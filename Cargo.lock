@@ -394,6 +394,7 @@ dependencies = [
  "os-shim",
  "quick-xml",
  "regex",
+ "serde_json",
  "thiserror",
  "zip",
 ]

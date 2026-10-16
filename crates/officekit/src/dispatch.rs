@@ -8,19 +8,25 @@ use std::process::ExitCode;
 use os_shim::System;
 
 use crate::cli::{Cli, Commands};
-use crate::handlers;
+use crate::handlers::{self, PackageValidator};
 
-pub const EXIT_ERROR: u8 = 1;
+pub const EXIT_ERROR: u8 = 2;
+pub const EXIT_OK: u8 = 0;
 
 pub fn run<S>(cli: &Cli, system: &S, stdout: &mut dyn Write, stderr: &mut dyn Write) -> ExitCode
 where
     S: System + ?Sized,
 {
     let outcome = match cli.cmd() {
-        Commands::Parts(args) => handlers::cmd_parts(system, args, stdout),
+        Commands::Cat(args) => handlers::cmd_cat(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Parts(args) => handlers::cmd_parts(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Validate(args) => {
+            let validator = PackageValidator::new(system);
+            handlers::cmd_validate(&validator, args, stdout, stderr).map_err(anyhow::Error::from)
+        }
     };
     match outcome {
-        Ok(()) => ExitCode::SUCCESS,
+        Ok(status) => ExitCode::from(status),
         Err(err) => {
             let _: Result<(), _> = writeln!(stderr, "error: {err:#}");
             ExitCode::from(EXIT_ERROR)

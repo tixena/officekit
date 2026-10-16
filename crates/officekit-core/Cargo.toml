@@ -27,6 +27,9 @@ quick-xml.workspace = true
 # Error handling
 thiserror.workspace = true
 
+# The validator's JSON records
+serde_json.workspace = true
+
 # Runs the pattern facets of the validation tables, matched whole.
 regex = "1"
 

@@ -63,13 +63,13 @@ fn json_output_carries_file_and_parts() {
 }
 
 #[test]
-fn missing_file_exits_one_with_an_error_line() {
+fn missing_file_exits_two_with_an_error_line() {
     let dir = TempDir::new().unwrap();
     let path = dir.path().join("absent.docx");
     assert!(!RealSystem::new().exists(&path).unwrap());
 
     let output = run(&["parts", path.to_str().unwrap()]);
-    assert_eq!(output.status.code(), Some(1_i32), "got {output:?}");
+    assert_eq!(output.status.code(), Some(2_i32), "got {output:?}");
     let stderr = str::from_utf8(&output.stderr).unwrap();
     assert!(stderr.starts_with("error: opening "), "stderr: {stderr}");
     assert!(stderr.contains("absent.docx"), "stderr: {stderr}");
