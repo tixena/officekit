@@ -6,25 +6,21 @@
 //!
 //! Subcommands:
 //!
-//! - `generate-schema` -- regenerate the typed element modules from the
-//!   Open XML SDK schema data. Finds its inputs under `inputs/`, reads the
-//!   standard's text and the SDK data, then exits with a message saying it
-//!   emits nothing yet and what it read.
+//! - `generate-schema` -- regenerate the generated modules of `officekit-core`
+//!   from the inputs under `inputs/`. Writes the namespace table so far.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 
 use std::io::{Write, stdout};
 use std::path::{Path, PathBuf};
 
-use anyhow::{Context as _, Result, bail};
+use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
-use os_shim::System as _;
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
+use xtask::generate_schema::emit::namespaces;
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
-use xtask::generate_schema::sdk_data::{Extension, ExtensionContent, SdkData};
-use xtask::generate_schema::standard_text;
 
 /// The namespace of `CT_P` and `CT_TblCellMar`, which the counts show.
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -117,25 +113,16 @@ fn main() -> Result<()> {
         Commands::GenerateSchema => {
             let system = RealSystem::new();
             let inputs = Inputs::open(&system, Path::new("inputs"))?;
-            let part_1 = system.read_to_string(&inputs.part1_text)?;
-            let part_4 = system.read_to_string(&inputs.part4_text)?;
-            let text = standard_text::summary(&part_1, &part_4);
-            let data = SdkData::read(&system, &inputs.sdk_data)?;
-            bail!(
-                "generate-schema emits nothing yet ({text}; inputs found: {} Strict XSDs, {} Transitional \
-                 XSDs, {} OPC XSDs, 2 texts ({}, {}), SDK data at {}, {} Open Specifications XSDs, \
-                 {} checksums, {} tools lines)\n{}",
-                inputs.strict_schemas.len(),
-                inputs.transitional_schemas.len(),
-                inputs.opc_schemas.len(),
-                inputs.part1_text.display(),
-                inputs.part4_text.display(),
-                inputs.sdk_data.display(),
-                inputs.open_specifications.len(),
-                inputs.checksums().lines().count(),
-                inputs.tools().lines().count(),
-                sdk_report(&data),
-            )
+            let summary = namespaces::emit(&system, &inputs, Path::new(namespaces::TABLE_PATH))?;
+            writeln!(
+                stdout().lock(),
+                "wrote {}: {} namespaces, {} with a Strict URI, {} dated Office 2010 or later",
+                namespaces::TABLE_PATH,
+                summary.rows,
+                summary.strict_uris,
+                summary.introduced,
+            )?;
+            Ok(())
         }
         Commands::SchemaCounts => schema_counts(&mut stdout().lock()),
     }
@@ -175,55 +162,6 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
     }
     transitional_counts(out, &transitional)?;
     comparison(out, &transitional, &strict)
-}
-
-/// What the SDK data reader read, in the counts the generator relies on.
-fn sdk_report(data: &SdkData) -> String {
-    let (covered, empty) = data.extension_namespaces();
-    let w14: Vec<Extension<'_>> = data
-        .types
-        .keys()
-        .flat_map(|name| data.extensions_in(name))
-        .filter(|extension| extension.namespace == "w14")
-        .collect();
-    let w14_elements = w14
-        .iter()
-        .filter(|extension| matches!(extension.content, ExtensionContent::Element(_)))
-        .count();
-    let mut paragraph = Vec::new();
-    for extension in data.extensions_in("w:CT_P/w:p") {
-        if let ExtensionContent::Attribute(attribute) = extension.content {
-            paragraph.push(format!("{} {:?}", attribute.qname, extension.version));
-        }
-    }
-    format!(
-        "SDK data read: {} namespaces, {} types, {} enumerations, {} parts with {} child entries, \
-         {} Schematron rules, {} typed namespaces\n\
-         namespaces dated Office 2010 to Microsoft 365: {} with types or attributes, {} without \
-         ({})\n\
-         w14 content inside other namespaces' types: {} elements, {} attributes\n\
-         w:CT_P/w:p extension attributes: {}",
-        data.namespaces.len(),
-        data.types.len(),
-        data.enumerations.len(),
-        data.parts.len(),
-        data.parts
-            .iter()
-            .map(|part| part.children.len())
-            .sum::<usize>(),
-        data.schematrons.len(),
-        data.typed_namespaces.len(),
-        covered.len(),
-        empty.len(),
-        empty
-            .iter()
-            .map(|namespace| namespace.prefix.as_str())
-            .collect::<Vec<_>>()
-            .join(", "),
-        w14_elements,
-        w14.len() - w14_elements,
-        paragraph.join(", "),
-    )
 }
 
 /// What the Transitional set holds: its declarations, tags, wildcards, and two types.

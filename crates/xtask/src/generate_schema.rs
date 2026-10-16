@@ -1,6 +1,7 @@
 //! The `generate-schema` subcommand.
 
 pub mod compare;
+pub mod emit;
 pub mod inputs;
 pub mod model;
 pub mod sdk_data;
