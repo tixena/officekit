@@ -55,7 +55,7 @@ parity DIR kinds="schema,markup-compatibility":
     cargo build -q -p officekit
     dotnet run --project oracle -c Release -- {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx > target/parity/oracle.json
     for f in {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx; do for t in 2010 2013 2016 2019 2021 365; do \
-      target/debug/officekit validate --json --target "$t" "$f" > "target/parity/officekit/$(basename "$f").$t.json" \
+      target/debug/officekit validate --json --max-errors 0 --target "$t" "$f" > "target/parity/officekit/$(basename "$f").$t.json" \
       || [ $? -eq 1 ] || exit 2; done; done
     cargo xtask parity target/parity/oracle.json target/parity/officekit --kinds {{kinds}}
 
