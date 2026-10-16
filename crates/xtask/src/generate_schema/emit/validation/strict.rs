@@ -1,6 +1,6 @@
 //! The Strict schema's rules for a value: the checks of each attribute whose
 //! Strict type is not its Transitional one, converted from the Strict schema
-//! model (D35).
+//! model.
 //!
 //! A type converts to clauses that must all pass, each a list of checks one
 //! of which must pass: a union of members that are several checks each is

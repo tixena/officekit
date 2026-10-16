@@ -1,13 +1,12 @@
 //! The Transitional conformance class (ECMA-376 Part 1 with the migration
-//! features of Part 4), behind the feature `transitional`, on by default
-//! (D21).
+//! features of Part 4), behind the feature `transitional`, on by default.
 //!
 //! Every node reads Transitional with the reader both classes share and
-//! writes the stored text with the shared writer (D9), with the Transitional
+//! writes the stored text with the shared writer, with the Transitional
 //! URI of every known namespace it declares. The one Strict form Transitional
 //! has no place for is a date cell (`t="d"`): the write refuses it, and
 //! [`dates::convert_date_cells`] turns each one into a number cell before a
-//! Transitional save (D22).
+//! Transitional save.
 
 // The namespace modules, `transitional::<namespace>`, generated in a file of
 // their own.

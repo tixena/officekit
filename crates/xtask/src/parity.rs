@@ -1,7 +1,7 @@
 //! `cargo xtask parity`: every error SDK 3.5.1 reports that officekit lacks.
 //!
-//! Parity runs one way (D25): an error only officekit reports does not count.
-//! The test-only table from officekit's codes to SDK 3.5.1's error ids (D3)
+//! Parity runs one way: an error only officekit reports does not count.
+//! The test-only table from officekit's codes to SDK 3.5.1's error ids
 //! lives here and nowhere in `officekit-core`.
 
 use alloc::collections::BTreeMap;

@@ -1,21 +1,34 @@
 # officekit
 
-A library (`officekit-core`) and a CLI (`officekit`) for reading, writing, and
-validating Office Open XML documents (`.docx`, `.xlsx`, `.pptx`). The module
-layout follows the Open XML SDK's namespaces.
+A library (`officekit-core`) and a CLI (`officekit`) for reading, editing,
+writing, and validating Office Open XML documents (`.docx`, `.xlsx`, `.pptx`)
+in either conformance class, Transitional or Strict.
 
 ## Layout
 
 ```
-crates/officekit-core   library: OPC packaging, element model, validation, typed documents
+crates/officekit-core   library: packaging, element trees, validation, file types
 crates/officekit        CLI binary
 crates/xtask            dev tooling (`cargo xtask <subcommand>`), never installed
+crates/xtask/data/      the generator's hand-written inputs
 ```
 
-Inside `officekit-core`, modules follow the SDK's namespaces: `packaging`
-(`DocumentFormat.OpenXml.Packaging` + `System.IO.Packaging`), `xml` (the root
-`DocumentFormat.OpenXml` element model), `validation`, and one module per
-document kind (`wordprocessing`, `spreadsheet`, `presentation`).
+Inside `officekit-core`, modules are organized by what each part of a document
+is:
+
+```
+docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
+markup             the typed tree, one module per namespace, with transforms and visitors
+parts              one module per part type: content type, relationship types, load and store
+stream             parts and packages read and written as events, without the whole tree
+image              image parts: format, bytes, pixel size
+embedded           a document stored in a part of another
+transitional       the Transitional class: read and write of every node (feature `transitional`)
+strict             the Strict class: read and write of every node (feature `strict`)
+validation         schema, markup compatibility, package, and semantic checks
+xml                the generic element tree, names, the namespace table, value parsing
+packaging          the Open Packaging Conventions container
+```
 
 ## Rules
 
@@ -27,9 +40,16 @@ document kind (`wordprocessing`, `spreadsheet`, `presentation`).
   files in the wild carry data descriptors, and a streaming reader cannot
   handle those. The bytes still arrive through `System::open`.
 - **Quality gate is `just all`** (clippy with `restriction`, `pedantic`, and
-  `nursery` denied; `cargo fmt --check`; build; tests). Nothing is done until
-  it passes. Never add `#[allow]` / `#[expect]` to get past a lint; fix the
-  code or raise it.
+  `nursery` denied; `cargo fmt --check`; build; tests). It runs the four
+  feature builds: the workspace, `officekit-core` with all features, with no
+  default features, and with `strict` alone. Nothing is done until it passes.
+  Never add `#[allow]` / `#[expect]` to get past a lint; fix the code or raise
+  it.
+- **Generated files are never edited by hand**: everything under `markup/`,
+  `transitional/`, `strict/`, `parts/`, and `validation/generated/` of
+  `officekit-core/src`, and `xml/name/table.rs`. Change the generator in
+  `crates/xtask` (its hand-written inputs live in `crates/xtask/data/`) and run
+  `cargo xtask generate-schema`.
 - **Module files, not `mod.rs`**: `foo.rs` next to `foo/`. Unit tests live in
   `foo/tests.rs` behind `#[cfg(test)] mod tests;`. Integration tests are
   `tests/<name>.rs` stubs that `#[path]`-include `tests/<name>/tests.rs`.

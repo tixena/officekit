@@ -1,4 +1,4 @@
-//! Writing the generic element tree, over `quick-xml`'s `Writer` (D29): the
+//! Writing the generic element tree, over `quick-xml`'s `Writer`: the
 //! escaping officekit does itself, the compact and pretty layouts, and the
 //! namespace cleanup.
 

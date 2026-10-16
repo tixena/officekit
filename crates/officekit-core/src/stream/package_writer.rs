@@ -1,5 +1,5 @@
 //! `PackageWriter`: a package written part by part into a sink that cannot
-//! seek (D31, D36).
+//! seek.
 
 use alloc::collections::BTreeMap;
 use std::io::{self, Write};

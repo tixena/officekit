@@ -1,4 +1,4 @@
-//! The write-through form of `Transform` (D37): a node's result goes to a
+//! The write-through form of `Transform`: a node's result goes to a
 //! `PartWriter` as it is made, each hook asked on the way.
 
 use std::io;

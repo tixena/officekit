@@ -1,4 +1,4 @@
-//! The typed tree's shared runtime (D8, D12): where unknown content goes when
+//! The typed tree's shared runtime: where unknown content goes when
 //! a node is read and written, and which prefix a written element takes.
 //!
 //! It holds the reader and writer every generated node goes through, the

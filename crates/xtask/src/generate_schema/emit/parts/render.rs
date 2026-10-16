@@ -604,7 +604,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
         .collect();
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "One module per part type (D13): ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.\n\nEach holds the part's content type, its relationship type in both classes' spelling, and the load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each file type. `restore_through_module` stores a part again in a class through the module its content type names.",
+        "One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.\n\nEach holds the part's content type, its relationship type in both classes' spelling, and the load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each file type. `restore_through_module` stores a part again in a class through the module its content type names.",
     ));
     out.push('\n');
     let mut modules: Vec<&str> = joined
@@ -779,7 +779,7 @@ fn all_constant(joined: &Joined, out: &mut String) {
 fn relationship_types(header: &str, joined: &Joined) -> String {
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling (D21).\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
+        "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
     ));
     out.push_str(
         "\nuse crate::packaging::relationship::RelationshipType;\nuse crate::xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",

@@ -1,4 +1,4 @@
-//! Streaming a part and a package (D31, D36, D37).
+//! Streaming a part and a package.
 //!
 //! A part read forward as events, a part written one element at a time, the
 //! write-through form of `Transform`, whose result goes to a part writer as it

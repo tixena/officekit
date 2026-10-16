@@ -340,7 +340,7 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The relationship types of every part module and of the sections of Part 1 that define no part,
-//! in both classes' spelling (D21).
+//! in both classes' spelling.
 //!
 //! Part 1 states the Strict type of each part and Part 4 the Transitional one; the types of the
 //! parts Part 2 defines and of Microsoft's extensions are one URI in both classes.

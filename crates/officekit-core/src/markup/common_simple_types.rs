@@ -272,7 +272,7 @@ pub enum BooleanValueMember {
     True,
 }
 
-/// 20.1.2.6 `ST_TrueFalseBlank` (Boolean Value with Blank [False] State): the text the file
+/// 20.1.2.6 `ST_TrueFalseBlank` (Boolean Value with Blank \[False\] State): the text the file
 /// carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]

@@ -3,7 +3,7 @@
 //!
 //! Every element, attribute, and enumeration value only Transitional allows is
 //! marked, and every attribute whose Strict type is not its Transitional type
-//! carries the Strict type's checks (D35).
+//! carries the Strict type's checks.
 
 pub(crate) mod render;
 mod strict;

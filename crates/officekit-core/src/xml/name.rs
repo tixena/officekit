@@ -1,4 +1,4 @@
-//! Qualified names: a namespace id and a local name (D11).
+//! Qualified names: a namespace id and a local name.
 
 pub mod table;
 

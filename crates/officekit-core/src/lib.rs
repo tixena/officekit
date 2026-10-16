@@ -1,25 +1,35 @@
-//! `officekit-core` - Office Open XML (ECMA-376) document model for Rust.
+//! `officekit-core` reads, edits, writes, and validates Office Open XML files (`.docx`, `.xlsx`,
+//! `.pptx`) in either conformance class.
 //!
-//! The layering follows the Open XML SDK:
-//!
-//! - [`packaging`] ports `DocumentFormat.OpenXml.Packaging` and the Open
-//!   Packaging Conventions underneath it (ECMA-376 Part 2): part names,
-//!   content types, relationships, and the zip container.
-//! - [`xml`] ports the root `DocumentFormat.OpenXml` namespace: the element
-//!   and attribute model, simple types, and the streaming reader and writer.
-//! - [`parts`] holds one generated module per part type: its content type,
-//!   its relationship type in both classes, and the load and store of its
-//!   root.
-//! - [`validation`] ports `DocumentFormat.OpenXml.Validation`.
-//! - [`docx`], [`xlsx`], and [`pptx`] hold the file types: a package with
-//!   its main part, its class, and its kind, the saves in either class, and
-//!   the operations over the generated types.
-//! - `transitional` and `strict`, each behind the feature of its name, read
-//!   and write every node of the typed tree in that conformance class.
+//! - [`packaging`]: the package, its parts, content types, and relationships, held in an os-shim
+//!   in-memory filesystem.
+//! - [`xml`]: the generic element tree, qualified names and the namespace table, the parsers of
+//!   simple-type values, and markup compatibility.
+//! - [`markup`]: the typed tree, one module per namespace, with the `Transform` and `Visit` traits
+//!   and the write-through form of a transform.
+//! - [`parts`]: one module per part type, with its content type, its relationship type in both
+//!   classes' spelling, and the load and store of its root.
+//! - `transitional` and `strict`, each behind the feature of its name: the read and write of
+//!   every node of the typed tree in that conformance class.
+//! - [`docx`], [`xlsx`], and [`pptx`]: the file types. Each opens a package with its main part,
+//!   its class, and its kind, saves it in either class, and holds the operations over the typed
+//!   tree.
+//! - [`stream`]: a part read forward as events, a part written one element at a time, and a
+//!   package written part by part into a sink that cannot seek.
+//! - [`image`]: image parts as images: a format, the bytes, and the pixel size.
+//! - [`embedded`]: a `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
+//! - [`compact`]: the merge of neighbouring runs that render the same.
+//! - [`folder`]: a `.docx` as a folder of its parts, and back.
+//! - [`validation`]: the checks of a package against the schema of an Office version, and the
+//!   semantic constraints, as static tables and the validator that walks them.
+//! - [`error`]: the failures of the packaging layer and the refusals of a class's reader and
+//!   writer.
 //!
 //! Every byte that reaches or leaves the operating system does so through an
-//! [`os_shim::System`], so callers choose between the real filesystem and an
-//! in-memory one, and tests never touch disk.
+//! [`os_shim::System`], so callers choose between the real filesystem and an in-memory one, and
+//! tests never touch disk.
+
+#![recursion_limit = "256"]
 
 extern crate alloc;
 

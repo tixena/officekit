@@ -1,4 +1,4 @@
-//! The part modules (D13): one module per part type, `parts::<part>`, the
+//! The part modules: one module per part type, `parts::<part>`, the
 //! relationship types of `packaging/relationship_type.rs`, and `parts/kinds.rs`.
 //!
 //! Each part module holds its part's content types, its relationship type in

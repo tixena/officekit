@@ -339,7 +339,7 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! One module per part type (D13): ECMA-376 Part 1's part definitions, then the parts Microsoft's
+//! One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's
 //! extensions define.
 //!
 //! Each holds the part's content type, its relationship type in both classes' spelling, and the

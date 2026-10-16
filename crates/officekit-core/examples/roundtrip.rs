@@ -1,5 +1,5 @@
 //! Reads every XML part of every Office file in a folder through the generic
-//! element tree and checks the round trip of D29:
+//! element tree and checks the round trip:
 //!
 //! - every part parses;
 //! - written compact without the cleanup, every part reads back to a tree that

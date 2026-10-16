@@ -1101,6 +1101,6 @@ fn code_word(word: &str) -> String {
     if core.contains('_') || camel || digit_camel || upper_camel {
         format!("{}`{core}`{}", &word[..core_start], &word[core_end..])
     } else {
-        word.to_owned()
+        word.replace('[', "\\[").replace(']', "\\]")
     }
 }

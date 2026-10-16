@@ -1,5 +1,5 @@
 //! Reading a part's bytes into the generic element tree, over `quick-xml`'s
-//! `Reader` (D29).
+//! `Reader`.
 
 use core::fmt::Display;
 use core::mem;

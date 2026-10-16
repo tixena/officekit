@@ -2,7 +2,7 @@
 //!
 //! [`down`] unpacks every `.docx` under a directory into a folder holding one
 //! file per package entry plus an `info.json` that remembers the document's
-//! file name; [`up`] zips those folders into `.docx` files again; [`format`]
+//! file name; [`up`] zips those folders into `.docx` files again; [`format()`]
 //! re-indents the XML parts of a folder in place. Everything the library does
 //! with the operating system goes through an [`os_shim::System`].
 

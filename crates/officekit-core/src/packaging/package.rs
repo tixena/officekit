@@ -1,6 +1,6 @@
 //! A package: an os-shim `MemorySystem` holding one file per part, with
 //! `[Content_Types].xml` and every relationship part kept parsed and written
-//! back into the memory filesystem whenever they change (D7).
+//! back into the memory filesystem whenever they change.
 
 use alloc::collections::{BTreeMap, BTreeSet};
 use core::fmt;

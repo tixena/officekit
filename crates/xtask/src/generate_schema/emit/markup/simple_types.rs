@@ -1,4 +1,4 @@
-//! The newtypes of simple types (D9): each holds the text the file carried,
+//! The newtypes of simple types: each holds the text the file carried,
 //! and its `value` method parses it by the type's kind, section 3.4's table:
 //! an enumeration gives its member enum, a union the first member type that
 //! matches, a list the newtypes of its items, `ST_OnOff` a `bool`, a date an

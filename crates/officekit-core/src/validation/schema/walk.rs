@@ -5,7 +5,7 @@
 //! attributes, its attributes, its text, its content model, and, when the
 //! file declares Strict, what only Transitional allows.
 //!
-//! An element's type comes from the element it sits in (D2). An element no
+//! An element's type comes from the element it sits in. An element no
 //! vocabulary types is not validated, nor is what it holds unless
 //! `mc:ProcessContent` names it. Inside an `mc:AlternateContent` the walk
 //! follows the one branch SDK 3.5.1 validates at the target.

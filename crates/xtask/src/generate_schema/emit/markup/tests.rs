@@ -99,6 +99,14 @@ fn doc_words_that_read_as_code_get_backticks() {
 }
 
 #[test]
+fn square_brackets_in_doc_words_are_escaped_so_they_do_not_read_as_links() {
+    assert_eq!(
+        layout::doc(0, "Blank [False] State"),
+        "/// Blank \\[False\\] State\n"
+    );
+}
+
+#[test]
 fn a_long_condition_puts_its_brace_on_a_line_of_its_own() {
     let pattern = Expr::pattern(
         "super::document_properties_custom::CustomFilePropertyContent::BinaryStorage",

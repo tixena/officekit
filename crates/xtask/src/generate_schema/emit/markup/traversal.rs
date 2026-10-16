@@ -1,4 +1,4 @@
-//! The traversals of the typed tree (D12, D17, D20, D37): each namespace's
+//! The traversals of the typed tree: each namespace's
 //! hook traits, `Context` and `Visitor`; every node's `Transform`, `Visit`,
 //! and `WriteThrough`, and each enum's `markup::Item`, in the namespace's
 //! `traversal.rs`; and the root accessors, one per namespace.

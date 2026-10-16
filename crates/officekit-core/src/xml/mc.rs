@@ -1,4 +1,4 @@
-//! Markup compatibility (ECMA-376 Part 3, D5): `mc:AlternateContent` and
+//! Markup compatibility (ECMA-376 Part 3): `mc:AlternateContent` and
 //! ignorable content resolved for an Office version.
 
 use alloc::borrow::Cow;

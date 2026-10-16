@@ -1,7 +1,7 @@
-//! The enums of the typed tree (D34): every choice position, flattened to the
+//! The enums of the typed tree: every choice position, flattened to the
 //! set of tags it allows, and positions with the same set sharing one enum;
 //! the extension tags SDK 3.5.1's data places beside ECMA tags joining those
-//! sets (D24); the choices of Microsoft's extension types; and the names of
+//! sets; the choices of Microsoft's extension types; and the names of
 //! `enum_names.toml`.
 
 use alloc::collections::{BTreeMap, BTreeSet};

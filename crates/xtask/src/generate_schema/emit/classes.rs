@@ -1,4 +1,4 @@
-//! The conformance classes' files (D21, D22): every node's `Strict` and
+//! The conformance classes' files: every node's `Strict` and
 //! `Transitional` impl, one module per namespace under `strict/` and
 //! `transitional/`, and the tables each class's write walks.
 //!

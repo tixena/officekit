@@ -2,7 +2,7 @@
 //!
 //! Each declared attribute's checks run in order; then come the attributes
 //! the type does not declare and, when the file declares Strict, what only
-//! Transitional allows (D35): a marked attribute or one in a namespace only
+//! Transitional allows: a marked attribute or one in a namespace only
 //! Transitional has, a marked enumeration member, and a value its own checks
 //! accept and its Strict checks refuse.
 

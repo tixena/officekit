@@ -1,4 +1,4 @@
-//! The typed tree (D12): one module per namespace, `markup::<namespace>`.
+//! The typed tree: one module per namespace, `markup::<namespace>`.
 //!
 //! Each is written to `crates/officekit-core/src/markup/<namespace>.rs` with
 //! its readers, writers, and traversals beside it, from the schema model of the

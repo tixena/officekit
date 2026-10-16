@@ -1,5 +1,5 @@
 //! The generic element tree: every XML part parses into it, the typed tree is
-//! built from it and written through it, and the validator walks it (D8).
+//! built from it and written through it, and the validator walks it.
 
 use super::conformance::ConformanceClass;
 use super::mc::{self, MarkupCompatibility};

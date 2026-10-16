@@ -1,12 +1,12 @@
 //! The Strict conformance class (ECMA-376 Part 1), behind the feature
-//! `strict` (D21).
+//! `strict`.
 //!
 //! Every node reads Strict with the reader both classes share and writes it
 //! with the shared writer; one walk over the written element then applies the
 //! generated tables of `strict/rules.rs`. Transitional-only children and
 //! attributes take their Strict names, bitmasks unpack into the attributes
 //! they pack, values take Strict's spelling, and content Strict has no form
-//! for fails the write with its name (D22). The rules are keyed by tag, so the
+//! for fails the write with its name. The rules are keyed by tag, so the
 //! walk also reaches content the typed tree keeps unknown, such as the
 //! branches of `mc:AlternateContent`.
 

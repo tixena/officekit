@@ -1,4 +1,4 @@
-//! The names of the typed tree (D14, D24): module names, the standard's titles
+//! The names of the typed tree: module names, the standard's titles
 //! for elements and simple types, the override table, and the words a name is
 //! made of.
 
