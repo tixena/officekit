@@ -19,6 +19,9 @@ where
 {
     let outcome = match cli.cmd() {
         Commands::Cat(args) => handlers::cmd_cat(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Down(args) => handlers::cmd_down(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Format(args) => handlers::cmd_format(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Up(args) => handlers::cmd_up(system, args, stdout).map(|()| EXIT_OK),
         Commands::Parts(args) => handlers::cmd_parts(system, args, stdout).map(|()| EXIT_OK),
         Commands::Validate(args) => {
             let validator = PackageValidator::new(system);

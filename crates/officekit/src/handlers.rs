@@ -7,13 +7,14 @@ use anyhow::{Context as _, Result};
 use os_shim::System;
 use serde_json::{Value, json};
 
+use officekit_core::folder::{self, DownOptions, UpOptions};
 use officekit_core::packaging::package::Package;
 use officekit_core::packaging::part_name::PartName;
 use officekit_core::validation::error::ValidationError;
 use officekit_core::validation::validator::Validator;
 use officekit_core::xml::name::OfficeVersion;
 
-use crate::cli::{CatArgs, PartsArgs, ValidateArgs};
+use crate::cli::{CatArgs, DownArgs, FormatArgs, PartsArgs, UpArgs, ValidateArgs};
 use crate::dispatch::EXIT_ERROR;
 
 #[cfg(test)]
@@ -78,6 +79,48 @@ where
         Package::open(system, path).with_context(|| format!("opening {}", path.display()))?;
     let name = PartName::new(&args.part)?;
     stdout.write_all(&package.part_bytes(&name)?)?;
+    Ok(())
+}
+
+/// `officekit down --src DIR --tgt DIR`: one `expanded:` line per folder written.
+pub fn cmd_down<S>(system: &S, args: &DownArgs, stdout: &mut dyn Write) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    let mut options = DownOptions::default();
+    options.pretty = args.pretty;
+    options.suffix = &args.suffix;
+    for folder in folder::down(system, &args.src, &args.tgt, options)? {
+        writeln!(stdout, "expanded: {}", folder.display())?;
+    }
+    Ok(())
+}
+
+/// `officekit up --src DIR --tgt DIR`: one `created:` line per file written.
+pub fn cmd_up<S>(system: &S, args: &UpArgs, stdout: &mut dyn Write) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    let mut options = UpOptions::default();
+    options.minify = args.minify;
+    options.suffix = &args.suffix;
+    for file in folder::up(system, &args.src, &args.tgt, options)? {
+        writeln!(stdout, "created: {}", file.display())?;
+    }
+    Ok(())
+}
+
+/// `officekit format --dir DIR`: how many XML parts were inspected and rewritten.
+pub fn cmd_format<S>(system: &S, args: &FormatArgs, stdout: &mut dyn Write) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    let summary = folder::format(system, &args.dir)?;
+    writeln!(
+        stdout,
+        "inspected {} XML parts, rewrote {}",
+        summary.inspected, summary.rewritten
+    )?;
     Ok(())
 }
 

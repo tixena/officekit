@@ -18,6 +18,7 @@
 extern crate alloc;
 
 pub mod error;
+pub mod folder;
 pub mod markup;
 pub mod packaging;
 pub mod presentation;

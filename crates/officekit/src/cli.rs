@@ -6,6 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use clap::{Args, Parser, Subcommand};
+use officekit_core::folder::DEFAULT_SUFFIX;
 use officekit_core::validation::validator::Validator;
 use officekit_core::xml::name::OfficeVersion;
 
@@ -30,8 +31,14 @@ impl Cli {
 pub enum Commands {
     /// Write the bytes of one part to standard output.
     Cat(CatArgs),
+    /// Expand every `.docx` under a folder into a folder of its parts.
+    Down(DownArgs),
+    /// Re-indent every XML part under a folder, in place.
+    Format(FormatArgs),
     /// List the parts inside a package.
     Parts(PartsArgs),
+    /// Zip every expanded folder under a folder back into a `.docx`.
+    Up(UpArgs),
     /// Check a package against the schema of an Office version.
     Validate(ValidateArgs),
 }
@@ -43,6 +50,51 @@ pub struct CatArgs {
 
     /// Name of the part, such as `/word/document.xml`.
     pub part: String,
+}
+
+#[derive(Args)]
+pub struct DownArgs {
+    /// Indent the XML parts.
+    #[arg(long)]
+    pub pretty: bool,
+
+    /// The folder searched, at any depth, for `.docx` files.
+    #[arg(long)]
+    pub src: PathBuf,
+
+    /// What the name of an expanded folder ends with.
+    #[arg(long, default_value = DEFAULT_SUFFIX)]
+    pub suffix: String,
+
+    /// The folder the expanded documents are written under.
+    #[arg(long)]
+    pub tgt: PathBuf,
+}
+
+#[derive(Args)]
+pub struct UpArgs {
+    /// Strip the whitespace between elements of the XML parts.
+    #[arg(long)]
+    pub minify: bool,
+
+    /// The folder searched, at any depth, for expanded documents.
+    #[arg(long)]
+    pub src: PathBuf,
+
+    /// What the name of an expanded folder ends with.
+    #[arg(long, default_value = DEFAULT_SUFFIX)]
+    pub suffix: String,
+
+    /// The folder the `.docx` files are written under.
+    #[arg(long)]
+    pub tgt: PathBuf,
+}
+
+#[derive(Args)]
+pub struct FormatArgs {
+    /// The folder whose XML parts are re-indented.
+    #[arg(long)]
+    pub dir: PathBuf,
 }
 
 #[derive(Args)]
