@@ -306,6 +306,28 @@ fn an_id_naming_no_relationship_is_reported() {
 }
 
 #[test]
+fn a_relationship_whose_target_names_no_part_hides_no_other_id() {
+    let body = "<w:p><w:hyperlink r:id=\"rId1\"><w:r><w:t>x</w:t></w:r></w:hyperlink></w:p>";
+    let mut written = word(body, &[]);
+    let main = PartName::new("/word/document.xml").unwrap();
+    written
+        .set_part_bytes(
+            &PartName::new(&main.relationships_part()).unwrap(),
+            "application/vnd.openxmlformats-package.relationships+xml",
+            format!(
+                "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">\
+                 <Relationship Id=\"rId1\" Type=\"{RELATIONSHIPS}hyperlink\" Target=\"https://example.org/\" TargetMode=\"External\"/>\
+                 <Relationship Id=\"rId2\" Type=\"{RELATIONSHIPS}image\" Target=\"media/\"/>\
+                 </Relationships>"
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+    let package = Package::from_bytes(written.to_bytes().unwrap()).unwrap();
+    assert_eq!(semantic(&package, OfficeVersion::Microsoft365), []);
+}
+
+#[test]
 fn a_header_reference_naming_a_footer_relationship_is_reported() {
     let parts = [
         (

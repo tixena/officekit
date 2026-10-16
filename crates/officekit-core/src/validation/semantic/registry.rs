@@ -489,7 +489,7 @@ impl<'checks, 'package> PartChecks<'checks, 'package> {
             && (DATA_PART_REFERENCES
                 .iter()
                 .any(|(_, data_type)| *data_type == type_uri)
-                || package.part_bytes(part).is_err())
+                || !package.contains(part))
         {
             return None;
         }
@@ -507,8 +507,13 @@ impl<'checks, 'package> PartChecks<'checks, 'package> {
     fn relationships(&mut self) -> &[RelatedPart] {
         let package = self.run.package;
         let part = self.part;
-        self.relationships
-            .get_or_insert_with(|| package.related(Some(part)).unwrap_or_default())
+        self.relationships.get_or_insert_with(|| {
+            package
+                .relationships_of(Some(part))
+                .into_iter()
+                .filter_map(Result::ok)
+                .collect()
+        })
     }
 }
 
@@ -768,9 +773,9 @@ fn descend(
             .find_map(|child| PART_RULES.get(usize::from(child.part?)))?;
         let relationship_type = child_rule.relationship_type?;
         let found = package
-            .related(source.as_ref())
-            .ok()?
+            .relationships_of(source.as_ref())
             .into_iter()
+            .filter_map(Result::ok)
             .find_map(|related| match related.target {
                 Target::Part(part) if transitional_type(&related.type_uri) == relationship_type => {
                     Some(part)
@@ -977,11 +982,13 @@ pub fn registrations(type_id: TypeId) -> &'static [Registration] {
 
 /// Whether `source` has a relationship to `target`.
 fn relates(package: &Package, source: &PartName, target: &PartName) -> bool {
-    package.related(Some(source)).is_ok_and(|related| {
-        related.iter().any(|relationship| {
+    package
+        .relationships_of(Some(source))
+        .into_iter()
+        .filter_map(Result::ok)
+        .any(|relationship| {
             matches!(&relationship.target, Target::Part(part) if part.folded() == target.folded())
         })
-    })
 }
 
 /// `AttributeRequiredForValue` when the attribute is absent and the other
