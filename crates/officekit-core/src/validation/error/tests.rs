@@ -56,10 +56,19 @@ fn there_are_45_codes_each_found_again_by_its_name() {
 
 #[test]
 fn the_codes_split_into_their_kinds() {
-    assert_eq!(count(Finding::Schema), 15);
-    assert_eq!(count(Finding::Semantic), 13);
+    assert_eq!(count(Finding::Schema), 17);
+    assert_eq!(count(Finding::Semantic), 11);
     assert_eq!(count(Finding::MarkupCompatibility), 12);
     assert_eq!(count(Finding::Package), 5);
+}
+
+#[test]
+fn the_two_attribute_constraint_codes_are_schema_errors() {
+    assert_eq!(ErrorCode::AttributeCannotBeOmitted.kind(), Finding::Schema);
+    assert_eq!(
+        ErrorCode::AttributeValueOutsideConstraint.kind(),
+        Finding::Schema
+    );
 }
 
 #[test]

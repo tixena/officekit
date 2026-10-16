@@ -160,11 +160,11 @@ codes! {
     // Semantic: rules between values, across the document, and through relationships.
     AttributeMustBeAbsentUnlessValue, Semantic, "the attribute {attribute} must be absent unless {other} is {value}";
     AttributeMustBeAbsentForValue, Semantic, "the attribute {attribute} must be absent when {other} is {value}";
-    AttributeCannotBeOmitted, Semantic, "the attribute {attribute} is missing and cannot be omitted";
+    AttributeCannotBeOmitted, Schema, "the attribute {attribute} is missing and cannot be omitted";
     MutuallyExclusiveAttributes, Semantic, "the attributes {attributes} cannot appear together";
     AttributeRequiredForValue, Semantic, "the attribute {attribute} is required when {other} is {value}";
     AttributeValueConflictsWithAnother, Semantic, "the attribute {attribute} must be {allowed} when {other} is {value}; it is \"{actual}\"";
-    AttributeValueOutsideConstraint, Semantic, "the attribute {attribute} has the value \"{value}\": {detail}";
+    AttributeValueOutsideConstraint, Schema, "the attribute {attribute} has the value \"{value}\": {detail}";
     AttributeValueExceedsAnother, Semantic, "the attribute {attribute} is {value}, more than {other}, which is {limit}";
     IndexedElementNotFound, Semantic, "{attribute} refers to {element} number {index} of the part {part}, which does not exist";
     ReferencedElementNotFound, Semantic, "{attribute} refers to the {element} \"{value}\" in the part {part}, which does not exist";

@@ -73,7 +73,14 @@ fn semantic(package: &Package, target: OfficeVersion) -> Vec<(ErrorCode, String)
         .with_max_errors(0)
         .validate(package)
         .into_iter()
-        .filter(|error| error.code.kind() == Finding::Semantic)
+        .filter(|error| {
+            error.code.kind() == Finding::Semantic
+                || matches!(
+                    error.code,
+                    ErrorCode::AttributeCannotBeOmitted
+                        | ErrorCode::AttributeValueOutsideConstraint
+                )
+        })
         .map(|error| {
             let part = error
                 .part
