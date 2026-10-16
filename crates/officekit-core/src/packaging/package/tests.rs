@@ -233,6 +233,16 @@ fn part_lookups_fold_case_and_a_case_variant_replaces_the_part() {
 }
 
 #[test]
+fn contains_folds_case_and_reports_only_parts_the_archive_holds() {
+    let mut package = document();
+    assert!(package.contains(&name("/word/document.xml")));
+    assert!(package.contains(&name("/WORD/Document.XML")));
+    assert!(!package.contains(&name("/word/styles.xml")));
+    package.remove_part(&name("/word/document.xml")).unwrap();
+    assert!(!package.contains(&name("/word/document.xml")));
+}
+
+#[test]
 fn a_missing_part_is_missing_part() {
     let error = document()
         .part_bytes(&name("/word/styles.xml"))

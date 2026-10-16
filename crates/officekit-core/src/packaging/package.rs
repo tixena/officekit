@@ -213,6 +213,12 @@ impl Package {
         self.write_relationships(&key)
     }
 
+    /// Whether the archive holds the part called `name`, compared case-folded.
+    #[must_use]
+    pub fn contains(&self, name: &PartName) -> bool {
+        matches!(self.locate(name.as_str()), Ok(Some(_)))
+    }
+
     /// The part's content type: its `Override`, else its extension's `Default`.
     #[must_use]
     pub fn content_type(&self, name: &PartName) -> Option<&str> {

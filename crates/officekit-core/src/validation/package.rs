@@ -2,7 +2,7 @@
 //! relationships, each source's relationships checked against its part rule,
 //! before any part's XML is read.
 
-use alloc::collections::{BTreeMap, BTreeSet};
+use alloc::collections::BTreeSet;
 use alloc::string::String;
 use alloc::vec::Vec;
 
@@ -63,8 +63,6 @@ struct Walk<'walk> {
     /// The part types the document can hold.
     known: Vec<&'static PartRule>,
     package: &'walk Package,
-    /// Whether the archive holds a part, by folded name.
-    present: BTreeMap<String, bool>,
     version: OfficeVersion,
 }
 
@@ -150,7 +148,7 @@ impl Walk<'_> {
                 continue;
             };
             let type_uri = transitional_type(&relationship.type_uri).into_owned();
-            if type_uri == HYPERLINK || !self.holds(&part) {
+            if type_uri == HYPERLINK || !self.package.contains(&part) {
                 continue;
             }
             if let Some(&(data_part, _)) = DATA_PART_REFERENCES
@@ -189,16 +187,6 @@ impl Walk<'_> {
         children
     }
 
-    /// Whether the archive holds `part`; a relationship to a part it lacks
-    /// reaches nothing.
-    fn holds(&mut self, part: &PartName) -> bool {
-        let package = self.package;
-        *self
-            .present
-            .entry(part.folded())
-            .or_insert_with(|| package.part_bytes(part).is_ok())
-    }
-
     /// How a message names `source`: its part name, or the document's rule
     /// for the package.
     fn name<'name>(&self, source: Option<&'name PartName>) -> &'name str {
@@ -231,7 +219,6 @@ pub(crate) fn check(package: &Package, version: OfficeVersion, errors: &mut Erro
         errors,
         known: document_parts(document),
         package,
-        present: BTreeMap::new(),
         version,
     };
     let mut seen = BTreeSet::new();
