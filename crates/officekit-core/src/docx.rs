@@ -1,6 +1,7 @@
 //! The `.docx` file type, and hand-written operations over the generated `WordprocessingML` types.
 
 mod header_footer;
+mod merge;
 pub mod table;
 #[cfg(test)]
 mod tests;
@@ -11,7 +12,9 @@ use os_shim::System;
 
 use crate::error::PackageError;
 use crate::file;
-use crate::markup::wordprocessing::{Document, Footer, Header, HeaderOrFooterTypeMember};
+use crate::markup::wordprocessing::{
+    BlockContent, Document, Footer, Header, HeaderOrFooterTypeMember,
+};
 use crate::new_parts;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
@@ -174,6 +177,26 @@ impl Docx {
     pub fn headers(&self) -> Result<Vec<RelatedPart>, PackageError> {
         self.package
             .related_by_type(Some(&self.main), &RelationshipType::HEADER)
+    }
+
+    /// `source`'s body blocks without its final `w:sectPr`, rewritten so that every id they use
+    /// resolves in this file, for its main document `document`: each relationship, comment,
+    /// footnote, endnote, style, list, range, and drawing id the blocks use names a part or entry
+    /// this package holds, copied from `source` when it is not this file's own. `document`'s root
+    /// gains the source root's namespace declarations and ignorable prefixes; the caller places
+    /// the blocks and stores `document`.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] when a prefix is bound to different namespaces in the two roots of
+    /// the main documents, or of a notes, styles, or numbering part the import adds to; the errors
+    /// of reading and writing the parts the blocks name.
+    pub fn import_body(
+        &mut self,
+        document: &mut Document,
+        source: &Self,
+    ) -> Result<Vec<BlockContent>, PackageError> {
+        merge::import_body(self, document, source)
     }
 
     /// The kind its main part's content type names.
