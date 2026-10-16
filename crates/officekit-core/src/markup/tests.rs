@@ -11,6 +11,8 @@ use crate::xml::name::{Namespace, QName};
 use crate::xml::parse::parse;
 use crate::xml::write::{Layout, WriteOptions};
 
+const EXTENDED_PROPERTIES: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -392,5 +394,53 @@ fn a_scope_gives_the_bound_prefix_until_an_inner_declaration_rebinds_it() {
             "<a:p xmlns:a=\"{W_STRICT}\" xmlns:w14=\"{W14}\" a:rsidR=\"1\" id=\"2\" xml:space=\"preserve\" \
              w14:paraId=\"3\"><w:r xmlns:a=\"urn:other\" xmlns:w=\"{W}\"/><a:t/></a:p>"
         )
+    );
+}
+
+fn declaration(prefix: &str, uri: &str) -> NamespaceDeclaration {
+    NamespaceDeclaration {
+        prefix: prefix.to_owned(),
+        uri: uri.to_owned(),
+    }
+}
+
+#[test]
+fn an_element_in_the_default_namespace_keeps_no_prefix() {
+    let mut scope = Scope::default();
+    let properties = scope.element(
+        EXTENDED_PROPERTIES,
+        "Properties",
+        &[declaration("", EXTENDED_PROPERTIES)],
+    );
+    scope.end();
+    assert_eq!(
+        to_xml(properties),
+        format!("<Properties xmlns=\"{EXTENDED_PROPERTIES}\"/>")
+    );
+}
+
+#[test]
+fn an_inner_default_namespace_hides_the_outer_one() {
+    let mut scope = Scope::default();
+    let mut outer = scope.element(W, "p", &[declaration("", W)]);
+    let inner = scope.element(W, "r", &[declaration("", "urn:other")]);
+    scope.end();
+    scope.end();
+    outer.children = vec![Node::Element(inner)];
+    assert_eq!(
+        to_xml(outer),
+        format!("<p xmlns=\"{W}\"><w:r xmlns=\"urn:other\" xmlns:w=\"{W}\"/></p>")
+    );
+}
+
+#[test]
+fn an_attribute_never_takes_the_default_namespace() {
+    let mut scope = Scope::default();
+    let mut paragraph = scope.element(W, "p", &[declaration("", W)]);
+    scope.attribute(&mut paragraph, Some(W), "rsidR", "1");
+    scope.end();
+    assert_eq!(
+        to_xml(paragraph),
+        format!("<p xmlns=\"{W}\" xmlns:w=\"{W}\" w:rsidR=\"1\"/>")
     );
 }

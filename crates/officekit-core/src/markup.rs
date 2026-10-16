@@ -220,7 +220,7 @@ impl Scope {
         let prefix = if namespace == Namespace::None {
             String::new()
         } else {
-            self.bound(&namespace)
+            self.bound(&namespace, false)
                 .unwrap_or_else(|| self.declare(element, &namespace, declared))
         };
         element.attributes.push(Attribute {
@@ -234,18 +234,19 @@ impl Scope {
     }
 
     /// The innermost prefix bound to `namespace` that no inner declaration
-    /// rebinds; `xml` is bound without a declaration.
-    fn bound(&self, namespace: &Namespace) -> Option<String> {
+    /// rebinds; `xml` is bound without a declaration. For an element, the
+    /// empty prefix of a default namespace counts.
+    fn bound(&self, namespace: &Namespace, element: bool) -> Option<String> {
         if binds(XML_NAMESPACE, namespace) {
             return Some("xml".to_owned());
         }
         let mut seen: Vec<&str> = Vec::new();
         for declaration in self.frames.iter().rev().flatten() {
             let prefix = declaration.prefix.as_str();
-            if prefix.is_empty() || seen.contains(&prefix) {
+            if seen.contains(&prefix) {
                 continue;
             }
-            if binds(&declaration.uri, namespace) {
+            if (element || !prefix.is_empty()) && binds(&declaration.uri, namespace) {
                 return Some(prefix.to_owned());
             }
             seen.push(prefix);
@@ -292,7 +293,7 @@ impl Scope {
         });
         element.namespace_declarations = declarations.to_vec();
         element.name.prefix = self
-            .bound(&namespace)
+            .bound(&namespace, true)
             .unwrap_or_else(|| self.declare(&mut element, &namespace, uri));
         element
     }
