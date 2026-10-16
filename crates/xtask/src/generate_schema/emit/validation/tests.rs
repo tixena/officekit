@@ -4,8 +4,8 @@ use std::path::Path;
 use os_shim::mock::MemorySystem;
 
 use super::{
-    AttributeRow, Bounds, Check, ChildRow, CompositeKind, Marks, Particle, StringKind, Tables,
-    TypeRow, ValueCheck, ValueClass, Versions, convert, render, simple_types,
+    AttributeRow, Bounds, Check, ChildRow, CompositeKind, Marks, PartRow, Particle, StringKind,
+    Tables, TypeRow, ValueCheck, ValueClass, Versions, convert, part_roots, render, simple_types,
 };
 use crate::generate_schema::compare::transitional_only;
 use crate::generate_schema::model::SchemaSet;
@@ -106,6 +106,34 @@ const MAIN_PART: &str = r#"{"Root": "w:CT_Document", "Name": "MainDocumentPart",
 
 const IMAGE_PART: &str = r#"{"Name": "ImagePart", "RelationshipType": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"}"#;
 
+/// The type of the root `StyleDefinitionsPart` takes from its base, and
+/// `MainDocumentPart`'s.
+const STYLES: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/wordprocessingml/2006/main", "Types": [
+  {"Name": "w:CT_Styles/w:styles"},
+  {"Name": "w:CT_Document/w:document"}
+], "Enums": []}"#;
+
+/// Three of the six parts with a `RootElement` and no `Root`, as the data
+/// writes them, and a made-up one with no root type anywhere.
+const ROOTLESS_PARTS: [(&str, &str); 4] = [
+    (
+        "StyleDefinitionsPart",
+        r#"{"Name": "StyleDefinitionsPart", "Base": "StylesPart", "ContentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml", "RelationshipType": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "Target": "styles", "RootElement": "styles", "Paths": {"General": "."}}"#,
+    ),
+    (
+        "CoreFilePropertiesPart",
+        r#"{"Name": "CoreFilePropertiesPart", "Base": "OpenXmlPart", "ContentType": "application/vnd.openxmlformats-package.core-properties+xml", "RelationshipType": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties", "Target": "core", "RootElement": "coreProperties", "Paths": {"General": "docProps"}}"#,
+    ),
+    (
+        "XmlSignaturePart",
+        r#"{"Name": "XmlSignaturePart", "Base": "OpenXmlPart", "ContentType": "application/vnd.openxmlformats-package.digital-signature-xmlsignature+xml", "RelationshipType": "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature", "Target": "sig", "RootElement": "Signature", "Paths": {"General": "_xmlsignatures"}}"#,
+    ),
+    (
+        "MadeUpPart",
+        r#"{"Name": "MadeUpPart", "Base": "OpenXmlPart", "RootElement": "madeUp"}"#,
+    ),
+];
+
 /// The SDK rows the marks are read for: margins with `w:left`, which Strict
 /// lacks, `w:ind` with the attribute `w:left`, and `w:jc` of a table, whose
 /// type and enumeration the SDK renames (`CT_TblJc`, `ST_TblJc`) from
@@ -174,6 +202,10 @@ fn attribute<'tables>(row: &'tables TypeRow, name: &str) -> &'tables AttributeRo
 }
 
 fn data(schemas: &[&str]) -> SdkData {
+    data_with_parts(schemas, &[])
+}
+
+fn data_with_parts(schemas: &[&str], parts: &[(&str, &str)]) -> SdkData {
     let base = MemorySystem::new()
         .with_file("data/namespaces.json", NAMESPACES.as_bytes())
         .unwrap()
@@ -185,7 +217,7 @@ fn data(schemas: &[&str]) -> SdkData {
         .unwrap()
         .with_file("data/schematrons.json", b"[]")
         .unwrap();
-    let system = schemas
+    let with_schemas = schemas
         .iter()
         .enumerate()
         .fold(base, |files, (index, schema)| {
@@ -193,6 +225,11 @@ fn data(schemas: &[&str]) -> SdkData {
                 .with_file(format!("data/schemas/{index}.json"), schema.as_bytes())
                 .unwrap()
         });
+    let system = parts.iter().fold(with_schemas, |files, (name, part)| {
+        files
+            .with_file(format!("data/parts/{name}.json"), part.as_bytes())
+            .unwrap()
+    });
     SdkData::read(&system, Path::new("data")).unwrap()
 }
 
@@ -223,10 +260,31 @@ fn number(class: ValueClass, min_inclusive: Option<i64>) -> Check {
     }
 }
 
+fn part_row<'tables>(tables: &'tables Tables, name: &str) -> &'tables PartRow {
+    tables.parts.iter().find(|part| part.name == name).unwrap()
+}
+
 /// The tables of `MATH` and `SHADING`, `w:ST_HexColorRGB` read as a `HexBinaryValue`.
 fn regressions() -> Tables {
     let hex = simple_types(r#""w:ST_HexColorRGB" = "HexBinaryValue""#).unwrap();
-    convert(&data(&[MATH, SHADING]), &hex, &Marks::default()).unwrap()
+    convert(
+        &data(&[MATH, SHADING]),
+        &hex,
+        &BTreeMap::new(),
+        &Marks::default(),
+    )
+    .unwrap()
+}
+
+/// The tables of `STYLES` with `parts`, `StylesPart` in the table of part roots.
+fn rooted(parts: &[(&str, &str)]) -> anyhow::Result<Tables> {
+    let roots = part_roots(r#""StylesPart" = "w:CT_Styles/w:styles""#)?;
+    convert(
+        &data_with_parts(&[STYLES], parts),
+        &BTreeMap::new(),
+        &roots,
+        &Marks::default(),
+    )
 }
 
 fn row<'tables>(tables: &'tables Tables, name: &str) -> &'tables TypeRow {
@@ -246,7 +304,13 @@ fn string(pattern: Option<&str>) -> Check {
 
 fn tables() -> Tables {
     let decimal = simple_types(r#""w:ST_DecimalNumber" = "Int32Value""#).unwrap();
-    convert(&data(&[WORDPROCESSING]), &decimal, &Marks::default()).unwrap()
+    convert(
+        &data(&[WORDPROCESSING]),
+        &decimal,
+        &BTreeMap::new(),
+        &Marks::default(),
+    )
+    .unwrap()
 }
 
 #[test]
@@ -470,7 +534,13 @@ fn a_hex_binary_string_validator_keeps_its_class() {
 fn a_string_validator_of_another_class_stops_the_generator() {
     let decimal = simple_types(r#""w:ST_DecimalNumber" = "Int32Value""#).unwrap();
     let schema = SHADING.replace("w:ST_HexColorRGB", "w:ST_DecimalNumber");
-    let error = convert(&data(&[&schema]), &decimal, &Marks::default()).unwrap_err();
+    let error = convert(
+        &data(&[&schema]),
+        &decimal,
+        &BTreeMap::new(),
+        &Marks::default(),
+    )
+    .unwrap_err();
     assert!(
         format!("{error:#}").contains("w:ST_DecimalNumber reads as Int32"),
         "{error:#}"
@@ -646,6 +716,33 @@ fn part_rules_keep_their_children_and_their_root_type() {
 }
 
 #[test]
+fn a_part_takes_the_root_of_its_abstract_base() {
+    let tables = rooted(&ROOTLESS_PARTS[..3]).unwrap();
+    assert_eq!(
+        part_row(&tables, "StyleDefinitionsPart").root.as_deref(),
+        Some("w:CT_Styles/w:styles")
+    );
+}
+
+#[test]
+fn a_part_with_a_root_element_and_no_root_type_stops_the_generator() {
+    let error = rooted(&ROOTLESS_PARTS).unwrap_err();
+    let message = format!("{error:#}");
+    assert!(
+        message.contains("the part MadeUpPart has the root element madeUp and no root type"),
+        "{message}"
+    );
+}
+
+#[test]
+fn core_properties_and_xml_signature_keep_no_root() {
+    let tables = rooted(&ROOTLESS_PARTS[..3]).unwrap();
+    for name in ["CoreFilePropertiesPart", "XmlSignaturePart"] {
+        assert_eq!(part_row(&tables, name).root, None, "{name}");
+    }
+}
+
+#[test]
 fn every_transitional_only_item_of_the_comparison_is_marked() {
     let system = MemorySystem::new()
         .with_file("t/wml.xsd", wml(W, true).as_bytes())
@@ -655,7 +752,7 @@ fn every_transitional_only_item_of_the_comparison_is_marked() {
     let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
     let marks = Marks::new(&transitional, &transitional_only(&transitional, &strict));
-    let tables = convert(&data(&[MARKED]), &BTreeMap::new(), &marks).unwrap();
+    let tables = convert(&data(&[MARKED]), &BTreeMap::new(), &BTreeMap::new(), &marks).unwrap();
 
     let children: Vec<(&str, bool)> = row(&tables, "w:CT_TblCellMar/w:tblCellMar")
         .children

@@ -1,0 +1,5 @@
+# The root type of the SDK 3.5.1 part classes whose parts take their root from
+# an abstract base the data names in "Base" but gives no file for. Found by
+# reflection over DocumentFormat.OpenXml 3.5.1: each base's typed root property.
+"CustomUIPart" = "mso:CT_CustomUI/mso:customUI"
+"StylesPart" = "w:CT_Styles/w:styles"

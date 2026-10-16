@@ -128,6 +128,7 @@ fn main() -> Result<()> {
                 &system,
                 &inputs,
                 Path::new(validation::SIMPLE_TYPES_PATH),
+                Path::new(validation::PART_ROOTS_PATH),
                 Path::new(validation::GENERATED_PATH),
             )?;
             validation_summary(&mut out, &tables)?;

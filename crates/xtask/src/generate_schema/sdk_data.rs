@@ -65,6 +65,8 @@ pub struct DataNamespace {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct DataPart {
+    /// The SDK class it derives from, `StylesPart`.
+    pub base: Option<String>,
     pub children: Vec<DataChildPart>,
     pub content_type: Option<String>,
     pub name: String,
@@ -533,6 +535,7 @@ fn occurs(entry: &Value) -> Result<Occurs> {
 
 fn part(entry: &Value) -> Result<DataPart> {
     Ok(DataPart {
+        base: text(entry, "Base")?,
         children: list(entry, "Children", child_part)?,
         content_type: text(entry, "ContentType")?,
         name: required(entry, "Name")?,

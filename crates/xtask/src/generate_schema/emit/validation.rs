@@ -7,6 +7,7 @@
 mod render;
 
 use alloc::collections::{BTreeMap, BTreeSet};
+use core::fmt::{self, Write as _};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
@@ -33,6 +34,12 @@ pub const GENERATED_PATH: &str = "crates/officekit-core/src/validation/generated
 
 /// The hand-maintained table of simple types, from the workspace root.
 pub const SIMPLE_TYPES_PATH: &str = "crates/xtask/data/simple_types.toml";
+
+/// The hand-maintained table of part roots, from the workspace root.
+pub const PART_ROOTS_PATH: &str = "crates/xtask/data/part_roots.toml";
+
+/// The parts SDK 3.5.1 gives a root element and no typed root.
+const NO_TYPED_ROOT: [&str; 2] = ["CoreFilePropertiesPart", "XmlSignaturePart"];
 
 /// The targets, Office 2010 to Microsoft 365.
 const TARGETS: u8 = 6;
@@ -320,6 +327,8 @@ struct Converter<'data> {
     /// `(C# namespace, enumeration name)` to the enumeration's simple type.
     enumerations: BTreeMap<(&'data str, &'data str), &'data str>,
     marks: &'data Marks,
+    /// The root type of each abstract part base the data names in `Base`.
+    part_roots: &'data BTreeMap<String, String>,
     simple_types: &'data BTreeMap<String, String>,
     /// Prefix to namespace URI.
     uris: BTreeMap<&'data str, &'data str>,
@@ -458,6 +467,21 @@ impl<'data> Converter<'data> {
             union: validator.union_id,
             versions,
         }))
+    }
+
+    /// `root` when the data has that type and its element's local name is `element`.
+    fn checked_root(&self, root: &str, element: &str) -> Result<String> {
+        if !self.data.types.contains_key(root) {
+            bail!("the root type {root} names no type");
+        }
+        let local = root
+            .split_once('/')
+            .and_then(|(_, qualified)| qualified.split_once(':'))
+            .map(|(_, local)| local);
+        if local != Some(element) {
+            bail!("the root type {root} is not of the element {element}");
+        }
+        Ok(root.to_owned())
     }
 
     /// The child elements of a type: those the data declares and those its
@@ -605,6 +629,7 @@ impl<'data> Converter<'data> {
     fn new(
         data: &'data SdkData,
         simple_types: &'data BTreeMap<String, String>,
+        part_roots: &'data BTreeMap<String, String>,
         marks: &'data Marks,
     ) -> Result<Self> {
         let uris: BTreeMap<&str, &str> = data
@@ -634,17 +659,32 @@ impl<'data> Converter<'data> {
             ecma_types,
             enumerations,
             marks,
+            part_roots,
             simple_types,
             uris,
             used: BTreeSet::new(),
         })
     }
 
+    /// A part's rule; a part with a root element and no `Root` takes the root
+    /// of its base from the table of part roots.
     fn part(&self, part: &DataPart) -> Result<PartRow> {
         let root = match (&part.root, &part.root_element) {
             (Some(root), Some(element)) => Some(self.root_type(root, element)?),
             (Some(root), None) => bail!("the root {root} has no root element"),
-            (None, _) => None,
+            (None, Some(element)) => match part
+                .base
+                .as_deref()
+                .and_then(|base| self.part_roots.get(base))
+            {
+                Some(root) => Some(self.checked_root(root, element)?),
+                None if NO_TYPED_ROOT.contains(&part.name.as_str()) => None,
+                None => bail!(
+                    "the part {} has the root element {element} and no root type",
+                    part.name
+                ),
+            },
+            (None, None) => None,
         };
         Ok(PartRow {
             children: part
@@ -1265,14 +1305,16 @@ fn composite_kind(kind: &str) -> Result<CompositeKind> {
 ///
 /// An attribute type with no value class, a validator or argument the
 /// conversion does not know, a simple type neither in `simple_types` nor an
-/// enumeration, a string validator whose `Type` is not a `HexBinaryValue`, or
-/// a child, root, or particle that names no type.
+/// enumeration, a string validator whose `Type` is not a `HexBinaryValue`, a
+/// child, root, or particle that names no type, or a part with a root element
+/// whose root type neither the data nor `part_roots` gives.
 pub fn convert(
     data: &SdkData,
     simple_types: &BTreeMap<String, String>,
+    part_roots: &BTreeMap<String, String>,
     marks: &Marks,
 ) -> Result<Tables> {
-    let mut converter = Converter::new(data, simple_types, marks)?;
+    let mut converter = Converter::new(data, simple_types, part_roots, marks)?;
     let types = data
         .types
         .iter()
@@ -1469,7 +1511,13 @@ fn enumeration_of<'data>(
 ///
 /// An input that cannot be read, data the conversion refuses, a table past
 /// the range of its ids, or an output that cannot be written.
-pub fn emit<S>(system: &S, inputs: &Inputs, simple_types_path: &Path, out: &Path) -> Result<Summary>
+pub fn emit<S>(
+    system: &S,
+    inputs: &Inputs,
+    simple_types_path: &Path,
+    part_roots_path: &Path,
+    out: &Path,
+) -> Result<Summary>
 where
     S: System + ?Sized,
 {
@@ -1492,7 +1540,12 @@ where
             .read_to_string(simple_types_path)
             .with_context(|| format!("cannot read {}", simple_types_path.display()))?,
     )?;
-    let tables = convert(&data, &simple_types, &marks)?;
+    let part_roots = part_roots(
+        &system
+            .read_to_string(part_roots_path)
+            .with_context(|| format!("cannot read {}", part_roots_path.display()))?,
+    )?;
+    let tables = convert(&data, &simple_types, &part_roots, &marks)?;
 
     let mut read: Vec<PathBuf> = inputs.strict_schemas.clone();
     read.extend(inputs.transitional_schemas.iter().cloned());
@@ -1501,7 +1554,12 @@ where
     read.push(inputs.sdk_data.join("typed").join("namespaces.json"));
     read.extend(json_files(system, &inputs.sdk_data.join("schemas"))?);
     read.extend(json_files(system, &inputs.sdk_data.join("parts"))?);
-    let header = namespaces::header(inputs.checksums(), inputs.tools(), &read)?;
+    // A committed table has no line in SHA256SUMS: the header names it by its path.
+    let mut header = namespaces::header(inputs.checksums(), "", &read)?;
+    let _: fmt::Result = writeln!(header, "//   {}", part_roots_path.display());
+    for line in inputs.tools().lines() {
+        let _: fmt::Result = writeln!(header, "// {line}");
+    }
     let prefixes: Vec<&str> = namespace_rows
         .iter()
         .map(|row| row.prefix.as_str())
@@ -1605,6 +1663,28 @@ fn office_version(validator: &Validator) -> Result<Versions> {
         _ => bail!("unknown Office version {value}"),
     };
     Ok(Versions::since(version))
+}
+
+/// Read the hand-maintained table of part roots: each abstract part base the
+/// data names in `Base`, and the root type its parts take.
+///
+/// # Errors
+///
+/// Text that is not TOML, or a value that is not a string.
+pub fn part_roots(text: &str) -> Result<BTreeMap<String, String>> {
+    let table: toml::Table = text
+        .parse()
+        .context("the table of part roots is not TOML")?;
+    table
+        .into_iter()
+        .map(|(base, value)| {
+            let root = value
+                .as_str()
+                .with_context(|| format!("the part base {base} maps to no root type"))?
+                .to_owned();
+            Ok((base, root))
+        })
+        .collect()
 }
 
 /// The content model of a type at each target, equal ones merged.
