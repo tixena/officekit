@@ -134,3 +134,27 @@ fn a_strict_relationship_type_reaches_the_same_parts() {
         [("/word/document.xml".to_owned(), "MainDocumentPart")]
     );
 }
+
+#[test]
+fn a_target_that_names_no_part_does_not_hide_the_other_parts_of_its_source() {
+    let main = PartName::new("/word/document.xml").unwrap();
+    let mut package = word(OFFICE_DOCUMENT, &[("/word/styles.xml", STYLES)]);
+    package
+        .set_part_bytes(
+            &PartName::new(&main.relationships_part()).unwrap(),
+            "application/vnd.openxmlformats-package.relationships+xml",
+            format!(
+                r#"<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="{UNKNOWN}" Target="media/"/><Relationship Id="rId2" Type="{STYLES}" Target="styles.xml"/></Relationships>"#
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+    let reread = Package::from_bytes(package.to_bytes().unwrap()).unwrap();
+    assert_eq!(
+        reached(&reread, OfficeVersion::Office2013),
+        [
+            ("/word/document.xml".to_owned(), "MainDocumentPart"),
+            ("/word/styles.xml".to_owned(), "StyleDefinitionsPart"),
+        ]
+    );
+}

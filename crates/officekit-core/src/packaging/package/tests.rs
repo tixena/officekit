@@ -74,6 +74,20 @@ fn document() -> Package {
     package
 }
 
+/// `package` saved and read back with the relationship part of `source`
+/// replaced by `entries`, so they parse as a file gives them.
+fn with_relationship_entries(package: &Package, source: &PartName, entries: &str) -> Package {
+    let mut written = package.duplicate().unwrap();
+    written
+        .set_part_bytes(
+            &PartName::new(&source.relationships_part()).unwrap(),
+            "application/vnd.openxmlformats-package.relationships+xml",
+            format!("<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">{entries}</Relationships>").as_bytes(),
+        )
+        .unwrap();
+    Package::from_bytes(written.to_bytes().unwrap()).unwrap()
+}
+
 /// The text of a file inside the zip archive of `package`.
 fn archived(package: &Package, path: &str) -> Option<String> {
     let fs = MemorySystem::from_zip_reader(Cursor::new(package.to_bytes().unwrap())).unwrap();
@@ -705,4 +719,41 @@ fn relationship_sets_list_each_source_with_its_entries_as_written() {
     assert_eq!(sets[1].0, Some(name("/word/document.xml")));
     assert_eq!(sets[1].1[0].target_mode, TargetMode::External);
     assert!(format!("{package:?}").starts_with("Package { content_types: "));
+}
+
+#[test]
+fn relationships_of_gives_one_result_per_entry_and_related_fails_on_a_bad_target() {
+    let main = name("/word/document.xml");
+    let package = with_relationship_entries(
+        &document(),
+        &main,
+        r#"<Relationship Id="rId1" Type="http://example.com/a" Target="styles.xml"/><Relationship Id="rId2" Type="http://example.com/b" Target="media/"/><Relationship Id="rId3" Type="http://example.com/c" Target="https://example.org/" TargetMode="External"/>"#,
+    );
+    let each = package.relationships_of(Some(&main));
+    assert_eq!(each.len(), 3);
+    assert_eq!(
+        each[0].as_ref().unwrap().target,
+        Target::Part(name("/word/styles.xml"))
+    );
+    assert!(each[1].is_err(), "got {each:?}");
+    assert_eq!(
+        each[2].as_ref().unwrap().target,
+        Target::External("https://example.org/".to_owned())
+    );
+    let error = package.related(Some(&main)).unwrap_err();
+    assert!(
+        matches!(
+            &error,
+            PackageError::PartName {
+                name: _name,
+                reason: _reason
+            }
+        ),
+        "got {error:?}"
+    );
+    assert!(
+        package
+            .relationships_of(Some(&name("/word/none.xml")))
+            .is_empty()
+    );
 }

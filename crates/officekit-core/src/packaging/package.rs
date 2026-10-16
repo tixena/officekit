@@ -496,25 +496,7 @@ impl Package {
     /// [`PackageError::PartName`] for an internal target that resolves to no
     /// valid part name.
     pub fn related(&self, source: Option<&PartName>) -> Result<Vec<RelatedPart>, PackageError> {
-        let Some(set) = self.relationships.get(&source_key(source)) else {
-            return Ok(Vec::new());
-        };
-        set.items
-            .iter()
-            .map(|item| {
-                let target = item.resolved(set.directory())?;
-                let content_type = match &target {
-                    Target::External(_) => None,
-                    Target::Part(part) => self.content_type(part).map(str::to_owned),
-                };
-                Ok(RelatedPart {
-                    content_type,
-                    id: item.id.clone(),
-                    target,
-                    type_uri: item.type_uri.clone(),
-                })
-            })
-            .collect()
+        self.relationships_of(source).into_iter().collect()
     }
 
     /// The parts a part relates to by one relationship type, in either
@@ -542,6 +524,35 @@ impl Package {
         self.relationships
             .values()
             .map(|set| (set.source.clone(), set.items.clone()))
+            .collect()
+    }
+
+    /// Each relationship of a source (`None`: the package), in the order the
+    /// relationship part has them, its target resolved against the source's
+    /// folder, or the error that target gives.
+    #[must_use]
+    pub fn relationships_of(
+        &self,
+        source: Option<&PartName>,
+    ) -> Vec<Result<RelatedPart, PackageError>> {
+        let Some(set) = self.relationships.get(&source_key(source)) else {
+            return Vec::new();
+        };
+        set.items
+            .iter()
+            .map(|item| {
+                let target = item.resolved(set.directory())?;
+                let content_type = match &target {
+                    Target::External(_) => None,
+                    Target::Part(part) => self.content_type(part).map(str::to_owned),
+                };
+                Ok(RelatedPart {
+                    content_type,
+                    id: item.id.clone(),
+                    target,
+                    type_uri: item.type_uri.clone(),
+                })
+            })
             .collect()
     }
 

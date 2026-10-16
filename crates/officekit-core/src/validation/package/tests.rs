@@ -54,6 +54,20 @@ fn reopened(package: &Package) -> Package {
     Package::open(&system, Path::new("/out/test.docx")).unwrap()
 }
 
+/// `package` saved and read back with the relationship part of `source`
+/// replaced by `entries`, so they parse as a file gives them.
+fn with_relationship_entries(package: &Package, source: &PartName, entries: &str) -> Package {
+    let mut written = package.duplicate().unwrap();
+    written
+        .set_part_bytes(
+            &PartName::new(&source.relationships_part()).unwrap(),
+            "application/vnd.openxmlformats-package.relationships+xml",
+            format!("<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">{entries}</Relationships>").as_bytes(),
+        )
+        .unwrap();
+    Package::from_bytes(written.to_bytes().unwrap()).unwrap()
+}
+
 /// A Word document whose main part, `/word/document.xml`, relates to each of
 /// `related`.
 fn word(related: &[Related<'_>]) -> Package {
@@ -173,5 +187,36 @@ fn a_clean_docx_has_no_error() {
     assert_eq!(
         Validator::new(OfficeVersion::Microsoft365).validate(&reopened(&package)),
         []
+    );
+}
+
+#[test]
+fn a_relationship_target_that_names_no_part_does_not_hide_the_others() {
+    let master = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster";
+    let deck = PartName::new("/ppt/presentation.xml").unwrap();
+    let mut package = Package::new();
+    package
+        .set_part_bytes(
+            &deck,
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+            b"<p:presentation xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"/>",
+        )
+        .unwrap();
+    package.relate(None, &deck, OFFICE_DOCUMENT).unwrap();
+    package
+        .set_part_bytes(
+            &PartName::new("/ppt/slideMasters/slideMaster1.xml").unwrap(),
+            "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml",
+            b"<p:sldMaster xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"/>",
+        )
+        .unwrap();
+    let entries = format!(
+        r#"<Relationship Id="rId1" Type="{master}" Target="slideMasters/slideMaster1.xml"/><Relationship Id="rId2" Type="http://example.com/relationships/media" Target="media/"/>"#
+    );
+    let reread = with_relationship_entries(&package, &deck, &entries);
+    let errors = package_errors(&reread);
+    assert!(
+        !codes(&errors).contains(&ErrorCode::MissingRequiredPart),
+        "{errors:?}"
     );
 }

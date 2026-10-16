@@ -142,7 +142,10 @@ impl Walk<'_> {
         rule: Option<&'static PartRule>,
     ) -> Vec<Reached> {
         let mut children = Vec::new();
-        for relationship in self.package.related(source).unwrap_or_default() {
+        for outcome in self.package.relationships_of(source) {
+            let Ok(relationship) = outcome else {
+                continue;
+            };
             let Target::Part(part) = relationship.target else {
                 continue;
             };

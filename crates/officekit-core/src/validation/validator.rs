@@ -223,10 +223,10 @@ fn reach(
     seen: &mut BTreeSet<String>,
     found: &mut Vec<(PartName, &'static PartRule)>,
 ) {
-    let Ok(related) = package.related(source) else {
-        return;
-    };
-    for relationship in related {
+    for outcome in package.relationships_of(source) {
+        let Ok(relationship) = outcome else {
+            continue;
+        };
         let Target::Part(part) = relationship.target else {
             continue;
         };
