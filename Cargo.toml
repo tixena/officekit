@@ -30,6 +30,9 @@ os-shim = { git = "https://github.com/eburgos/os-shim.git", rev = "0afaa75" }
 # matches os-shim's so both resolve to one build of the crate.
 zip = { version = "8", default-features = false, features = ["deflate-flate2-zlib-rs"] }
 
+# Reads and writes the XML of every part (D29).
+quick-xml = "0.42"
+
 # Error handling
 anyhow = "1"
 thiserror = "2"

@@ -23,5 +23,15 @@ os-shim.workspace = true
 # Zip container underneath every OPC package
 zip.workspace = true
 
+# Reads and writes the XML of every part
+quick-xml.workspace = true
+
 # Error handling
 thiserror.workspace = true
+
+[dev-dependencies]
+# The round-trip example takes its folder from the command line
+clap.workspace = true
+
+# The round-trip example unzips each sample file into a MemorySystem
+os-shim = { workspace = true, features = ["zip"] }

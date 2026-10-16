@@ -30,4 +30,4 @@ os-shim.workspace = true
 serde_json.workspace = true
 
 # Reads the XSD files the schema model is built from.
-quick-xml = "0.42"
+quick-xml.workspace = true
