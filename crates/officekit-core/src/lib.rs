@@ -17,6 +17,7 @@
 
 extern crate alloc;
 
+pub mod compact;
 pub mod error;
 pub mod folder;
 pub mod markup;

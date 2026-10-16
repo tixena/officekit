@@ -284,7 +284,7 @@ fn understands_requires(choice: &Element, target: OfficeVersion, scope: &mut Sco
 
 /// A node taking the place of an element that held `declarations`: an
 /// element gets the ones it does not declare itself, before its own.
-fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> Node {
+pub(crate) fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> Node {
     let Node::Element(mut element) = node else {
         return node;
     };
