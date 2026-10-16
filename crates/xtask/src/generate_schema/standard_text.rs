@@ -94,47 +94,72 @@ pub fn simple_type_headings(text: &str) -> BTreeSet<ElementHeading> {
 }
 
 fn headings(text: &str, simple_types: bool) -> BTreeSet<ElementHeading> {
-    let mut headings = BTreeSet::new();
-    for line in text.lines() {
-        if line.contains("....") {
-            continue;
-        }
-        let trimmed = line.trim();
-        let Some((section, rest)) = trimmed.split_once(char::is_whitespace) else {
-            continue;
-        };
-        if !section_number(section, 3, 5) {
-            continue;
-        }
-        let Some((local, raw_title)) = rest.trim_start().split_once(char::is_whitespace) else {
-            continue;
-        };
-        let title = raw_title.trim();
-        let name = if simple_types {
-            local.strip_prefix("ST_")
-        } else {
-            Some(local)
-        };
-        let valid_local = name.is_some_and(|n| {
-            n.chars().next().is_some_and(|c| c.is_ascii_alphabetic())
-                && n.chars().all(|c| c.is_ascii_alphanumeric())
-        });
-        let Some(inner) = title.strip_prefix('(').and_then(|t| t.strip_suffix(')')) else {
-            continue;
-        };
-        if !valid_local
-            || inner.contains(')')
-            || !inner.starts_with(|c: char| c.is_ascii_uppercase())
-        {
-            continue;
-        }
-        headings.insert(ElementHeading {
-            local: local.to_owned(),
-            section: section.to_owned(),
-            title: inner.split_whitespace().collect::<Vec<_>>().join(" "),
-        });
+    text.lines()
+        .filter_map(|line| heading(line, simple_types))
+        .collect()
+}
+
+/// The heading a line is, when it is one: a body line, not the table of contents.
+fn heading(line: &str, simple_types: bool) -> Option<ElementHeading> {
+    if line.contains("....") {
+        return None;
     }
-    headings
+    let trimmed = line.trim();
+    let (section, rest) = trimmed.split_once(char::is_whitespace)?;
+    if !section_number(section, 3, 5) {
+        return None;
+    }
+    let (local, raw_title) = rest.trim_start().split_once(char::is_whitespace)?;
+    let title = raw_title.trim();
+    let name = if simple_types {
+        local.strip_prefix("ST_")
+    } else {
+        Some(local)
+    };
+    let valid_local = name.is_some_and(|n| {
+        n.chars().next().is_some_and(|c| c.is_ascii_alphabetic())
+            && n.chars().all(|c| c.is_ascii_alphanumeric())
+    });
+    let inner = title.strip_prefix('(').and_then(|t| t.strip_suffix(')'))?;
+    if !valid_local || inner.contains(')') || !inner.starts_with(|c: char| c.is_ascii_uppercase()) {
+        return None;
+    }
+    Some(ElementHeading {
+        local: local.to_owned(),
+        section: section.to_owned(),
+        title: inner.split_whitespace().collect::<Vec<_>>().join(" "),
+    })
+}
+
+/// Every element heading of the body, in document order, with the schema type
+/// its section names.
+///
+/// The type is the one of the note "The W3C XML Schema definition of this
+/// element's content model (`CT_P`) is located in ...", searched up to the
+/// next heading; `None` when the section has no such note.
+#[must_use]
+pub fn element_heading_types(text: &str) -> Vec<(ElementHeading, Option<String>)> {
+    let lines: Vec<&str> = text.lines().collect();
+    let starts: Vec<(usize, ElementHeading)> = lines
+        .iter()
+        .enumerate()
+        .filter_map(|(index, line)| heading(line, false).map(|found| (index, found)))
+        .collect();
+    let mut found = Vec::with_capacity(starts.len());
+    for (position, (index, element)) in starts.iter().enumerate() {
+        let end = starts
+            .get(position + 1)
+            .map_or(lines.len(), |(next, _)| *next);
+        let body = lines[index + 1..end].join(" ");
+        let collapsed = body.split_whitespace().collect::<Vec<_>>().join(" ");
+        let content_type = collapsed
+            .split("content model (")
+            .nth(1)
+            .and_then(|rest| rest.split(')').next())
+            .map(str::to_owned);
+        found.push((element.clone(), content_type));
+    }
+    found
 }
 
 /// The label fragment a field line starts with, and the value after it.

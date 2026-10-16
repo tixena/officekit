@@ -8,7 +8,7 @@
 //!
 //! - `generate-schema` -- regenerate the generated modules of `officekit-core`
 //!   from the inputs under `inputs/`. Writes the namespace table, the
-//!   validation tables, and the semantic constraint table.
+//!   validation tables, the semantic constraint table, and the typed tree.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -23,7 +23,7 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::{namespaces, semantic, validation};
+use xtask::generate_schema::emit::{markup, namespaces, semantic, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 use xtask::parity;
@@ -155,6 +155,8 @@ fn main() -> Result<ExitCode> {
                 Path::new(semantic::GENERATED_PATH),
             )?;
             semantic_summary(&mut out, &semantic_table)?;
+            let typed = markup::emit(&system, &inputs, &emitted)?;
+            markup_summary(&mut out, &typed)?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {
@@ -215,6 +217,30 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
     }
     transitional_counts(out, &transitional)?;
     comparison(out, &transitional, &strict)
+}
+
+/// What `generate-schema` wrote of the typed tree.
+fn markup_summary(out: &mut dyn Write, summary: &markup::Summary) -> Result<()> {
+    writeln!(
+        out,
+        "wrote {}: {} modules; {} ECMA structs over {} tags, {} extension structs; {} choice \
+         enums ({} ECMA ones the data extends), {} xsd:all enums, {} wildcard enums over {} \
+         wildcard positions; {} From and TryFrom pairs; {} newtypes, {} with a member enum",
+        markup::MARKUP_PATH,
+        summary.modules,
+        summary.ecma_structs,
+        summary.ecma_tags,
+        summary.extension_structs,
+        summary.choice_enums,
+        summary.extended_enums,
+        summary.all_enums,
+        summary.wildcard_enums,
+        summary.wildcard_positions,
+        summary.conversions,
+        summary.newtypes,
+        summary.member_enums,
+    )?;
+    Ok(())
 }
 
 /// What `generate-schema` wrote of the semantic constraint table.

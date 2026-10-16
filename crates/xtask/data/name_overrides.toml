@@ -1,0 +1,1121 @@
+# The names that replace a struct's or a simple type's title in PascalCase
+# (D14), copied from the naming study's table: a name that collides with
+# another in its module, or a title of more than six words, shortened. Each
+# `[[element]]` row is the struct of one tag and schema type, its namespace by
+# its prefix in the namespace table; each `[[simple_type]]` row a simple type.
+# The generator stops when a row names no struct or no simple type.
+
+[[element]]
+# Category Axis Data
+namespace = "c"
+local = "cat"
+type = "CT_AxDataSource"
+name = "CategoryAxisDataCat"
+
+[[element]]
+# Category Axis Data
+namespace = "c"
+local = "catAx"
+type = "CT_CatAx"
+name = "CategoryAxisDataCatAx"
+
+[[element]]
+# Pie of Pie or Bar of Pie Charts
+namespace = "c"
+local = "ofPieChart"
+type = "CT_OfPieChart"
+name = "PieOfPieCharts"
+
+[[element]]
+# Pie of Pie or Bar of Pie Type
+namespace = "c"
+local = "ofPieType"
+type = "CT_OfPieType"
+name = "PieOfPieType"
+
+[[element]]
+# Follow Text
+namespace = "a"
+local = "buClrTx"
+type = "CT_TextBulletColorFollowText"
+name = "FollowTextBuClrTx"
+
+[[element]]
+# Follow text
+namespace = "a"
+local = "buFontTx"
+type = "CT_TextBulletTypefaceFollowText"
+name = "FollowTextBuFontTx"
+
+[[element]]
+# Effect Container
+namespace = "a"
+local = "cont"
+type = "CT_EffectContainer"
+name = "EffectContainerCont"
+
+[[element]]
+# Effect Container
+namespace = "a"
+local = "effectDag"
+type = "CT_EffectContainer"
+name = "EffectContainerEffectDag"
+
+[[element]]
+# Effect Container
+namespace = "a"
+local = "effectLst"
+type = "CT_EffectList"
+name = "EffectContainerEffectLst"
+
+[[element]]
+# Table Style
+namespace = "a"
+local = "tblStyle"
+type = "CT_TableStyle"
+name = "TableStyleTblStyle"
+
+[[element]]
+# Textual contents of shape
+namespace = "wp"
+local = "linkedTxbx"
+type = "CT_LinkedTextboxInformation"
+name = "TextualContentsOfShapeLinkedTxbx"
+
+[[element]]
+# Textual contents of shape
+namespace = "wp"
+local = "txbx"
+type = "CT_TextboxInfo"
+name = "TextualContentsOfShapeTxbx"
+
+[[element]]
+# Global Element for Embedded objects and Controls
+namespace = "p"
+local = "oleObj"
+type = "CT_OleObject"
+name = "EmbeddedObjectsAndControls"
+
+[[element]]
+# Slide Timing Information for a Slide Layout
+namespace = "p"
+local = "timing"
+type = "CT_SlideTiming"
+name = "SlideTimingInformation"
+
+[[element]]
+# Template Effects
+namespace = "p"
+local = "tmpl"
+type = "CT_TLTemplate"
+name = "TemplateEffectsTmpl"
+
+[[element]]
+# Template effects
+namespace = "p"
+local = "tmplLst"
+type = "CT_TLTemplateList"
+name = "TemplateEffectsTmplLst"
+
+[[element]]
+# Editor
+namespace = "b"
+local = "Edition"
+type = "ST_String"
+name = "EditorEdition"
+
+[[element]]
+# XML Mapping
+namespace = "x"
+local = "DataBinding"
+type = "CT_DataBinding"
+name = "XMLMappingDataBinding"
+
+[[element]]
+# XML Mapping
+namespace = "x"
+local = "MapInfo"
+type = "CT_MapInfo"
+name = "XMLMappingMapInfo"
+
+[[element]]
+# Smart Tag Properties
+namespace = "x"
+local = "cellSmartTagPr"
+type = "CT_CellSmartTagPr"
+name = "SmartTagPropertiesCellSmartTagPr"
+
+[[element]]
+# Conditional Formatting
+namespace = "x"
+local = "conditionalFormat"
+type = "CT_ConditionalFormat"
+name = "ConditionalFormattingConditionalFormat"
+
+[[element]]
+# External Reference
+namespace = "x"
+local = "externalLink"
+type = "CT_ExternalLink"
+name = "ExternalReferenceExternalLink"
+
+[[element]]
+# Formula
+namespace = "x"
+local = "f"
+type = "CT_CellFormula"
+name = "FormulaF"
+
+[[element]]
+# OLAP Grouping Levels
+namespace = "x"
+local = "groupLevel"
+type = "CT_GroupLevel"
+name = "OLAPGroupingLevelsGroupLevel"
+
+[[element]]
+# OLAP Grouping Levels
+namespace = "x"
+local = "groupLevels"
+type = "CT_GroupLevels"
+name = "OLAPGroupingLevelsGroupLevels"
+
+[[element]]
+# Row Items
+namespace = "x"
+local = "i"
+type = "CT_I"
+name = "RowItemsI"
+
+[[element]]
+# OLAP Measure Group
+namespace = "x"
+local = "map"
+type = "CT_MeasureDimensionMap"
+name = "OLAPMeasureGroupMap"
+
+[[element]]
+# OLAP Measure Group
+namespace = "x"
+local = "maps"
+type = "CT_MeasureDimensionMaps"
+name = "OLAPMeasureGroupMaps"
+
+[[element]]
+# OLAP Measure Group
+namespace = "x"
+local = "measureGroup"
+type = "CT_MeasureGroup"
+name = "OLAPMeasureGroupMeasureGroup"
+
+[[element]]
+# Font
+namespace = "x"
+local = "rFont"
+type = "CT_FontName"
+name = "FontRFont"
+
+[[element]]
+# Smart Tag Properties
+namespace = "x"
+local = "smartTagPr"
+type = "CT_SmartTagPr"
+name = "SmartTagPropertiesSmartTagPr"
+
+[[element]]
+# Table Style
+namespace = "x"
+local = "tableStyleElement"
+type = "CT_TableStyleElement"
+name = "TableStyleTableStyleElement"
+
+[[element]]
+# Table Style
+namespace = "x"
+local = "tableStyleInfo"
+type = "CT_TableStyleInfo"
+name = "TableStyleTableStyleInfo"
+
+[[element]]
+# References
+namespace = "x"
+local = "tr"
+type = "CT_VolTopicRef"
+name = "ReferencesTr"
+
+[[element]]
+# Add Document Grid Line Pitch To Lines in Table Cells
+namespace = "w"
+local = "adjustLineHeightInTable"
+type = "CT_OnOff"
+name = "AddDocumentGridLinePitch"
+
+[[element]]
+# Automatically Adjust Right Indent When Using Document Grid
+namespace = "w"
+local = "adjustRightInd"
+type = "CT_OnOff"
+name = "AutomaticallyAdjustRightIndent"
+
+[[element]]
+# Align Paragraph and Table Borders with Page Border
+namespace = "w"
+local = "alignBordersAndEdges"
+type = "CT_OnOff"
+name = "AlignParagraphAndTableBorders"
+
+[[element]]
+# Use Legacy Ethiopic and Amharic Line Breaking Rules
+namespace = "w"
+local = "applyBreakingRules"
+type = "CT_OnOff"
+name = "LegacyEthiopicAmharicLineBreakingRules"
+
+[[element]]
+# Allow Automatic Formatting to Override Formatting Protection Settings
+namespace = "w"
+local = "autoFormatOverride"
+type = "CT_OnOff"
+name = "AllowAutomaticFormattingOverride"
+
+[[element]]
+# Automatically Merge User Formatting Into Style Definition
+namespace = "w"
+local = "autoRedefine"
+type = "CT_OnOff"
+name = "AutomaticallyMergeUserFormatting"
+
+[[element]]
+# Automatically Adjust Spacing of Latin and East Asian Text
+namespace = "w"
+local = "autoSpaceDE"
+type = "CT_OnOff"
+name = "AdjustSpacingLatinEastAsianText"
+
+[[element]]
+# Automatically Adjust Spacing of East Asian Text and Numbers
+namespace = "w"
+local = "autoSpaceDN"
+type = "CT_OnOff"
+name = "AdjustSpacingEastAsianTextNumbers"
+
+[[element]]
+# Recalculate Fields When Current Field Is Modified
+namespace = "w"
+local = "calcOnExit"
+type = "CT_OnOff"
+name = "RecalculateFieldsWhenModified"
+
+[[element]]
+# Ignore Spacing Above and Below When Using Identical Styles
+namespace = "w"
+local = "contextualSpacing"
+type = "CT_OnOff"
+name = "IgnoreSpacingAboveAndBelow"
+
+[[element]]
+# Default Table Style for Newly Inserted Tables
+namespace = "w"
+local = "defaultTableStyle"
+type = "CT_String"
+name = "DefaultTableStyle"
+
+[[element]]
+# Child div Elements Contained within Current div
+namespace = "w"
+local = "divsChild"
+type = "CT_Divs"
+name = "ChildDivElements"
+
+[[element]]
+# Do Not Show Visual Indicator For Invalid Custom XML Markup
+namespace = "w"
+local = "doNotDemarcateInvalidXml"
+type = "CT_OnOff"
+name = "DoNotShowInvalidMarkupIndicator"
+
+[[element]]
+# Don't Justify Lines Ending in Soft Line Break
+namespace = "w"
+local = "doNotExpandShiftReturn"
+type = "CT_OnOff"
+name = "DontJustifySoftLineBreakLines"
+
+[[element]]
+# Do Not Hyphenate Words in ALL CAPITAL LETTERS
+namespace = "w"
+local = "doNotHyphenateCaps"
+type = "CT_OnOff"
+name = "DoNotHyphenateCapitalLetters"
+
+[[element]]
+# Do Not Place Supporting Files in Subdirectory
+namespace = "w"
+local = "doNotOrganizeInFolder"
+type = "CT_OnOff"
+name = "DoNotPlaceSupportingFiles"
+
+[[element]]
+# Do Not Rely on CSS for Font Face Formatting
+namespace = "w"
+local = "doNotRelyOnCSS"
+type = "CT_OnOff"
+name = "DoNotRelyOnCSS"
+
+[[element]]
+# Recommend Web Page Format over Single File Web Page Format
+namespace = "w"
+local = "doNotSaveAsSingleFile"
+type = "CT_OnOff"
+name = "RecommendWebPageFormat"
+
+[[element]]
+# Do Not Show Visual Indicator For Form Fields
+namespace = "w"
+local = "doNotShadeFormData"
+type = "CT_OnOff"
+name = "DoNotShowFormFieldIndicator"
+
+[[element]]
+# Do Not Use Move Syntax When Tracking Revisions
+namespace = "w"
+local = "doNotTrackMoves"
+type = "CT_OnOff"
+name = "DoNotUseMoveSyntax"
+
+[[element]]
+# Do Not Use File Names Longer than 8.3 Characters
+namespace = "w"
+local = "doNotUseLongFileNames"
+type = "CT_OnOff"
+name = "DoNotUseFileNames"
+
+[[element]]
+# Output Encoding When Saving as Web Page
+namespace = "w"
+local = "encoding"
+type = "CT_String"
+name = "OutputEncoding"
+
+[[element]]
+# Script Function to Execute on Form Field Entry
+namespace = "w"
+local = "entryMacro"
+type = "CT_MacroName"
+name = "ExecuteOnFormFieldEntry"
+
+[[element]]
+# Script Function to Execute on Form Field Exit
+namespace = "w"
+local = "exitMacro"
+type = "CT_MacroName"
+name = "ExecuteOnFormFieldExit"
+
+[[element]]
+# First Row of Data Source Contains Column Names
+namespace = "w"
+local = "fHdr"
+type = "CT_OnOff"
+name = "FirstRowContainsColumnNames"
+
+[[element]]
+# External Data Source to Merge Field Mapping
+namespace = "w"
+local = "fieldMapData"
+type = "CT_OdsoFieldMapData"
+name = "ExternalDataSourceMergeFieldMapping"
+
+[[element]]
+# Structured Document Tag Placeholder Text Should be Resaved
+namespace = "w"
+local = "formsDesign"
+type = "CT_OnOff"
+name = "PlaceholderTextShouldBeResaved"
+
+[[element]]
+# Grid Columns Spanned by Current Table Cell
+namespace = "w"
+local = "gridSpan"
+type = "CT_DecimalNumber"
+name = "GridColumnsSpanned"
+
+[[element]]
+# Do Not Display Visual Indication of Grammatical Errors
+namespace = "w"
+local = "hideGrammaticalErrors"
+type = "CT_OnOff"
+name = "DoNotDisplayGrammaticalErrors"
+
+[[element]]
+# Ignore End Of Cell Marker In Row Height Calculation
+namespace = "w"
+local = "hideMark"
+type = "CT_OnOff"
+name = "IgnoreEndOfCellMarker"
+
+[[element]]
+# Do Not Display Visual Indication of Spelling Errors
+namespace = "w"
+local = "hideSpellingErrors"
+type = "CT_OnOff"
+name = "DoNotDisplaySpellingErrors"
+
+[[element]]
+# Distance Between Phonetic Guide Text and Phonetic Guide Base Text
+namespace = "w"
+local = "hpsRaise"
+type = "CT_HpsMeasure"
+name = "DistanceBetweenPhoneticGuideText"
+
+[[element]]
+# Ignore Mixed Content When Validating Custom XML Markup
+namespace = "w"
+local = "ignoreMixedContent"
+type = "CT_OnOff"
+name = "IgnoreMixedContent"
+
+[[element]]
+# Use East Asian Typography Rules for First and Last Character per Line
+namespace = "w"
+local = "kinsoku"
+type = "CT_OnOff"
+name = "EastAsianTypographyRules"
+
+[[element]]
+# Query Contains Link to External Query File
+namespace = "w"
+local = "linkToQuery"
+type = "CT_OnOff"
+name = "LinkToExternalQueryFile"
+
+[[element]]
+# Custom Set of Characters Which Cannot End a Line
+namespace = "w"
+local = "noLineBreaksAfter"
+type = "CT_Kinsoku"
+name = "CharactersWhichCannotEndALine"
+
+[[element]]
+# Custom Set Of Characters Which Cannot Begin A Line
+namespace = "w"
+local = "noLineBreaksBefore"
+type = "CT_Kinsoku"
+name = "CharactersWhichCannotBeginALine"
+
+[[element]]
+# Numbering Definition Instance Reference
+namespace = "w"
+local = "numId"
+type = "CT_DecimalNumber"
+name = "NumberingDefinitionInstanceReferenceNumId"
+
+[[element]]
+# Numbering Definition Instance Reference
+namespace = "w"
+local = "numPr"
+type = "CT_NumPr"
+name = "NumberingDefinitionInstanceReferenceNumPr"
+
+[[element]]
+# Disable Features Not Supported by Target Web Profile
+namespace = "w"
+local = "optimizeForBrowser"
+type = "CT_OptimizeForBrowser"
+name = "DisableFeaturesNotSupported"
+
+[[element]]
+# Allow Punctuation to Extend Past Text Extents
+namespace = "w"
+local = "overflowPunct"
+type = "CT_OnOff"
+name = "AllowPunctuationExtendPastTextExtents"
+
+[[element]]
+# Query For Data Source Records To Merge
+namespace = "w"
+local = "query"
+type = "CT_String"
+name = "QueryForDataSourceRecords"
+
+[[element]]
+# Previous Run Properties for the Paragraph Mark
+namespace = "w"
+local = "rPr"
+type = "CT_ParaRPrOriginal"
+name = "PreviousParagraphMarkRunProperties"
+
+[[element]]
+# Revision Information for Run Properties on the Paragraph Mark
+namespace = "w"
+local = "rPrChange"
+type = "CT_ParaRPrChange"
+name = "ParagraphMarkRunPropertiesRevision"
+
+[[element]]
+# Reference to Inclusion/Exclusion Data for Data Source
+namespace = "w"
+local = "recipientData"
+type = "CT_Rel"
+name = "ReferenceToInclusionExclusionData"
+
+[[element]]
+# Listing of All Revision Save ID Values
+namespace = "w"
+local = "rsids"
+type = "CT_DocRsids"
+name = "RevisionSaveIDValues"
+
+[[element]]
+# Allow Saving Document As XML File When Custom XML Markup Is Invalid
+namespace = "w"
+local = "saveInvalidXml"
+type = "CT_OnOff"
+name = "AllowSavingDocumentAsXMLFile"
+
+[[element]]
+# Save Smart Tag Data in XML Property Bag
+namespace = "w"
+local = "saveSmartTagsAsXml"
+type = "CT_OnOff"
+name = "SaveSmartTagData"
+
+[[element]]
+# Custom XSL Transform To Use When Saving As XML File
+namespace = "w"
+local = "saveThroughXslt"
+type = "CT_SaveThroughXslt"
+name = "CustomXSLTransform"
+
+[[element]]
+# Use Document Grid Settings for Inter-Line Paragraph Spacing
+namespace = "w"
+local = "snapToGrid"
+type = "CT_OnOff"
+name = "DocumentGridInterLineParagraphSpacing"
+
+[[element]]
+# Add Additional Space Below Baseline For Underlined East Asian Text
+namespace = "w"
+local = "spaceForUL"
+type = "CT_OnOff"
+name = "AddSpaceBelowUnderlinedText"
+
+[[element]]
+# Use Strict Kinsoku Rules for Japanese Text
+namespace = "w"
+local = "strictFirstAndLastChars"
+type = "CT_OnOff"
+name = "StrictKinsokuRules"
+
+[[element]]
+# Suggested Filtering for List of Document Styles
+namespace = "w"
+local = "stylePaneFormatFilter"
+type = "CT_StylePaneFilter"
+name = "SuggestedFiltering"
+
+[[element]]
+# Suggested Sorting for List of Document Styles
+namespace = "w"
+local = "stylePaneSortMethod"
+type = "CT_StyleSort"
+name = "SuggestedSorting"
+
+[[element]]
+# Content Between Numbering Symbol and Paragraph Text
+namespace = "w"
+local = "suff"
+type = "CT_LevelSuffix"
+name = "ContentBetweenNumberingSymbolAndText"
+
+[[element]]
+# Percentage of Document to Use When Generating Summary
+namespace = "w"
+local = "summaryLength"
+type = "CT_DecimalNumberOrPrecent"
+name = "PercentageOfDocumentToUse"
+
+[[element]]
+# Revision Information for Table Grid Column Definitions
+namespace = "w"
+local = "tblGridChange"
+type = "CT_TblGridChange"
+name = "TableGridColumnRevisionInformation"
+
+[[element]]
+# Repeat Table Row on Every New Page
+namespace = "w"
+local = "tblHeader"
+type = "CT_OnOff"
+name = "RepeatTableRow"
+
+[[element]]
+# Floating Table Allows Other Tables to Overlap
+namespace = "w"
+local = "tblOverlap"
+type = "CT_TblOverlap"
+name = "FloatingTableAllowsOverlap"
+
+[[element]]
+# Remove Structured Document Tag When Contents Are Edited
+namespace = "w"
+local = "temporary"
+type = "CT_OnOff"
+name = "RemoveStructuredDocumentTagWhenEdited"
+
+[[element]]
+# Table Cell Top Left to Bottom Right Diagonal Border
+namespace = "w"
+local = "tl2br"
+type = "CT_Border"
+name = "TopLeftBottomRightDiagonalBorder"
+
+[[element]]
+# Compress Punctuation at Start of a Line
+namespace = "w"
+local = "topLinePunct"
+type = "CT_OnOff"
+name = "CompressPunctuationAtStartOfLine"
+
+[[element]]
+# Table Cell Top Right to Bottom Left Diagonal Border
+namespace = "w"
+local = "tr2bl"
+type = "CT_Border"
+name = "TopRightBottomLeftDiagonalBorder"
+
+[[element]]
+# Remove Semi-Hidden Property When Style Is Used
+namespace = "w"
+local = "unhideWhenUsed"
+type = "CT_OnOff"
+name = "RemoveSemiHiddenProperty"
+
+[[element]]
+# Save Document as XML File through Custom XSL Transform
+namespace = "w"
+local = "useXSLTWhenSaving"
+type = "CT_OnOff"
+name = "SaveThroughCustomXSLTransform"
+
+[[element]]
+# Allow First/Last Line to Display on a Separate Page
+namespace = "w"
+local = "widowControl"
+type = "CT_OnOff"
+name = "AllowFirstLastLineDisplay"
+
+[[simple_type]]
+# Axis Position
+namespace = "c"
+type = "ST_AxPos"
+name = "StAxPos"
+
+[[simple_type]]
+# Bar Direction
+namespace = "c"
+type = "ST_BarDir"
+name = "StBarDir"
+
+[[simple_type]]
+# Bar Grouping
+namespace = "c"
+type = "ST_BarGrouping"
+name = "StBarGrouping"
+
+[[simple_type]]
+# Bubble Scale
+namespace = "c"
+type = "ST_BubbleScale"
+name = "StBubbleScale"
+
+[[simple_type]]
+# Cross Between
+namespace = "c"
+type = "ST_CrossBetween"
+name = "StCrossBetween"
+
+[[simple_type]]
+# Crosses
+namespace = "c"
+type = "ST_Crosses"
+name = "StCrosses"
+
+[[simple_type]]
+# Data Label Position
+namespace = "c"
+type = "ST_DLblPos"
+name = "StDLblPos"
+
+[[simple_type]]
+# Depth Percent
+namespace = "c"
+type = "ST_DepthPercent"
+name = "StDepthPercent"
+
+[[simple_type]]
+# Display Blanks As
+namespace = "c"
+type = "ST_DispBlanksAs"
+name = "StDispBlanksAs"
+
+[[simple_type]]
+# Error Bar Type
+namespace = "c"
+type = "ST_ErrBarType"
+name = "StErrBarType"
+
+[[simple_type]]
+# Error Bar Direction
+namespace = "c"
+type = "ST_ErrDir"
+name = "StErrDir"
+
+[[simple_type]]
+# First Slice Angle
+namespace = "c"
+type = "ST_FirstSliceAng"
+name = "StFirstSliceAng"
+
+[[simple_type]]
+# Grouping
+namespace = "c"
+type = "ST_Grouping"
+name = "StGrouping"
+
+[[simple_type]]
+# Height Percent
+namespace = "c"
+type = "ST_HPercent"
+name = "StHPercent"
+
+[[simple_type]]
+# Hole Size
+namespace = "c"
+type = "ST_HoleSize"
+name = "StHoleSize"
+
+[[simple_type]]
+# Layout Target
+namespace = "c"
+type = "ST_LayoutTarget"
+name = "StLayoutTarget"
+
+[[simple_type]]
+# Label Alignment
+namespace = "c"
+type = "ST_LblAlgn"
+name = "StLblAlgn"
+
+[[simple_type]]
+# Label Offset
+namespace = "c"
+type = "ST_LblOffset"
+name = "StLblOffset"
+
+[[simple_type]]
+# Legend Position
+namespace = "c"
+type = "ST_LegendPos"
+name = "StLegendPos"
+
+[[simple_type]]
+# Logarithmic Base
+namespace = "c"
+type = "ST_LogBase"
+name = "StLogBase"
+
+[[simple_type]]
+# Pie of Pie or Bar of Pie Type
+namespace = "c"
+type = "ST_OfPieType"
+name = "StOfPieType"
+
+[[simple_type]]
+# Order
+namespace = "c"
+type = "ST_Order"
+name = "StOrder"
+
+[[simple_type]]
+# Overlap
+namespace = "c"
+type = "ST_Overlap"
+name = "StOverlap"
+
+[[simple_type]]
+# Period
+namespace = "c"
+type = "ST_Period"
+name = "StPeriod"
+
+[[simple_type]]
+# Perspective
+namespace = "c"
+type = "ST_Perspective"
+name = "StPerspective"
+
+[[simple_type]]
+# Picture Format
+namespace = "c"
+type = "ST_PictureFormat"
+name = "StPictureFormat"
+
+[[simple_type]]
+# Picture Stack Unit
+namespace = "c"
+type = "ST_PictureStackUnit"
+name = "StPictureStackUnit"
+
+[[simple_type]]
+# Radar Style
+namespace = "c"
+type = "ST_RadarStyle"
+name = "StRadarStyle"
+
+[[simple_type]]
+# X Rotation
+namespace = "c"
+type = "ST_RotX"
+name = "StRotX"
+
+[[simple_type]]
+# Y Rotation
+namespace = "c"
+type = "ST_RotY"
+name = "StRotY"
+
+[[simple_type]]
+# Scatter Style
+namespace = "c"
+type = "ST_ScatterStyle"
+name = "StScatterStyle"
+
+[[simple_type]]
+# Second Pie Size
+namespace = "c"
+type = "ST_SecondPieSize"
+name = "StSecondPieSize"
+
+[[simple_type]]
+# Shape
+namespace = "c"
+type = "ST_Shape"
+name = "StShape"
+
+[[simple_type]]
+# Size Represents
+namespace = "c"
+type = "ST_SizeRepresents"
+name = "StSizeRepresents"
+
+[[simple_type]]
+# Split Type
+namespace = "c"
+type = "ST_SplitType"
+name = "StSplitType"
+
+[[simple_type]]
+# Style
+namespace = "c"
+type = "ST_Style"
+name = "StStyle"
+
+[[simple_type]]
+# Thickness Percentage
+namespace = "c"
+type = "ST_Thickness"
+name = "StThickness"
+
+[[simple_type]]
+# Thickness Percentage
+namespace = "c"
+type = "ST_ThicknessPercent"
+name = "StThicknessPercent"
+
+[[simple_type]]
+# Tick Label Position
+namespace = "c"
+type = "ST_TickLblPos"
+name = "StTickLblPos"
+
+[[simple_type]]
+# Trendline Type
+namespace = "c"
+type = "ST_TrendlineType"
+name = "StTrendlineType"
+
+[[simple_type]]
+# Coordinate Point
+namespace = "a"
+type = "ST_Coordinate32"
+name = "StCoordinate32"
+
+[[simple_type]]
+# Coordinate Point
+namespace = "a"
+type = "ST_Coordinate32Unqualified"
+name = "StCoordinate32Unqualified"
+
+[[simple_type]]
+# Coordinate
+namespace = "a"
+type = "ST_CoordinateUnqualified"
+name = "StCoordinateUnqualified"
+
+[[simple_type]]
+# Scheme Color
+namespace = "a"
+type = "ST_SchemeColorVal"
+name = "StSchemeColorVal"
+
+[[simple_type]]
+# Bullet Size Percentage
+namespace = "a"
+type = "ST_TextBulletSize"
+name = "StTextBulletSize"
+
+[[simple_type]]
+# Bullet Size Percentage
+namespace = "a"
+type = "ST_TextBulletSizePercent"
+name = "StTextBulletSizePercent"
+
+[[simple_type]]
+# Text Point
+namespace = "a"
+type = "ST_TextPointUnqualified"
+name = "StTextPointUnqualified"
+
+[[simple_type]]
+# Slide Master ID
+namespace = "p"
+type = "ST_SlideMasterId"
+name = "StSlideMasterId"
+
+[[simple_type]]
+# Break on Binary Subtraction
+namespace = "m"
+type = "ST_BreakBinSub"
+name = "StBreakBinSub"
+
+[[simple_type]]
+# Character
+namespace = "m"
+type = "ST_Char"
+name = "StChar"
+
+[[simple_type]]
+# Fraction Type
+namespace = "m"
+type = "ST_FType"
+name = "StFType"
+
+[[simple_type]]
+# Justification
+namespace = "m"
+type = "ST_Jc"
+name = "StJc"
+
+[[simple_type]]
+# Script
+namespace = "m"
+type = "ST_Script"
+name = "StScript"
+
+[[simple_type]]
+# Dynamic Filter
+namespace = "x"
+type = "ST_DynamicFilterType"
+name = "StDynamicFilterType"
+
+[[simple_type]]
+# Font Family
+namespace = "x"
+type = "ST_FontFamily"
+name = "StFontFamily"
+
+[[simple_type]]
+# Formula
+namespace = "x"
+type = "ST_Formula"
+name = "StFormula"
+
+[[simple_type]]
+# Volatile Dependency Types
+namespace = "x"
+type = "ST_VolDepType"
+name = "StVolDepType"
+
+[[simple_type]]
+# Two Lines in One Enclosing Character Type
+namespace = "w"
+type = "ST_CombineBrackets"
+name = "TwoLinesEnclosingCharacterType"
+
+[[simple_type]]
+# Entry Types
+namespace = "w"
+type = "ST_DocPartType"
+name = "StDocPartType"
+
+[[simple_type]]
+# Content Between Numbering Symbol and Paragraph Text
+namespace = "w"
+type = "ST_LevelSuffix"
+name = "StLevelSuffix"
+
+[[simple_type]]
+# Numbering Format
+namespace = "w"
+type = "ST_NumberFormat"
+name = "StNumberFormat"
+
+[[simple_type]]
+# Phonetic Guide Text Alignment
+namespace = "w"
+type = "ST_RubyAlign"
+name = "StRubyAlign"
+
+[[simple_type]]
+# Section Type
+namespace = "w"
+type = "ST_SectionMark"
+name = "StSectionMark"
+
+[[simple_type]]
+# Signed Measurement in Twentieths of a Point
+namespace = "w"
+type = "ST_SignedTwipsMeasure"
+name = "SignedMeasurementInTwentiethsOfPoint"
+
+[[simple_type]]
+# Target Screen Sizes for Generated Web Pages
+namespace = "w"
+type = "ST_TargetScreenSz"
+name = "TargetScreenSizes"
+
+[[simple_type]]
+# Text Flow Direction
+namespace = "w"
+type = "ST_TextDirection"
+name = "StTextDirection"
+
+[[simple_type]]
+# Text Expansion/Compression Percentage
+namespace = "w"
+type = "ST_TextScale"
+name = "StTextScale"
+
+[[simple_type]]
+# Text Expansion/Compression Percentage
+namespace = "w"
+type = "ST_TextScalePercent"
+name = "StTextScalePercent"
+
+[[simple_type]]
+# Lines To Tight Wrap Within Text Box
+namespace = "w"
+type = "ST_TextboxTightWrap"
+name = "TightWrapWithinTextBox"
+

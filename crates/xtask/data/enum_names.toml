@@ -1,0 +1,1248 @@
+# The name of every enum of the typed tree (D14), written by officekit's
+# authors. An enum stands for the set of tags a choice position allows, and
+# every position that allows the same set shares it (D34). The generator
+# computes the sets from the Transitional schemas and SDK 3.5.1's schema data
+# and finds each one's row by its module and the types whose children it is;
+# it stops when a set has no row or a row matches no set.
+#
+# `types` names each schema type whose children the enum is, as the blueprint's
+# table writes it: a type of another namespace than the enum's module carries
+# its prefix. `source` says where the choice is written.
+#
+# The 195 choice enums of the blueprint's table come first, then the four of
+# the xsd:all types (each read as a list with every tag allowed once), then
+# the four of the wildcard positions (xsd:any), whose sets are the global
+# elements their namespace constraint allows.
+
+[[enum]]
+module = "wordprocessing"
+name = "BlockContent"
+source = "EG_BlockLevelElts"
+types = ["wp:CT_TxbxContent", "CT_Comment", "CT_HdrFtr", "CT_Tc", "CT_FtnEdn", "CT_TxbxContent", "CT_Body"]
+
+[[enum]]
+module = "wordprocessing"
+name = "CellMarkupContent"
+source = "EG_CellMarkupElements"
+types = ["CT_TcPrInner", "CT_TcPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "CheckboxFormFieldPropertiesContent"
+source = "local choice in CT_FFCheckBox"
+types = ["CT_FFCheckBox"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ComplexFieldCharacterContent"
+source = "local choice in CT_FldChar"
+types = ["CT_FldChar"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ConflictChangeContent"
+source = "a choice of w14 tags that the SDK's schema data adds"
+types = ["CT_ParaRPr", "CT_ParaRPrOriginal", "CT_TrPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ContentBlockContent"
+source = "EG_ContentBlockContent"
+types = ["CT_SdtContentBlock", "CT_CustomXmlBlock"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ContentCellContent"
+source = "EG_ContentCellContent"
+types = ["CT_SdtContentCell", "CT_CustomXmlCell", "CT_Row"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ContentRowContent"
+source = "EG_ContentRowContent"
+types = ["CT_SdtContentRow", "CT_CustomXmlRow", "CT_Tbl"]
+
+[[enum]]
+module = "wordprocessing"
+name = "DrawingObjectContent"
+source = "local choice in CT_Drawing"
+types = ["CT_Drawing"]
+
+[[enum]]
+module = "wordprocessing"
+name = "EmbeddedObjectContent"
+source = "local choice in CT_Object"
+types = ["CT_Object"]
+
+[[enum]]
+module = "wordprocessing"
+name = "FormFieldPropertiesContent"
+source = "local choice in CT_FFData"
+types = ["CT_FFData"]
+
+[[enum]]
+module = "wordprocessing"
+name = "FramesetDefinitionContent"
+source = "local choice in CT_Frameset"
+types = ["CT_Frameset"]
+
+[[enum]]
+module = "wordprocessing"
+name = "InsertedMathControlCharacterContent"
+source = "local choice in CT_MathCtrlIns"
+types = ["CT_MathCtrlIns"]
+
+[[enum]]
+module = "wordprocessing"
+name = "ParagraphContent"
+source = "EG_PContent"
+types = ["CT_SimpleField", "CT_Hyperlink", "CT_DirContentRun", "CT_BdoContentRun", "CT_SdtContentRun", "CT_CustomXmlRun", "CT_SmartTagRun", "CT_P"]
+
+[[enum]]
+module = "wordprocessing"
+name = "PhoneticGuideContent"
+source = "EG_RubyContent"
+types = ["CT_RubyContent"]
+
+[[enum]]
+module = "wordprocessing"
+name = "PictureNumberingSymbolDefinitionContent"
+source = "local choice in CT_NumPicBullet"
+types = ["CT_NumPicBullet"]
+
+[[enum]]
+module = "wordprocessing"
+name = "RangeMarkupContent"
+source = "EG_RangeMarkupElements"
+types = ["CT_Tbl"]
+
+[[enum]]
+module = "wordprocessing"
+name = "RunPropertiesContent"
+source = "EG_RPrBase"
+types = ["CT_RPr", "CT_RPrOriginal", "CT_ParaRPrOriginal", "CT_ParaRPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "SectionPropertiesContent"
+source = "EG_HdrFtrReferences"
+types = ["CT_SectPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "StructuredDocumentTagPropertiesContent"
+source = "local choice in CT_SdtPr"
+types = ["CT_SdtPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "TableRowPropertiesContent"
+source = "local choice in CT_TrPrBase"
+types = ["CT_TrPrBase", "CT_TrPr"]
+
+[[enum]]
+module = "wordprocessing"
+name = "TextRunContent"
+source = "EG_RunInnerContent"
+types = ["CT_R"]
+
+[[enum]]
+module = "wordprocessing"
+name = "TrackedRunContent"
+source = "local choice in CT_RunTrackChange"
+types = ["CT_RunTrackChange"]
+
+[[enum]]
+module = "math"
+name = "ControlPropertiesContent"
+source = "EG_RPrMath"
+types = ["CT_CtrlPr"]
+
+[[enum]]
+module = "math"
+name = "MathPropertiesContent"
+source = "local choice in CT_MathPr"
+types = ["CT_MathPr"]
+
+[[enum]]
+module = "math"
+name = "OfficeMathContent"
+source = "EG_OMathElements"
+types = ["CT_OMathArg", "CT_OMath"]
+
+[[enum]]
+module = "math"
+name = "RunContent"
+source = "local choice in CT_R"
+types = ["CT_R"]
+
+[[enum]]
+module = "math"
+name = "RunPropertiesContent"
+source = "local choice in CT_RPR"
+types = ["CT_RPR"]
+
+[[enum]]
+module = "spreadsheet"
+name = "AutoFilterColumnContent"
+source = "local choice in CT_FilterColumn"
+types = ["CT_FilterColumn"]
+
+[[enum]]
+module = "spreadsheet"
+name = "CacheItemContent"
+source = "local choice in CT_SharedItems, local choice in CT_GroupItems"
+types = ["CT_SharedItems", "CT_GroupItems"]
+
+[[enum]]
+module = "spreadsheet"
+name = "EntriesContent"
+source = "local choice in CT_PCDSDTCEntries"
+types = ["CT_PCDSDTCEntries"]
+
+[[enum]]
+module = "spreadsheet"
+name = "ExternalReferenceContent"
+source = "local choice in CT_ExternalLink"
+types = ["CT_ExternalLink"]
+
+[[enum]]
+module = "spreadsheet"
+name = "FillContent"
+source = "local choice in CT_Fill"
+types = ["CT_Fill"]
+
+[[enum]]
+module = "spreadsheet"
+name = "FontContent"
+source = "local choice in CT_Font"
+types = ["CT_Font"]
+
+[[enum]]
+module = "spreadsheet"
+name = "MultidimensionalExpressionMetadataContent"
+source = "local choice in CT_Mdx"
+types = ["CT_Mdx"]
+
+[[enum]]
+module = "spreadsheet"
+name = "NestedRevisionContent"
+source = "local choice in CT_RevisionRowColumn, local choice in CT_RevisionMove"
+types = ["CT_RevisionRowColumn", "CT_RevisionMove"]
+
+[[enum]]
+module = "spreadsheet"
+name = "PivotCacheRecordContent"
+source = "local choice in CT_Record"
+types = ["CT_Record"]
+
+[[enum]]
+module = "spreadsheet"
+name = "PivotCacheSourceDescriptionContent"
+source = "local choice in CT_CacheSource"
+types = ["CT_CacheSource"]
+
+[[enum]]
+module = "spreadsheet"
+name = "RevisionsContent"
+source = "local choice in CT_Revisions"
+types = ["CT_Revisions"]
+
+[[enum]]
+module = "spreadsheet"
+name = "RunPropertiesContent"
+source = "local choice in CT_RPrElt"
+types = ["CT_RPrElt"]
+
+[[enum]]
+module = "spreadsheet"
+name = "TablesContent"
+source = "local choice in CT_Tables"
+types = ["CT_Tables"]
+
+[[enum]]
+module = "presentation"
+name = "AnimateColorByContent"
+source = "local choice in CT_TLByAnimateColorTransform"
+types = ["CT_TLByAnimateColorTransform"]
+
+[[enum]]
+module = "presentation"
+name = "AnimationVariantContent"
+source = "local choice in CT_TLAnimVariant"
+types = ["CT_TLAnimVariant"]
+
+[[enum]]
+module = "presentation"
+name = "BuildGraphicsContent"
+source = "local choice in CT_TLGraphicalObjectBuild"
+types = ["CT_TLGraphicalObjectBuild"]
+
+[[enum]]
+module = "presentation"
+name = "BuildListContent"
+source = "local choice in CT_BuildList"
+types = ["CT_BuildList"]
+
+[[enum]]
+module = "presentation"
+name = "EmbeddedObjectContent"
+source = "local choice in CT_OleObject"
+types = ["CT_OleObject"]
+
+[[enum]]
+module = "presentation"
+name = "GroupShapeContent"
+source = "local choice in CT_GroupShape"
+types = ["CT_GroupShape"]
+
+[[enum]]
+module = "presentation"
+name = "IterateContent"
+source = "local choice in CT_TLIterateData"
+types = ["CT_TLIterateData"]
+
+[[enum]]
+module = "presentation"
+name = "NonVisualPropertiesContent"
+source = "EG_Media"
+types = ["CT_ApplicationNonVisualDrawingProps"]
+
+[[enum]]
+module = "presentation"
+name = "ShapeTargetContent"
+source = "local choice in CT_TLShapeTargetElement"
+types = ["CT_TLShapeTargetElement"]
+
+[[enum]]
+module = "presentation"
+name = "ShowTypeContent"
+source = "EG_ShowType"
+types = ["CT_ShowProperties"]
+
+[[enum]]
+module = "presentation"
+name = "SlideBackgroundContent"
+source = "EG_Background"
+types = ["CT_Background"]
+
+[[enum]]
+module = "presentation"
+name = "SlideListContent"
+source = "EG_SlideListChoice"
+types = ["CT_HtmlPublishProperties", "CT_ShowProperties"]
+
+[[enum]]
+module = "presentation"
+name = "SlideTransitionContent"
+source = "local choice in CT_SlideTransition"
+types = ["CT_SlideTransition"]
+
+[[enum]]
+module = "presentation"
+name = "SoundActionContent"
+source = "local choice in CT_TransitionSoundAction"
+types = ["CT_TransitionSoundAction"]
+
+[[enum]]
+module = "presentation"
+name = "TargetElementContent"
+source = "local choice in CT_TLTimeTargetElement"
+types = ["CT_TLTimeTargetElement"]
+
+[[enum]]
+module = "presentation"
+name = "TextElementContent"
+source = "local choice in CT_TLTextTargetElement"
+types = ["CT_TLTextTargetElement"]
+
+[[enum]]
+module = "presentation"
+name = "TimeConditionContent"
+source = "local choice in CT_TLTimeCondition"
+types = ["CT_TLTimeCondition"]
+
+[[enum]]
+module = "presentation"
+name = "TimeNodeListContent"
+source = "local choice in CT_TimeNodeList"
+types = ["CT_TimeNodeList"]
+
+[[enum]]
+module = "drawing"
+name = "BlipContent"
+source = "local choice in CT_Blip"
+types = ["CT_Blip"]
+
+[[enum]]
+module = "drawing"
+name = "BuildSubElementsContent"
+source = "local choice in CT_AnimationGraphicalObjectBuildProperties"
+types = ["CT_AnimationGraphicalObjectBuildProperties"]
+
+[[enum]]
+module = "drawing"
+name = "ColorContent"
+source = "EG_ColorChoice"
+types = ["dgm:CT_Colors", "CT_CustomColor", "CT_Color", "CT_ColorMRU", "CT_AlphaInverseEffect", "CT_ColorReplaceEffect", "CT_DuotoneEffect", "CT_GlowEffect", "CT_InnerShadowEffect", "CT_OuterShadowEffect", "CT_PresetShadowEffect", "CT_SolidColorFillProperties", "CT_GradientStop", "CT_StyleMatrixReference", "CT_FontReference", "CT_TableStyleTextStyle", "cs:CT_ColorStyle", "cs:CT_StyleReference", "cs:CT_FontReference"]
+
+[[enum]]
+module = "drawing"
+name = "ColorSchemeMapOverrideContent"
+source = "local choice in CT_ColorMappingOverride"
+types = ["CT_ColorMappingOverride"]
+
+[[enum]]
+module = "drawing"
+name = "ColorTransformContent"
+source = "EG_ColorTransform"
+types = ["CT_ScRgbColor", "CT_SRgbColor", "CT_HslColor", "CT_SystemColor", "CT_SchemeColor", "CT_PresetColor", "cs:CT_ColorStyleVariation", "cs:CT_StyleColor"]
+
+[[enum]]
+module = "drawing"
+name = "EffectContainerContent"
+source = "EG_Effect"
+types = ["CT_EffectContainer"]
+
+[[enum]]
+module = "drawing"
+name = "EffectPropertiesContent"
+source = "EG_EffectProperties"
+types = ["CT_EffectStyleItem", "CT_BackgroundFormatting", "CT_WholeE2oFormatting", "CT_EffectProperties", "CT_ShapeProperties", "CT_GroupShapeProperties", "CT_TableProperties", "CT_TextCharacterProperties", "p:CT_BackgroundProperties"]
+
+[[enum]]
+module = "drawing"
+name = "FillModeContent"
+source = "EG_FillModeProperties"
+types = ["CT_BlipFillProperties"]
+
+[[enum]]
+module = "drawing"
+name = "FillPropertiesContent"
+source = "EG_FillProperties"
+types = ["CT_FillStyleList", "CT_BackgroundFillStyleList", "CT_BackgroundFormatting", "CT_FillProperties", "CT_FillEffect", "CT_FillOverlayEffect", "CT_ShapeProperties", "CT_GroupShapeProperties", "CT_TableCellProperties", "CT_TableProperties", "CT_TextUnderlineFillGroupWrapper", "CT_TextCharacterProperties", "p:CT_BackgroundProperties"]
+
+[[enum]]
+module = "drawing"
+name = "GeometryContent"
+source = "EG_Geometry"
+types = ["CT_ShapeProperties", "ask:CT_LineSketchStyleProperties"]
+
+[[enum]]
+module = "drawing"
+name = "GradientFillContent"
+source = "EG_ShadeProperties"
+types = ["CT_GradientFillProperties"]
+
+[[enum]]
+module = "drawing"
+name = "GraphicElementContent"
+source = "local choice in CT_AnimationElementChoice"
+types = ["CT_AnimationElementChoice"]
+
+[[enum]]
+module = "drawing"
+name = "GroupShapeContent"
+source = "local choice in CT_GvmlGroupShape"
+types = ["CT_GvmlGroupShape"]
+
+[[enum]]
+module = "drawing"
+name = "LineDashContent"
+source = "EG_LineDashProperties"
+types = ["CT_LineProperties"]
+
+[[enum]]
+module = "drawing"
+name = "LineFillContent"
+source = "EG_LineFillProperties"
+types = ["CT_LineProperties"]
+
+[[enum]]
+module = "drawing"
+name = "LineJoinContent"
+source = "EG_LineJoinProperties"
+types = ["CT_LineProperties"]
+
+[[enum]]
+module = "drawing"
+name = "ShapeAdjustHandlesContent"
+source = "local choice in CT_AdjustHandleList"
+types = ["CT_AdjustHandleList"]
+
+[[enum]]
+module = "drawing"
+name = "ShapePathContent"
+source = "local choice in CT_Path2D"
+types = ["CT_Path2D"]
+
+[[enum]]
+module = "drawing"
+name = "TableBackgroundEffectContent"
+source = "EG_ThemeableEffectStyle"
+types = ["CT_TableBackgroundStyle"]
+
+[[enum]]
+module = "drawing"
+name = "TableCellTextStyleFontContent"
+source = "EG_ThemeableFontStyles"
+types = ["CT_TableStyleTextStyle"]
+
+[[enum]]
+module = "drawing"
+name = "TablePropertiesStyleContent"
+source = "local choice in CT_TableProperties"
+types = ["CT_TableProperties"]
+
+[[enum]]
+module = "drawing"
+name = "Text3DContent"
+source = "EG_Text3D"
+types = ["dgm:CT_TextProps", "CT_TextBodyProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextAutofitContent"
+source = "EG_TextAutofit"
+types = ["CT_TextBodyProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextBulletColorContent"
+source = "EG_TextBulletColor"
+types = ["CT_TextParagraphProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextBulletContent"
+source = "EG_TextBullet"
+types = ["CT_TextParagraphProperties", "dgm1611:CT_DiagramAutoBullet"]
+
+[[enum]]
+module = "drawing"
+name = "TextBulletSizeContent"
+source = "EG_TextBulletSize"
+types = ["CT_TextParagraphProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextBulletTypefaceContent"
+source = "EG_TextBulletTypeface"
+types = ["CT_TextParagraphProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextParagraphsContent"
+source = "EG_TextRun"
+types = ["CT_TextParagraph"]
+
+[[enum]]
+module = "drawing"
+name = "TextShapeContent"
+source = "local choice in CT_GvmlTextShape"
+types = ["CT_GvmlTextShape"]
+
+[[enum]]
+module = "drawing"
+name = "TextSpacingContent"
+source = "local choice in CT_TextSpacing"
+types = ["CT_TextSpacing"]
+
+[[enum]]
+module = "drawing"
+name = "TextUnderlineFillContent"
+source = "EG_TextUnderlineFill"
+types = ["CT_TextCharacterProperties"]
+
+[[enum]]
+module = "drawing"
+name = "TextUnderlineLineContent"
+source = "EG_TextUnderlineLine"
+types = ["CT_TextCharacterProperties"]
+
+[[enum]]
+module = "drawing"
+name = "ThemeableFillStyleContent"
+source = "EG_ThemeableFillStyle"
+types = ["CT_TableBackgroundStyle", "CT_TableStyleCellStyle"]
+
+[[enum]]
+module = "drawing"
+name = "ThemeableLineStyleContent"
+source = "local choice in CT_ThemeableLineStyle"
+types = ["CT_ThemeableLineStyle"]
+
+[[enum]]
+module = "chart"
+name = "AxisCrossingContent"
+source = "local choice in EG_AxShared"
+types = ["CT_CatAx", "CT_DateAx", "CT_SerAx", "CT_ValAx"]
+
+[[enum]]
+module = "chart"
+name = "AxisDataSourceContent"
+source = "local choice in CT_AxDataSource"
+types = ["CT_AxDataSource"]
+
+[[enum]]
+module = "chart"
+name = "ChartTextContent"
+source = "local choice in CT_Tx"
+types = ["CT_Tx"]
+
+[[enum]]
+module = "chart"
+name = "DataLabelContent"
+source = "local choice in CT_DLbl"
+types = ["CT_DLbl"]
+
+[[enum]]
+module = "chart"
+name = "DataLabelsContent"
+source = "local choice in CT_DLbls"
+types = ["CT_DLbls"]
+
+[[enum]]
+module = "chart"
+name = "DisplayUnitsContent"
+source = "local choice in CT_DispUnits"
+types = ["CT_DispUnits"]
+
+[[enum]]
+module = "chart"
+name = "LegendEntryContent"
+source = "local choice in CT_LegendEntry"
+types = ["CT_LegendEntry"]
+
+[[enum]]
+module = "chart"
+name = "NumberDataSourceContent"
+source = "local choice in CT_NumDataSource"
+types = ["CT_NumDataSource"]
+
+[[enum]]
+module = "chart"
+name = "PlotAreaAxisContent"
+contains = "c:valAx"
+source = "local choice in CT_PlotArea"
+types = ["CT_PlotArea"]
+
+[[enum]]
+module = "chart"
+name = "PlotAreaChartContent"
+contains = "c:barChart"
+source = "local choice in CT_PlotArea"
+types = ["CT_PlotArea"]
+
+[[enum]]
+module = "chart"
+name = "SeriesTextContent"
+source = "local choice in CT_SerTx"
+types = ["CT_SerTx"]
+
+[[enum]]
+module = "chart_drawing"
+name = "ObjectContent"
+source = "local choice in CT_GroupShape, local choice in EG_ObjectChoices"
+types = ["CT_GroupShape", "CT_RelSizeAnchor", "CT_AbsSizeAnchor"]
+
+[[enum]]
+module = "chart_drawing"
+name = "UserShapesContent"
+source = "EG_Anchor"
+types = ["CT_Drawing"]
+
+[[enum]]
+module = "diagram"
+name = "LayoutElementContent"
+source = "local choice in CT_ForEach, local choice in CT_When, local choice in CT_Otherwise"
+types = ["CT_ForEach", "CT_When", "CT_Otherwise"]
+
+[[enum]]
+module = "diagram"
+name = "LayoutNodeContent"
+source = "local choice in CT_LayoutNode"
+types = ["CT_LayoutNode"]
+
+[[enum]]
+module = "spreadsheet_drawing"
+name = "GroupShapeContent"
+source = "local choice in CT_GroupShape"
+types = ["CT_GroupShape"]
+
+[[enum]]
+module = "spreadsheet_drawing"
+name = "ObjectContent"
+source = "local choice in EG_ObjectChoices"
+types = ["CT_TwoCellAnchor", "CT_OneCellAnchor", "CT_AbsoluteAnchor"]
+
+[[enum]]
+module = "spreadsheet_drawing"
+name = "WorksheetDrawingContent"
+source = "EG_Anchor"
+types = ["CT_Drawing"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "AnchorContent"
+source = "local choice in EG_WrapType"
+types = ["CT_Anchor"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "DrawingCanvasContent"
+source = "local choice in CT_WordprocessingCanvas"
+types = ["CT_WordprocessingCanvas"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "GroupShapeContent"
+source = "local choice in CT_WordprocessingGroup"
+types = ["CT_WordprocessingGroup"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "HorizontalPositioningContent"
+source = "local choice in CT_PosH"
+types = ["CT_PosH"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "ShapeNonVisualPropertiesContent"
+contains = "wp:cNvSpPr"
+source = "local choice in CT_WordprocessingShape"
+types = ["CT_WordprocessingShape"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "ShapeTextContent"
+contains = "wp:txbx"
+source = "local choice in CT_WordprocessingShape"
+types = ["CT_WordprocessingShape"]
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "VerticalPositioningContent"
+source = "local choice in CT_PosV"
+types = ["CT_PosV"]
+
+[[enum]]
+module = "bibliography"
+name = "ContributorsListContent"
+source = "local choice in CT_AuthorType"
+types = ["CT_AuthorType"]
+
+[[enum]]
+module = "bibliography"
+name = "NameOrCorporateContent"
+source = "local choice in CT_NameOrCorporateType"
+types = ["CT_NameOrCorporateType"]
+
+[[enum]]
+module = "bibliography"
+name = "SourceContent"
+source = "local choice in CT_SourceType"
+types = ["CT_SourceType"]
+
+[[enum]]
+module = "document_properties_custom"
+name = "CustomFilePropertyContent"
+source = "local choice in CT_Property"
+types = ["CT_Property"]
+
+[[enum]]
+module = "document_properties_variant_types"
+name = "ArrayContent"
+source = "local choice in CT_Array"
+types = ["CT_Array"]
+
+[[enum]]
+module = "document_properties_variant_types"
+name = "VariantContent"
+source = "local choice in CT_Variant"
+types = ["CT_Variant"]
+
+[[enum]]
+module = "document_properties_variant_types"
+name = "VectorContent"
+source = "local choice in CT_Vector"
+types = ["CT_Vector"]
+
+[[enum]]
+module = "vml"
+name = "MultiplePathLineContent"
+source = "local choice in CT_PolyLine"
+types = ["CT_PolyLine"]
+
+[[enum]]
+module = "vml"
+name = "ShapeDefinitionContent"
+source = "local choice in CT_Shape"
+types = ["CT_Shape"]
+
+[[enum]]
+module = "vml"
+name = "ShapeElementContent"
+source = "EG_ShapeElements, local choice in CT_Oval, local choice in CT_Rect, local choice in CT_RoundRect"
+types = ["CT_Shapetype", "CT_Arc", "CT_Curve", "CT_Image", "CT_Line", "CT_Oval", "CT_Rect", "CT_RoundRect"]
+
+[[enum]]
+module = "vml"
+name = "ShapeGroupContent"
+source = "local choice in CT_Group"
+types = ["CT_Group"]
+
+[[enum]]
+module = "vml"
+name = "TextBoxContent"
+source = "local choice in CT_Textbox"
+types = ["CT_Textbox"]
+
+[[enum]]
+module = "vml_spreadsheet_drawing"
+name = "AttachedObjectDataContent"
+source = "local choice in CT_ClientData"
+types = ["CT_ClientData"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "BackstageContent"
+source = "choice in CT_Backstage"
+types = ["CT_Backstage"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "BackstageGroupsContent"
+source = "choice in CT_BackstageGroups"
+types = ["CT_BackstageGroups"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "BackstageMenuGroupContent"
+source = "choice in CT_BackstageMenuGroup"
+types = ["CT_BackstageMenuGroup"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "BoxContent"
+source = "choice in CT_Box"
+types = ["CT_Box"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "ButtonGroupContent"
+source = "choice in CT_ButtonGroup"
+types = ["CT_ButtonGroup"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "ContextMenuContent"
+source = "choice in CT_ContextMenu"
+types = ["CT_ContextMenu"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "GroupContent"
+source = "choice in CT_Group"
+types = ["CT_Group"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "GroupControlsContent"
+source = "choice in CT_GroupBox, choice in CT_LayoutContainer, choice in CT_GroupControls"
+types = ["CT_GroupBox", "CT_LayoutContainer", "CT_GroupControls"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "MenuContent"
+source = "choice in CT_MenuRegular, choice in CT_Menu, choice in CT_MenuRoot"
+types = ["CT_MenuRegular", "CT_Menu", "CT_MenuRoot"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "MenuWithTitleContent"
+source = "choice in CT_MenuWithTitle"
+types = ["CT_MenuWithTitle"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "PrimaryItemContent"
+source = "choice in CT_PrimaryItem"
+types = ["CT_PrimaryItem"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "QuickAccessToolbarItemsContent"
+source = "choice in CT_QatItems"
+types = ["CT_QatItems"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "SimpleGroupsContent"
+source = "choice in CT_SimpleGroups"
+types = ["CT_SimpleGroups"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "SplitButtonContent"
+source = "choice in CT_SplitButtonRegular, choice in CT_SplitButtonWithTitle, choice in CT_SplitButton"
+types = ["CT_SplitButtonRegular", "CT_SplitButtonWithTitle", "CT_SplitButton"]
+
+[[enum]]
+module = "office_drawing_2008_diagram"
+name = "GroupShapeContent"
+source = "choice in CT_GroupShape"
+types = ["CT_GroupShape"]
+
+[[enum]]
+module = "office_drawing_2010_main"
+name = "PictureEffectContent"
+source = "choice in CT_PictureEffect"
+types = ["CT_PictureEffect"]
+
+[[enum]]
+module = "office_drawing_2013_main_command"
+name = "GroupCommandContent"
+source = "choice in CT_GroupCommand"
+types = ["CT_GroupCommand"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "AxisContent"
+source = "choice in CT_Axis"
+types = ["CT_Axis"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "BinningContent"
+source = "choice in CT_Binning"
+types = ["CT_Binning"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "DataContent"
+source = "choice in CT_Data"
+types = ["CT_Data"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "GeographyCacheContent"
+source = "choice in CT_GeoCache"
+types = ["CT_GeoCache"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "NumericDimensionContent"
+source = "choice in CT_NumericDimension"
+types = ["CT_NumericDimension"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "SeriesLayoutPropertiesContent"
+source = "choice in CT_SeriesLayoutProperties"
+types = ["CT_SeriesLayoutProperties"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "StringDimensionContent"
+source = "choice in CT_StringDimension"
+types = ["CT_StringDimension"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "TextContent"
+source = "choice in CT_Text"
+types = ["CT_Text"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "TextDataContent"
+source = "choice in CT_TextData"
+types = ["CT_TextData"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "ValueColorEndPositionContent"
+source = "choice in CT_ValueColorEndPosition"
+types = ["CT_ValueColorEndPosition"]
+
+[[enum]]
+module = "office_drawing_2014_chartex"
+name = "ValueColorMiddlePositionContent"
+source = "choice in CT_ValueColorMiddlePosition"
+types = ["CT_ValueColorMiddlePosition"]
+
+[[enum]]
+module = "office_drawing_2017_model3d"
+name = "Model3DCameraContent"
+source = "choice in CT_Model3DCamera"
+types = ["CT_Model3DCamera"]
+
+[[enum]]
+module = "office_drawing_2017_model3d"
+name = "Model3DExtensionContent"
+source = "choice in CT_Model3DExtension"
+types = ["CT_Model3DExtension"]
+
+[[enum]]
+module = "office_drawing_2017_model3d"
+name = "Model3DLightContent"
+contains = "am3d:ptLight"
+source = "choice in CT_Model3D"
+types = ["CT_Model3D"]
+
+[[enum]]
+module = "office_drawing_2017_model3d"
+name = "Model3DViewportContent"
+contains = "am3d:winViewport"
+source = "choice in CT_Model3D"
+types = ["CT_Model3D"]
+
+[[enum]]
+module = "office_drawing_2018_sketchyshapes"
+name = "LineSketchTypePropertiesContent"
+source = "choice in CT_LineSketchTypeProperties"
+types = ["CT_LineSketchTypeProperties"]
+
+[[enum]]
+module = "office_drawing_2021_livefeed"
+name = "LiveFeedBackgroundPropertiesContent"
+source = "choice in CT_LiveFeedBackgroundProperties"
+types = ["CT_LiveFeedBackgroundProperties"]
+
+[[enum]]
+module = "office_powerpoint_2010_main"
+name = "ShowEventRecordListContent"
+source = "choice in CT_ShowEventRecordList"
+types = ["CT_ShowEventRecordList"]
+
+[[enum]]
+module = "office_powerpoint_2018_8_main"
+name = "CommentContent"
+source = "choice in CT_Comment"
+types = ["CT_Comment"]
+
+[[enum]]
+module = "office_powerpoint_2019_12_main"
+name = "TaskHistoryEventContent"
+source = "choice in CT_TaskHistoryEvent"
+types = ["CT_TaskHistoryEvent"]
+
+[[enum]]
+module = "office_powerpoint_2021_06_main"
+name = "TaskHistoryEventContent"
+source = "choice in CT_TaskHistoryEvent"
+types = ["CT_TaskHistoryEvent"]
+
+[[enum]]
+module = "office_powerpoint_2022_08_main"
+name = "TaskHistoryEventContent"
+source = "choice in CT_TaskHistoryEvent"
+types = ["CT_TaskHistoryEvent"]
+
+[[enum]]
+module = "office_powerpoint_2023_02_main"
+name = "PlaceholderTypeContent"
+source = "choice in CT_PlaceholderTypeACB"
+types = ["CT_PlaceholderTypeACB"]
+
+[[enum]]
+module = "office_spreadsheetml_2009_9_main"
+name = "PivotUserEditContent"
+source = "choice in CT_PivotUserEdit"
+types = ["CT_PivotUserEdit"]
+
+[[enum]]
+module = "office_spreadsheetml_2009_9_main"
+name = "SlicerCacheDataContent"
+source = "choice in CT_SlicerCacheData"
+types = ["CT_SlicerCacheData"]
+
+[[enum]]
+module = "office_spreadsheetml_2010_11_main"
+name = "DatabaseSourceContent"
+source = "choice in CT_OledbPr"
+types = ["CT_OledbPr"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "ReferenceMapContent"
+source = "choice in CT_RefMap"
+types = ["CT_RefMap"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "RevisionChangeObjectContent"
+source = "choice in CT_RevExChgObj"
+types = ["CT_RevExChgObj"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "RevisionGroupContent"
+source = "choice in CT_RevGroup"
+types = ["CT_RevGroup"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "RevisionStateContent"
+source = "choice in CT_RevisionState"
+types = ["CT_RevisionState"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "RevisionStreamContent"
+source = "choice in CT_RevExStream"
+types = ["CT_RevExStream"]
+
+[[enum]]
+module = "office_spreadsheetml_2014_revision"
+name = "StateBasedObjectContent"
+source = "choice in CT_StateBasedObject"
+types = ["CT_StateBasedObject"]
+
+[[enum]]
+module = "office_spreadsheetml_2017_richdata2"
+name = "CustomRichFiltersContent"
+source = "choice in CT_CustomRichFilters"
+types = ["CT_CustomRichFilters"]
+
+[[enum]]
+module = "office_spreadsheetml_2017_richdata2"
+name = "RichFilterColumnContent"
+source = "choice in CT_RichFilterColumn"
+types = ["CT_RichFilterColumn"]
+
+[[enum]]
+module = "office_spreadsheetml_2019_namedsheetviews"
+name = "SortRuleContent"
+source = "choice in CT_SortRule"
+types = ["CT_SortRule"]
+
+[[enum]]
+module = "office_spreadsheetml_2022_featurepropertybag"
+name = "ArrayFeaturePropertyContent"
+source = "choice in CT_ArrayFeatureProperty"
+types = ["CT_ArrayFeatureProperty"]
+
+[[enum]]
+module = "office_spreadsheetml_2022_featurepropertybag"
+name = "FeaturePropertyBagContent"
+source = "choice in CT_FeaturePropertyBag"
+types = ["CT_FeaturePropertyBag"]
+
+[[enum]]
+module = "office_tasks_2019_documenttasks"
+name = "TaskHistoryEventContent"
+source = "choice in CT_TaskHistoryEvent"
+types = ["CT_TaskHistoryEvent"]
+
+[[enum]]
+module = "office_word_2010_wordml"
+name = "ColorContent"
+source = "choice in CT_SolidColorFillProperties, choice in CT_Glow, choice in CT_Shadow, choice in CT_GradientStop, choice in CT_Color"
+types = ["CT_SolidColorFillProperties", "CT_Glow", "CT_Shadow", "CT_GradientStop", "CT_Color"]
+
+[[enum]]
+module = "office_word_2010_wordml"
+name = "ColorTransformContent"
+source = "choice in CT_SRgbColor, choice in CT_SchemeColor"
+types = ["CT_SRgbColor", "CT_SchemeColor"]
+
+[[enum]]
+module = "office_word_2010_wordml"
+name = "FillPropertiesContent"
+source = "choice in CT_TextOutlineEffect, choice in CT_FillTextEffect"
+types = ["CT_TextOutlineEffect", "CT_FillTextEffect"]
+
+[[enum]]
+module = "office_word_2010_wordml"
+name = "GradientFillPropertiesContent"
+source = "choice in CT_GradientFillProperties"
+types = ["CT_GradientFillProperties"]
+
+[[enum]]
+module = "office_word_2010_wordml"
+name = "LineJoinContent"
+source = "choice in CT_TextOutlineEffect"
+types = ["CT_TextOutlineEffect"]
+
+[[enum]]
+module = "office_word_2010_wordprocessing_canvas"
+name = "WordprocessingCanvasContent"
+source = "choice in CT_WordprocessingCanvas"
+types = ["CT_WordprocessingCanvas"]
+
+[[enum]]
+module = "office_word_2010_wordprocessing_group"
+name = "WordprocessingGroupContent"
+source = "choice in CT_WordprocessingGroup"
+types = ["CT_WordprocessingGroup"]
+
+[[enum]]
+module = "office_word_2010_wordprocessing_shape"
+name = "ShapeNonVisualPropertiesContent"
+contains = "wps:cNvSpPr"
+source = "choice in CT_WordprocessingShape"
+types = ["CT_WordprocessingShape"]
+
+[[enum]]
+module = "office_word_2010_wordprocessing_shape"
+name = "ShapeTextContent"
+contains = "wps:txbx"
+source = "choice in CT_WordprocessingShape"
+types = ["CT_WordprocessingShape"]
+
+# The children of the xsd:all types: each tag at most once, in the file's
+# order.
+
+[[enum]]
+module = "document_properties_extended"
+name = "ApplicationSpecificFilePropertiesContent"
+source = "xsd:all in CT_Properties"
+types = ["CT_Properties"]
+
+[[enum]]
+module = "wordprocessing"
+name = "GlossaryDocumentEntryPropertiesContent"
+source = "xsd:all in CT_DocPartPr"
+types = ["CT_DocPartPr"]
+
+[[enum]]
+module = "vml_office_drawing"
+name = "NewShapeDefaultsContent"
+source = "xsd:all in CT_ShapeDefaults"
+types = ["CT_ShapeDefaults"]
+
+[[enum]]
+module = "vml_office_drawing"
+name = "ShapeLayoutPropertiesContent"
+source = "xsd:all in CT_ShapeLayout"
+types = ["CT_ShapeLayout"]
+
+[[enum]]
+module = "office_2009_07_customui"
+name = "RibbonContent"
+source = "xsd:all in CT_Ribbon"
+types = ["CT_Ribbon"]
+
+# The wildcard positions (D17): the global elements of the Transitional
+# schemas the namespace constraint allows. Each row is found by its
+# constraint, and its module is where the enum lives.
+
+[[enum]]
+module = "drawing"
+name = "AnyElementContent"
+source = "an xsd:any of any namespace, the global elements of every namespace"
+wildcard = "##any"
+
+[[enum]]
+module = "wordprocessing"
+name = "VmlElementContent"
+source = "an xsd:any of VML and VML Office Drawing, their global elements"
+wildcard = "o v"
+
+[[enum]]
+module = "wordprocessing"
+name = "VmlOfficeDrawingElementContent"
+source = "an xsd:any of VML Office Drawing, its global elements"
+wildcard = "o"
