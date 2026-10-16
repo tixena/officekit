@@ -210,8 +210,8 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
     comparison(out, &transitional, &strict)
 }
 
-/// What `generate-schema` wrote of the validation tables, and the comparison
-/// items no row of the data carries.
+/// What `generate-schema` wrote of the validation tables, the comparison items
+/// no row of the data carries, and the Strict checks and namespaces it added.
 fn validation_summary(out: &mut dyn Write, summary: &validation::Summary) -> Result<()> {
     writeln!(
         out,
@@ -239,6 +239,15 @@ fn validation_summary(out: &mut dyn Write, summary: &validation::Summary) -> Res
     )?;
     for item in &summary.unmatched {
         writeln!(out, "    {item}")?;
+    }
+    writeln!(
+        out,
+        "  Strict checks: {} attribute rows; Transitional-only namespaces: {}",
+        summary.strict_checks,
+        summary.transitional_only_namespaces.len(),
+    )?;
+    for (prefix, namespace) in &summary.transitional_only_namespaces {
+        writeln!(out, "    {prefix} {namespace}")?;
     }
     Ok(())
 }

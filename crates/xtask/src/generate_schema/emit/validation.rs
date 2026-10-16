@@ -2,9 +2,11 @@
 //! `officekit-core`'s `validation::generated`.
 //!
 //! Every element, attribute, and enumeration value only Transitional allows is
-//! marked (D35).
+//! marked, and every attribute whose Strict type is not its Transitional type
+//! carries the Strict type's checks (D35).
 
 mod render;
+mod strict;
 
 use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -12,6 +14,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{Context as _, Result, bail};
 use os_shim::System;
 
+use self::strict::StrictChecks;
 use crate::generate_schema::compare::{self, Additions};
 use crate::generate_schema::emit::namespaces;
 use crate::generate_schema::inputs::Inputs;
@@ -64,6 +67,8 @@ pub struct AttributeRow {
     pub name: String,
     /// The namespace prefix; empty for an unprefixed attribute.
     pub prefix: String,
+    /// The checks of its Strict type, when that is not its Transitional type.
+    pub strict_checks: Option<Vec<ValueCheck>>,
     pub transitional_only: bool,
 }
 
@@ -97,7 +102,8 @@ pub enum Check {
     OfficeVersion,
     Required,
     String {
-        /// The class of the validator's `Type`: `HexBinary` or none.
+        /// The class of the validator's `Type`: `HexBinary` or none; a
+        /// Strict check's names the class of its built-in type.
         class: Option<ValueClass>,
         kind: StringKind,
         length: Option<u64>,
@@ -153,9 +159,10 @@ pub struct EnumerationRow {
 ///
 /// The child elements and attributes the type, its bases, and its groups
 /// declare only in Transitional, each with the comparison items that make it
-/// so; and the enumeration values. With them, what finds the Transitional type
-/// of an SDK type the SDK renamed: each type's child elements and attributes
-/// with their types.
+/// so; the enumeration values; the complex types and namespaces only
+/// Transitional has; and the Strict checks of the attributes whose types
+/// differ. With them, what finds the Transitional type of an SDK type the SDK
+/// renamed: each type's child elements and attributes with their types.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct Marks {
     /// By complex type: each attribute whose type is a simple type, and that type.
@@ -168,6 +175,11 @@ pub struct Marks {
     /// Every comparison item a mark can come from, described.
     items: BTreeSet<String>,
     simple_types: BTreeSet<Name>,
+    strict_checks: StrictChecks,
+    /// The namespace of every Transitional schema file with no Strict twin.
+    transitional_only_namespaces: BTreeSet<String>,
+    /// The complex types only Transitional declares.
+    transitional_only_types: BTreeSet<Name>,
     values: BTreeSet<(Name, String)>,
 }
 
@@ -241,6 +253,10 @@ pub struct Summary {
     pub parts: usize,
     /// Distinct patterns of the string checks.
     pub patterns: usize,
+    /// Attribute rows that carry Strict checks.
+    pub strict_checks: usize,
+    /// The prefix and URI of each namespace only Transitional has.
+    pub transitional_only_namespaces: Vec<(String, String)>,
     pub types: usize,
     /// The comparison items no row of the data carries.
     pub unmatched: Vec<String>,
@@ -258,6 +274,8 @@ pub struct Tables {
     pub parts: Vec<PartRow>,
     /// The hand-maintained table, sorted by simple type.
     pub simple_types: Vec<(String, ValueClass)>,
+    /// The prefix and URI of each namespace only Transitional has, sorted by prefix.
+    pub transitional_only_namespaces: Vec<(String, String)>,
     /// Sorted by name; a type's id is its index.
     pub types: Vec<TypeRow>,
 }
@@ -392,11 +410,19 @@ impl<'data> Converter<'data> {
             .split_once(':')
             .with_context(|| format!("the attribute {} has no `:`", attribute.qname))?;
         let transitional_only = self.marked(Marked::Attribute, ecma, prefix, local)?;
+        let strict_checks =
+            match ecma.and_then(|definition| self.marks.strict_checks.get(definition)) {
+                Some(by_name) => by_name
+                    .get(&Name::new(self.namespace(prefix)?, local))
+                    .cloned(),
+                None => None,
+            };
         Ok(AttributeRow {
             checks,
             class,
             name: local.to_owned(),
             prefix: prefix.to_owned(),
+            strict_checks,
             transitional_only,
         })
     }
@@ -503,7 +529,8 @@ impl<'data> Converter<'data> {
                 .split_once('/')
                 .and_then(|(_, element)| element.split_once(':'))
                 .with_context(|| format!("the child {type_name} names no prefixed element"))?;
-            let transitional_only = self.marked(Marked::Element, ecma, prefix, local)?;
+            let transitional_only = self.marked(Marked::Element, ecma, prefix, local)?
+                || self.transitional_only_type(type_name);
             rows.push(ChildRow {
                 local: local.to_owned(),
                 prefix: prefix.to_owned(),
@@ -607,13 +634,7 @@ impl<'data> Converter<'data> {
         let Some(definition) = ecma else {
             return Ok(false);
         };
-        let namespace = if prefix.is_empty() {
-            ""
-        } else {
-            self.uris
-                .get(prefix)
-                .with_context(|| format!("no namespace has the prefix {prefix}"))?
-        };
+        let namespace = self.namespace(prefix)?;
         let marks = self.marks;
         let by_type = match kind {
             Marked::Attribute => &marks.attributes,
@@ -627,6 +648,17 @@ impl<'data> Converter<'data> {
         };
         self.used.extend(items.iter().cloned());
         Ok(true)
+    }
+
+    /// The namespace URI of a prefix of the data; `""` for none.
+    fn namespace(&self, prefix: &str) -> Result<&'data str> {
+        if prefix.is_empty() {
+            return Ok("");
+        }
+        self.uris
+            .get(prefix)
+            .copied()
+            .with_context(|| format!("no namespace has the prefix {prefix}"))
     }
 
     fn new(
@@ -766,6 +798,14 @@ impl<'data> Converter<'data> {
         Ok(class)
     }
 
+    /// Whether the type the data names `type_name` is, in Transitional, a
+    /// complex type only Transitional declares.
+    fn transitional_only_type(&self, type_name: &str) -> bool {
+        self.ecma_types
+            .get(schema_type_of(type_name))
+            .is_some_and(|ecma| self.marks.transitional_only_types.contains(ecma))
+    }
+
     /// One type's row: a derived type takes the attributes of its schema type
     /// (`w:CT_TblWidthDxaNil/`) first, as SDK 3.5.1's classes inherit them.
     fn type_row(&mut self, name: &str, data_type: &DataType) -> Result<TypeRow> {
@@ -858,6 +898,30 @@ impl Marks {
             .collect();
         marks.values.clone_from(&only.enumeration_values);
         marks
+            .transitional_only_types
+            .clone_from(&only.complex_types);
+        marks
+    }
+
+    /// The marks with what the Strict set gives them: the Strict checks of
+    /// the attributes whose Strict type is not their Transitional type, and
+    /// the namespaces of the Transitional files with no Strict file of their
+    /// name.
+    ///
+    /// # Errors
+    ///
+    /// A Strict type built from a shape the conversion does not know, named.
+    pub fn with_strict(mut self, transitional: &SchemaSet, strict: &SchemaSet) -> Result<Self> {
+        self.strict_checks = strict::strict_checks(transitional, strict)?;
+        let twins = compare::twins(transitional, strict);
+        let twinned: BTreeSet<&String> = twins.values().collect();
+        self.transitional_only_namespaces = transitional
+            .namespaces
+            .keys()
+            .filter(|namespace| !twinned.contains(namespace))
+            .cloned()
+            .collect();
+        Ok(self)
     }
 }
 
@@ -929,6 +993,13 @@ impl Tables {
             part_required: part_children.filter(|child| child.required).count(),
             parts: self.parts.len(),
             patterns: patterns.len(),
+            strict_checks: self
+                .types
+                .iter()
+                .flat_map(|row| &row.attributes)
+                .filter(|attribute| attribute.strict_checks.is_some())
+                .count(),
+            transitional_only_namespaces: self.transitional_only_namespaces.clone(),
             types: self.types.len(),
             unmatched: marks
                 .items
@@ -1311,8 +1382,9 @@ fn composite_kind(kind: &str) -> Result<CompositeKind> {
 /// An attribute type with no value class, a validator or argument the
 /// conversion does not know, a simple type neither in `simple_types` nor an
 /// enumeration, a string validator whose `Type` is not a `HexBinaryValue`, a
-/// child, root, or particle that names no type, or a part with a root element
-/// whose root type neither the data nor `part_roots` gives.
+/// child, root, or particle that names no type, a part with a root element
+/// whose root type neither the data nor `part_roots` gives, or a namespace
+/// only Transitional has that no prefix of the data names.
 pub fn convert(
     data: &SdkData,
     simple_types: &BTreeMap<String, String>,
@@ -1354,11 +1426,26 @@ pub fn convert(
             ))
         })
         .collect::<Result<Vec<(String, ValueClass)>>>()?;
+    let mut transitional_only_namespaces = marks
+        .transitional_only_namespaces
+        .iter()
+        .map(|namespace| {
+            let prefix = converter
+                .uris
+                .iter()
+                .find(|(_, uri)| **uri == namespace.as_str())
+                .map(|(prefix, _)| (*prefix).to_owned())
+                .with_context(|| format!("no prefix of the data is the namespace {namespace}"))?;
+            Ok((prefix, namespace.clone()))
+        })
+        .collect::<Result<Vec<(String, String)>>>()?;
+    transitional_only_namespaces.sort();
     Ok(Tables {
         enumerations,
         marked_items: converter.used,
         parts,
         simple_types: classes,
+        transitional_only_namespaces,
         types,
     })
 }
@@ -1539,7 +1626,8 @@ where
     let marks = Marks::new(
         &transitional,
         &compare::transitional_only(&transitional, &strict),
-    );
+    )
+    .with_strict(&transitional, &strict)?;
     let simple_types_text = system
         .read_to_string(simple_types_path)
         .with_context(|| format!("cannot read {}", simple_types_path.display()))?;

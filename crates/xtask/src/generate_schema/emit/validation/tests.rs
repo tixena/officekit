@@ -18,7 +18,9 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const NAMESPACES: &str = r#"[
   {"Prefix": "", "Uri": ""},
   {"Prefix": "m", "Uri": "http://schemas.openxmlformats.org/officeDocument/2006/math"},
-  {"Prefix": "w", "Uri": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+  {"Prefix": "v", "Uri": "urn:schemas-microsoft-com:vml"},
+  {"Prefix": "w", "Uri": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"},
+  {"Prefix": "wps", "Uri": "http://schemas.microsoft.com/office/word/2010/wordprocessingShape"}
 ]"#;
 
 const TYPED_NAMESPACES: &str = r#"[
@@ -148,6 +150,60 @@ const MARKED: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/w
 ], "Enums": [
   {"Type": "w:ST_TblJc", "Name": "TableRowAlignmentValues", "Facets": [{"Value": "left"}, {"Value": "center"}]}
 ]}"#;
+
+/// The SDK rows the Strict additions are read for: `w:b`, whose `w:val` is
+/// `OnOffValue`, `w:ind`, and `w:txbxContent` in `wps:txbx`, a type of an
+/// extension namespace that no schema file declares; and the main part's root
+/// type.
+const STRICT_MARKED: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/wordprocessingml/2006/main", "Types": [
+  {"Name": "w:CT_OnOff/w:b", "IsLeafElement": true, "Attributes": [{"QName": "w:val", "Type": "OnOffValue"}]},
+  {"Name": "w:CT_Ind/w:ind", "Attributes": [{"QName": "w:start", "Type": "Int32Value"}]},
+  {"Name": "w:CT_TxbxContent/w:txbxContent"},
+  {"Name": "wps:CT_TextboxInfo/wps:txbx", "Children": [{"Name": "w:CT_TxbxContent/w:txbxContent"}]},
+  {"Name": "w:CT_Document/w:document"}
+], "Enums": []}"#;
+
+/// `vml-main.xsd`, which has no Strict twin, cut to one type.
+const VML: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:schemas-microsoft-com:vml" targetNamespace="urn:schemas-microsoft-com:vml"
+  elementFormDefault="qualified">
+  <xsd:complexType name="CT_Shape"/>
+</xsd:schema>"#;
+
+/// `wml.xsd` of either class, cut to what the Strict additions need:
+/// Transitional widens `ST_OnOff` with `on` and `off`, and declares
+/// `CT_TxbxContent`; both type `CT_Ind`'s `start` alike.
+fn strict_wml(namespace: &str, transitional: bool) -> String {
+    let (members, extra) = if transitional {
+        (
+            "xsd:boolean ST_OnOff1",
+            r#"<xsd:simpleType name="ST_OnOff1">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="on"/>
+      <xsd:enumeration value="off"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="CT_TxbxContent"/>"#,
+        )
+    } else {
+        ("xsd:boolean", "")
+    };
+    format!(
+        r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="{namespace}"
+  targetNamespace="{namespace}" elementFormDefault="qualified" attributeFormDefault="qualified">
+  <xsd:simpleType name="ST_OnOff">
+    <xsd:union memberTypes="{members}"/>
+  </xsd:simpleType>
+  {extra}
+  <xsd:complexType name="CT_OnOff">
+    <xsd:attribute name="val" type="ST_OnOff"/>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Ind">
+    <xsd:attribute name="start" type="xsd:integer"/>
+  </xsd:complexType>
+</xsd:schema>"#
+    )
+}
 
 /// `wml.xsd` of either class, cut to what the marks need: Transitional adds
 /// the element `left`, the enumeration value `left`, and the attribute `left`.
@@ -778,6 +834,71 @@ fn every_transitional_only_item_of_the_comparison_is_marked() {
         "through the renamed CT_TblJc"
     );
     assert_eq!(tables.summary(&marks).unmatched, Vec::<String>::new());
+}
+
+#[test]
+fn the_strict_set_adds_strict_checks_namespaces_and_transitional_only_types() {
+    let system = MemorySystem::new()
+        .with_file("t/wml.xsd", strict_wml(W, true).as_bytes())
+        .unwrap()
+        .with_file("t/vml-main.xsd", VML.as_bytes())
+        .unwrap()
+        .with_file("s/wml.xsd", strict_wml(STRICT_W, false).as_bytes())
+        .unwrap();
+    let transitional = SchemaSet::read(&system, &["t/vml-main.xsd", "t/wml.xsd"]).unwrap();
+    let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
+    let marks = Marks::new(&transitional, &transitional_only(&transitional, &strict))
+        .with_strict(&transitional, &strict)
+        .unwrap();
+    let tables = convert(
+        &data(&[STRICT_MARKED]),
+        &BTreeMap::new(),
+        &BTreeMap::new(),
+        &marks,
+    )
+    .unwrap();
+
+    let on_off = attribute(row(&tables, "w:CT_OnOff/w:b"), "val");
+    assert_eq!(
+        on_off.strict_checks,
+        Some(vec![every_target(Check::Enum {
+            class: ValueClass::Boolean,
+        })])
+    );
+    assert_eq!(
+        attribute(row(&tables, "w:CT_Ind/w:ind"), "start").strict_checks,
+        None,
+        "both classes type it alike"
+    );
+    let children: Vec<(&str, bool)> = row(&tables, "wps:CT_TextboxInfo/wps:txbx")
+        .children
+        .iter()
+        .map(|child| (child.local.as_str(), child.transitional_only))
+        .collect();
+    assert_eq!(
+        children,
+        [("txbxContent", true)],
+        "a Transitional-only type, under a parent no schema file declares"
+    );
+    assert_eq!(
+        tables.transitional_only_namespaces,
+        [("v".to_owned(), "urn:schemas-microsoft-com:vml".to_owned())]
+    );
+    let summary = tables.summary(&marks);
+    assert_eq!((summary.strict_checks, summary.marked_children), (1, 1));
+
+    let files = render::files("// header\n", &tables, &["", "m", "v", "w", "wps"]).unwrap();
+    assert!(
+        files[1]
+            .1
+            .contains("const STRICT_CHECKS_1: &[ValueCheck] = &[ValueCheck {\n")
+    );
+    assert!(files[1].1.contains("strict_checks: Some(STRICT_CHECKS_1),"));
+    assert!(
+        files[5]
+            .1
+            .contains("pub static TRANSITIONAL_ONLY_NAMESPACES: &[NamespaceId] = &[2];")
+    );
 }
 
 #[test]

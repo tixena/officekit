@@ -295,7 +295,8 @@ pub fn transitional_only(transitional: &SchemaSet, strict: &SchemaSet) -> Additi
 }
 
 /// `name` in its Transitional twin namespace, when it has one.
-fn translate(name: &Name, twins: &BTreeMap<String, String>) -> Name {
+#[must_use]
+pub fn translate(name: &Name, twins: &BTreeMap<String, String>) -> Name {
     twins.get(&name.namespace).map_or_else(
         || name.clone(),
         |namespace| Name::new(namespace, &name.local),
@@ -303,7 +304,8 @@ fn translate(name: &Name, twins: &BTreeMap<String, String>) -> Name {
 }
 
 /// Each Strict namespace mapped to the Transitional namespace of the file with the same name.
-fn twins(transitional: &SchemaSet, strict: &SchemaSet) -> BTreeMap<String, String> {
+#[must_use]
+pub fn twins(transitional: &SchemaSet, strict: &SchemaSet) -> BTreeMap<String, String> {
     let by_file: BTreeMap<_, _> = transitional
         .namespaces
         .iter()

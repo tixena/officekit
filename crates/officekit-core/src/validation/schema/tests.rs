@@ -5,7 +5,9 @@ use super::types::{
     Bounds, Check, CompositeKind, Particle, SchemaType, StringKind, ValueCheck, ValueClass,
     Versions,
 };
-use crate::validation::generated::{ENUMERATIONS, PART_RULES, SCHEMA_TYPES, type_id};
+use crate::validation::generated::{
+    ENUMERATIONS, PART_RULES, SCHEMA_TYPES, TRANSITIONAL_ONLY_NAMESPACES, type_id,
+};
 use crate::xml::name::table::NAMESPACES;
 
 const ALL: Versions = Versions(0b11_1111);
@@ -251,4 +253,78 @@ fn every_pattern_of_the_tables_compiles_and_matches_whole() {
     assert!(!matches_pattern(percent, "x10%").unwrap());
     assert!(!matches_pattern(percent, "10%x").unwrap());
     assert!(!matches_pattern(percent, "100.0").unwrap());
+}
+
+#[test]
+fn every_pattern_of_the_strict_checks_compiles_and_the_opacity_takes_a_percentage() {
+    let mut patterns = BTreeSet::new();
+    for check in SCHEMA_TYPES
+        .iter()
+        .flat_map(|row| row.attributes)
+        .filter_map(|attribute| attribute.strict_checks)
+        .flatten()
+    {
+        if let Check::String {
+            class: _class,
+            kind: _kind,
+            length: _length,
+            max_length: _max_length,
+            min_length: _min_length,
+            pattern: Some(pattern),
+        } = check.check
+        {
+            patterns.insert(pattern);
+        }
+    }
+    assert!(!patterns.is_empty());
+    for pattern in patterns {
+        assert!(matches_pattern(pattern, "").is_ok(), "{pattern}");
+    }
+    let opacity = schema_type("a:CT_PositiveFixedPercentage/a:alpha")
+        .attributes
+        .iter()
+        .find(|attribute| attribute.name == "val")
+        .unwrap();
+    let matches = |value: &str| -> Vec<bool> {
+        opacity
+            .strict_checks
+            .unwrap()
+            .iter()
+            .filter_map(|check| {
+                if let Check::String {
+                    class: _class,
+                    kind: _kind,
+                    length: _length,
+                    max_length: _max_length,
+                    min_length: _min_length,
+                    pattern: Some(pattern),
+                } = check.check
+                {
+                    matches_pattern(pattern, value).ok()
+                } else {
+                    None
+                }
+            })
+            .collect()
+    };
+    assert_eq!(matches("50%"), [true, true]);
+    assert_eq!(matches("50000"), [false, false]);
+}
+
+#[test]
+fn the_namespaces_only_transitional_has_are_the_five_of_vml() {
+    let uris: BTreeSet<&str> = TRANSITIONAL_ONLY_NAMESPACES
+        .iter()
+        .map(|id| NAMESPACES[usize::from(*id)].uri)
+        .collect();
+    assert_eq!(
+        uris,
+        BTreeSet::from([
+            "urn:schemas-microsoft-com:office:excel",
+            "urn:schemas-microsoft-com:office:office",
+            "urn:schemas-microsoft-com:office:powerpoint",
+            "urn:schemas-microsoft-com:office:word",
+            "urn:schemas-microsoft-com:vml",
+        ])
+    );
 }

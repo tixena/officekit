@@ -2,7 +2,9 @@
 //!
 //! Each declared attribute's checks run in order; then come the attributes
 //! the type does not declare and, when the file declares Strict, what only
-//! Transitional allows (D35).
+//! Transitional allows (D35): a marked attribute or one in a namespace only
+//! Transitional has, a marked enumeration member, and a value its own checks
+//! accept and its Strict checks refuse.
 
 use alloc::borrow::ToOwned as _;
 use alloc::string::String;
@@ -11,10 +13,11 @@ use alloc::vec::Vec;
 use super::simple_types::{enumeration, failures, has_value};
 use super::types::{AttributeConstraint, Check, SchemaType, ValueCheck, ValueClass};
 use crate::validation::error::ErrorCode;
+use crate::validation::generated::TRANSITIONAL_ONLY_NAMESPACES;
 use crate::xml::element::{Attribute, Element};
 use crate::xml::mc::is_mc;
 use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, OfficeVersion, QName};
+use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 
 #[cfg(test)]
 mod tests;
@@ -58,7 +61,7 @@ pub struct Problem {
 ///
 /// An attribute the type does not declare is an error unless `ignorable`
 /// says its namespace is ignorable or it is `xml:*`. With `strict`, a present
-/// attribute or value only Transitional allows is an error too.
+/// attribute or value only Transitional allows is an error too, once each.
 pub fn check<F>(
     element: &Element,
     schema_type: &SchemaType,
@@ -84,13 +87,15 @@ where
             attribute.name.namespace.clone()
         });
         let text = value.unwrap_or_default();
-        for failure in run(
+        let failures = run(
             constraint.checks,
             &constraint.class,
             value,
             target,
             ignorable(&namespace),
-        ) {
+        );
+        let own_checks_pass = failures.is_empty();
+        for failure in failures {
             problems.push(match failure {
                 Failure::Invalid(detail) => Problem {
                     arguments: vec![
@@ -115,13 +120,20 @@ where
             });
         }
         if strict && let Some(found) = value {
-            if constraint.transitional_only {
+            if constraint.transitional_only || transitional_only_namespace(&namespace).is_some() {
                 problems.push(Problem {
                     arguments: vec![("attribute", name.clone())],
                     code: ErrorCode::TransitionalOnlyAttribute,
                 });
             }
-            if transitional_only_value(constraint, found, target) {
+            let strict_refuses = || {
+                constraint.strict_checks.is_some_and(|checks| {
+                    !run(checks, &constraint.class, Some(found), target, false).is_empty()
+                })
+            };
+            if transitional_only_value(constraint, found, target)
+                || (own_checks_pass && strict_refuses())
+            {
                 problems.push(Problem {
                     arguments: vec![("attribute", name), ("value", found.to_owned())],
                     code: ErrorCode::TransitionalOnlyValue,
@@ -134,13 +146,19 @@ where
             continue;
         }
         let namespace = &attribute.name.namespace;
-        if (*namespace != Namespace::None && ignorable(namespace)) || is_xml(namespace) {
-            continue;
+        let allowed = (*namespace != Namespace::None && ignorable(namespace)) || is_xml(namespace);
+        if !allowed {
+            problems.push(Problem {
+                arguments: vec![("attribute", qualified(&attribute.name))],
+                code: ErrorCode::UndeclaredAttribute,
+            });
         }
-        problems.push(Problem {
-            arguments: vec![("attribute", qualified(&attribute.name))],
-            code: ErrorCode::UndeclaredAttribute,
-        });
+        if strict && transitional_only_namespace(namespace).is_some() {
+            problems.push(Problem {
+                arguments: vec![("attribute", qualified(&attribute.name))],
+                code: ErrorCode::TransitionalOnlyAttribute,
+            });
+        }
     }
     problems
 }
@@ -292,6 +310,17 @@ pub fn run(
         }
     }
     Vec::new()
+}
+
+/// The id of `namespace` when only Transitional has it: the namespace of a
+/// Transitional schema file with no Strict file of its name.
+#[must_use]
+pub fn transitional_only_namespace(namespace: &Namespace) -> Option<NamespaceId> {
+    if let Namespace::Known(id) = *namespace {
+        TRANSITIONAL_ONLY_NAMESPACES.contains(&id).then_some(id)
+    } else {
+        None
+    }
 }
 
 /// Whether `text` is a value of `constraint` that only Transitional allows:

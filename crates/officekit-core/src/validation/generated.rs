@@ -361,6 +361,7 @@ use super::schema::types::{
     Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
     Versions,
 };
+use crate::xml::name::NamespaceId;
 
 include!("generated/attributes.rs");
 include!("generated/particles.rs");

@@ -232,3 +232,71 @@ fn a_strict_file_reports_a_value_only_transitional_allows() {
     let start = element(&format!("<w:jc xmlns:w=\"{W}\" w:val=\"start\"/>"));
     assert_eq!(codes(&start, "w:CT_Jc/w:jc", true).len(), 0);
 }
+
+#[test]
+fn a_strict_file_reports_a_value_its_own_checks_accept_and_its_strict_checks_refuse() {
+    let alpha = |value: &str| {
+        element(&format!(
+            "<a:alpha xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" val=\"{value}\"/>"
+        ))
+    };
+    let opacity = "a:CT_PositiveFixedPercentage/a:alpha";
+    assert_eq!(
+        codes(&alpha("50000"), opacity, true),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(codes(&alpha("50000"), opacity, false).len(), 0);
+    assert_eq!(
+        codes(&alpha("50%"), opacity, true),
+        [ErrorCode::InvalidAttributeValue],
+        "Strict's form, which the attribute's own checks refuse"
+    );
+    assert_eq!(
+        codes(&alpha("x"), opacity, true),
+        [ErrorCode::InvalidAttributeValue],
+        "a value both refuse"
+    );
+    let bold = |value: &str| element(&format!("<w:b xmlns:w=\"{W}\" w:val=\"{value}\"/>"));
+    assert_eq!(
+        codes(&bold("on"), "w:CT_OnOff/w:b", true),
+        [ErrorCode::TransitionalOnlyValue]
+    );
+    assert_eq!(codes(&bold("true"), "w:CT_OnOff/w:b", true).len(), 0);
+    assert_eq!(codes(&bold("on"), "w:CT_OnOff/w:b", false).len(), 0);
+}
+
+#[test]
+fn a_strict_file_reports_a_marked_value_once() {
+    let left = element(&format!("<w:jc xmlns:w=\"{W}\" w:val=\"left\"/>"));
+    let constraint = schema_type("w:CT_Jc/w:jc")
+        .attributes
+        .iter()
+        .find(|constraint| constraint.name == "val")
+        .unwrap();
+    assert!(constraint.strict_checks.is_some());
+    assert_eq!(
+        codes(&left, "w:CT_Jc/w:jc", true),
+        [ErrorCode::TransitionalOnlyValue],
+        "a marked member that the Strict checks refuse too"
+    );
+}
+
+#[test]
+fn a_strict_file_reports_each_attribute_of_a_namespace_only_transitional_has() {
+    let shape = element(
+        "<v:shape xmlns:v=\"urn:schemas-microsoft-com:vml\" \
+         xmlns:o=\"urn:schemas-microsoft-com:office:office\" id=\"a\" o:spid=\"b\" o:bogus=\"c\"/>",
+    );
+    assert_eq!(
+        codes(&shape, "v:CT_Shape/v:shape", true),
+        [
+            ErrorCode::TransitionalOnlyAttribute,
+            ErrorCode::UndeclaredAttribute,
+            ErrorCode::TransitionalOnlyAttribute,
+        ]
+    );
+    assert_eq!(
+        codes(&shape, "v:CT_Shape/v:shape", false),
+        [ErrorCode::UndeclaredAttribute]
+    );
+}

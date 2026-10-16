@@ -36,6 +36,9 @@ pub struct AttributeConstraint {
     pub name: &'static str,
     /// `None` for an unprefixed attribute.
     pub namespace: Option<NamespaceId>,
+    /// The checks of its Strict type, when that is not its Transitional type:
+    /// a value they refuse exists only in Transitional (D35).
+    pub strict_checks: Option<&'static [ValueCheck]>,
     /// Only Transitional declares it (D35).
     pub transitional_only: bool,
 }
@@ -77,10 +80,11 @@ pub enum Check {
     String {
         /// With `Some(ValueClass::HexBinary)` the value must be hexadecimal
         /// digits, an even number of them, and `length`, `min_length`, and
-        /// `max_length` count bytes, two digits each; with `None` the class of
-        /// the attribute decides, as SDK 3.5.1 reads a value with a validator
-        /// that names no type: bytes for a hexadecimal or base64 attribute,
-        /// characters for any other.
+        /// `max_length` count bytes, two digits each; with
+        /// `Some(ValueClass::String)`, as a Strict check names it, they count
+        /// characters; with `None` the class of the attribute decides, as SDK
+        /// 3.5.1 reads a value with a validator that names no type: bytes for
+        /// a hexadecimal or base64 attribute, characters for any other.
         class: Option<ValueClass>,
         kind: StringKind,
         length: Option<usize>,

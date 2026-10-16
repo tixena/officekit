@@ -268,3 +268,114 @@ fn a_part_whose_root_is_another_element_is_not_checked() {
     let package = document(W, OFFICE_DOCUMENT, "<w:body/>", Some(&styles));
     assert_eq!(errors(&package, OfficeVersion::Office2019).len(), 0);
 }
+
+/// A Word document of the class `strict` declares whose body holds a run
+/// property `w:b` of each value, a VML shape in `w:pict`, an opacity of each
+/// form, and a text box of a `wps` shape, the `a`, `wp`, and `pic` prefixes
+/// bound to the class's URIs.
+fn transitional_content(strict: bool) -> Package {
+    let (relationship, w, a, wp, pic) = if strict {
+        (
+            STRICT_OFFICE_DOCUMENT,
+            STRICT_W,
+            "http://purl.oclc.org/ooxml/drawingml/main",
+            "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing",
+            "http://purl.oclc.org/ooxml/drawingml/picture",
+        )
+    } else {
+        (
+            OFFICE_DOCUMENT,
+            W,
+            "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+            "http://schemas.openxmlformats.org/drawingml/2006/picture",
+        )
+    };
+    let opacity = |value: &str| {
+        format!(
+            "<w:p><w:r><w:drawing><wp:inline><a:graphic><a:graphicData uri=\"{pic}\"><pic:pic>\
+             <pic:spPr><a:solidFill><a:srgbClr val=\"FF0000\"><a:alpha val=\"{value}\"/></a:srgbClr>\
+             </a:solidFill></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>"
+        )
+    };
+    let body = format!(
+        "<w:body xmlns:a=\"{a}\" xmlns:wp=\"{wp}\" xmlns:pic=\"{pic}\" \
+         xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\
+         <w:p><w:r><w:rPr><w:b w:val=\"on\"/></w:rPr></w:r></w:p>\
+         <w:p><w:r><w:rPr><w:b w:val=\"true\"/></w:rPr></w:r></w:p>\
+         <w:p><w:r><w:pict><v:shape o:spid=\"_x0000_s1025\"><v:textbox/></v:shape></w:pict></w:r></w:p>\
+         {}{}\
+         <w:p><w:r><w:drawing><wp:anchor><a:graphic><a:graphicData uri=\"{WPS}\"><wps:wsp><wps:txbx>\
+         <w:txbxContent><w:p/></w:txbxContent></wps:txbx></wps:wsp></a:graphicData></a:graphic></wp:anchor>\
+         </w:drawing></w:r></w:p></w:body>",
+        opacity("50000"),
+        opacity("50%"),
+    );
+    document(w, relationship, &body, None)
+}
+
+/// The errors a file gets of the three codes of what only Transitional allows.
+fn transitional_only(package: &Package) -> Vec<(ErrorCode, String)> {
+    found(package, OfficeVersion::Microsoft365)
+        .into_iter()
+        .filter(|(code, _)| {
+            matches!(
+                code,
+                ErrorCode::TransitionalOnlyAttribute
+                    | ErrorCode::TransitionalOnlyElement
+                    | ErrorCode::TransitionalOnlyValue
+            )
+        })
+        .collect()
+}
+
+#[test]
+fn a_strict_file_gets_an_error_for_each_thing_only_transitional_allows() {
+    let at = |path: &str| format!("/word/document.xml /w:document[1]/w:body[1]/{path}");
+    let drawing = "w:r[1]/w:drawing[1]";
+    let shape = "w:p[3]/w:r[1]/w:pict[1]/v:shape[1]";
+    assert_eq!(
+        transitional_only(&transitional_content(true)),
+        [
+            (
+                ErrorCode::TransitionalOnlyValue,
+                at("w:p[1]/w:r[1]/w:rPr[1]/w:b[1]")
+            ),
+            (
+                ErrorCode::TransitionalOnlyElement,
+                at("w:p[3]/w:r[1]/w:pict[1]")
+            ),
+            (ErrorCode::TransitionalOnlyElement, at(shape)),
+            (ErrorCode::TransitionalOnlyAttribute, at(shape)),
+            (
+                ErrorCode::TransitionalOnlyValue,
+                at(&format!(
+                    "w:p[4]/{drawing}/wp:inline[1]/a:graphic[1]/a:graphicData[1]/pic:pic[1]/\
+                     pic:spPr[1]/a:solidFill[1]/a:srgbClr[1]/a:alpha[1]"
+                ))
+            ),
+            (
+                ErrorCode::TransitionalOnlyElement,
+                at(&format!(
+                    "w:p[6]/{drawing}/wp:anchor[1]/a:graphic[1]/a:graphicData[1]/wps:wsp[1]/\
+                     wps:txbx[1]/w:txbxContent[1]"
+                ))
+            ),
+        ],
+        "v:textbox, in v:shape's namespace, is not reported again"
+    );
+    let opacity_of_strict_form = at(&format!(
+        "w:p[5]/{drawing}/wp:inline[1]/a:graphic[1]/a:graphicData[1]/pic:pic[1]/pic:spPr[1]/\
+         a:solidFill[1]/a:srgbClr[1]/a:alpha[1]"
+    ));
+    assert!(
+        found(&transitional_content(true), OfficeVersion::Microsoft365)
+            .contains(&(ErrorCode::InvalidAttributeValue, opacity_of_strict_form)),
+        "the own checks' error of 50% stays"
+    );
+}
+
+#[test]
+fn a_transitional_file_gets_none_of_the_strict_errors() {
+    assert_eq!(transitional_only(&transitional_content(false)), []);
+}

@@ -9,12 +9,15 @@
 //! vocabulary types is not validated, nor is what it holds unless
 //! `mc:ProcessContent` names it. Inside an `mc:AlternateContent` the walk
 //! follows the one branch SDK 3.5.1 validates at the target.
+//!
+//! In a file that declares Strict, an element in a namespace only Transitional
+//! has is reported, and what it holds in that namespace is not reported again.
 
 use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
-use super::attributes::{self, Failure, qualified};
+use super::attributes::{self, Failure, qualified, transitional_only_namespace};
 use super::particle::{self, Child};
 use super::types::{Particle, SchemaType, TypeId, ValueClass};
 use crate::packaging::part_name::PartName;
@@ -23,7 +26,7 @@ use crate::validation::generated::SCHEMA_TYPES;
 use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use crate::xml::mc::is_mc;
 use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, OfficeVersion, QName};
+use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 
 #[cfg(test)]
 mod tests;
@@ -69,6 +72,9 @@ struct Walker<'tree, 'run> {
     mc: Vec<Compatibility>,
     part: &'run PartName,
     path: Vec<Step>,
+    /// The namespaces only Transitional has of the reported elements on the
+    /// way down, whose descendants in them are not reported again.
+    reported_namespaces: Vec<NamespaceId>,
     /// The namespace declarations of every element on the way down.
     scope: Vec<&'tree [NamespaceDeclaration]>,
     strict: bool,
@@ -557,13 +563,21 @@ impl<'tree> Walker<'tree, '_> {
         self.scope.push(&element.namespace_declarations);
         let frame = self.compatibility_frame(element);
         self.mc.push(frame);
+        let mut reported_in = None;
         match kind {
             Kind::Typed(type_id, transitional_only) => {
-                if self.strict && transitional_only {
+                let namespace = transitional_only_namespace(&element.name.namespace);
+                let reported_above =
+                    namespace.is_some_and(|id| self.reported_namespaces.contains(&id));
+                if self.strict && !reported_above && (transitional_only || namespace.is_some()) {
                     self.error(
                         ErrorCode::TransitionalOnlyElement,
                         &[("element", qualified(&element.name))],
                     );
+                    if let Some(id) = namespace {
+                        self.reported_namespaces.push(id);
+                        reported_in = namespace;
+                    }
                 }
                 if exists_at(type_id, self.target) {
                     self.validate(element, type_id);
@@ -591,6 +605,9 @@ impl<'tree> Walker<'tree, '_> {
                 }
             }
             Kind::Choice | Kind::Fallback => {}
+        }
+        if reported_in.is_some() {
+            self.reported_namespaces.pop();
         }
         self.mc.pop();
         self.scope.pop();
@@ -785,6 +802,7 @@ pub fn walk(
         mc: Vec::new(),
         part,
         path: vec![step(&root.name, 1)],
+        reported_namespaces: Vec::new(),
         scope: Vec::new(),
         strict,
         target,

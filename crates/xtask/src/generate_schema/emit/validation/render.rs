@@ -39,12 +39,20 @@ use super::schema::types::{
     Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
     Versions,
 };
+use crate::xml::name::NamespaceId;
 
 include!(\"generated/attributes.rs\");
 include!(\"generated/particles.rs\");
 include!(\"generated/enums.rs\");
 include!(\"generated/parts.rs\");
 include!(\"generated/types.rs\");
+";
+
+/// The documentation of `TRANSITIONAL_ONLY_NAMESPACES`.
+const TRANSITIONAL_ONLY_NAMESPACES: &str = "
+/// The namespace of every Transitional schema file with no Strict file of its
+/// name: in a file that declares Strict, each element and attribute in one
+/// exists only in Transitional (D35).
 ";
 
 /// The lookup by name that ends `types.rs`.
@@ -84,6 +92,8 @@ struct Lists {
     checks_text: String,
     particles: BTreeMap<String, String>,
     particles_text: String,
+    strict_checks: BTreeMap<String, String>,
+    strict_checks_text: String,
 }
 
 impl Expr {
@@ -183,6 +193,14 @@ impl Lists {
                                     .transpose()?,
                             ),
                         ),
+                        (
+                            "strict_checks",
+                            option(
+                                row.strict_checks
+                                    .as_deref()
+                                    .map(|checks| Expr::Atom(self.strict_checks(checks))),
+                            ),
+                        ),
                         ("transitional_only", boolean(row.transitional_only)),
                     ],
                 ))
@@ -249,6 +267,25 @@ impl Lists {
         );
         self.particles.insert(key, name.clone());
         Ok(name)
+    }
+
+    /// The name of a list of Strict checks, written on first use; `&[]` for none.
+    fn strict_checks(&mut self, checks: &[ValueCheck]) -> String {
+        if checks.is_empty() {
+            return "&[]".to_owned();
+        }
+        let key = format!("{checks:?}");
+        if let Some(name) = self.strict_checks.get(&key) {
+            return name.clone();
+        }
+        let name = format!("STRICT_CHECKS_{}", self.strict_checks.len() + 1);
+        statement(
+            &format!("const {name}: &[ValueCheck] = "),
+            &Expr::Slice(checks.iter().map(value_check).collect()),
+            separated(&mut self.strict_checks_text),
+        );
+        self.strict_checks.insert(key, name.clone());
+        name
     }
 }
 
@@ -424,9 +461,27 @@ pub(super) fn files(
         &types,
         &mut types_text,
     );
+    types_text.push_str(TRANSITIONAL_ONLY_NAMESPACES);
+    statement(
+        "pub static TRANSITIONAL_ONLY_NAMESPACES: &[NamespaceId] = ",
+        &Expr::Slice(
+            tables
+                .transitional_only_namespaces
+                .iter()
+                .map(|(prefix, _)| namespace_id(prefixes, prefix))
+                .collect::<Result<Vec<Expr>>>()?,
+        ),
+        &mut types_text,
+    );
     types_text.push_str(TYPE_ID);
 
-    let attributes_text = format!("{header}\n{}\n{}", lists.checks_text, lists.attributes_text);
+    if !lists.strict_checks_text.is_empty() {
+        lists.strict_checks_text.push('\n');
+    }
+    let attributes_text = format!(
+        "{header}\n{}\n{}{}",
+        lists.checks_text, lists.strict_checks_text, lists.attributes_text
+    );
     let particles_text = format!("{header}\n{}", lists.particles_text);
 
     let mut enums_text =
