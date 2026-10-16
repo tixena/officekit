@@ -10,6 +10,7 @@ mod tests;
 
 /// Where each input the generator reads lives under `inputs/`.
 #[derive(Debug)]
+#[non_exhaustive]
 pub struct Inputs {
     /// The `SHA256SUMS` text.
     pub checksums: String,

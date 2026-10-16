@@ -10,14 +10,14 @@
 //!   Open XML SDK schema data. Finds its inputs under `inputs/`, then exits
 //!   with a message saying it emits nothing yet.
 
-mod generate_schema;
-
 use std::path::Path;
 
 use anyhow::{Result, bail};
 use clap::{Parser, Subcommand};
-use generate_schema::inputs::Inputs;
+use os_shim::System as _;
 use os_shim::real::RealSystem;
+use xtask::generate_schema::inputs::Inputs;
+use xtask::generate_schema::standard_text;
 
 /// Internal developer tooling dispatcher.
 #[derive(Parser)]
@@ -38,9 +38,13 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
     match cli.command {
         Commands::GenerateSchema => {
-            let inputs = Inputs::open(&RealSystem::new(), Path::new("inputs"))?;
+            let system = RealSystem::new();
+            let inputs = Inputs::open(&system, Path::new("inputs"))?;
+            let part_1 = system.read_to_string(&inputs.part1_text)?;
+            let part_4 = system.read_to_string(&inputs.part4_text)?;
+            let text = standard_text::summary(&part_1, &part_4);
             bail!(
-                "generate-schema emits nothing yet (inputs found: {} Strict XSDs, {} Transitional \
+                "generate-schema emits nothing yet ({text}; inputs found: {} Strict XSDs, {} Transitional \
                  XSDs, {} OPC XSDs, 2 texts ({}, {}), SDK data at {}, {} Open Specifications XSDs, \
                  {} checksums, {} tools lines)",
                 inputs.strict_schemas.len(),

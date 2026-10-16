@@ -1,0 +1,369 @@
+//! The generator's reader of the standard's text: ECMA-376 Part 1 and Part 4 as `pdftotext -layout` writes them.
+//!
+//! `just inputs` runs `pdftotext` once per PDF into the inputs folder; the generator reads the text through
+//! `os_shim::System`, so nothing in `crates/` starts a process.
+
+use alloc::collections::{BTreeMap, BTreeSet};
+
+const SECTION_SIGN: char = '\u{a7}';
+const PART_1_REFERENCE: &str = " (Part 1, \u{a7}";
+const PART_SECTIONS: [&str; 5] = ["11.3.", "12.3.", "13.3.", "14.2.", "15.2."];
+const LABELS: [&str; 7] = [
+    "Content Type:",
+    "Content",
+    "Type(s):",
+    "Root",
+    "Namespace:",
+    "Source",
+    "Relationship:",
+];
+
+/// `17.3.1.22 p (Paragraph)`: a section number of three to five levels, a local name, and a title starting upper case.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[non_exhaustive]
+pub struct ElementHeading {
+    pub local: String,
+    pub section: String,
+    pub title: String,
+}
+
+/// A part definition of Part 1 (sections 11.3, 12.3, 13.3, 14.2, 15.2), with the Strict URIs it states.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
+pub struct PartDefinition {
+    /// The field's text when it names no MIME type: "Any supported image type.", "application-defined" content.
+    pub content_type_text: Option<String>,
+    /// Every MIME type the "Content Type(s):" field names, in order.
+    pub content_types: Vec<String>,
+    /// "This part is defined in §13.2.1 ... of ECMA-376-2": the part's definition is in Part 2.
+    pub defined_in_part_2: bool,
+    /// From "The root element for a part of this content type shall be document."
+    pub root_element: Option<String>,
+    /// The "Root Namespace:" field: a URI, or text such as "not applicable".
+    pub root_namespace: Option<String>,
+    pub section: String,
+    /// The "Source Relationship:" field.
+    pub source_relationship: Option<String>,
+    pub title: String,
+}
+
+/// A part of Part 4's part summaries (sections 9.2 to 13.2), with the Transitional URIs that differ from Part 1's.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
+pub struct TransitionalPart {
+    /// The Part 1 section the heading names: `11.3.10` in `9.2.10 Main Document Part (Part 1, §11.3.10)`.
+    pub part_1_section: String,
+    pub root_namespace: Option<String>,
+    pub section: String,
+    pub source_relationship: Option<String>,
+    pub title: String,
+}
+
+/// The text's lines without page furniture: a line that holds only a page number, and a line starting with a form
+/// feed, which holds the next page's running header.
+#[must_use]
+pub fn lines(text: &str) -> Vec<&str> {
+    let page_number = |line: &str| {
+        let trimmed = line.trim();
+        !trimmed.is_empty() && trimmed.bytes().all(|b| b.is_ascii_digit())
+    };
+    text.lines()
+        .filter(|line| !line.starts_with('\u{c}') && !page_number(line))
+        .collect()
+}
+
+fn section_number(token: &str, min_levels: usize, max_levels: usize) -> bool {
+    let parts: Vec<&str> = token.split('.').collect();
+    (min_levels..=max_levels).contains(&parts.len())
+        && parts
+            .iter()
+            .all(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_digit()))
+}
+
+/// Every element heading of Part 1's body, once each: lines of the table of contents, which carry a dot leader, are
+/// left out.
+#[must_use]
+pub fn element_headings(text: &str) -> BTreeSet<ElementHeading> {
+    headings(text, false)
+}
+
+/// The same for simple types: `17.18.44 ST_Jc (Horizontal Alignment Type)`, the local name starting with `ST_`.
+#[must_use]
+pub fn simple_type_headings(text: &str) -> BTreeSet<ElementHeading> {
+    headings(text, true)
+}
+
+fn headings(text: &str, simple_types: bool) -> BTreeSet<ElementHeading> {
+    let mut headings = BTreeSet::new();
+    for line in text.lines() {
+        if line.contains("....") {
+            continue;
+        }
+        let trimmed = line.trim();
+        let Some((section, rest)) = trimmed.split_once(char::is_whitespace) else {
+            continue;
+        };
+        if !section_number(section, 3, 5) {
+            continue;
+        }
+        let Some((local, raw_title)) = rest.trim_start().split_once(char::is_whitespace) else {
+            continue;
+        };
+        let title = raw_title.trim();
+        let name = if simple_types {
+            local.strip_prefix("ST_")
+        } else {
+            Some(local)
+        };
+        let valid_local = name.is_some_and(|n| {
+            n.chars().next().is_some_and(|c| c.is_ascii_alphabetic())
+                && n.chars().all(|c| c.is_ascii_alphanumeric())
+        });
+        let Some(inner) = title.strip_prefix('(').and_then(|t| t.strip_suffix(')')) else {
+            continue;
+        };
+        if !valid_local
+            || inner.contains(')')
+            || !inner.starts_with(|c: char| c.is_ascii_uppercase())
+        {
+            continue;
+        }
+        headings.insert(ElementHeading {
+            local: local.to_owned(),
+            section: section.to_owned(),
+            title: inner.split_whitespace().collect::<Vec<_>>().join(" "),
+        });
+    }
+    headings
+}
+
+/// The label fragment a field line starts with, and the value after it.
+fn field_line(line: &str) -> Option<(Option<&'static str>, &str)> {
+    if line.trim().is_empty() {
+        return None;
+    }
+    if let Some(label) = LABELS.iter().find(|label| {
+        line.starts_with(*label)
+            && line[label.len()..]
+                .chars()
+                .next()
+                .is_none_or(char::is_whitespace)
+    }) {
+        return Some((Some(label), line[label.len()..].trim()));
+    }
+    // A continuation: the value column, past the labels.
+    line.starts_with("          ").then(|| (None, line.trim()))
+}
+
+/// The fields after a part heading, read until the first line that is neither blank, a label, nor a continuation.
+/// A label can wrap: `Content` then `Type(s):`, `Root` then `Namespace:`, `Source` then `Relationship:`.
+fn fields(lines: &[&str]) -> Vec<(String, Vec<String>)> {
+    let mut fields: Vec<(String, Vec<String>)> = Vec::new();
+    let mut wrapping = false;
+    for line in lines {
+        if line.trim().is_empty() {
+            continue;
+        }
+        let Some((label_fragment, value)) = field_line(line) else {
+            break;
+        };
+        if let Some(fragment) = label_fragment {
+            match fields.last_mut() {
+                Some((label, _)) if wrapping => *label = format!("{label} {fragment}"),
+                _ => fields.push((fragment.to_owned(), Vec::new())),
+            }
+            wrapping = !fragment.ends_with(':');
+        }
+        if let (false, Some((_, values))) = (value.is_empty(), fields.last_mut()) {
+            values.push(value.to_owned());
+        }
+    }
+    fields
+}
+
+fn field<'fields>(
+    fields: &'fields [(String, Vec<String>)],
+    name: &str,
+) -> Option<&'fields Vec<String>> {
+    fields
+        .iter()
+        .find(|(label, _)| label.split_whitespace().next() == Some(name))
+        .map(|(_, values)| values)
+}
+
+/// Every part definition of Part 1, in document order.
+#[must_use]
+pub fn part_definitions(text: &str) -> Vec<PartDefinition> {
+    let lines = lines(text);
+    let mut parts = Vec::new();
+    for (index, line) in lines.iter().enumerate() {
+        let trimmed = line.trim();
+        let Some((section, raw_title)) = trimmed.split_once(char::is_whitespace) else {
+            continue;
+        };
+        let title = raw_title.trim();
+        if !PART_SECTIONS
+            .iter()
+            .any(|prefix| section.starts_with(prefix))
+            || !section_number(section, 3, 4)
+            || !title.ends_with("Part")
+            || !title.starts_with(|c: char| c.is_ascii_uppercase())
+            || !title.chars().all(|c| c.is_ascii_alphabetic() || c == ' ')
+        {
+            continue;
+        }
+        let after = &lines[index + 1..];
+        let found = fields(after);
+        let mut part = PartDefinition {
+            section: section.to_owned(),
+            title: title.to_owned(),
+            ..PartDefinition::default()
+        };
+        // A field that starts with a MIME type lists one per line, each line's first word; one that starts with prose
+        // ("Any supported image type.") names none, and its examples in a note are not a list.
+        if let Some(values) = field(&found, "Content") {
+            let mime = |token: &str| {
+                token.contains('/')
+                    && !token.contains("://")
+                    && token.starts_with(|c: char| c.is_ascii_lowercase())
+            };
+            if values
+                .first()
+                .and_then(|v| v.split_whitespace().next())
+                .is_some_and(mime)
+            {
+                part.content_types = values
+                    .iter()
+                    .filter_map(|v| v.split_whitespace().next())
+                    .filter(|t| mime(t))
+                    .map(str::to_owned)
+                    .collect();
+            } else {
+                let prose = values.join(" ");
+                part.content_type_text = Some(
+                    prose
+                        .split("[Note:")
+                        .next()
+                        .unwrap_or_default()
+                        .trim()
+                        .to_owned(),
+                );
+            }
+        }
+        part.root_namespace = field(&found, "Root").map(|values| values.join(" "));
+        part.source_relationship = field(&found, "Source").map(|values| values.join(" "));
+        let next_heading = after
+            .iter()
+            .position(|l| {
+                let t = l.trim();
+                t.split_once(char::is_whitespace).is_some_and(|(s, rest)| {
+                    section_number(s, 2, 4)
+                        && rest.trim().starts_with(|c: char| c.is_ascii_uppercase())
+                        && !l.contains(SECTION_SIGN)
+                })
+            })
+            .unwrap_or(after.len());
+        let body = after[..next_heading].join(" ");
+        part.defined_in_part_2 = body.contains("of ECMA-376-2");
+        part.root_element = body
+            .split("The root element for a part of this content type shall be ")
+            .nth(1)
+            .and_then(|rest| rest.split(|c: char| c == '.' || c.is_whitespace()).next())
+            .map(str::to_owned);
+        parts.push(part);
+    }
+    parts
+}
+
+/// Every part of Part 4's part summaries, in document order.
+#[must_use]
+pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
+    let lines = lines(text);
+    let mut parts = Vec::new();
+    for (index, line) in lines.iter().enumerate() {
+        if line.contains("....") {
+            continue;
+        }
+        let trimmed = line.trim();
+        let Some((section, rest)) = trimmed.split_once(char::is_whitespace) else {
+            continue;
+        };
+        let Some((title, reference)) = rest.trim().split_once(PART_1_REFERENCE) else {
+            continue;
+        };
+        let Some(part_1_section) = reference.strip_suffix(')') else {
+            continue;
+        };
+        if !section_number(section, 3, 3)
+            || !["9.2.", "10.2.", "11.2.", "12.2.", "13.2."]
+                .iter()
+                .any(|p| section.starts_with(p))
+        {
+            continue;
+        }
+        let found = fields(&lines[index + 1..]);
+        parts.push(TransitionalPart {
+            part_1_section: part_1_section.to_owned(),
+            root_namespace: field(&found, "Root").map(|values| values.join(" ")),
+            section: section.to_owned(),
+            source_relationship: field(&found, "Source").map(|values| values.join(" ")),
+            title: title.trim().to_owned(),
+        });
+    }
+    parts
+}
+
+/// The counts the generator reports over the two texts, on one line.
+#[must_use]
+pub fn summary(part_1: &str, part_4: &str) -> String {
+    let elements = element_headings(part_1);
+    let mut per_name: BTreeMap<&str, usize> = BTreeMap::new();
+    for heading in &elements {
+        *per_name.entry(heading.local.as_str()).or_default() += 1;
+    }
+    let several = per_name.values().filter(|&&count| count > 1).count();
+    let words = |heading: &ElementHeading| heading.title.split_whitespace().count();
+    let shortest = elements.iter().map(words).min().unwrap_or(0);
+    let longest = elements.iter().map(words).max().unwrap_or(0);
+    let simple_types = simple_type_headings(part_1);
+    let simple_names: BTreeSet<&str> = simple_types.iter().map(|h| h.local.as_str()).collect();
+    let definitions = part_definitions(part_1);
+    let defined =
+        |test: fn(&PartDefinition) -> bool| definitions.iter().filter(|p| test(p)).count();
+    let transitional = transitional_parts(part_4);
+    let joined = transitional
+        .iter()
+        .filter(|part| definitions.iter().any(|d| d.section == part.part_1_section))
+        .count();
+    format!(
+        "{} element headings over {} local names, {several} under several headings, titles of \
+         {shortest} to {longest} words; {} simple-type headings over {} names; {} part \
+         definitions: {} list MIME types, {} state prose, {} defined in Part 2, {} state a root \
+         namespace, {} a source relationship, {} name a root element; {} Transitional parts: {} \
+         joined to a Part 1 definition, {} with a root namespace, {} with a source relationship",
+        elements.len(),
+        per_name.len(),
+        simple_types.len(),
+        simple_names.len(),
+        definitions.len(),
+        defined(|p| !p.content_types.is_empty()),
+        defined(|p| p.content_type_text.is_some()),
+        defined(|p| p.defined_in_part_2),
+        defined(|p| p.root_namespace.is_some()),
+        defined(|p| p.source_relationship.is_some()),
+        defined(|p| p.root_element.is_some()),
+        transitional.len(),
+        joined,
+        transitional
+            .iter()
+            .filter(|p| p.root_namespace.is_some())
+            .count(),
+        transitional
+            .iter()
+            .filter(|p| p.source_relationship.is_some())
+            .count(),
+    )
+}
+
+#[cfg(test)]
+mod tests;
