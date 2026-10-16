@@ -22,6 +22,8 @@ use crate::parts::workbook;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
+use crate::parts::{pivot_table, table_definition};
+#[cfg(feature = "strict")]
 use crate::strict::iso_date_time;
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::{SaveWarning, convert_date_cells};
@@ -41,9 +43,9 @@ pub struct Xlsx {
     write_options: WriteOptions,
 }
 
-/// A Strict save's context over the worksheet and pivot cache definition parts: each serial
-/// date-time Strict writes in ISO 8601 is given its ISO attribute in the workbook's date system,
-/// which the Strict write keeps.
+/// A Strict save's context over the worksheet, table definition, pivot table, and pivot cache
+/// definition parts: each serial date-time Strict writes in ISO 8601 is given its ISO attribute in
+/// the workbook's date system, which the Strict write keeps.
 #[cfg(feature = "strict")]
 struct IsoDates {
     date1904: bool,
@@ -214,9 +216,10 @@ impl Xlsx {
     /// The file's bytes in the Strict class: as they are when it was read Strict (D9), else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
     /// spelling, and every other part, an embedded workbook among them, as it is. Before a
-    /// worksheet or pivot cache definition is written, each `x:dynamicFilter/@maxVal` gives its
-    /// `maxValIso` and each `x:pivotCacheDefinition/@refreshedDate` its `refreshedDateIso`, in the
-    /// workbook's date system.
+    /// worksheet, table definition, pivot table, or pivot cache definition is written, each
+    /// `x:dynamicFilter/@maxVal` gives its `maxValIso` and each
+    /// `x:pivotCacheDefinition/@refreshedDate` its `refreshedDateIso`, in the workbook's date
+    /// system.
     ///
     /// # Errors
     ///
@@ -252,6 +255,16 @@ impl Xlsx {
                             &definition,
                             self.write_options,
                         )?;
+                    }
+                    Some(table_definition::CONTENT_TYPE) => {
+                        let table = table_definition::load(package, name, self.options)?
+                            .transform(&mut dates);
+                        table_definition::store_strict(package, name, &table, self.write_options)?;
+                    }
+                    Some(pivot_table::CONTENT_TYPE) => {
+                        let pivot =
+                            pivot_table::load(package, name, self.options)?.transform(&mut dates);
+                        pivot_table::store_strict(package, name, &pivot, self.write_options)?;
                     }
                     _ => return Ok(false),
                 }

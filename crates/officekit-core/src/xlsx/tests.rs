@@ -18,6 +18,8 @@ use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::pivot_table_cache_definition;
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
+use crate::parts::{pivot_table, table_definition};
+#[cfg(feature = "strict")]
 use crate::strict::iso_date_time;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::dates::SaveWarning;
@@ -32,6 +34,14 @@ use crate::xml::parse::parse;
 /// A Transitional worksheet whose filter keeps the dates up to a serial date-time.
 #[cfg(feature = "strict")]
 const FILTERED_SHEET: &str = "<worksheet xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><sheetData/><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter></worksheet>";
+
+/// A Transitional table definition whose filter keeps the dates up to a serial date-time.
+#[cfg(feature = "strict")]
+const FILTERED_TABLE: &str = "<table xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" id=\"1\" name=\"T\" displayName=\"T\" ref=\"A1:A3\"><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter><tableColumns count=\"1\"><tableColumn id=\"1\" name=\"Day\"/></tableColumns></table>";
+
+/// A Transitional pivot table whose advanced filter keeps the dates up to a serial date-time.
+#[cfg(feature = "strict")]
+const FILTERED_PIVOT_TABLE: &str = "<pivotTableDefinition xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" name=\"P\" cacheId=\"1\" dataCaption=\"Values\"><location ref=\"A1:B3\" firstHeaderRow=\"1\" firstDataRow=\"1\" firstDataCol=\"1\"/><filters count=\"1\"><filter fld=\"0\" type=\"dateBetween\" id=\"1\"><autoFilter ref=\"A1:A3\"><filterColumn colId=\"0\"><dynamicFilter type=\"aboveAverage\" val=\"46000\" maxVal=\"46309\"/></filterColumn></autoFilter></filter></filters></pivotTableDefinition>";
 
 /// A Transitional pivot cache definition refreshed at a serial date-time.
 #[cfg(feature = "strict")]
@@ -223,6 +233,55 @@ fn a_strict_save_writes_iso_date_times_in_the_workbook_date_system() {
         assert_eq!(filter.attribute(&Namespace::None, "maxVal"), None);
     }
     assert_ne!(iso_date_time("46309", true), iso_date_time("46309", false));
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_save_writes_table_and_pivot_table_filter_dates_in_the_workbook_date_system() {
+    for (date1904, system_1904) in [(Some("1"), true), (None, false)] {
+        let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+        if let Some(value) = date1904 {
+            let mut workbook = xlsx.workbook().unwrap();
+            workbook.properties = Some(Box::new(WorkbookProperties {
+                date1904: Some(value.to_owned()),
+                ..WorkbookProperties::default()
+            }));
+            xlsx.set_workbook(&workbook).unwrap();
+        }
+        let sheet = name("/xl/worksheets/sheet1.xml");
+        let (table, _) = xlsx
+            .package_mut()
+            .add_part(
+                Some(&sheet),
+                RelationshipType::TABLE.transitional,
+                table_definition::CONTENT_TYPE,
+                "/xl/tables/table{}.xml",
+                FILTERED_TABLE.as_bytes(),
+            )
+            .unwrap();
+        let (pivot, _) = xlsx
+            .package_mut()
+            .add_part(
+                Some(&sheet),
+                RelationshipType::PIVOT_TABLE.transitional,
+                pivot_table::CONTENT_TYPE,
+                "/xl/pivotTables/pivotTable{}.xml",
+                FILTERED_PIVOT_TABLE.as_bytes(),
+            )
+            .unwrap();
+        let strict = Package::from_bytes(xlsx.to_bytes_strict().unwrap()).unwrap();
+        let iso = iso_date_time("46309", system_1904).unwrap();
+        for part in [table, pivot] {
+            let root = parse(&strict.part_bytes(&part).unwrap()).unwrap().root;
+            let filter = find(&root, "dynamicFilter").unwrap();
+            assert_eq!(
+                filter.attribute(&Namespace::None, "maxValIso"),
+                Some(iso.as_str()),
+                "{part:?}"
+            );
+            assert_eq!(filter.attribute(&Namespace::None, "maxVal"), None);
+        }
+    }
 }
 
 #[cfg(feature = "strict")]
