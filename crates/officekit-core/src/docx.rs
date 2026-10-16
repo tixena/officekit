@@ -3,6 +3,7 @@
 mod header_footer;
 pub mod image;
 mod merge;
+pub mod protection;
 pub mod table;
 #[cfg(test)]
 mod tests;
@@ -15,14 +16,15 @@ use crate::error::PackageError;
 use crate::file;
 use crate::image::Image;
 use crate::markup::wordprocessing::{
-    BlockContent, Document, Footer, Header, HeaderOrFooterTypeMember, TextRun,
+    BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
+    HeaderOrFooterTypeMember, TextRun,
 };
 use crate::new_parts;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelatedPart, RelationshipType};
+use crate::packaging::relationship::{RelatedPart, RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{header, main_document};
+use crate::parts::{document_settings, header, main_document};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
 use crate::xml::conformance::ConformanceClass;
@@ -261,6 +263,59 @@ impl Docx {
     /// The package, to change.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
+    }
+
+    /// Put one `w:documentProtection` entry into the settings part, in place of the one there or
+    /// else at its place in the schema's order, making and relating the part when the file has
+    /// none. `class` picks the form of the hash (see [`entry`](protection::entry)); an empty
+    /// `password` gives the restriction alone.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`], [`Package::free_part_name`],
+    /// [`Package::relate`], [`document_settings::load`], and [`Package::store`].
+    pub fn protect(
+        &mut self,
+        edit: DocumentProtectionTypesMember,
+        password: &str,
+        salt: &[u8; 16],
+        class: ConformanceClass,
+    ) -> Result<(), PackageError> {
+        let existing = self
+            .package
+            .related_by_type(Some(&self.main), &RelationshipType::SETTINGS)?
+            .into_iter()
+            .find_map(|related| match related.target {
+                Target::Part(name) => Some(name),
+                Target::External(_) => None,
+            });
+        let (name, mut settings) = if let Some(name) = existing {
+            let settings = document_settings::load(&self.package, &name, self.options)?;
+            (name, settings)
+        } else {
+            let usual = PartName::new("/word/settings.xml")?;
+            let name = if self.package.contains(&usual) {
+                self.package.free_part_name("/word/settings{}.xml")?
+            } else {
+                usual
+            };
+            self.package.relate(
+                Some(&self.main),
+                &name,
+                RelationshipType::SETTINGS.in_class(self.class),
+            )?;
+            (name, DocumentSettings::default())
+        };
+        settings.document_editing_restrictions =
+            Some(Box::new(protection::entry(edit, password, salt, class)));
+        file::store(
+            &mut self.package,
+            &name,
+            &settings,
+            document_settings::CONTENT_TYPE,
+            self.class,
+            self.write_options,
+        )
     }
 
     /// Remove section `section`'s footer of type `kind`; its part goes once no section references

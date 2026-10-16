@@ -261,10 +261,16 @@ impl Package {
         matches!(self.locate(name.as_str()), Ok(Some(_)))
     }
 
-    /// The part's content type: its `Override`, else its extension's `Default`.
+    /// The content type of a part the package holds: its `Override`, else its extension's
+    /// `Default`. `None` for a part the package does not hold, whatever the extension's
+    /// `Default` says.
     #[must_use]
     pub fn content_type(&self, name: &PartName) -> Option<&str> {
-        self.content_types.of(name)
+        if self.contains(name) {
+            self.content_types.of(name)
+        } else {
+            None
+        }
     }
 
     /// The `Default` entries of `[Content_Types].xml`, extension and content
@@ -652,7 +658,7 @@ impl Package {
                 let target = item.resolved(set.directory())?;
                 let content_type = match &target {
                     Target::External(_) => None,
-                    Target::Part(part) => self.content_type(part).map(str::to_owned),
+                    Target::Part(part) => self.content_types.of(part).map(str::to_owned),
                 };
                 Ok(RelatedPart {
                     content_type,

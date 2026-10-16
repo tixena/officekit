@@ -9,8 +9,12 @@ use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 use super::{OpenOptions, Package, PartRoot};
 use crate::error::{PackageError, WriteError};
 use crate::image::{Image, ImageFormat, PixelSize};
+#[cfg(feature = "transitional")]
+use crate::markup::wordprocessing::Footer;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target, TargetMode};
+#[cfg(feature = "transitional")]
+use crate::parts::footer;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::{Element, NamespaceDeclaration, Node};
 use crate::xml::mc::MarkupCompatibility;
@@ -385,8 +389,8 @@ fn removing_a_part_removes_its_file_override_own_relationships_and_every_relatio
     assert_eq!(package.related(Some(&main)).unwrap().len(), 0);
     assert_eq!(
         package.content_type(&header),
-        Some("application/xml"),
-        "the override is gone"
+        None,
+        "a part the package no longer holds has no content type"
     );
     assert!(
         package
@@ -1088,5 +1092,41 @@ fn add_image_relates_with_the_type_of_the_packages_class() {
     assert_eq!(
         package.related(Some(&main)).unwrap()[0].type_uri,
         RelationshipType::IMAGE.strict
+    );
+}
+
+#[test]
+fn an_absent_part_has_no_content_type_whatever_its_extension_defaults_to() {
+    let mut package = Package::new();
+    package
+        .set_part_bytes(&name("/customXml/item1.xml"), "application/xml", b"<a/>")
+        .unwrap();
+    assert_eq!(
+        package.content_type(&name("/customXml/item1.xml")),
+        Some("application/xml")
+    );
+    assert_eq!(package.content_type(&name("/word/x.xml")), None);
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_generated_store_of_a_new_part_registers_the_modules_content_type() {
+    let mut package = Package::new();
+    package
+        .set_part_bytes(&name("/customXml/item1.xml"), "application/xml", b"<a/>")
+        .unwrap();
+    let footer = name("/word/footer1.xml");
+    footer::store_transitional(
+        &mut package,
+        &footer,
+        &Footer::default(),
+        WriteOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(package.content_type(&footer), Some(footer::CONTENT_TYPE));
+    assert!(
+        package
+            .content_type_overrides()
+            .contains(&(footer, footer::CONTENT_TYPE.to_owned()))
     );
 }
