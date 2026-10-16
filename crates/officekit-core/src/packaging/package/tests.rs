@@ -8,6 +8,7 @@ use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
 use super::{OpenOptions, Package, PartRoot};
 use crate::error::{PackageError, WriteError};
+use crate::image::{Image, ImageFormat, PixelSize};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target, TargetMode};
 use crate::xml::conformance::ConformanceClass;
@@ -26,6 +27,19 @@ const HYPERLINK: &str =
 const PACKAGE_TYPE: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package";
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+const IMAGE_RELATIONSHIP: &str =
+    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+const PNG_PREFIX: [u8; 16] = *b"\x89PNG\r\n\x1a\n\0\0\0\rIHDR";
+const PNG_SUFFIX: [u8; 5] = [8, 6, 0, 0, 0];
+const JPEG_PREFIX: [u8; 7] = [0xFF, 0xD8, 0xFF, 0xC0, 0, 17, 8];
+const JPEG_SUFFIX: [u8; 10] = [3, 1, 0x22, 0, 2, 0x11, 1, 3, 0x11, 1];
+/// The width then the height of a PNG header, four bytes each.
+const WIDE: [u8; 8] = [0, 0, 1, 0x2C, 0, 0, 0, 100];
+const PORTRAIT: [u8; 8] = [0, 0, 6, 0x1B, 0, 0, 8, 2];
+/// The height then the width of a JPEG start-of-frame segment, two bytes each.
+const SQUARE: [u8; 4] = [1, 0xC8, 1, 0xC8];
+const SMALL: [u8; 4] = [0, 8, 0, 8];
+const TINY: [u8; 8] = [0, 0, 0, 1, 0, 0, 0, 1];
 
 /// A typed root for the tests: `<w:note>` holding its text.
 #[derive(Debug, PartialEq, Eq)]
@@ -894,5 +908,185 @@ fn relationships_of_gives_one_result_per_entry_and_related_fails_on_a_bad_target
         package
             .relationships_of(Some(&name("/word/none.xml")))
             .is_empty()
+    );
+}
+
+fn png_bytes(width_and_height: [u8; 8]) -> Vec<u8> {
+    [&PNG_PREFIX[..], &width_and_height, &PNG_SUFFIX].concat()
+}
+
+fn jpeg_bytes(height_and_width: [u8; 4]) -> Vec<u8> {
+    [&JPEG_PREFIX[..], &height_and_width, &JPEG_SUFFIX].concat()
+}
+
+/// A document whose footer relates to `/word/media/image1.png` as `rId1`, the document also
+/// relating to it as `rId7`.
+fn with_footer_image() -> (Package, PartName, PartName) {
+    let mut package = document();
+    let main = name("/word/document.xml");
+    let footer = name("/word/footer1.xml");
+    let picture = name("/word/media/image1.png");
+    package
+        .set_part_bytes(
+            &footer,
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml",
+            b"<w:ftr/>",
+        )
+        .unwrap();
+    package
+        .relate(Some(&main), &footer, RelationshipType::FOOTER.transitional)
+        .unwrap();
+    package
+        .set_part_bytes(&picture, "image/png", &png_bytes(PORTRAIT))
+        .unwrap();
+    package
+        .add_relationship(
+            Some(&footer),
+            "rId1",
+            &Target::Part(picture.clone()),
+            IMAGE_RELATIONSHIP,
+        )
+        .unwrap();
+    package
+        .add_relationship(
+            Some(&main),
+            "rId7",
+            &Target::Part(picture.clone()),
+            IMAGE_RELATIONSHIP,
+        )
+        .unwrap();
+    (package, footer, picture)
+}
+
+#[test]
+fn an_image_part_reads_as_an_image_with_its_pixel_size() {
+    let (package, _, picture) = with_footer_image();
+    let image = package.image(&picture).unwrap();
+    assert_eq!(image.format(), &ImageFormat::Png);
+    assert_eq!(
+        image.pixel_size(),
+        Some(PixelSize {
+            height: 2050,
+            width: 1563
+        })
+    );
+}
+
+#[test]
+fn a_part_that_is_not_an_image_is_a_content_type_error() {
+    let package = document();
+    let error = package.image(&name("/word/document.xml")).unwrap_err();
+    assert!(error.to_string().ends_with(", not image/*"));
+}
+
+#[test]
+fn set_image_of_the_same_format_replaces_the_bytes() {
+    let (mut package, _, picture) = with_footer_image();
+    let image = Image::from_bytes(png_bytes(WIDE)).unwrap();
+    assert_eq!(package.set_image(&picture, &image).unwrap(), picture);
+    assert_eq!(package.part_bytes(&picture).unwrap(), image.bytes());
+    assert_eq!(package.part_names().unwrap().len(), 3);
+}
+
+#[test]
+fn set_image_of_another_format_moves_it_and_retargets_every_relationship() {
+    let (mut package, footer, picture) = with_footer_image();
+    let image = Image::from_bytes(jpeg_bytes(SQUARE)).unwrap();
+    let moved = package.set_image(&picture, &image).unwrap();
+    assert_eq!(moved.as_str(), "/word/media/image1.jpeg");
+    assert_eq!(package.content_type(&moved), Some("image/jpeg"));
+    assert_eq!(package.part_bytes(&moved).unwrap(), image.bytes());
+    assert!(!package.contains(&picture));
+    for source in [&footer, &name("/word/document.xml")] {
+        let image_relationships = package
+            .related_by_type(Some(source), &RelationshipType::IMAGE)
+            .unwrap();
+        assert_eq!(image_relationships.len(), 1);
+        assert_eq!(image_relationships[0].target, Target::Part(moved.clone()));
+    }
+    assert_eq!(
+        package.related(Some(&footer)).unwrap()[0].id,
+        "rId1".to_owned()
+    );
+    assert_eq!(
+        package
+            .related(Some(&name("/word/document.xml")))
+            .unwrap()
+            .iter()
+            .filter(|related| related.id == "rId7")
+            .count(),
+        1
+    );
+}
+
+#[test]
+fn set_image_removes_the_old_parts_override() {
+    let (mut package, _, picture) = with_footer_image();
+    package
+        .set_part_bytes(&picture, "image/x-special", &png_bytes(TINY))
+        .unwrap();
+    assert!(
+        package
+            .content_type_overrides()
+            .iter()
+            .any(|(part, _)| *part == picture)
+    );
+    let image = Image::from_bytes(jpeg_bytes(SMALL)).unwrap();
+    package.set_image(&picture, &image).unwrap();
+    assert!(
+        package
+            .content_type_overrides()
+            .iter()
+            .all(|(part, _)| *part != picture)
+    );
+}
+
+#[test]
+fn set_image_takes_the_first_free_number() {
+    let (mut package, _, picture) = with_footer_image();
+    package
+        .set_part_bytes(&name("/word/media/image1.jpeg"), "image/jpeg", b"x")
+        .unwrap();
+    let image = Image::from_bytes(jpeg_bytes(SMALL)).unwrap();
+    assert_eq!(
+        package.set_image(&picture, &image).unwrap().as_str(),
+        "/word/media/image2.jpeg"
+    );
+}
+
+#[test]
+fn add_image_takes_the_first_free_name_in_the_sources_media_folder() {
+    let mut package = document();
+    let main = name("/word/document.xml");
+    let image = Image::from_bytes(png_bytes(WIDE)).unwrap();
+    let (first, id) = package.add_image(&main, &image).unwrap();
+    assert_eq!(
+        (first.as_str(), id.as_str()),
+        ("/word/media/image1.png", "rId1")
+    );
+    let (second, second_id) = package.add_image(&main, &image).unwrap();
+    assert_eq!(
+        (second.as_str(), second_id.as_str()),
+        ("/word/media/image2.png", "rId2")
+    );
+    assert_eq!(package.content_type(&first), Some("image/png"));
+    let related = package.related(Some(&main)).unwrap();
+    assert_eq!(related[0].type_uri, IMAGE_RELATIONSHIP);
+    assert_eq!(related[0].target, Target::Part(first));
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn add_image_relates_with_the_type_of_the_packages_class() {
+    let mut package = document();
+    let main = name("/word/document.xml");
+    package
+        .set_relationship_class(ConformanceClass::Strict)
+        .unwrap();
+    let image = Image::from_bytes(png_bytes(WIDE)).unwrap();
+    package.add_image(&main, &image).unwrap();
+    assert_eq!(
+        package.related(Some(&main)).unwrap()[0].type_uri,
+        RelationshipType::IMAGE.strict
     );
 }

@@ -30,6 +30,9 @@ thiserror.workspace = true
 # The validator's JSON records
 serde_json.workspace = true
 
+# Reads an image's pixel size from its header; no pixel decoding
+imagesize = { version = "0.15", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
+
 # Runs the pattern facets of the validation tables, matched whole.
 regex = "1"
 

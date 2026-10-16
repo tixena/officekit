@@ -1,18 +1,12 @@
 //! Failures raised by the packaging layer, and the refusals of a class's
 //! reader and writer.
 
-use core::convert::Infallible;
 use std::io;
 
+use crate::image::ImageError;
 use crate::packaging::part_name::PartName;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::XmlError;
-
-/// Why an image part could not be read. No value exists yet: the image
-/// module gives it its cases.
-#[derive(Debug, thiserror::Error)]
-#[error(transparent)]
-pub struct ImageError(Infallible);
 
 /// Failure while opening, reading, editing, or writing a package.
 #[derive(Debug, thiserror::Error)]

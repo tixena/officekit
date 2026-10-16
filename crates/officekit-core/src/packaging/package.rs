@@ -10,7 +10,11 @@ use std::path::{Path, PathBuf};
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 
+use crate::docx::Docx;
+use crate::embedded::Embedded;
 use crate::error::{PackageError, WriteError};
+use crate::file;
+use crate::image::{Image, ImageFormat};
 use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::packaging::part_allocation;
 use crate::packaging::part_name::PartName;
@@ -18,6 +22,11 @@ use crate::packaging::relationship::{
     self, RELATIONSHIPS_CONTENT_TYPE, RelatedPart, Relationship, RelationshipType, Target,
     TargetMode,
 };
+use crate::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
+use crate::pptx::Pptx;
+#[cfg(feature = "transitional")]
+use crate::transitional::dates::SaveWarning;
+use crate::xlsx::Xlsx;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use crate::xml::mc::MarkupCompatibility;
@@ -147,6 +156,39 @@ impl Package {
         Ok(item)
     }
 
+    /// Add `image` as the first free `<source folder>/media/image{n}.<extension>`, related from
+    /// `source` with the image relationship type of the package's class; returns its name and the
+    /// relationship id.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::ClassNotEnabled`] for a package whose class has its feature off;
+    /// [`PackageError::PartName`] for a source folder that gives no valid part name;
+    /// [`PackageError::Io`] when the memory filesystem refuses a write.
+    pub fn add_image(
+        &mut self,
+        source: &PartName,
+        image: &Image,
+    ) -> Result<(PartName, String), PackageError> {
+        let class = match file::main_part(self) {
+            Ok(main) => main.class,
+            Err(PackageError::MissingPart(_)) => ConformanceClass::Transitional,
+            Err(error) => return Err(error),
+        };
+        let template = format!(
+            "{}/media/image{{}}.{}",
+            source.directory(),
+            image.format().extension()
+        );
+        self.add_part(
+            Some(source),
+            RelationshipType::IMAGE.in_class(class),
+            image.content_type(),
+            &template,
+            image.bytes(),
+        )
+    }
+
     /// Add a part related from `source` (`None`: the package); returns its
     /// name, the first free one `template` gives, and its relationship id.
     ///
@@ -250,6 +292,48 @@ impl Package {
         Self::from_bytes(self.to_bytes()?)
     }
 
+    /// Open the document a part holds, by its main part's content type.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::NotAPackage`] for bytes that are not a `.docx`, `.xlsx`, or `.pptx`, an OLE
+    /// object for one; [`PackageError::MissingPart`] when the package has no such part; the errors
+    /// of the file type's `from_package`.
+    pub fn embedded(
+        &self,
+        name: &PartName,
+        options: OpenOptions,
+    ) -> Result<Embedded, PackageError> {
+        let not_a_package = |reason: String| PackageError::NotAPackage {
+            part: name.clone(),
+            reason,
+        };
+        let package = Self::from_bytes(self.part_bytes(name)?)
+            .map_err(|error| not_a_package(error.to_string()))?;
+        let main = file::main_part(&package).map_err(|error| not_a_package(error.to_string()))?;
+        let content_type = main.content_type.as_deref();
+        if WordprocessingKind::ALL
+            .iter()
+            .any(|kind| Some(kind.main_content_type()) == content_type)
+        {
+            Docx::from_package(package, options).map(Embedded::Docx)
+        } else if SpreadsheetKind::ALL
+            .iter()
+            .any(|kind| Some(kind.main_content_type()) == content_type)
+        {
+            Xlsx::from_package(package, options).map(Embedded::Xlsx)
+        } else if PresentationKind::ALL
+            .iter()
+            .any(|kind| Some(kind.main_content_type()) == content_type)
+        {
+            Pptx::from_package(package, options).map(Embedded::Pptx)
+        } else {
+            Err(not_a_package(format!(
+                "the main part's content type is {content_type:?}"
+            )))
+        }
+    }
+
     /// Every file of the memory filesystem, by path.
     fn files(&self) -> Result<Vec<String>, PackageError> {
         Ok(self
@@ -311,6 +395,24 @@ impl Package {
             }
         }
         Ok(package)
+    }
+
+    /// The image a part holds.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::ContentType`] when the part's content type does not start with `image/`;
+    /// the errors of [`part_bytes`](Self::part_bytes).
+    pub fn image(&self, name: &PartName) -> Result<Image, PackageError> {
+        let content_type = self.content_type(name);
+        let format = content_type
+            .and_then(ImageFormat::from_content_type)
+            .ok_or_else(|| PackageError::ContentType {
+                expected: "image/*",
+                found: content_type.map(str::to_owned),
+                part: name.clone(),
+            })?;
+        Ok(Image::with_format(format, self.part_bytes(name)?))
     }
 
     /// Any part's typed root by part name; the root's tag must be
@@ -667,6 +769,108 @@ impl Package {
     {
         system.write(path, &self.to_bytes()?)?;
         Ok(())
+    }
+
+    /// Write a document back into the part, saved as Strict; the part keeps its name and content
+    /// type.
+    ///
+    /// # Errors
+    ///
+    /// The errors of the document's own save; [`PackageError::MissingPart`] when the package has
+    /// no such part.
+    #[cfg(feature = "strict")]
+    pub fn set_embedded_strict(
+        &mut self,
+        name: &PartName,
+        document: &Embedded,
+    ) -> Result<(), PackageError> {
+        let bytes = match document {
+            Embedded::Docx(docx) => docx.to_bytes_strict()?,
+            Embedded::Pptx(pptx) => pptx.to_bytes_strict()?,
+            Embedded::Xlsx(xlsx) => xlsx.to_bytes_strict()?,
+        };
+        let content_type = self
+            .content_type(name)
+            .ok_or_else(|| PackageError::MissingPart(name.clone()))?
+            .to_owned();
+        self.set_part_bytes(name, &content_type, &bytes)
+    }
+
+    /// Write a document back into the part, saved as Transitional; the part keeps its name and
+    /// content type. Returns the save's warnings.
+    ///
+    /// # Errors
+    ///
+    /// The errors of the document's own save; [`PackageError::MissingPart`] when the package has
+    /// no such part.
+    #[cfg(feature = "transitional")]
+    pub fn set_embedded_transitional(
+        &mut self,
+        name: &PartName,
+        document: &Embedded,
+    ) -> Result<Vec<SaveWarning>, PackageError> {
+        let (bytes, warnings) = match document {
+            Embedded::Docx(docx) => docx.to_bytes_transitional()?,
+            Embedded::Pptx(pptx) => pptx.to_bytes_transitional()?,
+            Embedded::Xlsx(xlsx) => xlsx.to_bytes_transitional()?,
+        };
+        let content_type = self
+            .content_type(name)
+            .ok_or_else(|| PackageError::MissingPart(name.clone()))?
+            .to_owned();
+        self.set_part_bytes(name, &content_type, &bytes)?;
+        Ok(warnings)
+    }
+
+    /// Put an image in place of the one a part holds. Of the same format, the bytes are replaced.
+    /// Of another, the image moves to the old stem with the first free number and the new
+    /// extension in the same folder, every relationship to the old part targets the new one under
+    /// the same id, the new content type is registered, and the old part and its override go.
+    /// Returns the image's name.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`image`](Self::image);
+    /// [`PackageError::Io`] when the memory filesystem refuses a change.
+    pub fn set_image(&mut self, name: &PartName, image: &Image) -> Result<PartName, PackageError> {
+        if self.image(name)?.format() == image.format() {
+            self.set_part_bytes(name, image.content_type(), image.bytes())?;
+            return Ok(name.clone());
+        }
+        let file_name = name
+            .as_str()
+            .rsplit_once('/')
+            .map_or(name.as_str(), |(_, file_name)| file_name);
+        let stem = file_name
+            .rsplit_once('.')
+            .map_or(file_name, |(stem, _)| stem)
+            .trim_end_matches(|c: char| c.is_ascii_digit());
+        let new_name = self.free_part_name(&format!(
+            "{}/{stem}{{}}.{}",
+            name.directory(),
+            image.format().extension()
+        ))?;
+        self.set_part_bytes(&new_name, image.content_type(), image.bytes())?;
+        let folded = name.folded();
+        let mut changed = Vec::new();
+        for (key, set) in &mut self.relationships {
+            let directory = set.directory().to_owned();
+            let mut any = false;
+            for item in &mut set.items {
+                if targets(item, &directory, &folded) {
+                    item.target = relationship::relative(&directory, &new_name);
+                    any = true;
+                }
+            }
+            if any {
+                changed.push(key.clone());
+            }
+        }
+        for key in changed {
+            self.write_relationships(&key)?;
+        }
+        self.remove_part(name)?;
+        Ok(new_name)
     }
 
     /// Replace a part's bytes, or add the part; its content type is
