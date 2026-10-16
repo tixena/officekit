@@ -5,7 +5,7 @@ use std::io;
 
 use super::writer::PartWriter;
 use crate::markup::{Context, Unknown};
-use crate::xml::element::{Element, Node};
+use crate::xml::element::Node;
 use crate::xml::write::{is_whitespace_text, preserves_space, qualified};
 
 #[cfg(test)]
@@ -107,15 +107,7 @@ impl<'unknown> Place<'unknown> {
     }
 }
 
-impl Context for Unchanged {
-    fn element(&mut self, _node: &Element) -> Option<Element> {
-        None
-    }
-
-    fn write_element(&mut self, _node: &Element, _out: &mut PartWriter<'_>) -> io::Result<Written> {
-        Ok(Written::No)
-    }
-}
+impl Context for Unchanged {}
 
 impl WriteThrough for Node {
     /// An element with element children is written tag by tag, each child

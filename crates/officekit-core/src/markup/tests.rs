@@ -1,11 +1,7 @@
-use std::io;
-
 use super::{
     Children, Context, Descend, Extra, Pending, Placement, Scope, Transform as _, Unknown,
     Visit as _, Visitor,
 };
-use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
 use crate::xml::element::{Document, Element, NamespaceDeclaration, Node};
 use crate::xml::name::{Namespace, QName};
 use crate::xml::parse::parse;
@@ -69,10 +65,6 @@ impl Context for DropComments {
             .retain(|child| !matches!(child, Node::Comment(_)));
         Some(kept)
     }
-
-    fn write_element(&mut self, _node: &Element, _out: &mut PartWriter<'_>) -> io::Result<Written> {
-        Ok(Written::No)
-    }
 }
 
 impl Visitor for Names {
@@ -93,10 +85,6 @@ impl Context for ReplaceB {
             replaced.children.push(Node::Element(node.clone()));
             replaced
         })
-    }
-
-    fn write_element(&mut self, _node: &Element, _out: &mut PartWriter<'_>) -> io::Result<Written> {
-        Ok(Written::No)
     }
 }
 

@@ -87,3 +87,6 @@ integer_division_remainder_used = "allow"
 iter_over_hash_type = "allow"
 # HashSet parameters use the default hasher; generalization adds complexity for no benefit.
 implicit_hasher = "allow"
+# Hook traits give every hook a default, so a context implements only the
+# hooks it needs (D12).
+missing_trait_methods = "allow"
