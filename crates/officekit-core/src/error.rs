@@ -1,5 +1,5 @@
-//! Failures raised by the packaging layer, and the refusal of a class's
-//! writer.
+//! Failures raised by the packaging layer, and the refusals of a class's
+//! reader and writer.
 
 use core::convert::Infallible;
 use std::io;
@@ -96,6 +96,15 @@ pub enum WriteError {
         class: ConformanceClass,
         tag: &'static str,
     },
+}
+
+/// Why an element could not be read as a node of the typed tree.
+#[derive(Debug, thiserror::Error)]
+#[non_exhaustive]
+pub enum ReadError {
+    /// The element is not the node's tag.
+    #[error("expected the element {expected}, found {found}")]
+    UnexpectedTag { expected: String, found: String },
 }
 
 /// A relationship's source as a message names it.

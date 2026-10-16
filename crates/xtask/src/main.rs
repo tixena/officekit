@@ -8,7 +8,8 @@
 //!
 //! - `generate-schema` -- regenerate the generated modules of `officekit-core`
 //!   from the inputs under `inputs/`. Writes the namespace table, the
-//!   validation tables, the semantic constraint table, and the typed tree.
+//!   validation tables, the semantic constraint table, the typed tree, and
+//!   the conformance classes' impls and tables.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -23,7 +24,7 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::{markup, namespaces, parts, semantic, validation};
+use xtask::generate_schema::emit::{classes, markup, namespaces, parts, semantic, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 use xtask::parity;
@@ -115,6 +116,35 @@ fn comparison(out: &mut dyn Write, transitional: &SchemaSet, strict: &SchemaSet)
     Ok(())
 }
 
+/// What `generate-schema` wrote of the two conformance classes.
+fn classes_summary(out: &mut dyn Write, summary: &classes::Summary) -> Result<()> {
+    let attributes: Vec<String> = summary
+        .attributes
+        .iter()
+        .map(|(kind, count)| format!("{count} {kind}"))
+        .collect();
+    writeln!(
+        out,
+        "wrote {} and {}: {} modules each, {} nodes each, {} setting conformance; Strict rules: \
+         attributes {} ({}) and {} by parent, children {} renamed and {} refused, {} elements \
+         and {} namespaces refused; Transitional rules: {} attributes with Strict-only values",
+        classes::STRICT_PATH,
+        classes::TRANSITIONAL_PATH,
+        summary.modules,
+        summary.nodes,
+        summary.roots,
+        summary.attributes.values().sum::<usize>(),
+        attributes.join(", "),
+        summary.contextual,
+        summary.children_renamed,
+        summary.children_refused,
+        summary.elements,
+        summary.namespaces,
+        summary.strict_only,
+    )?;
+    Ok(())
+}
+
 /// A content model as text.
 fn content(content: &Content) -> String {
     if let Content::Particle(particle) = content {
@@ -159,6 +189,8 @@ fn main() -> Result<ExitCode> {
             markup_summary(&mut out, &catalog.summary())?;
             let part_modules = parts::emit(&system, &inputs, &emitted, &catalog)?;
             parts_summary(&mut out, &part_modules)?;
+            let written = classes::emit(&system, &inputs, &emitted, &catalog)?;
+            classes_summary(&mut out, &written)?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {

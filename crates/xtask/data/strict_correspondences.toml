@@ -1,0 +1,453 @@
+# What a Strict save writes for each Transitional form that has a Strict one
+# (D21, D22), written by officekit's authors. The comparison of the two schema
+# sets says what Transitional adds; it cannot say what each addition becomes,
+# so this table does. The generator stops when an addition the comparison
+# finds has no row, or a row names no addition. An attribute or a child that
+# Transitional adds and no row converts has no Strict form: writing it in
+# Strict fails.
+#
+# Types and members are named by the prefix of their namespace in the
+# namespace table, attributes and children by their local name in the named
+# complex type. Sections cited are of ECMA-376, 5th edition.
+
+# Enumeration values Transitional adds to a simple type, each with the value
+# Strict writes in its place.
+
+[[value]]
+# Part 4, 14.11.2: left and right are semantically equivalent to start and end.
+type = "w:ST_Jc"
+values = { left = "start", right = "end" }
+
+[[value]]
+# Part 4, 14.11.3: aligned to the leading and the trailing edge.
+type = "w:ST_JcTable"
+values = { left = "start", right = "end" }
+
+[[value]]
+# Part 4, 14.11.5: sort by name, priority, default, font, based on, type.
+type = "w:ST_StyleSort"
+values = { "0000" = "name", "0001" = "priority", "0002" = "default", "0003" = "font", "0004" = "basedOn", "0005" = "type" }
+
+[[value]]
+# Part 4, 14.11.6: semantically equivalent to start and end.
+type = "w:ST_TabJc"
+values = { left = "start", right = "end" }
+
+[[value]]
+# Part 4, 14.11.7: each value is semantically equivalent to its Strict one.
+type = "w:ST_TextDirection"
+values = { btLr = "lr", lrTb = "tb", lrTbV = "tbV", tbLrV = "lrV", tbRl = "rl", tbRlV = "rlV" }
+
+[[value]]
+# Part 4, 15.8.1: topRight is semantically equivalent to topEnd.
+type = "x:ST_PivotAreaType"
+values = { topRight = "topEnd" }
+
+# Union members Transitional adds: a bare number whose unit Part 4 gives,
+# written as a percentage, or a spelling written as Strict's. `per_percent` is
+# how many of the number make one percent; `decimals` caps the decimal places
+# when the Strict type's pattern does, the last kept place rounded half away
+# from zero.
+
+[[member]]
+# Part 4, 18.1.3.16: a whole number of percent.
+type = "c:ST_BubbleScale"
+member = "c:ST_BubbleScaleUInt"
+per_percent = 1
+
+[[member]]
+# Part 4, 14.11.10: a whole number of percent; CT_TblWidth's `w`, in
+# fiftieths, is a measure below.
+type = "w:ST_DecimalNumberOrPercent"
+member = "w:ST_UnqualifiedPercentage"
+per_percent = 1
+
+[[member]]
+# Part 4, 18.1.3.2: a whole number of percent.
+type = "c:ST_DepthPercent"
+member = "c:ST_DepthPercentUShort"
+per_percent = 1
+
+[[member]]
+# Part 4, 17.2.2.7: thousandths of a percent; Strict's pattern allows two
+# decimal places.
+type = "a:ST_FixedPercentage"
+member = "a:ST_FixedPercentageDecimal"
+per_percent = 1000
+decimals = 2
+
+[[member]]
+# Part 4, 18.1.3.6: a whole number of percent.
+type = "c:ST_GapAmount"
+member = "c:ST_GapAmountUShort"
+per_percent = 1
+
+[[member]]
+# Part 4, 18.1.3.4: a whole number of percent.
+type = "c:ST_HPercent"
+member = "c:ST_HPercentUShort"
+per_percent = 1
+
+[[member]]
+# Part 4, 18.1.3.10: a whole number of percent.
+type = "c:ST_HoleSize"
+member = "c:ST_HoleSizeUByte"
+per_percent = 1
+
+[[member]]
+# Part 4, 18.1.3.12: a whole number of percent.
+type = "c:ST_LblOffset"
+member = "c:ST_LblOffsetUShort"
+per_percent = 1
+
+[[member]]
+# Part 4, A.8.9: ST_OnOff1 adds on and off, which Strict writes true and false.
+type = "s:ST_OnOff"
+member = "s:ST_OnOff1"
+values = { on = "true", off = "false" }
+
+[[member]]
+# Part 4, 18.1.3.14: a whole number of percent.
+type = "c:ST_Overlap"
+member = "c:ST_OverlapByte"
+per_percent = 1
+
+[[member]]
+# Part 4, 17.2.2.12: thousandths of a percent.
+type = "a:ST_Percentage"
+member = "a:ST_PercentageDecimal"
+per_percent = 1000
+
+[[member]]
+# Part 4, 17.2.2.8: thousandths of a percent; Strict's pattern allows two
+# decimal places.
+type = "a:ST_PositiveFixedPercentage"
+member = "a:ST_PositiveFixedPercentageDecimal"
+per_percent = 1000
+decimals = 2
+
+[[member]]
+# Part 4, 17.2.2.9: thousandths of a percent.
+type = "a:ST_PositivePercentage"
+member = "a:ST_PositivePercentageDecimal"
+per_percent = 1000
+
+[[member]]
+# Part 4, 17.2.2.13 adds xsd:int and gives no unit; DrawingML counts every
+# other bare percentage in thousandths (17.2.2.7 to 17.2.2.14).
+type = "dgm:ST_PrSetCustVal"
+member = "xsd:int"
+per_percent = 1000
+
+[[member]]
+# Part 4, 18.1.3.8: a whole number of percent.
+type = "c:ST_SecondPieSize"
+member = "c:ST_SecondPieSizeUShort"
+per_percent = 1
+
+[[member]]
+# Part 4, 17.2.2.14: thousandths of a percent; Strict's pattern allows whole
+# percents only.
+type = "a:ST_TextBulletSize"
+member = "a:ST_TextBulletSizeDecimal"
+per_percent = 1000
+decimals = 0
+
+[[member]]
+# Part 4, 17.2.2.10: thousandths of a percent.
+type = "a:ST_TextFontScalePercentOrPercentString"
+member = "a:ST_TextFontScalePercent"
+per_percent = 1000
+
+[[member]]
+# Part 4, 14.11.11: a whole number of percent.
+type = "w:ST_TextScale"
+member = "w:ST_TextScaleDecimal"
+per_percent = 1
+
+[[member]]
+# Part 4, 17.2.2.11: thousandths of a percent.
+type = "a:ST_TextSpacingPercentOrPercentString"
+member = "a:ST_TextSpacingPercent"
+per_percent = 1000
+
+[[member]]
+# Part 4, 18.1.3.17 adds xsd:unsignedInt and gives no unit; every other bare
+# number of a chart's percentage types is a whole number of percent
+# (18.1.3.2 to 18.1.3.16).
+type = "c:ST_Thickness"
+member = "xsd:unsignedInt"
+per_percent = 1
+
+# A measure whose unit another attribute of its element names: `percent` in
+# that attribute makes the bare number count `per_percent` of a percent, any
+# other unit `per_point` of a point.
+
+[[measure]]
+# Part 4, 14.11.10: with type pct, w counts fiftieths of a percent. Part 1,
+# 17.4.87: with any other type, w counts twentieths of a point (dxa).
+type = "w:CT_TblWidth"
+attribute = "w"
+unit = "type"
+percent = "pct"
+per_percent = 50
+per_point = 20
+
+# Children Transitional adds that Strict names otherwise. When the element
+# holds both, the Strict one is kept.
+
+[[child]]
+# Part 4, 14.4.2 and 14.4.6: semantically equivalent to start and end.
+type = "w:CT_TblBorders"
+renames = { left = "start", right = "end" }
+
+[[child]]
+# Part 4, 14.4.4 and 14.4.7: semantically equivalent to start and end.
+type = "w:CT_TblCellMar"
+renames = { left = "start", right = "end" }
+
+[[child]]
+# Part 4, 14.4.1 and 14.4.5: semantically equivalent to start and end.
+type = "w:CT_TcBorders"
+renames = { left = "start", right = "end" }
+
+[[child]]
+# Part 4, 14.4.3 and 14.4.8: semantically equivalent to start and end.
+type = "w:CT_TcMar"
+renames = { left = "start", right = "end" }
+
+[[child]]
+# Part 4, 15.5.1 and 15.5.2: semantically equivalent to start and end.
+type = "x:CT_Border"
+renames = { left = "start", right = "end" }
+
+# Attributes Transitional adds that Strict names otherwise. When the element
+# holds both, the Strict one is kept.
+
+[[attribute]]
+# Part 4, 14.3.1.2: semantically equivalent to start, startChars, end, and
+# endChars.
+type = "w:CT_Ind"
+renames = { left = "start", leftChars = "startChars", right = "end", rightChars = "endChars" }
+
+[[attribute]]
+# Part 4, 15.9.1: a calculation-chain cell's ref is semantically equivalent to r.
+type = "x:CT_CalcCell"
+renames = { ref = "r" }
+
+[[attribute]]
+# Part 4, 15.4.1.3.
+type = "x:CT_DataConsolidate"
+renames = { leftLabels = "startLabels" }
+
+# Attributes Transitional adds that Strict writes as a child element of the
+# same name, holding the attribute's text.
+
+[[child_attribute]]
+# Part 4, 15.4.1.4.
+type = "x:CT_ProtectedRange"
+attribute = "securityDescriptor"
+child = "securityDescriptor"
+
+# Bitmasks Transitional packs into one attribute, written as the ST_OnOff
+# attributes Strict declares: `characters` names the attribute of each
+# character of a string of 0 and 1, first first; `bits` gives each attribute's
+# bit of a hexadecimal number.
+
+[[packed]]
+# Part 4, 14.3.1.1 and 14.11.9: first row, last row, first column, last
+# column, band 1 and 2 vertical, band 1 and 2 horizontal, the NE, NW, SE, and
+# SW cells.
+type = "w:CT_Cnf"
+attribute = "val"
+characters = [
+    "firstRow",
+    "lastRow",
+    "firstColumn",
+    "lastColumn",
+    "oddVBand",
+    "evenVBand",
+    "oddHBand",
+    "evenHBand",
+    "firstRowLastColumn",
+    "firstRowFirstColumn",
+    "lastRowLastColumn",
+    "lastRowFirstColumn",
+]
+
+[[packed]]
+# Part 4, 14.4.11 and 14.4.12.
+type = "w:CT_TblLook"
+attribute = "val"
+bits = { firstRow = 0x0020, lastRow = 0x0040, firstColumn = 0x0080, lastColumn = 0x0100, noHBand = 0x0200, noVBand = 0x0400 }
+
+[[packed]]
+# Part 4, 14.8.2.4; 0x0010 is undefined and has no attribute.
+type = "w:CT_StylePaneFilter"
+attribute = "val"
+bits = { allStyles = 0x0001, customStyles = 0x0002, latentStyles = 0x0004, stylesInUse = 0x0008, headingStyles = 0x0020, numberingStyles = 0x0040, tableStyles = 0x0080, directFormattingOnRuns = 0x0100, directFormattingOnParagraphs = 0x0200, directFormattingOnNumbering = 0x0400, directFormattingOnTables = 0x0800, clearFormatting = 0x1000, top3HeadingStyles = 0x2000, visibleStyles = 0x4000, alternateStyleNames = 0x8000 }
+
+# Codes Transitional writes for a character set, written as the IANA name
+# `to` holds in Strict. `codes` names the table below, whose codes are
+# `written` in hexadecimal or in decimal; a code with no row has no Strict
+# form.
+
+[[character_set]]
+# Part 4, 14.5.1.1.
+type = "w:CT_Charset"
+attribute = "val"
+to = "characterSet"
+codes = "charset"
+written = "hexadecimal"
+
+[[character_set]]
+# Part 4, 15.7.1.
+type = "x:CT_TextPr"
+attribute = "codePage"
+to = "characterSet"
+codes = "code_page"
+written = "decimal"
+
+[[character_set]]
+# Part 4, 15.3.2.
+type = "x:CT_WebPublishing"
+attribute = "codePage"
+to = "characterSet"
+codes = "code_page"
+written = "decimal"
+
+# Serial date-times Transitional writes as a number, written in ISO 8601 as
+# the attribute `to` (in the 1900 date system, which a node's own write takes;
+# the attribute `to` already present is kept).
+
+[[iso_date]]
+# Part 4, 15.4.2.1.
+type = "x:CT_DynamicFilter"
+attribute = "maxVal"
+to = "maxValIso"
+
+[[iso_date]]
+# Part 4, 15.6.1.1.
+type = "x:CT_PivotCacheDefinition"
+attribute = "refreshedDate"
+to = "refreshedDateIso"
+
+# Part 4, 14.5.1.1: each one-byte character-set code with the name Part 4
+# gives it, spelled as Part 4 prints it. 01 (default), 02 (Symbol), and FF
+# (OEM) have none.
+[charset]
+"00" = "iso-8859-1"
+"4D" = "macintosh"
+"80" = "shift_jis"
+"81" = "ks_c-5601-1987"
+"82" = "KS_C-5601-1992"
+"86" = "GBK"
+"88" = "Big5"
+"A1" = "windows-1253"
+"A2" = "iso-8859-9"
+"A3" = "windows-1258"
+"B1" = "windows-1255"
+"B2" = "windows-1256"
+"BA" = "windows-1257"
+"CC" = "windows-1251"
+"DE" = "windows-874"
+"EE" = "windows-1250"
+
+# Windows code pages with an IANA name. Part 4 gives no table for codePage
+# (15.3.2 and 15.7.1 point at http://www.unicode.org/Public/MAPPINGS/), so the
+# rows are the identifiers of Microsoft's "Code Page Identifiers"
+# (https://learn.microsoft.com/windows/win32/intl/code-page-identifiers, read
+# 2026-10-16) whose .NET name the IANA character-set registry
+# (https://www.iana.org/assignments/character-sets/character-sets-1.csv, read
+# 2026-10-16) holds as a name or an alias, spelled as Microsoft spells it. A
+# code page with no row has no Strict form.
+[code_page]
+37 = "IBM037"
+437 = "IBM437"
+500 = "IBM500"
+708 = "ASMO-708"
+775 = "ibm775"
+850 = "ibm850"
+852 = "ibm852"
+855 = "IBM855"
+857 = "ibm857"
+858 = "IBM00858"
+860 = "IBM860"
+861 = "ibm861"
+863 = "IBM863"
+864 = "IBM864"
+865 = "IBM865"
+866 = "cp866"
+869 = "ibm869"
+870 = "IBM870"
+874 = "windows-874"
+932 = "shift_jis"
+936 = "gb2312"
+949 = "ks_c_5601-1987"
+950 = "big5"
+1026 = "IBM1026"
+1140 = "IBM01140"
+1141 = "IBM01141"
+1142 = "IBM01142"
+1143 = "IBM01143"
+1144 = "IBM01144"
+1145 = "IBM01145"
+1146 = "IBM01146"
+1147 = "IBM01147"
+1148 = "IBM01148"
+1149 = "IBM01149"
+1200 = "utf-16"
+1250 = "windows-1250"
+1251 = "windows-1251"
+1252 = "windows-1252"
+1253 = "windows-1253"
+1254 = "windows-1254"
+1255 = "windows-1255"
+1256 = "windows-1256"
+1257 = "windows-1257"
+1258 = "windows-1258"
+10000 = "macintosh"
+12000 = "utf-32"
+12001 = "utf-32BE"
+20127 = "us-ascii"
+20273 = "IBM273"
+20277 = "IBM277"
+20278 = "IBM278"
+20280 = "IBM280"
+20284 = "IBM284"
+20285 = "IBM285"
+20290 = "IBM290"
+20297 = "IBM297"
+20420 = "IBM420"
+20423 = "IBM423"
+20424 = "IBM424"
+20838 = "IBM-Thai"
+20866 = "koi8-r"
+20871 = "IBM871"
+20880 = "IBM880"
+20905 = "IBM905"
+20924 = "IBM00924"
+20932 = "EUC-JP"
+21866 = "koi8-u"
+28591 = "iso-8859-1"
+28592 = "iso-8859-2"
+28593 = "iso-8859-3"
+28594 = "iso-8859-4"
+28595 = "iso-8859-5"
+28596 = "iso-8859-6"
+28597 = "iso-8859-7"
+28598 = "iso-8859-8"
+28599 = "iso-8859-9"
+28603 = "iso-8859-13"
+28605 = "iso-8859-15"
+38598 = "iso-8859-8-i"
+50220 = "iso-2022-jp"
+50221 = "csISO2022JP"
+50222 = "iso-2022-jp"
+50225 = "iso-2022-kr"
+51932 = "euc-jp"
+51949 = "euc-kr"
+52936 = "hz-gb-2312"
+54936 = "GB18030"
+65000 = "utf-7"
+65001 = "utf-8"

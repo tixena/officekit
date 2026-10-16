@@ -13,6 +13,8 @@
 //! - [`validation`] ports `DocumentFormat.OpenXml.Validation`.
 //! - [`docx`], [`spreadsheet`], and [`presentation`] hold the typed
 //!   document classes and the operations over the generated types.
+//! - `transitional` and `strict`, each behind the feature of its name, read
+//!   and write every node of the typed tree in that conformance class.
 //!
 //! Every byte that reaches or leaves the operating system does so through an
 //! [`os_shim::System`], so callers choose between the real filesystem and an
@@ -20,6 +22,8 @@
 
 extern crate alloc;
 
+#[cfg(any(feature = "strict", feature = "transitional"))]
+mod class_rules;
 pub mod compact;
 pub mod docx;
 pub mod error;
@@ -30,5 +34,9 @@ pub mod parts;
 pub mod presentation;
 pub mod spreadsheet;
 pub mod stream;
+#[cfg(feature = "strict")]
+pub mod strict;
+#[cfg(feature = "transitional")]
+pub mod transitional;
 pub mod validation;
 pub mod xml;
