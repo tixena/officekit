@@ -109,3 +109,24 @@ fn a_long_condition_puts_its_brace_on_a_line_of_its_own() {
         "    if let super::document_properties_custom::CustomFilePropertyContent::BinaryStorage(arm) = *item\n    {\n"
     );
 }
+
+#[test]
+fn a_method_call_as_a_nested_calls_lone_argument_takes_rustfmts_comma() {
+    let mut out = String::new();
+    layout::line(
+        "        return ",
+        &Expr::call(
+            "Some",
+            vec![Expr::call(
+                "super::Model3DExtensionContent::ArcSegment",
+                vec![Expr::call("arm.transform", vec![Expr::atom("ctx")])],
+            )],
+        ),
+        ";",
+        &mut out,
+    );
+    assert_eq!(
+        out,
+        "        return Some(super::Model3DExtensionContent::ArcSegment(\n            arm.transform(ctx),\n        ));\n"
+    );
+}

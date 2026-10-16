@@ -64,6 +64,7 @@ enum Tactic {
 struct Shape {
     indent: usize,
     offset: usize,
+    one_line_chain: bool,
     width: usize,
 }
 
@@ -96,6 +97,21 @@ impl Expr {
             | Self::Struct(_, _)
             | Self::Tuple(_) => count == 1,
             Self::Prefix(prefix, inner) => prefix == "&" && inner.can_overflow(count),
+        }
+    }
+
+    /// rustfmt's `is_method_call`: a method call, maybe borrowed, negated or
+    /// otherwise prefixed.
+    fn is_method_call(&self) -> bool {
+        match self {
+            Self::Method(_, _) => true,
+            Self::Prefix(_, inner) => inner.is_method_call(),
+            Self::Atom(_)
+            | Self::Call(_, _)
+            | Self::Pattern(_, _)
+            | Self::Slice(_)
+            | Self::Struct(_, _)
+            | Self::Tuple(_) => false,
         }
     }
 
@@ -219,12 +235,16 @@ impl Shape {
             indent,
             offset: 0,
             width: MAX_WIDTH.saturating_sub(indent),
+            one_line_chain: false,
         }
     }
 
     /// A line one step in from this shape's block indent.
     const fn nested(self) -> Self {
-        Self::indented(self.indent + INDENT)
+        Self {
+            one_line_chain: self.one_line_chain,
+            ..Self::indented(self.indent + INDENT)
+        }
     }
 
     /// The same line, `by` columns further on.
@@ -233,6 +253,7 @@ impl Shape {
             indent: self.indent,
             offset: self.offset + by,
             width: self.width.checked_sub(by)?,
+            one_line_chain: self.one_line_chain,
         })
     }
 
@@ -337,7 +358,14 @@ fn overflow_last(
             }
             .offset_left(before)
         };
-        if let Some(rewritten) = arg_shape.and_then(|inner| last.rewrite(inner)) {
+        let forced = !combine && last.is_method_call();
+        let attempt = arg_shape.and_then(|inner| {
+            last.rewrite(Shape {
+                one_line_chain: inner.one_line_chain || forced,
+                ..inner
+            })
+        });
+        if let Some(rewritten) = attempt {
             if let Some(slot) = rendered.last_mut() {
                 *slot = Some(first_line(&rewritten).to_owned());
             }
@@ -439,7 +467,10 @@ fn write_list(list: &[Option<String>], tactic: Tactic, nested: Shape) -> Option<
 
 /// A method call on a name, as rustfmt lays out a chain of one call: on the
 /// name's line when it fits there, else on the next line one step in when
-/// that takes fewer lines.
+/// that takes fewer lines. Under `one_line_chain` (rustfmt's
+/// `force_one_line_chain`, set by `try_overflow_last_item` for a method call
+/// that overflows a list) a chain on two lines is refused, as `join_rewrites`
+/// in rustfmt's `chains.rs` does.
 fn method_chain(name: &str, items: &[Expr], shape: Shape) -> Option<String> {
     let (root, method) = name.split_once('.')?;
     if root.len() > shape.width {
@@ -489,6 +520,9 @@ fn method_chain(name: &str, items: &[Expr], shape: Shape) -> Option<String> {
             false,
         )
     };
+    if !joined && shape.one_line_chain {
+        return None;
+    }
     let mut out = String::from(root);
     if !joined {
         out.push('\n');
