@@ -339,7 +339,8 @@
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The relationship types of every part module, in both classes' spelling (D21).
+//! The relationship types of every part module and of the sections of Part 1 that define no part,
+//! in both classes' spelling (D21).
 //!
 //! Part 1 states the Strict type of each part and Part 4 the Transitional one; the types of the
 //! parts Part 2 defines and of Microsoft's extensions are one URI in both classes.
@@ -353,6 +354,144 @@ impl RelationshipType {
     pub const ACTIVE_X_CONTROL_BINARY: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/activeXControlBinary",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/activeXControlBinary",
+    };
+    /// Every relationship type of the standard and the extensions.
+    pub const ALL: &'static [Self] = &[
+        Self::ACTIVE_X_CONTROL_BINARY,
+        Self::ATTACHED_TEMPLATE,
+        Self::ATTACHED_TOOLBARS,
+        Self::AUDIO,
+        Self::AUTHORS,
+        Self::A_F_CHUNK,
+        Self::CALC_CHAIN,
+        Self::CHART,
+        Self::CHARTSHEET,
+        Self::CHART_COLOR_STYLE,
+        Self::CHART_EX,
+        Self::CHART_STYLE,
+        Self::CHART_USER_SHAPES,
+        Self::CLASSIFICATIONLABELS,
+        Self::COMMENTS,
+        Self::COMMENTS_EXTENDED,
+        Self::COMMENTS_EXTENSIBLE,
+        Self::COMMENTS_IDS,
+        Self::COMMENT_AUTHORS,
+        Self::CONNECTIONS,
+        Self::CONTROL,
+        Self::CORE_PROPERTIES,
+        Self::CTRL_PROP,
+        Self::CUSTOM_DATA,
+        Self::CUSTOM_DATA_PROPERTIES,
+        Self::CUSTOM_PROPERTIES,
+        Self::CUSTOM_PROPERTY,
+        Self::CUSTOM_XML,
+        Self::CUSTOM_XML_PROPERTIES,
+        Self::DIAGRAM_COLORS,
+        Self::DIAGRAM_DATA,
+        Self::DIAGRAM_DRAWING,
+        Self::DIAGRAM_LAYOUT,
+        Self::DIAGRAM_QUICK_STYLE,
+        Self::DIALOGSHEET,
+        Self::DIGITAL_SIGNATURE_ORIGIN,
+        Self::DIGITAL_SIGNATURE_SIGNATURE,
+        Self::DOCUMENTTASKS,
+        Self::DRAWING,
+        Self::ENDNOTES,
+        Self::EXTENDED_PROPERTIES,
+        Self::EXTERNAL_LINK,
+        Self::EXTERNAL_LINK_PATH,
+        Self::FEATURE_PROPERTY_BAG,
+        Self::FONT,
+        Self::FONT_TABLE,
+        Self::FOOTER,
+        Self::FOOTNOTES,
+        Self::FRAME,
+        Self::GLOSSARY_DOCUMENT,
+        Self::HANDOUT_MASTER,
+        Self::HEADER,
+        Self::HTML_PUB_SAVE_AS,
+        Self::HYPERLINK,
+        Self::IMAGE,
+        Self::KEY_MAP_CUSTOMIZATIONS,
+        Self::LEGACY_DIAGRAM_TEXT,
+        Self::LEGACY_DOC_TEXT_INFO,
+        Self::MAIL_MERGE_HEADER_SOURCE,
+        Self::MAIL_MERGE_SOURCE,
+        Self::MODEL3D,
+        Self::NAMED_SHEET_VIEW,
+        Self::NOTES_MASTER,
+        Self::NOTES_SLIDE,
+        Self::NUMBERING,
+        Self::OFFICE_DOCUMENT,
+        Self::OLE_OBJECT,
+        Self::PACKAGE,
+        Self::PEOPLE,
+        Self::PERSON,
+        Self::PIVOT_CACHE_DEFINITION,
+        Self::PIVOT_CACHE_RECORDS,
+        Self::PIVOT_TABLE,
+        Self::POWER_POINT_COMMENT,
+        Self::PRES_PROPERTIES,
+        Self::PRINTER_SETTINGS,
+        Self::QUERY_TABLE,
+        Self::RD_ARRAY,
+        Self::RD_RICH_VALUE,
+        Self::RD_RICH_VALUE_STRUCTURE,
+        Self::RD_RICH_VALUE_TYPES,
+        Self::RD_RICH_VALUE_WEB_IMAGE,
+        Self::RD_SUPPORTING_PROPERTY_BAG,
+        Self::RD_SUPPORTING_PROPERTY_BAG_STRUCTURE,
+        Self::RECIPIENT_DATA,
+        Self::REVISION_HEADERS,
+        Self::REVISION_LOG,
+        Self::RIBBON_AND_BACKSTAGE_CUSTOMIZATIONS,
+        Self::RIBBON_EXTENSIBILITY,
+        Self::RICH_STYLES,
+        Self::SETTINGS,
+        Self::SHARED_STRINGS,
+        Self::SHEET_METADATA,
+        Self::SLICER,
+        Self::SLICER_CACHE,
+        Self::SLIDE,
+        Self::SLIDE_LAYOUT,
+        Self::SLIDE_MASTER,
+        Self::SLIDE_UPDATE_INFO,
+        Self::SLIDE_UPDATE_URL,
+        Self::STYLES,
+        Self::STYLES_WITH_EFFECTS,
+        Self::SUB_DOCUMENT,
+        Self::TABLE,
+        Self::TABLE_SINGLE_CELLS,
+        Self::TABLE_STYLES,
+        Self::TAGS,
+        Self::THEME,
+        Self::THEME_OVERRIDE,
+        Self::THREADED_COMMENT,
+        Self::THUMBNAIL,
+        Self::TIMELINE,
+        Self::TIMELINE_CACHE,
+        Self::TRANSFORM,
+        Self::UI_USER_CUSTOMIZATION,
+        Self::USERNAMES,
+        Self::VBA_PROJECT,
+        Self::VIDEO,
+        Self::VIEW_PROPERTIES,
+        Self::VML_DRAWING,
+        Self::VOLATILE_DEPENDENCIES,
+        Self::WEBEXTENSION,
+        Self::WEBEXTENSIONTASKPANES,
+        Self::WEB_SETTINGS,
+        Self::WORD_VBA_DATA,
+        Self::WORKSHEET,
+        Self::WS_SORT_MAP,
+        Self::XL_INTL_MACROSHEET,
+        Self::XL_MACROSHEET,
+        Self::XML_MAPS,
+    ];
+    /// The relationship type of Part 1, 11.4 "Document Template", and Part 4, 9.3; no part module.
+    pub const ATTACHED_TEMPLATE: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/attachedTemplate",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/attachedTemplate",
     };
     /// The relationship type of `excel_attached_toolbars` and `word_attached_toolbars`; one URI in
     /// both classes.
@@ -557,6 +696,12 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/externalLink",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLink",
     };
+    /// The relationship type of Part 1, 12.4 "External Workbooks", and Part 4, 10.3; no part
+    /// module.
+    pub const EXTERNAL_LINK_PATH: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/externalLinkPath",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLinkPath",
+    };
     /// The relationship type of `feature_property_bags`; one URI in both classes.
     pub const FEATURE_PROPERTY_BAG: Self = Self {
         strict: "http://schemas.microsoft.com/office/2022/11/relationships/FeaturePropertyBag",
@@ -582,6 +727,11 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/footnotes",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes",
     };
+    /// The relationship type of Part 1, 11.5 "Framesets", and Part 4, 9.4; no part module.
+    pub const FRAME: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/frame",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/frame",
+    };
     /// The relationship type of `glossary_document`.
     pub const GLOSSARY_DOCUMENT: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/glossaryDocument",
@@ -596,6 +746,17 @@ impl RelationshipType {
     pub const HEADER: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/header",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header",
+    };
+    /// The relationship type of Part 1, 13.4 "HTML Publish Location", and Part 4, 11.3; no part
+    /// module.
+    pub const HTML_PUB_SAVE_AS: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/htmlPubSaveAs",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/htmlPubSaveAs",
+    };
+    /// The relationship type of Part 1, 15.3 "Hyperlinks", and Part 4, 13.3; no part module.
+    pub const HYPERLINK: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/hyperlink",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
     };
     /// The relationship type of `image`.
     pub const IMAGE: Self = Self {
@@ -616,6 +777,18 @@ impl RelationshipType {
     pub const LEGACY_DOC_TEXT_INFO: Self = Self {
         strict: "http://schemas.microsoft.com/office/2006/relationships/legacyDocTextInfo",
         transitional: "http://schemas.microsoft.com/office/2006/relationships/legacyDocTextInfo",
+    };
+    /// The relationship type of Part 1, 11.8 "Mail Merge Header Data Source", and Part 4, 9.7; no
+    /// part module.
+    pub const MAIL_MERGE_HEADER_SOURCE: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/mailMergeHeaderSource",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/mailMergeHeaderSource",
+    };
+    /// The relationship type of Part 1, 11.7 "Mail Merge Data Source", and Part 4, 9.6; no part
+    /// module.
+    pub const MAIL_MERGE_SOURCE: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/mailMergeSource",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/mailMergeSource",
     };
     /// The relationship type of `model3d_reference_relationship`; one URI in both classes.
     pub const MODEL3D: Self = Self {
@@ -812,6 +985,12 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideUpdateInfo",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateInfo",
     };
+    /// The relationship type of Part 1, 13.5 "Slide Synchronization Server Location", and Part 4,
+    /// 11.4; no part module.
+    pub const SLIDE_UPDATE_URL: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/slideUpdateUrl",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateUrl",
+    };
     /// The relationship type of `style_definitions` and `styles`.
     pub const STYLES: Self = Self {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/styles",
@@ -821,6 +1000,12 @@ impl RelationshipType {
     pub const STYLES_WITH_EFFECTS: Self = Self {
         strict: "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
         transitional: "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
+    };
+    /// The relationship type of Part 1, 11.6 "Master Documents and Subdocuments", and Part 4, 9.5;
+    /// no part module.
+    pub const SUB_DOCUMENT: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/subDocument",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/subDocument",
     };
     /// The relationship type of `table_definition`.
     pub const TABLE: Self = Self {
@@ -871,6 +1056,11 @@ impl RelationshipType {
     pub const TIMELINE_CACHE: Self = Self {
         strict: "http://schemas.microsoft.com/office/2011/relationships/timelineCache",
         transitional: "http://schemas.microsoft.com/office/2011/relationships/timelineCache",
+    };
+    /// The relationship type of Part 1, 11.9 "XSL Transformation", and Part 4, 9.8; no part module.
+    pub const TRANSFORM: Self = Self {
+        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/transform",
+        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/transform",
     };
     /// The relationship type of `quick_access_toolbar_customizations`; one URI in both classes.
     pub const UI_USER_CUSTOMIZATION: Self = Self {
@@ -952,6 +1142,15 @@ impl RelationshipType {
         strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/xmlMaps",
         transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/xmlMaps",
     };
+
+    /// The type `type_uri` spells in either class.
+    #[must_use]
+    pub fn find(type_uri: &str) -> Option<Self> {
+        Self::ALL
+            .iter()
+            .copied()
+            .find(|known| known.matches(type_uri))
+    }
 
     /// The spelling `class` writes.
     #[must_use]

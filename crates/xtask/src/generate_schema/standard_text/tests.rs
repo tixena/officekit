@@ -1,4 +1,7 @@
-use super::{element_headings, part_definitions, simple_type_headings, transitional_parts};
+use super::{
+    element_headings, part_definitions, relationship_sections, simple_type_headings,
+    transitional_parts, transitional_relationships,
+};
 
 #[test]
 fn a_body_heading_counts_and_its_table_of_contents_line_does_not() {
@@ -158,4 +161,61 @@ fn a_prose_value_is_joined_with_spaces() {
     );
     let parts = transitional_parts(text);
     assert_eq!(parts[0].root_namespace.as_deref(), Some("not applicable"));
+}
+
+#[test]
+fn a_relationship_section_outside_the_part_definitions_states_its_type() {
+    let text = concat!(
+        "11.3.1          Alternative Format Import Part\n",
+        "Source           http://purl.oclc.org/ooxml/officeDocument/relationships/aFChunk\n",
+        "Relationship:\n\n",
+        "11.4        Document Template\n",
+        "Source           http://purl.oclc.org/ooxml/officeDocument/relationships/attachedTemplate\n",
+        "Relationship:\n\n\n",
+        "A document template can be represented by an instance of a WordprocessingML package.\n",
+        "15.3       Hyperlinks\n",
+        "Source           http://purl.oclc.org/ooxml/officeDocument/relationships/hyperlink\n",
+        "Relationship:\n\n",
+        "15.4       Custom Properties\n",
+        "A section with no field.\n",
+    );
+    let sections: Vec<_> = relationship_sections(text)
+        .into_iter()
+        .map(|found| (found.section, found.title, found.source_relationship))
+        .collect();
+    assert_eq!(
+        sections,
+        [
+            (
+                "11.4".to_owned(),
+                "Document Template".to_owned(),
+                "http://purl.oclc.org/ooxml/officeDocument/relationships/attachedTemplate"
+                    .to_owned()
+            ),
+            (
+                "15.3".to_owned(),
+                "Hyperlinks".to_owned(),
+                "http://purl.oclc.org/ooxml/officeDocument/relationships/hyperlink".to_owned()
+            ),
+        ]
+    );
+}
+
+#[test]
+fn a_uri_split_after_a_slash_is_joined_to_the_next_word_of_its_line() {
+    let text = concat!(
+        "11.3      HTML Publish Location (Part 1, \u{a7}13.4)\n",
+        "Source            http://schemas.openxmlformats.org/officeDocument/2006/relationships/ htmlPubSaveAs\n",
+        "Relationship:\n\n",
+        "11.4      Slide Synchronization Server Location (Part 1, \u{a7}13.5)\n",
+        "Source            http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateUrl\n",
+        "Relationship:\n",
+    );
+    let restated = transitional_relationships(text);
+    assert_eq!(restated[0].part_1_section, "13.4");
+    assert_eq!(
+        restated[0].source_relationship.as_deref(),
+        Some("http://schemas.openxmlformats.org/officeDocument/2006/relationships/htmlPubSaveAs")
+    );
+    assert_eq!(restated[1].part_1_section, "13.5");
 }

@@ -71,6 +71,15 @@ fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(),
 
 /// The methods of `RelationshipType`, after its constants.
 const RELATIONSHIP_METHODS: &str = "
+    /// The type `type_uri` spells in either class.
+    #[must_use]
+    pub fn find(type_uri: &str) -> Option<Self> {
+        Self::ALL
+            .iter()
+            .copied()
+            .find(|known| known.matches(type_uri))
+    }
+
     /// The spelling `class` writes.
     #[must_use]
     pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
@@ -512,17 +521,41 @@ fn relationship_doc(part: &PartType) -> String {
     }
 }
 
+/// The constant `ALL`, which lists every constant of `joined`.
+fn all_constant(joined: &Joined, out: &mut String) {
+    out.push_str(&layout::doc(
+        4,
+        "Every relationship type of the standard and the extensions.",
+    ));
+    layout::statement(
+        "    pub const ALL: &'static [Self] = ",
+        &Expr::Slice(
+            joined
+                .constants
+                .iter()
+                .map(|constant| Expr::atom(&format!("Self::{}", constant.name)))
+                .collect(),
+        ),
+        out,
+    );
+}
+
 /// `packaging/relationship_type.rs`: the one inherent `impl` of
 /// `RelationshipType`, a constant per type, then its methods.
 fn relationship_types(header: &str, joined: &Joined) -> String {
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "The relationship types of every part module, in both classes' spelling (D21).\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
+        "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling (D21).\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
     ));
     out.push_str(
         "\nuse crate::packaging::relationship::RelationshipType;\nuse crate::xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
     );
+    let mut all_written = false;
     for constant in &joined.constants {
+        if !all_written && constant.name.as_str() > "ALL" {
+            all_constant(joined, &mut out);
+            all_written = true;
+        }
         let modules: Vec<String> = constant
             .modules
             .iter()
@@ -533,10 +566,11 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
         } else {
             ""
         };
-        out.push_str(&layout::doc(
-            4,
-            &format!("The relationship type of {}{both}.", list(&modules)),
-        ));
+        let doc = constant.source.as_ref().map_or_else(
+            || format!("The relationship type of {}{both}.", list(&modules)),
+            |source| format!("The relationship type of {source}{both}; no part module."),
+        );
+        out.push_str(&layout::doc(4, &doc));
         layout::statement(
             &format!("    pub const {}: Self = ", constant.name),
             &Expr::Struct(
@@ -554,6 +588,9 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
             ),
             &mut out,
         );
+    }
+    if !all_written {
+        all_constant(joined, &mut out);
     }
     out.push_str(RELATIONSHIP_METHODS);
     out

@@ -59,6 +59,16 @@ pub struct TransitionalPart {
     pub title: String,
 }
 
+/// A section of Part 1 outside the part definitions that states a relationship type: `15.3 Hyperlinks`.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
+pub struct RelationshipSection {
+    pub section: String,
+    /// The Strict relationship type of the "Source Relationship:" field.
+    pub source_relationship: String,
+    pub title: String,
+}
+
 /// The text's lines without page furniture: a line that holds only a page number, and a line starting with a form
 /// feed, which holds the next page's running header.
 #[must_use]
@@ -217,16 +227,24 @@ fn field<'fields>(
 }
 
 /// A field value as the text states it: a URI is its first line's first word followed
-/// directly by each continuation line's first word; other text is joined with spaces.
+/// directly by each continuation line's first word, a word ending with `/` taking the
+/// next word of its line too (`.../relationships/ htmlPubSaveAs`); other text is joined
+/// with spaces.
 fn field_value(values: &[String]) -> String {
     let is_uri = values
         .first()
         .is_some_and(|first| first.starts_with("http://") || first.starts_with("https://"));
     if is_uri {
-        values
-            .iter()
-            .filter_map(|value| value.split_whitespace().next())
-            .collect()
+        let mut uri = String::new();
+        for value in values {
+            let mut words = value.split_whitespace();
+            let first = words.next().unwrap_or_default();
+            uri.push_str(first);
+            if first.ends_with('/') {
+                uri.push_str(words.next().unwrap_or_default());
+            }
+        }
+        uri
     } else {
         values.join(" ")
     }
@@ -332,6 +350,31 @@ fn root_element(body: &str) -> Option<String> {
 /// Every part of Part 4's part summaries, in document order.
 #[must_use]
 pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
+    restatements(text, |section| {
+        section_number(section, 3, 3)
+            && ["9.2.", "10.2.", "11.2.", "12.2.", "13.2."]
+                .iter()
+                .any(|p| section.starts_with(p))
+    })
+}
+
+/// Every relationship section of Part 4 (`9.3 Document Template (Part 1, §11.4)`), in document order, as the
+/// part it restates: the Part 1 section it names and the Transitional relationship type it states.
+#[must_use]
+pub fn transitional_relationships(text: &str) -> Vec<TransitionalPart> {
+    restatements(text, |section| {
+        section_number(section, 2, 2)
+            && ["9.", "10.", "11.", "12.", "13."]
+                .iter()
+                .any(|p| section.starts_with(p))
+    })
+    .into_iter()
+    .filter(|restated| restated.source_relationship.is_some())
+    .collect()
+}
+
+/// Every heading of Part 4 that names a Part 1 section and whose number `keep` accepts.
+fn restatements(text: &str, keep: impl Fn(&str) -> bool) -> Vec<TransitionalPart> {
     let lines = lines(text);
     let mut parts = Vec::new();
     for (index, line) in lines.iter().enumerate() {
@@ -348,11 +391,7 @@ pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
         let Some(part_1_section) = reference.strip_suffix(')') else {
             continue;
         };
-        if !section_number(section, 3, 3)
-            || !["9.2.", "10.2.", "11.2.", "12.2.", "13.2."]
-                .iter()
-                .any(|p| section.starts_with(p))
-        {
+        if !keep(section) {
             continue;
         }
         let found = fields(&lines[index + 1..]);
@@ -365,6 +404,46 @@ pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
         });
     }
     parts
+}
+
+/// Every section of clauses 11 to 15 of Part 1 that is not a part definition and states a "Source Relationship:",
+/// in document order.
+#[must_use]
+pub fn relationship_sections(text: &str) -> Vec<RelationshipSection> {
+    let lines = lines(text);
+    let mut sections = Vec::new();
+    for (index, line) in lines.iter().enumerate() {
+        if line.contains("....") {
+            continue;
+        }
+        let Some((section, raw_title)) = line.trim().split_once(char::is_whitespace) else {
+            continue;
+        };
+        let title = raw_title.trim();
+        let clause = ["11.", "12.", "13.", "14.", "15."]
+            .iter()
+            .any(|prefix| section.starts_with(prefix));
+        let part_definition = PART_SECTIONS
+            .iter()
+            .any(|prefix| section.starts_with(prefix))
+            && title.ends_with("Part");
+        if !clause
+            || !section_number(section, 2, 4)
+            || part_definition
+            || !title.starts_with(|c: char| c.is_ascii_uppercase())
+        {
+            continue;
+        }
+        let found = fields(&lines[index + 1..]);
+        if let Some(values) = field(&found, "Source") {
+            sections.push(RelationshipSection {
+                section: section.to_owned(),
+                source_relationship: field_value(values),
+                title: title.to_owned(),
+            });
+        }
+    }
+    sections
 }
 
 /// The counts the generator reports over the two texts, on one line.

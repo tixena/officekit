@@ -3,6 +3,7 @@ use core::iter;
 use super::{Validator, document_parts, reachable_parts, rule};
 use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
+use crate::packaging::relationship::RelationshipType;
 use crate::validation::error::{ErrorCode, ValidationError};
 use crate::xml::name::OfficeVersion;
 
@@ -153,6 +154,26 @@ fn a_strict_relationship_type_reaches_the_same_parts() {
     assert_eq!(
         reached(&package, OfficeVersion::Microsoft365),
         [("/word/document.xml".to_owned(), "MainDocumentPart")]
+    );
+}
+
+#[test]
+fn a_strict_extended_properties_type_reaches_the_extended_properties_part() {
+    let mut package = word(OFFICE_DOCUMENT, &[]);
+    let app = PartName::new("/docProps/app.xml").unwrap();
+    package
+        .set_part_bytes(
+            &app,
+            "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+            b"<a/>",
+        )
+        .unwrap();
+    package
+        .relate(None, &app, RelationshipType::EXTENDED_PROPERTIES.strict)
+        .unwrap();
+    assert!(
+        reached(&package, OfficeVersion::Microsoft365)
+            .contains(&("/docProps/app.xml".to_owned(), "ExtendedFilePropertiesPart"))
     );
 }
 

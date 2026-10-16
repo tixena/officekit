@@ -53,11 +53,6 @@ const CUSTOM_XML_PROPERTIES_DECLARATION: &str =
 const CUSTOM_XML_ITEM: &str = "/customXml/item{}.xml";
 const CUSTOM_XML_ITEM_PROPERTIES: &str = "/customXml/itemProps{}.xml";
 
-/// The `officeDocument` relationship family in each class's spelling.
-const STRICT_RELATIONSHIPS: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships/";
-const TRANSITIONAL_RELATIONSHIPS: &str =
-    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/";
-
 /// What a file of the memory filesystem is to the package.
 enum FileKind {
     ContentTypes,
@@ -697,26 +692,24 @@ impl Package {
         Ok(())
     }
 
-    /// Write every relationship type of the `officeDocument` family in
-    /// `class`'s spelling: `http://schemas.openxmlformats.org/officeDocument/2006/relationships/`
-    /// for Transitional, `http://purl.oclc.org/ooxml/officeDocument/relationships/`
-    /// for Strict. Other types, such as core properties', are the same in both.
+    /// Write every relationship type the standard defines in `class`'s
+    /// spelling. A type no standard defines, such as an extension's, is left
+    /// as written.
     ///
     /// # Errors
     ///
     /// [`PackageError::Io`] when a relationship part cannot be written.
     pub fn set_relationship_class(&mut self, class: ConformanceClass) -> Result<(), PackageError> {
-        let (from, to) = match class {
-            ConformanceClass::Strict => (TRANSITIONAL_RELATIONSHIPS, STRICT_RELATIONSHIPS),
-            ConformanceClass::Transitional => (STRICT_RELATIONSHIPS, TRANSITIONAL_RELATIONSHIPS),
-        };
         let mut changed = Vec::new();
         for (key, set) in &mut self.relationships {
             let mut any = false;
             for item in &mut set.items {
-                if let Some(rest) = item.type_uri.strip_prefix(from) {
-                    item.type_uri = format!("{to}{rest}");
-                    any = true;
+                if let Some(known) = RelationshipType::find(&item.type_uri) {
+                    let spelled = known.in_class(class);
+                    if spelled != item.type_uri {
+                        spelled.clone_into(&mut item.type_uri);
+                        any = true;
+                    }
                 }
             }
             if any {

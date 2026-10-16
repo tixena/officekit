@@ -42,28 +42,6 @@ const LEFT_OUT: &[(&str, &[&str])] = &[
     ),
 ];
 
-/// The Strict relationship types whose Transitional spelling is not the
-/// family's prefix swapped.
-const STRICT_RENAMED: &[(&str, &str)] = &[
-    (
-        "http://purl.oclc.org/ooxml/officeDocument/relationships/customProperties",
-        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties",
-    ),
-    (
-        "http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties",
-        "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
-    ),
-    (
-        "http://purl.oclc.org/ooxml/officeDocument/relationships/metadata/thumbnail",
-        "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail",
-    ),
-];
-
-/// The `officeDocument` relationship family in each class's spelling.
-const STRICT_RELATIONSHIPS: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships/";
-const TRANSITIONAL_RELATIONSHIPS: &str =
-    "http://schemas.openxmlformats.org/officeDocument/2006/relationships/";
-
 /// Checks a package against one target version, stopping at a number of errors.
 #[derive(Debug, Clone, Copy)]
 pub struct Validator {
@@ -307,17 +285,7 @@ fn rule(name: &str) -> Option<&'static PartRule> {
 
 /// A relationship type in its Transitional spelling, as the part rules name it.
 pub(crate) fn transitional_type(type_uri: &str) -> Cow<'_, str> {
-    if let Some((_, transitional)) = STRICT_RENAMED
-        .iter()
-        .find(|(strict, _)| *strict == type_uri)
-    {
-        return Cow::Borrowed(transitional);
-    }
-    type_uri
-        .strip_prefix(STRICT_RELATIONSHIPS)
-        .map_or(Cow::Borrowed(type_uri), |rest| {
-            Cow::Owned(format!("{TRANSITIONAL_RELATIONSHIPS}{rest}"))
-        })
+    Cow::Borrowed(RelationshipType::find(type_uri).map_or(type_uri, |known| known.transitional))
 }
 
 /// Whether the part's name ends in `.xml`, in any case.

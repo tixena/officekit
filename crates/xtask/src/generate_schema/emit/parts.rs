@@ -24,7 +24,9 @@ use super::validation::{self, Emitted};
 use crate::generate_schema::inputs::Inputs;
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
 use crate::generate_schema::sdk_data::{DataPart, DataVersion, SdkData};
-use crate::generate_schema::standard_text::{self, PartDefinition, TransitionalPart};
+use crate::generate_schema::standard_text::{
+    self, PartDefinition, RelationshipSection, TransitionalPart,
+};
 
 #[cfg(test)]
 mod tests;
@@ -150,6 +152,9 @@ pub struct RelationshipConstant {
     /// The modules of the parts of this type, in module order.
     pub modules: Vec<String>,
     pub name: String,
+    /// What the standard states for a type that belongs to no part module:
+    /// `Part 1, 15.3 "Hyperlinks", and Part 4, 13.3`.
+    pub source: Option<String>,
     pub strict: String,
     pub transitional: String,
 }
@@ -269,14 +274,25 @@ pub fn constants(
                 .map(|index| parts[*index].module.clone())
                 .collect(),
             name: constant_name(transitional)?,
+            source: None,
             strict,
             transitional: transitional.clone(),
         });
     }
     rename_collisions(parts, &mut found)?;
     found.sort_by(|left, right| left.name.cmp(&right.name));
+    check_distinct(&found)?;
+    Ok(found)
+}
+
+/// Whether no two constants share a name.
+///
+/// # Errors
+///
+/// Two types that give one name.
+fn check_distinct(found: &[RelationshipConstant]) -> Result<()> {
     let mut seen = BTreeSet::new();
-    for constant in &found {
+    for constant in found {
         if !seen.insert(constant.name.as_str()) {
             bail!(
                 "two relationship types give the constant name {}",
@@ -284,7 +300,57 @@ pub fn constants(
             );
         }
     }
-    Ok(found)
+    Ok(())
+}
+
+/// Add the types of the sections of Part 1 that define no part, each with
+/// Part 4's restatement; a section whose type a part module has is not added
+/// twice.
+///
+/// # Errors
+///
+/// A section with no Part 4 restatement, or two types that give one name.
+pub fn add_sections(
+    joined: &mut Joined,
+    sections: &[RelationshipSection],
+    restatements: &[TransitionalPart],
+) -> Result<()> {
+    for section in sections {
+        let restated = restatements
+            .iter()
+            .find(|restated| restated.part_1_section == section.section)
+            .with_context(|| {
+                format!(
+                    "Part 1, {} \"{}\" has no restatement in Part 4",
+                    section.section, section.title
+                )
+            })?;
+        let transitional = restated
+            .source_relationship
+            .clone()
+            .with_context(|| format!("Part 4, {} states no relationship type", restated.section))?;
+        if joined
+            .constants
+            .iter()
+            .any(|constant| constant.transitional == transitional)
+        {
+            continue;
+        }
+        joined.constants.push(RelationshipConstant {
+            modules: Vec::new(),
+            name: constant_name(&transitional)?,
+            source: Some(format!(
+                "Part 1, {} \"{}\", and Part 4, {}",
+                section.section, section.title, restated.section
+            )),
+            strict: section.source_relationship.clone(),
+            transitional,
+        });
+    }
+    joined
+        .constants
+        .sort_by(|left, right| left.name.cmp(&right.name));
+    check_distinct(&joined.constants)
 }
 
 /// Whether a Part 1 definition defines a part of SDK 3.5.1's data.
@@ -382,12 +448,19 @@ where
     let kinds_text = read(system, Path::new(DOCUMENT_KINDS_PATH))?;
     let part_roots_text = read(system, Path::new(validation::PART_ROOTS_PATH))?;
     let transitional = SchemaSet::read(system, &inputs.transitional_schemas)?;
+    let part_1_text = read(system, &inputs.part1_text)?;
+    let part_4_text = read(system, &inputs.part4_text)?;
     let mut joined = join(
-        &standard_text::part_definitions(&read(system, &inputs.part1_text)?),
-        &standard_text::transitional_parts(&read(system, &inputs.part4_text)?),
+        &standard_text::part_definitions(&part_1_text),
+        &standard_text::transitional_parts(&part_4_text),
         &emitted.data,
         &kinds(&kinds_text)?,
         &validation::part_roots(&part_roots_text)?,
+    )?;
+    add_sections(
+        &mut joined,
+        &standard_text::relationship_sections(&part_1_text),
+        &standard_text::transitional_relationships(&part_4_text),
     )?;
     let data = Data::new(&emitted.data, &transitional);
     let roots = roots(

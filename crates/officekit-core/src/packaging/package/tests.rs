@@ -542,6 +542,89 @@ fn set_relationship_class_respells_the_office_document_family_only() {
     );
 }
 
+fn types_of(package: &Package) -> Vec<String> {
+    package
+        .relationship_sets()
+        .into_iter()
+        .flat_map(|(_, items)| items.into_iter().map(|item| item.type_uri))
+        .collect()
+}
+
+#[test]
+fn the_three_irregular_types_respell_both_ways() {
+    let mut package = document();
+    let parts = [
+        ("/docProps/app.xml", RelationshipType::EXTENDED_PROPERTIES),
+        ("/docProps/custom.xml", RelationshipType::CUSTOM_PROPERTIES),
+        ("/docProps/thumbnail.jpeg", RelationshipType::THUMBNAIL),
+    ];
+    for (file, known) in parts {
+        let part = name(file);
+        package
+            .set_part_bytes(&part, "application/xml", b"<a/>")
+            .unwrap();
+        package.relate(None, &part, known.transitional).unwrap();
+    }
+
+    package
+        .set_relationship_class(ConformanceClass::Strict)
+        .unwrap();
+    let strict = types_of(&Package::from_bytes(package.to_bytes().unwrap()).unwrap());
+    assert_eq!(
+        strict,
+        [
+            "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument",
+            "http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties",
+            "http://purl.oclc.org/ooxml/officeDocument/relationships/customProperties",
+            "http://purl.oclc.org/ooxml/officeDocument/relationships/metadata/thumbnail",
+        ]
+    );
+
+    package
+        .set_relationship_class(ConformanceClass::Transitional)
+        .unwrap();
+    let transitional = types_of(&Package::from_bytes(package.to_bytes().unwrap()).unwrap());
+    assert_eq!(
+        transitional,
+        [
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties",
+            "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail",
+        ]
+    );
+}
+
+#[test]
+fn every_known_type_respells_to_strict_and_back_to_its_own_transitional() {
+    for known in RelationshipType::ALL {
+        assert_eq!(RelationshipType::find(known.strict), Some(*known));
+        assert_eq!(RelationshipType::find(known.transitional), Some(*known));
+        assert_eq!(known.in_class(ConformanceClass::Strict), known.strict);
+        assert_eq!(
+            known.in_class(ConformanceClass::Transitional),
+            known.transitional
+        );
+    }
+}
+
+#[test]
+fn a_type_the_table_does_not_know_is_left_as_written() {
+    const EXTENSION: &str = "http://schemas.microsoft.com/office/2011/relationships/webextension";
+    let mut package = document();
+    package
+        .relate_external(None, "https://example.org/", EXTENSION)
+        .unwrap();
+    package
+        .set_relationship_class(ConformanceClass::Strict)
+        .unwrap();
+    assert!(types_of(&package).contains(&EXTENSION.to_owned()));
+    package
+        .set_relationship_class(ConformanceClass::Transitional)
+        .unwrap();
+    assert!(types_of(&package).contains(&EXTENSION.to_owned()));
+}
+
 #[test]
 fn a_custom_xml_part_comes_with_its_properties_part() {
     let mut package = document();
