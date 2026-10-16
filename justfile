@@ -44,5 +44,10 @@ audit:
 docs:
     cargo doc --workspace --no-deps
 
+# Validate every Office file in a folder with SDK 3.5.1 and print its errors as
+# JSON. Not part of `all`: it needs .NET 10 and NuGet.
+oracle folder:
+    dotnet run --project oracle -c Release -- {{folder}}/*.docx {{folder}}/*.xlsx {{folder}}/*.pptx
+
 # Full pipeline (standardized `all` entry point across tixena repos).
 all: lint build test
