@@ -234,10 +234,7 @@ fn reach(
             continue;
         }
         let type_uri = transitional_type(&relationship.type_uri);
-        if let Some(part_rule) = known
-            .iter()
-            .find(|candidate| candidate.relationship_type == Some(type_uri.as_ref()))
-        {
+        if let Some(part_rule) = part_rule(known, &type_uri, relationship.content_type.as_deref()) {
             found.push((part.clone(), part_rule));
         }
         reach(package, Some(&part), known, seen, found);
@@ -264,6 +261,25 @@ pub fn reachable_parts(
     reach(package, None, &known, &mut seen, &mut found);
     found.retain(|(_, part_rule)| part_rule.versions.contains(version));
     found
+}
+
+/// The part type of `known` that a relationship type (Transitional spelling)
+/// and a content type name: a part type with no content type of its own takes
+/// any.
+pub(crate) fn part_rule(
+    known: &[&'static PartRule],
+    type_uri: &str,
+    content_type: Option<&str>,
+) -> Option<&'static PartRule> {
+    known
+        .iter()
+        .copied()
+        .find(|candidate| candidate.relationship_type == Some(type_uri))
+        .filter(|candidate| {
+            candidate
+                .content_type
+                .is_none_or(|fixed| Some(fixed) == content_type)
+        })
 }
 
 /// The part rule called `name`, `MainDocumentPart`.

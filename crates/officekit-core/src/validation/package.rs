@@ -9,7 +9,7 @@ use alloc::vec::Vec;
 use super::error::{ErrorCode, Errors, ValidationError};
 use super::generated::PART_RULES;
 use super::schema::types::{ChildKind, ChildPart, PartRule};
-use super::validator::{document_parts, document_rule, transitional_type};
+use super::validator::{document_parts, document_rule, part_rule, transitional_type};
 use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::Target;
@@ -174,7 +174,7 @@ impl Walk<'_> {
                 }
                 continue;
             }
-            let part_rule = self.rule_for(&type_uri, relationship.content_type.as_deref());
+            let part_rule = part_rule(&self.known, &type_uri, relationship.content_type.as_deref());
             children.push(Reached {
                 from: source.cloned(),
                 part,
@@ -215,20 +215,6 @@ impl Walk<'_> {
         let mut error = ValidationError::new(code, source.cloned(), None, arguments);
         error.related_part = related.cloned();
         self.errors.push(error);
-    }
-
-    /// The document's part type a relationship type and a content type
-    /// match: a rule with no content type of its own takes any.
-    fn rule_for(&self, type_uri: &str, content_type: Option<&str>) -> Option<&'static PartRule> {
-        self.known
-            .iter()
-            .copied()
-            .find(|part_rule| part_rule.relationship_type == Some(type_uri))
-            .filter(|part_rule| {
-                part_rule
-                    .content_type
-                    .is_none_or(|fixed| Some(fixed) == content_type)
-            })
     }
 }
 

@@ -181,6 +181,23 @@ fn a_standard_relationship_type_with_no_rule_is_an_unknown_part() {
 }
 
 #[test]
+fn a_part_whose_content_type_contradicts_its_part_type_gets_no_schema_error() {
+    let package = word(&[(
+        "/word/styles.xml",
+        "application/xml",
+        STYLES_TYPE,
+        r#"<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:bogus/></w:styles>"#,
+    )]);
+    let reopened = reopened(&package);
+    let errors = Validator::new(OfficeVersion::Microsoft365).validate(&reopened);
+    assert_eq!(codes(&errors), [ErrorCode::UnknownPartOfStandardType]);
+    assert_eq!(
+        names(&errors[0]),
+        (Some("/word/document.xml"), Some("/word/styles.xml"))
+    );
+}
+
+#[test]
 fn a_clean_docx_has_no_error() {
     let package = word(&[("/word/styles.xml", STYLES, STYLES_TYPE, STYLES_XML)]);
     assert_eq!(package_errors(&package), []);

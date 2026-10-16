@@ -8,6 +8,8 @@ use crate::xml::name::OfficeVersion;
 
 const COMMENTS_EXTENDED: &str =
     "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
+const COMMENTS_EXTENDED_CONTENT: &str =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml";
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const OFFICE_DOCUMENT: &str =
@@ -15,19 +17,22 @@ const OFFICE_DOCUMENT: &str =
 const STRICT_OFFICE_DOCUMENT: &str =
     "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument";
 const STYLES: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
+const STYLES_CONTENT: &str =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml";
 const UNKNOWN: &str = "http://example.com/relationships/unknown";
 
 /// A Word document related by `office_document` whose main part relates to
-/// one part by each of `related`.
-fn word(office_document: &str, related: &[(&str, &str)]) -> Package {
+/// one part by each of `related`: its name, relationship type, and content
+/// type.
+fn word(office_document: &str, related: &[(&str, &str, &str)]) -> Package {
     let mut package = Package::new();
     let main = PartName::new("/word/document.xml").unwrap();
     package.set_part_bytes(&main, MAIN, b"<a/>").unwrap();
     package.relate(None, &main, office_document).unwrap();
-    for (name, relationship_type) in related {
+    for (name, relationship_type, content_type) in related {
         let part = PartName::new(name).unwrap();
         package
-            .set_part_bytes(&part, "application/xml", b"<a/>")
+            .set_part_bytes(&part, content_type, b"<a/>")
             .unwrap();
         package
             .relate(Some(&main), &part, relationship_type)
@@ -101,9 +106,13 @@ fn the_parts_reached_are_typed_by_relationship_and_kept_from_their_version_on() 
     let package = word(
         OFFICE_DOCUMENT,
         &[
-            ("/word/styles.xml", STYLES),
-            ("/word/commentsExtended.xml", COMMENTS_EXTENDED),
-            ("/word/other.xml", UNKNOWN),
+            ("/word/styles.xml", STYLES, STYLES_CONTENT),
+            (
+                "/word/commentsExtended.xml",
+                COMMENTS_EXTENDED,
+                COMMENTS_EXTENDED_CONTENT,
+            ),
+            ("/word/other.xml", UNKNOWN, "application/xml"),
         ],
     );
     assert_eq!(
@@ -127,6 +136,18 @@ fn the_parts_reached_are_typed_by_relationship_and_kept_from_their_version_on() 
 }
 
 #[test]
+fn a_part_whose_content_type_contradicts_its_part_type_is_not_reached() {
+    let package = word(
+        OFFICE_DOCUMENT,
+        &[("/word/styles.xml", STYLES, "application/xml")],
+    );
+    assert_eq!(
+        reached(&package, OfficeVersion::Microsoft365),
+        [("/word/document.xml".to_owned(), "MainDocumentPart")]
+    );
+}
+
+#[test]
 fn a_strict_relationship_type_reaches_the_same_parts() {
     let package = word(STRICT_OFFICE_DOCUMENT, &[]);
     assert_eq!(
@@ -138,7 +159,10 @@ fn a_strict_relationship_type_reaches_the_same_parts() {
 #[test]
 fn a_target_that_names_no_part_does_not_hide_the_other_parts_of_its_source() {
     let main = PartName::new("/word/document.xml").unwrap();
-    let mut package = word(OFFICE_DOCUMENT, &[("/word/styles.xml", STYLES)]);
+    let mut package = word(
+        OFFICE_DOCUMENT,
+        &[("/word/styles.xml", STYLES, STYLES_CONTENT)],
+    );
     package
         .set_part_bytes(
             &PartName::new(&main.relationships_part()).unwrap(),
