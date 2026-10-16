@@ -20,6 +20,8 @@ fn layout() -> MemorySystem {
         .unwrap()
         .with_file("inputs/open-specifications/xr2.xsd", b"<xsd/>")
         .unwrap()
+        .with_file("inputs/sdk-3.5.1-semantic.json", b"[]")
+        .unwrap()
         .with_file("inputs/SHA256SUMS", b"abc  inputs/TOOLS\ndef  inputs/x\n")
         .unwrap()
         .with_file(
@@ -65,6 +67,10 @@ fn finds_every_input() {
     assert_eq!(inputs.part1_text, Path::new("inputs/ecma-376/part1.txt"));
     assert_eq!(inputs.part4_text, Path::new("inputs/ecma-376/part4.txt"));
     assert_eq!(inputs.sdk_data, Path::new("inputs/open-xml-sdk/data"));
+    assert_eq!(
+        inputs.semantic_dump,
+        Path::new("inputs/sdk-3.5.1-semantic.json")
+    );
     assert_eq!(
         inputs.open_specifications,
         [
@@ -129,5 +135,18 @@ fn names_the_missing_sdk_data() {
     assert_eq!(
         err.to_string(),
         format!("{MISSING_PREFIX}inputs/open-xml-sdk/data")
+    );
+}
+
+#[test]
+fn names_the_missing_semantic_dump() {
+    let err = Inputs::open(
+        &without("inputs/sdk-3.5.1-semantic.json"),
+        Path::new("inputs"),
+    )
+    .unwrap_err();
+    assert_eq!(
+        err.to_string(),
+        format!("{MISSING_PREFIX}inputs/sdk-3.5.1-semantic.json")
     );
 }

@@ -25,6 +25,8 @@ notes/
 # Generator inputs, downloaded by `just inputs` and never committed
 /inputs/
 
-# The parity oracle's build output
+# The parity oracle's and the reflection dump's build output
 /oracle/bin/
 /oracle/obj/
+/oracle/semantic-dump/bin/
+/oracle/semantic-dump/obj/

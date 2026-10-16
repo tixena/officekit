@@ -70,6 +70,21 @@ parity DIR kinds="schema,markup-compatibility":
     done; done
     cargo xtask parity target/parity/oracle.json target/parity/officekit --kinds {{kinds}}
 
+# Read the semantic constraints SDK 3.5.1 registers from its package, by
+# reflection, into inputs/sdk-3.5.1-semantic.json (git-ignored, never
+# committed), and record its SHA-256 in inputs/SHA256SUMS. The generator
+# checks its rows against it and takes from it any registration no Schematron
+# rule of the data gives. Not part of `all`: it needs .NET 10 and NuGet.
+semantic-inputs:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dump=inputs/sdk-3.5.1-semantic.json
+    dotnet run --project oracle/semantic-dump -c Release > "$dump.part"
+    mv -f "$dump.part" "$dump"
+    { awk -v dump="$dump" '$2 != dump' inputs/SHA256SUMS; sha256sum "$dump"; } \
+        | LC_ALL=C sort -k 2 > inputs/SHA256SUMS.part
+    mv -f inputs/SHA256SUMS.part inputs/SHA256SUMS
+
 # Download the generator's inputs into inputs/ (git-ignored, never committed).
 # Files already present are not downloaded again.
 #

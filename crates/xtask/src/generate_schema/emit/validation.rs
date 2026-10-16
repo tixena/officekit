@@ -5,7 +5,7 @@
 //! marked, and every attribute whose Strict type is not its Transitional type
 //! carries the Strict type's checks (D35).
 
-mod render;
+pub(crate) mod render;
 mod strict;
 
 use alloc::collections::{BTreeMap, BTreeSet};
@@ -229,6 +229,17 @@ pub enum StringKind {
     QName,
     Token,
     Uri,
+}
+
+/// What `emit` wrote, and the conversion the semantic table is built on.
+#[derive(Clone, Debug)]
+#[non_exhaustive]
+pub struct Emitted {
+    pub data: SdkData,
+    /// The namespace table's rows; a row's index is its namespace id.
+    pub namespaces: Vec<namespaces::Row>,
+    pub summary: Summary,
+    pub tables: Tables,
 }
 
 /// What was converted and written.
@@ -1597,7 +1608,8 @@ fn enumeration_of<'data>(
 }
 
 /// Read the inputs, convert the data, and write the module of the tables to
-/// `out` and its five files to the folder of the same name.
+/// `out` and its five files to the folder of the same name; the conversion
+/// comes back for the semantic table.
 ///
 /// # Errors
 ///
@@ -1609,7 +1621,7 @@ pub fn emit<S>(
     simple_types_path: &Path,
     part_roots_path: &Path,
     out: &Path,
-) -> Result<Summary>
+) -> Result<Emitted>
 where
     S: System + ?Sized,
 {
@@ -1673,7 +1685,12 @@ where
             .write(&path, text.as_bytes())
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
-    Ok(tables.summary(&marks))
+    Ok(Emitted {
+        data,
+        namespaces: namespace_rows,
+        summary: tables.summary(&marks),
+        tables,
+    })
 }
 
 /// A validator's flag, `"True"` or `"False"`; absent is false.

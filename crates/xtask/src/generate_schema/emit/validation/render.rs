@@ -20,24 +20,31 @@ pub(super) const MODULE: &str = "generated.rs";
 const ARRAY_WIDTH: usize = 60;
 /// rustfmt's widest call or tuple arguments on one line.
 const CALL_WIDTH: usize = 60;
+/// rustfmt's widest array item that it still fills lines with.
+const SHORT_ITEM_WIDTH: usize = 10;
 const INDENT: usize = 4;
 /// rustfmt's line width.
 const MAX_WIDTH: usize = 100;
 /// rustfmt's widest struct literal fields on one line.
 const STRUCT_WIDTH: usize = 18;
 
-/// The module's text after the header: its documentation, imports, and the five files.
+/// The module's text after the header: its documentation, imports, and the
+/// five files, with the semantic table `emit::semantic` writes.
 const MODULE_BODY: &str = "\
 //! The validation tables, converted from SDK 3.5.1's schema data.
 //!
 //! Every schema type's attributes, children, content models, and text checks,
-//! the enumerations, the simple types the generator maps by hand, and the part
-//! rules, written by `cargo xtask generate-schema`.
+//! the enumerations, the simple types the generator maps by hand, the part
+//! rules, and the semantic constraints, written by `cargo xtask
+//! generate-schema`.
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,
     Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
     Versions,
+};
+use super::semantic::constraint::{
+    Applications, AttributeName, Constraint, ElementName, Registration,
 };
 use crate::xml::name::NamespaceId;
 
@@ -45,6 +52,7 @@ include!(\"generated/attributes.rs\");
 include!(\"generated/particles.rs\");
 include!(\"generated/enums.rs\");
 include!(\"generated/parts.rs\");
+include!(\"generated/semantic.rs\");
 include!(\"generated/types.rs\");
 ";
 
@@ -68,7 +76,7 @@ pub fn type_id(name: &str) -> Option<TypeId> {
 ";
 
 /// A Rust expression of a table.
-enum Expr {
+pub enum Expr {
     /// Written as is: a path or a literal.
     Atom(String),
     /// `name(arguments)`.
@@ -118,6 +126,12 @@ impl Expr {
         }
     }
 
+    /// Whether rustfmt counts the expression a short array item: a literal or
+    /// a path of at most `SHORT_ITEM_WIDTH` characters.
+    const fn is_short(&self) -> bool {
+        matches!(self, Self::Atom(text) if text.len() <= SHORT_ITEM_WIDTH)
+    }
+
     /// Whether rustfmt lets the expression, a list's only item, open on the list's line.
     fn overflows(&self) -> bool {
         match self {
@@ -145,6 +159,9 @@ impl Expr {
             Self::Ref(inner) => {
                 out.push('&');
                 inner.write(indent, start + 1, tail, out);
+            }
+            Self::Slice(items) if items.len() > 1 && items.iter().all(Self::is_short) => {
+                filled(items, indent, out);
             }
             Self::Slice(items) => list("&[", items, "]", [indent, start, tail], out),
             Self::Struct(path, fields) => {
@@ -299,7 +316,7 @@ fn any_namespace(namespace: &AnyNamespace) -> Expr {
     }
 }
 
-fn boolean(value: bool) -> Expr {
+pub fn boolean(value: bool) -> Expr {
     Expr::Atom(value.to_string())
 }
 
@@ -527,12 +544,63 @@ pub(super) fn files(
     ])
 }
 
+/// An array of short items that does not fit one line, laid out as rustfmt
+/// lays it out: the items filled into lines one step past `indent`.
+fn filled(items: &[Expr], indent: usize, out: &mut String) {
+    out.push_str("&[\n");
+    let inner = indent + INDENT;
+    let width = MAX_WIDTH - inner;
+    let mut line = 0;
+    for item in items {
+        let text = item.flat().unwrap_or_default();
+        let used = text.len() + 1;
+        if line > 0 && line + 1 + used > width {
+            out.push('\n');
+            line = 0;
+        }
+        if line == 0 {
+            pad(inner, out);
+        } else {
+            out.push(' ');
+            line += 1;
+        }
+        out.push_str(&text);
+        out.push(',');
+        line += used;
+    }
+    out.push('\n');
+    pad(indent, out);
+    out.push(']');
+}
+
 /// A whole number of the data as an `f64` literal, its digits grouped by three
 /// past five as clippy's `unreadable_literal` asks.
 fn float(value: i64) -> Expr {
     let digits = grouped(&value.unsigned_abs().to_string());
     let sign = if value < 0 { "-" } else { "" };
     Expr::Atom(format!("{sign}{digits}.0_f64"))
+}
+
+/// A number as an `f64` literal: `f64::INFINITY` or `f64::NEG_INFINITY`, else
+/// Rust's shortest form of it, the whole part grouped as `grouped` does.
+pub fn real(value: f64) -> Expr {
+    if value.is_infinite() {
+        let name = if value.is_sign_positive() {
+            "f64::INFINITY"
+        } else {
+            "f64::NEG_INFINITY"
+        };
+        return Expr::Atom(name.to_owned());
+    }
+    let text = format!("{value:?}");
+    if text.contains('e') {
+        return Expr::Atom(format!("{text}_f64"));
+    }
+    let (sign, digits) = text
+        .strip_prefix('-')
+        .map_or(("", text.as_str()), |rest| ("-", rest));
+    let (whole, fraction) = digits.split_once('.').unwrap_or((digits, "0"));
+    Expr::Atom(format!("{sign}{}.{fraction}_f64", grouped(whole)))
 }
 
 /// Decimal digits grouped by three from the right when there are more than five.
@@ -553,7 +621,7 @@ fn grouped(digits: &str) -> String {
 /// An integer literal as clippy accepts it: in hex, grouped by four, where
 /// `decimal_literal_representation` finds hex the better form (from 16384,
 /// its threshold), else in decimal.
-fn integer(value: u64) -> Expr {
+pub fn integer(value: u64) -> Expr {
     if value >= 0x4000 && hex_is_better(&format!("{value:X}")) {
         let hex = format!("{value:X}");
         let mut out = String::from("0x");
@@ -619,7 +687,7 @@ fn namespace_id(prefixes: &[&str], prefix: &str) -> Result<Expr> {
     Ok(integer(index as u64))
 }
 
-fn option(value: Option<Expr>) -> Expr {
+pub fn option(value: Option<Expr>) -> Expr {
     value.map_or_else(
         || Expr::Atom("None".to_owned()),
         |inner| Expr::Call("Some", vec![inner]),
@@ -783,14 +851,14 @@ fn schema_type(
 }
 
 /// `start` and the expression, laid out from column `start.len()`, and `;`.
-fn statement(start: &str, expr: &Expr, out: &mut String) {
+pub fn statement(start: &str, expr: &Expr, out: &mut String) {
     out.push_str(start);
     expr.write(0, start.len(), 1, out);
     out.push_str(";\n");
 }
 
 /// A string literal, every character outside printable ASCII escaped.
-fn string(text: &str) -> Expr {
+pub fn string(text: &str) -> Expr {
     let mut out = String::with_capacity(text.len() + 2);
     out.push('"');
     for character in text.chars() {
@@ -875,7 +943,7 @@ fn value_class(class: &ValueClass) -> Expr {
 }
 
 /// `Versions(0b11_1111)`: one bit per target, Office 2010 the lowest.
-fn versions_expr(versions: Versions) -> Expr {
+pub fn versions_expr(versions: Versions) -> Expr {
     Expr::Call(
         "Versions",
         vec![Expr::Atom(format!(

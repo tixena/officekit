@@ -20,7 +20,7 @@ mod tests;
 
 /// The data part references a part rule can list, by the data's name, with
 /// their relationship types.
-const DATA_PART_REFERENCES: &[(&str, &str)] = &[
+pub(crate) const DATA_PART_REFERENCES: &[(&str, &str)] = &[
     (
         "AudioReferenceRelationship",
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships/audio",
@@ -36,7 +36,7 @@ const DATA_PART_REFERENCES: &[(&str, &str)] = &[
 ];
 
 /// A hyperlink relates to no part, internal or external.
-const HYPERLINK: &str =
+pub(crate) const HYPERLINK: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
 /// The standard's relationship type families, in each class's spelling.

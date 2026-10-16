@@ -7,8 +7,8 @@
 //! Subcommands:
 //!
 //! - `generate-schema` -- regenerate the generated modules of `officekit-core`
-//!   from the inputs under `inputs/`. Writes the namespace table and the
-//!   validation tables so far.
+//!   from the inputs under `inputs/`. Writes the namespace table, the
+//!   validation tables, and the semantic constraint table.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -23,7 +23,7 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::{namespaces, validation};
+use xtask::generate_schema::emit::{namespaces, semantic, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 use xtask::parity;
@@ -140,14 +140,21 @@ fn main() -> Result<ExitCode> {
                 summary.strict_uris,
                 summary.introduced,
             )?;
-            let tables = validation::emit(
+            let emitted = validation::emit(
                 &system,
                 &inputs,
                 Path::new(validation::SIMPLE_TYPES_PATH),
                 Path::new(validation::PART_ROOTS_PATH),
                 Path::new(validation::GENERATED_PATH),
             )?;
-            validation_summary(&mut out, &tables)?;
+            validation_summary(&mut out, &emitted.summary)?;
+            let semantic_table = semantic::emit(
+                &system,
+                &inputs,
+                &emitted,
+                Path::new(semantic::GENERATED_PATH),
+            )?;
+            semantic_summary(&mut out, &semantic_table)?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {
@@ -208,6 +215,27 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
     }
     transitional_counts(out, &transitional)?;
     comparison(out, &transitional, &strict)
+}
+
+/// What `generate-schema` wrote of the semantic constraint table.
+fn semantic_summary(out: &mut dyn Write, summary: &semantic::Summary) -> Result<()> {
+    writeln!(
+        out,
+        "wrote {}: {} rows over {} element types, {} from Schematron rules, {} from the \
+         reflection dump",
+        semantic::GENERATED_PATH,
+        summary.rows,
+        summary.types,
+        summary.from_rules,
+        summary.from_dump,
+    )?;
+    let kinds: Vec<String> = summary
+        .by_kind
+        .iter()
+        .map(|(kind, count)| format!("{count} {kind}"))
+        .collect();
+    writeln!(out, "  by kind: {}", kinds.join(", "))?;
+    Ok(())
 }
 
 /// What `generate-schema` wrote of the validation tables, the comparison items

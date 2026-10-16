@@ -1,6 +1,6 @@
 //! The validator: the target version, the cap on errors it reports, and the
 //! pipeline that runs the package pass, then the schema pass over every part
-//! it reaches.
+//! it reaches, the semantic checks in the same walk.
 
 use alloc::borrow::Cow;
 use alloc::collections::BTreeSet;
@@ -13,6 +13,7 @@ use super::generated::PART_RULES;
 use super::package;
 use super::schema::types::{ChildKind, PartRule};
 use super::schema::walk::walk;
+use super::semantic::registry::{PartChecks, Run};
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
@@ -100,19 +101,23 @@ impl Validator {
     ///
     /// The schema pass, for each part reachable from the package and known at
     /// the target: `MissingRootElement` when the part is an empty XML file,
-    /// else its tree walked from the root type its part rule gives. A part
-    /// that does not parse is the package pass's to report.
+    /// else its tree walked from the root type its part rule gives, with the
+    /// semantic checks of each element it visits, whose errors follow the
+    /// part's schema errors. A part that does not parse is the package
+    /// pass's to report.
     #[must_use]
     pub fn validate(&self, package: &Package) -> Vec<ValidationError> {
         let mut errors = Errors::new(self.max_errors);
         package::check(package, self.version, &mut errors);
         if !errors.full() {
             let strict = package_class(package) == Some(ConformanceClass::Strict);
-            for (part, part_rule) in reachable_parts(package, self.version) {
-                let Ok(bytes) = package.part_bytes(&part) else {
+            let parts = reachable_parts(package, self.version);
+            let mut run = Run::new(package, self.version, &parts);
+            for (part, part_rule) in &parts {
+                let Ok(bytes) = package.part_bytes(part) else {
                     continue;
                 };
-                if bytes.is_empty() && xml_part(&part) {
+                if bytes.is_empty() && xml_part(part) {
                     errors.push(ValidationError::new(
                         ErrorCode::MissingRootElement,
                         Some(part.clone()),
@@ -120,9 +125,19 @@ impl Validator {
                         &[("part", part.as_str())],
                     ));
                 } else if let Some(root) = part_rule.root
-                    && let Ok(tree) = package.load_tree(&part, OpenOptions::default())
+                    && let Ok(tree) = package.load_tree(part, OpenOptions::default())
                 {
-                    walk(&tree.root, root, self.version, strict, &part, &mut errors);
+                    let mut checks = PartChecks::new(&mut run, part, part_rule);
+                    walk(
+                        &tree.root,
+                        root,
+                        self.version,
+                        strict,
+                        part,
+                        &mut errors,
+                        &mut checks,
+                    );
+                    checks.finish(&mut errors);
                 } else {
                     // A part with no root type, or one the package pass reports.
                 }

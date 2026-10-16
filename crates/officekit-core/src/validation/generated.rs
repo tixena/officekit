@@ -353,13 +353,17 @@
 //! The validation tables, converted from SDK 3.5.1's schema data.
 //!
 //! Every schema type's attributes, children, content models, and text checks,
-//! the enumerations, the simple types the generator maps by hand, and the part
-//! rules, written by `cargo xtask generate-schema`.
+//! the enumerations, the simple types the generator maps by hand, the part
+//! rules, and the semantic constraints, written by `cargo xtask
+//! generate-schema`.
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,
     Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
     Versions,
+};
+use super::semantic::constraint::{
+    Applications, AttributeName, Constraint, ElementName, Registration,
 };
 use crate::xml::name::NamespaceId;
 
@@ -367,4 +371,5 @@ include!("generated/attributes.rs");
 include!("generated/particles.rs");
 include!("generated/enums.rs");
 include!("generated/parts.rs");
+include!("generated/semantic.rs");
 include!("generated/types.rs");

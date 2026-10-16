@@ -24,6 +24,9 @@ pub struct Inputs {
     pub part4_text: PathBuf,
     /// The SDK's `data/` folder.
     pub sdk_data: PathBuf,
+    /// SDK 3.5.1's semantic constraint registrations, read from its package
+    /// by `just semantic-inputs`.
+    pub semantic_dump: PathBuf,
     /// The 21 Strict schemas.
     pub strict_schemas: Vec<PathBuf>,
     /// The `TOOLS` text.
@@ -70,6 +73,8 @@ impl Inputs {
             })
             .collect();
 
+        let semantic_dump = file(system, root.join("sdk-3.5.1-semantic.json"))?;
+
         let checksums = read(system, &file(system, root.join("SHA256SUMS"))?)?;
         let tools = read(system, &file(system, root.join("TOOLS"))?)?;
 
@@ -80,6 +85,7 @@ impl Inputs {
             part1_text,
             part4_text,
             sdk_data,
+            semantic_dump,
             strict_schemas,
             tools,
             transitional_schemas,

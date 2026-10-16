@@ -12,6 +12,10 @@
 //!
 //! In a file that declares Strict, an element in a namespace only Transitional
 //! has is reported, and what it holds in that namespace is not reported again.
+//!
+//! An `Observer` sees each element SDK 3.5.1's validating traversal yields,
+//! after the element's content, which is how the semantic checks run in the
+//! same walk; `traverse` walks a part for an observer alone.
 
 use alloc::borrow::ToOwned as _;
 use alloc::string::String;
@@ -65,16 +69,36 @@ enum Kind {
     Unknown,
 }
 
+/// What sees each element SDK 3.5.1's validating traversal yields: a typed
+/// element that exists at the target, or an `mc:AlternateContent`.
+pub trait Observer {
+    /// `element` after its content was walked: `type_id` is `None` for an
+    /// `mc:AlternateContent`, `parent` is the element holding it in the file
+    /// (an `mc:Choice` or `mc:Fallback` inside a block), and `path` its path.
+    fn element(
+        &mut self,
+        element: &Element,
+        type_id: Option<TypeId>,
+        parent: Option<&Element>,
+        path: &[Step],
+    );
+}
+
 /// The walk's state: where it is, what is in scope, and what it found.
 struct Walker<'tree, 'run> {
+    /// Every element on the way down, with the branch inside a block.
+    ancestors: Vec<&'tree Element>,
     errors: &'run mut Errors,
     /// One frame per element on the way down.
     mc: Vec<Compatibility>,
+    observer: &'run mut dyn Observer,
     part: &'run PartName,
     path: Vec<Step>,
     /// The namespaces only Transitional has of the reported elements on the
     /// way down, whose descendants in them are not reported again.
     reported_namespaces: Vec<NamespaceId>,
+    /// Whether the schema checks run; without them only the observer sees the part.
+    schema: bool,
     /// The namespace declarations of every element on the way down.
     scope: Vec<&'tree [NamespaceDeclaration]>,
     strict: bool,
@@ -467,6 +491,20 @@ impl<'tree> Walker<'tree, '_> {
         })
     }
 
+    /// Walk from `root`, typed `root_type`, when it is the element its type
+    /// names.
+    fn root(&mut self, root: &'tree Element, root_type: TypeId) {
+        let Some(schema_type) = SCHEMA_TYPES.get(usize::from(root_type)) else {
+            return;
+        };
+        if !is_element_of(root, schema_type) {
+            return;
+        }
+        self.path.push(step(&root.name, 1));
+        self.visit(root, Kind::Typed(root_type, false), Factory::Unknown);
+        self.path.pop();
+    }
+
     /// The checks of one typed element that exists at the target.
     fn validate(&mut self, element: &'tree Element, type_id: TypeId) {
         let Some(schema_type) = SCHEMA_TYPES.get(usize::from(type_id)) else {
@@ -560,6 +598,8 @@ impl<'tree> Walker<'tree, '_> {
     /// Walk one element of kind `kind`; `factory` is the vocabulary it sits
     /// in, which also types the content of an `mc:AlternateContent` branch.
     fn visit(&mut self, element: &'tree Element, kind: Kind, factory: Factory) {
+        let parent = self.ancestors.last().copied();
+        self.ancestors.push(element);
         self.scope.push(&element.namespace_declarations);
         let frame = self.compatibility_frame(element);
         self.mc.push(frame);
@@ -569,7 +609,11 @@ impl<'tree> Walker<'tree, '_> {
                 let namespace = transitional_only_namespace(&element.name.namespace);
                 let reported_above =
                     namespace.is_some_and(|id| self.reported_namespaces.contains(&id));
-                if self.strict && !reported_above && (transitional_only || namespace.is_some()) {
+                if self.schema
+                    && self.strict
+                    && !reported_above
+                    && (transitional_only || namespace.is_some())
+                {
                     self.error(
                         ErrorCode::TransitionalOnlyElement,
                         &[("element", qualified(&element.name))],
@@ -579,7 +623,8 @@ impl<'tree> Walker<'tree, '_> {
                         reported_in = namespace;
                     }
                 }
-                if exists_at(type_id, self.target) {
+                let exists = exists_at(type_id, self.target);
+                if exists && self.schema {
                     self.validate(element, type_id);
                 }
                 if SCHEMA_TYPES
@@ -588,6 +633,10 @@ impl<'tree> Walker<'tree, '_> {
                 {
                     self.children(element, Factory::Typed(type_id));
                 }
+                if exists {
+                    self.observer
+                        .element(element, Some(type_id), parent, &self.path);
+                }
             }
             Kind::Unknown => {
                 if self.process_content(&element.name) {
@@ -595,14 +644,19 @@ impl<'tree> Walker<'tree, '_> {
                 }
             }
             Kind::AlternateContent => {
-                self.alternate_content(element);
+                if self.schema {
+                    self.alternate_content(element);
+                }
                 if let Some((branch, index)) = self.branch(element) {
                     self.path.push(step(&branch.name, index));
                     self.scope.push(&branch.namespace_declarations);
+                    self.ancestors.push(branch);
                     self.children(branch, factory);
+                    self.ancestors.pop();
                     self.scope.pop();
                     self.path.pop();
                 }
+                self.observer.element(element, None, parent, &self.path);
             }
             Kind::Choice | Kind::Fallback => {}
         }
@@ -611,6 +665,7 @@ impl<'tree> Walker<'tree, '_> {
         }
         self.mc.pop();
         self.scope.pop();
+        self.ancestors.pop();
     }
 }
 
@@ -778,7 +833,34 @@ fn introduced_at(namespace: &Namespace, target: OfficeVersion) -> bool {
     }
 }
 
-/// Run the schema checks over a part's tree, keeping what they find in `errors`.
+/// Walk a part's tree for `observer` alone, with no schema check: the
+/// elements SDK 3.5.1's traversal yields at `target`, as `walk` shows them.
+pub fn traverse(
+    root: &Element,
+    root_type: TypeId,
+    target: OfficeVersion,
+    part: &PartName,
+    observer: &mut dyn Observer,
+) {
+    let mut errors = Errors::new(0);
+    let mut walker = Walker {
+        ancestors: Vec::new(),
+        errors: &mut errors,
+        mc: Vec::new(),
+        observer,
+        part,
+        path: Vec::new(),
+        reported_namespaces: Vec::new(),
+        schema: false,
+        scope: Vec::new(),
+        strict: false,
+        target,
+    };
+    walker.root(root, root_type);
+}
+
+/// Run the schema checks over a part's tree, keeping what they find in
+/// `errors`, and show `observer` each element SDK 3.5.1's traversal yields.
 ///
 /// `root` is the part's root element, `root_type` the type its part rule
 /// gives it. A root of another element than the type's is not validated: SDK
@@ -790,22 +872,20 @@ pub fn walk(
     strict: bool,
     part: &PartName,
     errors: &mut Errors,
+    observer: &mut dyn Observer,
 ) {
-    let Some(schema_type) = SCHEMA_TYPES.get(usize::from(root_type)) else {
-        return;
-    };
-    if !is_element_of(root, schema_type) {
-        return;
-    }
     let mut walker = Walker {
+        ancestors: Vec::new(),
         errors,
         mc: Vec::new(),
+        observer,
         part,
-        path: vec![step(&root.name, 1)],
+        path: Vec::new(),
         reported_namespaces: Vec::new(),
+        schema: true,
         scope: Vec::new(),
         strict,
         target,
     };
-    walker.visit(root, Kind::Typed(root_type, false), Factory::Unknown);
+    walker.root(root, root_type);
 }
