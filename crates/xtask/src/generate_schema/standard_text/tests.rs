@@ -104,3 +104,58 @@ fn a_transitional_part_names_its_part_1_section() {
         Some("http://schemas.openxmlformats.org/wordprocessingml/2006/main")
     );
 }
+
+#[test]
+fn a_wrapped_uri_is_joined_without_a_space_and_a_residue_after_it_is_dropped() {
+    let text = concat!(
+        "10.2.22         Volatile Dependencies Part (Part 1, §12.3.22)\n",
+        "Root              http://schemas.openxmlformats.org/spreadsheetml/2006/main\n",
+        "Namespace:\n",
+        "Source            http://schemas.openxmlformats.org/officeDocument/2006/relationships/volatileDependencie\n",
+        "Relationship:     s\n\n",
+        "13.2.10         Core File Properties Part (Part 1, §15.2.12.1)\n",
+        "Source            http://schemas.openxmlformats.org/officedocument/2006/relationships/metadata/core-\n",
+        "Relationship:     properties\n\n",
+    );
+    let parts = transitional_parts(text);
+    let relationships: Vec<_> = parts
+        .iter()
+        .map(|part| part.source_relationship.as_deref())
+        .collect();
+    assert_eq!(
+        relationships[0],
+        Some(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/volatileDependencies"
+        )
+    );
+    assert_eq!(
+        relationships[1],
+        Some(
+            "http://schemas.openxmlformats.org/officedocument/2006/relationships/metadata/core-properties"
+        )
+    );
+    let notes_slide = concat!(
+        "13.3.5          Notes Slide Part\n",
+        "Content Type:     application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml\n",
+        "Root              http://purl.oclc.org/ooxml/presentationml/main ain\n",
+        "Namespace:\n",
+        "Source           http://purl.oclc.org/ooxml/officeDocument/relationships/notesSlide\n",
+    );
+    let definitions = part_definitions(notes_slide);
+    assert_eq!(
+        definitions[0].root_namespace.as_deref(),
+        Some("http://purl.oclc.org/ooxml/presentationml/main")
+    );
+}
+
+#[test]
+fn a_prose_value_is_joined_with_spaces() {
+    let text = concat!(
+        "9.2.12          VML Drawing Part (Part 1, \u{a7}11.3.12)\n",
+        "Root             not applicable\n",
+        "Namespace:\n",
+        "Source           http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing\n",
+    );
+    let parts = transitional_parts(text);
+    assert_eq!(parts[0].root_namespace.as_deref(), Some("not applicable"));
+}

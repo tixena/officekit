@@ -657,13 +657,13 @@ fn part_1_type(
     restatement: Option<&TransitionalPart>,
     kinds: &[Kind],
 ) -> Result<PartType> {
-    let strict = uri(definition
+    let strict = definition
         .source_relationship
-        .as_deref()
-        .with_context(|| format!("Part 1, {} states no relationship type", definition.section))?);
+        .clone()
+        .with_context(|| format!("Part 1, {} states no relationship type", definition.section))?;
     let transitional = restatement
-        .and_then(|restated| restated.source_relationship.as_deref())
-        .map_or_else(|| strict.clone(), uri);
+        .and_then(|restated| restated.source_relationship.clone())
+        .unwrap_or_else(|| strict.clone());
     let mut content_types = definition.content_types.clone();
     if transitional == OFFICE_DOCUMENT {
         let file = file_type(&definition.section).with_context(|| {
@@ -696,7 +696,6 @@ fn part_1_type(
         ]
         .into_iter()
         .flatten()
-        .filter_map(|text| text.split_whitespace().next())
         .map(str::to_owned)
         .collect();
         (hints, local)
@@ -778,7 +777,6 @@ fn part_2_type(
         .with_context(|| format!("the part data of {title} gives no relationship type"))?;
     if let Some(restated) = restatement
         .and_then(|restated| restated.source_relationship.as_deref())
-        .map(uri)
         .filter(|restated| *restated != relationship)
     {
         notes.push(format!(
@@ -1033,11 +1031,4 @@ fn summary_line(joined: &Joined, part: &PartType, root: Option<Root>) -> String 
         None => "bytes",
     };
     format!("{} ({source}): {shown_root}, {constant}", part.module)
-}
-
-/// A URI as a field of the standard's text states it: the line breaks of a
-/// wrapped value removed.
-#[must_use]
-pub fn uri(text: &str) -> String {
-    text.split_whitespace().collect()
 }

@@ -216,6 +216,22 @@ fn field<'fields>(
         .map(|(_, values)| values)
 }
 
+/// A field value as the text states it: a URI is its first line's first word followed
+/// directly by each continuation line's first word; other text is joined with spaces.
+fn field_value(values: &[String]) -> String {
+    let is_uri = values
+        .first()
+        .is_some_and(|first| first.starts_with("http://") || first.starts_with("https://"));
+    if is_uri {
+        values
+            .iter()
+            .filter_map(|value| value.split_whitespace().next())
+            .collect()
+    } else {
+        values.join(" ")
+    }
+}
+
 /// Every part definition of Part 1, in document order.
 #[must_use]
 pub fn part_definitions(text: &str) -> Vec<PartDefinition> {
@@ -275,8 +291,8 @@ pub fn part_definitions(text: &str) -> Vec<PartDefinition> {
                 );
             }
         }
-        part.root_namespace = field(&found, "Root").map(|values| values.join(" "));
-        part.source_relationship = field(&found, "Source").map(|values| values.join(" "));
+        part.root_namespace = field(&found, "Root").map(|values| field_value(values));
+        part.source_relationship = field(&found, "Source").map(|values| field_value(values));
         let next_heading = after
             .iter()
             .position(|l| {
@@ -342,9 +358,9 @@ pub fn transitional_parts(text: &str) -> Vec<TransitionalPart> {
         let found = fields(&lines[index + 1..]);
         parts.push(TransitionalPart {
             part_1_section: part_1_section.to_owned(),
-            root_namespace: field(&found, "Root").map(|values| values.join(" ")),
+            root_namespace: field(&found, "Root").map(|values| field_value(values)),
             section: section.to_owned(),
-            source_relationship: field(&found, "Source").map(|values| values.join(" ")),
+            source_relationship: field(&found, "Source").map(|values| field_value(values)),
             title: title.trim().to_owned(),
         });
     }

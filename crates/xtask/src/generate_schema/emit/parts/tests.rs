@@ -1,6 +1,6 @@
 use alloc::collections::BTreeMap;
 
-use super::{Definition, Kind, constant_name, join, kinds, uri};
+use super::{Definition, Kind, constant_name, join, kinds};
 use crate::generate_schema::sdk_data::{DataPart, SdkData};
 use crate::generate_schema::standard_text::{PartDefinition, TransitionalPart};
 
@@ -78,16 +78,6 @@ fn a_constant_is_named_after_the_path_of_its_type() {
         "UI_USER_CUSTOMIZATION"
     );
     constant_name("http://example.com/types/header").unwrap_err();
-}
-
-#[test]
-fn a_wrapped_uri_loses_its_line_breaks() {
-    assert_eq!(
-        uri(
-            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/volatileDependencie s"
-        ),
-        format!("{TRANSITIONAL}volatileDependencies")
-    );
 }
 
 #[test]
