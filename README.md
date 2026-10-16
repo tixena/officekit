@@ -44,7 +44,7 @@ data, the same way the SDK generates its own classes.
 ### Design rules
 
 - **Every byte in or out of the operating system passes through
-  [`os-shim`](https://github.com/eburgos/os-shim).** Library functions that
+  [`os-shim`](https://github.com/tixena/os-shim).** Library functions that
   touch files take a `&S where S: os_shim::System + ?Sized`. The CLI hands in
   `RealSystem`; tests hand in `MemorySystem` and never touch disk.
 - **The zip container is parsed from an in-memory buffer**, not a stream.
