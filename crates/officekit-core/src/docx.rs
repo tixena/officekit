@@ -1,5 +1,6 @@
 //! The `.docx` file type, and hand-written operations over the generated `WordprocessingML` types.
 
+pub mod chart;
 mod header_footer;
 pub mod image;
 mod merge;
@@ -327,6 +328,25 @@ impl Docx {
             self.class,
             self.write_options,
         )
+    }
+
+    /// Refill every `c:numCache` and `c:strCache` of the chart part `chart` from the workbook
+    /// embedded in it, the target of the chart's `package` relationship: `c:ptCount` is the number
+    /// of cells the `c:f` names, and each cell holding a value gives one `c:pt` at its place in the
+    /// area, counted row by row. A `c:f` that is not one area of one sheet of the workbook (several
+    /// areas, a defined name, a missing sheet) leaves its cache as it is. The workbook is not
+    /// changed; the chart is stored back with the file's write options.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] for a chart that embeds no workbook, and the errors of reading the
+    /// workbook and the chart and of storing the chart.
+    pub fn refresh_chart_caches(
+        &mut self,
+        chart: &PartName,
+        ranges: chart::ChartRanges,
+    ) -> Result<(), PackageError> {
+        chart::refresh(self, chart, ranges)
     }
 
     /// Remove section `section`'s footer of type `kind`; its part goes once no section references
