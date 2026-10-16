@@ -28,6 +28,13 @@ pub fn load(package: &Package, name: &PartName) -> Result<Vec<u8>, PackageError>
 }
 ";
 
+/// The attribute of an item only a build without both class features uses.
+const SHARED_WRITER: &str = "#[cfg(not(all(feature = \"strict\", feature = \"transitional\")))]\n";
+/// The attribute of an item only a Strict build uses.
+const STRICT_ONLY: &str = "#[cfg(feature = \"strict\")]\n";
+/// The attribute of an item only a Transitional build uses.
+const TRANSITIONAL_ONLY: &str = "#[cfg(feature = \"transitional\")]\n";
+
 /// The attribute of an item only a build with a class's feature uses.
 const EITHER_CLASS: &str = "#[cfg(any(feature = \"strict\", feature = \"transitional\"))]\n";
 
@@ -438,22 +445,32 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
     out.push_str(&layout::signature(
         4,
         "fn to_tree",
-        &["&self".to_owned(), "_class: ConformanceClass".to_owned()],
+        &["&self".to_owned(), "class: ConformanceClass".to_owned()],
         "Result<Element, WriteError>",
     ));
+    out.push_str("        match class {\n");
+    out.push_str("            #[cfg(feature = \"strict\")]\n            ConformanceClass::Strict => self.to_strict(),\n");
+    out.push_str("            #[cfg(not(feature = \"strict\"))]\n            ConformanceClass::Strict => Ok(shared_tree(self)),\n");
+    out.push_str("            #[cfg(feature = \"transitional\")]\n            ConformanceClass::Transitional => self.to_transitional(),\n");
+    out.push_str("            #[cfg(not(feature = \"transitional\"))]\n            ConformanceClass::Transitional => Ok(shared_tree(self)),\n");
+    out.push_str("        }\n    }\n}\n\n");
+    out.push_str(SHARED_WRITER);
+    out.push_str(&layout::signature(
+        0,
+        "fn shared_tree",
+        &[format!("root: &{path}")],
+        "Element",
+    ));
     layout::line(
-        "        ",
+        "    ",
         &Expr::call(
-            "Ok",
-            vec![Expr::call(
-                &format!("{}::write::{}", root.module, root.function),
-                vec![Expr::atom("self"), Expr::atom("&mut Scope::default()")],
-            )],
+            &format!("{}::write::{}", root.module, root.function),
+            vec![Expr::atom("root"), Expr::atom("&mut Scope::default()")],
         ),
         "",
         &mut out,
     );
-    out.push_str("    }\n}\n");
+    out.push_str("}\n");
     out
 }
 
@@ -694,7 +711,7 @@ fn uses(root: Option<&RootText>) -> String {
             known.module
         ),
         Some(known) => format!(
-            "use crate::error::{{PackageError, WriteError}};\nuse crate::markup::{{Scope, {}}};\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\nuse crate::xml::conformance::ConformanceClass;\nuse crate::xml::element::Element;\n{EITHER_CLASS}use crate::xml::write::WriteOptions;\n",
+            "use crate::error::{{PackageError, WriteError}};\n{SHARED_WRITER}use crate::markup::Scope;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse crate::xml::conformance::ConformanceClass;\nuse crate::xml::element::Element;\n{EITHER_CLASS}use crate::xml::write::WriteOptions;\n",
             known.module
         ),
     }

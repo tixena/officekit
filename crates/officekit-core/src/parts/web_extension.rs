@@ -345,10 +345,16 @@
 //! `we:webextension`.
 
 use crate::error::{PackageError, WriteError};
-use crate::markup::{Scope, office_webextensions_webextension_2010_11};
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
+use crate::markup::Scope;
+use crate::markup::office_webextensions_webextension_2010_11;
 use crate::packaging::package::{OpenOptions, Package, PartRoot};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
+#[cfg(feature = "strict")]
+use crate::strict::Strict as _;
+#[cfg(feature = "transitional")]
+use crate::transitional::Transitional as _;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::Element;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -368,14 +374,23 @@ impl PartRoot for office_webextensions_webextension_2010_11::Webextension {
         Ok(office_webextensions_webextension_2010_11::read::webextension(root))
     }
 
-    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
-        Ok(
-            office_webextensions_webextension_2010_11::write::webextension(
-                self,
-                &mut Scope::default(),
-            ),
-        )
+    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
+        match class {
+            #[cfg(feature = "strict")]
+            ConformanceClass::Strict => self.to_strict(),
+            #[cfg(not(feature = "strict"))]
+            ConformanceClass::Strict => Ok(shared_tree(self)),
+            #[cfg(feature = "transitional")]
+            ConformanceClass::Transitional => self.to_transitional(),
+            #[cfg(not(feature = "transitional"))]
+            ConformanceClass::Transitional => Ok(shared_tree(self)),
+        }
     }
+}
+
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
+fn shared_tree(root: &office_webextensions_webextension_2010_11::Webextension) -> Element {
+    office_webextensions_webextension_2010_11::write::webextension(root, &mut Scope::default())
 }
 
 /// The part's typed root, read from either class.

@@ -345,10 +345,16 @@
 //! `xlrd2:richStyleSheet`.
 
 use crate::error::{PackageError, WriteError};
-use crate::markup::{Scope, office_spreadsheetml_2017_richdata2};
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
+use crate::markup::Scope;
+use crate::markup::office_spreadsheetml_2017_richdata2;
 use crate::packaging::package::{OpenOptions, Package, PartRoot};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
+#[cfg(feature = "strict")]
+use crate::strict::Strict as _;
+#[cfg(feature = "transitional")]
+use crate::transitional::Transitional as _;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::Element;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -370,14 +376,23 @@ impl PartRoot for office_spreadsheetml_2017_richdata2::RichStyleSheet {
         ))
     }
 
-    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
-        Ok(
-            office_spreadsheetml_2017_richdata2::write::rich_style_sheet(
-                self,
-                &mut Scope::default(),
-            ),
-        )
+    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
+        match class {
+            #[cfg(feature = "strict")]
+            ConformanceClass::Strict => self.to_strict(),
+            #[cfg(not(feature = "strict"))]
+            ConformanceClass::Strict => Ok(shared_tree(self)),
+            #[cfg(feature = "transitional")]
+            ConformanceClass::Transitional => self.to_transitional(),
+            #[cfg(not(feature = "transitional"))]
+            ConformanceClass::Transitional => Ok(shared_tree(self)),
+        }
     }
+}
+
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
+fn shared_tree(root: &office_spreadsheetml_2017_richdata2::RichStyleSheet) -> Element {
+    office_spreadsheetml_2017_richdata2::write::rich_style_sheet(root, &mut Scope::default())
 }
 
 /// The part's typed root, read from either class.

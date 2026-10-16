@@ -4,6 +4,8 @@ use core::fmt::Debug;
 use super::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use super::{MODULES, header, main_document, presentation, workbook};
 use crate::error::PackageError;
+#[cfg(feature = "strict")]
+use crate::error::WriteError;
 #[cfg(feature = "transitional")]
 use crate::packaging::package::PartRoot;
 use crate::packaging::package::{OpenOptions, Package};
@@ -154,6 +156,45 @@ fn a_strict_store_writes_the_strict_namespace_and_reads_the_same_content_back() 
     );
     let reloaded = header::load(&package, &part, OpenOptions::default()).unwrap();
     assert_eq!(reloaded.content, root.content);
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_store_of_the_main_document_converts_the_content_and_marks_it_strict() {
+    let part = name("/word/document.xml");
+    let mut package = package_with(&part, main_document::CONTENT_TYPES[0], DOCUMENT);
+    let root = main_document::load(&package, &part, OpenOptions::default()).unwrap();
+    main_document::store_strict(&mut package, &part, &root, WriteOptions::default()).unwrap();
+    let text = String::from_utf8(package.part_bytes(&part).unwrap()).unwrap();
+    assert!(text.contains("w:val=\"start\""), "{text}");
+    assert!(!text.contains("w:val=\"left\""), "{text}");
+    assert!(text.contains("conformance=\"strict\""), "{text}");
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_strict_store_of_content_strict_has_no_form_for_fails_and_stores_nothing() {
+    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></w:r></w:p></w:body></w:document>";
+    let source = name("/word/document.xml");
+    let loaded = package_with(&source, main_document::CONTENT_TYPES[0], VML);
+    let root = main_document::load(&loaded, &source, OpenOptions::default()).unwrap();
+    let mut package = Package::new();
+    let error = main_document::store_strict(&mut package, &source, &root, WriteOptions::default())
+        .unwrap_err();
+    assert!(
+        matches!(
+            &error,
+            PackageError::Write {
+                error: WriteError::NotInClass {
+                    class: ConformanceClass::Strict,
+                    tag,
+                },
+                part,
+            } if !tag.is_empty() && *part == source
+        ),
+        "{error:?}"
+    );
+    package.part_bytes(&source).unwrap_err();
 }
 
 #[test]
