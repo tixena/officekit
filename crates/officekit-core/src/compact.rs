@@ -7,7 +7,11 @@
 //! Word comment; every other node ends the stretch. The merged run is the
 //! first run followed by the content of the others, adjacent text elements
 //! joined into one.
+//!
+//! [`compact_package`] runs the merge over every XML part of a package and
+//! every Office document embedded in it.
 
+mod comments;
 mod properties;
 
 use alloc::collections::BTreeSet;
@@ -15,14 +19,44 @@ use core::mem;
 
 use properties::{Counted, DRAWING, SPREADSHEET, WORDPROCESSING};
 
+use crate::error::PackageError;
+use crate::packaging::package::{OpenOptions, Package};
+use crate::packaging::part_name::PartName;
 use crate::xml::element::{Attribute, Element, Node};
 use crate::xml::mc::with_declarations;
 use crate::xml::name::table::NAMESPACES;
 use crate::xml::name::{Namespace, QName};
-use crate::xml::write::{is_whitespace_text, preserves_space};
+use crate::xml::write::{Layout, WriteOptions, is_whitespace_text, preserves_space};
 
 #[cfg(test)]
 mod tests;
+
+/// The content types of an Office document held by a part: a `.docx`,
+/// `.xlsx`, `.pptx`, or `.ppsx` slide show, its template, and their
+/// macro-enabled variants.
+const PACKAGE_CONTENT_TYPES: [&str; 14] = [
+    "application/vnd.ms-excel.sheet.macroEnabled.12",
+    "application/vnd.ms-excel.template.macroEnabled.12",
+    "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+    "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+    "application/vnd.ms-powerpoint.template.macroEnabled.12",
+    "application/vnd.ms-word.document.macroEnabled.12",
+    "application/vnd.ms-word.template.macroEnabled.12",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+    "application/vnd.openxmlformats-officedocument.presentationml.template",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+];
+
+/// How a compacted part is written back: compact, every namespace
+/// declaration kept.
+const STORE: WriteOptions = WriteOptions {
+    layout: Layout::Compact,
+    namespace_cleanup: false,
+};
 
 /// The namespace the `xml` prefix is bound to.
 const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
@@ -36,6 +70,22 @@ pub enum Comments {
     Keep,
     /// The comment goes: every node of it in the tree, and its id is reported.
     Remove,
+}
+
+/// What compacting a package did, its embedded packages included.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct Compaction {
+    /// Embedded packages compacted.
+    pub embedded: usize,
+    /// Runs merged into the run before them.
+    pub merged: usize,
+    /// XML parts stored back.
+    pub parts: usize,
+    /// Word comments removed, with their entries in the comments parts.
+    pub removed_comments: usize,
+    /// Embedded packages that did not open, left as they were.
+    pub skipped: usize,
 }
 
 /// A run kind, by the namespace of its `r`, `rPr`, and text elements.
@@ -68,6 +118,17 @@ enum Role {
     Between(Node, Option<String>),
     /// A run that can merge.
     Run(Element, Kind),
+}
+
+impl Compaction {
+    /// Add the counts of an embedded package's compaction.
+    const fn include(&mut self, embedded: &Self) {
+        self.embedded += embedded.embedded;
+        self.merged += embedded.merged;
+        self.parts += embedded.parts;
+        self.removed_comments += embedded.removed_comments;
+        self.skipped += embedded.skipped;
+    }
 }
 
 impl Kind {
@@ -210,6 +271,75 @@ fn compact(element: &mut Element, around: bool, comments: Comments, done: &mut P
             compact(child_element, preserve, comments, done);
         }
     }
+}
+
+/// Compact the Office document the part `name` holds, and store it back when
+/// a part of it changed; one that does not open is left as it is.
+fn compact_embedded(
+    package: &mut Package,
+    name: &PartName,
+    content_type: &str,
+    comments: Comments,
+    done: &mut Compaction,
+) -> Result<(), PackageError> {
+    let Ok(mut embedded) = Package::from_bytes(package.part_bytes(name)?) else {
+        done.skipped += 1;
+        return Ok(());
+    };
+    let inner = compact_package(&mut embedded, comments)?;
+    if inner.parts > 0 {
+        package.set_part_bytes(name, content_type, &embedded.to_bytes()?)?;
+    }
+    done.embedded += 1;
+    done.include(&inner);
+    Ok(())
+}
+
+/// Compact every part of `package` that holds runs, and every Office
+/// document embedded in it.
+///
+/// Each XML part is compacted with its markup compatibility as the file has
+/// it, and written back only when a run merged; under [`Comments::Remove`],
+/// each removed comment also leaves the parts that record it.
+///
+/// # Errors
+///
+/// A part that cannot be read, parsed, or stored.
+pub fn compact_package(
+    package: &mut Package,
+    comments: Comments,
+) -> Result<Compaction, PackageError> {
+    let mut done = Compaction::default();
+    // Folded names, so a comments part stored twice counts once.
+    let mut stored = BTreeSet::new();
+    let mut found = Vec::new();
+    for name in package.part_names()? {
+        let Some(content_type) = package.content_type(&name).map(str::to_owned) else {
+            continue;
+        };
+        if is_xml(&content_type) {
+            let mut document = package.load_tree(&name, OpenOptions::default())?;
+            let part = compact_tree(&mut document.root, comments);
+            if part.merged > 0 || !part.removed_comments.is_empty() {
+                package.store_tree(&name, &content_type, &document, STORE)?;
+                stored.insert(name.folded());
+            }
+            done.merged += part.merged;
+            if !part.removed_comments.is_empty() {
+                done.removed_comments += part.removed_comments.len();
+                found.push((name, part.removed_comments));
+            }
+        } else if is_package(&content_type) {
+            compact_embedded(package, &name, &content_type, comments, &mut done)?;
+        } else {
+            // Any other part holds no runs and keeps its bytes.
+        }
+    }
+    for name in comments::remove(package, found)? {
+        stored.insert(name.folded());
+    }
+    done.parts += stored.len();
+    Ok(done)
 }
 
 /// Merge, under every element of `root`, each stretch of neighbouring runs
@@ -456,12 +586,29 @@ fn role(node: Node, comments: Comments) -> Role {
     Role::Barrier(Node::Element(element))
 }
 
+/// Whether a content type names an Office document.
+fn is_package(content_type: &str) -> bool {
+    PACKAGE_CONTENT_TYPES
+        .iter()
+        .any(|known| known.eq_ignore_ascii_case(content_type))
+}
+
 fn is_space(name: &QName) -> bool {
     name.prefix == "xml" && name.local == "space"
 }
 
 const fn is_xml_whitespace(character: char) -> bool {
     matches!(character, ' ' | '\t' | '\n' | '\r')
+}
+
+/// Whether a content type names XML markup: `application/xml`, `text/xml`,
+/// or an `application` type ending in `+xml`. Another top-level type, such
+/// as `image/svg+xml`, names a picture or media file.
+fn is_xml(content_type: &str) -> bool {
+    let folded = content_type.to_ascii_lowercase();
+    folded == "application/xml"
+        || folded == "text/xml"
+        || (folded.starts_with("application/") && folded.ends_with("+xml"))
 }
 
 /// An `xml:space` attribute.
