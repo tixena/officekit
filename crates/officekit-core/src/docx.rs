@@ -1,6 +1,7 @@
 //! The `.docx` file type, and hand-written operations over the generated `WordprocessingML` types.
 
 mod header_footer;
+pub mod image;
 mod merge;
 pub mod table;
 #[cfg(test)]
@@ -12,8 +13,9 @@ use os_shim::System;
 
 use crate::error::PackageError;
 use crate::file;
+use crate::image::Image;
 use crate::markup::wordprocessing::{
-    BlockContent, Document, Footer, Header, HeaderOrFooterTypeMember,
+    BlockContent, Document, Footer, Header, HeaderOrFooterTypeMember, TextRun,
 };
 use crate::new_parts;
 use crate::packaging::package::{OpenOptions, Package};
@@ -359,6 +361,27 @@ impl Docx {
             self.class,
             self.write_options,
         )
+    }
+
+    /// Put `image` into a new image part related from `part` (`media/image{n}.<extension>` beside
+    /// it), point the run's first `a:blip` at it through `r:embed`, and size the picture's frame as
+    /// `fit` says. The blip is the first one inside a `w:drawing`, in typed content or in the
+    /// markup compatibility around one. Returns the relationship id the blip named before; it and
+    /// its part stay, for the caller to remove with [`Package::remove_relationship`] once no
+    /// markup names it.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] when the run holds no picture, and the errors of
+    /// [`Package::add_image`].
+    pub fn set_picture(
+        &mut self,
+        part: &PartName,
+        run: &mut TextRun,
+        image: &Image,
+        fit: image::PictureFit,
+    ) -> Result<Option<String>, PackageError> {
+        image::set_picture(self, part, run, image, fit)
     }
 
     /// The options every store through the file writes with, its saves included (D29).
