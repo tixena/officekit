@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_LC: Option<NamespaceId> = Some(50);
@@ -237,6 +241,34 @@ static LOCKED_CANVAS_CONTAINER_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `lc` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::locked_canvas` is never asked.
+pub trait Context: markup::Context {
+    fn locked_canvas_container(
+        &mut self,
+        _node: &LockedCanvasContainer,
+    ) -> Option<LockedCanvasContainer> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_locked_canvas_container(
+        &mut self,
+        _node: &LockedCanvasContainer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 20.3.2.1 `lockedCanvas` (Locked Canvas Container): the tag `lc:lockedCanvas`, schema type
 /// `CT_GvmlGroupShape`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -248,6 +280,17 @@ pub struct LockedCanvasContainer {
         Box<super::drawing::NonVisualPropertiesForAGroupShape>,
     pub unknown: markup::Unknown,
     pub visual_group_shape_properties: Box<super::drawing::VisualGroupShapeProperties>,
+}
+
+/// The hooks of a visitor for the `lc` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::locked_canvas` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn locked_canvas_container(&mut self, _node: &LockedCanvasContainer) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for LockedCanvasContainer {

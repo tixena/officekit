@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_W: Option<NamespaceId> = Some(97);
 const NS_W15: Option<NamespaceId> = Some(100);
@@ -421,6 +425,282 @@ pub struct CommentsEx {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `w15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2012_wordml` is never asked.
+pub trait Context: markup::Context {
+    fn appearance(&mut self, _node: &Appearance) -> Option<Appearance> {
+        None
+    }
+
+    fn chart_tracking_ref_based(
+        &mut self,
+        _node: &ChartTrackingRefBased,
+    ) -> Option<ChartTrackingRefBased> {
+        None
+    }
+
+    fn collapsed(&mut self, _node: &Collapsed) -> Option<Collapsed> {
+        None
+    }
+
+    fn color(&mut self, _node: &Color) -> Option<Color> {
+        None
+    }
+
+    fn comment_ex(&mut self, _node: &CommentEx) -> Option<CommentEx> {
+        None
+    }
+
+    fn comments_ex(&mut self, _node: &CommentsEx) -> Option<CommentsEx> {
+        None
+    }
+
+    fn data_binding(&mut self, _node: &DataBinding) -> Option<DataBinding> {
+        None
+    }
+
+    fn do_not_allow_insert_delete_section(
+        &mut self,
+        _node: &DoNotAllowInsertDeleteSection,
+    ) -> Option<DoNotAllowInsertDeleteSection> {
+        None
+    }
+
+    fn doc_id(&mut self, _node: &DocId) -> Option<DocId> {
+        None
+    }
+
+    fn footnote_columns(&mut self, _node: &FootnoteColumns) -> Option<FootnoteColumns> {
+        None
+    }
+
+    fn people(&mut self, _node: &People) -> Option<People> {
+        None
+    }
+
+    fn person(&mut self, _node: &Person) -> Option<Person> {
+        None
+    }
+
+    fn presence_info(&mut self, _node: &PresenceInfo) -> Option<PresenceInfo> {
+        None
+    }
+
+    fn repeating_section(&mut self, _node: &RepeatingSection) -> Option<RepeatingSection> {
+        None
+    }
+
+    fn repeating_section_item(
+        &mut self,
+        _node: &RepeatingSectionItem,
+    ) -> Option<RepeatingSectionItem> {
+        None
+    }
+
+    fn section_title(&mut self, _node: &SectionTitle) -> Option<SectionTitle> {
+        None
+    }
+
+    fn web_extension_created(
+        &mut self,
+        _node: &WebExtensionCreated,
+    ) -> Option<WebExtensionCreated> {
+        None
+    }
+
+    fn web_extension_linked(&mut self, _node: &WebExtensionLinked) -> Option<WebExtensionLinked> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_appearance(
+        &mut self,
+        _node: &Appearance,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_tracking_ref_based(
+        &mut self,
+        _node: &ChartTrackingRefBased,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_collapsed(
+        &mut self,
+        _node: &Collapsed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color(&mut self, _node: &Color, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_ex(
+        &mut self,
+        _node: &CommentEx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_ex(
+        &mut self,
+        _node: &CommentsEx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_binding(
+        &mut self,
+        _node: &DataBinding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_allow_insert_delete_section(
+        &mut self,
+        _node: &DoNotAllowInsertDeleteSection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doc_id(&mut self, _node: &DocId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_columns(
+        &mut self,
+        _node: &FootnoteColumns,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_people(&mut self, _node: &People, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presence_info(
+        &mut self,
+        _node: &PresenceInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_repeating_section(
+        &mut self,
+        _node: &RepeatingSection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_repeating_section_item(
+        &mut self,
+        _node: &RepeatingSectionItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_title(
+        &mut self,
+        _node: &SectionTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_extension_created(
+        &mut self,
+        _node: &WebExtensionCreated,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_extension_linked(
+        &mut self,
+        _node: &WebExtensionLinked,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `w15:dataBinding`, schema type `CT_DataBinding` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -516,6 +796,88 @@ pub enum SdtAppearanceMember {
 pub struct SectionTitle {
     pub unknown: markup::Unknown,
     pub val: Option<String>,
+}
+
+/// The hooks of a visitor for the `w15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2012_wordml` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn appearance(&mut self, _node: &Appearance) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_tracking_ref_based(&mut self, _node: &ChartTrackingRefBased) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn collapsed(&mut self, _node: &Collapsed) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color(&mut self, _node: &Color) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_ex(&mut self, _node: &CommentEx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_ex(&mut self, _node: &CommentsEx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_binding(&mut self, _node: &DataBinding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_allow_insert_delete_section(
+        &mut self,
+        _node: &DoNotAllowInsertDeleteSection,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doc_id(&mut self, _node: &DocId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_columns(&mut self, _node: &FootnoteColumns) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn people(&mut self, _node: &People) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn person(&mut self, _node: &Person) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presence_info(&mut self, _node: &PresenceInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn repeating_section(&mut self, _node: &RepeatingSection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn repeating_section_item(&mut self, _node: &RepeatingSectionItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_title(&mut self, _node: &SectionTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_extension_created(&mut self, _node: &WebExtensionCreated) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_extension_linked(&mut self, _node: &WebExtensionLinked) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `w15:webExtensionCreated`, schema type `CT_OnOff` of SDK 3.5.1's data.

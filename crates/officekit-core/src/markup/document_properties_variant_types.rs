@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_VT: Option<NamespaceId> = Some(96);
 
@@ -709,6 +713,527 @@ pub struct ClassID {
     pub value: super::common_simple_types::Guid,
 }
 
+/// The hooks of a context for the `vt` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::document_properties_variant_types` is never asked.
+pub trait Context: markup::Context {
+    fn array(&mut self, _node: &Array) -> Option<Array> {
+        None
+    }
+
+    fn array_content(&mut self, _node: &ArrayContent) -> Option<ArrayContent> {
+        None
+    }
+
+    fn array_content_items(&mut self, _node: &ArrayContent) -> Option<Vec<ArrayContent>> {
+        None
+    }
+
+    fn basic_string(&mut self, _node: &BasicString) -> Option<BasicString> {
+        None
+    }
+
+    fn binary_blob(&mut self, _node: &BinaryBlob) -> Option<BinaryBlob> {
+        None
+    }
+
+    fn binary_blob_object(&mut self, _node: &BinaryBlobObject) -> Option<BinaryBlobObject> {
+        None
+    }
+
+    fn binary_storage(&mut self, _node: &BinaryStorage) -> Option<BinaryStorage> {
+        None
+    }
+
+    fn binary_storage_object(
+        &mut self,
+        _node: &BinaryStorageObject,
+    ) -> Option<BinaryStorageObject> {
+        None
+    }
+
+    fn binary_stream(&mut self, _node: &BinaryStream) -> Option<BinaryStream> {
+        None
+    }
+
+    fn binary_stream_object(&mut self, _node: &BinaryStreamObject) -> Option<BinaryStreamObject> {
+        None
+    }
+
+    fn binary_versioned_stream(
+        &mut self,
+        _node: &BinaryVersionedStream,
+    ) -> Option<BinaryVersionedStream> {
+        None
+    }
+
+    fn boolean(&mut self, _node: &Boolean) -> Option<Boolean> {
+        None
+    }
+
+    fn class_id(&mut self, _node: &ClassID) -> Option<ClassID> {
+        None
+    }
+
+    fn currency(&mut self, _node: &Currency) -> Option<Currency> {
+        None
+    }
+
+    fn date_and_time(&mut self, _node: &DateAndTime) -> Option<DateAndTime> {
+        None
+    }
+
+    fn decimal(&mut self, _node: &Decimal) -> Option<Decimal> {
+        None
+    }
+
+    fn empty(&mut self, _node: &Empty) -> Option<Empty> {
+        None
+    }
+
+    fn error_status_code(&mut self, _node: &ErrorStatusCode) -> Option<ErrorStatusCode> {
+        None
+    }
+
+    fn file_time(&mut self, _node: &FileTime) -> Option<FileTime> {
+        None
+    }
+
+    fn i1(&mut self, _node: &I1) -> Option<I1> {
+        None
+    }
+
+    fn i2(&mut self, _node: &I2) -> Option<I2> {
+        None
+    }
+
+    fn i4(&mut self, _node: &I4) -> Option<I4> {
+        None
+    }
+
+    fn i8(&mut self, _node: &I8) -> Option<I8> {
+        None
+    }
+
+    fn integer(&mut self, _node: &Integer) -> Option<Integer> {
+        None
+    }
+
+    fn lpstr(&mut self, _node: &LPSTR) -> Option<LPSTR> {
+        None
+    }
+
+    fn lpwstr(&mut self, _node: &LPWSTR) -> Option<LPWSTR> {
+        None
+    }
+
+    fn null(&mut self, _node: &Null) -> Option<Null> {
+        None
+    }
+
+    fn r4(&mut self, _node: &R4) -> Option<R4> {
+        None
+    }
+
+    fn r8(&mut self, _node: &R8) -> Option<R8> {
+        None
+    }
+
+    fn ui1(&mut self, _node: &Ui1) -> Option<Ui1> {
+        None
+    }
+
+    fn ui2(&mut self, _node: &Ui2) -> Option<Ui2> {
+        None
+    }
+
+    fn ui4(&mut self, _node: &Ui4) -> Option<Ui4> {
+        None
+    }
+
+    fn ui8(&mut self, _node: &Ui8) -> Option<Ui8> {
+        None
+    }
+
+    fn unsigned_integer(&mut self, _node: &UnsignedInteger) -> Option<UnsignedInteger> {
+        None
+    }
+
+    fn variant(&mut self, _node: &Variant) -> Option<Variant> {
+        None
+    }
+
+    fn variant_content(&mut self, _node: &VariantContent) -> Option<VariantContent> {
+        None
+    }
+
+    fn vector(&mut self, _node: &Vector) -> Option<Vector> {
+        None
+    }
+
+    fn vector_content(&mut self, _node: &VectorContent) -> Option<VectorContent> {
+        None
+    }
+
+    fn vector_content_items(&mut self, _node: &VectorContent) -> Option<Vec<VectorContent>> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array(&mut self, _node: &Array, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_content(
+        &mut self,
+        _node: &ArrayContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_content_items(
+        &mut self,
+        _node: &ArrayContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_basic_string(
+        &mut self,
+        _node: &BasicString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_blob(
+        &mut self,
+        _node: &BinaryBlob,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_blob_object(
+        &mut self,
+        _node: &BinaryBlobObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_storage(
+        &mut self,
+        _node: &BinaryStorage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_storage_object(
+        &mut self,
+        _node: &BinaryStorageObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_stream(
+        &mut self,
+        _node: &BinaryStream,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_stream_object(
+        &mut self,
+        _node: &BinaryStreamObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary_versioned_stream(
+        &mut self,
+        _node: &BinaryVersionedStream,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_boolean(&mut self, _node: &Boolean, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_class_id(
+        &mut self,
+        _node: &ClassID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_currency(
+        &mut self,
+        _node: &Currency,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_and_time(
+        &mut self,
+        _node: &DateAndTime,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_decimal(&mut self, _node: &Decimal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_empty(&mut self, _node: &Empty, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_status_code(
+        &mut self,
+        _node: &ErrorStatusCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_file_time(
+        &mut self,
+        _node: &FileTime,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i1(&mut self, _node: &I1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i2(&mut self, _node: &I2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i4(&mut self, _node: &I4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i8(&mut self, _node: &I8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_integer(&mut self, _node: &Integer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lpstr(&mut self, _node: &LPSTR, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lpwstr(&mut self, _node: &LPWSTR, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_null(&mut self, _node: &Null, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_r4(&mut self, _node: &R4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_r8(&mut self, _node: &R8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui1(&mut self, _node: &Ui1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui2(&mut self, _node: &Ui2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui4(&mut self, _node: &Ui4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui8(&mut self, _node: &Ui8, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unsigned_integer(
+        &mut self,
+        _node: &UnsignedInteger,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_variant(&mut self, _node: &Variant, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_variant_content(
+        &mut self,
+        _node: &VariantContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vector(&mut self, _node: &Vector, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vector_content(
+        &mut self,
+        _node: &VectorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vector_content_items(
+        &mut self,
+        _node: &VectorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.4.2.6 cy (Currency): the tag `vt:cy`, schema type `ST_Cy`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -999,6 +1524,161 @@ pub enum VectorContent {
     Ui4(Ui4),
     Ui8(Ui8),
     Variant(Variant),
+}
+
+/// The hooks of a visitor for the `vt` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::document_properties_variant_types` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn array(&mut self, _node: &Array) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn array_content(&mut self, _node: &ArrayContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn basic_string(&mut self, _node: &BasicString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_blob(&mut self, _node: &BinaryBlob) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_blob_object(&mut self, _node: &BinaryBlobObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_storage(&mut self, _node: &BinaryStorage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_storage_object(&mut self, _node: &BinaryStorageObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_stream(&mut self, _node: &BinaryStream) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_stream_object(&mut self, _node: &BinaryStreamObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary_versioned_stream(&mut self, _node: &BinaryVersionedStream) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn boolean(&mut self, _node: &Boolean) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn class_id(&mut self, _node: &ClassID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn currency(&mut self, _node: &Currency) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_and_time(&mut self, _node: &DateAndTime) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn decimal(&mut self, _node: &Decimal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn empty(&mut self, _node: &Empty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_status_code(&mut self, _node: &ErrorStatusCode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn file_time(&mut self, _node: &FileTime) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i1(&mut self, _node: &I1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i2(&mut self, _node: &I2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i4(&mut self, _node: &I4) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i8(&mut self, _node: &I8) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn integer(&mut self, _node: &Integer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lpstr(&mut self, _node: &LPSTR) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lpwstr(&mut self, _node: &LPWSTR) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn null(&mut self, _node: &Null) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r4(&mut self, _node: &R4) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r8(&mut self, _node: &R8) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui1(&mut self, _node: &Ui1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui2(&mut self, _node: &Ui2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui4(&mut self, _node: &Ui4) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui8(&mut self, _node: &Ui8) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unsigned_integer(&mut self, _node: &UnsignedInteger) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn variant(&mut self, _node: &Variant) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn variant_content(&mut self, _node: &VariantContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vector(&mut self, _node: &Vector) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vector_content(&mut self, _node: &VectorContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Array {

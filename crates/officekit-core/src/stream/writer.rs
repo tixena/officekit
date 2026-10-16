@@ -5,8 +5,9 @@ use std::io::{self, Write};
 use quick_xml::Writer;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
+use crate::markup::Scope;
 use crate::xml::element::{Element, NamespaceDeclaration, Node};
-use crate::xml::write::{Layout, escape, write_element, write_node};
+use crate::xml::write::{Layout, escape, qualified, start_tag, write_element, write_node};
 
 #[cfg(test)]
 mod tests;
@@ -18,8 +19,14 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 ///
 /// It writes through `quick-xml`'s writer, in D29's layout: compact, or
 /// pretty, which puts each tag on a line of its own, indented by two spaces,
-/// unless text comes before it.
+/// unless text comes before it. A start tag waits for the element's first
+/// content, so an element nothing is written into ends as an empty tag. It
+/// keeps the namespace declarations of the elements it has started and not
+/// ended, which a typed node written through it takes its prefixes from.
 pub struct PartWriter<'sink> {
+    /// The start tag waiting for its element's first content.
+    pending: Option<BytesStart<'static>>,
+    scope: Scope,
     writer: Writer<&'sink mut dyn Write>,
 }
 
@@ -31,6 +38,7 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn declaration(&mut self) -> io::Result<()> {
+        self.flush()?;
         // Past the writer, so the pretty layout does not break the line before the root.
         self.writer.get_mut().write_all(DECLARATION)
     }
@@ -41,6 +49,7 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn element(&mut self, element: &Element) -> io::Result<()> {
+        self.flush()?;
         write_element(&mut self.writer, element, Layout::Compact, 0, false)
     }
 
@@ -50,17 +59,31 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn empty(&mut self, name: &str, attributes: &[(&str, &str)]) -> io::Result<()> {
+        self.flush()?;
         self.writer
             .write_event(Event::Empty(tag(name, &[], attributes)))
     }
 
-    /// `</name>`.
+    /// `</name>`, or `<name/>` in place of the start tag when nothing was
+    /// written into the element; its declarations leave the scope.
     ///
     /// # Errors
     ///
     /// The sink's.
     pub fn end(&mut self, name: &str) -> io::Result<()> {
-        self.writer.write_event(Event::End(BytesEnd::new(name)))
+        self.scope.end();
+        match self.pending.take() {
+            Some(start) => self.writer.write_event(Event::Empty(start)),
+            None => self.writer.write_event(Event::End(BytesEnd::new(name))),
+        }
+    }
+
+    /// Write the start tag waiting for its element's first content.
+    fn flush(&mut self) -> io::Result<()> {
+        match self.pending.take() {
+            Some(start) => self.writer.write_event(Event::Start(start)),
+            None => Ok(()),
+        }
     }
 
     #[must_use]
@@ -69,7 +92,11 @@ impl<'sink> PartWriter<'sink> {
             Layout::Compact => Writer::new(sink),
             Layout::Pretty => Writer::new_with_indent(sink, b' ', 2),
         };
-        Self { writer }
+        Self {
+            pending: None,
+            scope: Scope::default(),
+            writer,
+        }
     }
 
     /// A node of the generic tree: an element, text, a comment, CDATA, or a
@@ -79,7 +106,21 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn node(&mut self, node: &Node) -> io::Result<()> {
+        self.flush()?;
         write_node(&mut self.writer, node, Layout::Compact, 0, false)
+    }
+
+    /// The start tag of an element whose declarations the scope already
+    /// holds, a typed node's: its name, declarations, and attributes, as
+    /// [`Self::start`] writes them.
+    pub(crate) fn open(&mut self, element: &Element) -> io::Result<()> {
+        self.flush()?;
+        let name = qualified(&element.name);
+        self.pending = Some(BytesStart::from_content(
+            start_tag(element, &name),
+            name.len(),
+        ));
+        Ok(())
     }
 
     /// Markup written as it is.
@@ -88,11 +129,18 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn raw(&mut self, markup: &[u8]) -> io::Result<()> {
+        self.flush()?;
         self.writer.get_mut().write_all(markup)
     }
 
+    /// The namespace declarations in scope.
+    pub(crate) const fn scope(&mut self) -> &mut Scope {
+        &mut self.scope
+    }
+
     /// `<name xmlns:p="..." a="v">`: the namespace declarations first, then the
-    /// attributes, values escaped as in the generic tree's writer.
+    /// attributes, values escaped as in the generic tree's writer. The
+    /// declarations stay in scope until the element's `end`.
     ///
     /// # Errors
     ///
@@ -103,8 +151,10 @@ impl<'sink> PartWriter<'sink> {
         declarations: &[NamespaceDeclaration],
         attributes: &[(&str, &str)],
     ) -> io::Result<()> {
-        self.writer
-            .write_event(Event::Start(tag(name, declarations, attributes)))
+        self.flush()?;
+        self.scope.start(declarations);
+        self.pending = Some(tag(name, declarations, attributes));
+        Ok(())
     }
 
     /// Text, escaped as in the generic tree's writer.
@@ -113,6 +163,7 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn text(&mut self, value: &str) -> io::Result<()> {
+        self.flush()?;
         self.writer
             .write_event(Event::Text(BytesText::from_escaped(escape(value, false))))
     }

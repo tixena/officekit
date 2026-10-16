@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chart`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
@@ -458,6 +462,347 @@ pub struct CategoryFilterExceptions {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `c16` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2014_chart` is never asked.
+pub trait Context: markup::Context {
+    fn bubble3d(&mut self, _node: &Bubble3D) -> Option<Bubble3D> {
+        None
+    }
+
+    fn category_filter_exception(
+        &mut self,
+        _node: &CategoryFilterException,
+    ) -> Option<CategoryFilterException> {
+        None
+    }
+
+    fn category_filter_exceptions(
+        &mut self,
+        _node: &CategoryFilterExceptions,
+    ) -> Option<CategoryFilterExceptions> {
+        None
+    }
+
+    fn d_lbl(&mut self, _node: &DLbl) -> Option<DLbl> {
+        None
+    }
+
+    fn datapointuniqueidmap(
+        &mut self,
+        _node: &Datapointuniqueidmap,
+    ) -> Option<Datapointuniqueidmap> {
+        None
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> Option<Explosion> {
+        None
+    }
+
+    fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
+    ) -> Option<FilteredLitCacheMultiLvlStrFilteredLiteralCache> {
+        None
+    }
+
+    fn filtered_lit_cache_num_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheNumFilteredLiteralCache,
+    ) -> Option<FilteredLitCacheNumFilteredLiteralCache> {
+        None
+    }
+
+    fn filtered_lit_cache_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheStrFilteredLiteralCache,
+    ) -> Option<FilteredLitCacheStrFilteredLiteralCache> {
+        None
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> Option<InvertIfNegative> {
+        None
+    }
+
+    fn literal_data_chart(&mut self, _node: &LiteralDataChart) -> Option<LiteralDataChart> {
+        None
+    }
+
+    fn marker(&mut self, _node: &Marker) -> Option<Marker> {
+        None
+    }
+
+    fn multi_lvl_str_cache(&mut self, _node: &MultiLvlStrCache) -> Option<MultiLvlStrCache> {
+        None
+    }
+
+    fn num_cache(&mut self, _node: &NumCache) -> Option<NumCache> {
+        None
+    }
+
+    fn pivot_options16(&mut self, _node: &PivotOptions16) -> Option<PivotOptions16> {
+        None
+    }
+
+    fn ptentry(&mut self, _node: &Ptentry) -> Option<Ptentry> {
+        None
+    }
+
+    fn ptidx(&mut self, _node: &Ptidx) -> Option<Ptidx> {
+        None
+    }
+
+    fn show_expand_collapse_field_buttons(
+        &mut self,
+        _node: &ShowExpandCollapseFieldButtons,
+    ) -> Option<ShowExpandCollapseFieldButtons> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn str_cache(&mut self, _node: &StrCache) -> Option<StrCache> {
+        None
+    }
+
+    fn unique_id(&mut self, _node: &UniqueID) -> Option<UniqueID> {
+        None
+    }
+
+    fn unique_id_2(&mut self, _node: &UniqueId) -> Option<UniqueId> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble3d(
+        &mut self,
+        _node: &Bubble3D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_filter_exception(
+        &mut self,
+        _node: &CategoryFilterException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_filter_exceptions(
+        &mut self,
+        _node: &CategoryFilterExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_d_lbl(&mut self, _node: &DLbl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_datapointuniqueidmap(
+        &mut self,
+        _node: &Datapointuniqueidmap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_explosion(
+        &mut self,
+        _node: &Explosion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_lit_cache_num_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheNumFilteredLiteralCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_lit_cache_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheStrFilteredLiteralCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_invert_if_negative(
+        &mut self,
+        _node: &InvertIfNegative,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_literal_data_chart(
+        &mut self,
+        _node: &LiteralDataChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_marker(&mut self, _node: &Marker, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multi_lvl_str_cache(
+        &mut self,
+        _node: &MultiLvlStrCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_cache(
+        &mut self,
+        _node: &NumCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_options16(
+        &mut self,
+        _node: &PivotOptions16,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ptentry(&mut self, _node: &Ptentry, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ptidx(&mut self, _node: &Ptidx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_expand_collapse_field_buttons(
+        &mut self,
+        _node: &ShowExpandCollapseFieldButtons,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_str_cache(
+        &mut self,
+        _node: &StrCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unique_id(
+        &mut self,
+        _node: &UniqueID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unique_id_2(
+        &mut self,
+        _node: &UniqueId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `c16:dLbl`, schema type `CT_DLbl` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -629,6 +974,113 @@ pub struct UniqueID {
 #[non_exhaustive]
 pub struct UniqueId {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `c16` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2014_chart` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn bubble3d(&mut self, _node: &Bubble3D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_filter_exception(&mut self, _node: &CategoryFilterException) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_filter_exceptions(&mut self, _node: &CategoryFilterExceptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn d_lbl(&mut self, _node: &DLbl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn datapointuniqueidmap(&mut self, _node: &Datapointuniqueidmap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheMultiLvlStrFilteredLiteralCache,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_lit_cache_num_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheNumFilteredLiteralCache,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_lit_cache_str_filtered_literal_cache(
+        &mut self,
+        _node: &FilteredLitCacheStrFilteredLiteralCache,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn literal_data_chart(&mut self, _node: &LiteralDataChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn marker(&mut self, _node: &Marker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multi_lvl_str_cache(&mut self, _node: &MultiLvlStrCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_cache(&mut self, _node: &NumCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_options16(&mut self, _node: &PivotOptions16) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ptentry(&mut self, _node: &Ptentry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ptidx(&mut self, _node: &Ptidx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_expand_collapse_field_buttons(
+        &mut self,
+        _node: &ShowExpandCollapseFieldButtons,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn str_cache(&mut self, _node: &StrCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unique_id(&mut self, _node: &UniqueID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unique_id_2(&mut self, _node: &UniqueId) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Bubble3D {

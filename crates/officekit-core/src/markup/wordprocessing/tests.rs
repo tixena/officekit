@@ -1,3 +1,6 @@
+#[path = "traversal_tests.rs"]
+mod traversal_tests;
+
 use super::{
     AnchorForImportedExternalContent, BlockContent, ContentBlockContent, HorizontalAlignmentType,
     HorizontalAlignmentTypeMember, MeasurementOrPercentageValue,

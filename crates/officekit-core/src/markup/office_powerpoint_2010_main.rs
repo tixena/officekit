@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -727,6 +731,797 @@ pub struct CNvPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `p14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2010_main` is never asked.
+pub trait Context: markup::Context {
+    fn bmk(&mut self, _node: &Bmk) -> Option<Bmk> {
+        None
+    }
+
+    fn bmk_lst(&mut self, _node: &BmkLst) -> Option<BmkLst> {
+        None
+    }
+
+    fn bmk_tgt(&mut self, _node: &BmkTgt) -> Option<BmkTgt> {
+        None
+    }
+
+    fn browse_mode(&mut self, _node: &BrowseMode) -> Option<BrowseMode> {
+        None
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn conveyor(&mut self, _node: &Conveyor) -> Option<Conveyor> {
+        None
+    }
+
+    fn creation_id(&mut self, _node: &CreationId) -> Option<CreationId> {
+        None
+    }
+
+    fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> Option<DefaultImageDpi> {
+        None
+    }
+
+    fn discard_image_edit_data(
+        &mut self,
+        _node: &DiscardImageEditData,
+    ) -> Option<DiscardImageEditData> {
+        None
+    }
+
+    fn doors(&mut self, _node: &Doors) -> Option<Doors> {
+        None
+    }
+
+    fn ext_lst_extension_list(
+        &mut self,
+        _node: &ExtLstExtensionList,
+    ) -> Option<ExtLstExtensionList> {
+        None
+    }
+
+    fn ext_lst_extension_list_modify(
+        &mut self,
+        _node: &ExtLstExtensionListModify,
+    ) -> Option<ExtLstExtensionListModify> {
+        None
+    }
+
+    fn fade(&mut self, _node: &Fade) -> Option<Fade> {
+        None
+    }
+
+    fn ferris(&mut self, _node: &Ferris) -> Option<Ferris> {
+        None
+    }
+
+    fn flash(&mut self, _node: &Flash) -> Option<Flash> {
+        None
+    }
+
+    fn flip(&mut self, _node: &Flip) -> Option<Flip> {
+        None
+    }
+
+    fn flythrough(&mut self, _node: &Flythrough) -> Option<Flythrough> {
+        None
+    }
+
+    fn gallery(&mut self, _node: &Gallery) -> Option<Gallery> {
+        None
+    }
+
+    fn glitter(&mut self, _node: &Glitter) -> Option<Glitter> {
+        None
+    }
+
+    fn honeycomb(&mut self, _node: &Honeycomb) -> Option<Honeycomb> {
+        None
+    }
+
+    fn laser_clr(&mut self, _node: &LaserClr) -> Option<LaserClr> {
+        None
+    }
+
+    fn laser_trace_lst(&mut self, _node: &LaserTraceLst) -> Option<LaserTraceLst> {
+        None
+    }
+
+    fn media(&mut self, _node: &Media) -> Option<Media> {
+        None
+    }
+
+    fn mod_id(&mut self, _node: &ModId) -> Option<ModId> {
+        None
+    }
+
+    fn null_evt(&mut self, _node: &NullEvt) -> Option<NullEvt> {
+        None
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
+        None
+    }
+
+    fn nv_pr(&mut self, _node: &NvPr) -> Option<NvPr> {
+        None
+    }
+
+    fn pan(&mut self, _node: &Pan) -> Option<Pan> {
+        None
+    }
+
+    fn pause_evt(&mut self, _node: &PauseEvt) -> Option<PauseEvt> {
+        None
+    }
+
+    fn play_evt(&mut self, _node: &PlayEvt) -> Option<PlayEvt> {
+        None
+    }
+
+    fn prism(&mut self, _node: &Prism) -> Option<Prism> {
+        None
+    }
+
+    fn resume_evt(&mut self, _node: &ResumeEvt) -> Option<ResumeEvt> {
+        None
+    }
+
+    fn reveal(&mut self, _node: &Reveal) -> Option<Reveal> {
+        None
+    }
+
+    fn ripple(&mut self, _node: &Ripple) -> Option<Ripple> {
+        None
+    }
+
+    fn section_lst(&mut self, _node: &SectionLst) -> Option<SectionLst> {
+        None
+    }
+
+    fn section_pr(&mut self, _node: &SectionPr) -> Option<SectionPr> {
+        None
+    }
+
+    fn section_section(&mut self, _node: &SectionSection) -> Option<SectionSection> {
+        None
+    }
+
+    fn section_section_old(&mut self, _node: &SectionSectionOld) -> Option<SectionSectionOld> {
+        None
+    }
+
+    fn seek_evt(&mut self, _node: &SeekEvt) -> Option<SeekEvt> {
+        None
+    }
+
+    fn show_event_record_list(
+        &mut self,
+        _node: &ShowEventRecordListContent,
+    ) -> Option<ShowEventRecordListContent> {
+        None
+    }
+
+    fn show_event_record_list_items(
+        &mut self,
+        _node: &ShowEventRecordListContent,
+    ) -> Option<Vec<ShowEventRecordListContent>> {
+        None
+    }
+
+    fn show_evt_lst(&mut self, _node: &ShowEvtLst) -> Option<ShowEvtLst> {
+        None
+    }
+
+    fn show_media_ctrls(&mut self, _node: &ShowMediaCtrls) -> Option<ShowMediaCtrls> {
+        None
+    }
+
+    fn shred(&mut self, _node: &Shred) -> Option<Shred> {
+        None
+    }
+
+    fn sld_id(&mut self, _node: &SldId) -> Option<SldId> {
+        None
+    }
+
+    fn sld_id_lst(&mut self, _node: &SldIdLst) -> Option<SldIdLst> {
+        None
+    }
+
+    fn stop_evt(&mut self, _node: &StopEvt) -> Option<StopEvt> {
+        None
+    }
+
+    fn switch(&mut self, _node: &Switch) -> Option<Switch> {
+        None
+    }
+
+    fn trace_pt(&mut self, _node: &TracePt) -> Option<TracePt> {
+        None
+    }
+
+    fn trace_pt_lst(&mut self, _node: &TracePtLst) -> Option<TracePtLst> {
+        None
+    }
+
+    fn trigger_evt(&mut self, _node: &TriggerEvt) -> Option<TriggerEvt> {
+        None
+    }
+
+    fn trim(&mut self, _node: &Trim) -> Option<Trim> {
+        None
+    }
+
+    fn vortex(&mut self, _node: &Vortex) -> Option<Vortex> {
+        None
+    }
+
+    fn warp(&mut self, _node: &Warp) -> Option<Warp> {
+        None
+    }
+
+    fn wheel_reverse(&mut self, _node: &WheelReverse) -> Option<WheelReverse> {
+        None
+    }
+
+    fn window(&mut self, _node: &Window) -> Option<Window> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bmk(&mut self, _node: &Bmk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bmk_lst(&mut self, _node: &BmkLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bmk_tgt(&mut self, _node: &BmkTgt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_browse_mode(
+        &mut self,
+        _node: &BrowseMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_content_part_pr(
+        &mut self,
+        _node: &CNvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conveyor(
+        &mut self,
+        _node: &Conveyor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_creation_id(
+        &mut self,
+        _node: &CreationId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_image_dpi(
+        &mut self,
+        _node: &DefaultImageDpi,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_discard_image_edit_data(
+        &mut self,
+        _node: &DiscardImageEditData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doors(&mut self, _node: &Doors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst_extension_list(
+        &mut self,
+        _node: &ExtLstExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst_extension_list_modify(
+        &mut self,
+        _node: &ExtLstExtensionListModify,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fade(&mut self, _node: &Fade, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ferris(&mut self, _node: &Ferris, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_flash(&mut self, _node: &Flash, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_flip(&mut self, _node: &Flip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_flythrough(
+        &mut self,
+        _node: &Flythrough,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gallery(&mut self, _node: &Gallery, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glitter(&mut self, _node: &Glitter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_honeycomb(
+        &mut self,
+        _node: &Honeycomb,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_laser_clr(
+        &mut self,
+        _node: &LaserClr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_laser_trace_lst(
+        &mut self,
+        _node: &LaserTraceLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_media(&mut self, _node: &Media, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mod_id(&mut self, _node: &ModId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_null_evt(
+        &mut self,
+        _node: &NullEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_content_part_pr(
+        &mut self,
+        _node: &NvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_pr(&mut self, _node: &NvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pan(&mut self, _node: &Pan, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pause_evt(
+        &mut self,
+        _node: &PauseEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_play_evt(
+        &mut self,
+        _node: &PlayEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prism(&mut self, _node: &Prism, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_resume_evt(
+        &mut self,
+        _node: &ResumeEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reveal(&mut self, _node: &Reveal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ripple(&mut self, _node: &Ripple, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_lst(
+        &mut self,
+        _node: &SectionLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_pr(
+        &mut self,
+        _node: &SectionPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_section(
+        &mut self,
+        _node: &SectionSection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_section_old(
+        &mut self,
+        _node: &SectionSectionOld,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_seek_evt(
+        &mut self,
+        _node: &SeekEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_event_record_list(
+        &mut self,
+        _node: &ShowEventRecordListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_event_record_list_items(
+        &mut self,
+        _node: &ShowEventRecordListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_evt_lst(
+        &mut self,
+        _node: &ShowEvtLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_media_ctrls(
+        &mut self,
+        _node: &ShowMediaCtrls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shred(&mut self, _node: &Shred, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_id(&mut self, _node: &SldId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_id_lst(
+        &mut self,
+        _node: &SldIdLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_stop_evt(
+        &mut self,
+        _node: &StopEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_switch(&mut self, _node: &Switch, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trace_pt(
+        &mut self,
+        _node: &TracePt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trace_pt_lst(
+        &mut self,
+        _node: &TracePtLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trigger_evt(
+        &mut self,
+        _node: &TriggerEvt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trim(&mut self, _node: &Trim, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vortex(&mut self, _node: &Vortex, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_warp(&mut self, _node: &Warp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wheel_reverse(
+        &mut self,
+        _node: &WheelReverse,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_window(&mut self, _node: &Window, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// The tag `p14:conveyor`, schema type `CT_LeftRightDirectionTransition` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1156,6 +1951,244 @@ pub struct Trim {
     pub end: Option<String>,
     pub st: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `p14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2010_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn bmk(&mut self, _node: &Bmk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bmk_lst(&mut self, _node: &BmkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bmk_tgt(&mut self, _node: &BmkTgt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn browse_mode(&mut self, _node: &BrowseMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conveyor(&mut self, _node: &Conveyor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn creation_id(&mut self, _node: &CreationId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn discard_image_edit_data(&mut self, _node: &DiscardImageEditData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doors(&mut self, _node: &Doors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst_extension_list(&mut self, _node: &ExtLstExtensionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst_extension_list_modify(
+        &mut self,
+        _node: &ExtLstExtensionListModify,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fade(&mut self, _node: &Fade) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ferris(&mut self, _node: &Ferris) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn flash(&mut self, _node: &Flash) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn flip(&mut self, _node: &Flip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn flythrough(&mut self, _node: &Flythrough) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gallery(&mut self, _node: &Gallery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glitter(&mut self, _node: &Glitter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn honeycomb(&mut self, _node: &Honeycomb) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn laser_clr(&mut self, _node: &LaserClr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn laser_trace_lst(&mut self, _node: &LaserTraceLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn media(&mut self, _node: &Media) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mod_id(&mut self, _node: &ModId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn null_evt(&mut self, _node: &NullEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_pr(&mut self, _node: &NvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pan(&mut self, _node: &Pan) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pause_evt(&mut self, _node: &PauseEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn play_evt(&mut self, _node: &PlayEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prism(&mut self, _node: &Prism) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn resume_evt(&mut self, _node: &ResumeEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reveal(&mut self, _node: &Reveal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ripple(&mut self, _node: &Ripple) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_lst(&mut self, _node: &SectionLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_pr(&mut self, _node: &SectionPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_section(&mut self, _node: &SectionSection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_section_old(&mut self, _node: &SectionSectionOld) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn seek_evt(&mut self, _node: &SeekEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_event_record_list(&mut self, _node: &ShowEventRecordListContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_evt_lst(&mut self, _node: &ShowEvtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_media_ctrls(&mut self, _node: &ShowMediaCtrls) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shred(&mut self, _node: &Shred) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_id(&mut self, _node: &SldId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_id_lst(&mut self, _node: &SldIdLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn stop_evt(&mut self, _node: &StopEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn switch(&mut self, _node: &Switch) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trace_pt(&mut self, _node: &TracePt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trace_pt_lst(&mut self, _node: &TracePtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trigger_evt(&mut self, _node: &TriggerEvt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trim(&mut self, _node: &Trim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vortex(&mut self, _node: &Vortex) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn warp(&mut self, _node: &Warp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wheel_reverse(&mut self, _node: &WheelReverse) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn window(&mut self, _node: &Window) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `p14:vortex`, schema type `CT_SideDirectionTransition` of SDK 3.5.1's data.

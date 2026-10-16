@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRDWI: Option<NamespaceId> = Some(142);
@@ -290,6 +294,95 @@ pub struct Blip {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xlrdwi` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2020_richdatawebimage` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn address(&mut self, _node: &Address) -> Option<Address> {
+        None
+    }
+
+    fn blip(&mut self, _node: &Blip) -> Option<Blip> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn more_images_address(&mut self, _node: &MoreImagesAddress) -> Option<MoreImagesAddress> {
+        None
+    }
+
+    fn web_image_srd(&mut self, _node: &WebImageSrd) -> Option<WebImageSrd> {
+        None
+    }
+
+    fn web_images_srd(&mut self, _node: &WebImagesSrd) -> Option<WebImagesSrd> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_address(&mut self, _node: &Address, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip(&mut self, _node: &Blip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_more_images_address(
+        &mut self,
+        _node: &MoreImagesAddress,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_image_srd(
+        &mut self,
+        _node: &WebImageSrd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_images_srd(
+        &mut self,
+        _node: &WebImagesSrd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xlrdwi:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -304,6 +397,37 @@ pub struct ExtLst {
 #[non_exhaustive]
 pub struct MoreImagesAddress {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xlrdwi` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2020_richdatawebimage` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn address(&mut self, _node: &Address) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blip(&mut self, _node: &Blip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn more_images_address(&mut self, _node: &MoreImagesAddress) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_image_srd(&mut self, _node: &WebImageSrd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_images_srd(&mut self, _node: &WebImagesSrd) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `xlrdwi:webImageSrd`, schema type `CT_WebImageSupportingRichData` of SDK 3.5.1's data.

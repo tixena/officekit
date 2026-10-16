@@ -1,15 +1,15 @@
 //! The typed tree (D12): one module per namespace, `markup::<namespace>`.
 //!
 //! Each is written to `crates/officekit-core/src/markup/<namespace>.rs` with
-//! its readers and writers beside it, from the schema model of the
+//! its readers, writers, and traversals beside it, from the schema model of the
 //! Transitional schemas, SDK 3.5.1's extension types and placements, and the
 //! standard's titles.
 //!
 //! Each module holds one struct per distinct pair of tag and schema type,
 //! one flat enum per distinct set of tags a choice position allows, one
-//! newtype per simple type with its member enum, and the `From` and
-//! `TryFrom` conversions between enums one of whose tag sets holds the
-//! other's.
+//! newtype per simple type with its member enum, the `From` and `TryFrom`
+//! conversions between enums one of whose tag sets holds the other's, and
+//! the hook traits of its traversals.
 
 mod enums;
 pub(crate) mod names;
@@ -17,6 +17,7 @@ mod readers;
 pub(crate) mod render;
 mod simple_types;
 pub mod structs;
+mod traversal;
 mod writers;
 
 use alloc::collections::{BTreeMap, BTreeSet};
@@ -92,15 +93,23 @@ pub struct Summary {
     pub extended_enums: usize,
     /// Structs of Microsoft's extension types.
     pub extension_structs: usize,
+    /// List hooks: one per enum a list holds.
+    pub list_hooks: usize,
     /// Member enums of the enumeration and union newtypes.
     pub member_enums: usize,
     pub modules: usize,
     /// Simple-type newtypes.
     pub newtypes: usize,
+    /// Tree hooks: one per struct and enum.
+    pub tree_hooks: usize,
+    /// Visitor hooks: one per struct and enum.
+    pub visitor_hooks: usize,
     /// Enums of the wildcard positions.
     pub wildcard_enums: usize,
     /// Wildcard positions, `xsd:any` particles of one sequence that repeats counted once.
     pub wildcard_positions: usize,
+    /// Write hooks: one per tree hook and per list hook.
+    pub write_hooks: usize,
 }
 
 impl<'data> Data<'data> {

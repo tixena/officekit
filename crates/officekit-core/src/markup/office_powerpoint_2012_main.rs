@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P15: Option<NamespaceId> = Some(66);
@@ -326,6 +330,157 @@ pub struct Clr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `p15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2012_main` is never asked.
+pub trait Context: markup::Context {
+    fn chart_tracking_ref_based(
+        &mut self,
+        _node: &ChartTrackingRefBased,
+    ) -> Option<ChartTrackingRefBased> {
+        None
+    }
+
+    fn clr(&mut self, _node: &Clr) -> Option<Clr> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn guide(&mut self, _node: &Guide) -> Option<Guide> {
+        None
+    }
+
+    fn notes_guide_lst(&mut self, _node: &NotesGuideLst) -> Option<NotesGuideLst> {
+        None
+    }
+
+    fn parent_cm(&mut self, _node: &ParentCm) -> Option<ParentCm> {
+        None
+    }
+
+    fn presence_info(&mut self, _node: &PresenceInfo) -> Option<PresenceInfo> {
+        None
+    }
+
+    fn prst_trans(&mut self, _node: &PrstTrans) -> Option<PrstTrans> {
+        None
+    }
+
+    fn sld_guide_lst(&mut self, _node: &SldGuideLst) -> Option<SldGuideLst> {
+        None
+    }
+
+    fn threading_info(&mut self, _node: &ThreadingInfo) -> Option<ThreadingInfo> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_tracking_ref_based(
+        &mut self,
+        _node: &ChartTrackingRefBased,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_clr(&mut self, _node: &Clr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_guide(&mut self, _node: &Guide, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_guide_lst(
+        &mut self,
+        _node: &NotesGuideLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parent_cm(
+        &mut self,
+        _node: &ParentCm,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presence_info(
+        &mut self,
+        _node: &PresenceInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prst_trans(
+        &mut self,
+        _node: &PrstTrans,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_guide_lst(
+        &mut self,
+        _node: &SldGuideLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_threading_info(
+        &mut self,
+        _node: &ThreadingInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `p15:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -401,6 +556,53 @@ pub struct ThreadingInfo {
     pub parent_cm: Option<Box<ParentCm>>,
     pub time_zone_bias: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `p15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2012_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn chart_tracking_ref_based(&mut self, _node: &ChartTrackingRefBased) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn clr(&mut self, _node: &Clr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn guide(&mut self, _node: &Guide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_guide_lst(&mut self, _node: &NotesGuideLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parent_cm(&mut self, _node: &ParentCm) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presence_info(&mut self, _node: &PresenceInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prst_trans(&mut self, _node: &PrstTrans) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_guide_lst(&mut self, _node: &SldGuideLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn threading_info(&mut self, _node: &ThreadingInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ChartTrackingRefBased {

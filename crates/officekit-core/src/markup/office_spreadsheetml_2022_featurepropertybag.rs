@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XFPB: Option<NamespaceId> = Some(131);
@@ -621,6 +625,553 @@ pub struct ColumnTotalsRevDxf {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xfpb` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2022_featurepropertybag` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn a(&mut self, _node: &A) -> Option<A> {
+        None
+    }
+
+    fn array_feature_property(
+        &mut self,
+        _node: &ArrayFeaturePropertyContent,
+    ) -> Option<ArrayFeaturePropertyContent> {
+        None
+    }
+
+    fn array_feature_property_items(
+        &mut self,
+        _node: &ArrayFeaturePropertyContent,
+    ) -> Option<Vec<ArrayFeaturePropertyContent>> {
+        None
+    }
+
+    fn b_bool_feature_property(
+        &mut self,
+        _node: &BBoolFeatureProperty,
+    ) -> Option<BBoolFeatureProperty> {
+        None
+    }
+
+    fn b_boolean(&mut self, _node: &BBoolean) -> Option<BBoolean> {
+        None
+    }
+
+    fn bag(&mut self, _node: &Bag) -> Option<Bag> {
+        None
+    }
+
+    fn bag_ext(&mut self, _node: &BagExt) -> Option<BagExt> {
+        None
+    }
+
+    fn bag_id_bag_feature_property(
+        &mut self,
+        _node: &BagIdBagFeatureProperty,
+    ) -> Option<BagIdBagFeatureProperty> {
+        None
+    }
+
+    fn bag_id_unsigned_int(&mut self, _node: &BagIdUnsignedInt) -> Option<BagIdUnsignedInt> {
+        None
+    }
+
+    fn column_body_rev_dxf(&mut self, _node: &ColumnBodyRevDxf) -> Option<ColumnBodyRevDxf> {
+        None
+    }
+
+    fn column_header_rev_dxf(&mut self, _node: &ColumnHeaderRevDxf) -> Option<ColumnHeaderRevDxf> {
+        None
+    }
+
+    fn column_totals_rev_dxf(&mut self, _node: &ColumnTotalsRevDxf) -> Option<ColumnTotalsRevDxf> {
+        None
+    }
+
+    fn d_decimal_feature_property(
+        &mut self,
+        _node: &DDecimalFeatureProperty,
+    ) -> Option<DDecimalFeatureProperty> {
+        None
+    }
+
+    fn d_double(&mut self, _node: &DDouble) -> Option<DDouble> {
+        None
+    }
+
+    fn data_rev_dxf(&mut self, _node: &DataRevDxf) -> Option<DataRevDxf> {
+        None
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
+        None
+    }
+
+    fn dxf_complement(&mut self, _node: &DXFComplement) -> Option<DXFComplement> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn feature_property_bag(
+        &mut self,
+        _node: &FeaturePropertyBagContent,
+    ) -> Option<FeaturePropertyBagContent> {
+        None
+    }
+
+    fn feature_property_bag_items(
+        &mut self,
+        _node: &FeaturePropertyBagContent,
+    ) -> Option<Vec<FeaturePropertyBagContent>> {
+        None
+    }
+
+    fn feature_property_bags(
+        &mut self,
+        _node: &FeaturePropertyBags,
+    ) -> Option<FeaturePropertyBags> {
+        None
+    }
+
+    fn fpbs(&mut self, _node: &Fpbs) -> Option<Fpbs> {
+        None
+    }
+
+    fn header_row_border_rev_dxf(
+        &mut self,
+        _node: &HeaderRowBorderRevDxf,
+    ) -> Option<HeaderRowBorderRevDxf> {
+        None
+    }
+
+    fn header_row_rev_dxf(&mut self, _node: &HeaderRowRevDxf) -> Option<HeaderRowRevDxf> {
+        None
+    }
+
+    fn i_int_feature_property(
+        &mut self,
+        _node: &IIntFeatureProperty,
+    ) -> Option<IIntFeatureProperty> {
+        None
+    }
+
+    fn i_integer(&mut self, _node: &IInteger) -> Option<IInteger> {
+        None
+    }
+
+    fn rel_rel_feature_property(
+        &mut self,
+        _node: &RelRelFeatureProperty,
+    ) -> Option<RelRelFeatureProperty> {
+        None
+    }
+
+    fn rel_string(&mut self, _node: &RelString) -> Option<RelString> {
+        None
+    }
+
+    fn revdxf(&mut self, _node: &Revdxf) -> Option<Revdxf> {
+        None
+    }
+
+    fn s_string(&mut self, _node: &SString) -> Option<SString> {
+        None
+    }
+
+    fn s_string_feature_property(
+        &mut self,
+        _node: &SStringFeatureProperty,
+    ) -> Option<SStringFeatureProperty> {
+        None
+    }
+
+    fn table_border_rev_dxf(&mut self, _node: &TableBorderRevDxf) -> Option<TableBorderRevDxf> {
+        None
+    }
+
+    fn totals_row_border_rev_dxf(
+        &mut self,
+        _node: &TotalsRowBorderRevDxf,
+    ) -> Option<TotalsRowBorderRevDxf> {
+        None
+    }
+
+    fn totals_row_rev_dxf(&mut self, _node: &TotalsRowRevDxf) -> Option<TotalsRowRevDxf> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_a(&mut self, _node: &A, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_feature_property(
+        &mut self,
+        _node: &ArrayFeaturePropertyContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_feature_property_items(
+        &mut self,
+        _node: &ArrayFeaturePropertyContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_b_bool_feature_property(
+        &mut self,
+        _node: &BBoolFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_b_boolean(
+        &mut self,
+        _node: &BBoolean,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bag(&mut self, _node: &Bag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bag_ext(&mut self, _node: &BagExt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bag_id_bag_feature_property(
+        &mut self,
+        _node: &BagIdBagFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bag_id_unsigned_int(
+        &mut self,
+        _node: &BagIdUnsignedInt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_body_rev_dxf(
+        &mut self,
+        _node: &ColumnBodyRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_header_rev_dxf(
+        &mut self,
+        _node: &ColumnHeaderRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_totals_rev_dxf(
+        &mut self,
+        _node: &ColumnTotalsRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_d_decimal_feature_property(
+        &mut self,
+        _node: &DDecimalFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_d_double(
+        &mut self,
+        _node: &DDouble,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_rev_dxf(
+        &mut self,
+        _node: &DataRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxf_complement(
+        &mut self,
+        _node: &DXFComplement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_feature_property_bag(
+        &mut self,
+        _node: &FeaturePropertyBagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_feature_property_bag_items(
+        &mut self,
+        _node: &FeaturePropertyBagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_feature_property_bags(
+        &mut self,
+        _node: &FeaturePropertyBags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fpbs(&mut self, _node: &Fpbs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_row_border_rev_dxf(
+        &mut self,
+        _node: &HeaderRowBorderRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_row_rev_dxf(
+        &mut self,
+        _node: &HeaderRowRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i_int_feature_property(
+        &mut self,
+        _node: &IIntFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_i_integer(
+        &mut self,
+        _node: &IInteger,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rel_rel_feature_property(
+        &mut self,
+        _node: &RelRelFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rel_string(
+        &mut self,
+        _node: &RelString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revdxf(&mut self, _node: &Revdxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_s_string(
+        &mut self,
+        _node: &SString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_s_string_feature_property(
+        &mut self,
+        _node: &SStringFeatureProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_border_rev_dxf(
+        &mut self,
+        _node: &TableBorderRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_totals_row_border_rev_dxf(
+        &mut self,
+        _node: &TotalsRowBorderRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_totals_row_rev_dxf(
+        &mut self,
+        _node: &TotalsRowRevDxf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xf_complement(
+        &mut self,
+        _node: &XfComplement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xf_complement(&mut self, _node: &XfComplement) -> Option<XfComplement> {
+        None
+    }
+}
+
 /// The tag `xfpb:d`, schema type `CT_DecimalFeatureProperty` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -816,6 +1367,145 @@ pub struct TotalsRowRevDxf {
     pub dxf: Option<Box<Dxf>>,
     pub fpbs: Box<Fpbs>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xfpb` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2022_featurepropertybag` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn a(&mut self, _node: &A) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn array_feature_property(&mut self, _node: &ArrayFeaturePropertyContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn b_bool_feature_property(&mut self, _node: &BBoolFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn b_boolean(&mut self, _node: &BBoolean) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bag(&mut self, _node: &Bag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bag_ext(&mut self, _node: &BagExt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bag_id_bag_feature_property(&mut self, _node: &BagIdBagFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bag_id_unsigned_int(&mut self, _node: &BagIdUnsignedInt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_body_rev_dxf(&mut self, _node: &ColumnBodyRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_header_rev_dxf(&mut self, _node: &ColumnHeaderRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_totals_rev_dxf(&mut self, _node: &ColumnTotalsRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn d_decimal_feature_property(&mut self, _node: &DDecimalFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn d_double(&mut self, _node: &DDouble) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_rev_dxf(&mut self, _node: &DataRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxf_complement(&mut self, _node: &DXFComplement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn feature_property_bag(&mut self, _node: &FeaturePropertyBagContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn feature_property_bags(&mut self, _node: &FeaturePropertyBags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fpbs(&mut self, _node: &Fpbs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_row_border_rev_dxf(&mut self, _node: &HeaderRowBorderRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_row_rev_dxf(&mut self, _node: &HeaderRowRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i_int_feature_property(&mut self, _node: &IIntFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn i_integer(&mut self, _node: &IInteger) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rel_rel_feature_property(&mut self, _node: &RelRelFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rel_string(&mut self, _node: &RelString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revdxf(&mut self, _node: &Revdxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn s_string(&mut self, _node: &SString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn s_string_feature_property(&mut self, _node: &SStringFeatureProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_border_rev_dxf(&mut self, _node: &TableBorderRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn totals_row_border_rev_dxf(&mut self, _node: &TotalsRowBorderRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn totals_row_rev_dxf(&mut self, _node: &TotalsRowRevDxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xf_complement(&mut self, _node: &XfComplement) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `xfpb:xfComplement`, schema type `CT_XfComplement` of SDK 3.5.1's data.

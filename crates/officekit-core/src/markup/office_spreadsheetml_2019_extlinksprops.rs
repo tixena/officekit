@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/extlinksprops`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_XXLNP: Option<NamespaceId> = Some(165);
 
@@ -231,12 +235,49 @@ static EXTERNAL_LINKS_PR_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `xxlnp` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2019_extlinksprops` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn external_links_pr(&mut self, _node: &ExternalLinksPr) -> Option<ExternalLinksPr> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_links_pr(
+        &mut self,
+        _node: &ExternalLinksPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xxlnp:externalLinksPr`, schema type `CT_ExternalLinksPr` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct ExternalLinksPr {
     pub auto_refresh: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xxlnp` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2019_extlinksprops` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn external_links_pr(&mut self, _node: &ExternalLinksPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExternalLinksPr {

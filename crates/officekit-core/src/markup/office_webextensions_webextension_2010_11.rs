@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/webextensions/webextension/2010/11`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -339,6 +343,159 @@ pub struct Bindings {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `we` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_webextensions_webextension_2010_11` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn alternate_references(&mut self, _node: &AlternateReferences) -> Option<AlternateReferences> {
+        None
+    }
+
+    fn binding(&mut self, _node: &Binding) -> Option<Binding> {
+        None
+    }
+
+    fn bindings(&mut self, _node: &Bindings) -> Option<Bindings> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn properties(&mut self, _node: &Properties) -> Option<Properties> {
+        None
+    }
+
+    fn property(&mut self, _node: &Property) -> Option<Property> {
+        None
+    }
+
+    fn reference(&mut self, _node: &Reference) -> Option<Reference> {
+        None
+    }
+
+    fn snapshot(&mut self, _node: &Snapshot) -> Option<Snapshot> {
+        None
+    }
+
+    fn webextension(&mut self, _node: &Webextension) -> Option<Webextension> {
+        None
+    }
+
+    fn webextensionref(&mut self, _node: &Webextensionref) -> Option<Webextensionref> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alternate_references(
+        &mut self,
+        _node: &AlternateReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binding(&mut self, _node: &Binding, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bindings(
+        &mut self,
+        _node: &Bindings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_properties(
+        &mut self,
+        _node: &Properties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_property(
+        &mut self,
+        _node: &Property,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference(
+        &mut self,
+        _node: &Reference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_snapshot(
+        &mut self,
+        _node: &Snapshot,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_webextension(
+        &mut self,
+        _node: &Webextension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_webextensionref(
+        &mut self,
+        _node: &Webextensionref,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `we:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -386,6 +543,53 @@ pub struct Snapshot {
     pub extension_list: Option<Box<super::drawing::ExtensionList>>,
     pub link: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `we` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_webextensions_webextension_2010_11` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn alternate_references(&mut self, _node: &AlternateReferences) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binding(&mut self, _node: &Binding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bindings(&mut self, _node: &Bindings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn properties(&mut self, _node: &Properties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn property(&mut self, _node: &Property) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference(&mut self, _node: &Reference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn snapshot(&mut self, _node: &Snapshot) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn webextension(&mut self, _node: &Webextension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn webextensionref(&mut self, _node: &Webextensionref) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `we:webextension`, schema type `CT_OsfWebExtension` of SDK 3.5.1's data.

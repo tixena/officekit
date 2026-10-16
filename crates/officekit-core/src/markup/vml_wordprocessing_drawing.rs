@@ -216,12 +216,16 @@
 //! The namespace is `urn:schemas-microsoft-com:office:word`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_W10: Option<NamespaceId> = Some(98);
 
@@ -341,6 +345,109 @@ pub struct BottomBorder {
     pub width: Option<String>,
 }
 
+/// The hooks of a context for the `w10` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::vml_wordprocessing_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn anchor_location_is_locked(
+        &mut self,
+        _node: &AnchorLocationIsLocked,
+    ) -> Option<AnchorLocationIsLocked> {
+        None
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
+        None
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> Option<LeftBorder> {
+        None
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> Option<RightBorder> {
+        None
+    }
+
+    fn text_wrapping(&mut self, _node: &TextWrapping) -> Option<TextWrapping> {
+        None
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor_location_is_locked(
+        &mut self,
+        _node: &AnchorLocationIsLocked,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_border(
+        &mut self,
+        _node: &BottomBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_border(
+        &mut self,
+        _node: &LeftBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_border(
+        &mut self,
+        _node: &RightBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_wrapping(
+        &mut self,
+        _node: &TextWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_border(
+        &mut self,
+        _node: &TopBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 19.3.3.3 `ST_HorizontalAnchor` (Horizontal Anchor Type): the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -437,6 +544,37 @@ pub enum VerticalAnchorTypeMember {
     Margin,
     Page,
     Text,
+}
+
+/// The hooks of a visitor for the `w10` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::vml_wordprocessing_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn anchor_location_is_locked(&mut self, _node: &AnchorLocationIsLocked) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_wrapping(&mut self, _node: &TextWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AnchorLocationIsLocked {

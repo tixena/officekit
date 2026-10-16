@@ -27,12 +27,14 @@ const VARIANT_SIZE_DIFFERENCE: usize = 200;
 /// clippy's longest first doc paragraph (`too_long_first_doc_paragraph`).
 const FIRST_PARAGRAPH: usize = 200;
 
-/// The names of Rust's prelude the generated modules use: a struct or a
-/// simple type of one of them takes another name, as a collision does.
-const PRELUDE: [&str; 19] = [
+/// The names the generated modules use, Rust's prelude's and the hook traits':
+/// a struct or a simple type of one of them takes another name, as a
+/// collision does.
+const RESERVED: [&str; 21] = [
     "AsRef",
     "Box",
     "Clone",
+    "Context",
     "Copy",
     "Debug",
     "Default",
@@ -49,6 +51,7 @@ const PRELUDE: [&str; 19] = [
     "String",
     "TryFrom",
     "Vec",
+    "Visitor",
 ];
 
 /// An attribute field of a struct.
@@ -331,6 +334,8 @@ impl Catalog {
             .filter(|node| matches!(node.key.source, Source::Xsd(_)) && self.ecma(node))
             .collect();
         let tags: BTreeSet<&Name> = ecma.iter().map(|node| &node.key.tag).collect();
+        let tree_hooks = self.nodes.len() + self.enums.len();
+        let list_hooks = super::traversal::listed(self).len();
         Summary {
             all_enums: self.count(EnumKind::All),
             choice_enums: self.count(EnumKind::Choice),
@@ -339,6 +344,7 @@ impl Catalog {
             ecma_tags: tags.len(),
             extended_enums: self.extended,
             extension_structs: self.nodes.len() - ecma.len(),
+            list_hooks,
             member_enums: self
                 .simples
                 .iter()
@@ -346,8 +352,11 @@ impl Catalog {
                 .count(),
             modules: self.modules.len(),
             newtypes: self.simples.len(),
+            tree_hooks,
+            visitor_hooks: tree_hooks,
             wildcard_enums: self.count(EnumKind::Wildcard),
             wildcard_positions: self.wildcard_positions,
+            write_hooks: tree_hooks + list_hooks,
         }
     }
 }
@@ -640,7 +649,7 @@ impl<'data> Builder<'data> {
             let collisions: Vec<(String, Vec<(bool, usize)>)> = groups
                 .into_iter()
                 .filter(|((_, name), members)| {
-                    members.len() > 1 || PRELUDE.contains(&name.as_str())
+                    members.len() > 1 || RESERVED.contains(&name.as_str())
                 })
                 .map(|((_, name), members)| (name, members))
                 .collect();
@@ -1372,7 +1381,7 @@ impl<'data> Builder<'data> {
                 .first()
                 .copied()
                 .filter(|first| self.catalog.nodes[*first].section.is_some())
-                .filter(|_| !PRELUDE.contains(&name));
+                .filter(|_| !RESERVED.contains(&name));
             for index in ordered {
                 if Some(index) == keeper {
                     continue;
@@ -1414,7 +1423,7 @@ impl<'data> Builder<'data> {
             ([only], _, _) | (_, [only], _) | ([], [], [only]) => Some(*only),
             _ => None,
         }
-        .filter(|_| !PRELUDE.contains(&name));
+        .filter(|_| !RESERVED.contains(&name));
         let locals: Vec<String> = members.iter().map(local_of).collect();
         for (member, local) in members.iter().zip(locals) {
             if Some(*member) == keeper {

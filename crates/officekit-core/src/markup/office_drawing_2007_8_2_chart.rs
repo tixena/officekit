@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C14: Option<NamespaceId> = Some(23);
@@ -327,6 +331,188 @@ static STYLE_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `c14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2007_8_2_chart` is never asked.
+pub trait Context: markup::Context {
+    fn drop_zone_categories(&mut self, _node: &DropZoneCategories) -> Option<DropZoneCategories> {
+        None
+    }
+
+    fn drop_zone_data(&mut self, _node: &DropZoneData) -> Option<DropZoneData> {
+        None
+    }
+
+    fn drop_zone_filter(&mut self, _node: &DropZoneFilter) -> Option<DropZoneFilter> {
+        None
+    }
+
+    fn drop_zone_series(&mut self, _node: &DropZoneSeries) -> Option<DropZoneSeries> {
+        None
+    }
+
+    fn drop_zones_visible(&mut self, _node: &DropZonesVisible) -> Option<DropZonesVisible> {
+        None
+    }
+
+    fn in_sketch_mode(&mut self, _node: &InSketchMode) -> Option<InSketchMode> {
+        None
+    }
+
+    fn invert_solid_fill_fmt(&mut self, _node: &InvertSolidFillFmt) -> Option<InvertSolidFillFmt> {
+        None
+    }
+
+    fn pivot_options(&mut self, _node: &PivotOptions) -> Option<PivotOptions> {
+        None
+    }
+
+    fn show_sketch_btn(&mut self, _node: &ShowSketchBtn) -> Option<ShowSketchBtn> {
+        None
+    }
+
+    fn sketch_options(&mut self, _node: &SketchOptions) -> Option<SketchOptions> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn style(&mut self, _node: &Style) -> Option<Style> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_zone_categories(
+        &mut self,
+        _node: &DropZoneCategories,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_zone_data(
+        &mut self,
+        _node: &DropZoneData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_zone_filter(
+        &mut self,
+        _node: &DropZoneFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_zone_series(
+        &mut self,
+        _node: &DropZoneSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_zones_visible(
+        &mut self,
+        _node: &DropZonesVisible,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_in_sketch_mode(
+        &mut self,
+        _node: &InSketchMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_invert_solid_fill_fmt(
+        &mut self,
+        _node: &InvertSolidFillFmt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_options(
+        &mut self,
+        _node: &PivotOptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_sketch_btn(
+        &mut self,
+        _node: &ShowSketchBtn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sketch_options(
+        &mut self,
+        _node: &SketchOptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `c14:dropZoneCategories`, schema type `CT_BooleanFalse` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -428,6 +614,61 @@ pub struct SpPr {
 pub struct Style {
     pub unknown: markup::Unknown,
     pub val: Option<String>,
+}
+
+/// The hooks of a visitor for the `c14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2007_8_2_chart` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn drop_zone_categories(&mut self, _node: &DropZoneCategories) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_zone_data(&mut self, _node: &DropZoneData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_zone_filter(&mut self, _node: &DropZoneFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_zone_series(&mut self, _node: &DropZoneSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_zones_visible(&mut self, _node: &DropZonesVisible) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn in_sketch_mode(&mut self, _node: &InSketchMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn invert_solid_fill_fmt(&mut self, _node: &InvertSolidFillFmt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_options(&mut self, _node: &PivotOptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_sketch_btn(&mut self, _node: &ShowSketchBtn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sketch_options(&mut self, _node: &SketchOptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style(&mut self, _node: &Style) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for DropZoneCategories {

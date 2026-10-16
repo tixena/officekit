@@ -216,11 +216,15 @@
 //! The namespace is `urn:schemas-microsoft-com:office:powerpoint`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_PVML: Option<NamespaceId> = Some(87);
 
@@ -238,6 +242,46 @@ static VML_DIAGRAM_TEXT_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `pvml` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::vml_presentation_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn ink_annotation_flag(&mut self, _node: &InkAnnotationFlag) -> Option<InkAnnotationFlag> {
+        None
+    }
+
+    fn vml_diagram_text(&mut self, _node: &VMLDiagramText) -> Option<VMLDiagramText> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ink_annotation_flag(
+        &mut self,
+        _node: &InkAnnotationFlag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_diagram_text(
+        &mut self,
+        _node: &VMLDiagramText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 19.5.2.1 iscomment (Ink Annotation Flag): the tag `pvml:iscomment`, schema type `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -251,6 +295,21 @@ pub struct InkAnnotationFlag {
 pub struct VMLDiagramText {
     pub id: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `pvml` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::vml_presentation_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ink_annotation_flag(&mut self, _node: &InkAnnotationFlag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vml_diagram_text(&mut self, _node: &VMLDiagramText) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for InkAnnotationFlag {

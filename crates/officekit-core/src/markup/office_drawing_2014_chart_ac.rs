@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chart/ac`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_C: Option<NamespaceId> = Some(22);
 const NS_C16AC: Option<NamespaceId> = Some(26);
@@ -236,6 +240,31 @@ static MULTI_LVL_STR_LIT_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `c16ac` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2014_chart_ac` is never asked.
+pub trait Context: markup::Context {
+    fn multi_lvl_str_lit(&mut self, _node: &MultiLvlStrLit) -> Option<MultiLvlStrLit> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multi_lvl_str_lit(
+        &mut self,
+        _node: &MultiLvlStrLit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `c16ac:multiLvlStrLit`, schema type `CT_MultiLvlStrData` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -244,6 +273,17 @@ pub struct MultiLvlStrLit {
     pub level: Vec<super::chart::Level>,
     pub point_count: Option<Box<super::chart::PointCount>>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `c16ac` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2014_chart_ac` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn multi_lvl_str_lit(&mut self, _node: &MultiLvlStrLit) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for MultiLvlStrLit {

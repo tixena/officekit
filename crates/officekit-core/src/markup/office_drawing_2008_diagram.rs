@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2008/diagram`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DSP: Option<NamespaceId> = Some(47);
@@ -442,6 +446,242 @@ pub struct CNvSpPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `dsp` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2008_diagram` is never asked.
+pub trait Context: markup::Context {
+    fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> Option<CNvGrpSpPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> Option<CNvSpPr> {
+        None
+    }
+
+    fn data_model_ext(&mut self, _node: &DataModelExt) -> Option<DataModelExt> {
+        None
+    }
+
+    fn drawing(&mut self, _node: &Drawing) -> Option<Drawing> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn group_shape(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
+        None
+    }
+
+    fn group_shape_items(&mut self, _node: &GroupShapeContent) -> Option<Vec<GroupShapeContent>> {
+        None
+    }
+
+    fn grp_sp(&mut self, _node: &GrpSp) -> Option<GrpSp> {
+        None
+    }
+
+    fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> Option<GrpSpPr> {
+        None
+    }
+
+    fn nv_grp_sp_pr(&mut self, _node: &NvGrpSpPr) -> Option<NvGrpSpPr> {
+        None
+    }
+
+    fn nv_sp_pr(&mut self, _node: &NvSpPr) -> Option<NvSpPr> {
+        None
+    }
+
+    fn sp(&mut self, _node: &Sp) -> Option<Sp> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn sp_tree(&mut self, _node: &SpTree) -> Option<SpTree> {
+        None
+    }
+
+    fn style(&mut self, _node: &Style) -> Option<Style> {
+        None
+    }
+
+    fn tx_body(&mut self, _node: &TxBody) -> Option<TxBody> {
+        None
+    }
+
+    fn tx_xfrm(&mut self, _node: &TxXfrm) -> Option<TxXfrm> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_grp_sp_pr(
+        &mut self,
+        _node: &CNvGrpSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_sp_pr(
+        &mut self,
+        _node: &CNvSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_model_ext(
+        &mut self,
+        _node: &DataModelExt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing(&mut self, _node: &Drawing, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_items(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp(&mut self, _node: &GrpSp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_pr(
+        &mut self,
+        _node: &GrpSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_grp_sp_pr(
+        &mut self,
+        _node: &NvGrpSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_sp_pr(&mut self, _node: &NvSpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp(&mut self, _node: &Sp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_tree(&mut self, _node: &SpTree, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_body(&mut self, _node: &TxBody, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_xfrm(&mut self, _node: &TxXfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `dsp:dataModelExt`, schema type `CT_DataModelExtBlock` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -590,6 +830,81 @@ pub struct TxXfrm {
     pub offset: Option<Box<super::drawing::Offset>>,
     pub rot: Option<super::drawing::Angle>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `dsp` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2008_diagram` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_model_ext(&mut self, _node: &DataModelExt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing(&mut self, _node: &Drawing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape(&mut self, _node: &GroupShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp(&mut self, _node: &GrpSp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_grp_sp_pr(&mut self, _node: &NvGrpSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_sp_pr(&mut self, _node: &NvSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp(&mut self, _node: &Sp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_tree(&mut self, _node: &SpTree) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style(&mut self, _node: &Style) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_body(&mut self, _node: &TxBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_xfrm(&mut self, _node: &TxXfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CNvGrpSpPr {

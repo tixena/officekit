@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2016/wordml/cid`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_W16CID: Option<NamespaceId> = Some(102);
 
@@ -253,6 +257,61 @@ pub struct CommentId {
 pub struct CommentsIds {
     pub comment_id: Vec<CommentId>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a context for the `w16cid` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2016_wordml_cid` is never asked.
+pub trait Context: markup::Context {
+    fn comment_id(&mut self, _node: &CommentId) -> Option<CommentId> {
+        None
+    }
+
+    fn comments_ids(&mut self, _node: &CommentsIds) -> Option<CommentsIds> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_id(
+        &mut self,
+        _node: &CommentId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_ids(
+        &mut self,
+        _node: &CommentsIds,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// The hooks of a visitor for the `w16cid` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2016_wordml_cid` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn comment_id(&mut self, _node: &CommentId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_ids(&mut self, _node: &CommentsIds) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CommentId {

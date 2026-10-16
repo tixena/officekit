@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2010/11/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_X: Option<NamespaceId> = Some(118);
@@ -986,6 +990,1135 @@ pub struct Connection {
     pub used_by_addin: Option<String>,
 }
 
+/// The hooks of a context for the `x15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2010_11_main` is never asked.
+pub trait Context: markup::Context {
+    fn active_tab_top_level_entity(
+        &mut self,
+        _node: &ActiveTabTopLevelEntity,
+    ) -> Option<ActiveTabTopLevelEntity> {
+        None
+    }
+
+    fn auto_filter(&mut self, _node: &AutoFilter) -> Option<AutoFilter> {
+        None
+    }
+
+    fn bounds(&mut self, _node: &Bounds) -> Option<Bounds> {
+        None
+    }
+
+    fn c(&mut self, _node: &C) -> Option<C> {
+        None
+    }
+
+    fn cache_hierarchy(&mut self, _node: &CacheHierarchy) -> Option<CacheHierarchy> {
+        None
+    }
+
+    fn cached_unique_name(&mut self, _node: &CachedUniqueName) -> Option<CachedUniqueName> {
+        None
+    }
+
+    fn cached_unique_names(&mut self, _node: &CachedUniqueNames) -> Option<CachedUniqueNames> {
+        None
+    }
+
+    fn calculated_member(&mut self, _node: &CalculatedMember) -> Option<CalculatedMember> {
+        None
+    }
+
+    fn connection(&mut self, _node: &Connection) -> Option<Connection> {
+        None
+    }
+
+    fn data_feed_pr(&mut self, _node: &DataFeedPr) -> Option<DataFeedPr> {
+        None
+    }
+
+    fn data_field(&mut self, _node: &DataField) -> Option<DataField> {
+        None
+    }
+
+    fn data_model(&mut self, _node: &DataModel) -> Option<DataModel> {
+        None
+    }
+
+    fn database_source(&mut self, _node: &DatabaseSourceContent) -> Option<DatabaseSourceContent> {
+        None
+    }
+
+    fn db_command(&mut self, _node: &DbCommand) -> Option<DbCommand> {
+        None
+    }
+
+    fn db_table(&mut self, _node: &DbTable) -> Option<DbTable> {
+        None
+    }
+
+    fn db_tables(&mut self, _node: &DbTables) -> Option<DbTables> {
+        None
+    }
+
+    fn description_pr(&mut self, _node: &DescriptionPr) -> Option<DescriptionPr> {
+        None
+    }
+
+    fn dxfs(&mut self, _node: &Dxfs) -> Option<Dxfs> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn model_relationship(&mut self, _node: &ModelRelationship) -> Option<ModelRelationship> {
+        None
+    }
+
+    fn model_relationships(&mut self, _node: &ModelRelationships) -> Option<ModelRelationships> {
+        None
+    }
+
+    fn model_table(&mut self, _node: &ModelTable) -> Option<ModelTable> {
+        None
+    }
+
+    fn model_tables(&mut self, _node: &ModelTables) -> Option<ModelTables> {
+        None
+    }
+
+    fn model_text_pr(&mut self, _node: &ModelTextPr) -> Option<ModelTextPr> {
+        None
+    }
+
+    fn moving_period_state(&mut self, _node: &MovingPeriodState) -> Option<MovingPeriodState> {
+        None
+    }
+
+    fn oledb_pr(&mut self, _node: &OledbPr) -> Option<OledbPr> {
+        None
+    }
+
+    fn pivot_cache_decoupled(
+        &mut self,
+        _node: &PivotCacheDecoupled,
+    ) -> Option<PivotCacheDecoupled> {
+        None
+    }
+
+    fn pivot_cache_id_version(
+        &mut self,
+        _node: &PivotCacheIdVersion,
+    ) -> Option<PivotCacheIdVersion> {
+        None
+    }
+
+    fn pivot_caches(&mut self, _node: &PivotCaches) -> Option<PivotCaches> {
+        None
+    }
+
+    fn pivot_filter(&mut self, _node: &PivotFilter) -> Option<PivotFilter> {
+        None
+    }
+
+    fn pivot_row(&mut self, _node: &PivotRow) -> Option<PivotRow> {
+        None
+    }
+
+    fn pivot_table(&mut self, _node: &PivotTable) -> Option<PivotTable> {
+        None
+    }
+
+    fn pivot_table_data(&mut self, _node: &PivotTableData) -> Option<PivotTableData> {
+        None
+    }
+
+    fn pivot_table_reference(
+        &mut self,
+        _node: &PivotTableReference,
+    ) -> Option<PivotTableReference> {
+        None
+    }
+
+    fn pivot_table_references(
+        &mut self,
+        _node: &PivotTableReferences,
+    ) -> Option<PivotTableReferences> {
+        None
+    }
+
+    fn pivot_table_server_formats(
+        &mut self,
+        _node: &PivotTableServerFormats,
+    ) -> Option<PivotTableServerFormats> {
+        None
+    }
+
+    fn pivot_table_ui_settings(
+        &mut self,
+        _node: &PivotTableUISettings,
+    ) -> Option<PivotTableUISettings> {
+        None
+    }
+
+    fn pivot_tables(&mut self, _node: &PivotTables) -> Option<PivotTables> {
+        None
+    }
+
+    fn query_table(&mut self, _node: &QueryTable) -> Option<QueryTable> {
+        None
+    }
+
+    fn question(&mut self, _node: &Question) -> Option<Question> {
+        None
+    }
+
+    fn question_pr(&mut self, _node: &QuestionPr) -> Option<QuestionPr> {
+        None
+    }
+
+    fn questions(&mut self, _node: &Questions) -> Option<Questions> {
+        None
+    }
+
+    fn questions_pr(&mut self, _node: &QuestionsPr) -> Option<QuestionsPr> {
+        None
+    }
+
+    fn range_pr(&mut self, _node: &RangePr) -> Option<RangePr> {
+        None
+    }
+
+    fn selection(&mut self, _node: &Selection) -> Option<Selection> {
+        None
+    }
+
+    fn server_format(&mut self, _node: &ServerFormat) -> Option<ServerFormat> {
+        None
+    }
+
+    fn slicer_cache_hide_items_with_no_data(
+        &mut self,
+        _node: &SlicerCacheHideItemsWithNoData,
+    ) -> Option<SlicerCacheHideItemsWithNoData> {
+        None
+    }
+
+    fn slicer_cache_olap_level_name(
+        &mut self,
+        _node: &SlicerCacheOlapLevelName,
+    ) -> Option<SlicerCacheOlapLevelName> {
+        None
+    }
+
+    fn slicer_cache_pivot_tables(
+        &mut self,
+        _node: &SlicerCachePivotTables,
+    ) -> Option<SlicerCachePivotTables> {
+        None
+    }
+
+    fn slicer_caches(&mut self, _node: &SlicerCaches) -> Option<SlicerCaches> {
+        None
+    }
+
+    fn state(&mut self, _node: &State) -> Option<State> {
+        None
+    }
+
+    fn survey(&mut self, _node: &Survey) -> Option<Survey> {
+        None
+    }
+
+    fn survey_pr(&mut self, _node: &SurveyPr) -> Option<SurveyPr> {
+        None
+    }
+
+    fn table_slicer_cache(&mut self, _node: &TableSlicerCache) -> Option<TableSlicerCache> {
+        None
+    }
+
+    fn text_pr(&mut self, _node: &TextPr) -> Option<TextPr> {
+        None
+    }
+
+    fn timeline(&mut self, _node: &Timeline) -> Option<Timeline> {
+        None
+    }
+
+    fn timeline_cache_definition(
+        &mut self,
+        _node: &TimelineCacheDefinition,
+    ) -> Option<TimelineCacheDefinition> {
+        None
+    }
+
+    fn timeline_cache_pivot_caches(
+        &mut self,
+        _node: &TimelineCachePivotCaches,
+    ) -> Option<TimelineCachePivotCaches> {
+        None
+    }
+
+    fn timeline_cache_ref(&mut self, _node: &TimelineCacheRef) -> Option<TimelineCacheRef> {
+        None
+    }
+
+    fn timeline_cache_refs(&mut self, _node: &TimelineCacheRefs) -> Option<TimelineCacheRefs> {
+        None
+    }
+
+    fn timeline_pivot_cache_definition(
+        &mut self,
+        _node: &TimelinePivotCacheDefinition,
+    ) -> Option<TimelinePivotCacheDefinition> {
+        None
+    }
+
+    fn timeline_ref(&mut self, _node: &TimelineRef) -> Option<TimelineRef> {
+        None
+    }
+
+    fn timeline_refs(&mut self, _node: &TimelineRefs) -> Option<TimelineRefs> {
+        None
+    }
+
+    fn timeline_style(&mut self, _node: &TimelineStyle) -> Option<TimelineStyle> {
+        None
+    }
+
+    fn timeline_style_element(
+        &mut self,
+        _node: &TimelineStyleElement,
+    ) -> Option<TimelineStyleElement> {
+        None
+    }
+
+    fn timeline_style_elements(
+        &mut self,
+        _node: &TimelineStyleElements,
+    ) -> Option<TimelineStyleElements> {
+        None
+    }
+
+    fn timeline_styles(&mut self, _node: &TimelineStyles) -> Option<TimelineStyles> {
+        None
+    }
+
+    fn timelines(&mut self, _node: &Timelines) -> Option<Timelines> {
+        None
+    }
+
+    fn title_pr(&mut self, _node: &TitlePr) -> Option<TitlePr> {
+        None
+    }
+
+    fn v(&mut self, _node: &V) -> Option<V> {
+        None
+    }
+
+    fn web_extension(&mut self, _node: &WebExtension) -> Option<WebExtension> {
+        None
+    }
+
+    fn web_extensions(&mut self, _node: &WebExtensions) -> Option<WebExtensions> {
+        None
+    }
+
+    fn workbook_pr(&mut self, _node: &WorkbookPr) -> Option<WorkbookPr> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_active_tab_top_level_entity(
+        &mut self,
+        _node: &ActiveTabTopLevelEntity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_filter(
+        &mut self,
+        _node: &AutoFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bounds(&mut self, _node: &Bounds, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c(&mut self, _node: &C, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cache_hierarchy(
+        &mut self,
+        _node: &CacheHierarchy,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cached_unique_name(
+        &mut self,
+        _node: &CachedUniqueName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cached_unique_names(
+        &mut self,
+        _node: &CachedUniqueNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_member(
+        &mut self,
+        _node: &CalculatedMember,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection(
+        &mut self,
+        _node: &Connection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_feed_pr(
+        &mut self,
+        _node: &DataFeedPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_field(
+        &mut self,
+        _node: &DataField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_model(
+        &mut self,
+        _node: &DataModel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_database_source(
+        &mut self,
+        _node: &DatabaseSourceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_db_command(
+        &mut self,
+        _node: &DbCommand,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_db_table(
+        &mut self,
+        _node: &DbTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_db_tables(
+        &mut self,
+        _node: &DbTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_description_pr(
+        &mut self,
+        _node: &DescriptionPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxfs(&mut self, _node: &Dxfs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_relationship(
+        &mut self,
+        _node: &ModelRelationship,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_relationships(
+        &mut self,
+        _node: &ModelRelationships,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_table(
+        &mut self,
+        _node: &ModelTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_tables(
+        &mut self,
+        _node: &ModelTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_text_pr(
+        &mut self,
+        _node: &ModelTextPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_moving_period_state(
+        &mut self,
+        _node: &MovingPeriodState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_oledb_pr(
+        &mut self,
+        _node: &OledbPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_decoupled(
+        &mut self,
+        _node: &PivotCacheDecoupled,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_id_version(
+        &mut self,
+        _node: &PivotCacheIdVersion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_caches(
+        &mut self,
+        _node: &PivotCaches,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_filter(
+        &mut self,
+        _node: &PivotFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_row(
+        &mut self,
+        _node: &PivotRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table(
+        &mut self,
+        _node: &PivotTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_data(
+        &mut self,
+        _node: &PivotTableData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_reference(
+        &mut self,
+        _node: &PivotTableReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_references(
+        &mut self,
+        _node: &PivotTableReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_server_formats(
+        &mut self,
+        _node: &PivotTableServerFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_ui_settings(
+        &mut self,
+        _node: &PivotTableUISettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_tables(
+        &mut self,
+        _node: &PivotTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_table(
+        &mut self,
+        _node: &QueryTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_question(
+        &mut self,
+        _node: &Question,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_question_pr(
+        &mut self,
+        _node: &QuestionPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_questions(
+        &mut self,
+        _node: &Questions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_questions_pr(
+        &mut self,
+        _node: &QuestionsPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_pr(
+        &mut self,
+        _node: &RangePr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_selection(
+        &mut self,
+        _node: &Selection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_server_format(
+        &mut self,
+        _node: &ServerFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slicer_cache_hide_items_with_no_data(
+        &mut self,
+        _node: &SlicerCacheHideItemsWithNoData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slicer_cache_olap_level_name(
+        &mut self,
+        _node: &SlicerCacheOlapLevelName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slicer_cache_pivot_tables(
+        &mut self,
+        _node: &SlicerCachePivotTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slicer_caches(
+        &mut self,
+        _node: &SlicerCaches,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_state(&mut self, _node: &State, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_survey(&mut self, _node: &Survey, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_survey_pr(
+        &mut self,
+        _node: &SurveyPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_slicer_cache(
+        &mut self,
+        _node: &TableSlicerCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_pr(&mut self, _node: &TextPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline(
+        &mut self,
+        _node: &Timeline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_cache_definition(
+        &mut self,
+        _node: &TimelineCacheDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_cache_pivot_caches(
+        &mut self,
+        _node: &TimelineCachePivotCaches,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_cache_ref(
+        &mut self,
+        _node: &TimelineCacheRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_cache_refs(
+        &mut self,
+        _node: &TimelineCacheRefs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_pivot_cache_definition(
+        &mut self,
+        _node: &TimelinePivotCacheDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_ref(
+        &mut self,
+        _node: &TimelineRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_refs(
+        &mut self,
+        _node: &TimelineRefs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_style(
+        &mut self,
+        _node: &TimelineStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_style_element(
+        &mut self,
+        _node: &TimelineStyleElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_style_elements(
+        &mut self,
+        _node: &TimelineStyleElements,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timeline_styles(
+        &mut self,
+        _node: &TimelineStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_timelines(
+        &mut self,
+        _node: &Timelines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title_pr(
+        &mut self,
+        _node: &TitlePr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_extension(
+        &mut self,
+        _node: &WebExtension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_extensions(
+        &mut self,
+        _node: &WebExtensions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook_pr(
+        &mut self,
+        _node: &WorkbookPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_x(&mut self, _node: &X, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn x(&mut self, _node: &X) -> Option<X> {
+        None
+    }
+}
+
 /// The tag `x15:dataFeedPr`, schema type `CT_DataFeedPr` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1663,6 +2796,318 @@ pub struct TitlePr {
 pub struct V {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `x15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2010_11_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn active_tab_top_level_entity(&mut self, _node: &ActiveTabTopLevelEntity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_filter(&mut self, _node: &AutoFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bounds(&mut self, _node: &Bounds) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c(&mut self, _node: &C) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cache_hierarchy(&mut self, _node: &CacheHierarchy) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cached_unique_name(&mut self, _node: &CachedUniqueName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cached_unique_names(&mut self, _node: &CachedUniqueNames) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_member(&mut self, _node: &CalculatedMember) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection(&mut self, _node: &Connection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_feed_pr(&mut self, _node: &DataFeedPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_field(&mut self, _node: &DataField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_model(&mut self, _node: &DataModel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn database_source(&mut self, _node: &DatabaseSourceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn db_command(&mut self, _node: &DbCommand) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn db_table(&mut self, _node: &DbTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn db_tables(&mut self, _node: &DbTables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn description_pr(&mut self, _node: &DescriptionPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxfs(&mut self, _node: &Dxfs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_relationship(&mut self, _node: &ModelRelationship) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_relationships(&mut self, _node: &ModelRelationships) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_table(&mut self, _node: &ModelTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_tables(&mut self, _node: &ModelTables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_text_pr(&mut self, _node: &ModelTextPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn moving_period_state(&mut self, _node: &MovingPeriodState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn oledb_pr(&mut self, _node: &OledbPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_decoupled(&mut self, _node: &PivotCacheDecoupled) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_id_version(&mut self, _node: &PivotCacheIdVersion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_caches(&mut self, _node: &PivotCaches) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_filter(&mut self, _node: &PivotFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_row(&mut self, _node: &PivotRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table(&mut self, _node: &PivotTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_data(&mut self, _node: &PivotTableData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_reference(&mut self, _node: &PivotTableReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_references(&mut self, _node: &PivotTableReferences) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_server_formats(&mut self, _node: &PivotTableServerFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_ui_settings(&mut self, _node: &PivotTableUISettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_tables(&mut self, _node: &PivotTables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_table(&mut self, _node: &QueryTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn question(&mut self, _node: &Question) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn question_pr(&mut self, _node: &QuestionPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn questions(&mut self, _node: &Questions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn questions_pr(&mut self, _node: &QuestionsPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_pr(&mut self, _node: &RangePr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn selection(&mut self, _node: &Selection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn server_format(&mut self, _node: &ServerFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slicer_cache_hide_items_with_no_data(
+        &mut self,
+        _node: &SlicerCacheHideItemsWithNoData,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slicer_cache_olap_level_name(
+        &mut self,
+        _node: &SlicerCacheOlapLevelName,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slicer_cache_pivot_tables(&mut self, _node: &SlicerCachePivotTables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slicer_caches(&mut self, _node: &SlicerCaches) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn state(&mut self, _node: &State) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn survey(&mut self, _node: &Survey) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn survey_pr(&mut self, _node: &SurveyPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_slicer_cache(&mut self, _node: &TableSlicerCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_pr(&mut self, _node: &TextPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline(&mut self, _node: &Timeline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_cache_definition(&mut self, _node: &TimelineCacheDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_cache_pivot_caches(&mut self, _node: &TimelineCachePivotCaches) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_cache_ref(&mut self, _node: &TimelineCacheRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_cache_refs(&mut self, _node: &TimelineCacheRefs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_pivot_cache_definition(
+        &mut self,
+        _node: &TimelinePivotCacheDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_ref(&mut self, _node: &TimelineRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_refs(&mut self, _node: &TimelineRefs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_style(&mut self, _node: &TimelineStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_style_element(&mut self, _node: &TimelineStyleElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_style_elements(&mut self, _node: &TimelineStyleElements) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timeline_styles(&mut self, _node: &TimelineStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn timelines(&mut self, _node: &Timelines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title_pr(&mut self, _node: &TitlePr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v(&mut self, _node: &V) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_extension(&mut self, _node: &WebExtension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_extensions(&mut self, _node: &WebExtensions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook_pr(&mut self, _node: &WorkbookPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn x(&mut self, _node: &X) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `x15:webExtension`, schema type `CT_WebExtension` of SDK 3.5.1's data.

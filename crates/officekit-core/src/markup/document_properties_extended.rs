@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_AP: Option<NamespaceId> = Some(16);
 const NS_VT: Option<NamespaceId> = Some(96);
@@ -524,6 +528,511 @@ pub struct CharactersWithSpaces {
     pub value: String,
 }
 
+/// The hooks of a context for the `ap` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::document_properties_extended` is never asked.
+pub trait Context: markup::Context {
+    fn application_name(&mut self, _node: &ApplicationName) -> Option<ApplicationName> {
+        None
+    }
+
+    fn application_specific_file_properties(
+        &mut self,
+        _node: &ApplicationSpecificFileProperties,
+    ) -> Option<ApplicationSpecificFileProperties> {
+        None
+    }
+
+    fn application_specific_file_properties_content(
+        &mut self,
+        _node: &ApplicationSpecificFilePropertiesContent,
+    ) -> Option<ApplicationSpecificFilePropertiesContent> {
+        None
+    }
+
+    fn application_specific_file_properties_content_items(
+        &mut self,
+        _node: &ApplicationSpecificFilePropertiesContent,
+    ) -> Option<Vec<ApplicationSpecificFilePropertiesContent>> {
+        None
+    }
+
+    fn application_version(&mut self, _node: &ApplicationVersion) -> Option<ApplicationVersion> {
+        None
+    }
+
+    fn characters_with_spaces(
+        &mut self,
+        _node: &CharactersWithSpaces,
+    ) -> Option<CharactersWithSpaces> {
+        None
+    }
+
+    fn digital_signature(&mut self, _node: &DigitalSignature) -> Option<DigitalSignature> {
+        None
+    }
+
+    fn document_security(&mut self, _node: &DocumentSecurity) -> Option<DocumentSecurity> {
+        None
+    }
+
+    fn heading_pairs(&mut self, _node: &HeadingPairs) -> Option<HeadingPairs> {
+        None
+    }
+
+    fn hyperlink_list(&mut self, _node: &HyperlinkList) -> Option<HyperlinkList> {
+        None
+    }
+
+    fn hyperlinks_changed(&mut self, _node: &HyperlinksChanged) -> Option<HyperlinksChanged> {
+        None
+    }
+
+    fn intended_format_of_presentation(
+        &mut self,
+        _node: &IntendedFormatOfPresentation,
+    ) -> Option<IntendedFormatOfPresentation> {
+        None
+    }
+
+    fn links_up_to_date(&mut self, _node: &LinksUpToDate) -> Option<LinksUpToDate> {
+        None
+    }
+
+    fn name_of_company(&mut self, _node: &NameOfCompany) -> Option<NameOfCompany> {
+        None
+    }
+
+    fn name_of_document_template(
+        &mut self,
+        _node: &NameOfDocumentTemplate,
+    ) -> Option<NameOfDocumentTemplate> {
+        None
+    }
+
+    fn name_of_manager(&mut self, _node: &NameOfManager) -> Option<NameOfManager> {
+        None
+    }
+
+    fn number_of_hidden_slides(
+        &mut self,
+        _node: &NumberOfHiddenSlides,
+    ) -> Option<NumberOfHiddenSlides> {
+        None
+    }
+
+    fn number_of_lines(&mut self, _node: &NumberOfLines) -> Option<NumberOfLines> {
+        None
+    }
+
+    fn number_of_slides_containing_notes(
+        &mut self,
+        _node: &NumberOfSlidesContainingNotes,
+    ) -> Option<NumberOfSlidesContainingNotes> {
+        None
+    }
+
+    fn part_titles(&mut self, _node: &PartTitles) -> Option<PartTitles> {
+        None
+    }
+
+    fn relative_hyperlink_base(
+        &mut self,
+        _node: &RelativeHyperlinkBase,
+    ) -> Option<RelativeHyperlinkBase> {
+        None
+    }
+
+    fn shared_document(&mut self, _node: &SharedDocument) -> Option<SharedDocument> {
+        None
+    }
+
+    fn slides_metadata_element(
+        &mut self,
+        _node: &SlidesMetadataElement,
+    ) -> Option<SlidesMetadataElement> {
+        None
+    }
+
+    fn thumbnail_display_mode(
+        &mut self,
+        _node: &ThumbnailDisplayMode,
+    ) -> Option<ThumbnailDisplayMode> {
+        None
+    }
+
+    fn total_edit_time_metadata_element(
+        &mut self,
+        _node: &TotalEditTimeMetadataElement,
+    ) -> Option<TotalEditTimeMetadataElement> {
+        None
+    }
+
+    fn total_number_of_characters(
+        &mut self,
+        _node: &TotalNumberOfCharacters,
+    ) -> Option<TotalNumberOfCharacters> {
+        None
+    }
+
+    fn total_number_of_multimedia_clips(
+        &mut self,
+        _node: &TotalNumberOfMultimediaClips,
+    ) -> Option<TotalNumberOfMultimediaClips> {
+        None
+    }
+
+    fn total_number_of_pages(&mut self, _node: &TotalNumberOfPages) -> Option<TotalNumberOfPages> {
+        None
+    }
+
+    fn total_number_of_paragraphs(
+        &mut self,
+        _node: &TotalNumberOfParagraphs,
+    ) -> Option<TotalNumberOfParagraphs> {
+        None
+    }
+
+    fn word_count(&mut self, _node: &WordCount) -> Option<WordCount> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_application_name(
+        &mut self,
+        _node: &ApplicationName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_application_specific_file_properties(
+        &mut self,
+        _node: &ApplicationSpecificFileProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_application_specific_file_properties_content(
+        &mut self,
+        _node: &ApplicationSpecificFilePropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_application_specific_file_properties_content_items(
+        &mut self,
+        _node: &ApplicationSpecificFilePropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_application_version(
+        &mut self,
+        _node: &ApplicationVersion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_characters_with_spaces(
+        &mut self,
+        _node: &CharactersWithSpaces,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_digital_signature(
+        &mut self,
+        _node: &DigitalSignature,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_security(
+        &mut self,
+        _node: &DocumentSecurity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_heading_pairs(
+        &mut self,
+        _node: &HeadingPairs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink_list(
+        &mut self,
+        _node: &HyperlinkList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlinks_changed(
+        &mut self,
+        _node: &HyperlinksChanged,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_intended_format_of_presentation(
+        &mut self,
+        _node: &IntendedFormatOfPresentation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_links_up_to_date(
+        &mut self,
+        _node: &LinksUpToDate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_name_of_company(
+        &mut self,
+        _node: &NameOfCompany,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_name_of_document_template(
+        &mut self,
+        _node: &NameOfDocumentTemplate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_name_of_manager(
+        &mut self,
+        _node: &NameOfManager,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_hidden_slides(
+        &mut self,
+        _node: &NumberOfHiddenSlides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_lines(
+        &mut self,
+        _node: &NumberOfLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_slides_containing_notes(
+        &mut self,
+        _node: &NumberOfSlidesContainingNotes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_part_titles(
+        &mut self,
+        _node: &PartTitles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_relative_hyperlink_base(
+        &mut self,
+        _node: &RelativeHyperlinkBase,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shared_document(
+        &mut self,
+        _node: &SharedDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slides_metadata_element(
+        &mut self,
+        _node: &SlidesMetadataElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_thumbnail_display_mode(
+        &mut self,
+        _node: &ThumbnailDisplayMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_total_edit_time_metadata_element(
+        &mut self,
+        _node: &TotalEditTimeMetadataElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_total_number_of_characters(
+        &mut self,
+        _node: &TotalNumberOfCharacters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_total_number_of_multimedia_clips(
+        &mut self,
+        _node: &TotalNumberOfMultimediaClips,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_total_number_of_pages(
+        &mut self,
+        _node: &TotalNumberOfPages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_total_number_of_paragraphs(
+        &mut self,
+        _node: &TotalNumberOfParagraphs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_word_count(
+        &mut self,
+        _node: &WordCount,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.2.2.6 `DigSig` (Digital Signature): the tag `ap:DigSig`, schema type `CT_DigSigBlob`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -712,6 +1221,147 @@ pub struct TotalNumberOfPages {
 pub struct TotalNumberOfParagraphs {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `ap` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::document_properties_extended` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn application_name(&mut self, _node: &ApplicationName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn application_specific_file_properties(
+        &mut self,
+        _node: &ApplicationSpecificFileProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn application_specific_file_properties_content(
+        &mut self,
+        _node: &ApplicationSpecificFilePropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn application_version(&mut self, _node: &ApplicationVersion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn characters_with_spaces(&mut self, _node: &CharactersWithSpaces) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn digital_signature(&mut self, _node: &DigitalSignature) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_security(&mut self, _node: &DocumentSecurity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn heading_pairs(&mut self, _node: &HeadingPairs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink_list(&mut self, _node: &HyperlinkList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlinks_changed(&mut self, _node: &HyperlinksChanged) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn intended_format_of_presentation(
+        &mut self,
+        _node: &IntendedFormatOfPresentation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn links_up_to_date(&mut self, _node: &LinksUpToDate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn name_of_company(&mut self, _node: &NameOfCompany) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn name_of_document_template(&mut self, _node: &NameOfDocumentTemplate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn name_of_manager(&mut self, _node: &NameOfManager) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_hidden_slides(&mut self, _node: &NumberOfHiddenSlides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_lines(&mut self, _node: &NumberOfLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_slides_containing_notes(
+        &mut self,
+        _node: &NumberOfSlidesContainingNotes,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn part_titles(&mut self, _node: &PartTitles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn relative_hyperlink_base(&mut self, _node: &RelativeHyperlinkBase) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shared_document(&mut self, _node: &SharedDocument) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slides_metadata_element(&mut self, _node: &SlidesMetadataElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn thumbnail_display_mode(&mut self, _node: &ThumbnailDisplayMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn total_edit_time_metadata_element(
+        &mut self,
+        _node: &TotalEditTimeMetadataElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn total_number_of_characters(&mut self, _node: &TotalNumberOfCharacters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn total_number_of_multimedia_clips(
+        &mut self,
+        _node: &TotalNumberOfMultimediaClips,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn total_number_of_pages(&mut self, _node: &TotalNumberOfPages) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn total_number_of_paragraphs(&mut self, _node: &TotalNumberOfParagraphs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn word_count(&mut self, _node: &WordCount) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 22.2.2.28 Words (Word Count): the tag `ap:Words`, schema type `int`.

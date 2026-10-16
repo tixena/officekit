@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_B: Option<NamespaceId> = Some(21);
 
@@ -1004,6 +1008,1159 @@ pub struct ConferenceOrProceedingsName {
     pub value: String,
 }
 
+/// The hooks of a context for the `b` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::bibliography` is never asked.
+pub trait Context: markup::Context {
+    fn abbreviated_case_number(
+        &mut self,
+        _node: &AbbreviatedCaseNumber,
+    ) -> Option<AbbreviatedCaseNumber> {
+        None
+    }
+
+    fn album_title(&mut self, _node: &AlbumTitle) -> Option<AlbumTitle> {
+        None
+    }
+
+    fn artist(&mut self, _node: &Artist) -> Option<Artist> {
+        None
+    }
+
+    fn author(&mut self, _node: &Author) -> Option<Author> {
+        None
+    }
+
+    fn book_author(&mut self, _node: &BookAuthor) -> Option<BookAuthor> {
+        None
+    }
+
+    fn book_title(&mut self, _node: &BookTitle) -> Option<BookTitle> {
+        None
+    }
+
+    fn broadcast_title(&mut self, _node: &BroadcastTitle) -> Option<BroadcastTitle> {
+        None
+    }
+
+    fn broadcaster(&mut self, _node: &Broadcaster) -> Option<Broadcaster> {
+        None
+    }
+
+    fn case_number(&mut self, _node: &CaseNumber) -> Option<CaseNumber> {
+        None
+    }
+
+    fn chapter_number(&mut self, _node: &ChapterNumber) -> Option<ChapterNumber> {
+        None
+    }
+
+    fn city(&mut self, _node: &City) -> Option<City> {
+        None
+    }
+
+    fn comments(&mut self, _node: &Comments) -> Option<Comments> {
+        None
+    }
+
+    fn compiler(&mut self, _node: &Compiler) -> Option<Compiler> {
+        None
+    }
+
+    fn composer(&mut self, _node: &Composer) -> Option<Composer> {
+        None
+    }
+
+    fn conductor(&mut self, _node: &Conductor) -> Option<Conductor> {
+        None
+    }
+
+    fn conference_or_proceedings_name(
+        &mut self,
+        _node: &ConferenceOrProceedingsName,
+    ) -> Option<ConferenceOrProceedingsName> {
+        None
+    }
+
+    fn contributors_list(&mut self, _node: &ContributorsList) -> Option<ContributorsList> {
+        None
+    }
+
+    fn contributors_list_content(
+        &mut self,
+        _node: &ContributorsListContent,
+    ) -> Option<ContributorsListContent> {
+        None
+    }
+
+    fn contributors_list_content_items(
+        &mut self,
+        _node: &ContributorsListContent,
+    ) -> Option<Vec<ContributorsListContent>> {
+        None
+    }
+
+    fn corporate_author(&mut self, _node: &CorporateAuthor) -> Option<CorporateAuthor> {
+        None
+    }
+
+    fn counsel(&mut self, _node: &Counsel) -> Option<Counsel> {
+        None
+    }
+
+    fn country_or_region(&mut self, _node: &CountryOrRegion) -> Option<CountryOrRegion> {
+        None
+    }
+
+    fn court(&mut self, _node: &Court) -> Option<Court> {
+        None
+    }
+
+    fn day(&mut self, _node: &Day) -> Option<Day> {
+        None
+    }
+
+    fn day_accessed(&mut self, _node: &DayAccessed) -> Option<DayAccessed> {
+        None
+    }
+
+    fn department(&mut self, _node: &Department) -> Option<Department> {
+        None
+    }
+
+    fn director(&mut self, _node: &Director) -> Option<Director> {
+        None
+    }
+
+    fn distributor(&mut self, _node: &Distributor) -> Option<Distributor> {
+        None
+    }
+
+    fn editor(&mut self, _node: &Editor) -> Option<Editor> {
+        None
+    }
+
+    fn editor_edition(&mut self, _node: &EditorEdition) -> Option<EditorEdition> {
+        None
+    }
+
+    fn guid(&mut self, _node: &GUID) -> Option<GUID> {
+        None
+    }
+
+    fn institution(&mut self, _node: &Institution) -> Option<Institution> {
+        None
+    }
+
+    fn internet_site_title(&mut self, _node: &InternetSiteTitle) -> Option<InternetSiteTitle> {
+        None
+    }
+
+    fn interviewee(&mut self, _node: &Interviewee) -> Option<Interviewee> {
+        None
+    }
+
+    fn interviewer(&mut self, _node: &Interviewer) -> Option<Interviewer> {
+        None
+    }
+
+    fn inventor(&mut self, _node: &Inventor) -> Option<Inventor> {
+        None
+    }
+
+    fn issue(&mut self, _node: &Issue) -> Option<Issue> {
+        None
+    }
+
+    fn journal_name(&mut self, _node: &JournalName) -> Option<JournalName> {
+        None
+    }
+
+    fn locale_id(&mut self, _node: &LocaleID) -> Option<LocaleID> {
+        None
+    }
+
+    fn medium(&mut self, _node: &Medium) -> Option<Medium> {
+        None
+    }
+
+    fn month(&mut self, _node: &Month) -> Option<Month> {
+        None
+    }
+
+    fn month_accessed(&mut self, _node: &MonthAccessed) -> Option<MonthAccessed> {
+        None
+    }
+
+    fn name_list(&mut self, _node: &NameList) -> Option<NameList> {
+        None
+    }
+
+    fn name_or_corporate(
+        &mut self,
+        _node: &NameOrCorporateContent,
+    ) -> Option<NameOrCorporateContent> {
+        None
+    }
+
+    fn number_of_volumes(&mut self, _node: &NumberOfVolumes) -> Option<NumberOfVolumes> {
+        None
+    }
+
+    fn pages(&mut self, _node: &Pages) -> Option<Pages> {
+        None
+    }
+
+    fn patent_number(&mut self, _node: &PatentNumber) -> Option<PatentNumber> {
+        None
+    }
+
+    fn patent_type(&mut self, _node: &PatentType) -> Option<PatentType> {
+        None
+    }
+
+    fn performer(&mut self, _node: &Performer) -> Option<Performer> {
+        None
+    }
+
+    fn periodical_title(&mut self, _node: &PeriodicalTitle) -> Option<PeriodicalTitle> {
+        None
+    }
+
+    fn person(&mut self, _node: &Person) -> Option<Person> {
+        None
+    }
+
+    fn persons_first_or_given_name(
+        &mut self,
+        _node: &PersonsFirstOrGivenName,
+    ) -> Option<PersonsFirstOrGivenName> {
+        None
+    }
+
+    fn persons_last_or_family_name(
+        &mut self,
+        _node: &PersonsLastOrFamilyName,
+    ) -> Option<PersonsLastOrFamilyName> {
+        None
+    }
+
+    fn persons_middle_or_other_name(
+        &mut self,
+        _node: &PersonsMiddleOrOtherName,
+    ) -> Option<PersonsMiddleOrOtherName> {
+        None
+    }
+
+    fn producer_name(&mut self, _node: &ProducerName) -> Option<ProducerName> {
+        None
+    }
+
+    fn production_company(&mut self, _node: &ProductionCompany) -> Option<ProductionCompany> {
+        None
+    }
+
+    fn publication_title(&mut self, _node: &PublicationTitle) -> Option<PublicationTitle> {
+        None
+    }
+
+    fn publisher(&mut self, _node: &Publisher) -> Option<Publisher> {
+        None
+    }
+
+    fn recording_number(&mut self, _node: &RecordingNumber) -> Option<RecordingNumber> {
+        None
+    }
+
+    fn reference_order(&mut self, _node: &ReferenceOrder) -> Option<ReferenceOrder> {
+        None
+    }
+
+    fn reporter(&mut self, _node: &Reporter) -> Option<Reporter> {
+        None
+    }
+
+    fn short_title(&mut self, _node: &ShortTitle) -> Option<ShortTitle> {
+        None
+    }
+
+    fn source(&mut self, _node: &Source) -> Option<Source> {
+        None
+    }
+
+    fn source_content(&mut self, _node: &SourceContent) -> Option<SourceContent> {
+        None
+    }
+
+    fn source_content_items(&mut self, _node: &SourceContent) -> Option<Vec<SourceContent>> {
+        None
+    }
+
+    fn source_type(&mut self, _node: &SourceType) -> Option<SourceType> {
+        None
+    }
+
+    fn sources(&mut self, _node: &Sources) -> Option<Sources> {
+        None
+    }
+
+    fn standard_number(&mut self, _node: &StandardNumber) -> Option<StandardNumber> {
+        None
+    }
+
+    fn state_or_province(&mut self, _node: &StateOrProvince) -> Option<StateOrProvince> {
+        None
+    }
+
+    fn station(&mut self, _node: &Station) -> Option<Station> {
+        None
+    }
+
+    fn tag(&mut self, _node: &Tag) -> Option<Tag> {
+        None
+    }
+
+    fn theater(&mut self, _node: &Theater) -> Option<Theater> {
+        None
+    }
+
+    fn thesis_type(&mut self, _node: &ThesisType) -> Option<ThesisType> {
+        None
+    }
+
+    fn title(&mut self, _node: &Title) -> Option<Title> {
+        None
+    }
+
+    fn translator(&mut self, _node: &Translator) -> Option<Translator> {
+        None
+    }
+
+    fn url(&mut self, _node: &URL) -> Option<URL> {
+        None
+    }
+
+    fn version(&mut self, _node: &Version) -> Option<Version> {
+        None
+    }
+
+    fn volume(&mut self, _node: &Volume) -> Option<Volume> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_abbreviated_case_number(
+        &mut self,
+        _node: &AbbreviatedCaseNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_album_title(
+        &mut self,
+        _node: &AlbumTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artist(&mut self, _node: &Artist, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_author(&mut self, _node: &Author, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_book_author(
+        &mut self,
+        _node: &BookAuthor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_book_title(
+        &mut self,
+        _node: &BookTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_broadcast_title(
+        &mut self,
+        _node: &BroadcastTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_broadcaster(
+        &mut self,
+        _node: &Broadcaster,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_case_number(
+        &mut self,
+        _node: &CaseNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chapter_number(
+        &mut self,
+        _node: &ChapterNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_city(&mut self, _node: &City, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments(
+        &mut self,
+        _node: &Comments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compiler(
+        &mut self,
+        _node: &Compiler,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_composer(
+        &mut self,
+        _node: &Composer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conductor(
+        &mut self,
+        _node: &Conductor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conference_or_proceedings_name(
+        &mut self,
+        _node: &ConferenceOrProceedingsName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contributors_list(
+        &mut self,
+        _node: &ContributorsList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contributors_list_content(
+        &mut self,
+        _node: &ContributorsListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contributors_list_content_items(
+        &mut self,
+        _node: &ContributorsListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_corporate_author(
+        &mut self,
+        _node: &CorporateAuthor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_counsel(&mut self, _node: &Counsel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_country_or_region(
+        &mut self,
+        _node: &CountryOrRegion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_court(&mut self, _node: &Court, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_day(&mut self, _node: &Day, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_day_accessed(
+        &mut self,
+        _node: &DayAccessed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_department(
+        &mut self,
+        _node: &Department,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_director(
+        &mut self,
+        _node: &Director,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_distributor(
+        &mut self,
+        _node: &Distributor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_editor(&mut self, _node: &Editor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_editor_edition(
+        &mut self,
+        _node: &EditorEdition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_guid(&mut self, _node: &GUID, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_institution(
+        &mut self,
+        _node: &Institution,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_internet_site_title(
+        &mut self,
+        _node: &InternetSiteTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_interviewee(
+        &mut self,
+        _node: &Interviewee,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_interviewer(
+        &mut self,
+        _node: &Interviewer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inventor(
+        &mut self,
+        _node: &Inventor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_issue(&mut self, _node: &Issue, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_journal_name(
+        &mut self,
+        _node: &JournalName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_locale_id(
+        &mut self,
+        _node: &LocaleID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_medium(&mut self, _node: &Medium, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_month(&mut self, _node: &Month, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_month_accessed(
+        &mut self,
+        _node: &MonthAccessed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_name_list(
+        &mut self,
+        _node: &NameList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_name_or_corporate(
+        &mut self,
+        _node: &NameOrCorporateContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_volumes(
+        &mut self,
+        _node: &NumberOfVolumes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pages(&mut self, _node: &Pages, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_patent_number(
+        &mut self,
+        _node: &PatentNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_patent_type(
+        &mut self,
+        _node: &PatentType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_performer(
+        &mut self,
+        _node: &Performer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_periodical_title(
+        &mut self,
+        _node: &PeriodicalTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_persons_first_or_given_name(
+        &mut self,
+        _node: &PersonsFirstOrGivenName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_persons_last_or_family_name(
+        &mut self,
+        _node: &PersonsLastOrFamilyName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_persons_middle_or_other_name(
+        &mut self,
+        _node: &PersonsMiddleOrOtherName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_producer_name(
+        &mut self,
+        _node: &ProducerName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_production_company(
+        &mut self,
+        _node: &ProductionCompany,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_publication_title(
+        &mut self,
+        _node: &PublicationTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_publisher(
+        &mut self,
+        _node: &Publisher,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_recording_number(
+        &mut self,
+        _node: &RecordingNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_order(
+        &mut self,
+        _node: &ReferenceOrder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reporter(
+        &mut self,
+        _node: &Reporter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_short_title(
+        &mut self,
+        _node: &ShortTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source(&mut self, _node: &Source, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_content(
+        &mut self,
+        _node: &SourceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_content_items(
+        &mut self,
+        _node: &SourceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_type(
+        &mut self,
+        _node: &SourceType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sources(&mut self, _node: &Sources, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_standard_number(
+        &mut self,
+        _node: &StandardNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_state_or_province(
+        &mut self,
+        _node: &StateOrProvince,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_station(&mut self, _node: &Station, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tag(&mut self, _node: &Tag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theater(&mut self, _node: &Theater, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_thesis_type(
+        &mut self,
+        _node: &ThesisType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title(&mut self, _node: &Title, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_translator(
+        &mut self,
+        _node: &Translator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_url(&mut self, _node: &URL, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_version(&mut self, _node: &Version, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_volume(&mut self, _node: &Volume, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_writer(&mut self, _node: &Writer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_year(&mut self, _node: &Year, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_year_accessed(
+        &mut self,
+        _node: &YearAccessed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn writer(&mut self, _node: &Writer) -> Option<Writer> {
+        None
+    }
+
+    fn year(&mut self, _node: &Year) -> Option<Year> {
+        None
+    }
+
+    fn year_accessed(&mut self, _node: &YearAccessed) -> Option<YearAccessed> {
+        None
+    }
+}
+
 /// 22.6.2.4 Author (Contributors List): the tag `b:Author`, schema type `CT_AuthorType`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1555,6 +2712,335 @@ pub struct URL {
 pub struct Version {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `b` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::bibliography` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn abbreviated_case_number(&mut self, _node: &AbbreviatedCaseNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn album_title(&mut self, _node: &AlbumTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artist(&mut self, _node: &Artist) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn author(&mut self, _node: &Author) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn book_author(&mut self, _node: &BookAuthor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn book_title(&mut self, _node: &BookTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn broadcast_title(&mut self, _node: &BroadcastTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn broadcaster(&mut self, _node: &Broadcaster) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn case_number(&mut self, _node: &CaseNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chapter_number(&mut self, _node: &ChapterNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn city(&mut self, _node: &City) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments(&mut self, _node: &Comments) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn compiler(&mut self, _node: &Compiler) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn composer(&mut self, _node: &Composer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conductor(&mut self, _node: &Conductor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conference_or_proceedings_name(
+        &mut self,
+        _node: &ConferenceOrProceedingsName,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contributors_list(&mut self, _node: &ContributorsList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contributors_list_content(&mut self, _node: &ContributorsListContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn corporate_author(&mut self, _node: &CorporateAuthor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn counsel(&mut self, _node: &Counsel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn country_or_region(&mut self, _node: &CountryOrRegion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn court(&mut self, _node: &Court) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn day(&mut self, _node: &Day) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn day_accessed(&mut self, _node: &DayAccessed) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn department(&mut self, _node: &Department) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn director(&mut self, _node: &Director) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn distributor(&mut self, _node: &Distributor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn editor(&mut self, _node: &Editor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn editor_edition(&mut self, _node: &EditorEdition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn guid(&mut self, _node: &GUID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn institution(&mut self, _node: &Institution) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn internet_site_title(&mut self, _node: &InternetSiteTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn interviewee(&mut self, _node: &Interviewee) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn interviewer(&mut self, _node: &Interviewer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inventor(&mut self, _node: &Inventor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn issue(&mut self, _node: &Issue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn journal_name(&mut self, _node: &JournalName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn locale_id(&mut self, _node: &LocaleID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn medium(&mut self, _node: &Medium) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn month(&mut self, _node: &Month) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn month_accessed(&mut self, _node: &MonthAccessed) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn name_list(&mut self, _node: &NameList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn name_or_corporate(&mut self, _node: &NameOrCorporateContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_volumes(&mut self, _node: &NumberOfVolumes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pages(&mut self, _node: &Pages) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn patent_number(&mut self, _node: &PatentNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn patent_type(&mut self, _node: &PatentType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn performer(&mut self, _node: &Performer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn periodical_title(&mut self, _node: &PeriodicalTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn person(&mut self, _node: &Person) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn persons_first_or_given_name(&mut self, _node: &PersonsFirstOrGivenName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn persons_last_or_family_name(&mut self, _node: &PersonsLastOrFamilyName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn persons_middle_or_other_name(
+        &mut self,
+        _node: &PersonsMiddleOrOtherName,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn producer_name(&mut self, _node: &ProducerName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn production_company(&mut self, _node: &ProductionCompany) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn publication_title(&mut self, _node: &PublicationTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn publisher(&mut self, _node: &Publisher) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn recording_number(&mut self, _node: &RecordingNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_order(&mut self, _node: &ReferenceOrder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reporter(&mut self, _node: &Reporter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn short_title(&mut self, _node: &ShortTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source(&mut self, _node: &Source) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source_content(&mut self, _node: &SourceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source_type(&mut self, _node: &SourceType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sources(&mut self, _node: &Sources) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn standard_number(&mut self, _node: &StandardNumber) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn state_or_province(&mut self, _node: &StateOrProvince) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn station(&mut self, _node: &Station) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tag(&mut self, _node: &Tag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theater(&mut self, _node: &Theater) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn thesis_type(&mut self, _node: &ThesisType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title(&mut self, _node: &Title) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn translator(&mut self, _node: &Translator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn url(&mut self, _node: &URL) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn version(&mut self, _node: &Version) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn volume(&mut self, _node: &Volume) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn writer(&mut self, _node: &Writer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn year(&mut self, _node: &Year) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn year_accessed(&mut self, _node: &YearAccessed) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 22.6.2.73 Volume (Volume): the tag `b:Volume`, schema type `ST_String`.

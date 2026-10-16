@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRD2: Option<NamespaceId> = Some(141);
@@ -615,6 +619,569 @@ pub enum ArrayValueTypeMember {
     I,
     R,
     S,
+}
+
+/// The hooks of a context for the `xlrd2` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2017_richdata2` is never asked.
+pub trait Context: markup::Context {
+    fn a_array(&mut self, _node: &AArray) -> Option<AArray> {
+        None
+    }
+
+    fn a_supporting_property_bag_array(
+        &mut self,
+        _node: &ASupportingPropertyBagArray,
+    ) -> Option<ASupportingPropertyBagArray> {
+        None
+    }
+
+    fn array_data(&mut self, _node: &ArrayData) -> Option<ArrayData> {
+        None
+    }
+
+    fn custom_filter(&mut self, _node: &CustomFilter) -> Option<CustomFilter> {
+        None
+    }
+
+    fn custom_filters(&mut self, _node: &CustomFilters) -> Option<CustomFilters> {
+        None
+    }
+
+    fn custom_rich_filters(
+        &mut self,
+        _node: &CustomRichFiltersContent,
+    ) -> Option<CustomRichFiltersContent> {
+        None
+    }
+
+    fn custom_rich_filters_items(
+        &mut self,
+        _node: &CustomRichFiltersContent,
+    ) -> Option<Vec<CustomRichFiltersContent>> {
+        None
+    }
+
+    fn date_group_item(&mut self, _node: &DateGroupItem) -> Option<DateGroupItem> {
+        None
+    }
+
+    fn dxfs(&mut self, _node: &Dxfs) -> Option<Dxfs> {
+        None
+    }
+
+    fn dynamic_filter(&mut self, _node: &DynamicFilter) -> Option<DynamicFilter> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn filter(&mut self, _node: &Filter) -> Option<Filter> {
+        None
+    }
+
+    fn filter_column(&mut self, _node: &FilterColumn) -> Option<FilterColumn> {
+        None
+    }
+
+    fn filters(&mut self, _node: &Filters) -> Option<Filters> {
+        None
+    }
+
+    fn flag(&mut self, _node: &Flag) -> Option<Flag> {
+        None
+    }
+
+    fn global(&mut self, _node: &Global) -> Option<Global> {
+        None
+    }
+
+    fn k(&mut self, _node: &K) -> Option<K> {
+        None
+    }
+
+    fn key(&mut self, _node: &Key) -> Option<Key> {
+        None
+    }
+
+    fn key_flags(&mut self, _node: &KeyFlags) -> Option<KeyFlags> {
+        None
+    }
+
+    fn r_pr(&mut self, _node: &RPr) -> Option<RPr> {
+        None
+    }
+
+    fn r_sty(&mut self, _node: &RSty) -> Option<RSty> {
+        None
+    }
+
+    fn rich_filter_column(
+        &mut self,
+        _node: &RichFilterColumnContent,
+    ) -> Option<RichFilterColumnContent> {
+        None
+    }
+
+    fn rich_properties(&mut self, _node: &RichProperties) -> Option<RichProperties> {
+        None
+    }
+
+    fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> Option<RichSortCondition> {
+        None
+    }
+
+    fn rich_style_sheet(&mut self, _node: &RichStyleSheet) -> Option<RichStyleSheet> {
+        None
+    }
+
+    fn rich_styles(&mut self, _node: &RichStyles) -> Option<RichStyles> {
+        None
+    }
+
+    fn rpv(&mut self, _node: &Rpv) -> Option<Rpv> {
+        None
+    }
+
+    fn rv_types_info(&mut self, _node: &RvTypesInfo) -> Option<RvTypesInfo> {
+        None
+    }
+
+    fn s(&mut self, _node: &S) -> Option<S> {
+        None
+    }
+
+    fn spb(&mut self, _node: &Spb) -> Option<Spb> {
+        None
+    }
+
+    fn spb_arrays(&mut self, _node: &SpbArrays) -> Option<SpbArrays> {
+        None
+    }
+
+    fn spb_data(&mut self, _node: &SpbData) -> Option<SpbData> {
+        None
+    }
+
+    fn spb_structures(&mut self, _node: &SpbStructures) -> Option<SpbStructures> {
+        None
+    }
+
+    fn supporting_property_bags(
+        &mut self,
+        _node: &SupportingPropertyBags,
+    ) -> Option<SupportingPropertyBags> {
+        None
+    }
+
+    fn top10(&mut self, _node: &Top10) -> Option<Top10> {
+        None
+    }
+
+    fn r#type(&mut self, _node: &Type) -> Option<Type> {
+        None
+    }
+
+    fn types(&mut self, _node: &Types) -> Option<Types> {
+        None
+    }
+
+    fn v_array_value(&mut self, _node: &VArrayValue) -> Option<VArrayValue> {
+        None
+    }
+
+    fn v_supporting_property_bag_array_value(
+        &mut self,
+        _node: &VSupportingPropertyBagArrayValue,
+    ) -> Option<VSupportingPropertyBagArrayValue> {
+        None
+    }
+
+    fn v_supporting_property_bag_value(
+        &mut self,
+        _node: &VSupportingPropertyBagValue,
+    ) -> Option<VSupportingPropertyBagValue> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_a_array(&mut self, _node: &AArray, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_a_supporting_property_bag_array(
+        &mut self,
+        _node: &ASupportingPropertyBagArray,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_data(
+        &mut self,
+        _node: &ArrayData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_filter(
+        &mut self,
+        _node: &CustomFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_filters(
+        &mut self,
+        _node: &CustomFilters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_rich_filters(
+        &mut self,
+        _node: &CustomRichFiltersContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_rich_filters_items(
+        &mut self,
+        _node: &CustomRichFiltersContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_group_item(
+        &mut self,
+        _node: &DateGroupItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxfs(&mut self, _node: &Dxfs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dynamic_filter(
+        &mut self,
+        _node: &DynamicFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filter_column(
+        &mut self,
+        _node: &FilterColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filters(&mut self, _node: &Filters, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_flag(&mut self, _node: &Flag, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_global(&mut self, _node: &Global, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_k(&mut self, _node: &K, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_key(&mut self, _node: &Key, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_key_flags(
+        &mut self,
+        _node: &KeyFlags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_r_pr(&mut self, _node: &RPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_r_sty(&mut self, _node: &RSty, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_filter_column(
+        &mut self,
+        _node: &RichFilterColumnContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_properties(
+        &mut self,
+        _node: &RichProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_sort_condition(
+        &mut self,
+        _node: &RichSortCondition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_style_sheet(
+        &mut self,
+        _node: &RichStyleSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_styles(
+        &mut self,
+        _node: &RichStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rpv(&mut self, _node: &Rpv, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rv_types_info(
+        &mut self,
+        _node: &RvTypesInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_s(&mut self, _node: &S, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spb(&mut self, _node: &Spb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spb_arrays(
+        &mut self,
+        _node: &SpbArrays,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spb_data(
+        &mut self,
+        _node: &SpbData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spb_structures(
+        &mut self,
+        _node: &SpbStructures,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_supporting_property_bags(
+        &mut self,
+        _node: &SupportingPropertyBags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top10(&mut self, _node: &Top10, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_types(&mut self, _node: &Types, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v_array_value(
+        &mut self,
+        _node: &VArrayValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v_supporting_property_bag_array_value(
+        &mut self,
+        _node: &VSupportingPropertyBagArrayValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v_supporting_property_bag_value(
+        &mut self,
+        _node: &VSupportingPropertyBagValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
 }
 
 /// The tag `xlrd2:customFilter`, schema type `CT_CustomRichFilter` of SDK 3.5.1's data.
@@ -1011,6 +1578,178 @@ pub struct VSupportingPropertyBagArrayValue {
 pub struct VSupportingPropertyBagValue {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xlrd2` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2017_richdata2` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn a_array(&mut self, _node: &AArray) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn a_supporting_property_bag_array(
+        &mut self,
+        _node: &ASupportingPropertyBagArray,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn array_data(&mut self, _node: &ArrayData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_filter(&mut self, _node: &CustomFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_filters(&mut self, _node: &CustomFilters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_rich_filters(&mut self, _node: &CustomRichFiltersContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_group_item(&mut self, _node: &DateGroupItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxfs(&mut self, _node: &Dxfs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dynamic_filter(&mut self, _node: &DynamicFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filter(&mut self, _node: &Filter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filter_column(&mut self, _node: &FilterColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filters(&mut self, _node: &Filters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn flag(&mut self, _node: &Flag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn global(&mut self, _node: &Global) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn k(&mut self, _node: &K) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn key(&mut self, _node: &Key) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn key_flags(&mut self, _node: &KeyFlags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r_pr(&mut self, _node: &RPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r_sty(&mut self, _node: &RSty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_filter_column(&mut self, _node: &RichFilterColumnContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_properties(&mut self, _node: &RichProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_style_sheet(&mut self, _node: &RichStyleSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_styles(&mut self, _node: &RichStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rpv(&mut self, _node: &Rpv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rv_types_info(&mut self, _node: &RvTypesInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn s(&mut self, _node: &S) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spb(&mut self, _node: &Spb) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spb_arrays(&mut self, _node: &SpbArrays) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spb_data(&mut self, _node: &SpbData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spb_structures(&mut self, _node: &SpbStructures) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn supporting_property_bags(&mut self, _node: &SupportingPropertyBags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top10(&mut self, _node: &Top10) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#type(&mut self, _node: &Type) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn types(&mut self, _node: &Types) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v_array_value(&mut self, _node: &VArrayValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v_supporting_property_bag_array_value(
+        &mut self,
+        _node: &VSupportingPropertyBagArrayValue,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v_supporting_property_bag_value(
+        &mut self,
+        _node: &VSupportingPropertyBagValue,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AArray {

@@ -212,13 +212,715 @@
 // The root hooks every namespace's `Context` and `Visitor` extend (D12),
 // brought into `markup` with `include!`.
 
-/// The root of every context: the hooks for content the schemas do not
-/// declare. Each namespace's `Context` extends this trait and no other.
+/// The root of every context, which each namespace's `Context` extends and no other trait.
+///
+/// It holds the hooks for content the schemas do not declare, and one accessor per namespace,
+/// through which a context opts into that namespace's hooks by returning itself.
 pub trait Context {
+    fn additional_characteristics(
+        &mut self,
+    ) -> Option<&mut dyn additional_characteristics::Context> {
+        None
+    }
+
+    fn bibliography(&mut self) -> Option<&mut dyn bibliography::Context> {
+        None
+    }
+
+    fn chart(&mut self) -> Option<&mut dyn chart::Context> {
+        None
+    }
+
+    fn chart_drawing(&mut self) -> Option<&mut dyn chart_drawing::Context> {
+        None
+    }
+
+    fn common_simple_types(&mut self) -> Option<&mut dyn common_simple_types::Context> {
+        None
+    }
+
+    fn custom_xml_data_properties(
+        &mut self,
+    ) -> Option<&mut dyn custom_xml_data_properties::Context> {
+        None
+    }
+
+    fn custom_xml_schema_properties(
+        &mut self,
+    ) -> Option<&mut dyn custom_xml_schema_properties::Context> {
+        None
+    }
+
+    fn diagram(&mut self) -> Option<&mut dyn diagram::Context> {
+        None
+    }
+
+    fn document_properties_custom(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_custom::Context> {
+        None
+    }
+
+    fn document_properties_extended(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_extended::Context> {
+        None
+    }
+
+    fn document_properties_variant_types(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_variant_types::Context> {
+        None
+    }
+
+    fn drawing(&mut self) -> Option<&mut dyn drawing::Context> {
+        None
+    }
+
     /// Asked for each generic element: an unknown element in a list's `Other`
     /// items, in a node's `unknown.children`, or in a wildcard position.
     /// `None` rebuilds the element from its transformed children.
     fn element(&mut self, _node: &xml::element::Element) -> Option<xml::element::Element> {
+        None
+    }
+
+    fn locked_canvas(&mut self) -> Option<&mut dyn locked_canvas::Context> {
+        None
+    }
+
+    fn math(&mut self) -> Option<&mut dyn math::Context> {
+        None
+    }
+
+    fn office_2009_07_customui(&mut self) -> Option<&mut dyn office_2009_07_customui::Context> {
+        None
+    }
+
+    fn office_2019_extlst(&mut self) -> Option<&mut dyn office_2019_extlst::Context> {
+        None
+    }
+
+    fn office_2020_mip_label_metadata(
+        &mut self,
+    ) -> Option<&mut dyn office_2020_mip_label_metadata::Context> {
+        None
+    }
+
+    fn office_drawing_2007_8_2_chart(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2007_8_2_chart::Context> {
+        None
+    }
+
+    fn office_drawing_2008_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2008_diagram::Context> {
+        None
+    }
+
+    fn office_drawing_2010_chart_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_chart_drawing::Context> {
+        None
+    }
+
+    fn office_drawing_2010_compatibility(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_compatibility::Context> {
+        None
+    }
+
+    fn office_drawing_2010_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_diagram::Context> {
+        None
+    }
+
+    fn office_drawing_2010_main(&mut self) -> Option<&mut dyn office_drawing_2010_main::Context> {
+        None
+    }
+
+    fn office_drawing_2010_picture(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_picture::Context> {
+        None
+    }
+
+    fn office_drawing_2010_slicer(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_slicer::Context> {
+        None
+    }
+
+    fn office_drawing_2012_chart(&mut self) -> Option<&mut dyn office_drawing_2012_chart::Context> {
+        None
+    }
+
+    fn office_drawing_2012_chart_style(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2012_chart_style::Context> {
+        None
+    }
+
+    fn office_drawing_2012_main(&mut self) -> Option<&mut dyn office_drawing_2012_main::Context> {
+        None
+    }
+
+    fn office_drawing_2012_timeslicer(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2012_timeslicer::Context> {
+        None
+    }
+
+    fn office_drawing_2013_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2013_main_command::Context> {
+        None
+    }
+
+    fn office_drawing_2014_chart(&mut self) -> Option<&mut dyn office_drawing_2014_chart::Context> {
+        None
+    }
+
+    fn office_drawing_2014_chart_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2014_chart_ac::Context> {
+        None
+    }
+
+    fn office_drawing_2014_chartex(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2014_chartex::Context> {
+        None
+    }
+
+    fn office_drawing_2014_main(&mut self) -> Option<&mut dyn office_drawing_2014_main::Context> {
+        None
+    }
+
+    fn office_drawing_2016_11_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_11_diagram::Context> {
+        None
+    }
+
+    fn office_drawing_2016_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_11_main::Context> {
+        None
+    }
+
+    fn office_drawing_2016_12_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_12_diagram::Context> {
+        None
+    }
+
+    fn office_drawing_2016_svg_main(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_svg_main::Context> {
+        None
+    }
+
+    fn office_drawing_2017_03_chart(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_03_chart::Context> {
+        None
+    }
+
+    fn office_drawing_2017_decorative(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_decorative::Context> {
+        None
+    }
+
+    fn office_drawing_2017_model3d(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_model3d::Context> {
+        None
+    }
+
+    fn office_drawing_2018_animation(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_animation::Context> {
+        None
+    }
+
+    fn office_drawing_2018_animation_model3d(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_animation_model3d::Context> {
+        None
+    }
+
+    fn office_drawing_2018_hyperlinkcolor(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_hyperlinkcolor::Context> {
+        None
+    }
+
+    fn office_drawing_2018_sketchyshapes(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_sketchyshapes::Context> {
+        None
+    }
+
+    fn office_drawing_2020_classification_shape(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2020_classification_shape::Context> {
+        None
+    }
+
+    fn office_drawing_2021_livefeed(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_livefeed::Context> {
+        None
+    }
+
+    fn office_drawing_2021_oembed(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_oembed::Context> {
+        None
+    }
+
+    fn office_drawing_2021_scriptlink(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_scriptlink::Context> {
+        None
+    }
+
+    fn office_drawing_2022_imageformula(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2022_imageformula::Context> {
+        None
+    }
+
+    fn office_excel_2006_main(&mut self) -> Option<&mut dyn office_excel_2006_main::Context> {
+        None
+    }
+
+    fn office_excel_2010_spreadsheet_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_excel_2010_spreadsheet_drawing::Context> {
+        None
+    }
+
+    fn office_powerpoint_2010_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2010_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2012_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2012_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2012_roaming_settings(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2012_roaming_settings::Context> {
+        None
+    }
+
+    fn office_powerpoint_2013_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2013_main_command::Context> {
+        None
+    }
+
+    fn office_powerpoint_2015_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2015_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2017_10_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2017_10_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2017_3_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2017_3_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2018_4_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2018_4_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2018_8_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2018_8_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2019_12_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2019_12_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2019_9_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2019_9_main_command::Context> {
+        None
+    }
+
+    fn office_powerpoint_2020_02_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2020_02_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2021_06_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2021_06_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2022_03_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2022_03_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2022_08_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2022_08_main::Context> {
+        None
+    }
+
+    fn office_powerpoint_2023_02_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2023_02_main::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2009_9_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2009_9_main::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2010_11_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2010_11_ac::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2010_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2010_11_main::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2011_1_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2011_1_ac::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2014_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2014_11_main::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2014_revision(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2014_revision::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2016_pivotdefaultlayout(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2016_pivotdefaultlayout::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_dynamicarray(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_dynamicarray::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_richdata(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_richdata::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_richdata2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_richdata2::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2018_calcfeatures(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2018_calcfeatures::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2018_threadedcomments(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2018_threadedcomments::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2019_extlinksprops(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2019_extlinksprops::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2019_namedsheetviews(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2019_namedsheetviews::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_pivot_nov2020(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_pivot_nov2020::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_richdatawebimage(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_richdatawebimage::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_richvaluerefresh(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_richvaluerefresh::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_threadedcomments2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_threadedcomments2::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2021_extlinks2021(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2021_extlinks2021::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_featurepropertybag(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_featurepropertybag::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_pivot_rich_data(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_rich_data::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_pivot_version_info(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_version_info::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_richvaluerel(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_richvaluerel::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_data_source_versioning(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_data_source_versioning::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_external_code_service(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_external_code_service::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_ms_forms(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_ms_forms::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_pivot2023_calculation(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_pivot2023_calculation::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_pivot_auto_refresh(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_auto_refresh::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_pivot_dynamic_arrays(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_dynamic_arrays::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_workbook_compatibility_version(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_workbook_compatibility_version::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2025_external_code_service2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2025_external_code_service2::Context> {
+        None
+    }
+
+    fn office_spreadsheetml_2025_pivot_data_source(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2025_pivot_data_source::Context> {
+        None
+    }
+
+    fn office_tasks_2019_documenttasks(
+        &mut self,
+    ) -> Option<&mut dyn office_tasks_2019_documenttasks::Context> {
+        None
+    }
+
+    fn office_thememl_2012_main(&mut self) -> Option<&mut dyn office_thememl_2012_main::Context> {
+        None
+    }
+
+    fn office_webextensions_taskpanes_2010_11(
+        &mut self,
+    ) -> Option<&mut dyn office_webextensions_taskpanes_2010_11::Context> {
+        None
+    }
+
+    fn office_webextensions_webextension_2010_11(
+        &mut self,
+    ) -> Option<&mut dyn office_webextensions_webextension_2010_11::Context> {
+        None
+    }
+
+    fn office_word_2010_wordml(&mut self) -> Option<&mut dyn office_word_2010_wordml::Context> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_canvas(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_canvas::Context> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_drawing::Context> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_group(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_group::Context> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_shape(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_shape::Context> {
+        None
+    }
+
+    fn office_word_2012_wordml(&mut self) -> Option<&mut dyn office_word_2012_wordml::Context> {
+        None
+    }
+
+    fn office_word_2012_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2012_wordprocessing_drawing::Context> {
+        None
+    }
+
+    fn office_word_2015_wordml_symex(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2015_wordml_symex::Context> {
+        None
+    }
+
+    fn office_word_2016_wordml_cid(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2016_wordml_cid::Context> {
+        None
+    }
+
+    fn office_word_2018_wordml(&mut self) -> Option<&mut dyn office_word_2018_wordml::Context> {
+        None
+    }
+
+    fn office_word_2018_wordml_cex(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2018_wordml_cex::Context> {
+        None
+    }
+
+    fn office_word_2020_oembed(&mut self) -> Option<&mut dyn office_word_2020_oembed::Context> {
+        None
+    }
+
+    fn picture(&mut self) -> Option<&mut dyn picture::Context> {
+        None
+    }
+
+    fn presentation(&mut self) -> Option<&mut dyn presentation::Context> {
+        None
+    }
+
+    fn spreadsheet(&mut self) -> Option<&mut dyn spreadsheet::Context> {
+        None
+    }
+
+    fn spreadsheet_drawing(&mut self) -> Option<&mut dyn spreadsheet_drawing::Context> {
+        None
+    }
+
+    fn vml(&mut self) -> Option<&mut dyn vml::Context> {
+        None
+    }
+
+    fn vml_office_drawing(&mut self) -> Option<&mut dyn vml_office_drawing::Context> {
+        None
+    }
+
+    fn vml_presentation_drawing(&mut self) -> Option<&mut dyn vml_presentation_drawing::Context> {
+        None
+    }
+
+    fn vml_spreadsheet_drawing(&mut self) -> Option<&mut dyn vml_spreadsheet_drawing::Context> {
+        None
+    }
+
+    fn vml_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn vml_wordprocessing_drawing::Context> {
+        None
+    }
+
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
+        None
+    }
+
+    fn wordprocessing_drawing(&mut self) -> Option<&mut dyn wordprocessing_drawing::Context> {
         None
     }
 
@@ -237,11 +939,713 @@ pub trait Context {
     }
 }
 
-/// The root of every visitor: the hook for content the schemas do not
-/// declare. Each namespace's `Visitor` extends this trait and no other.
+/// The root of every visitor, which each namespace's `Visitor` extends and no other trait.
+///
+/// It holds the hook for content the schemas do not declare, and one accessor per namespace,
+/// through which a visitor opts into that namespace's hooks by returning itself.
 pub trait Visitor {
+    fn additional_characteristics(
+        &mut self,
+    ) -> Option<&mut dyn additional_characteristics::Visitor> {
+        None
+    }
+
+    fn bibliography(&mut self) -> Option<&mut dyn bibliography::Visitor> {
+        None
+    }
+
+    fn chart(&mut self) -> Option<&mut dyn chart::Visitor> {
+        None
+    }
+
+    fn chart_drawing(&mut self) -> Option<&mut dyn chart_drawing::Visitor> {
+        None
+    }
+
+    fn common_simple_types(&mut self) -> Option<&mut dyn common_simple_types::Visitor> {
+        None
+    }
+
+    fn custom_xml_data_properties(
+        &mut self,
+    ) -> Option<&mut dyn custom_xml_data_properties::Visitor> {
+        None
+    }
+
+    fn custom_xml_schema_properties(
+        &mut self,
+    ) -> Option<&mut dyn custom_xml_schema_properties::Visitor> {
+        None
+    }
+
+    fn diagram(&mut self) -> Option<&mut dyn diagram::Visitor> {
+        None
+    }
+
+    fn document_properties_custom(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_custom::Visitor> {
+        None
+    }
+
+    fn document_properties_extended(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_extended::Visitor> {
+        None
+    }
+
+    fn document_properties_variant_types(
+        &mut self,
+    ) -> Option<&mut dyn document_properties_variant_types::Visitor> {
+        None
+    }
+
+    fn drawing(&mut self) -> Option<&mut dyn drawing::Visitor> {
+        None
+    }
+
     /// Shown each generic element; `Descend::Yes` walks into its children.
     fn element(&mut self, _node: &xml::element::Element) -> Descend {
         Descend::Yes
+    }
+
+    fn locked_canvas(&mut self) -> Option<&mut dyn locked_canvas::Visitor> {
+        None
+    }
+
+    fn math(&mut self) -> Option<&mut dyn math::Visitor> {
+        None
+    }
+
+    fn office_2009_07_customui(&mut self) -> Option<&mut dyn office_2009_07_customui::Visitor> {
+        None
+    }
+
+    fn office_2019_extlst(&mut self) -> Option<&mut dyn office_2019_extlst::Visitor> {
+        None
+    }
+
+    fn office_2020_mip_label_metadata(
+        &mut self,
+    ) -> Option<&mut dyn office_2020_mip_label_metadata::Visitor> {
+        None
+    }
+
+    fn office_drawing_2007_8_2_chart(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2007_8_2_chart::Visitor> {
+        None
+    }
+
+    fn office_drawing_2008_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2008_diagram::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_chart_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_chart_drawing::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_compatibility(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_compatibility::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_diagram::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_main(&mut self) -> Option<&mut dyn office_drawing_2010_main::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_picture(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_picture::Visitor> {
+        None
+    }
+
+    fn office_drawing_2010_slicer(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2010_slicer::Visitor> {
+        None
+    }
+
+    fn office_drawing_2012_chart(&mut self) -> Option<&mut dyn office_drawing_2012_chart::Visitor> {
+        None
+    }
+
+    fn office_drawing_2012_chart_style(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2012_chart_style::Visitor> {
+        None
+    }
+
+    fn office_drawing_2012_main(&mut self) -> Option<&mut dyn office_drawing_2012_main::Visitor> {
+        None
+    }
+
+    fn office_drawing_2012_timeslicer(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2012_timeslicer::Visitor> {
+        None
+    }
+
+    fn office_drawing_2013_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2013_main_command::Visitor> {
+        None
+    }
+
+    fn office_drawing_2014_chart(&mut self) -> Option<&mut dyn office_drawing_2014_chart::Visitor> {
+        None
+    }
+
+    fn office_drawing_2014_chart_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2014_chart_ac::Visitor> {
+        None
+    }
+
+    fn office_drawing_2014_chartex(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2014_chartex::Visitor> {
+        None
+    }
+
+    fn office_drawing_2014_main(&mut self) -> Option<&mut dyn office_drawing_2014_main::Visitor> {
+        None
+    }
+
+    fn office_drawing_2016_11_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_11_diagram::Visitor> {
+        None
+    }
+
+    fn office_drawing_2016_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_11_main::Visitor> {
+        None
+    }
+
+    fn office_drawing_2016_12_diagram(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_12_diagram::Visitor> {
+        None
+    }
+
+    fn office_drawing_2016_svg_main(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2016_svg_main::Visitor> {
+        None
+    }
+
+    fn office_drawing_2017_03_chart(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_03_chart::Visitor> {
+        None
+    }
+
+    fn office_drawing_2017_decorative(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_decorative::Visitor> {
+        None
+    }
+
+    fn office_drawing_2017_model3d(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2017_model3d::Visitor> {
+        None
+    }
+
+    fn office_drawing_2018_animation(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_animation::Visitor> {
+        None
+    }
+
+    fn office_drawing_2018_animation_model3d(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_animation_model3d::Visitor> {
+        None
+    }
+
+    fn office_drawing_2018_hyperlinkcolor(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_hyperlinkcolor::Visitor> {
+        None
+    }
+
+    fn office_drawing_2018_sketchyshapes(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2018_sketchyshapes::Visitor> {
+        None
+    }
+
+    fn office_drawing_2020_classification_shape(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2020_classification_shape::Visitor> {
+        None
+    }
+
+    fn office_drawing_2021_livefeed(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_livefeed::Visitor> {
+        None
+    }
+
+    fn office_drawing_2021_oembed(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_oembed::Visitor> {
+        None
+    }
+
+    fn office_drawing_2021_scriptlink(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2021_scriptlink::Visitor> {
+        None
+    }
+
+    fn office_drawing_2022_imageformula(
+        &mut self,
+    ) -> Option<&mut dyn office_drawing_2022_imageformula::Visitor> {
+        None
+    }
+
+    fn office_excel_2006_main(&mut self) -> Option<&mut dyn office_excel_2006_main::Visitor> {
+        None
+    }
+
+    fn office_excel_2010_spreadsheet_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_excel_2010_spreadsheet_drawing::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2010_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2010_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2012_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2012_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2012_roaming_settings(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2012_roaming_settings::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2013_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2013_main_command::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2015_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2015_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2017_10_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2017_10_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2017_3_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2017_3_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2018_4_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2018_4_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2018_8_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2018_8_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2019_12_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2019_12_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2019_9_main_command(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2019_9_main_command::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2020_02_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2020_02_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2021_06_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2021_06_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2022_03_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2022_03_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2022_08_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2022_08_main::Visitor> {
+        None
+    }
+
+    fn office_powerpoint_2023_02_main(
+        &mut self,
+    ) -> Option<&mut dyn office_powerpoint_2023_02_main::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2009_9_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2009_9_main::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2010_11_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2010_11_ac::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2010_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2010_11_main::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2011_1_ac(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2011_1_ac::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2014_11_main(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2014_11_main::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2014_revision(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2014_revision::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2016_pivotdefaultlayout(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2016_pivotdefaultlayout::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_dynamicarray(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_dynamicarray::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_richdata(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_richdata::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2017_richdata2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2017_richdata2::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2018_calcfeatures(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2018_calcfeatures::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2018_threadedcomments(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2018_threadedcomments::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2019_extlinksprops(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2019_extlinksprops::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2019_namedsheetviews(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2019_namedsheetviews::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_pivot_nov2020(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_pivot_nov2020::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_richdatawebimage(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_richdatawebimage::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_richvaluerefresh(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_richvaluerefresh::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2020_threadedcomments2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2020_threadedcomments2::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2021_extlinks2021(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2021_extlinks2021::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_featurepropertybag(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_featurepropertybag::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_pivot_rich_data(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_rich_data::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_pivot_version_info(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_pivot_version_info::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2022_richvaluerel(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2022_richvaluerel::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_data_source_versioning(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_data_source_versioning::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_external_code_service(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_external_code_service::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_ms_forms(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_ms_forms::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2023_pivot2023_calculation(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2023_pivot2023_calculation::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_pivot_auto_refresh(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_auto_refresh::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_pivot_dynamic_arrays(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_pivot_dynamic_arrays::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2024_workbook_compatibility_version(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2024_workbook_compatibility_version::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2025_external_code_service2(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2025_external_code_service2::Visitor> {
+        None
+    }
+
+    fn office_spreadsheetml_2025_pivot_data_source(
+        &mut self,
+    ) -> Option<&mut dyn office_spreadsheetml_2025_pivot_data_source::Visitor> {
+        None
+    }
+
+    fn office_tasks_2019_documenttasks(
+        &mut self,
+    ) -> Option<&mut dyn office_tasks_2019_documenttasks::Visitor> {
+        None
+    }
+
+    fn office_thememl_2012_main(&mut self) -> Option<&mut dyn office_thememl_2012_main::Visitor> {
+        None
+    }
+
+    fn office_webextensions_taskpanes_2010_11(
+        &mut self,
+    ) -> Option<&mut dyn office_webextensions_taskpanes_2010_11::Visitor> {
+        None
+    }
+
+    fn office_webextensions_webextension_2010_11(
+        &mut self,
+    ) -> Option<&mut dyn office_webextensions_webextension_2010_11::Visitor> {
+        None
+    }
+
+    fn office_word_2010_wordml(&mut self) -> Option<&mut dyn office_word_2010_wordml::Visitor> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_canvas(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_canvas::Visitor> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_drawing::Visitor> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_group(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_group::Visitor> {
+        None
+    }
+
+    fn office_word_2010_wordprocessing_shape(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2010_wordprocessing_shape::Visitor> {
+        None
+    }
+
+    fn office_word_2012_wordml(&mut self) -> Option<&mut dyn office_word_2012_wordml::Visitor> {
+        None
+    }
+
+    fn office_word_2012_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2012_wordprocessing_drawing::Visitor> {
+        None
+    }
+
+    fn office_word_2015_wordml_symex(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2015_wordml_symex::Visitor> {
+        None
+    }
+
+    fn office_word_2016_wordml_cid(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2016_wordml_cid::Visitor> {
+        None
+    }
+
+    fn office_word_2018_wordml(&mut self) -> Option<&mut dyn office_word_2018_wordml::Visitor> {
+        None
+    }
+
+    fn office_word_2018_wordml_cex(
+        &mut self,
+    ) -> Option<&mut dyn office_word_2018_wordml_cex::Visitor> {
+        None
+    }
+
+    fn office_word_2020_oembed(&mut self) -> Option<&mut dyn office_word_2020_oembed::Visitor> {
+        None
+    }
+
+    fn picture(&mut self) -> Option<&mut dyn picture::Visitor> {
+        None
+    }
+
+    fn presentation(&mut self) -> Option<&mut dyn presentation::Visitor> {
+        None
+    }
+
+    fn spreadsheet(&mut self) -> Option<&mut dyn spreadsheet::Visitor> {
+        None
+    }
+
+    fn spreadsheet_drawing(&mut self) -> Option<&mut dyn spreadsheet_drawing::Visitor> {
+        None
+    }
+
+    fn vml(&mut self) -> Option<&mut dyn vml::Visitor> {
+        None
+    }
+
+    fn vml_office_drawing(&mut self) -> Option<&mut dyn vml_office_drawing::Visitor> {
+        None
+    }
+
+    fn vml_presentation_drawing(&mut self) -> Option<&mut dyn vml_presentation_drawing::Visitor> {
+        None
+    }
+
+    fn vml_spreadsheet_drawing(&mut self) -> Option<&mut dyn vml_spreadsheet_drawing::Visitor> {
+        None
+    }
+
+    fn vml_wordprocessing_drawing(
+        &mut self,
+    ) -> Option<&mut dyn vml_wordprocessing_drawing::Visitor> {
+        None
+    }
+
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Visitor> {
+        None
+    }
+
+    fn wordprocessing_drawing(&mut self) -> Option<&mut dyn wordprocessing_drawing::Visitor> {
+        None
     }
 }

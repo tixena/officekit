@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_XLPCALC: Option<NamespaceId> = Some(137);
 
@@ -305,6 +309,152 @@ pub enum AggregationTypeMember {
     Median,
 }
 
+/// The hooks of a context for the `xlpcalc` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2023_pivot2023_calculation` is
+/// never asked.
+pub trait Context: markup::Context {
+    fn aggregation_info(&mut self, _node: &AggregationInfo) -> Option<AggregationInfo> {
+        None
+    }
+
+    fn feature_support_info(&mut self, _node: &FeatureSupportInfo) -> Option<FeatureSupportInfo> {
+        None
+    }
+
+    fn pivot_area_reference_subtotals(
+        &mut self,
+        _node: &PivotAreaReferenceSubtotals,
+    ) -> Option<PivotAreaReferenceSubtotals> {
+        None
+    }
+
+    fn pivot_field_subtotal_line_items(
+        &mut self,
+        _node: &PivotFieldSubtotalLineItems,
+    ) -> Option<PivotFieldSubtotalLineItems> {
+        None
+    }
+
+    fn pivot_field_subtotals(
+        &mut self,
+        _node: &PivotFieldSubtotals,
+    ) -> Option<PivotFieldSubtotals> {
+        None
+    }
+
+    fn subtotal_line_item(&mut self, _node: &SubtotalLineItem) -> Option<SubtotalLineItem> {
+        None
+    }
+
+    fn subtotal_pivot_item_subtotal(
+        &mut self,
+        _node: &SubtotalPivotItemSubtotal,
+    ) -> Option<SubtotalPivotItemSubtotal> {
+        None
+    }
+
+    fn subtotal_pivot_subtotal_type(
+        &mut self,
+        _node: &SubtotalPivotSubtotalType,
+    ) -> Option<SubtotalPivotSubtotalType> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_aggregation_info(
+        &mut self,
+        _node: &AggregationInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_feature_support_info(
+        &mut self,
+        _node: &FeatureSupportInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_area_reference_subtotals(
+        &mut self,
+        _node: &PivotAreaReferenceSubtotals,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_field_subtotal_line_items(
+        &mut self,
+        _node: &PivotFieldSubtotalLineItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_field_subtotals(
+        &mut self,
+        _node: &PivotFieldSubtotals,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subtotal_line_item(
+        &mut self,
+        _node: &SubtotalLineItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subtotal_pivot_item_subtotal(
+        &mut self,
+        _node: &SubtotalPivotItemSubtotal,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subtotal_pivot_subtotal_type(
+        &mut self,
+        _node: &SubtotalPivotSubtotalType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xlpcalc:featureSupportInfo`, schema type `CT_FeatureSupport` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -359,6 +509,57 @@ pub struct SubtotalPivotItemSubtotal {
 pub struct SubtotalPivotSubtotalType {
     pub subtotal_type: Option<AggregationType>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xlpcalc` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2023_pivot2023_calculation` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn aggregation_info(&mut self, _node: &AggregationInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn feature_support_info(&mut self, _node: &FeatureSupportInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_area_reference_subtotals(
+        &mut self,
+        _node: &PivotAreaReferenceSubtotals,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_field_subtotal_line_items(
+        &mut self,
+        _node: &PivotFieldSubtotalLineItems,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_field_subtotals(&mut self, _node: &PivotFieldSubtotals) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subtotal_line_item(&mut self, _node: &SubtotalLineItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subtotal_pivot_item_subtotal(
+        &mut self,
+        _node: &SubtotalPivotItemSubtotal,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subtotal_pivot_subtotal_type(
+        &mut self,
+        _node: &SubtotalPivotSubtotalType,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AggregationInfo {

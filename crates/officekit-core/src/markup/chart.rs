@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chart`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
@@ -3156,6 +3160,3734 @@ pub struct ColorMapOverride {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `c` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::chart` is never asked.
+pub trait Context: markup::Context {
+    fn apply_to_end(&mut self, _node: &ApplyToEnd) -> Option<ApplyToEnd> {
+        None
+    }
+
+    fn apply_to_front(&mut self, _node: &ApplyToFront) -> Option<ApplyToFront> {
+        None
+    }
+
+    fn apply_to_sides(&mut self, _node: &ApplyToSides) -> Option<ApplyToSides> {
+        None
+    }
+
+    fn area3d_chart(&mut self, _node: &Area3DChart) -> Option<Area3DChart> {
+        None
+    }
+
+    fn area_chart_series(&mut self, _node: &AreaChartSeries) -> Option<AreaChartSeries> {
+        None
+    }
+
+    fn area_charts(&mut self, _node: &AreaCharts) -> Option<AreaCharts> {
+        None
+    }
+
+    fn auto_title_is_deleted(&mut self, _node: &AutoTitleIsDeleted) -> Option<AutoTitleIsDeleted> {
+        None
+    }
+
+    fn automatic_category_axis(
+        &mut self,
+        _node: &AutomaticCategoryAxis,
+    ) -> Option<AutomaticCategoryAxis> {
+        None
+    }
+
+    fn axis_crossing(&mut self, _node: &AxisCrossingContent) -> Option<AxisCrossingContent> {
+        None
+    }
+
+    fn axis_data_source(&mut self, _node: &AxisDataSourceContent) -> Option<AxisDataSourceContent> {
+        None
+    }
+
+    fn axis_id(&mut self, _node: &AxisID) -> Option<AxisID> {
+        None
+    }
+
+    fn axis_orientation(&mut self, _node: &AxisOrientation) -> Option<AxisOrientation> {
+        None
+    }
+
+    fn axis_position(&mut self, _node: &AxisPosition) -> Option<AxisPosition> {
+        None
+    }
+
+    fn back_wall(&mut self, _node: &BackWall) -> Option<BackWall> {
+        None
+    }
+
+    fn backward(&mut self, _node: &Backward) -> Option<Backward> {
+        None
+    }
+
+    fn band_format(&mut self, _node: &BandFormat) -> Option<BandFormat> {
+        None
+    }
+
+    fn band_formats(&mut self, _node: &BandFormats) -> Option<BandFormats> {
+        None
+    }
+
+    fn bar3d_chart(&mut self, _node: &Bar3DChart) -> Option<Bar3DChart> {
+        None
+    }
+
+    fn bar_chart_series(&mut self, _node: &BarChartSeries) -> Option<BarChartSeries> {
+        None
+    }
+
+    fn bar_charts(&mut self, _node: &BarCharts) -> Option<BarCharts> {
+        None
+    }
+
+    fn bar_direction(&mut self, _node: &BarDirection) -> Option<BarDirection> {
+        None
+    }
+
+    fn bar_grouping(&mut self, _node: &BarGrouping) -> Option<BarGrouping> {
+        None
+    }
+
+    fn base_time_unit(&mut self, _node: &BaseTimeUnit) -> Option<BaseTimeUnit> {
+        None
+    }
+
+    fn bubble3d(&mut self, _node: &Bubble3D) -> Option<Bubble3D> {
+        None
+    }
+
+    fn bubble_chart_series(&mut self, _node: &BubbleChartSeries) -> Option<BubbleChartSeries> {
+        None
+    }
+
+    fn bubble_charts(&mut self, _node: &BubbleCharts) -> Option<BubbleCharts> {
+        None
+    }
+
+    fn bubble_scale(&mut self, _node: &BubbleScale) -> Option<BubbleScale> {
+        None
+    }
+
+    fn bubble_size(&mut self, _node: &BubbleSize) -> Option<BubbleSize> {
+        None
+    }
+
+    fn built_in_display_unit_value(
+        &mut self,
+        _node: &BuiltInDisplayUnitValue,
+    ) -> Option<BuiltInDisplayUnitValue> {
+        None
+    }
+
+    fn category_axis_data_cat(
+        &mut self,
+        _node: &CategoryAxisDataCat,
+    ) -> Option<CategoryAxisDataCat> {
+        None
+    }
+
+    fn category_axis_data_cat_ax(
+        &mut self,
+        _node: &CategoryAxisDataCatAx,
+    ) -> Option<CategoryAxisDataCatAx> {
+        None
+    }
+
+    fn chart(&mut self, _node: &Chart) -> Option<Chart> {
+        None
+    }
+
+    fn chart_extensibility(&mut self, _node: &ChartExtensibility) -> Option<ChartExtensibility> {
+        None
+    }
+
+    fn chart_object(&mut self, _node: &ChartObject) -> Option<ChartObject> {
+        None
+    }
+
+    fn chart_space(&mut self, _node: &ChartSpace) -> Option<ChartSpace> {
+        None
+    }
+
+    fn chart_text(&mut self, _node: &ChartText) -> Option<ChartText> {
+        None
+    }
+
+    fn chart_text_content(&mut self, _node: &ChartTextContent) -> Option<ChartTextContent> {
+        None
+    }
+
+    fn color_map_override(&mut self, _node: &ColorMapOverride) -> Option<ColorMapOverride> {
+        None
+    }
+
+    fn cross_between(&mut self, _node: &CrossBetween) -> Option<CrossBetween> {
+        None
+    }
+
+    fn crosses(&mut self, _node: &Crosses) -> Option<Crosses> {
+        None
+    }
+
+    fn crossing_axis_id(&mut self, _node: &CrossingAxisID) -> Option<CrossingAxisID> {
+        None
+    }
+
+    fn crossing_value(&mut self, _node: &CrossingValue) -> Option<CrossingValue> {
+        None
+    }
+
+    fn custom_display_unit(&mut self, _node: &CustomDisplayUnit) -> Option<CustomDisplayUnit> {
+        None
+    }
+
+    fn custom_split(&mut self, _node: &CustomSplit) -> Option<CustomSplit> {
+        None
+    }
+
+    fn data_cannot_be_changed(
+        &mut self,
+        _node: &DataCannotBeChanged,
+    ) -> Option<DataCannotBeChanged> {
+        None
+    }
+
+    fn data_label(&mut self, _node: &DataLabel) -> Option<DataLabel> {
+        None
+    }
+
+    fn data_label_content(&mut self, _node: &DataLabelContent) -> Option<DataLabelContent> {
+        None
+    }
+
+    fn data_label_content_items(
+        &mut self,
+        _node: &DataLabelContent,
+    ) -> Option<Vec<DataLabelContent>> {
+        None
+    }
+
+    fn data_label_position(&mut self, _node: &DataLabelPosition) -> Option<DataLabelPosition> {
+        None
+    }
+
+    fn data_labels(&mut self, _node: &DataLabels) -> Option<DataLabels> {
+        None
+    }
+
+    fn data_labels_content(&mut self, _node: &DataLabelsContent) -> Option<DataLabelsContent> {
+        None
+    }
+
+    fn data_labels_content_items(
+        &mut self,
+        _node: &DataLabelsContent,
+    ) -> Option<Vec<DataLabelsContent>> {
+        None
+    }
+
+    fn data_point(&mut self, _node: &DataPoint) -> Option<DataPoint> {
+        None
+    }
+
+    fn data_table(&mut self, _node: &DataTable) -> Option<DataTable> {
+        None
+    }
+
+    fn date1904(&mut self, _node: &Date1904) -> Option<Date1904> {
+        None
+    }
+
+    fn date_axis(&mut self, _node: &DateAxis) -> Option<DateAxis> {
+        None
+    }
+
+    fn delete(&mut self, _node: &Delete) -> Option<Delete> {
+        None
+    }
+
+    fn depth_percent(&mut self, _node: &DepthPercent) -> Option<DepthPercent> {
+        None
+    }
+
+    fn display_blanks_as(&mut self, _node: &DisplayBlanksAs) -> Option<DisplayBlanksAs> {
+        None
+    }
+
+    fn display_equation(&mut self, _node: &DisplayEquation) -> Option<DisplayEquation> {
+        None
+    }
+
+    fn display_r_squared_value(
+        &mut self,
+        _node: &DisplayRSquaredValue,
+    ) -> Option<DisplayRSquaredValue> {
+        None
+    }
+
+    fn display_units(&mut self, _node: &DisplayUnits) -> Option<DisplayUnits> {
+        None
+    }
+
+    fn display_units_content(
+        &mut self,
+        _node: &DisplayUnitsContent,
+    ) -> Option<DisplayUnitsContent> {
+        None
+    }
+
+    fn display_units_label(&mut self, _node: &DisplayUnitsLabel) -> Option<DisplayUnitsLabel> {
+        None
+    }
+
+    fn doughnut_charts(&mut self, _node: &DoughnutCharts) -> Option<DoughnutCharts> {
+        None
+    }
+
+    fn down_bars(&mut self, _node: &DownBars) -> Option<DownBars> {
+        None
+    }
+
+    fn drop_lines(&mut self, _node: &DropLines) -> Option<DropLines> {
+        None
+    }
+
+    fn editing_language(&mut self, _node: &EditingLanguage) -> Option<EditingLanguage> {
+        None
+    }
+
+    fn error_bar_direction(&mut self, _node: &ErrorBarDirection) -> Option<ErrorBarDirection> {
+        None
+    }
+
+    fn error_bar_type(&mut self, _node: &ErrorBarType) -> Option<ErrorBarType> {
+        None
+    }
+
+    fn error_bar_value(&mut self, _node: &ErrorBarValue) -> Option<ErrorBarValue> {
+        None
+    }
+
+    fn error_bar_value_type(&mut self, _node: &ErrorBarValueType) -> Option<ErrorBarValueType> {
+        None
+    }
+
+    fn error_bars(&mut self, _node: &ErrorBars) -> Option<ErrorBars> {
+        None
+    }
+
+    fn even_footer(&mut self, _node: &EvenFooter) -> Option<EvenFooter> {
+        None
+    }
+
+    fn even_header(&mut self, _node: &EvenHeader) -> Option<EvenHeader> {
+        None
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> Option<Explosion> {
+        None
+    }
+
+    fn extension(&mut self, _node: &Extension) -> Option<Extension> {
+        None
+    }
+
+    fn external_data_relationship(
+        &mut self,
+        _node: &ExternalDataRelationship,
+    ) -> Option<ExternalDataRelationship> {
+        None
+    }
+
+    fn first_footer(&mut self, _node: &FirstFooter) -> Option<FirstFooter> {
+        None
+    }
+
+    fn first_header(&mut self, _node: &FirstHeader) -> Option<FirstHeader> {
+        None
+    }
+
+    fn first_slice_angle(&mut self, _node: &FirstSliceAngle) -> Option<FirstSliceAngle> {
+        None
+    }
+
+    fn floor(&mut self, _node: &Floor) -> Option<Floor> {
+        None
+    }
+
+    fn format_code(&mut self, _node: &FormatCode) -> Option<FormatCode> {
+        None
+    }
+
+    fn format_id(&mut self, _node: &FormatID) -> Option<FormatID> {
+        None
+    }
+
+    fn formatting(&mut self, _node: &Formatting) -> Option<Formatting> {
+        None
+    }
+
+    fn formula(&mut self, _node: &Formula) -> Option<Formula> {
+        None
+    }
+
+    fn forward(&mut self, _node: &Forward) -> Option<Forward> {
+        None
+    }
+
+    fn gap_depth(&mut self, _node: &GapDepth) -> Option<GapDepth> {
+        None
+    }
+
+    fn gap_width(&mut self, _node: &GapWidth) -> Option<GapWidth> {
+        None
+    }
+
+    fn grouping(&mut self, _node: &Grouping) -> Option<Grouping> {
+        None
+    }
+
+    fn header_and_footer(&mut self, _node: &HeaderAndFooter) -> Option<HeaderAndFooter> {
+        None
+    }
+
+    fn height(&mut self, _node: &Height) -> Option<Height> {
+        None
+    }
+
+    fn height_mode(&mut self, _node: &HeightMode) -> Option<HeightMode> {
+        None
+    }
+
+    fn height_percent(&mut self, _node: &HeightPercent) -> Option<HeightPercent> {
+        None
+    }
+
+    fn high_low_lines(&mut self, _node: &HighLowLines) -> Option<HighLowLines> {
+        None
+    }
+
+    fn hole_size(&mut self, _node: &HoleSize) -> Option<HoleSize> {
+        None
+    }
+
+    fn index(&mut self, _node: &Index) -> Option<Index> {
+        None
+    }
+
+    fn intercept(&mut self, _node: &Intercept) -> Option<Intercept> {
+        None
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> Option<InvertIfNegative> {
+        None
+    }
+
+    fn label_alignment(&mut self, _node: &LabelAlignment) -> Option<LabelAlignment> {
+        None
+    }
+
+    fn label_offset(&mut self, _node: &LabelOffset) -> Option<LabelOffset> {
+        None
+    }
+
+    fn layout(&mut self, _node: &Layout) -> Option<Layout> {
+        None
+    }
+
+    fn layout_target(&mut self, _node: &LayoutTarget) -> Option<LayoutTarget> {
+        None
+    }
+
+    fn leader_lines(&mut self, _node: &LeaderLines) -> Option<LeaderLines> {
+        None
+    }
+
+    fn left(&mut self, _node: &Left) -> Option<Left> {
+        None
+    }
+
+    fn left_mode(&mut self, _node: &LeftMode) -> Option<LeftMode> {
+        None
+    }
+
+    fn legacy_drawing_for_headers_and_footers(
+        &mut self,
+        _node: &LegacyDrawingForHeadersAndFooters,
+    ) -> Option<LegacyDrawingForHeadersAndFooters> {
+        None
+    }
+
+    fn legend(&mut self, _node: &Legend) -> Option<Legend> {
+        None
+    }
+
+    fn legend_entry(&mut self, _node: &LegendEntry) -> Option<LegendEntry> {
+        None
+    }
+
+    fn legend_entry_content(&mut self, _node: &LegendEntryContent) -> Option<LegendEntryContent> {
+        None
+    }
+
+    fn legend_position(&mut self, _node: &LegendPosition) -> Option<LegendPosition> {
+        None
+    }
+
+    fn level(&mut self, _node: &Level) -> Option<Level> {
+        None
+    }
+
+    fn line3d_chart(&mut self, _node: &Line3DChart) -> Option<Line3DChart> {
+        None
+    }
+
+    fn line_chart_series(&mut self, _node: &LineChartSeries) -> Option<LineChartSeries> {
+        None
+    }
+
+    fn line_charts(&mut self, _node: &LineCharts) -> Option<LineCharts> {
+        None
+    }
+
+    fn logarithmic_base(&mut self, _node: &LogarithmicBase) -> Option<LogarithmicBase> {
+        None
+    }
+
+    fn major_gridlines(&mut self, _node: &MajorGridlines) -> Option<MajorGridlines> {
+        None
+    }
+
+    fn major_tick_mark(&mut self, _node: &MajorTickMark) -> Option<MajorTickMark> {
+        None
+    }
+
+    fn major_time_unit(&mut self, _node: &MajorTimeUnit) -> Option<MajorTimeUnit> {
+        None
+    }
+
+    fn major_unit(&mut self, _node: &MajorUnit) -> Option<MajorUnit> {
+        None
+    }
+
+    fn manual_layout(&mut self, _node: &ManualLayout) -> Option<ManualLayout> {
+        None
+    }
+
+    fn marker(&mut self, _node: &Marker) -> Option<Marker> {
+        None
+    }
+
+    fn maximum(&mut self, _node: &Maximum) -> Option<Maximum> {
+        None
+    }
+
+    fn minimum(&mut self, _node: &Minimum) -> Option<Minimum> {
+        None
+    }
+
+    fn minor_gridlines(&mut self, _node: &MinorGridlines) -> Option<MinorGridlines> {
+        None
+    }
+
+    fn minor_tick_mark(&mut self, _node: &MinorTickMark) -> Option<MinorTickMark> {
+        None
+    }
+
+    fn minor_time_unit(&mut self, _node: &MinorTimeUnit) -> Option<MinorTimeUnit> {
+        None
+    }
+
+    fn minor_unit(&mut self, _node: &MinorUnit) -> Option<MinorUnit> {
+        None
+    }
+
+    fn minus(&mut self, _node: &Minus) -> Option<Minus> {
+        None
+    }
+
+    fn multi_level_string_cache(
+        &mut self,
+        _node: &MultiLevelStringCache,
+    ) -> Option<MultiLevelStringCache> {
+        None
+    }
+
+    fn multi_level_string_reference(
+        &mut self,
+        _node: &MultiLevelStringReference,
+    ) -> Option<MultiLevelStringReference> {
+        None
+    }
+
+    fn no_end_cap(&mut self, _node: &NoEndCap) -> Option<NoEndCap> {
+        None
+    }
+
+    fn no_multi_level_labels(&mut self, _node: &NoMultiLevelLabels) -> Option<NoMultiLevelLabels> {
+        None
+    }
+
+    fn number_cache(&mut self, _node: &NumberCache) -> Option<NumberCache> {
+        None
+    }
+
+    fn number_data_source(
+        &mut self,
+        _node: &NumberDataSourceContent,
+    ) -> Option<NumberDataSourceContent> {
+        None
+    }
+
+    fn number_format(&mut self, _node: &NumberFormat) -> Option<NumberFormat> {
+        None
+    }
+
+    fn number_literal(&mut self, _node: &NumberLiteral) -> Option<NumberLiteral> {
+        None
+    }
+
+    fn number_reference(&mut self, _node: &NumberReference) -> Option<NumberReference> {
+        None
+    }
+
+    fn numeric_point(&mut self, _node: &NumericPoint) -> Option<NumericPoint> {
+        None
+    }
+
+    fn numeric_value(&mut self, _node: &NumericValue) -> Option<NumericValue> {
+        None
+    }
+
+    fn odd_footer(&mut self, _node: &OddFooter) -> Option<OddFooter> {
+        None
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> Option<OddHeader> {
+        None
+    }
+
+    fn order(&mut self, _node: &Order) -> Option<Order> {
+        None
+    }
+
+    fn overlap(&mut self, _node: &Overlap) -> Option<Overlap> {
+        None
+    }
+
+    fn overlay(&mut self, _node: &Overlay) -> Option<Overlay> {
+        None
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> Option<PageMargins> {
+        None
+    }
+
+    fn page_setup(&mut self, _node: &PageSetup) -> Option<PageSetup> {
+        None
+    }
+
+    fn period(&mut self, _node: &Period) -> Option<Period> {
+        None
+    }
+
+    fn perspective(&mut self, _node: &Perspective) -> Option<Perspective> {
+        None
+    }
+
+    fn picture_format(&mut self, _node: &PictureFormat) -> Option<PictureFormat> {
+        None
+    }
+
+    fn picture_options(&mut self, _node: &PictureOptions) -> Option<PictureOptions> {
+        None
+    }
+
+    fn picture_stack_unit(&mut self, _node: &PictureStackUnit) -> Option<PictureStackUnit> {
+        None
+    }
+
+    fn pie3d_chart(&mut self, _node: &Pie3DChart) -> Option<Pie3DChart> {
+        None
+    }
+
+    fn pie_chart_series(&mut self, _node: &PieChartSeries) -> Option<PieChartSeries> {
+        None
+    }
+
+    fn pie_charts(&mut self, _node: &PieCharts) -> Option<PieCharts> {
+        None
+    }
+
+    fn pie_of_pie_charts(&mut self, _node: &PieOfPieCharts) -> Option<PieOfPieCharts> {
+        None
+    }
+
+    fn pie_of_pie_type(&mut self, _node: &PieOfPieType) -> Option<PieOfPieType> {
+        None
+    }
+
+    fn pivot_format(&mut self, _node: &PivotFormat) -> Option<PivotFormat> {
+        None
+    }
+
+    fn pivot_formats(&mut self, _node: &PivotFormats) -> Option<PivotFormats> {
+        None
+    }
+
+    fn pivot_name(&mut self, _node: &PivotName) -> Option<PivotName> {
+        None
+    }
+
+    fn pivot_source(&mut self, _node: &PivotSource) -> Option<PivotSource> {
+        None
+    }
+
+    fn plot_area(&mut self, _node: &PlotArea) -> Option<PlotArea> {
+        None
+    }
+
+    fn plot_area_axis(&mut self, _node: &PlotAreaAxisContent) -> Option<PlotAreaAxisContent> {
+        None
+    }
+
+    fn plot_area_axis_items(
+        &mut self,
+        _node: &PlotAreaAxisContent,
+    ) -> Option<Vec<PlotAreaAxisContent>> {
+        None
+    }
+
+    fn plot_area_chart(&mut self, _node: &PlotAreaChartContent) -> Option<PlotAreaChartContent> {
+        None
+    }
+
+    fn plot_area_chart_items(
+        &mut self,
+        _node: &PlotAreaChartContent,
+    ) -> Option<Vec<PlotAreaChartContent>> {
+        None
+    }
+
+    fn plot_visible_only(&mut self, _node: &PlotVisibleOnly) -> Option<PlotVisibleOnly> {
+        None
+    }
+
+    fn plus(&mut self, _node: &Plus) -> Option<Plus> {
+        None
+    }
+
+    fn point_count(&mut self, _node: &PointCount) -> Option<PointCount> {
+        None
+    }
+
+    fn polynomial_trendline_order(
+        &mut self,
+        _node: &PolynomialTrendlineOrder,
+    ) -> Option<PolynomialTrendlineOrder> {
+        None
+    }
+
+    fn print_settings(&mut self, _node: &PrintSettings) -> Option<PrintSettings> {
+        None
+    }
+
+    fn protection(&mut self, _node: &Protection) -> Option<Protection> {
+        None
+    }
+
+    fn radar_chart_series(&mut self, _node: &RadarChartSeries) -> Option<RadarChartSeries> {
+        None
+    }
+
+    fn radar_charts(&mut self, _node: &RadarCharts) -> Option<RadarCharts> {
+        None
+    }
+
+    fn radar_style(&mut self, _node: &RadarStyle) -> Option<RadarStyle> {
+        None
+    }
+
+    fn reference_to_chart_drawing_part(
+        &mut self,
+        _node: &ReferenceToChartDrawingPart,
+    ) -> Option<ReferenceToChartDrawingPart> {
+        None
+    }
+
+    fn reference_to_chart_part(
+        &mut self,
+        _node: &ReferenceToChartPart,
+    ) -> Option<ReferenceToChartPart> {
+        None
+    }
+
+    fn rich_text(&mut self, _node: &RichText) -> Option<RichText> {
+        None
+    }
+
+    fn right_angle_axes(&mut self, _node: &RightAngleAxes) -> Option<RightAngleAxes> {
+        None
+    }
+
+    fn rounded_corners(&mut self, _node: &RoundedCorners) -> Option<RoundedCorners> {
+        None
+    }
+
+    fn scaling(&mut self, _node: &Scaling) -> Option<Scaling> {
+        None
+    }
+
+    fn scatter_chart_series(&mut self, _node: &ScatterChartSeries) -> Option<ScatterChartSeries> {
+        None
+    }
+
+    fn scatter_charts(&mut self, _node: &ScatterCharts) -> Option<ScatterCharts> {
+        None
+    }
+
+    fn scatter_style(&mut self, _node: &ScatterStyle) -> Option<ScatterStyle> {
+        None
+    }
+
+    fn second_pie_point(&mut self, _node: &SecondPiePoint) -> Option<SecondPiePoint> {
+        None
+    }
+
+    fn second_pie_size(&mut self, _node: &SecondPieSize) -> Option<SecondPieSize> {
+        None
+    }
+
+    fn selection(&mut self, _node: &Selection) -> Option<Selection> {
+        None
+    }
+
+    fn separator(&mut self, _node: &Separator) -> Option<Separator> {
+        None
+    }
+
+    fn series_axis(&mut self, _node: &SeriesAxis) -> Option<SeriesAxis> {
+        None
+    }
+
+    fn series_lines(&mut self, _node: &SeriesLines) -> Option<SeriesLines> {
+        None
+    }
+
+    fn series_text(&mut self, _node: &SeriesText) -> Option<SeriesText> {
+        None
+    }
+
+    fn series_text_content(&mut self, _node: &SeriesTextContent) -> Option<SeriesTextContent> {
+        None
+    }
+
+    fn shape(&mut self, _node: &Shape) -> Option<Shape> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn show_bubble_size(&mut self, _node: &ShowBubbleSize) -> Option<ShowBubbleSize> {
+        None
+    }
+
+    fn show_category_name(&mut self, _node: &ShowCategoryName) -> Option<ShowCategoryName> {
+        None
+    }
+
+    fn show_data_labels_over_maximum(
+        &mut self,
+        _node: &ShowDataLabelsOverMaximum,
+    ) -> Option<ShowDataLabelsOverMaximum> {
+        None
+    }
+
+    fn show_horizontal_border(
+        &mut self,
+        _node: &ShowHorizontalBorder,
+    ) -> Option<ShowHorizontalBorder> {
+        None
+    }
+
+    fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> Option<ShowLeaderLines> {
+        None
+    }
+
+    fn show_legend_key(&mut self, _node: &ShowLegendKey) -> Option<ShowLegendKey> {
+        None
+    }
+
+    fn show_legend_keys(&mut self, _node: &ShowLegendKeys) -> Option<ShowLegendKeys> {
+        None
+    }
+
+    fn show_marker(&mut self, _node: &ShowMarker) -> Option<ShowMarker> {
+        None
+    }
+
+    fn show_negative_bubbles(
+        &mut self,
+        _node: &ShowNegativeBubbles,
+    ) -> Option<ShowNegativeBubbles> {
+        None
+    }
+
+    fn show_outline_border(&mut self, _node: &ShowOutlineBorder) -> Option<ShowOutlineBorder> {
+        None
+    }
+
+    fn show_percent(&mut self, _node: &ShowPercent) -> Option<ShowPercent> {
+        None
+    }
+
+    fn show_series_name(&mut self, _node: &ShowSeriesName) -> Option<ShowSeriesName> {
+        None
+    }
+
+    fn show_value(&mut self, _node: &ShowValue) -> Option<ShowValue> {
+        None
+    }
+
+    fn show_vertical_border(&mut self, _node: &ShowVerticalBorder) -> Option<ShowVerticalBorder> {
+        None
+    }
+
+    fn side_wall(&mut self, _node: &SideWall) -> Option<SideWall> {
+        None
+    }
+
+    fn size(&mut self, _node: &Size) -> Option<Size> {
+        None
+    }
+
+    fn size_represents(&mut self, _node: &SizeRepresents) -> Option<SizeRepresents> {
+        None
+    }
+
+    fn smoothing(&mut self, _node: &Smoothing) -> Option<Smoothing> {
+        None
+    }
+
+    fn split_position(&mut self, _node: &SplitPosition) -> Option<SplitPosition> {
+        None
+    }
+
+    fn split_type(&mut self, _node: &SplitType) -> Option<SplitType> {
+        None
+    }
+
+    fn stock_charts(&mut self, _node: &StockCharts) -> Option<StockCharts> {
+        None
+    }
+
+    fn string_cache(&mut self, _node: &StringCache) -> Option<StringCache> {
+        None
+    }
+
+    fn string_literal(&mut self, _node: &StringLiteral) -> Option<StringLiteral> {
+        None
+    }
+
+    fn string_point(&mut self, _node: &StringPoint) -> Option<StringPoint> {
+        None
+    }
+
+    fn string_reference(&mut self, _node: &StringReference) -> Option<StringReference> {
+        None
+    }
+
+    fn style(&mut self, _node: &Style) -> Option<Style> {
+        None
+    }
+
+    fn surface3d_chart(&mut self, _node: &Surface3DChart) -> Option<Surface3DChart> {
+        None
+    }
+
+    fn surface_chart_series(&mut self, _node: &SurfaceChartSeries) -> Option<SurfaceChartSeries> {
+        None
+    }
+
+    fn surface_charts(&mut self, _node: &SurfaceCharts) -> Option<SurfaceCharts> {
+        None
+    }
+
+    fn symbol(&mut self, _node: &Symbol) -> Option<Symbol> {
+        None
+    }
+
+    fn text_properties(&mut self, _node: &TextProperties) -> Option<TextProperties> {
+        None
+    }
+
+    fn thickness(&mut self, _node: &Thickness) -> Option<Thickness> {
+        None
+    }
+
+    fn tick_label_position(&mut self, _node: &TickLabelPosition) -> Option<TickLabelPosition> {
+        None
+    }
+
+    fn tick_label_skip(&mut self, _node: &TickLabelSkip) -> Option<TickLabelSkip> {
+        None
+    }
+
+    fn tick_mark_skip(&mut self, _node: &TickMarkSkip) -> Option<TickMarkSkip> {
+        None
+    }
+
+    fn title(&mut self, _node: &Title) -> Option<Title> {
+        None
+    }
+
+    fn top(&mut self, _node: &Top) -> Option<Top> {
+        None
+    }
+
+    fn top_mode(&mut self, _node: &TopMode) -> Option<TopMode> {
+        None
+    }
+
+    fn trendline_label(&mut self, _node: &TrendlineLabel) -> Option<TrendlineLabel> {
+        None
+    }
+
+    fn trendline_name(&mut self, _node: &TrendlineName) -> Option<TrendlineName> {
+        None
+    }
+
+    fn trendline_type(&mut self, _node: &TrendlineType) -> Option<TrendlineType> {
+        None
+    }
+
+    fn trendlines(&mut self, _node: &Trendlines) -> Option<Trendlines> {
+        None
+    }
+
+    fn up_bars(&mut self, _node: &UpBars) -> Option<UpBars> {
+        None
+    }
+
+    fn up_down_bars(&mut self, _node: &UpDownBars) -> Option<UpDownBars> {
+        None
+    }
+
+    fn update_automatically(&mut self, _node: &UpdateAutomatically) -> Option<UpdateAutomatically> {
+        None
+    }
+
+    fn user_interface(&mut self, _node: &UserInterface) -> Option<UserInterface> {
+        None
+    }
+
+    fn user_shapes(&mut self, _node: &UserShapes) -> Option<UserShapes> {
+        None
+    }
+
+    fn value_axis(&mut self, _node: &ValueAxis) -> Option<ValueAxis> {
+        None
+    }
+
+    fn values(&mut self, _node: &Values) -> Option<Values> {
+        None
+    }
+
+    fn vary_colors_by_point(&mut self, _node: &VaryColorsByPoint) -> Option<VaryColorsByPoint> {
+        None
+    }
+
+    fn view_in3d(&mut self, _node: &ViewIn3D) -> Option<ViewIn3D> {
+        None
+    }
+
+    fn width(&mut self, _node: &Width) -> Option<Width> {
+        None
+    }
+
+    fn width_mode(&mut self, _node: &WidthMode) -> Option<WidthMode> {
+        None
+    }
+
+    fn wireframe(&mut self, _node: &Wireframe) -> Option<Wireframe> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_apply_to_end(
+        &mut self,
+        _node: &ApplyToEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_apply_to_front(
+        &mut self,
+        _node: &ApplyToFront,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_apply_to_sides(
+        &mut self,
+        _node: &ApplyToSides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_area3d_chart(
+        &mut self,
+        _node: &Area3DChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_area_chart_series(
+        &mut self,
+        _node: &AreaChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_area_charts(
+        &mut self,
+        _node: &AreaCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_title_is_deleted(
+        &mut self,
+        _node: &AutoTitleIsDeleted,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatic_category_axis(
+        &mut self,
+        _node: &AutomaticCategoryAxis,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_crossing(
+        &mut self,
+        _node: &AxisCrossingContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_data_source(
+        &mut self,
+        _node: &AxisDataSourceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_id(&mut self, _node: &AxisID, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_orientation(
+        &mut self,
+        _node: &AxisOrientation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_position(
+        &mut self,
+        _node: &AxisPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_back_wall(
+        &mut self,
+        _node: &BackWall,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backward(
+        &mut self,
+        _node: &Backward,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band_format(
+        &mut self,
+        _node: &BandFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band_formats(
+        &mut self,
+        _node: &BandFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar3d_chart(
+        &mut self,
+        _node: &Bar3DChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar_chart_series(
+        &mut self,
+        _node: &BarChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar_charts(
+        &mut self,
+        _node: &BarCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar_direction(
+        &mut self,
+        _node: &BarDirection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar_grouping(
+        &mut self,
+        _node: &BarGrouping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_base_time_unit(
+        &mut self,
+        _node: &BaseTimeUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble3d(
+        &mut self,
+        _node: &Bubble3D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble_chart_series(
+        &mut self,
+        _node: &BubbleChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble_charts(
+        &mut self,
+        _node: &BubbleCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble_scale(
+        &mut self,
+        _node: &BubbleScale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble_size(
+        &mut self,
+        _node: &BubbleSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_built_in_display_unit_value(
+        &mut self,
+        _node: &BuiltInDisplayUnitValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_axis_data_cat(
+        &mut self,
+        _node: &CategoryAxisDataCat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_axis_data_cat_ax(
+        &mut self,
+        _node: &CategoryAxisDataCatAx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart(&mut self, _node: &Chart, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_extensibility(
+        &mut self,
+        _node: &ChartExtensibility,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_object(
+        &mut self,
+        _node: &ChartObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_space(
+        &mut self,
+        _node: &ChartSpace,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_text(
+        &mut self,
+        _node: &ChartText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_text_content(
+        &mut self,
+        _node: &ChartTextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_map_override(
+        &mut self,
+        _node: &ColorMapOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cross_between(
+        &mut self,
+        _node: &CrossBetween,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_crosses(&mut self, _node: &Crosses, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_crossing_axis_id(
+        &mut self,
+        _node: &CrossingAxisID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_crossing_value(
+        &mut self,
+        _node: &CrossingValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_display_unit(
+        &mut self,
+        _node: &CustomDisplayUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_split(
+        &mut self,
+        _node: &CustomSplit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_cannot_be_changed(
+        &mut self,
+        _node: &DataCannotBeChanged,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label(
+        &mut self,
+        _node: &DataLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label_content(
+        &mut self,
+        _node: &DataLabelContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label_content_items(
+        &mut self,
+        _node: &DataLabelContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label_position(
+        &mut self,
+        _node: &DataLabelPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_labels(
+        &mut self,
+        _node: &DataLabels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_labels_content(
+        &mut self,
+        _node: &DataLabelsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_labels_content_items(
+        &mut self,
+        _node: &DataLabelsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_point(
+        &mut self,
+        _node: &DataPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_table(
+        &mut self,
+        _node: &DataTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date1904(
+        &mut self,
+        _node: &Date1904,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_axis(
+        &mut self,
+        _node: &DateAxis,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delete(&mut self, _node: &Delete, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_depth_percent(
+        &mut self,
+        _node: &DepthPercent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_blanks_as(
+        &mut self,
+        _node: &DisplayBlanksAs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_equation(
+        &mut self,
+        _node: &DisplayEquation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_r_squared_value(
+        &mut self,
+        _node: &DisplayRSquaredValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_units(
+        &mut self,
+        _node: &DisplayUnits,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_units_content(
+        &mut self,
+        _node: &DisplayUnitsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_units_label(
+        &mut self,
+        _node: &DisplayUnitsLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doughnut_charts(
+        &mut self,
+        _node: &DoughnutCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_down_bars(
+        &mut self,
+        _node: &DownBars,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_lines(
+        &mut self,
+        _node: &DropLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_editing_language(
+        &mut self,
+        _node: &EditingLanguage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_bar_direction(
+        &mut self,
+        _node: &ErrorBarDirection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_bar_type(
+        &mut self,
+        _node: &ErrorBarType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_bar_value(
+        &mut self,
+        _node: &ErrorBarValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_bar_value_type(
+        &mut self,
+        _node: &ErrorBarValueType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_bars(
+        &mut self,
+        _node: &ErrorBars,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_footer(
+        &mut self,
+        _node: &EvenFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_header(
+        &mut self,
+        _node: &EvenHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_explosion(
+        &mut self,
+        _node: &Explosion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension(
+        &mut self,
+        _node: &Extension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_data_relationship(
+        &mut self,
+        _node: &ExternalDataRelationship,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_footer(
+        &mut self,
+        _node: &FirstFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_header(
+        &mut self,
+        _node: &FirstHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_slice_angle(
+        &mut self,
+        _node: &FirstSliceAngle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_floor(&mut self, _node: &Floor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_format_code(
+        &mut self,
+        _node: &FormatCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_format_id(
+        &mut self,
+        _node: &FormatID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formatting(
+        &mut self,
+        _node: &Formatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula(&mut self, _node: &Formula, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_forward(&mut self, _node: &Forward, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gap_depth(
+        &mut self,
+        _node: &GapDepth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gap_width(
+        &mut self,
+        _node: &GapWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grouping(
+        &mut self,
+        _node: &Grouping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_and_footer(
+        &mut self,
+        _node: &HeaderAndFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_height(&mut self, _node: &Height, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_height_mode(
+        &mut self,
+        _node: &HeightMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_height_percent(
+        &mut self,
+        _node: &HeightPercent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_high_low_lines(
+        &mut self,
+        _node: &HighLowLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hole_size(
+        &mut self,
+        _node: &HoleSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_index(&mut self, _node: &Index, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_intercept(
+        &mut self,
+        _node: &Intercept,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_invert_if_negative(
+        &mut self,
+        _node: &InvertIfNegative,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label_alignment(
+        &mut self,
+        _node: &LabelAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label_offset(
+        &mut self,
+        _node: &LabelOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout(&mut self, _node: &Layout, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_target(
+        &mut self,
+        _node: &LayoutTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_leader_lines(
+        &mut self,
+        _node: &LeaderLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left(&mut self, _node: &Left, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_mode(
+        &mut self,
+        _node: &LeftMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legacy_drawing_for_headers_and_footers(
+        &mut self,
+        _node: &LegacyDrawingForHeadersAndFooters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legend(&mut self, _node: &Legend, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legend_entry(
+        &mut self,
+        _node: &LegendEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legend_entry_content(
+        &mut self,
+        _node: &LegendEntryContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legend_position(
+        &mut self,
+        _node: &LegendPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_level(&mut self, _node: &Level, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line3d_chart(
+        &mut self,
+        _node: &Line3DChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_chart_series(
+        &mut self,
+        _node: &LineChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_charts(
+        &mut self,
+        _node: &LineCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_logarithmic_base(
+        &mut self,
+        _node: &LogarithmicBase,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_gridlines(
+        &mut self,
+        _node: &MajorGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_tick_mark(
+        &mut self,
+        _node: &MajorTickMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_time_unit(
+        &mut self,
+        _node: &MajorTimeUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_unit(
+        &mut self,
+        _node: &MajorUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_manual_layout(
+        &mut self,
+        _node: &ManualLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_marker(&mut self, _node: &Marker, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_maximum(&mut self, _node: &Maximum, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minimum(&mut self, _node: &Minimum, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_gridlines(
+        &mut self,
+        _node: &MinorGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_tick_mark(
+        &mut self,
+        _node: &MinorTickMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_time_unit(
+        &mut self,
+        _node: &MinorTimeUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_unit(
+        &mut self,
+        _node: &MinorUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minus(&mut self, _node: &Minus, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multi_level_string_cache(
+        &mut self,
+        _node: &MultiLevelStringCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multi_level_string_reference(
+        &mut self,
+        _node: &MultiLevelStringReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_end_cap(
+        &mut self,
+        _node: &NoEndCap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_multi_level_labels(
+        &mut self,
+        _node: &NoMultiLevelLabels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_cache(
+        &mut self,
+        _node: &NumberCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_data_source(
+        &mut self,
+        _node: &NumberDataSourceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_format(
+        &mut self,
+        _node: &NumberFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_literal(
+        &mut self,
+        _node: &NumberLiteral,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_reference(
+        &mut self,
+        _node: &NumberReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numeric_point(
+        &mut self,
+        _node: &NumericPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numeric_value(
+        &mut self,
+        _node: &NumericValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_footer(
+        &mut self,
+        _node: &OddFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_header(
+        &mut self,
+        _node: &OddHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_order(&mut self, _node: &Order, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_overlap(&mut self, _node: &Overlap, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_overlay(&mut self, _node: &Overlay, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_margins(
+        &mut self,
+        _node: &PageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_setup(
+        &mut self,
+        _node: &PageSetup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_period(&mut self, _node: &Period, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_perspective(
+        &mut self,
+        _node: &Perspective,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_format(
+        &mut self,
+        _node: &PictureFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_options(
+        &mut self,
+        _node: &PictureOptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_stack_unit(
+        &mut self,
+        _node: &PictureStackUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pie3d_chart(
+        &mut self,
+        _node: &Pie3DChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pie_chart_series(
+        &mut self,
+        _node: &PieChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pie_charts(
+        &mut self,
+        _node: &PieCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pie_of_pie_charts(
+        &mut self,
+        _node: &PieOfPieCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pie_of_pie_type(
+        &mut self,
+        _node: &PieOfPieType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_format(
+        &mut self,
+        _node: &PivotFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_formats(
+        &mut self,
+        _node: &PivotFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_name(
+        &mut self,
+        _node: &PivotName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_source(
+        &mut self,
+        _node: &PivotSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area(
+        &mut self,
+        _node: &PlotArea,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area_axis(
+        &mut self,
+        _node: &PlotAreaAxisContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area_axis_items(
+        &mut self,
+        _node: &PlotAreaAxisContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area_chart(
+        &mut self,
+        _node: &PlotAreaChartContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area_chart_items(
+        &mut self,
+        _node: &PlotAreaChartContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_visible_only(
+        &mut self,
+        _node: &PlotVisibleOnly,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plus(&mut self, _node: &Plus, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_point_count(
+        &mut self,
+        _node: &PointCount,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_polynomial_trendline_order(
+        &mut self,
+        _node: &PolynomialTrendlineOrder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_settings(
+        &mut self,
+        _node: &PrintSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_protection(
+        &mut self,
+        _node: &Protection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radar_chart_series(
+        &mut self,
+        _node: &RadarChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radar_charts(
+        &mut self,
+        _node: &RadarCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radar_style(
+        &mut self,
+        _node: &RadarStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_to_chart_drawing_part(
+        &mut self,
+        _node: &ReferenceToChartDrawingPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_to_chart_part(
+        &mut self,
+        _node: &ReferenceToChartPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text(
+        &mut self,
+        _node: &RichText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_angle_axes(
+        &mut self,
+        _node: &RightAngleAxes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rounded_corners(
+        &mut self,
+        _node: &RoundedCorners,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scaling(&mut self, _node: &Scaling, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scatter_chart_series(
+        &mut self,
+        _node: &ScatterChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scatter_charts(
+        &mut self,
+        _node: &ScatterCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scatter_style(
+        &mut self,
+        _node: &ScatterStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_second_pie_point(
+        &mut self,
+        _node: &SecondPiePoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_second_pie_size(
+        &mut self,
+        _node: &SecondPieSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_selection(
+        &mut self,
+        _node: &Selection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_separator(
+        &mut self,
+        _node: &Separator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series_axis(
+        &mut self,
+        _node: &SeriesAxis,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series_lines(
+        &mut self,
+        _node: &SeriesLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series_text(
+        &mut self,
+        _node: &SeriesText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series_text_content(
+        &mut self,
+        _node: &SeriesTextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_bubble_size(
+        &mut self,
+        _node: &ShowBubbleSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_category_name(
+        &mut self,
+        _node: &ShowCategoryName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_data_labels_over_maximum(
+        &mut self,
+        _node: &ShowDataLabelsOverMaximum,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_horizontal_border(
+        &mut self,
+        _node: &ShowHorizontalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_leader_lines(
+        &mut self,
+        _node: &ShowLeaderLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_legend_key(
+        &mut self,
+        _node: &ShowLegendKey,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_legend_keys(
+        &mut self,
+        _node: &ShowLegendKeys,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_marker(
+        &mut self,
+        _node: &ShowMarker,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_negative_bubbles(
+        &mut self,
+        _node: &ShowNegativeBubbles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_outline_border(
+        &mut self,
+        _node: &ShowOutlineBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_percent(
+        &mut self,
+        _node: &ShowPercent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_series_name(
+        &mut self,
+        _node: &ShowSeriesName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_value(
+        &mut self,
+        _node: &ShowValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_vertical_border(
+        &mut self,
+        _node: &ShowVerticalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_side_wall(
+        &mut self,
+        _node: &SideWall,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_size(&mut self, _node: &Size, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_size_represents(
+        &mut self,
+        _node: &SizeRepresents,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smoothing(
+        &mut self,
+        _node: &Smoothing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_position(
+        &mut self,
+        _node: &SplitPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_type(
+        &mut self,
+        _node: &SplitType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_stock_charts(
+        &mut self,
+        _node: &StockCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_cache(
+        &mut self,
+        _node: &StringCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_literal(
+        &mut self,
+        _node: &StringLiteral,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_point(
+        &mut self,
+        _node: &StringPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_reference(
+        &mut self,
+        _node: &StringReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_surface3d_chart(
+        &mut self,
+        _node: &Surface3DChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_surface_chart_series(
+        &mut self,
+        _node: &SurfaceChartSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_surface_charts(
+        &mut self,
+        _node: &SurfaceCharts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_symbol(&mut self, _node: &Symbol, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_properties(
+        &mut self,
+        _node: &TextProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_thickness(
+        &mut self,
+        _node: &Thickness,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tick_label_position(
+        &mut self,
+        _node: &TickLabelPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tick_label_skip(
+        &mut self,
+        _node: &TickLabelSkip,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tick_mark_skip(
+        &mut self,
+        _node: &TickMarkSkip,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title(&mut self, _node: &Title, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top(&mut self, _node: &Top, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_mode(
+        &mut self,
+        _node: &TopMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trendline_label(
+        &mut self,
+        _node: &TrendlineLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trendline_name(
+        &mut self,
+        _node: &TrendlineName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trendline_type(
+        &mut self,
+        _node: &TrendlineType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trendlines(
+        &mut self,
+        _node: &Trendlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_up_bars(&mut self, _node: &UpBars, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_up_down_bars(
+        &mut self,
+        _node: &UpDownBars,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_update_automatically(
+        &mut self,
+        _node: &UpdateAutomatically,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_user_interface(
+        &mut self,
+        _node: &UserInterface,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_user_shapes(
+        &mut self,
+        _node: &UserShapes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_axis(
+        &mut self,
+        _node: &ValueAxis,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_values(&mut self, _node: &Values, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vary_colors_by_point(
+        &mut self,
+        _node: &VaryColorsByPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_in3d(
+        &mut self,
+        _node: &ViewIn3D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_width(&mut self, _node: &Width, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_width_mode(
+        &mut self,
+        _node: &WidthMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wireframe(
+        &mut self,
+        _node: &Wireframe,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_x_rotation(
+        &mut self,
+        _node: &XRotation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_x_values(
+        &mut self,
+        _node: &XValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_y_rotation(
+        &mut self,
+        _node: &YRotation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_y_values(
+        &mut self,
+        _node: &YValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn x_rotation(&mut self, _node: &XRotation) -> Option<XRotation> {
+        None
+    }
+
+    fn x_values(&mut self, _node: &XValues) -> Option<XValues> {
+        None
+    }
+
+    fn y_rotation(&mut self, _node: &YRotation) -> Option<YRotation> {
+        None
+    }
+
+    fn y_values(&mut self, _node: &YValues) -> Option<YValues> {
+        None
+    }
+}
+
 /// 21.2.2.32 `crossBetween` (Cross Between): the tag `c:crossBetween`, schema type
 /// `CT_CrossBetween`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -5868,6 +9600,1017 @@ pub struct ViewIn3D {
     pub unknown: markup::Unknown,
     pub x_rotation: Option<Box<XRotation>>,
     pub y_rotation: Option<Box<YRotation>>,
+}
+
+/// The hooks of a visitor for the `c` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from `markup::Visitor::chart`
+/// is never asked.
+pub trait Visitor: markup::Visitor {
+    fn apply_to_end(&mut self, _node: &ApplyToEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn apply_to_front(&mut self, _node: &ApplyToFront) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn apply_to_sides(&mut self, _node: &ApplyToSides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn area3d_chart(&mut self, _node: &Area3DChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn area_chart_series(&mut self, _node: &AreaChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn area_charts(&mut self, _node: &AreaCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_title_is_deleted(&mut self, _node: &AutoTitleIsDeleted) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatic_category_axis(&mut self, _node: &AutomaticCategoryAxis) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_crossing(&mut self, _node: &AxisCrossingContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_data_source(&mut self, _node: &AxisDataSourceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_id(&mut self, _node: &AxisID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_orientation(&mut self, _node: &AxisOrientation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_position(&mut self, _node: &AxisPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn back_wall(&mut self, _node: &BackWall) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn backward(&mut self, _node: &Backward) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band_format(&mut self, _node: &BandFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band_formats(&mut self, _node: &BandFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar3d_chart(&mut self, _node: &Bar3DChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar_chart_series(&mut self, _node: &BarChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar_charts(&mut self, _node: &BarCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar_direction(&mut self, _node: &BarDirection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar_grouping(&mut self, _node: &BarGrouping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn base_time_unit(&mut self, _node: &BaseTimeUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble3d(&mut self, _node: &Bubble3D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble_chart_series(&mut self, _node: &BubbleChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble_charts(&mut self, _node: &BubbleCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble_scale(&mut self, _node: &BubbleScale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble_size(&mut self, _node: &BubbleSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn built_in_display_unit_value(&mut self, _node: &BuiltInDisplayUnitValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_axis_data_cat(&mut self, _node: &CategoryAxisDataCat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_axis_data_cat_ax(&mut self, _node: &CategoryAxisDataCatAx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart(&mut self, _node: &Chart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_extensibility(&mut self, _node: &ChartExtensibility) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_object(&mut self, _node: &ChartObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_space(&mut self, _node: &ChartSpace) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_text(&mut self, _node: &ChartText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_text_content(&mut self, _node: &ChartTextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_map_override(&mut self, _node: &ColorMapOverride) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cross_between(&mut self, _node: &CrossBetween) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn crosses(&mut self, _node: &Crosses) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn crossing_axis_id(&mut self, _node: &CrossingAxisID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn crossing_value(&mut self, _node: &CrossingValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_display_unit(&mut self, _node: &CustomDisplayUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_split(&mut self, _node: &CustomSplit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_cannot_be_changed(&mut self, _node: &DataCannotBeChanged) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_label(&mut self, _node: &DataLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_label_content(&mut self, _node: &DataLabelContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_label_position(&mut self, _node: &DataLabelPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_labels(&mut self, _node: &DataLabels) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_labels_content(&mut self, _node: &DataLabelsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_point(&mut self, _node: &DataPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_table(&mut self, _node: &DataTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date1904(&mut self, _node: &Date1904) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_axis(&mut self, _node: &DateAxis) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delete(&mut self, _node: &Delete) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn depth_percent(&mut self, _node: &DepthPercent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_blanks_as(&mut self, _node: &DisplayBlanksAs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_equation(&mut self, _node: &DisplayEquation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_r_squared_value(&mut self, _node: &DisplayRSquaredValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_units(&mut self, _node: &DisplayUnits) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_units_content(&mut self, _node: &DisplayUnitsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_units_label(&mut self, _node: &DisplayUnitsLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doughnut_charts(&mut self, _node: &DoughnutCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn down_bars(&mut self, _node: &DownBars) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_lines(&mut self, _node: &DropLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn editing_language(&mut self, _node: &EditingLanguage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_bar_direction(&mut self, _node: &ErrorBarDirection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_bar_type(&mut self, _node: &ErrorBarType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_bar_value(&mut self, _node: &ErrorBarValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_bar_value_type(&mut self, _node: &ErrorBarValueType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_bars(&mut self, _node: &ErrorBars) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_footer(&mut self, _node: &EvenFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_header(&mut self, _node: &EvenHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension(&mut self, _node: &Extension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_data_relationship(&mut self, _node: &ExternalDataRelationship) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_footer(&mut self, _node: &FirstFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_header(&mut self, _node: &FirstHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_slice_angle(&mut self, _node: &FirstSliceAngle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn floor(&mut self, _node: &Floor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn format_code(&mut self, _node: &FormatCode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn format_id(&mut self, _node: &FormatID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formatting(&mut self, _node: &Formatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula(&mut self, _node: &Formula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn forward(&mut self, _node: &Forward) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gap_depth(&mut self, _node: &GapDepth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gap_width(&mut self, _node: &GapWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grouping(&mut self, _node: &Grouping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_and_footer(&mut self, _node: &HeaderAndFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn height(&mut self, _node: &Height) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn height_mode(&mut self, _node: &HeightMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn height_percent(&mut self, _node: &HeightPercent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn high_low_lines(&mut self, _node: &HighLowLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hole_size(&mut self, _node: &HoleSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn index(&mut self, _node: &Index) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn intercept(&mut self, _node: &Intercept) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label_alignment(&mut self, _node: &LabelAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label_offset(&mut self, _node: &LabelOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout(&mut self, _node: &Layout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_target(&mut self, _node: &LayoutTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn leader_lines(&mut self, _node: &LeaderLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left(&mut self, _node: &Left) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_mode(&mut self, _node: &LeftMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legacy_drawing_for_headers_and_footers(
+        &mut self,
+        _node: &LegacyDrawingForHeadersAndFooters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legend(&mut self, _node: &Legend) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legend_entry(&mut self, _node: &LegendEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legend_entry_content(&mut self, _node: &LegendEntryContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legend_position(&mut self, _node: &LegendPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn level(&mut self, _node: &Level) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line3d_chart(&mut self, _node: &Line3DChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_chart_series(&mut self, _node: &LineChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_charts(&mut self, _node: &LineCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn logarithmic_base(&mut self, _node: &LogarithmicBase) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_gridlines(&mut self, _node: &MajorGridlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_tick_mark(&mut self, _node: &MajorTickMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_time_unit(&mut self, _node: &MajorTimeUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_unit(&mut self, _node: &MajorUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn manual_layout(&mut self, _node: &ManualLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn marker(&mut self, _node: &Marker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn maximum(&mut self, _node: &Maximum) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minimum(&mut self, _node: &Minimum) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_gridlines(&mut self, _node: &MinorGridlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_tick_mark(&mut self, _node: &MinorTickMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_time_unit(&mut self, _node: &MinorTimeUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_unit(&mut self, _node: &MinorUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minus(&mut self, _node: &Minus) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multi_level_string_cache(&mut self, _node: &MultiLevelStringCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multi_level_string_reference(
+        &mut self,
+        _node: &MultiLevelStringReference,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_end_cap(&mut self, _node: &NoEndCap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_multi_level_labels(&mut self, _node: &NoMultiLevelLabels) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_cache(&mut self, _node: &NumberCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_data_source(&mut self, _node: &NumberDataSourceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_format(&mut self, _node: &NumberFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_literal(&mut self, _node: &NumberLiteral) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_reference(&mut self, _node: &NumberReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numeric_point(&mut self, _node: &NumericPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numeric_value(&mut self, _node: &NumericValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_footer(&mut self, _node: &OddFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn order(&mut self, _node: &Order) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn overlap(&mut self, _node: &Overlap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn overlay(&mut self, _node: &Overlay) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_setup(&mut self, _node: &PageSetup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn period(&mut self, _node: &Period) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn perspective(&mut self, _node: &Perspective) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_format(&mut self, _node: &PictureFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_options(&mut self, _node: &PictureOptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_stack_unit(&mut self, _node: &PictureStackUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pie3d_chart(&mut self, _node: &Pie3DChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pie_chart_series(&mut self, _node: &PieChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pie_charts(&mut self, _node: &PieCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pie_of_pie_charts(&mut self, _node: &PieOfPieCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pie_of_pie_type(&mut self, _node: &PieOfPieType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_format(&mut self, _node: &PivotFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_formats(&mut self, _node: &PivotFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_name(&mut self, _node: &PivotName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_source(&mut self, _node: &PivotSource) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_area(&mut self, _node: &PlotArea) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_area_axis(&mut self, _node: &PlotAreaAxisContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_area_chart(&mut self, _node: &PlotAreaChartContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_visible_only(&mut self, _node: &PlotVisibleOnly) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plus(&mut self, _node: &Plus) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn point_count(&mut self, _node: &PointCount) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn polynomial_trendline_order(&mut self, _node: &PolynomialTrendlineOrder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_settings(&mut self, _node: &PrintSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn protection(&mut self, _node: &Protection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radar_chart_series(&mut self, _node: &RadarChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radar_charts(&mut self, _node: &RadarCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radar_style(&mut self, _node: &RadarStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_to_chart_drawing_part(
+        &mut self,
+        _node: &ReferenceToChartDrawingPart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_to_chart_part(&mut self, _node: &ReferenceToChartPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text(&mut self, _node: &RichText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_angle_axes(&mut self, _node: &RightAngleAxes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rounded_corners(&mut self, _node: &RoundedCorners) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scaling(&mut self, _node: &Scaling) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scatter_chart_series(&mut self, _node: &ScatterChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scatter_charts(&mut self, _node: &ScatterCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scatter_style(&mut self, _node: &ScatterStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn second_pie_point(&mut self, _node: &SecondPiePoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn second_pie_size(&mut self, _node: &SecondPieSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn selection(&mut self, _node: &Selection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn separator(&mut self, _node: &Separator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series_axis(&mut self, _node: &SeriesAxis) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series_lines(&mut self, _node: &SeriesLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series_text(&mut self, _node: &SeriesText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series_text_content(&mut self, _node: &SeriesTextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape(&mut self, _node: &Shape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_bubble_size(&mut self, _node: &ShowBubbleSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_category_name(&mut self, _node: &ShowCategoryName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_data_labels_over_maximum(
+        &mut self,
+        _node: &ShowDataLabelsOverMaximum,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_horizontal_border(&mut self, _node: &ShowHorizontalBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_legend_key(&mut self, _node: &ShowLegendKey) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_legend_keys(&mut self, _node: &ShowLegendKeys) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_marker(&mut self, _node: &ShowMarker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_negative_bubbles(&mut self, _node: &ShowNegativeBubbles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_outline_border(&mut self, _node: &ShowOutlineBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_percent(&mut self, _node: &ShowPercent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_series_name(&mut self, _node: &ShowSeriesName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_value(&mut self, _node: &ShowValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_vertical_border(&mut self, _node: &ShowVerticalBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn side_wall(&mut self, _node: &SideWall) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn size(&mut self, _node: &Size) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn size_represents(&mut self, _node: &SizeRepresents) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smoothing(&mut self, _node: &Smoothing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_position(&mut self, _node: &SplitPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_type(&mut self, _node: &SplitType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn stock_charts(&mut self, _node: &StockCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_cache(&mut self, _node: &StringCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_literal(&mut self, _node: &StringLiteral) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_point(&mut self, _node: &StringPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_reference(&mut self, _node: &StringReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style(&mut self, _node: &Style) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn surface3d_chart(&mut self, _node: &Surface3DChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn surface_chart_series(&mut self, _node: &SurfaceChartSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn surface_charts(&mut self, _node: &SurfaceCharts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn symbol(&mut self, _node: &Symbol) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_properties(&mut self, _node: &TextProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn thickness(&mut self, _node: &Thickness) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tick_label_position(&mut self, _node: &TickLabelPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tick_label_skip(&mut self, _node: &TickLabelSkip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tick_mark_skip(&mut self, _node: &TickMarkSkip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title(&mut self, _node: &Title) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top(&mut self, _node: &Top) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_mode(&mut self, _node: &TopMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trendline_label(&mut self, _node: &TrendlineLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trendline_name(&mut self, _node: &TrendlineName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trendline_type(&mut self, _node: &TrendlineType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trendlines(&mut self, _node: &Trendlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn up_bars(&mut self, _node: &UpBars) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn up_down_bars(&mut self, _node: &UpDownBars) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn update_automatically(&mut self, _node: &UpdateAutomatically) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn user_interface(&mut self, _node: &UserInterface) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn user_shapes(&mut self, _node: &UserShapes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_axis(&mut self, _node: &ValueAxis) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn values(&mut self, _node: &Values) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vary_colors_by_point(&mut self, _node: &VaryColorsByPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_in3d(&mut self, _node: &ViewIn3D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn width(&mut self, _node: &Width) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn width_mode(&mut self, _node: &WidthMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wireframe(&mut self, _node: &Wireframe) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn x_rotation(&mut self, _node: &XRotation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn x_values(&mut self, _node: &XValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn y_rotation(&mut self, _node: &YRotation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn y_values(&mut self, _node: &YValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 21.2.2.229 w (Width): the tag `c:w`, schema type `CT_Double`.

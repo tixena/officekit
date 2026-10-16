@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2013/main/command`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_PC: Option<NamespaceId> = Some(81);
 
@@ -479,6 +483,371 @@ pub struct CmMkLst {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `pc` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2013_main_command` is never asked.
+pub trait Context: markup::Context {
+    fn anim_effect_mk_lst(&mut self, _node: &AnimEffectMkLst) -> Option<AnimEffectMkLst> {
+        None
+    }
+
+    fn anim_effect_parent_mk_lst(
+        &mut self,
+        _node: &AnimEffectParentMkLst,
+    ) -> Option<AnimEffectParentMkLst> {
+        None
+    }
+
+    fn c_xml_mk_lst(&mut self, _node: &CXmlMkLst) -> Option<CXmlMkLst> {
+        None
+    }
+
+    fn cm_author_mk_lst(&mut self, _node: &CmAuthorMkLst) -> Option<CmAuthorMkLst> {
+        None
+    }
+
+    fn cm_mk_lst(&mut self, _node: &CmMkLst) -> Option<CmMkLst> {
+        None
+    }
+
+    fn cust_show_mk_lst(&mut self, _node: &CustShowMkLst) -> Option<CustShowMkLst> {
+        None
+    }
+
+    fn design_tag_mk_lst(&mut self, _node: &DesignTagMkLst) -> Option<DesignTagMkLst> {
+        None
+    }
+
+    fn doc_mk(&mut self, _node: &DocMk) -> Option<DocMk> {
+        None
+    }
+
+    fn doc_mk_lst(&mut self, _node: &DocMkLst) -> Option<DocMkLst> {
+        None
+    }
+
+    fn handout_mk_lst(&mut self, _node: &HandoutMkLst) -> Option<HandoutMkLst> {
+        None
+    }
+
+    fn notes_master_mk_lst(&mut self, _node: &NotesMasterMkLst) -> Option<NotesMasterMkLst> {
+        None
+    }
+
+    fn notes_mk_lst(&mut self, _node: &NotesMkLst) -> Option<NotesMkLst> {
+        None
+    }
+
+    fn notes_txt_mk_lst(&mut self, _node: &NotesTxtMkLst) -> Option<NotesTxtMkLst> {
+        None
+    }
+
+    fn section_lnk_obj_mk_lst(&mut self, _node: &SectionLnkObjMkLst) -> Option<SectionLnkObjMkLst> {
+        None
+    }
+
+    fn section_mk_lst(&mut self, _node: &SectionMkLst) -> Option<SectionMkLst> {
+        None
+    }
+
+    fn sld_base_mk_lst(&mut self, _node: &SldBaseMkLst) -> Option<SldBaseMkLst> {
+        None
+    }
+
+    fn sld_layout_mk_lst(&mut self, _node: &SldLayoutMkLst) -> Option<SldLayoutMkLst> {
+        None
+    }
+
+    fn sld_master_mk_lst(&mut self, _node: &SldMasterMkLst) -> Option<SldMasterMkLst> {
+        None
+    }
+
+    fn sld_mk(&mut self, _node: &SldMk) -> Option<SldMk> {
+        None
+    }
+
+    fn sld_mk_lst(&mut self, _node: &SldMkLst) -> Option<SldMkLst> {
+        None
+    }
+
+    fn sld_pos_mk_lst(&mut self, _node: &SldPosMkLst) -> Option<SldPosMkLst> {
+        None
+    }
+
+    fn tag_mk_lst(&mut self, _node: &TagMkLst) -> Option<TagMkLst> {
+        None
+    }
+
+    fn tk_app_mk_lst(&mut self, _node: &TkAppMkLst) -> Option<TkAppMkLst> {
+        None
+    }
+
+    fn toc_mk_lst(&mut self, _node: &TocMkLst) -> Option<TocMkLst> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anim_effect_mk_lst(
+        &mut self,
+        _node: &AnimEffectMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anim_effect_parent_mk_lst(
+        &mut self,
+        _node: &AnimEffectParentMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_xml_mk_lst(
+        &mut self,
+        _node: &CXmlMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_author_mk_lst(
+        &mut self,
+        _node: &CmAuthorMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_mk_lst(
+        &mut self,
+        _node: &CmMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cust_show_mk_lst(
+        &mut self,
+        _node: &CustShowMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_design_tag_mk_lst(
+        &mut self,
+        _node: &DesignTagMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doc_mk(&mut self, _node: &DocMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doc_mk_lst(
+        &mut self,
+        _node: &DocMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_handout_mk_lst(
+        &mut self,
+        _node: &HandoutMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_master_mk_lst(
+        &mut self,
+        _node: &NotesMasterMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_mk_lst(
+        &mut self,
+        _node: &NotesMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_txt_mk_lst(
+        &mut self,
+        _node: &NotesTxtMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_lnk_obj_mk_lst(
+        &mut self,
+        _node: &SectionLnkObjMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_mk_lst(
+        &mut self,
+        _node: &SectionMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_base_mk_lst(
+        &mut self,
+        _node: &SldBaseMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_layout_mk_lst(
+        &mut self,
+        _node: &SldLayoutMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_master_mk_lst(
+        &mut self,
+        _node: &SldMasterMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_mk(&mut self, _node: &SldMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_mk_lst(
+        &mut self,
+        _node: &SldMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sld_pos_mk_lst(
+        &mut self,
+        _node: &SldPosMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tag_mk_lst(
+        &mut self,
+        _node: &TagMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tk_app_mk_lst(
+        &mut self,
+        _node: &TkAppMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_toc_mk_lst(
+        &mut self,
+        _node: &TocMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `pc:custShowMkLst`, schema type `CT_CustomShowMonikerList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -631,6 +1000,109 @@ pub struct TkAppMkLst {
 pub struct TocMkLst {
     pub content: Vec<super::drawing::AnyElementContent>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `pc` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2013_main_command` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn anim_effect_mk_lst(&mut self, _node: &AnimEffectMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anim_effect_parent_mk_lst(&mut self, _node: &AnimEffectParentMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_xml_mk_lst(&mut self, _node: &CXmlMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cm_author_mk_lst(&mut self, _node: &CmAuthorMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cm_mk_lst(&mut self, _node: &CmMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cust_show_mk_lst(&mut self, _node: &CustShowMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn design_tag_mk_lst(&mut self, _node: &DesignTagMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doc_mk(&mut self, _node: &DocMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doc_mk_lst(&mut self, _node: &DocMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn handout_mk_lst(&mut self, _node: &HandoutMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_master_mk_lst(&mut self, _node: &NotesMasterMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_mk_lst(&mut self, _node: &NotesMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_txt_mk_lst(&mut self, _node: &NotesTxtMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_lnk_obj_mk_lst(&mut self, _node: &SectionLnkObjMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_mk_lst(&mut self, _node: &SectionMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_base_mk_lst(&mut self, _node: &SldBaseMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_layout_mk_lst(&mut self, _node: &SldLayoutMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_master_mk_lst(&mut self, _node: &SldMasterMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_mk(&mut self, _node: &SldMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_mk_lst(&mut self, _node: &SldMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sld_pos_mk_lst(&mut self, _node: &SldPosMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tag_mk_lst(&mut self, _node: &TagMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tk_app_mk_lst(&mut self, _node: &TkAppMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn toc_mk_lst(&mut self, _node: &TocMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AnimEffectMkLst {

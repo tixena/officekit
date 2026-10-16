@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRD: Option<NamespaceId> = Some(140);
@@ -297,6 +301,119 @@ static V_SHAPE: markup::Shape = markup::Shape {
     slots: &[],
     text: true,
 };
+
+/// The hooks of a context for the `xlrd` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2017_richdata` is never asked.
+pub trait Context: markup::Context {
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn fb(&mut self, _node: &Fb) -> Option<Fb> {
+        None
+    }
+
+    fn k(&mut self, _node: &K) -> Option<K> {
+        None
+    }
+
+    fn rv(&mut self, _node: &Rv) -> Option<Rv> {
+        None
+    }
+
+    fn rv_data(&mut self, _node: &RvData) -> Option<RvData> {
+        None
+    }
+
+    fn rv_structures(&mut self, _node: &RvStructures) -> Option<RvStructures> {
+        None
+    }
+
+    fn rvb(&mut self, _node: &Rvb) -> Option<Rvb> {
+        None
+    }
+
+    fn s(&mut self, _node: &S) -> Option<S> {
+        None
+    }
+
+    fn v(&mut self, _node: &V) -> Option<V> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fb(&mut self, _node: &Fb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_k(&mut self, _node: &K, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rv(&mut self, _node: &Rv, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rv_data(&mut self, _node: &RvData, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rv_structures(
+        &mut self,
+        _node: &RvStructures,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rvb(&mut self, _node: &Rvb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_s(&mut self, _node: &S, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
 
 /// The tag `xlrd:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -409,6 +526,49 @@ pub struct S {
 pub struct V {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xlrd` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2017_richdata` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fb(&mut self, _node: &Fb) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn k(&mut self, _node: &K) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rv(&mut self, _node: &Rv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rv_data(&mut self, _node: &RvData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rv_structures(&mut self, _node: &RvStructures) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rvb(&mut self, _node: &Rvb) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn s(&mut self, _node: &S) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v(&mut self, _node: &V) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExtLst {

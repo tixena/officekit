@@ -216,12 +216,16 @@
 //! The namespace is `urn:schemas-microsoft-com:vml`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_O: Option<NamespaceId> = Some(60);
 const NS_PVML: Option<NamespaceId> = Some(87);
@@ -1418,6 +1422,509 @@ pub struct BezierCurve {
     pub wrapcoords: Option<String>,
 }
 
+/// The hooks of a context for the `v` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::vml` is never asked.
+pub trait Context: markup::Context {
+    fn arc_segment(&mut self, _node: &ArcSegment) -> Option<ArcSegment> {
+        None
+    }
+
+    fn bezier_curve(&mut self, _node: &BezierCurve) -> Option<BezierCurve> {
+        None
+    }
+
+    fn document_background(&mut self, _node: &DocumentBackground) -> Option<DocumentBackground> {
+        None
+    }
+
+    fn image_data(&mut self, _node: &ImageData) -> Option<ImageData> {
+        None
+    }
+
+    fn image_file(&mut self, _node: &ImageFile) -> Option<ImageFile> {
+        None
+    }
+
+    fn line(&mut self, _node: &Line) -> Option<Line> {
+        None
+    }
+
+    fn line_stroke_settings(&mut self, _node: &LineStrokeSettings) -> Option<LineStrokeSettings> {
+        None
+    }
+
+    fn multiple_path_line(&mut self, _node: &MultiplePathLine) -> Option<MultiplePathLine> {
+        None
+    }
+
+    fn multiple_path_line_content(
+        &mut self,
+        _node: &MultiplePathLineContent,
+    ) -> Option<MultiplePathLineContent> {
+        None
+    }
+
+    fn multiple_path_line_content_items(
+        &mut self,
+        _node: &MultiplePathLineContent,
+    ) -> Option<Vec<MultiplePathLineContent>> {
+        None
+    }
+
+    fn oval(&mut self, _node: &Oval) -> Option<Oval> {
+        None
+    }
+
+    fn rectangle(&mut self, _node: &Rectangle) -> Option<Rectangle> {
+        None
+    }
+
+    fn rounded_rectangle(&mut self, _node: &RoundedRectangle) -> Option<RoundedRectangle> {
+        None
+    }
+
+    fn set_of_formulas(&mut self, _node: &SetOfFormulas) -> Option<SetOfFormulas> {
+        None
+    }
+
+    fn set_of_handles(&mut self, _node: &SetOfHandles) -> Option<SetOfHandles> {
+        None
+    }
+
+    fn shadow_effect(&mut self, _node: &ShadowEffect) -> Option<ShadowEffect> {
+        None
+    }
+
+    fn shape_definition(&mut self, _node: &ShapeDefinition) -> Option<ShapeDefinition> {
+        None
+    }
+
+    fn shape_definition_content(
+        &mut self,
+        _node: &ShapeDefinitionContent,
+    ) -> Option<ShapeDefinitionContent> {
+        None
+    }
+
+    fn shape_definition_content_items(
+        &mut self,
+        _node: &ShapeDefinitionContent,
+    ) -> Option<Vec<ShapeDefinitionContent>> {
+        None
+    }
+
+    fn shape_element(&mut self, _node: &ShapeElementContent) -> Option<ShapeElementContent> {
+        None
+    }
+
+    fn shape_element_items(
+        &mut self,
+        _node: &ShapeElementContent,
+    ) -> Option<Vec<ShapeElementContent>> {
+        None
+    }
+
+    fn shape_fill_properties(
+        &mut self,
+        _node: &ShapeFillProperties,
+    ) -> Option<ShapeFillProperties> {
+        None
+    }
+
+    fn shape_group(&mut self, _node: &ShapeGroup) -> Option<ShapeGroup> {
+        None
+    }
+
+    fn shape_group_content(&mut self, _node: &ShapeGroupContent) -> Option<ShapeGroupContent> {
+        None
+    }
+
+    fn shape_group_content_items(
+        &mut self,
+        _node: &ShapeGroupContent,
+    ) -> Option<Vec<ShapeGroupContent>> {
+        None
+    }
+
+    fn shape_handle(&mut self, _node: &ShapeHandle) -> Option<ShapeHandle> {
+        None
+    }
+
+    fn shape_path(&mut self, _node: &ShapePath) -> Option<ShapePath> {
+        None
+    }
+
+    fn shape_template(&mut self, _node: &ShapeTemplate) -> Option<ShapeTemplate> {
+        None
+    }
+
+    fn single_formula(&mut self, _node: &SingleFormula) -> Option<SingleFormula> {
+        None
+    }
+
+    fn text_box(&mut self, _node: &TextBox) -> Option<TextBox> {
+        None
+    }
+
+    fn text_box_content(&mut self, _node: &TextBoxContent) -> Option<TextBoxContent> {
+        None
+    }
+
+    fn text_layout_path(&mut self, _node: &TextLayoutPath) -> Option<TextLayoutPath> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_arc_segment(
+        &mut self,
+        _node: &ArcSegment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bezier_curve(
+        &mut self,
+        _node: &BezierCurve,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_background(
+        &mut self,
+        _node: &DocumentBackground,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_image_data(
+        &mut self,
+        _node: &ImageData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_image_file(
+        &mut self,
+        _node: &ImageFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line(&mut self, _node: &Line, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_stroke_settings(
+        &mut self,
+        _node: &LineStrokeSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multiple_path_line(
+        &mut self,
+        _node: &MultiplePathLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multiple_path_line_content(
+        &mut self,
+        _node: &MultiplePathLineContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multiple_path_line_content_items(
+        &mut self,
+        _node: &MultiplePathLineContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_oval(&mut self, _node: &Oval, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rectangle(
+        &mut self,
+        _node: &Rectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rounded_rectangle(
+        &mut self,
+        _node: &RoundedRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_formulas(
+        &mut self,
+        _node: &SetOfFormulas,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_handles(
+        &mut self,
+        _node: &SetOfHandles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shadow_effect(
+        &mut self,
+        _node: &ShadowEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_definition(
+        &mut self,
+        _node: &ShapeDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_definition_content(
+        &mut self,
+        _node: &ShapeDefinitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_definition_content_items(
+        &mut self,
+        _node: &ShapeDefinitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_element(
+        &mut self,
+        _node: &ShapeElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_element_items(
+        &mut self,
+        _node: &ShapeElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_fill_properties(
+        &mut self,
+        _node: &ShapeFillProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_group(
+        &mut self,
+        _node: &ShapeGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_group_content(
+        &mut self,
+        _node: &ShapeGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_group_content_items(
+        &mut self,
+        _node: &ShapeGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_handle(
+        &mut self,
+        _node: &ShapeHandle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_path(
+        &mut self,
+        _node: &ShapePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_template(
+        &mut self,
+        _node: &ShapeTemplate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_formula(
+        &mut self,
+        _node: &SingleFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box(
+        &mut self,
+        _node: &TextBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_content(
+        &mut self,
+        _node: &TextBoxContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_layout_path(
+        &mut self,
+        _node: &TextLayoutPath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 19.1.2.2 background (Document Background): the tag `v:background`, schema type `CT_Background`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -2524,6 +3031,125 @@ pub enum VMLExtensionHandlingBehaviorsMember {
     BackwardCompatible,
     Edit,
     View,
+}
+
+/// The hooks of a visitor for the `v` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from `markup::Visitor::vml` is
+/// never asked.
+pub trait Visitor: markup::Visitor {
+    fn arc_segment(&mut self, _node: &ArcSegment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bezier_curve(&mut self, _node: &BezierCurve) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_background(&mut self, _node: &DocumentBackground) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn image_data(&mut self, _node: &ImageData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn image_file(&mut self, _node: &ImageFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line(&mut self, _node: &Line) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_stroke_settings(&mut self, _node: &LineStrokeSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multiple_path_line(&mut self, _node: &MultiplePathLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multiple_path_line_content(&mut self, _node: &MultiplePathLineContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn oval(&mut self, _node: &Oval) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rectangle(&mut self, _node: &Rectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rounded_rectangle(&mut self, _node: &RoundedRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_of_formulas(&mut self, _node: &SetOfFormulas) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_of_handles(&mut self, _node: &SetOfHandles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shadow_effect(&mut self, _node: &ShadowEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_definition(&mut self, _node: &ShapeDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_definition_content(&mut self, _node: &ShapeDefinitionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_element(&mut self, _node: &ShapeElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_fill_properties(&mut self, _node: &ShapeFillProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_group(&mut self, _node: &ShapeGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_group_content(&mut self, _node: &ShapeGroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_handle(&mut self, _node: &ShapeHandle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_path(&mut self, _node: &ShapePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_template(&mut self, _node: &ShapeTemplate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_formula(&mut self, _node: &SingleFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box(&mut self, _node: &TextBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_content(&mut self, _node: &TextBoxContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_layout_path(&mut self, _node: &TextLayoutPath) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ArcSegment {

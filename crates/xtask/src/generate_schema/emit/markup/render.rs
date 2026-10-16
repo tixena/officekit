@@ -15,7 +15,7 @@ use os_shim::System;
 use self::layout::{Expr, MAX_WIDTH, doc, line, statement};
 use super::names;
 use super::structs::{Body, Catalog, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard};
-use super::{readers, writers};
+use super::{readers, traversal, writers};
 
 /// The lines a generated function body holds before its work is split into
 /// helpers, below clippy's `too_many_lines`.
@@ -23,44 +23,6 @@ pub const BODY_LINES: usize = 90;
 
 /// The enum arms one function holds before its match is split.
 pub const CHUNK: usize = 80;
-
-/// The root hooks every namespace's `Context` and `Visitor` extend, as the
-/// runtime declared them.
-const ROOT_HOOKS: &str = "
-/// The root of every context: the hooks for content the schemas do not
-/// declare. Each namespace's `Context` extends this trait and no other.
-pub trait Context {
-    /// Asked for each generic element: an unknown element in a list's `Other`
-    /// items, in a node's `unknown.children`, or in a wildcard position.
-    /// `None` rebuilds the element from its transformed children.
-    fn element(&mut self, _node: &xml::element::Element) -> Option<xml::element::Element> {
-        None
-    }
-
-    /// Asked for each generic element written through, before `element`;
-    /// `Written::Yes` means the hook wrote it.
-    ///
-    /// # Errors
-    ///
-    /// The sink's.
-    fn write_element(
-        &mut self,
-        _node: &xml::element::Element,
-        _out: &mut PartWriter<'_>,
-    ) -> io::Result<Written> {
-        Ok(Written::No)
-    }
-}
-
-/// The root of every visitor: the hook for content the schemas do not
-/// declare. Each namespace's `Visitor` extends this trait and no other.
-pub trait Visitor {
-    /// Shown each generic element; `Descend::Yes` walks into its children.
-    fn element(&mut self, _node: &xml::element::Element) -> Descend {
-        Descend::Yes
-    }
-}
-";
 
 /// The names one module's items take.
 pub struct Names<'catalog> {
@@ -315,25 +277,28 @@ impl Uses {
     /// The `use` lines, in rustfmt's order.
     fn text(&self) -> String {
         let mut grouped: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
-        let mut out = String::new();
+        // Each line by its path's segments, which rustfmt sorts the lines by.
+        let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
         for path in &self.paths {
             match path.rsplit_once("::") {
                 Some((parent, name)) if parent.contains("::") && !name.contains(' ') => {
                     grouped.entry(parent).or_default().push(name);
                 }
-                _ => {
-                    let _ = writeln!(out, "use {path};");
-                }
+                _ => lines.push((path.split("::").collect(), format!("use {path};\n"))),
             }
         }
         for (parent, names) in grouped {
-            if let [only] = names.as_slice() {
-                let _ = writeln!(out, "use {parent}::{only};");
+            let line = if let [only] = names.as_slice() {
+                format!("use {parent}::{only};\n")
             } else {
-                let _ = writeln!(out, "use {parent}::{{{}}};", names.join(", "));
-            }
+                format!("use {parent}::{{{}}};\n", names.join(", "))
+            };
+            let mut key: Vec<&str> = parent.split("::").collect();
+            key.extend(names.first());
+            lines.push((key, line));
         }
-        out
+        lines.sort();
+        lines.into_iter().map(|(_, line)| line).collect()
     }
 }
 
@@ -425,6 +390,7 @@ where
             .name
             .cmp(&catalog.modules[*right].name)
     });
+    let listed = traversal::listed(catalog);
     let mut files = Vec::new();
     for module in &order {
         let names = functions(catalog, *module)?;
@@ -434,12 +400,18 @@ where
             .unwrap_or(false);
         files.push((
             folder.join(format!("{name}.rs")),
-            module_text(header, &names, tests)?,
+            module_text(header, &names, &listed, tests)?,
         ));
         files.push((
             folder.join(name).join("read.rs"),
             readers::text(header, &names),
         ));
+        if traversal::has_nodes(&names) {
+            files.push((
+                folder.join(name).join("traversal.rs"),
+                traversal::text(header, &names, &listed),
+            ));
+        }
         files.push((
             folder.join(name).join("write.rs"),
             writers::text(header, &names),
@@ -455,11 +427,7 @@ where
     }
     files.push((folder.join("modules.rs"), modules));
     let mut root = String::from(header);
-    root.push_str(
-        "// The root hooks every namespace's `Context` and `Visitor` extend (D12),\n\
-         // brought into `markup` with `include!`.\n",
-    );
-    root.push_str(ROOT_HOOKS);
+    root.push_str(&traversal::root_text(catalog, &order));
     files.push((folder.join("root.rs"), root));
     Ok(files)
 }
@@ -524,7 +492,12 @@ pub fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
 }
 
 /// A namespace module's file.
-fn module_text(header: &str, names: &Names<'_>, tests: bool) -> Result<String> {
+fn module_text(
+    header: &str,
+    names: &Names<'_>,
+    listed: &BTreeSet<usize>,
+    tests: bool,
+) -> Result<String> {
     let catalog = names.catalog;
     let module = &catalog.modules[names.module];
     let mut out = String::from(header);
@@ -535,12 +508,29 @@ fn module_text(header: &str, names: &Names<'_>, tests: bool) -> Result<String> {
          //! `write`.\n//!\n//! The namespace is `{}`.\n",
         module.prefix, module.uri
     );
-    out.push_str("pub mod read;\npub mod write;\n");
+    if traversal::has_nodes(names) {
+        out.push_str("pub mod read;\nmod traversal;\npub mod write;\n");
+    } else {
+        out.push_str("pub mod read;\npub mod write;\n");
+    }
     if tests {
         out.push_str("\n#[cfg(test)]\nmod tests;\n");
     }
     let mut uses = Uses::default();
-    let parts = ModuleItems::collect(names, &mut uses)?;
+    let mut parts = ModuleItems::collect(names, &mut uses)?;
+    parts.items.push((
+        "Context".to_owned(),
+        traversal::context_trait(names, listed),
+    ));
+    parts
+        .items
+        .push(("Visitor".to_owned(), traversal::visitor_trait(names)));
+    parts.items.sort_by(|left, right| left.0.cmp(&right.0));
+    if traversal::has_nodes(names) {
+        uses.add("crate::stream::transform::Written");
+        uses.add("crate::stream::writer::PartWriter");
+        uses.add("std::io");
+    }
     let mut rest = parts.statics.clone();
     for (_, text) in parts.items.iter().chain(&parts.impls) {
         rest.push_str(text);

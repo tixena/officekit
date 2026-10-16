@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLTC: Option<NamespaceId> = Some(145);
@@ -308,6 +312,121 @@ static THREADED_COMMENTS_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `xltc` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2018_threadedcomments` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn mention(&mut self, _node: &Mention) -> Option<Mention> {
+        None
+    }
+
+    fn mentions(&mut self, _node: &Mentions) -> Option<Mentions> {
+        None
+    }
+
+    fn person(&mut self, _node: &Person) -> Option<Person> {
+        None
+    }
+
+    fn person_list(&mut self, _node: &PersonList) -> Option<PersonList> {
+        None
+    }
+
+    fn text(&mut self, _node: &Text) -> Option<Text> {
+        None
+    }
+
+    fn threaded_comment(&mut self, _node: &ThreadedComment) -> Option<ThreadedComment> {
+        None
+    }
+
+    fn threaded_comments(&mut self, _node: &ThreadedComments) -> Option<ThreadedComments> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mention(&mut self, _node: &Mention, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mentions(
+        &mut self,
+        _node: &Mentions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_person(&mut self, _node: &Person, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_person_list(
+        &mut self,
+        _node: &PersonList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_threaded_comment(
+        &mut self,
+        _node: &ThreadedComment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_threaded_comments(
+        &mut self,
+        _node: &ThreadedComments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xltc:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -387,6 +506,45 @@ pub struct ThreadedComments {
     pub ext_lst: Option<Box<ExtLst>>,
     pub threaded_comment: Vec<ThreadedComment>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xltc` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2018_threadedcomments` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mention(&mut self, _node: &Mention) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mentions(&mut self, _node: &Mentions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn person(&mut self, _node: &Person) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn person_list(&mut self, _node: &PersonList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text(&mut self, _node: &Text) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn threaded_comment(&mut self, _node: &ThreadedComment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn threaded_comments(&mut self, _node: &ThreadedComments) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExtLst {

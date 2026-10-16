@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2012/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A15: Option<NamespaceId> = Some(2);
 
@@ -282,6 +286,79 @@ pub struct BackgroundPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `a15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2012_main` is never asked.
+pub trait Context: markup::Context {
+    fn background_pr(&mut self, _node: &BackgroundPr) -> Option<BackgroundPr> {
+        None
+    }
+
+    fn non_visual_group_props(
+        &mut self,
+        _node: &NonVisualGroupProps,
+    ) -> Option<NonVisualGroupProps> {
+        None
+    }
+
+    fn object_pr(&mut self, _node: &ObjectPr) -> Option<ObjectPr> {
+        None
+    }
+
+    fn signature_line(&mut self, _node: &SignatureLine) -> Option<SignatureLine> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_pr(
+        &mut self,
+        _node: &BackgroundPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_group_props(
+        &mut self,
+        _node: &NonVisualGroupProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_pr(
+        &mut self,
+        _node: &ObjectPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_signature_line(
+        &mut self,
+        _node: &SignatureLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `a15:nonVisualGroupProps`, schema type `CT_NonVisualGroupProps` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -338,6 +415,29 @@ pub enum TargetScreenSzMember {
     Value640x480,
     Value720x512,
     Value800x600,
+}
+
+/// The hooks of a visitor for the `a15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2012_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn background_pr(&mut self, _node: &BackgroundPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_group_props(&mut self, _node: &NonVisualGroupProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_pr(&mut self, _node: &ObjectPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn signature_line(&mut self, _node: &SignatureLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for BackgroundPr {

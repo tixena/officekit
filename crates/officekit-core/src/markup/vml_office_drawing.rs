@@ -216,12 +216,16 @@
 //! The namespace is `urn:schemas-microsoft-com:office:office`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_O: Option<NamespaceId> = Some(60);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -838,6 +842,588 @@ pub enum ConnectorTypeMember {
     Elbow,
     None,
     Straight,
+}
+
+/// The hooks of a context for the `o` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::vml_office_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn callout(&mut self, _node: &Callout) -> Option<Callout> {
+        None
+    }
+
+    fn complex(&mut self, _node: &Complex) -> Option<Complex> {
+        None
+    }
+
+    fn diagram_relationship(&mut self, _node: &DiagramRelationship) -> Option<DiagramRelationship> {
+        None
+    }
+
+    fn diagram_relationship_table(
+        &mut self,
+        _node: &DiagramRelationshipTable,
+    ) -> Option<DiagramRelationshipTable> {
+        None
+    }
+
+    fn digital_signature_line(
+        &mut self,
+        _node: &DigitalSignatureLine,
+    ) -> Option<DigitalSignatureLine> {
+        None
+    }
+
+    fn embedded_object_alternate_image_request(
+        &mut self,
+        _node: &EmbeddedObjectAlternateImageRequest,
+    ) -> Option<EmbeddedObjectAlternateImageRequest> {
+        None
+    }
+
+    fn embedded_object_cannot_be_refreshed(
+        &mut self,
+        _node: &EmbeddedObjectCannotBeRefreshed,
+    ) -> Option<EmbeddedObjectCannotBeRefreshed> {
+        None
+    }
+
+    fn embedded_ole_object(&mut self, _node: &EmbeddedOLEObject) -> Option<EmbeddedOLEObject> {
+        None
+    }
+
+    fn extrusion(&mut self, _node: &Extrusion) -> Option<Extrusion> {
+        None
+    }
+
+    fn ink(&mut self, _node: &Ink) -> Option<Ink> {
+        None
+    }
+
+    fn most_recently_used_colors(
+        &mut self,
+        _node: &MostRecentlyUsedColors,
+    ) -> Option<MostRecentlyUsedColors> {
+        None
+    }
+
+    fn new_shape_defaults(&mut self, _node: &NewShapeDefaults) -> Option<NewShapeDefaults> {
+        None
+    }
+
+    fn new_shape_defaults_content(
+        &mut self,
+        _node: &NewShapeDefaultsContent,
+    ) -> Option<NewShapeDefaultsContent> {
+        None
+    }
+
+    fn new_shape_defaults_content_items(
+        &mut self,
+        _node: &NewShapeDefaultsContent,
+    ) -> Option<Vec<NewShapeDefaultsContent>> {
+        None
+    }
+
+    fn regroup_entry(&mut self, _node: &RegroupEntry) -> Option<RegroupEntry> {
+        None
+    }
+
+    fn rule(&mut self, _node: &Rule) -> Option<Rule> {
+        None
+    }
+
+    fn rule_set(&mut self, _node: &RuleSet) -> Option<RuleSet> {
+        None
+    }
+
+    fn shape_clipping_path(&mut self, _node: &ShapeClippingPath) -> Option<ShapeClippingPath> {
+        None
+    }
+
+    fn shape_fill_extended_properties(
+        &mut self,
+        _node: &ShapeFillExtendedProperties,
+    ) -> Option<ShapeFillExtendedProperties> {
+        None
+    }
+
+    fn shape_grouping_history(
+        &mut self,
+        _node: &ShapeGroupingHistory,
+    ) -> Option<ShapeGroupingHistory> {
+        None
+    }
+
+    fn shape_id_map(&mut self, _node: &ShapeIDMap) -> Option<ShapeIDMap> {
+        None
+    }
+
+    fn shape_layout_properties(
+        &mut self,
+        _node: &ShapeLayoutProperties,
+    ) -> Option<ShapeLayoutProperties> {
+        None
+    }
+
+    fn shape_layout_properties_content(
+        &mut self,
+        _node: &ShapeLayoutPropertiesContent,
+    ) -> Option<ShapeLayoutPropertiesContent> {
+        None
+    }
+
+    fn shape_layout_properties_content_items(
+        &mut self,
+        _node: &ShapeLayoutPropertiesContent,
+    ) -> Option<Vec<ShapeLayoutPropertiesContent>> {
+        None
+    }
+
+    fn shape_protections(&mut self, _node: &ShapeProtections) -> Option<ShapeProtections> {
+        None
+    }
+
+    fn shape_reference(&mut self, _node: &ShapeReference) -> Option<ShapeReference> {
+        None
+    }
+
+    fn skew_transform(&mut self, _node: &SkewTransform) -> Option<SkewTransform> {
+        None
+    }
+
+    fn storage_for_alternate_math_content(
+        &mut self,
+        _node: &StorageForAlternateMathContent,
+    ) -> Option<StorageForAlternateMathContent> {
+        None
+    }
+
+    fn text_box_bottom_stroke(
+        &mut self,
+        _node: &TextBoxBottomStroke,
+    ) -> Option<TextBoxBottomStroke> {
+        None
+    }
+
+    fn text_box_interior_stroke(
+        &mut self,
+        _node: &TextBoxInteriorStroke,
+    ) -> Option<TextBoxInteriorStroke> {
+        None
+    }
+
+    fn text_box_left_stroke(&mut self, _node: &TextBoxLeftStroke) -> Option<TextBoxLeftStroke> {
+        None
+    }
+
+    fn text_box_right_stroke(&mut self, _node: &TextBoxRightStroke) -> Option<TextBoxRightStroke> {
+        None
+    }
+
+    fn text_box_top_stroke(&mut self, _node: &TextBoxTopStroke) -> Option<TextBoxTopStroke> {
+        None
+    }
+
+    fn ui_default_colors(&mut self, _node: &UIDefaultColors) -> Option<UIDefaultColors> {
+        None
+    }
+
+    fn vml_diagram(&mut self, _node: &VMLDiagram) -> Option<VMLDiagram> {
+        None
+    }
+
+    fn wordprocessing_ml_field_switches(
+        &mut self,
+        _node: &WordprocessingMLFieldSwitches,
+    ) -> Option<WordprocessingMLFieldSwitches> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_callout(&mut self, _node: &Callout, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex(&mut self, _node: &Complex, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagram_relationship(
+        &mut self,
+        _node: &DiagramRelationship,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagram_relationship_table(
+        &mut self,
+        _node: &DiagramRelationshipTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_digital_signature_line(
+        &mut self,
+        _node: &DigitalSignatureLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_alternate_image_request(
+        &mut self,
+        _node: &EmbeddedObjectAlternateImageRequest,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_cannot_be_refreshed(
+        &mut self,
+        _node: &EmbeddedObjectCannotBeRefreshed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_ole_object(
+        &mut self,
+        _node: &EmbeddedOLEObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extrusion(
+        &mut self,
+        _node: &Extrusion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ink(&mut self, _node: &Ink, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_most_recently_used_colors(
+        &mut self,
+        _node: &MostRecentlyUsedColors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_new_shape_defaults(
+        &mut self,
+        _node: &NewShapeDefaults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_new_shape_defaults_content(
+        &mut self,
+        _node: &NewShapeDefaultsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_new_shape_defaults_content_items(
+        &mut self,
+        _node: &NewShapeDefaultsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_regroup_entry(
+        &mut self,
+        _node: &RegroupEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rule(&mut self, _node: &Rule, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rule_set(
+        &mut self,
+        _node: &RuleSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_clipping_path(
+        &mut self,
+        _node: &ShapeClippingPath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_fill_extended_properties(
+        &mut self,
+        _node: &ShapeFillExtendedProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_grouping_history(
+        &mut self,
+        _node: &ShapeGroupingHistory,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_id_map(
+        &mut self,
+        _node: &ShapeIDMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_layout_properties(
+        &mut self,
+        _node: &ShapeLayoutProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_layout_properties_content(
+        &mut self,
+        _node: &ShapeLayoutPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_layout_properties_content_items(
+        &mut self,
+        _node: &ShapeLayoutPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_protections(
+        &mut self,
+        _node: &ShapeProtections,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_reference(
+        &mut self,
+        _node: &ShapeReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_skew_transform(
+        &mut self,
+        _node: &SkewTransform,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_storage_for_alternate_math_content(
+        &mut self,
+        _node: &StorageForAlternateMathContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_bottom_stroke(
+        &mut self,
+        _node: &TextBoxBottomStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_interior_stroke(
+        &mut self,
+        _node: &TextBoxInteriorStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_left_stroke(
+        &mut self,
+        _node: &TextBoxLeftStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_right_stroke(
+        &mut self,
+        _node: &TextBoxRightStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_top_stroke(
+        &mut self,
+        _node: &TextBoxTopStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui_default_colors(
+        &mut self,
+        _node: &UIDefaultColors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_diagram(
+        &mut self,
+        _node: &VMLDiagram,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_ml_field_switches(
+        &mut self,
+        _node: &WordprocessingMLFieldSwitches,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
 }
 
 /// 19.2.3.10 `ST_DiagramLayout` (Diagram Layout Type): the text the file carried.
@@ -1528,6 +2114,167 @@ pub struct VMLDiagram {
     pub relationship_table: Option<Box<DiagramRelationshipTable>>,
     pub reverse: Option<super::common_simple_types::BooleanValue>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `o` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::vml_office_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn callout(&mut self, _node: &Callout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex(&mut self, _node: &Complex) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagram_relationship(&mut self, _node: &DiagramRelationship) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagram_relationship_table(&mut self, _node: &DiagramRelationshipTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn digital_signature_line(&mut self, _node: &DigitalSignatureLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_alternate_image_request(
+        &mut self,
+        _node: &EmbeddedObjectAlternateImageRequest,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_cannot_be_refreshed(
+        &mut self,
+        _node: &EmbeddedObjectCannotBeRefreshed,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_ole_object(&mut self, _node: &EmbeddedOLEObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extrusion(&mut self, _node: &Extrusion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ink(&mut self, _node: &Ink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn most_recently_used_colors(&mut self, _node: &MostRecentlyUsedColors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn new_shape_defaults(&mut self, _node: &NewShapeDefaults) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn new_shape_defaults_content(&mut self, _node: &NewShapeDefaultsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn regroup_entry(&mut self, _node: &RegroupEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rule(&mut self, _node: &Rule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rule_set(&mut self, _node: &RuleSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_clipping_path(&mut self, _node: &ShapeClippingPath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_fill_extended_properties(
+        &mut self,
+        _node: &ShapeFillExtendedProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_grouping_history(&mut self, _node: &ShapeGroupingHistory) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_id_map(&mut self, _node: &ShapeIDMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_layout_properties(&mut self, _node: &ShapeLayoutProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_layout_properties_content(
+        &mut self,
+        _node: &ShapeLayoutPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_protections(&mut self, _node: &ShapeProtections) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_reference(&mut self, _node: &ShapeReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn skew_transform(&mut self, _node: &SkewTransform) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn storage_for_alternate_math_content(
+        &mut self,
+        _node: &StorageForAlternateMathContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_bottom_stroke(&mut self, _node: &TextBoxBottomStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_interior_stroke(&mut self, _node: &TextBoxInteriorStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_left_stroke(&mut self, _node: &TextBoxLeftStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_right_stroke(&mut self, _node: &TextBoxRightStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_top_stroke(&mut self, _node: &TextBoxTopStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui_default_colors(&mut self, _node: &UIDefaultColors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vml_diagram(&mut self, _node: &VMLDiagram) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_ml_field_switches(
+        &mut self,
+        _node: &WordprocessingMLFieldSwitches,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 19.2.2.12 `FieldCodes` (`WordprocessingML` Field Switches): the tag `o:FieldCodes`, schema type

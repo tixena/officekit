@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
@@ -905,6 +909,906 @@ pub struct ContentPart {
     pub xfrm: Option<Box<Xfrm>>,
 }
 
+/// The hooks of a context for the `wp` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::wordprocessing_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn absolute_position_offset(
+        &mut self,
+        _node: &AbsolutePositionOffset,
+    ) -> Option<AbsolutePositionOffset> {
+        None
+    }
+
+    fn anchor(&mut self, _node: &AnchorContent) -> Option<AnchorContent> {
+        None
+    }
+
+    fn anchor_for_floating_drawing_ml_object(
+        &mut self,
+        _node: &AnchorForFloatingDrawingMLObject,
+    ) -> Option<AnchorForFloatingDrawingMLObject> {
+        None
+    }
+
+    fn background_formatting(
+        &mut self,
+        _node: &BackgroundFormatting,
+    ) -> Option<BackgroundFormatting> {
+        None
+    }
+
+    fn body_properties(&mut self, _node: &BodyProperties) -> Option<BodyProperties> {
+        None
+    }
+
+    fn common_drawing_ml_non_visual_properties(
+        &mut self,
+        _node: &CommonDrawingMLNonVisualProperties,
+    ) -> Option<CommonDrawingMLNonVisualProperties> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn drawing_canvas(&mut self, _node: &DrawingCanvasContent) -> Option<DrawingCanvasContent> {
+        None
+    }
+
+    fn drawing_canvas_items(
+        &mut self,
+        _node: &DrawingCanvasContent,
+    ) -> Option<Vec<DrawingCanvasContent>> {
+        None
+    }
+
+    fn drawing_object_non_visual_properties(
+        &mut self,
+        _node: &DrawingObjectNonVisualProperties,
+    ) -> Option<DrawingObjectNonVisualProperties> {
+        None
+    }
+
+    fn drawing_object_size(&mut self, _node: &DrawingObjectSize) -> Option<DrawingObjectSize> {
+        None
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> Option<ExtensionList> {
+        None
+    }
+
+    fn graphical_object_container(
+        &mut self,
+        _node: &GraphicalObjectContainer,
+    ) -> Option<GraphicalObjectContainer> {
+        None
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> Option<GroupShape> {
+        None
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
+        None
+    }
+
+    fn group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+    ) -> Option<Vec<GroupShapeContent>> {
+        None
+    }
+
+    fn group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+    ) -> Option<GroupShapeProperties> {
+        None
+    }
+
+    fn horizontal_positioning(
+        &mut self,
+        _node: &HorizontalPositioning,
+    ) -> Option<HorizontalPositioning> {
+        None
+    }
+
+    fn horizontal_positioning_content(
+        &mut self,
+        _node: &HorizontalPositioningContent,
+    ) -> Option<HorizontalPositioningContent> {
+        None
+    }
+
+    fn inline_drawing_ml_object(
+        &mut self,
+        _node: &InlineDrawingMLObject,
+    ) -> Option<InlineDrawingMLObject> {
+        None
+    }
+
+    fn no_text_wrapping(&mut self, _node: &NoTextWrapping) -> Option<NoTextWrapping> {
+        None
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> Option<NonVisualConnectorShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_content_part_drawing_properties(
+        &mut self,
+        _node: &NonVisualContentPartDrawingProperties,
+    ) -> Option<NonVisualContentPartDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> Option<NonVisualDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+    ) -> Option<NonVisualDrawingPropertiesForAShape> {
+        None
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> Option<NonVisualGraphicFrameDrawingProperties> {
+        None
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> Option<NonVisualGroupShapeDrawingProperties> {
+        None
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
+        None
+    }
+
+    fn object_extents_including_effects(
+        &mut self,
+        _node: &ObjectExtentsIncludingEffects,
+    ) -> Option<ObjectExtentsIncludingEffects> {
+        None
+    }
+
+    fn relative_horizontal_alignment(
+        &mut self,
+        _node: &RelativeHorizontalAlignment,
+    ) -> Option<RelativeHorizontalAlignment> {
+        None
+    }
+
+    fn relative_vertical_alignment(
+        &mut self,
+        _node: &RelativeVerticalAlignment,
+    ) -> Option<RelativeVerticalAlignment> {
+        None
+    }
+
+    fn rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+    ) -> Option<RichTextBoxContentContainer> {
+        None
+    }
+
+    fn shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+    ) -> Option<ShapeNonVisualPropertiesContent> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
+        None
+    }
+
+    fn shape_text(&mut self, _node: &ShapeTextContent) -> Option<ShapeTextContent> {
+        None
+    }
+
+    fn simple_positioning_coordinates(
+        &mut self,
+        _node: &SimplePositioningCoordinates,
+    ) -> Option<SimplePositioningCoordinates> {
+        None
+    }
+
+    fn square_wrapping(&mut self, _node: &SquareWrapping) -> Option<SquareWrapping> {
+        None
+    }
+
+    fn textual_contents_of_shape_linked_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeLinkedTxbx,
+    ) -> Option<TextualContentsOfShapeLinkedTxbx> {
+        None
+    }
+
+    fn textual_contents_of_shape_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeTxbx,
+    ) -> Option<TextualContentsOfShapeTxbx> {
+        None
+    }
+
+    fn through_wrapping(&mut self, _node: &ThroughWrapping) -> Option<ThroughWrapping> {
+        None
+    }
+
+    fn tight_wrapping(&mut self, _node: &TightWrapping) -> Option<TightWrapping> {
+        None
+    }
+
+    fn top_and_bottom_wrapping(
+        &mut self,
+        _node: &TopAndBottomWrapping,
+    ) -> Option<TopAndBottomWrapping> {
+        None
+    }
+
+    fn vertical_positioning(&mut self, _node: &VerticalPositioning) -> Option<VerticalPositioning> {
+        None
+    }
+
+    fn vertical_positioning_content(
+        &mut self,
+        _node: &VerticalPositioningContent,
+    ) -> Option<VerticalPositioningContent> {
+        None
+    }
+
+    fn whole_e2o_formatting(&mut self, _node: &WholeE2OFormatting) -> Option<WholeE2OFormatting> {
+        None
+    }
+
+    fn wordprocessing_ml_drawing_canvas(
+        &mut self,
+        _node: &WordprocessingMLDrawingCanvas,
+    ) -> Option<WordprocessingMLDrawingCanvas> {
+        None
+    }
+
+    fn wordprocessing_ml_shape(
+        &mut self,
+        _node: &WordprocessingMLShape,
+    ) -> Option<WordprocessingMLShape> {
+        None
+    }
+
+    fn wordprocessing_ml_shape_group(
+        &mut self,
+        _node: &WordprocessingMLShapeGroup,
+    ) -> Option<WordprocessingMLShapeGroup> {
+        None
+    }
+
+    fn wrapping_polygon(&mut self, _node: &WrappingPolygon) -> Option<WrappingPolygon> {
+        None
+    }
+
+    fn wrapping_polygon_line_end_position(
+        &mut self,
+        _node: &WrappingPolygonLineEndPosition,
+    ) -> Option<WrappingPolygonLineEndPosition> {
+        None
+    }
+
+    fn wrapping_polygon_start(
+        &mut self,
+        _node: &WrappingPolygonStart,
+    ) -> Option<WrappingPolygonStart> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_absolute_position_offset(
+        &mut self,
+        _node: &AbsolutePositionOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor(
+        &mut self,
+        _node: &AnchorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor_for_floating_drawing_ml_object(
+        &mut self,
+        _node: &AnchorForFloatingDrawingMLObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_formatting(
+        &mut self,
+        _node: &BackgroundFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_body_properties(
+        &mut self,
+        _node: &BodyProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_drawing_ml_non_visual_properties(
+        &mut self,
+        _node: &CommonDrawingMLNonVisualProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_canvas(
+        &mut self,
+        _node: &DrawingCanvasContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_canvas_items(
+        &mut self,
+        _node: &DrawingCanvasContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_object_non_visual_properties(
+        &mut self,
+        _node: &DrawingObjectNonVisualProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_object_size(
+        &mut self,
+        _node: &DrawingObjectSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension_list(
+        &mut self,
+        _node: &ExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphical_object_container(
+        &mut self,
+        _node: &GraphicalObjectContainer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape(
+        &mut self,
+        _node: &GroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontal_positioning(
+        &mut self,
+        _node: &HorizontalPositioning,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontal_positioning_content(
+        &mut self,
+        _node: &HorizontalPositioningContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inline_drawing_ml_object(
+        &mut self,
+        _node: &InlineDrawingMLObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_text_wrapping(
+        &mut self,
+        _node: &NoTextWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_content_part_drawing_properties(
+        &mut self,
+        _node: &NonVisualContentPartDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_content_part_pr(
+        &mut self,
+        _node: &NvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_extents_including_effects(
+        &mut self,
+        _node: &ObjectExtentsIncludingEffects,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_relative_horizontal_alignment(
+        &mut self,
+        _node: &RelativeHorizontalAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_relative_vertical_alignment(
+        &mut self,
+        _node: &RelativeVerticalAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_style(
+        &mut self,
+        _node: &ShapeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text(
+        &mut self,
+        _node: &ShapeTextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_simple_positioning_coordinates(
+        &mut self,
+        _node: &SimplePositioningCoordinates,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_square_wrapping(
+        &mut self,
+        _node: &SquareWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_textual_contents_of_shape_linked_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeLinkedTxbx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_textual_contents_of_shape_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeTxbx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_through_wrapping(
+        &mut self,
+        _node: &ThroughWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tight_wrapping(
+        &mut self,
+        _node: &TightWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_and_bottom_wrapping(
+        &mut self,
+        _node: &TopAndBottomWrapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_positioning(
+        &mut self,
+        _node: &VerticalPositioning,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_positioning_content(
+        &mut self,
+        _node: &VerticalPositioningContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_whole_e2o_formatting(
+        &mut self,
+        _node: &WholeE2OFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_ml_drawing_canvas(
+        &mut self,
+        _node: &WordprocessingMLDrawingCanvas,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_ml_shape(
+        &mut self,
+        _node: &WordprocessingMLShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_ml_shape_group(
+        &mut self,
+        _node: &WordprocessingMLShapeGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wrapping_polygon(
+        &mut self,
+        _node: &WrappingPolygon,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wrapping_polygon_line_end_position(
+        &mut self,
+        _node: &WrappingPolygonLineEndPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wrapping_polygon_start(
+        &mut self,
+        _node: &WrappingPolygonStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// 20.4.3.6 `ST_WrapDistance` (Distance from Text): the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1388,6 +2292,283 @@ pub enum VerticalRelativePositioningMember {
     Page,
     Paragraph,
     TopMargin,
+}
+
+/// The hooks of a visitor for the `wp` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::wordprocessing_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn absolute_position_offset(&mut self, _node: &AbsolutePositionOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchor(&mut self, _node: &AnchorContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchor_for_floating_drawing_ml_object(
+        &mut self,
+        _node: &AnchorForFloatingDrawingMLObject,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_formatting(&mut self, _node: &BackgroundFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn body_properties(&mut self, _node: &BodyProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_drawing_ml_non_visual_properties(
+        &mut self,
+        _node: &CommonDrawingMLNonVisualProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_canvas(&mut self, _node: &DrawingCanvasContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_object_non_visual_properties(
+        &mut self,
+        _node: &DrawingObjectNonVisualProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_object_size(&mut self, _node: &DrawingObjectSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphical_object_container(&mut self, _node: &GraphicalObjectContainer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_properties(&mut self, _node: &GroupShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontal_positioning(&mut self, _node: &HorizontalPositioning) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontal_positioning_content(
+        &mut self,
+        _node: &HorizontalPositioningContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inline_drawing_ml_object(&mut self, _node: &InlineDrawingMLObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_text_wrapping(&mut self, _node: &NoTextWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_content_part_drawing_properties(
+        &mut self,
+        _node: &NonVisualContentPartDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_extents_including_effects(
+        &mut self,
+        _node: &ObjectExtentsIncludingEffects,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn relative_horizontal_alignment(
+        &mut self,
+        _node: &RelativeHorizontalAlignment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn relative_vertical_alignment(
+        &mut self,
+        _node: &RelativeVerticalAlignment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text(&mut self, _node: &ShapeTextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn simple_positioning_coordinates(
+        &mut self,
+        _node: &SimplePositioningCoordinates,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn square_wrapping(&mut self, _node: &SquareWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn textual_contents_of_shape_linked_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeLinkedTxbx,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn textual_contents_of_shape_txbx(
+        &mut self,
+        _node: &TextualContentsOfShapeTxbx,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn through_wrapping(&mut self, _node: &ThroughWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tight_wrapping(&mut self, _node: &TightWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_and_bottom_wrapping(&mut self, _node: &TopAndBottomWrapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_positioning(&mut self, _node: &VerticalPositioning) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_positioning_content(
+        &mut self,
+        _node: &VerticalPositioningContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn whole_e2o_formatting(&mut self, _node: &WholeE2OFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_ml_drawing_canvas(
+        &mut self,
+        _node: &WordprocessingMLDrawingCanvas,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_ml_shape(&mut self, _node: &WordprocessingMLShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_ml_shape_group(
+        &mut self,
+        _node: &WordprocessingMLShapeGroup,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wrapping_polygon(&mut self, _node: &WrappingPolygon) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wrapping_polygon_line_end_position(
+        &mut self,
+        _node: &WrappingPolygonLineEndPosition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wrapping_polygon_start(&mut self, _node: &WrappingPolygonStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 20.4.2.40 whole (Whole E2O Formatting): the tag `wp:whole`, schema type `CT_WholeE2oFormatting`.

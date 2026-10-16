@@ -618,11 +618,13 @@ pub fn compress_pic_pr(element: &xml::element::Element) -> super::CompressPicPr 
     node
 }
 
-/// Read `oac:context` into a `Context`.
+/// Read `oac:context` into a `ContextTextCharRangeContext`.
 #[must_use]
-pub fn context(element: &xml::element::Element) -> super::Context {
-    let mut node = super::Context::default();
-    let mut reader = markup::Reader::new(element, &super::CONTEXT_SHAPE);
+pub fn context_text_char_range_context(
+    element: &xml::element::Element,
+) -> super::ContextTextCharRangeContext {
+    let mut node = super::ContextTextCharRangeContext::default();
+    let mut reader = markup::Reader::new(element, &super::CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE);
     for (index, field) in &mut reader {
         match index {
             0 => field.attribute(&mut node.len),

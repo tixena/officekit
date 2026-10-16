@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_OP: Option<NamespaceId> = Some(63);
 const NS_VT: Option<NamespaceId> = Some(96);
@@ -283,6 +287,67 @@ pub(crate) static CUSTOM_FILE_PROPERTY_CONTENT_TAGS: markup::Accept = markup::Ac
     ],
 };
 
+/// The hooks of a context for the `op` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::document_properties_custom` is never asked.
+pub trait Context: markup::Context {
+    fn custom_file_properties(
+        &mut self,
+        _node: &CustomFileProperties,
+    ) -> Option<CustomFileProperties> {
+        None
+    }
+
+    fn custom_file_property(&mut self, _node: &CustomFileProperty) -> Option<CustomFileProperty> {
+        None
+    }
+
+    fn custom_file_property_content(
+        &mut self,
+        _node: &CustomFilePropertyContent,
+    ) -> Option<CustomFilePropertyContent> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_file_properties(
+        &mut self,
+        _node: &CustomFileProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_file_property(
+        &mut self,
+        _node: &CustomFileProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_file_property_content(
+        &mut self,
+        _node: &CustomFilePropertyContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.3.2.1 Properties (Custom File Properties): the tag `op:Properties`, schema type
 /// `CT_Properties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -342,6 +407,28 @@ pub enum CustomFilePropertyContent {
     Ui8(super::document_properties_variant_types::Ui8),
     UnsignedInteger(super::document_properties_variant_types::UnsignedInteger),
     Vector(super::document_properties_variant_types::Vector),
+}
+
+/// The hooks of a visitor for the `op` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::document_properties_custom` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn custom_file_properties(&mut self, _node: &CustomFileProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_file_property(&mut self, _node: &CustomFileProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_file_property_content(
+        &mut self,
+        _node: &CustomFilePropertyContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CustomFileProperties {

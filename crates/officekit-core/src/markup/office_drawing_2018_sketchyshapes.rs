@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2018/sketchyshapes`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_ASK: Option<NamespaceId> = Some(17);
@@ -298,6 +302,145 @@ pub(crate) static LINE_SKETCH_TYPE_PROPERTIES_CONTENT_TAGS: markup::Accept = mar
     ],
 };
 
+/// The hooks of a context for the `ask` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2018_sketchyshapes` is never asked.
+pub trait Context: markup::Context {
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn line_sketch_curved(&mut self, _node: &LineSketchCurved) -> Option<LineSketchCurved> {
+        None
+    }
+
+    fn line_sketch_freehand(&mut self, _node: &LineSketchFreehand) -> Option<LineSketchFreehand> {
+        None
+    }
+
+    fn line_sketch_none(&mut self, _node: &LineSketchNone) -> Option<LineSketchNone> {
+        None
+    }
+
+    fn line_sketch_scribble(&mut self, _node: &LineSketchScribble) -> Option<LineSketchScribble> {
+        None
+    }
+
+    fn line_sketch_style_props(
+        &mut self,
+        _node: &LineSketchStyleProps,
+    ) -> Option<LineSketchStyleProps> {
+        None
+    }
+
+    fn line_sketch_type_properties(
+        &mut self,
+        _node: &LineSketchTypePropertiesContent,
+    ) -> Option<LineSketchTypePropertiesContent> {
+        None
+    }
+
+    fn seed(&mut self, _node: &Seed) -> Option<Seed> {
+        None
+    }
+
+    fn r#type(&mut self, _node: &Type) -> Option<Type> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_curved(
+        &mut self,
+        _node: &LineSketchCurved,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_freehand(
+        &mut self,
+        _node: &LineSketchFreehand,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_none(
+        &mut self,
+        _node: &LineSketchNone,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_scribble(
+        &mut self,
+        _node: &LineSketchScribble,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_style_props(
+        &mut self,
+        _node: &LineSketchStyleProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_sketch_type_properties(
+        &mut self,
+        _node: &LineSketchTypePropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_seed(&mut self, _node: &Seed, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `ask:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -372,6 +515,52 @@ pub struct Seed {
 pub struct Type {
     pub content: Option<Box<LineSketchTypePropertiesContent>>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `ask` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2018_sketchyshapes` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_curved(&mut self, _node: &LineSketchCurved) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_freehand(&mut self, _node: &LineSketchFreehand) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_none(&mut self, _node: &LineSketchNone) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_scribble(&mut self, _node: &LineSketchScribble) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_style_props(&mut self, _node: &LineSketchStyleProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_sketch_type_properties(
+        &mut self,
+        _node: &LineSketchTypePropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn seed(&mut self, _node: &Seed) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#type(&mut self, _node: &Type) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExtLst {

@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2014/11/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_X16: Option<NamespaceId> = Some(124);
 
@@ -266,6 +270,64 @@ pub struct CalculatedTimeColumn {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `x16` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2014_11_main` is never asked.
+pub trait Context: markup::Context {
+    fn calculated_time_column(
+        &mut self,
+        _node: &CalculatedTimeColumn,
+    ) -> Option<CalculatedTimeColumn> {
+        None
+    }
+
+    fn model_time_grouping(&mut self, _node: &ModelTimeGrouping) -> Option<ModelTimeGrouping> {
+        None
+    }
+
+    fn model_time_groupings(&mut self, _node: &ModelTimeGroupings) -> Option<ModelTimeGroupings> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_time_column(
+        &mut self,
+        _node: &CalculatedTimeColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_time_grouping(
+        &mut self,
+        _node: &ModelTimeGrouping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model_time_groupings(
+        &mut self,
+        _node: &ModelTimeGroupings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `x16:modelTimeGrouping`, schema type `CT_ModelTimeGrouping` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -302,6 +364,25 @@ pub enum ModelTimeGroupingContentTypeMember {
 pub struct ModelTimeGroupings {
     pub model_time_grouping: Vec<ModelTimeGrouping>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `x16` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2014_11_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn calculated_time_column(&mut self, _node: &CalculatedTimeColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_time_grouping(&mut self, _node: &ModelTimeGrouping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model_time_groupings(&mut self, _node: &ModelTimeGroupings) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CalculatedTimeColumn {

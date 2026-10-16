@@ -539,10 +539,17 @@ pub fn compress_pic_pr(
     writer.finish()
 }
 
-/// Write a `Context` as its element, `oac:context`.
+/// Write a `ContextTextCharRangeContext` as its element, `oac:context`.
 #[must_use]
-pub fn context(node: &super::Context, scope: &mut markup::Scope) -> xml::element::Element {
-    let mut writer = markup::Writer::new(scope, &super::CONTEXT_SHAPE, &node.unknown);
+pub fn context_text_char_range_context(
+    node: &super::ContextTextCharRangeContext,
+    scope: &mut markup::Scope,
+) -> xml::element::Element {
+    let mut writer = markup::Writer::new(
+        scope,
+        &super::CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE,
+        &node.unknown,
+    );
     writer.attribute(0, &node.len);
     writer.attribute(1, &node.hash);
     writer.finish()

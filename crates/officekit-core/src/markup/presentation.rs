@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/presentationml/2006/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_P: Option<NamespaceId> = Some(64);
@@ -3287,6 +3291,3923 @@ pub struct ContentPart {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `p` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::presentation` is never asked.
+pub trait Context: markup::Context {
+    fn a_guide(&mut self, _node: &AGuide) -> Option<AGuide> {
+        None
+    }
+
+    fn all_slides(&mut self, _node: &AllSlides) -> Option<AllSlides> {
+        None
+    }
+
+    fn animate(&mut self, _node: &Animate) -> Option<Animate> {
+        None
+    }
+
+    fn animate_color_behavior(
+        &mut self,
+        _node: &AnimateColorBehavior,
+    ) -> Option<AnimateColorBehavior> {
+        None
+    }
+
+    fn animate_color_by(&mut self, _node: &AnimateColorByContent) -> Option<AnimateColorByContent> {
+        None
+    }
+
+    fn animate_effect(&mut self, _node: &AnimateEffect) -> Option<AnimateEffect> {
+        None
+    }
+
+    fn animate_motion(&mut self, _node: &AnimateMotion) -> Option<AnimateMotion> {
+        None
+    }
+
+    fn animate_rotation(&mut self, _node: &AnimateRotation) -> Option<AnimateRotation> {
+        None
+    }
+
+    fn animate_scale(&mut self, _node: &AnimateScale) -> Option<AnimateScale> {
+        None
+    }
+
+    fn animation_variant(
+        &mut self,
+        _node: &AnimationVariantContent,
+    ) -> Option<AnimationVariantContent> {
+        None
+    }
+
+    fn attribute_name(&mut self, _node: &AttributeName) -> Option<AttributeName> {
+        None
+    }
+
+    fn attribute_name_list(&mut self, _node: &AttributeNameList) -> Option<AttributeNameList> {
+        None
+    }
+
+    fn audio(&mut self, _node: &Audio) -> Option<Audio> {
+        None
+    }
+
+    fn background(&mut self, _node: &Background) -> Option<Background> {
+        None
+    }
+
+    fn background_properties(
+        &mut self,
+        _node: &BackgroundProperties,
+    ) -> Option<BackgroundProperties> {
+        None
+    }
+
+    fn background_style_reference(
+        &mut self,
+        _node: &BackgroundStyleReference,
+    ) -> Option<BackgroundStyleReference> {
+        None
+    }
+
+    fn blinds_slide_transition(
+        &mut self,
+        _node: &BlindsSlideTransition,
+    ) -> Option<BlindsSlideTransition> {
+        None
+    }
+
+    fn bold_embedded_font(&mut self, _node: &BoldEmbeddedFont) -> Option<BoldEmbeddedFont> {
+        None
+    }
+
+    fn bold_italic_embedded_font(
+        &mut self,
+        _node: &BoldItalicEmbeddedFont,
+    ) -> Option<BoldItalicEmbeddedFont> {
+        None
+    }
+
+    fn boolean_variant(&mut self, _node: &BooleanVariant) -> Option<BooleanVariant> {
+        None
+    }
+
+    fn browse_slide_show_mode(
+        &mut self,
+        _node: &BrowseSlideShowMode,
+    ) -> Option<BrowseSlideShowMode> {
+        None
+    }
+
+    fn build_as_one(&mut self, _node: &BuildAsOne) -> Option<BuildAsOne> {
+        None
+    }
+
+    fn build_diagram(&mut self, _node: &BuildDiagram) -> Option<BuildDiagram> {
+        None
+    }
+
+    fn build_embedded_chart(&mut self, _node: &BuildEmbeddedChart) -> Option<BuildEmbeddedChart> {
+        None
+    }
+
+    fn build_graphics(&mut self, _node: &BuildGraphics) -> Option<BuildGraphics> {
+        None
+    }
+
+    fn build_graphics_content(
+        &mut self,
+        _node: &BuildGraphicsContent,
+    ) -> Option<BuildGraphicsContent> {
+        None
+    }
+
+    fn build_list(&mut self, _node: &BuildList) -> Option<BuildList> {
+        None
+    }
+
+    fn build_list_content(&mut self, _node: &BuildListContent) -> Option<BuildListContent> {
+        None
+    }
+
+    fn build_list_content_items(
+        &mut self,
+        _node: &BuildListContent,
+    ) -> Option<Vec<BuildListContent>> {
+        None
+    }
+
+    fn build_paragraph(&mut self, _node: &BuildParagraph) -> Option<BuildParagraph> {
+        None
+    }
+
+    fn build_sub_elements(&mut self, _node: &BuildSubElements) -> Option<BuildSubElements> {
+        None
+    }
+
+    fn by(&mut self, _node: &By) -> Option<By> {
+        None
+    }
+
+    fn by_tl_point(&mut self, _node: &ByTLPoint) -> Option<ByTLPoint> {
+        None
+    }
+
+    fn character_range(&mut self, _node: &CharacterRange) -> Option<CharacterRange> {
+        None
+    }
+
+    fn checker_slide_transition(
+        &mut self,
+        _node: &CheckerSlideTransition,
+    ) -> Option<CheckerSlideTransition> {
+        None
+    }
+
+    fn children_time_node_list(
+        &mut self,
+        _node: &ChildrenTimeNodeList,
+    ) -> Option<ChildrenTimeNodeList> {
+        None
+    }
+
+    fn circle_slide_transition(
+        &mut self,
+        _node: &CircleSlideTransition,
+    ) -> Option<CircleSlideTransition> {
+        None
+    }
+
+    fn color_mru(&mut self, _node: &ColorMRU) -> Option<ColorMRU> {
+        None
+    }
+
+    fn color_scheme_map(&mut self, _node: &ColorSchemeMap) -> Option<ColorSchemeMap> {
+        None
+    }
+
+    fn color_scheme_map_override(
+        &mut self,
+        _node: &ColorSchemeMapOverride,
+    ) -> Option<ColorSchemeMapOverride> {
+        None
+    }
+
+    fn color_value(&mut self, _node: &ColorValue) -> Option<ColorValue> {
+        None
+    }
+
+    fn comb_slide_transition(
+        &mut self,
+        _node: &CombSlideTransition,
+    ) -> Option<CombSlideTransition> {
+        None
+    }
+
+    fn command(&mut self, _node: &Command) -> Option<Command> {
+        None
+    }
+
+    fn comment(&mut self, _node: &Comment) -> Option<Comment> {
+        None
+    }
+
+    fn comment_author(&mut self, _node: &CommentAuthor) -> Option<CommentAuthor> {
+        None
+    }
+
+    fn comment_list(&mut self, _node: &CommentList) -> Option<CommentList> {
+        None
+    }
+
+    fn comment_position(&mut self, _node: &CommentPosition) -> Option<CommentPosition> {
+        None
+    }
+
+    fn comments_text_content(
+        &mut self,
+        _node: &CommentsTextContent,
+    ) -> Option<CommentsTextContent> {
+        None
+    }
+
+    fn common_behavior(&mut self, _node: &CommonBehavior) -> Option<CommonBehavior> {
+        None
+    }
+
+    fn common_media_node_properties(
+        &mut self,
+        _node: &CommonMediaNodeProperties,
+    ) -> Option<CommonMediaNodeProperties> {
+        None
+    }
+
+    fn common_slide_data(&mut self, _node: &CommonSlideData) -> Option<CommonSlideData> {
+        None
+    }
+
+    fn common_slide_view_properties(
+        &mut self,
+        _node: &CommonSlideViewProperties,
+    ) -> Option<CommonSlideViewProperties> {
+        None
+    }
+
+    fn common_time_node_properties(
+        &mut self,
+        _node: &CommonTimeNodeProperties,
+    ) -> Option<CommonTimeNodeProperties> {
+        None
+    }
+
+    fn common_view_properties(
+        &mut self,
+        _node: &CommonViewProperties,
+    ) -> Option<CommonViewProperties> {
+        None
+    }
+
+    fn condition(&mut self, _node: &Condition) -> Option<Condition> {
+        None
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> Option<ConnectionShape> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn cover_slide_transition(
+        &mut self,
+        _node: &CoverSlideTransition,
+    ) -> Option<CoverSlideTransition> {
+        None
+    }
+
+    fn custom_show(&mut self, _node: &CustomShow) -> Option<CustomShow> {
+        None
+    }
+
+    fn custom_show_custom_show(
+        &mut self,
+        _node: &CustomShowCustomShow,
+    ) -> Option<CustomShowCustomShow> {
+        None
+    }
+
+    fn customer_data(&mut self, _node: &CustomerData) -> Option<CustomerData> {
+        None
+    }
+
+    fn customer_data_list(&mut self, _node: &CustomerDataList) -> Option<CustomerDataList> {
+        None
+    }
+
+    fn customer_data_tags(&mut self, _node: &CustomerDataTags) -> Option<CustomerDataTags> {
+        None
+    }
+
+    fn cut_slide_transition(&mut self, _node: &CutSlideTransition) -> Option<CutSlideTransition> {
+        None
+    }
+
+    fn diamond_slide_transition(
+        &mut self,
+        _node: &DiamondSlideTransition,
+    ) -> Option<DiamondSlideTransition> {
+        None
+    }
+
+    fn dissolve_slide_transition(
+        &mut self,
+        _node: &DissolveSlideTransition,
+    ) -> Option<DissolveSlideTransition> {
+        None
+    }
+
+    fn embedded_chart_element(
+        &mut self,
+        _node: &EmbeddedChartElement,
+    ) -> Option<EmbeddedChartElement> {
+        None
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
+        None
+    }
+
+    fn embedded_font(&mut self, _node: &EmbeddedFont) -> Option<EmbeddedFont> {
+        None
+    }
+
+    fn embedded_font_list(&mut self, _node: &EmbeddedFontList) -> Option<EmbeddedFontList> {
+        None
+    }
+
+    fn embedded_font_name(&mut self, _node: &EmbeddedFontName) -> Option<EmbeddedFontName> {
+        None
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObjectContent) -> Option<EmbeddedObjectContent> {
+        None
+    }
+
+    fn embedded_object_or_control(
+        &mut self,
+        _node: &EmbeddedObjectOrControl,
+    ) -> Option<EmbeddedObjectOrControl> {
+        None
+    }
+
+    fn embedded_objects_and_controls(
+        &mut self,
+        _node: &EmbeddedObjectsAndControls,
+    ) -> Option<EmbeddedObjectsAndControls> {
+        None
+    }
+
+    fn end_conditions_list(&mut self, _node: &EndConditionsList) -> Option<EndConditionsList> {
+        None
+    }
+
+    fn end_sync(&mut self, _node: &EndSync) -> Option<EndSync> {
+        None
+    }
+
+    fn exclusive(&mut self, _node: &Exclusive) -> Option<Exclusive> {
+        None
+    }
+
+    fn extension(&mut self, _node: &Extension) -> Option<Extension> {
+        None
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> Option<ExtensionList> {
+        None
+    }
+
+    fn extension_list_with_modification_flag(
+        &mut self,
+        _node: &ExtensionListWithModificationFlag,
+    ) -> Option<ExtensionListWithModificationFlag> {
+        None
+    }
+
+    fn fade_slide_transition(
+        &mut self,
+        _node: &FadeSlideTransition,
+    ) -> Option<FadeSlideTransition> {
+        None
+    }
+
+    fn float_value(&mut self, _node: &FloatValue) -> Option<FloatValue> {
+        None
+    }
+
+    fn graphic_element(&mut self, _node: &GraphicElement) -> Option<GraphicElement> {
+        None
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
+        None
+    }
+
+    fn grid_spacing(&mut self, _node: &GridSpacing) -> Option<GridSpacing> {
+        None
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> Option<GroupShape> {
+        None
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
+        None
+    }
+
+    fn group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+    ) -> Option<Vec<GroupShapeContent>> {
+        None
+    }
+
+    fn group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+    ) -> Option<GroupShapeProperties> {
+        None
+    }
+
+    fn handout_master(&mut self, _node: &HandoutMaster) -> Option<HandoutMaster> {
+        None
+    }
+
+    fn handout_master_id(&mut self, _node: &HandoutMasterID) -> Option<HandoutMasterID> {
+        None
+    }
+
+    fn header_footer_information_for_a_slide_master(
+        &mut self,
+        _node: &HeaderFooterInformationForASlideMaster,
+    ) -> Option<HeaderFooterInformationForASlideMaster> {
+        None
+    }
+
+    fn hsl(&mut self, _node: &HSL) -> Option<HSL> {
+        None
+    }
+
+    fn html_publishing_properties(
+        &mut self,
+        _node: &HTMLPublishingProperties,
+    ) -> Option<HTMLPublishingProperties> {
+        None
+    }
+
+    fn ink_target(&mut self, _node: &InkTarget) -> Option<InkTarget> {
+        None
+    }
+
+    fn integer(&mut self, _node: &Integer) -> Option<Integer> {
+        None
+    }
+
+    fn italic_embedded_font(&mut self, _node: &ItalicEmbeddedFont) -> Option<ItalicEmbeddedFont> {
+        None
+    }
+
+    fn iterate(&mut self, _node: &Iterate) -> Option<Iterate> {
+        None
+    }
+
+    fn iterate_content(&mut self, _node: &IterateContent) -> Option<IterateContent> {
+        None
+    }
+
+    fn kinsoku_settings(&mut self, _node: &KinsokuSettings) -> Option<KinsokuSettings> {
+        None
+    }
+
+    fn kiosk_slide_show_mode(&mut self, _node: &KioskSlideShowMode) -> Option<KioskSlideShowMode> {
+        None
+    }
+
+    fn linked_object_or_control(
+        &mut self,
+        _node: &LinkedObjectOrControl,
+    ) -> Option<LinkedObjectOrControl> {
+        None
+    }
+
+    fn list_of_comment_authors(
+        &mut self,
+        _node: &ListOfCommentAuthors,
+    ) -> Option<ListOfCommentAuthors> {
+        None
+    }
+
+    fn list_of_controls(&mut self, _node: &ListOfControls) -> Option<ListOfControls> {
+        None
+    }
+
+    fn list_of_custom_shows(&mut self, _node: &ListOfCustomShows) -> Option<ListOfCustomShows> {
+        None
+    }
+
+    fn list_of_guides(&mut self, _node: &ListOfGuides) -> Option<ListOfGuides> {
+        None
+    }
+
+    fn list_of_handout_master_i_ds(
+        &mut self,
+        _node: &ListOfHandoutMasterIDs,
+    ) -> Option<ListOfHandoutMasterIDs> {
+        None
+    }
+
+    fn list_of_notes_master_i_ds(
+        &mut self,
+        _node: &ListOfNotesMasterIDs,
+    ) -> Option<ListOfNotesMasterIDs> {
+        None
+    }
+
+    fn list_of_presentation_slides(
+        &mut self,
+        _node: &ListOfPresentationSlides,
+    ) -> Option<ListOfPresentationSlides> {
+        None
+    }
+
+    fn list_of_presentation_slides_outline_view_slide_list(
+        &mut self,
+        _node: &ListOfPresentationSlidesOutlineViewSlideList,
+    ) -> Option<ListOfPresentationSlidesOutlineViewSlideList> {
+        None
+    }
+
+    fn list_of_slide_i_ds(&mut self, _node: &ListOfSlideIDs) -> Option<ListOfSlideIDs> {
+        None
+    }
+
+    fn list_of_slide_layouts(&mut self, _node: &ListOfSlideLayouts) -> Option<ListOfSlideLayouts> {
+        None
+    }
+
+    fn list_of_slide_master_i_ds(
+        &mut self,
+        _node: &ListOfSlideMasterIDs,
+    ) -> Option<ListOfSlideMasterIDs> {
+        None
+    }
+
+    fn modification_verifier(
+        &mut self,
+        _node: &ModificationVerifier,
+    ) -> Option<ModificationVerifier> {
+        None
+    }
+
+    fn newsflash_slide_transition(
+        &mut self,
+        _node: &NewsflashSlideTransition,
+    ) -> Option<NewsflashSlideTransition> {
+        None
+    }
+
+    fn next_conditions_list(&mut self, _node: &NextConditionsList) -> Option<NextConditionsList> {
+        None
+    }
+
+    fn node_from_color(&mut self, _node: &FromColor) -> Option<FromColor> {
+        None
+    }
+
+    fn node_from_tl_point(&mut self, _node: &FromTLPoint) -> Option<FromTLPoint> {
+        None
+    }
+
+    fn node_to_color(&mut self, _node: &ToColor) -> Option<ToColor> {
+        None
+    }
+
+    fn node_to_tl_anim_variant(&mut self, _node: &ToTLAnimVariant) -> Option<ToTLAnimVariant> {
+        None
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> Option<NonVisualConnectorShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> Option<NonVisualDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+    ) -> Option<NonVisualDrawingPropertiesForAShape> {
+        None
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> Option<NonVisualGraphicFrameDrawingProperties> {
+        None
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> Option<NonVisualGroupShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> Option<NonVisualPictureDrawingProperties> {
+        None
+    }
+
+    fn non_visual_properties(
+        &mut self,
+        _node: &NonVisualProperties,
+    ) -> Option<NonVisualProperties> {
+        None
+    }
+
+    fn non_visual_properties_content(
+        &mut self,
+        _node: &NonVisualPropertiesContent,
+    ) -> Option<NonVisualPropertiesContent> {
+        None
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> Option<NonVisualPropertiesForAConnectionShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> Option<NonVisualPropertiesForAGraphicFrame> {
+        None
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> Option<NonVisualPropertiesForAGroupShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> Option<NonVisualPropertiesForAPicture> {
+        None
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> Option<NonVisualPropertiesForAShape> {
+        None
+    }
+
+    fn normal_view_properties(
+        &mut self,
+        _node: &NormalViewProperties,
+    ) -> Option<NormalViewProperties> {
+        None
+    }
+
+    fn normal_view_restored_left_properties(
+        &mut self,
+        _node: &NormalViewRestoredLeftProperties,
+    ) -> Option<NormalViewRestoredLeftProperties> {
+        None
+    }
+
+    fn normal_view_restored_top_properties(
+        &mut self,
+        _node: &NormalViewRestoredTopProperties,
+    ) -> Option<NormalViewRestoredTopProperties> {
+        None
+    }
+
+    fn notes_master(&mut self, _node: &NotesMaster) -> Option<NotesMaster> {
+        None
+    }
+
+    fn notes_master_id(&mut self, _node: &NotesMasterID) -> Option<NotesMasterID> {
+        None
+    }
+
+    fn notes_slide(&mut self, _node: &NotesSlide) -> Option<NotesSlide> {
+        None
+    }
+
+    fn notes_slide_size(&mut self, _node: &NotesSlideSize) -> Option<NotesSlideSize> {
+        None
+    }
+
+    fn notes_text_style(&mut self, _node: &NotesTextStyle) -> Option<NotesTextStyle> {
+        None
+    }
+
+    fn notes_text_view_properties(
+        &mut self,
+        _node: &NotesTextViewProperties,
+    ) -> Option<NotesTextViewProperties> {
+        None
+    }
+
+    fn notes_view_properties(
+        &mut self,
+        _node: &NotesViewProperties,
+    ) -> Option<NotesViewProperties> {
+        None
+    }
+
+    fn outline_view_properties(
+        &mut self,
+        _node: &OutlineViewProperties,
+    ) -> Option<OutlineViewProperties> {
+        None
+    }
+
+    fn paragraph_text_range(&mut self, _node: &ParagraphTextRange) -> Option<ParagraphTextRange> {
+        None
+    }
+
+    fn parallel_time_node(&mut self, _node: &ParallelTimeNode) -> Option<ParallelTimeNode> {
+        None
+    }
+
+    fn pen_color_for_slide_show(
+        &mut self,
+        _node: &PenColorForSlideShow,
+    ) -> Option<PenColorForSlideShow> {
+        None
+    }
+
+    fn photo_album_information(
+        &mut self,
+        _node: &PhotoAlbumInformation,
+    ) -> Option<PhotoAlbumInformation> {
+        None
+    }
+
+    fn picture(&mut self, _node: &Picture) -> Option<Picture> {
+        None
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
+        None
+    }
+
+    fn placeholder_shape(&mut self, _node: &PlaceholderShape) -> Option<PlaceholderShape> {
+        None
+    }
+
+    fn plus_slide_transition(
+        &mut self,
+        _node: &PlusSlideTransition,
+    ) -> Option<PlusSlideTransition> {
+        None
+    }
+
+    fn presentation(&mut self, _node: &Presentation) -> Option<Presentation> {
+        None
+    }
+
+    fn presentation_default_text_style(
+        &mut self,
+        _node: &PresentationDefaultTextStyle,
+    ) -> Option<PresentationDefaultTextStyle> {
+        None
+    }
+
+    fn presentation_slide(&mut self, _node: &PresentationSlide) -> Option<PresentationSlide> {
+        None
+    }
+
+    fn presentation_slide_outline_view_slide_entry(
+        &mut self,
+        _node: &PresentationSlideOutlineViewSlideEntry,
+    ) -> Option<PresentationSlideOutlineViewSlideEntry> {
+        None
+    }
+
+    fn presentation_slide_size(
+        &mut self,
+        _node: &PresentationSlideSize,
+    ) -> Option<PresentationSlideSize> {
+        None
+    }
+
+    fn presentation_slide_slide(
+        &mut self,
+        _node: &PresentationSlideSlide,
+    ) -> Option<PresentationSlideSlide> {
+        None
+    }
+
+    fn presentation_wide_properties(
+        &mut self,
+        _node: &PresentationWideProperties,
+    ) -> Option<PresentationWideProperties> {
+        None
+    }
+
+    fn presentation_wide_show_properties(
+        &mut self,
+        _node: &PresentationWideShowProperties,
+    ) -> Option<PresentationWideShowProperties> {
+        None
+    }
+
+    fn presentation_wide_view_properties(
+        &mut self,
+        _node: &PresentationWideViewProperties,
+    ) -> Option<PresentationWideViewProperties> {
+        None
+    }
+
+    fn presenter_slide_show_mode(
+        &mut self,
+        _node: &PresenterSlideShowMode,
+    ) -> Option<PresenterSlideShowMode> {
+        None
+    }
+
+    fn previous_conditions_list(
+        &mut self,
+        _node: &PreviousConditionsList,
+    ) -> Option<PreviousConditionsList> {
+        None
+    }
+
+    fn printing_properties(&mut self, _node: &PrintingProperties) -> Option<PrintingProperties> {
+        None
+    }
+
+    fn programmable_extensibility_tag(
+        &mut self,
+        _node: &ProgrammableExtensibilityTag,
+    ) -> Option<ProgrammableExtensibilityTag> {
+        None
+    }
+
+    fn programmable_tab_list(
+        &mut self,
+        _node: &ProgrammableTabList,
+    ) -> Option<ProgrammableTabList> {
+        None
+    }
+
+    fn progress(&mut self, _node: &Progress) -> Option<Progress> {
+        None
+    }
+
+    fn pull_slide_transition(
+        &mut self,
+        _node: &PullSlideTransition,
+    ) -> Option<PullSlideTransition> {
+        None
+    }
+
+    fn push_slide_transition(
+        &mut self,
+        _node: &PushSlideTransition,
+    ) -> Option<PushSlideTransition> {
+        None
+    }
+
+    fn random_bar_slide_transition(
+        &mut self,
+        _node: &RandomBarSlideTransition,
+    ) -> Option<RandomBarSlideTransition> {
+        None
+    }
+
+    fn random_slide_transition(
+        &mut self,
+        _node: &RandomSlideTransition,
+    ) -> Option<RandomSlideTransition> {
+        None
+    }
+
+    fn regular_embedded_font(
+        &mut self,
+        _node: &RegularEmbeddedFont,
+    ) -> Option<RegularEmbeddedFont> {
+        None
+    }
+
+    fn rgb(&mut self, _node: &RGB) -> Option<RGB> {
+        None
+    }
+
+    fn rotation_center(&mut self, _node: &RotationCenter) -> Option<RotationCenter> {
+        None
+    }
+
+    fn runtime_node_trigger_choice(
+        &mut self,
+        _node: &RuntimeNodeTriggerChoice,
+    ) -> Option<RuntimeNodeTriggerChoice> {
+        None
+    }
+
+    fn sequence_time_node(&mut self, _node: &SequenceTimeNode) -> Option<SequenceTimeNode> {
+        None
+    }
+
+    fn set_time_node_behavior(
+        &mut self,
+        _node: &SetTimeNodeBehavior,
+    ) -> Option<SetTimeNodeBehavior> {
+        None
+    }
+
+    fn shape(&mut self, _node: &Shape) -> Option<Shape> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
+        None
+    }
+
+    fn shape_target(&mut self, _node: &ShapeTarget) -> Option<ShapeTarget> {
+        None
+    }
+
+    fn shape_target_content(&mut self, _node: &ShapeTargetContent) -> Option<ShapeTargetContent> {
+        None
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> Option<ShapeTextBody> {
+        None
+    }
+
+    fn shape_tree(&mut self, _node: &ShapeTree) -> Option<ShapeTree> {
+        None
+    }
+
+    fn show_type(&mut self, _node: &ShowTypeContent) -> Option<ShowTypeContent> {
+        None
+    }
+
+    fn slide_background(&mut self, _node: &SlideBackground) -> Option<SlideBackground> {
+        None
+    }
+
+    fn slide_background_content(
+        &mut self,
+        _node: &SlideBackgroundContent,
+    ) -> Option<SlideBackgroundContent> {
+        None
+    }
+
+    fn slide_id(&mut self, _node: &SlideID) -> Option<SlideID> {
+        None
+    }
+
+    fn slide_layout(&mut self, _node: &SlideLayout) -> Option<SlideLayout> {
+        None
+    }
+
+    fn slide_layout_id(&mut self, _node: &SlideLayoutId) -> Option<SlideLayoutId> {
+        None
+    }
+
+    fn slide_list(&mut self, _node: &SlideListContent) -> Option<SlideListContent> {
+        None
+    }
+
+    fn slide_master(&mut self, _node: &SlideMaster) -> Option<SlideMaster> {
+        None
+    }
+
+    fn slide_master_body_text_style(
+        &mut self,
+        _node: &SlideMasterBodyTextStyle,
+    ) -> Option<SlideMasterBodyTextStyle> {
+        None
+    }
+
+    fn slide_master_id(&mut self, _node: &SlideMasterID) -> Option<SlideMasterID> {
+        None
+    }
+
+    fn slide_master_other_text_style(
+        &mut self,
+        _node: &SlideMasterOtherTextStyle,
+    ) -> Option<SlideMasterOtherTextStyle> {
+        None
+    }
+
+    fn slide_master_text_styles(
+        &mut self,
+        _node: &SlideMasterTextStyles,
+    ) -> Option<SlideMasterTextStyles> {
+        None
+    }
+
+    fn slide_master_title_text_style(
+        &mut self,
+        _node: &SlideMasterTitleTextStyle,
+    ) -> Option<SlideMasterTitleTextStyle> {
+        None
+    }
+
+    fn slide_range(&mut self, _node: &SlideRange) -> Option<SlideRange> {
+        None
+    }
+
+    fn slide_sorter_view_properties(
+        &mut self,
+        _node: &SlideSorterViewProperties,
+    ) -> Option<SlideSorterViewProperties> {
+        None
+    }
+
+    fn slide_synchronization_properties(
+        &mut self,
+        _node: &SlideSynchronizationProperties,
+    ) -> Option<SlideSynchronizationProperties> {
+        None
+    }
+
+    fn slide_target(&mut self, _node: &SlideTarget) -> Option<SlideTarget> {
+        None
+    }
+
+    fn slide_timing_information(
+        &mut self,
+        _node: &SlideTimingInformation,
+    ) -> Option<SlideTimingInformation> {
+        None
+    }
+
+    fn slide_transition(
+        &mut self,
+        _node: &SlideTransitionContent,
+    ) -> Option<SlideTransitionContent> {
+        None
+    }
+
+    fn slide_transition_for_a_slide_layout(
+        &mut self,
+        _node: &SlideTransitionForASlideLayout,
+    ) -> Option<SlideTransitionForASlideLayout> {
+        None
+    }
+
+    fn slide_view_properties(
+        &mut self,
+        _node: &SlideViewProperties,
+    ) -> Option<SlideViewProperties> {
+        None
+    }
+
+    fn smart_tags(&mut self, _node: &SmartTags) -> Option<SmartTags> {
+        None
+    }
+
+    fn sound(&mut self, _node: &Sound) -> Option<Sound> {
+        None
+    }
+
+    fn sound_action(&mut self, _node: &SoundAction) -> Option<SoundAction> {
+        None
+    }
+
+    fn sound_action_content(&mut self, _node: &SoundActionContent) -> Option<SoundActionContent> {
+        None
+    }
+
+    fn sound_target(&mut self, _node: &SoundTarget) -> Option<SoundTarget> {
+        None
+    }
+
+    fn split_slide_transition(
+        &mut self,
+        _node: &SplitSlideTransition,
+    ) -> Option<SplitSlideTransition> {
+        None
+    }
+
+    fn start_conditions_list(
+        &mut self,
+        _node: &StartConditionsList,
+    ) -> Option<StartConditionsList> {
+        None
+    }
+
+    fn start_sound_action(&mut self, _node: &StartSoundAction) -> Option<StartSoundAction> {
+        None
+    }
+
+    fn stop_sound_action(&mut self, _node: &StopSoundAction) -> Option<StopSoundAction> {
+        None
+    }
+
+    fn string_value(&mut self, _node: &StringValue) -> Option<StringValue> {
+        None
+    }
+
+    fn strips_slide_transition(
+        &mut self,
+        _node: &StripsSlideTransition,
+    ) -> Option<StripsSlideTransition> {
+        None
+    }
+
+    fn sub_time_nodes_list(&mut self, _node: &SubTimeNodesList) -> Option<SubTimeNodesList> {
+        None
+    }
+
+    fn subshape(&mut self, _node: &Subshape) -> Option<Subshape> {
+        None
+    }
+
+    fn target_element(&mut self, _node: &TargetElement) -> Option<TargetElement> {
+        None
+    }
+
+    fn target_element_content(
+        &mut self,
+        _node: &TargetElementContent,
+    ) -> Option<TargetElementContent> {
+        None
+    }
+
+    fn template_effects_tmpl(
+        &mut self,
+        _node: &TemplateEffectsTmpl,
+    ) -> Option<TemplateEffectsTmpl> {
+        None
+    }
+
+    fn template_effects_tmpl_lst(
+        &mut self,
+        _node: &TemplateEffectsTmplLst,
+    ) -> Option<TemplateEffectsTmplLst> {
+        None
+    }
+
+    fn text_element(&mut self, _node: &TextElement) -> Option<TextElement> {
+        None
+    }
+
+    fn text_element_content(&mut self, _node: &TextElementContent) -> Option<TextElementContent> {
+        None
+    }
+
+    fn time_absolute(&mut self, _node: &TimeAbsolute) -> Option<TimeAbsolute> {
+        None
+    }
+
+    fn time_animate_value(&mut self, _node: &TimeAnimateValue) -> Option<TimeAnimateValue> {
+        None
+    }
+
+    fn time_animated_value_list(
+        &mut self,
+        _node: &TimeAnimatedValueList,
+    ) -> Option<TimeAnimatedValueList> {
+        None
+    }
+
+    fn time_condition(&mut self, _node: &TimeConditionContent) -> Option<TimeConditionContent> {
+        None
+    }
+
+    fn time_node(&mut self, _node: &TimeNode) -> Option<TimeNode> {
+        None
+    }
+
+    fn time_node_list(&mut self, _node: &TimeNodeList) -> Option<TimeNodeList> {
+        None
+    }
+
+    fn time_node_list_content(
+        &mut self,
+        _node: &TimeNodeListContent,
+    ) -> Option<TimeNodeListContent> {
+        None
+    }
+
+    fn time_node_list_content_items(
+        &mut self,
+        _node: &TimeNodeListContent,
+    ) -> Option<Vec<TimeNodeListContent>> {
+        None
+    }
+
+    fn time_percentage(&mut self, _node: &TimePercentage) -> Option<TimePercentage> {
+        None
+    }
+
+    fn to(&mut self, _node: &To) -> Option<To> {
+        None
+    }
+
+    fn value(&mut self, _node: &Value) -> Option<Value> {
+        None
+    }
+
+    fn video(&mut self, _node: &Video) -> Option<Video> {
+        None
+    }
+
+    fn view_origin(&mut self, _node: &ViewOrigin) -> Option<ViewOrigin> {
+        None
+    }
+
+    fn view_scale(&mut self, _node: &ViewScale) -> Option<ViewScale> {
+        None
+    }
+
+    fn web_properties(&mut self, _node: &WebProperties) -> Option<WebProperties> {
+        None
+    }
+
+    fn wedge_slide_transition(
+        &mut self,
+        _node: &WedgeSlideTransition,
+    ) -> Option<WedgeSlideTransition> {
+        None
+    }
+
+    fn wheel_slide_transition(
+        &mut self,
+        _node: &WheelSlideTransition,
+    ) -> Option<WheelSlideTransition> {
+        None
+    }
+
+    fn wipe_slide_transition(
+        &mut self,
+        _node: &WipeSlideTransition,
+    ) -> Option<WipeSlideTransition> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_a_guide(&mut self, _node: &AGuide, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_all_slides(
+        &mut self,
+        _node: &AllSlides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate(&mut self, _node: &Animate, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_color_behavior(
+        &mut self,
+        _node: &AnimateColorBehavior,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_color_by(
+        &mut self,
+        _node: &AnimateColorByContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_effect(
+        &mut self,
+        _node: &AnimateEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_motion(
+        &mut self,
+        _node: &AnimateMotion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_rotation(
+        &mut self,
+        _node: &AnimateRotation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animate_scale(
+        &mut self,
+        _node: &AnimateScale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animation_variant(
+        &mut self,
+        _node: &AnimationVariantContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attribute_name(
+        &mut self,
+        _node: &AttributeName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attribute_name_list(
+        &mut self,
+        _node: &AttributeNameList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio(&mut self, _node: &Audio, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background(
+        &mut self,
+        _node: &Background,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_properties(
+        &mut self,
+        _node: &BackgroundProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_style_reference(
+        &mut self,
+        _node: &BackgroundStyleReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blinds_slide_transition(
+        &mut self,
+        _node: &BlindsSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold_embedded_font(
+        &mut self,
+        _node: &BoldEmbeddedFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold_italic_embedded_font(
+        &mut self,
+        _node: &BoldItalicEmbeddedFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_boolean_variant(
+        &mut self,
+        _node: &BooleanVariant,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_browse_slide_show_mode(
+        &mut self,
+        _node: &BrowseSlideShowMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_as_one(
+        &mut self,
+        _node: &BuildAsOne,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_diagram(
+        &mut self,
+        _node: &BuildDiagram,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_embedded_chart(
+        &mut self,
+        _node: &BuildEmbeddedChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_graphics(
+        &mut self,
+        _node: &BuildGraphics,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_graphics_content(
+        &mut self,
+        _node: &BuildGraphicsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_list(
+        &mut self,
+        _node: &BuildList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_list_content(
+        &mut self,
+        _node: &BuildListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_list_content_items(
+        &mut self,
+        _node: &BuildListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_paragraph(
+        &mut self,
+        _node: &BuildParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_sub_elements(
+        &mut self,
+        _node: &BuildSubElements,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_by(&mut self, _node: &By, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_by_tl_point(
+        &mut self,
+        _node: &ByTLPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_range(
+        &mut self,
+        _node: &CharacterRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checker_slide_transition(
+        &mut self,
+        _node: &CheckerSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_children_time_node_list(
+        &mut self,
+        _node: &ChildrenTimeNodeList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_circle_slide_transition(
+        &mut self,
+        _node: &CircleSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_mru(
+        &mut self,
+        _node: &ColorMRU,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_scheme_map(
+        &mut self,
+        _node: &ColorSchemeMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_scheme_map_override(
+        &mut self,
+        _node: &ColorSchemeMapOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_value(
+        &mut self,
+        _node: &ColorValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comb_slide_transition(
+        &mut self,
+        _node: &CombSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_command(&mut self, _node: &Command, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_author(
+        &mut self,
+        _node: &CommentAuthor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_list(
+        &mut self,
+        _node: &CommentList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_position(
+        &mut self,
+        _node: &CommentPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_text_content(
+        &mut self,
+        _node: &CommentsTextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_behavior(
+        &mut self,
+        _node: &CommonBehavior,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_media_node_properties(
+        &mut self,
+        _node: &CommonMediaNodeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_slide_data(
+        &mut self,
+        _node: &CommonSlideData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_slide_view_properties(
+        &mut self,
+        _node: &CommonSlideViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_time_node_properties(
+        &mut self,
+        _node: &CommonTimeNodeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_common_view_properties(
+        &mut self,
+        _node: &CommonViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_condition(
+        &mut self,
+        _node: &Condition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_shape(
+        &mut self,
+        _node: &ConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cover_slide_transition(
+        &mut self,
+        _node: &CoverSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_show(
+        &mut self,
+        _node: &CustomShow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_show_custom_show(
+        &mut self,
+        _node: &CustomShowCustomShow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_customer_data(
+        &mut self,
+        _node: &CustomerData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_customer_data_list(
+        &mut self,
+        _node: &CustomerDataList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_customer_data_tags(
+        &mut self,
+        _node: &CustomerDataTags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cut_slide_transition(
+        &mut self,
+        _node: &CutSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diamond_slide_transition(
+        &mut self,
+        _node: &DiamondSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dissolve_slide_transition(
+        &mut self,
+        _node: &DissolveSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_chart_element(
+        &mut self,
+        _node: &EmbeddedChartElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_control(
+        &mut self,
+        _node: &EmbeddedControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_font(
+        &mut self,
+        _node: &EmbeddedFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_font_list(
+        &mut self,
+        _node: &EmbeddedFontList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_font_name(
+        &mut self,
+        _node: &EmbeddedFontName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object(
+        &mut self,
+        _node: &EmbeddedObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_or_control(
+        &mut self,
+        _node: &EmbeddedObjectOrControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_objects_and_controls(
+        &mut self,
+        _node: &EmbeddedObjectsAndControls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_end_conditions_list(
+        &mut self,
+        _node: &EndConditionsList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_end_sync(
+        &mut self,
+        _node: &EndSync,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_exclusive(
+        &mut self,
+        _node: &Exclusive,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension(
+        &mut self,
+        _node: &Extension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension_list(
+        &mut self,
+        _node: &ExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension_list_with_modification_flag(
+        &mut self,
+        _node: &ExtensionListWithModificationFlag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fade_slide_transition(
+        &mut self,
+        _node: &FadeSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_float_value(
+        &mut self,
+        _node: &FloatValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_element(
+        &mut self,
+        _node: &GraphicElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame(
+        &mut self,
+        _node: &GraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_spacing(
+        &mut self,
+        _node: &GridSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape(
+        &mut self,
+        _node: &GroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_handout_master(
+        &mut self,
+        _node: &HandoutMaster,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_handout_master_id(
+        &mut self,
+        _node: &HandoutMasterID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_footer_information_for_a_slide_master(
+        &mut self,
+        _node: &HeaderFooterInformationForASlideMaster,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hsl(&mut self, _node: &HSL, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_html_publishing_properties(
+        &mut self,
+        _node: &HTMLPublishingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ink_target(
+        &mut self,
+        _node: &InkTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_integer(&mut self, _node: &Integer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_italic_embedded_font(
+        &mut self,
+        _node: &ItalicEmbeddedFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_iterate(&mut self, _node: &Iterate, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_iterate_content(
+        &mut self,
+        _node: &IterateContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_kinsoku_settings(
+        &mut self,
+        _node: &KinsokuSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_kiosk_slide_show_mode(
+        &mut self,
+        _node: &KioskSlideShowMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_object_or_control(
+        &mut self,
+        _node: &LinkedObjectOrControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_comment_authors(
+        &mut self,
+        _node: &ListOfCommentAuthors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_controls(
+        &mut self,
+        _node: &ListOfControls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_custom_shows(
+        &mut self,
+        _node: &ListOfCustomShows,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_guides(
+        &mut self,
+        _node: &ListOfGuides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_handout_master_i_ds(
+        &mut self,
+        _node: &ListOfHandoutMasterIDs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_notes_master_i_ds(
+        &mut self,
+        _node: &ListOfNotesMasterIDs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_presentation_slides(
+        &mut self,
+        _node: &ListOfPresentationSlides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_presentation_slides_outline_view_slide_list(
+        &mut self,
+        _node: &ListOfPresentationSlidesOutlineViewSlideList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_slide_i_ds(
+        &mut self,
+        _node: &ListOfSlideIDs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_slide_layouts(
+        &mut self,
+        _node: &ListOfSlideLayouts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_slide_master_i_ds(
+        &mut self,
+        _node: &ListOfSlideMasterIDs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_modification_verifier(
+        &mut self,
+        _node: &ModificationVerifier,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_newsflash_slide_transition(
+        &mut self,
+        _node: &NewsflashSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_next_conditions_list(
+        &mut self,
+        _node: &NextConditionsList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_node_from_color(
+        &mut self,
+        _node: &FromColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_node_from_tl_point(
+        &mut self,
+        _node: &FromTLPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_node_to_color(
+        &mut self,
+        _node: &ToColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_node_to_tl_anim_variant(
+        &mut self,
+        _node: &ToTLAnimVariant,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties(
+        &mut self,
+        _node: &NonVisualProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_content(
+        &mut self,
+        _node: &NonVisualPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal_view_properties(
+        &mut self,
+        _node: &NormalViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal_view_restored_left_properties(
+        &mut self,
+        _node: &NormalViewRestoredLeftProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal_view_restored_top_properties(
+        &mut self,
+        _node: &NormalViewRestoredTopProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_master(
+        &mut self,
+        _node: &NotesMaster,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_master_id(
+        &mut self,
+        _node: &NotesMasterID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_slide(
+        &mut self,
+        _node: &NotesSlide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_slide_size(
+        &mut self,
+        _node: &NotesSlideSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_text_style(
+        &mut self,
+        _node: &NotesTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_text_view_properties(
+        &mut self,
+        _node: &NotesTextViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_notes_view_properties(
+        &mut self,
+        _node: &NotesViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outline_view_properties(
+        &mut self,
+        _node: &OutlineViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_text_range(
+        &mut self,
+        _node: &ParagraphTextRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parallel_time_node(
+        &mut self,
+        _node: &ParallelTimeNode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pen_color_for_slide_show(
+        &mut self,
+        _node: &PenColorForSlideShow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_photo_album_information(
+        &mut self,
+        _node: &PhotoAlbumInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_fill(
+        &mut self,
+        _node: &PictureFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_placeholder_shape(
+        &mut self,
+        _node: &PlaceholderShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plus_slide_transition(
+        &mut self,
+        _node: &PlusSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation(
+        &mut self,
+        _node: &Presentation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_default_text_style(
+        &mut self,
+        _node: &PresentationDefaultTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_slide(
+        &mut self,
+        _node: &PresentationSlide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_slide_outline_view_slide_entry(
+        &mut self,
+        _node: &PresentationSlideOutlineViewSlideEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_slide_size(
+        &mut self,
+        _node: &PresentationSlideSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_slide_slide(
+        &mut self,
+        _node: &PresentationSlideSlide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_wide_properties(
+        &mut self,
+        _node: &PresentationWideProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_wide_show_properties(
+        &mut self,
+        _node: &PresentationWideShowProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_wide_view_properties(
+        &mut self,
+        _node: &PresentationWideViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presenter_slide_show_mode(
+        &mut self,
+        _node: &PresenterSlideShowMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_conditions_list(
+        &mut self,
+        _node: &PreviousConditionsList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_printing_properties(
+        &mut self,
+        _node: &PrintingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_programmable_extensibility_tag(
+        &mut self,
+        _node: &ProgrammableExtensibilityTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_programmable_tab_list(
+        &mut self,
+        _node: &ProgrammableTabList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_progress(
+        &mut self,
+        _node: &Progress,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pull_slide_transition(
+        &mut self,
+        _node: &PullSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_push_slide_transition(
+        &mut self,
+        _node: &PushSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_random_bar_slide_transition(
+        &mut self,
+        _node: &RandomBarSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_random_slide_transition(
+        &mut self,
+        _node: &RandomSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_regular_embedded_font(
+        &mut self,
+        _node: &RegularEmbeddedFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rgb(&mut self, _node: &RGB, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rotation_center(
+        &mut self,
+        _node: &RotationCenter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_runtime_node_trigger_choice(
+        &mut self,
+        _node: &RuntimeNodeTriggerChoice,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sequence_time_node(
+        &mut self,
+        _node: &SequenceTimeNode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_time_node_behavior(
+        &mut self,
+        _node: &SetTimeNodeBehavior,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_style(
+        &mut self,
+        _node: &ShapeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_target(
+        &mut self,
+        _node: &ShapeTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_target_content(
+        &mut self,
+        _node: &ShapeTargetContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text_body(
+        &mut self,
+        _node: &ShapeTextBody,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_tree(
+        &mut self,
+        _node: &ShapeTree,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_type(
+        &mut self,
+        _node: &ShowTypeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_background(
+        &mut self,
+        _node: &SlideBackground,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_background_content(
+        &mut self,
+        _node: &SlideBackgroundContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_id(
+        &mut self,
+        _node: &SlideID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_layout(
+        &mut self,
+        _node: &SlideLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_layout_id(
+        &mut self,
+        _node: &SlideLayoutId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_list(
+        &mut self,
+        _node: &SlideListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master(
+        &mut self,
+        _node: &SlideMaster,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master_body_text_style(
+        &mut self,
+        _node: &SlideMasterBodyTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master_id(
+        &mut self,
+        _node: &SlideMasterID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master_other_text_style(
+        &mut self,
+        _node: &SlideMasterOtherTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master_text_styles(
+        &mut self,
+        _node: &SlideMasterTextStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_master_title_text_style(
+        &mut self,
+        _node: &SlideMasterTitleTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_range(
+        &mut self,
+        _node: &SlideRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_sorter_view_properties(
+        &mut self,
+        _node: &SlideSorterViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_synchronization_properties(
+        &mut self,
+        _node: &SlideSynchronizationProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_target(
+        &mut self,
+        _node: &SlideTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_timing_information(
+        &mut self,
+        _node: &SlideTimingInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_transition(
+        &mut self,
+        _node: &SlideTransitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_transition_for_a_slide_layout(
+        &mut self,
+        _node: &SlideTransitionForASlideLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_slide_view_properties(
+        &mut self,
+        _node: &SlideViewProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tags(
+        &mut self,
+        _node: &SmartTags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sound(&mut self, _node: &Sound, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sound_action(
+        &mut self,
+        _node: &SoundAction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sound_action_content(
+        &mut self,
+        _node: &SoundActionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sound_target(
+        &mut self,
+        _node: &SoundTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_slide_transition(
+        &mut self,
+        _node: &SplitSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_start_conditions_list(
+        &mut self,
+        _node: &StartConditionsList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_start_sound_action(
+        &mut self,
+        _node: &StartSoundAction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_stop_sound_action(
+        &mut self,
+        _node: &StopSoundAction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_value(
+        &mut self,
+        _node: &StringValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_strips_slide_transition(
+        &mut self,
+        _node: &StripsSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sub_time_nodes_list(
+        &mut self,
+        _node: &SubTimeNodesList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subshape(
+        &mut self,
+        _node: &Subshape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_target_element(
+        &mut self,
+        _node: &TargetElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_target_element_content(
+        &mut self,
+        _node: &TargetElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_template_effects_tmpl(
+        &mut self,
+        _node: &TemplateEffectsTmpl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_template_effects_tmpl_lst(
+        &mut self,
+        _node: &TemplateEffectsTmplLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_element(
+        &mut self,
+        _node: &TextElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_element_content(
+        &mut self,
+        _node: &TextElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_absolute(
+        &mut self,
+        _node: &TimeAbsolute,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_animate_value(
+        &mut self,
+        _node: &TimeAnimateValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_animated_value_list(
+        &mut self,
+        _node: &TimeAnimatedValueList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_condition(
+        &mut self,
+        _node: &TimeConditionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_node(
+        &mut self,
+        _node: &TimeNode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_node_list(
+        &mut self,
+        _node: &TimeNodeList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_node_list_content(
+        &mut self,
+        _node: &TimeNodeListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_node_list_content_items(
+        &mut self,
+        _node: &TimeNodeListContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_time_percentage(
+        &mut self,
+        _node: &TimePercentage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_to(&mut self, _node: &To, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value(&mut self, _node: &Value, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_video(&mut self, _node: &Video, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_origin(
+        &mut self,
+        _node: &ViewOrigin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_scale(
+        &mut self,
+        _node: &ViewScale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_properties(
+        &mut self,
+        _node: &WebProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wedge_slide_transition(
+        &mut self,
+        _node: &WedgeSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wheel_slide_transition(
+        &mut self,
+        _node: &WheelSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wipe_slide_transition(
+        &mut self,
+        _node: &WipeSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_zoom_slide_transition(
+        &mut self,
+        _node: &ZoomSlideTransition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+
+    fn zoom_slide_transition(
+        &mut self,
+        _node: &ZoomSlideTransition,
+    ) -> Option<ZoomSlideTransition> {
+        None
+    }
+}
+
 /// 19.5.32 cover (Cover Slide Transition): the tag `p:cover`, schema type
 /// `CT_EightDirectionTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -5918,6 +9839,1073 @@ pub struct ViewScale {
     pub horizontal_ratio: Box<super::drawing::HorizontalRatio>,
     pub unknown: markup::Unknown,
     pub vertical_ratio: Box<super::drawing::VerticalRatio>,
+}
+
+/// The hooks of a visitor for the `p` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::presentation` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn a_guide(&mut self, _node: &AGuide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn all_slides(&mut self, _node: &AllSlides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate(&mut self, _node: &Animate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_color_behavior(&mut self, _node: &AnimateColorBehavior) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_color_by(&mut self, _node: &AnimateColorByContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_effect(&mut self, _node: &AnimateEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_motion(&mut self, _node: &AnimateMotion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_rotation(&mut self, _node: &AnimateRotation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animate_scale(&mut self, _node: &AnimateScale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animation_variant(&mut self, _node: &AnimationVariantContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attribute_name(&mut self, _node: &AttributeName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attribute_name_list(&mut self, _node: &AttributeNameList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio(&mut self, _node: &Audio) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background(&mut self, _node: &Background) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_properties(&mut self, _node: &BackgroundProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_style_reference(&mut self, _node: &BackgroundStyleReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blinds_slide_transition(&mut self, _node: &BlindsSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold_embedded_font(&mut self, _node: &BoldEmbeddedFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold_italic_embedded_font(&mut self, _node: &BoldItalicEmbeddedFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn boolean_variant(&mut self, _node: &BooleanVariant) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn browse_slide_show_mode(&mut self, _node: &BrowseSlideShowMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_as_one(&mut self, _node: &BuildAsOne) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_diagram(&mut self, _node: &BuildDiagram) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_embedded_chart(&mut self, _node: &BuildEmbeddedChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_graphics(&mut self, _node: &BuildGraphics) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_graphics_content(&mut self, _node: &BuildGraphicsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_list(&mut self, _node: &BuildList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_list_content(&mut self, _node: &BuildListContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_paragraph(&mut self, _node: &BuildParagraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_sub_elements(&mut self, _node: &BuildSubElements) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn by(&mut self, _node: &By) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn by_tl_point(&mut self, _node: &ByTLPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_range(&mut self, _node: &CharacterRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checker_slide_transition(&mut self, _node: &CheckerSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn children_time_node_list(&mut self, _node: &ChildrenTimeNodeList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn circle_slide_transition(&mut self, _node: &CircleSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_mru(&mut self, _node: &ColorMRU) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_scheme_map(&mut self, _node: &ColorSchemeMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_scheme_map_override(&mut self, _node: &ColorSchemeMapOverride) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_value(&mut self, _node: &ColorValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comb_slide_transition(&mut self, _node: &CombSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn command(&mut self, _node: &Command) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment(&mut self, _node: &Comment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_author(&mut self, _node: &CommentAuthor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_list(&mut self, _node: &CommentList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_position(&mut self, _node: &CommentPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_text_content(&mut self, _node: &CommentsTextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_behavior(&mut self, _node: &CommonBehavior) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_media_node_properties(
+        &mut self,
+        _node: &CommonMediaNodeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_slide_data(&mut self, _node: &CommonSlideData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_slide_view_properties(
+        &mut self,
+        _node: &CommonSlideViewProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_time_node_properties(&mut self, _node: &CommonTimeNodeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn common_view_properties(&mut self, _node: &CommonViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn condition(&mut self, _node: &Condition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cover_slide_transition(&mut self, _node: &CoverSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_show(&mut self, _node: &CustomShow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_show_custom_show(&mut self, _node: &CustomShowCustomShow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn customer_data(&mut self, _node: &CustomerData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn customer_data_list(&mut self, _node: &CustomerDataList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn customer_data_tags(&mut self, _node: &CustomerDataTags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cut_slide_transition(&mut self, _node: &CutSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diamond_slide_transition(&mut self, _node: &DiamondSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dissolve_slide_transition(&mut self, _node: &DissolveSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_chart_element(&mut self, _node: &EmbeddedChartElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_font(&mut self, _node: &EmbeddedFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_font_list(&mut self, _node: &EmbeddedFontList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_font_name(&mut self, _node: &EmbeddedFontName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_or_control(&mut self, _node: &EmbeddedObjectOrControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_objects_and_controls(
+        &mut self,
+        _node: &EmbeddedObjectsAndControls,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn end_conditions_list(&mut self, _node: &EndConditionsList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn end_sync(&mut self, _node: &EndSync) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn exclusive(&mut self, _node: &Exclusive) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension(&mut self, _node: &Extension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension_list_with_modification_flag(
+        &mut self,
+        _node: &ExtensionListWithModificationFlag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fade_slide_transition(&mut self, _node: &FadeSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn float_value(&mut self, _node: &FloatValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_element(&mut self, _node: &GraphicElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_spacing(&mut self, _node: &GridSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_properties(&mut self, _node: &GroupShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn handout_master(&mut self, _node: &HandoutMaster) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn handout_master_id(&mut self, _node: &HandoutMasterID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_footer_information_for_a_slide_master(
+        &mut self,
+        _node: &HeaderFooterInformationForASlideMaster,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hsl(&mut self, _node: &HSL) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn html_publishing_properties(&mut self, _node: &HTMLPublishingProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ink_target(&mut self, _node: &InkTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn integer(&mut self, _node: &Integer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn italic_embedded_font(&mut self, _node: &ItalicEmbeddedFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn iterate(&mut self, _node: &Iterate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn iterate_content(&mut self, _node: &IterateContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn kinsoku_settings(&mut self, _node: &KinsokuSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn kiosk_slide_show_mode(&mut self, _node: &KioskSlideShowMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_object_or_control(&mut self, _node: &LinkedObjectOrControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_comment_authors(&mut self, _node: &ListOfCommentAuthors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_controls(&mut self, _node: &ListOfControls) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_custom_shows(&mut self, _node: &ListOfCustomShows) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_guides(&mut self, _node: &ListOfGuides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_handout_master_i_ds(&mut self, _node: &ListOfHandoutMasterIDs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_notes_master_i_ds(&mut self, _node: &ListOfNotesMasterIDs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_presentation_slides(&mut self, _node: &ListOfPresentationSlides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_presentation_slides_outline_view_slide_list(
+        &mut self,
+        _node: &ListOfPresentationSlidesOutlineViewSlideList,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_slide_i_ds(&mut self, _node: &ListOfSlideIDs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_slide_layouts(&mut self, _node: &ListOfSlideLayouts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_slide_master_i_ds(&mut self, _node: &ListOfSlideMasterIDs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn modification_verifier(&mut self, _node: &ModificationVerifier) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn newsflash_slide_transition(&mut self, _node: &NewsflashSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn next_conditions_list(&mut self, _node: &NextConditionsList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn node_from_color(&mut self, _node: &FromColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn node_from_tl_point(&mut self, _node: &FromTLPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn node_to_color(&mut self, _node: &ToColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn node_to_tl_anim_variant(&mut self, _node: &ToTLAnimVariant) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualDrawingPropertiesForAShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties(&mut self, _node: &NonVisualProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_content(
+        &mut self,
+        _node: &NonVisualPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal_view_properties(&mut self, _node: &NormalViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal_view_restored_left_properties(
+        &mut self,
+        _node: &NormalViewRestoredLeftProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal_view_restored_top_properties(
+        &mut self,
+        _node: &NormalViewRestoredTopProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_master(&mut self, _node: &NotesMaster) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_master_id(&mut self, _node: &NotesMasterID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_slide(&mut self, _node: &NotesSlide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_slide_size(&mut self, _node: &NotesSlideSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_text_style(&mut self, _node: &NotesTextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_text_view_properties(&mut self, _node: &NotesTextViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn notes_view_properties(&mut self, _node: &NotesViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outline_view_properties(&mut self, _node: &OutlineViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_text_range(&mut self, _node: &ParagraphTextRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parallel_time_node(&mut self, _node: &ParallelTimeNode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pen_color_for_slide_show(&mut self, _node: &PenColorForSlideShow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn photo_album_information(&mut self, _node: &PhotoAlbumInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture(&mut self, _node: &Picture) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn placeholder_shape(&mut self, _node: &PlaceholderShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plus_slide_transition(&mut self, _node: &PlusSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation(&mut self, _node: &Presentation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_default_text_style(
+        &mut self,
+        _node: &PresentationDefaultTextStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_slide(&mut self, _node: &PresentationSlide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_slide_outline_view_slide_entry(
+        &mut self,
+        _node: &PresentationSlideOutlineViewSlideEntry,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_slide_size(&mut self, _node: &PresentationSlideSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_slide_slide(&mut self, _node: &PresentationSlideSlide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_wide_properties(
+        &mut self,
+        _node: &PresentationWideProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_wide_show_properties(
+        &mut self,
+        _node: &PresentationWideShowProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_wide_view_properties(
+        &mut self,
+        _node: &PresentationWideViewProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presenter_slide_show_mode(&mut self, _node: &PresenterSlideShowMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_conditions_list(&mut self, _node: &PreviousConditionsList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn printing_properties(&mut self, _node: &PrintingProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn programmable_extensibility_tag(
+        &mut self,
+        _node: &ProgrammableExtensibilityTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn programmable_tab_list(&mut self, _node: &ProgrammableTabList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn progress(&mut self, _node: &Progress) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pull_slide_transition(&mut self, _node: &PullSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn push_slide_transition(&mut self, _node: &PushSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn random_bar_slide_transition(&mut self, _node: &RandomBarSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn random_slide_transition(&mut self, _node: &RandomSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn regular_embedded_font(&mut self, _node: &RegularEmbeddedFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rgb(&mut self, _node: &RGB) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rotation_center(&mut self, _node: &RotationCenter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn runtime_node_trigger_choice(&mut self, _node: &RuntimeNodeTriggerChoice) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sequence_time_node(&mut self, _node: &SequenceTimeNode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_time_node_behavior(&mut self, _node: &SetTimeNodeBehavior) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape(&mut self, _node: &Shape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_target(&mut self, _node: &ShapeTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_target_content(&mut self, _node: &ShapeTargetContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_tree(&mut self, _node: &ShapeTree) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_type(&mut self, _node: &ShowTypeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_background(&mut self, _node: &SlideBackground) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_background_content(&mut self, _node: &SlideBackgroundContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_id(&mut self, _node: &SlideID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_layout(&mut self, _node: &SlideLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_layout_id(&mut self, _node: &SlideLayoutId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_list(&mut self, _node: &SlideListContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master(&mut self, _node: &SlideMaster) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master_body_text_style(
+        &mut self,
+        _node: &SlideMasterBodyTextStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master_id(&mut self, _node: &SlideMasterID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master_other_text_style(
+        &mut self,
+        _node: &SlideMasterOtherTextStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master_text_styles(&mut self, _node: &SlideMasterTextStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_master_title_text_style(
+        &mut self,
+        _node: &SlideMasterTitleTextStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_range(&mut self, _node: &SlideRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_sorter_view_properties(
+        &mut self,
+        _node: &SlideSorterViewProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_synchronization_properties(
+        &mut self,
+        _node: &SlideSynchronizationProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_target(&mut self, _node: &SlideTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_timing_information(&mut self, _node: &SlideTimingInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_transition(&mut self, _node: &SlideTransitionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_transition_for_a_slide_layout(
+        &mut self,
+        _node: &SlideTransitionForASlideLayout,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn slide_view_properties(&mut self, _node: &SlideViewProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tags(&mut self, _node: &SmartTags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sound(&mut self, _node: &Sound) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sound_action(&mut self, _node: &SoundAction) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sound_action_content(&mut self, _node: &SoundActionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sound_target(&mut self, _node: &SoundTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_slide_transition(&mut self, _node: &SplitSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn start_conditions_list(&mut self, _node: &StartConditionsList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn start_sound_action(&mut self, _node: &StartSoundAction) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn stop_sound_action(&mut self, _node: &StopSoundAction) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_value(&mut self, _node: &StringValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn strips_slide_transition(&mut self, _node: &StripsSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sub_time_nodes_list(&mut self, _node: &SubTimeNodesList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subshape(&mut self, _node: &Subshape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn target_element(&mut self, _node: &TargetElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn target_element_content(&mut self, _node: &TargetElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn template_effects_tmpl(&mut self, _node: &TemplateEffectsTmpl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn template_effects_tmpl_lst(&mut self, _node: &TemplateEffectsTmplLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_element(&mut self, _node: &TextElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_element_content(&mut self, _node: &TextElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_absolute(&mut self, _node: &TimeAbsolute) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_animate_value(&mut self, _node: &TimeAnimateValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_animated_value_list(&mut self, _node: &TimeAnimatedValueList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_condition(&mut self, _node: &TimeConditionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_node(&mut self, _node: &TimeNode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_node_list(&mut self, _node: &TimeNodeList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_node_list_content(&mut self, _node: &TimeNodeListContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn time_percentage(&mut self, _node: &TimePercentage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn to(&mut self, _node: &To) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value(&mut self, _node: &Value) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn video(&mut self, _node: &Video) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_origin(&mut self, _node: &ViewOrigin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_scale(&mut self, _node: &ViewScale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_properties(&mut self, _node: &WebProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wedge_slide_transition(&mut self, _node: &WedgeSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wheel_slide_transition(&mut self, _node: &WheelSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wipe_slide_transition(&mut self, _node: &WipeSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn zoom_slide_transition(&mut self, _node: &ZoomSlideTransition) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 16.3.1.2 `webPr` (Web Properties): the tag `p:webPr`, schema type `CT_WebProperties`.

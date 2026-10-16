@@ -216,12 +216,16 @@
 //! The namespace is `urn:schemas-microsoft-com:office:excel`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_XVML: Option<NamespaceId> = Some(162);
 
@@ -982,6 +986,1118 @@ pub struct CommentsRowIsHidden {
     pub value: super::common_simple_types::BooleanValueWithBlankFalseState,
 }
 
+/// The hooks of a context for the `xvml` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::vml_spreadsheet_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn anchor(&mut self, _node: &Anchor) -> Option<Anchor> {
+        None
+    }
+
+    fn attached_object_data(&mut self, _node: &AttachedObjectData) -> Option<AttachedObjectData> {
+        None
+    }
+
+    fn attached_object_data_content(
+        &mut self,
+        _node: &AttachedObjectDataContent,
+    ) -> Option<AttachedObjectDataContent> {
+        None
+    }
+
+    fn attached_object_data_content_items(
+        &mut self,
+        _node: &AttachedObjectDataContent,
+    ) -> Option<Vec<AttachedObjectDataContent>> {
+        None
+    }
+
+    fn auto_fill(&mut self, _node: &AutoFill) -> Option<AutoFill> {
+        None
+    }
+
+    fn auto_line(&mut self, _node: &AutoLine) -> Option<AutoLine> {
+        None
+    }
+
+    fn automatically_size(&mut self, _node: &AutomaticallySize) -> Option<AutomaticallySize> {
+        None
+    }
+
+    fn callback_type(&mut self, _node: &CallbackType) -> Option<CallbackType> {
+        None
+    }
+
+    fn camera_source_range(&mut self, _node: &CameraSourceRange) -> Option<CameraSourceRange> {
+        None
+    }
+
+    fn camera_tool(&mut self, _node: &CameraTool) -> Option<CameraTool> {
+        None
+    }
+
+    fn cancel_button(&mut self, _node: &CancelButton) -> Option<CancelButton> {
+        None
+    }
+
+    fn checked(&mut self, _node: &Checked) -> Option<Checked> {
+        None
+    }
+
+    fn clipboard_format(&mut self, _node: &ClipboardFormat) -> Option<ClipboardFormat> {
+        None
+    }
+
+    fn comment_column_target(
+        &mut self,
+        _node: &CommentColumnTarget,
+    ) -> Option<CommentColumnTarget> {
+        None
+    }
+
+    fn comment_row_target(&mut self, _node: &CommentRowTarget) -> Option<CommentRowTarget> {
+        None
+    }
+
+    fn comment_visibility_toggle(
+        &mut self,
+        _node: &CommentVisibilityToggle,
+    ) -> Option<CommentVisibilityToggle> {
+        None
+    }
+
+    fn comments_column_is_hidden(
+        &mut self,
+        _node: &CommentsColumnIsHidden,
+    ) -> Option<CommentsColumnIsHidden> {
+        None
+    }
+
+    fn comments_row_is_hidden(
+        &mut self,
+        _node: &CommentsRowIsHidden,
+    ) -> Option<CommentsRowIsHidden> {
+        None
+    }
+
+    fn default_button(&mut self, _node: &DefaultButton) -> Option<DefaultButton> {
+        None
+    }
+
+    fn default_size_toggle(&mut self, _node: &DefaultSizeToggle) -> Option<DefaultSizeToggle> {
+        None
+    }
+
+    fn disable3d_no_three_d(&mut self, _node: &Disable3DNoThreeD) -> Option<Disable3DNoThreeD> {
+        None
+    }
+
+    fn disable3d_no_three_d2(&mut self, _node: &Disable3DNoThreeD2) -> Option<Disable3DNoThreeD2> {
+        None
+    }
+
+    fn dismiss_button(&mut self, _node: &DismissButton) -> Option<DismissButton> {
+        None
+    }
+
+    fn dropdown_color_toggle(
+        &mut self,
+        _node: &DropdownColorToggle,
+    ) -> Option<DropdownColorToggle> {
+        None
+    }
+
+    fn dropdown_maximum_lines(
+        &mut self,
+        _node: &DropdownMaximumLines,
+    ) -> Option<DropdownMaximumLines> {
+        None
+    }
+
+    fn dropdown_style(&mut self, _node: &DropdownStyle) -> Option<DropdownStyle> {
+        None
+    }
+
+    fn dynamic_data_exchange(
+        &mut self,
+        _node: &DynamicDataExchange,
+    ) -> Option<DynamicDataExchange> {
+        None
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
+        None
+    }
+
+    fn far_east_alignment_toggle(
+        &mut self,
+        _node: &FarEastAlignmentToggle,
+    ) -> Option<FarEastAlignmentToggle> {
+        None
+    }
+
+    fn first_radio_button(&mut self, _node: &FirstRadioButton) -> Option<FirstRadioButton> {
+        None
+    }
+
+    fn font_auto_scale(&mut self, _node: &FontAutoScale) -> Option<FontAutoScale> {
+        None
+    }
+
+    fn help_button(&mut self, _node: &HelpButton) -> Option<HelpButton> {
+        None
+    }
+
+    fn horizontal_text_alignment(
+        &mut self,
+        _node: &HorizontalTextAlignment,
+    ) -> Option<HorizontalTextAlignment> {
+        None
+    }
+
+    fn html_script_attributes(
+        &mut self,
+        _node: &HTMLScriptAttributes,
+    ) -> Option<HTMLScriptAttributes> {
+        None
+    }
+
+    fn html_script_language(&mut self, _node: &HTMLScriptLanguage) -> Option<HTMLScriptLanguage> {
+        None
+    }
+
+    fn html_script_location(&mut self, _node: &HTMLScriptLocation) -> Option<HTMLScriptLocation> {
+        None
+    }
+
+    fn html_script_text(&mut self, _node: &HTMLScriptText) -> Option<HTMLScriptText> {
+        None
+    }
+
+    fn linked_formula(&mut self, _node: &LinkedFormula) -> Option<LinkedFormula> {
+        None
+    }
+
+    fn linked_formula_group_box(
+        &mut self,
+        _node: &LinkedFormulaGroupBox,
+    ) -> Option<LinkedFormulaGroupBox> {
+        None
+    }
+
+    fn list_items_source_range(
+        &mut self,
+        _node: &ListItemsSourceRange,
+    ) -> Option<ListItemsSourceRange> {
+        None
+    }
+
+    fn lock_toggle(&mut self, _node: &LockToggle) -> Option<LockToggle> {
+        None
+    }
+
+    fn macro_disable_toggle(&mut self, _node: &MacroDisableToggle) -> Option<MacroDisableToggle> {
+        None
+    }
+
+    fn minimum_width(&mut self, _node: &MinimumWidth) -> Option<MinimumWidth> {
+        None
+    }
+
+    fn move_with_cells(&mut self, _node: &MoveWithCells) -> Option<MoveWithCells> {
+        None
+    }
+
+    fn multi_line(&mut self, _node: &MultiLine) -> Option<MultiLine> {
+        None
+    }
+
+    fn multiple_selections(&mut self, _node: &MultipleSelections) -> Option<MultipleSelections> {
+        None
+    }
+
+    fn non_linked_list_item(&mut self, _node: &NonLinkedListItem) -> Option<NonLinkedListItem> {
+        None
+    }
+
+    fn password_edit(&mut self, _node: &PasswordEdit) -> Option<PasswordEdit> {
+        None
+    }
+
+    fn primary_keyboard_accelerator(
+        &mut self,
+        _node: &PrimaryKeyboardAccelerator,
+    ) -> Option<PrimaryKeyboardAccelerator> {
+        None
+    }
+
+    fn print_toggle(&mut self, _node: &PrintToggle) -> Option<PrintToggle> {
+        None
+    }
+
+    fn recalculation_toggle(&mut self, _node: &RecalculationToggle) -> Option<RecalculationToggle> {
+        None
+    }
+
+    fn reference_to_custom_function(
+        &mut self,
+        _node: &ReferenceToCustomFunction,
+    ) -> Option<ReferenceToCustomFunction> {
+        None
+    }
+
+    fn resize_with_cells(&mut self, _node: &ResizeWithCells) -> Option<ResizeWithCells> {
+        None
+    }
+
+    fn scroll_bar_increment(&mut self, _node: &ScrollBarIncrement) -> Option<ScrollBarIncrement> {
+        None
+    }
+
+    fn scroll_bar_maximum(&mut self, _node: &ScrollBarMaximum) -> Option<ScrollBarMaximum> {
+        None
+    }
+
+    fn scroll_bar_minimum(&mut self, _node: &ScrollBarMinimum) -> Option<ScrollBarMinimum> {
+        None
+    }
+
+    fn scroll_bar_orientation(
+        &mut self,
+        _node: &ScrollBarOrientation,
+    ) -> Option<ScrollBarOrientation> {
+        None
+    }
+
+    fn scroll_bar_page_increment(
+        &mut self,
+        _node: &ScrollBarPageIncrement,
+    ) -> Option<ScrollBarPageIncrement> {
+        None
+    }
+
+    fn scroll_bar_position(&mut self, _node: &ScrollBarPosition) -> Option<ScrollBarPosition> {
+        None
+    }
+
+    fn scroll_bar_width(&mut self, _node: &ScrollBarWidth) -> Option<ScrollBarWidth> {
+        None
+    }
+
+    fn secondary_keyboard_accelerator(
+        &mut self,
+        _node: &SecondaryKeyboardAccelerator,
+    ) -> Option<SecondaryKeyboardAccelerator> {
+        None
+    }
+
+    fn selected_entry(&mut self, _node: &SelectedEntry) -> Option<SelectedEntry> {
+        None
+    }
+
+    fn selection_type(&mut self, _node: &SelectionType) -> Option<SelectionType> {
+        None
+    }
+
+    fn text_formula(&mut self, _node: &TextFormula) -> Option<TextFormula> {
+        None
+    }
+
+    fn text_lock(&mut self, _node: &TextLock) -> Option<TextLock> {
+        None
+    }
+
+    fn ui_object_toggle(&mut self, _node: &UIObjectToggle) -> Option<UIObjectToggle> {
+        None
+    }
+
+    fn valid_id(&mut self, _node: &ValidID) -> Option<ValidID> {
+        None
+    }
+
+    fn validation_type(&mut self, _node: &ValidationType) -> Option<ValidationType> {
+        None
+    }
+
+    fn vertical_scroll(&mut self, _node: &VerticalScroll) -> Option<VerticalScroll> {
+        None
+    }
+
+    fn vertical_text_alignment(
+        &mut self,
+        _node: &VerticalTextAlignment,
+    ) -> Option<VerticalTextAlignment> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor(&mut self, _node: &Anchor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attached_object_data(
+        &mut self,
+        _node: &AttachedObjectData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attached_object_data_content(
+        &mut self,
+        _node: &AttachedObjectDataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attached_object_data_content_items(
+        &mut self,
+        _node: &AttachedObjectDataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_fill(
+        &mut self,
+        _node: &AutoFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_line(
+        &mut self,
+        _node: &AutoLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_size(
+        &mut self,
+        _node: &AutomaticallySize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_callback_type(
+        &mut self,
+        _node: &CallbackType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera_source_range(
+        &mut self,
+        _node: &CameraSourceRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera_tool(
+        &mut self,
+        _node: &CameraTool,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cancel_button(
+        &mut self,
+        _node: &CancelButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checked(&mut self, _node: &Checked, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_clipboard_format(
+        &mut self,
+        _node: &ClipboardFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_column_target(
+        &mut self,
+        _node: &CommentColumnTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_row_target(
+        &mut self,
+        _node: &CommentRowTarget,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_visibility_toggle(
+        &mut self,
+        _node: &CommentVisibilityToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_column_is_hidden(
+        &mut self,
+        _node: &CommentsColumnIsHidden,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_row_is_hidden(
+        &mut self,
+        _node: &CommentsRowIsHidden,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_button(
+        &mut self,
+        _node: &DefaultButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_size_toggle(
+        &mut self,
+        _node: &DefaultSizeToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_disable3d_no_three_d(
+        &mut self,
+        _node: &Disable3DNoThreeD,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_disable3d_no_three_d2(
+        &mut self,
+        _node: &Disable3DNoThreeD2,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dismiss_button(
+        &mut self,
+        _node: &DismissButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dropdown_color_toggle(
+        &mut self,
+        _node: &DropdownColorToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dropdown_maximum_lines(
+        &mut self,
+        _node: &DropdownMaximumLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dropdown_style(
+        &mut self,
+        _node: &DropdownStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dynamic_data_exchange(
+        &mut self,
+        _node: &DynamicDataExchange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_control(
+        &mut self,
+        _node: &EmbeddedControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_far_east_alignment_toggle(
+        &mut self,
+        _node: &FarEastAlignmentToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_radio_button(
+        &mut self,
+        _node: &FirstRadioButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_auto_scale(
+        &mut self,
+        _node: &FontAutoScale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_help_button(
+        &mut self,
+        _node: &HelpButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontal_text_alignment(
+        &mut self,
+        _node: &HorizontalTextAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_html_script_attributes(
+        &mut self,
+        _node: &HTMLScriptAttributes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_html_script_language(
+        &mut self,
+        _node: &HTMLScriptLanguage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_html_script_location(
+        &mut self,
+        _node: &HTMLScriptLocation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_html_script_text(
+        &mut self,
+        _node: &HTMLScriptText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_formula(
+        &mut self,
+        _node: &LinkedFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_formula_group_box(
+        &mut self,
+        _node: &LinkedFormulaGroupBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_items_source_range(
+        &mut self,
+        _node: &ListItemsSourceRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lock_toggle(
+        &mut self,
+        _node: &LockToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_macro_disable_toggle(
+        &mut self,
+        _node: &MacroDisableToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minimum_width(
+        &mut self,
+        _node: &MinimumWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_with_cells(
+        &mut self,
+        _node: &MoveWithCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multi_line(
+        &mut self,
+        _node: &MultiLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multiple_selections(
+        &mut self,
+        _node: &MultipleSelections,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_linked_list_item(
+        &mut self,
+        _node: &NonLinkedListItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_password_edit(
+        &mut self,
+        _node: &PasswordEdit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_primary_keyboard_accelerator(
+        &mut self,
+        _node: &PrimaryKeyboardAccelerator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_toggle(
+        &mut self,
+        _node: &PrintToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_recalculation_toggle(
+        &mut self,
+        _node: &RecalculationToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_to_custom_function(
+        &mut self,
+        _node: &ReferenceToCustomFunction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_resize_with_cells(
+        &mut self,
+        _node: &ResizeWithCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_increment(
+        &mut self,
+        _node: &ScrollBarIncrement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_maximum(
+        &mut self,
+        _node: &ScrollBarMaximum,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_minimum(
+        &mut self,
+        _node: &ScrollBarMinimum,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_orientation(
+        &mut self,
+        _node: &ScrollBarOrientation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_page_increment(
+        &mut self,
+        _node: &ScrollBarPageIncrement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_position(
+        &mut self,
+        _node: &ScrollBarPosition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scroll_bar_width(
+        &mut self,
+        _node: &ScrollBarWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_secondary_keyboard_accelerator(
+        &mut self,
+        _node: &SecondaryKeyboardAccelerator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_selected_entry(
+        &mut self,
+        _node: &SelectedEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_selection_type(
+        &mut self,
+        _node: &SelectionType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_formula(
+        &mut self,
+        _node: &TextFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_lock(
+        &mut self,
+        _node: &TextLock,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ui_object_toggle(
+        &mut self,
+        _node: &UIObjectToggle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_valid_id(
+        &mut self,
+        _node: &ValidID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_validation_type(
+        &mut self,
+        _node: &ValidationType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_scroll(
+        &mut self,
+        _node: &VerticalScroll,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_text_alignment(
+        &mut self,
+        _node: &VerticalTextAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 19.4.2.17 Default (Default Button): the tag `xvml:Default`, schema type `ST_TrueFalseBlank`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1443,6 +2559,301 @@ pub struct VerticalScroll {
 pub struct VerticalTextAlignment {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xvml` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::vml_spreadsheet_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn anchor(&mut self, _node: &Anchor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attached_object_data(&mut self, _node: &AttachedObjectData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attached_object_data_content(
+        &mut self,
+        _node: &AttachedObjectDataContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_fill(&mut self, _node: &AutoFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_line(&mut self, _node: &AutoLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_size(&mut self, _node: &AutomaticallySize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn callback_type(&mut self, _node: &CallbackType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera_source_range(&mut self, _node: &CameraSourceRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera_tool(&mut self, _node: &CameraTool) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cancel_button(&mut self, _node: &CancelButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checked(&mut self, _node: &Checked) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn clipboard_format(&mut self, _node: &ClipboardFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_column_target(&mut self, _node: &CommentColumnTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_row_target(&mut self, _node: &CommentRowTarget) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_visibility_toggle(&mut self, _node: &CommentVisibilityToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_column_is_hidden(&mut self, _node: &CommentsColumnIsHidden) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_row_is_hidden(&mut self, _node: &CommentsRowIsHidden) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_button(&mut self, _node: &DefaultButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_size_toggle(&mut self, _node: &DefaultSizeToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn disable3d_no_three_d(&mut self, _node: &Disable3DNoThreeD) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn disable3d_no_three_d2(&mut self, _node: &Disable3DNoThreeD2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dismiss_button(&mut self, _node: &DismissButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dropdown_color_toggle(&mut self, _node: &DropdownColorToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dropdown_maximum_lines(&mut self, _node: &DropdownMaximumLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dropdown_style(&mut self, _node: &DropdownStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dynamic_data_exchange(&mut self, _node: &DynamicDataExchange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn far_east_alignment_toggle(&mut self, _node: &FarEastAlignmentToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_radio_button(&mut self, _node: &FirstRadioButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_auto_scale(&mut self, _node: &FontAutoScale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn help_button(&mut self, _node: &HelpButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontal_text_alignment(&mut self, _node: &HorizontalTextAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn html_script_attributes(&mut self, _node: &HTMLScriptAttributes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn html_script_language(&mut self, _node: &HTMLScriptLanguage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn html_script_location(&mut self, _node: &HTMLScriptLocation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn html_script_text(&mut self, _node: &HTMLScriptText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_formula(&mut self, _node: &LinkedFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_formula_group_box(&mut self, _node: &LinkedFormulaGroupBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_items_source_range(&mut self, _node: &ListItemsSourceRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lock_toggle(&mut self, _node: &LockToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn macro_disable_toggle(&mut self, _node: &MacroDisableToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minimum_width(&mut self, _node: &MinimumWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_with_cells(&mut self, _node: &MoveWithCells) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multi_line(&mut self, _node: &MultiLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multiple_selections(&mut self, _node: &MultipleSelections) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_linked_list_item(&mut self, _node: &NonLinkedListItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn password_edit(&mut self, _node: &PasswordEdit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn primary_keyboard_accelerator(
+        &mut self,
+        _node: &PrimaryKeyboardAccelerator,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_toggle(&mut self, _node: &PrintToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn recalculation_toggle(&mut self, _node: &RecalculationToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_to_custom_function(
+        &mut self,
+        _node: &ReferenceToCustomFunction,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn resize_with_cells(&mut self, _node: &ResizeWithCells) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_increment(&mut self, _node: &ScrollBarIncrement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_maximum(&mut self, _node: &ScrollBarMaximum) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_minimum(&mut self, _node: &ScrollBarMinimum) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_orientation(&mut self, _node: &ScrollBarOrientation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_page_increment(&mut self, _node: &ScrollBarPageIncrement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_position(&mut self, _node: &ScrollBarPosition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scroll_bar_width(&mut self, _node: &ScrollBarWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn secondary_keyboard_accelerator(
+        &mut self,
+        _node: &SecondaryKeyboardAccelerator,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn selected_entry(&mut self, _node: &SelectedEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn selection_type(&mut self, _node: &SelectionType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_formula(&mut self, _node: &TextFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_lock(&mut self, _node: &TextLock) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ui_object_toggle(&mut self, _node: &UIObjectToggle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn valid_id(&mut self, _node: &ValidID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn validation_type(&mut self, _node: &ValidationType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_scroll(&mut self, _node: &VerticalScroll) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_text_alignment(&mut self, _node: &VerticalTextAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Anchor {

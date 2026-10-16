@@ -216,15 +216,19 @@
 //! The namespace is `http://schemas.openxmlformats.org/wordprocessingml/2006/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 #[cfg(test)]
 mod tests;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::{DateTime, Measure, ValueError};
+use std::io;
 
 const NS_M: Option<NamespaceId> = Some(52);
 const NS_O: Option<NamespaceId> = Some(60);
@@ -8659,6 +8663,12343 @@ pub struct ContentsOfGlossaryDocumentEntry {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `w` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::wordprocessing` is never asked.
+pub trait Context: markup::Context {
+    fn absolute_position_tab_character(
+        &mut self,
+        _node: &AbsolutePositionTabCharacter,
+    ) -> Option<AbsolutePositionTabCharacter> {
+        None
+    }
+
+    fn abstract_numbering_definition(
+        &mut self,
+        _node: &AbstractNumberingDefinition,
+    ) -> Option<AbstractNumberingDefinition> {
+        None
+    }
+
+    fn abstract_numbering_definition_identifier(
+        &mut self,
+        _node: &AbstractNumberingDefinitionIdentifier,
+    ) -> Option<AbstractNumberingDefinitionIdentifier> {
+        None
+    }
+
+    fn abstract_numbering_definition_reference(
+        &mut self,
+        _node: &AbstractNumberingDefinitionReference,
+    ) -> Option<AbstractNumberingDefinitionReference> {
+        None
+    }
+
+    fn abstract_numbering_definition_type(
+        &mut self,
+        _node: &AbstractNumberingDefinitionType,
+    ) -> Option<AbstractNumberingDefinitionType> {
+        None
+    }
+
+    fn add_document_grid_line_pitch(
+        &mut self,
+        _node: &AddDocumentGridLinePitch,
+    ) -> Option<AddDocumentGridLinePitch> {
+        None
+    }
+
+    fn add_space_below_underlined_text(
+        &mut self,
+        _node: &AddSpaceBelowUnderlinedText,
+    ) -> Option<AddSpaceBelowUnderlinedText> {
+        None
+    }
+
+    fn adjust_spacing_east_asian_text_numbers(
+        &mut self,
+        _node: &AdjustSpacingEastAsianTextNumbers,
+    ) -> Option<AdjustSpacingEastAsianTextNumbers> {
+        None
+    }
+
+    fn adjust_spacing_latin_east_asian_text(
+        &mut self,
+        _node: &AdjustSpacingLatinEastAsianText,
+    ) -> Option<AdjustSpacingLatinEastAsianText> {
+        None
+    }
+
+    fn align_paragraph_and_table_borders(
+        &mut self,
+        _node: &AlignParagraphAndTableBorders,
+    ) -> Option<AlignParagraphAndTableBorders> {
+        None
+    }
+
+    fn align_table_rows_independently(
+        &mut self,
+        _node: &AlignTableRowsIndependently,
+    ) -> Option<AlignTableRowsIndependently> {
+        None
+    }
+
+    fn allow_automatic_formatting_override(
+        &mut self,
+        _node: &AllowAutomaticFormattingOverride,
+    ) -> Option<AllowAutomaticFormattingOverride> {
+        None
+    }
+
+    fn allow_contextual_spacing_of_paragraphs_in_tables(
+        &mut self,
+        _node: &AllowContextualSpacingOfParagraphsInTables,
+    ) -> Option<AllowContextualSpacingOfParagraphsInTables> {
+        None
+    }
+
+    fn allow_first_last_line_display(
+        &mut self,
+        _node: &AllowFirstLastLineDisplay,
+    ) -> Option<AllowFirstLastLineDisplay> {
+        None
+    }
+
+    fn allow_line_breaking_at_character_level(
+        &mut self,
+        _node: &AllowLineBreakingAtCharacterLevel,
+    ) -> Option<AllowLineBreakingAtCharacterLevel> {
+        None
+    }
+
+    fn allow_png_as_graphic_format(
+        &mut self,
+        _node: &AllowPNGAsGraphicFormat,
+    ) -> Option<AllowPNGAsGraphicFormat> {
+        None
+    }
+
+    fn allow_punctuation_extend_past_text_extents(
+        &mut self,
+        _node: &AllowPunctuationExtendPastTextExtents,
+    ) -> Option<AllowPunctuationExtendPastTextExtents> {
+        None
+    }
+
+    fn allow_saving_document_as_xml_file(
+        &mut self,
+        _node: &AllowSavingDocumentAsXMLFile,
+    ) -> Option<AllowSavingDocumentAsXMLFile> {
+        None
+    }
+
+    fn allow_table_rows_to_wrap_inline_objects_independently(
+        &mut self,
+        _node: &AllowTableRowsToWrapInlineObjectsIndependently,
+    ) -> Option<AllowTableRowsToWrapInlineObjectsIndependently> {
+        None
+    }
+
+    fn allow_tables_to_auto_fit_into_page_margins(
+        &mut self,
+        _node: &AllowTablesToAutoFitIntoPageMargins,
+    ) -> Option<AllowTablesToAutoFitIntoPageMargins> {
+        None
+    }
+
+    fn alternate_names_for_font(
+        &mut self,
+        _node: &AlternateNamesForFont,
+    ) -> Option<AlternateNamesForFont> {
+        None
+    }
+
+    fn alternate_style_names(
+        &mut self,
+        _node: &AlternateStyleNames,
+    ) -> Option<AlternateStyleNames> {
+        None
+    }
+
+    fn always_merge_empty_namespace(
+        &mut self,
+        _node: &AlwaysMergeEmptyNamespace,
+    ) -> Option<AlwaysMergeEmptyNamespace> {
+        None
+    }
+
+    fn always_show_placeholder_text(
+        &mut self,
+        _node: &AlwaysShowPlaceholderText,
+    ) -> Option<AlwaysShowPlaceholderText> {
+        None
+    }
+
+    fn always_use_fixed_width_for_hangul_characters(
+        &mut self,
+        _node: &AlwaysUseFixedWidthForHangulCharacters,
+    ) -> Option<AlwaysUseFixedWidthForHangulCharacters> {
+        None
+    }
+
+    fn anchor_for_imported_external_content(
+        &mut self,
+        _node: &AnchorForImportedExternalContent,
+    ) -> Option<AnchorForImportedExternalContent> {
+        None
+    }
+
+    fn anchor_for_subdocument_location(
+        &mut self,
+        _node: &AnchorForSubdocumentLocation,
+    ) -> Option<AnchorForSubdocumentLocation> {
+        None
+    }
+
+    fn animated_text_effect(&mut self, _node: &AnimatedTextEffect) -> Option<AnimatedTextEffect> {
+        None
+    }
+
+    fn associated_help_text(&mut self, _node: &AssociatedHelpText) -> Option<AssociatedHelpText> {
+        None
+    }
+
+    fn associated_html_div_id(
+        &mut self,
+        _node: &AssociatedHTMLDivID,
+    ) -> Option<AssociatedHTMLDivID> {
+        None
+    }
+
+    fn associated_outline_level(
+        &mut self,
+        _node: &AssociatedOutlineLevel,
+    ) -> Option<AssociatedOutlineLevel> {
+        None
+    }
+
+    fn associated_paragraph_style_name(
+        &mut self,
+        _node: &AssociatedParagraphStyleName,
+    ) -> Option<AssociatedParagraphStyleName> {
+        None
+    }
+
+    fn associated_status_text(
+        &mut self,
+        _node: &AssociatedStatusText,
+    ) -> Option<AssociatedStatusText> {
+        None
+    }
+
+    fn attached_custom_xml_schema(
+        &mut self,
+        _node: &AttachedCustomXMLSchema,
+    ) -> Option<AttachedCustomXMLSchema> {
+        None
+    }
+
+    fn attached_document_template(
+        &mut self,
+        _node: &AttachedDocumentTemplate,
+    ) -> Option<AttachedDocumentTemplate> {
+        None
+    }
+
+    fn auto_space_like_word95(
+        &mut self,
+        _node: &AutoSpaceLikeWord95,
+    ) -> Option<AutoSpaceLikeWord95> {
+        None
+    }
+
+    fn autofit_to_first_fixed_width_cell(
+        &mut self,
+        _node: &AutofitToFirstFixedWidthCell,
+    ) -> Option<AutofitToFirstFixedWidthCell> {
+        None
+    }
+
+    fn automatic_captioning_settings(
+        &mut self,
+        _node: &AutomaticCaptioningSettings,
+    ) -> Option<AutomaticCaptioningSettings> {
+        None
+    }
+
+    fn automatically_adjust_right_indent(
+        &mut self,
+        _node: &AutomaticallyAdjustRightIndent,
+    ) -> Option<AutomaticallyAdjustRightIndent> {
+        None
+    }
+
+    fn automatically_hyphenate_document_contents_when_displayed(
+        &mut self,
+        _node: &AutomaticallyHyphenateDocumentContentsWhenDisplayed,
+    ) -> Option<AutomaticallyHyphenateDocumentContentsWhenDisplayed> {
+        None
+    }
+
+    fn automatically_merge_user_formatting(
+        &mut self,
+        _node: &AutomaticallyMergeUserFormatting,
+    ) -> Option<AutomaticallyMergeUserFormatting> {
+        None
+    }
+
+    fn automatically_recalculate_fields_on_open(
+        &mut self,
+        _node: &AutomaticallyRecalculateFieldsOnOpen,
+    ) -> Option<AutomaticallyRecalculateFieldsOnOpen> {
+        None
+    }
+
+    fn automatically_size_form_field(
+        &mut self,
+        _node: &AutomaticallySizeFormField,
+    ) -> Option<AutomaticallySizeFormField> {
+        None
+    }
+
+    fn automatically_update_styles_from_document_template(
+        &mut self,
+        _node: &AutomaticallyUpdateStylesFromDocumentTemplate,
+    ) -> Option<AutomaticallyUpdateStylesFromDocumentTemplate> {
+        None
+    }
+
+    fn balance_single_byte_double_byte_width(
+        &mut self,
+        _node: &BalanceSingleByteDoubleByteWidth,
+    ) -> Option<BalanceSingleByteDoubleByteWidth> {
+        None
+    }
+
+    fn bibliography_structured_document_tag(
+        &mut self,
+        _node: &BibliographyStructuredDocumentTag,
+    ) -> Option<BibliographyStructuredDocumentTag> {
+        None
+    }
+
+    fn bidirectional_embedding_level(
+        &mut self,
+        _node: &BidirectionalEmbeddingLevel,
+    ) -> Option<BidirectionalEmbeddingLevel> {
+        None
+    }
+
+    fn bidirectional_override(
+        &mut self,
+        _node: &BidirectionalOverride,
+    ) -> Option<BidirectionalOverride> {
+        None
+    }
+
+    fn block(&mut self, _node: &BlockContent) -> Option<BlockContent> {
+        None
+    }
+
+    fn block_items(&mut self, _node: &BlockContent) -> Option<Vec<BlockContent>> {
+        None
+    }
+
+    fn block_level_custom_xml_element(
+        &mut self,
+        _node: &BlockLevelCustomXMLElement,
+    ) -> Option<BlockLevelCustomXMLElement> {
+        None
+    }
+
+    fn block_level_structured_document_tag(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTag,
+    ) -> Option<BlockLevelStructuredDocumentTag> {
+        None
+    }
+
+    fn block_level_structured_document_tag_content(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTagContent,
+    ) -> Option<BlockLevelStructuredDocumentTagContent> {
+        None
+    }
+
+    fn bold(&mut self, _node: &Bold) -> Option<Bold> {
+        None
+    }
+
+    fn bold_italic_font_style_embedding(
+        &mut self,
+        _node: &BoldItalicFontStyleEmbedding,
+    ) -> Option<BoldItalicFontStyleEmbedding> {
+        None
+    }
+
+    fn bold_style_font_style_embedding(
+        &mut self,
+        _node: &BoldStyleFontStyleEmbedding,
+    ) -> Option<BoldStyleFontStyleEmbedding> {
+        None
+    }
+
+    fn book_fold_printing(&mut self, _node: &BookFoldPrinting) -> Option<BookFoldPrinting> {
+        None
+    }
+
+    fn bookmark_end(&mut self, _node: &BookmarkEnd) -> Option<BookmarkEnd> {
+        None
+    }
+
+    fn bookmark_start(&mut self, _node: &BookmarkStart) -> Option<BookmarkStart> {
+        None
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
+        None
+    }
+
+    fn bottom_margin_for_html_div(
+        &mut self,
+        _node: &BottomMarginForHTMLDiv,
+    ) -> Option<BottomMarginForHTMLDiv> {
+        None
+    }
+
+    fn r#break(&mut self, _node: &Break) -> Option<Break> {
+        None
+    }
+
+    fn built_in_document_part(
+        &mut self,
+        _node: &BuiltInDocumentPart,
+    ) -> Option<BuiltInDocumentPart> {
+        None
+    }
+
+    fn built_in_document_part_structured_document_tag(
+        &mut self,
+        _node: &BuiltInDocumentPartStructuredDocumentTag,
+    ) -> Option<BuiltInDocumentPartStructuredDocumentTag> {
+        None
+    }
+
+    fn caption_settings(&mut self, _node: &CaptionSettings) -> Option<CaptionSettings> {
+        None
+    }
+
+    fn carriage_return(&mut self, _node: &CarriageReturn) -> Option<CarriageReturn> {
+        None
+    }
+
+    fn cell_level_custom_xml_element(
+        &mut self,
+        _node: &CellLevelCustomXMLElement,
+    ) -> Option<CellLevelCustomXMLElement> {
+        None
+    }
+
+    fn cell_level_structured_document_tag(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTag,
+    ) -> Option<CellLevelStructuredDocumentTag> {
+        None
+    }
+
+    fn cell_level_structured_document_tag_content(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTagContent,
+    ) -> Option<CellLevelStructuredDocumentTagContent> {
+        None
+    }
+
+    fn cell_markup(&mut self, _node: &CellMarkupContent) -> Option<CellMarkupContent> {
+        None
+    }
+
+    fn character_level_whitespace_compression(
+        &mut self,
+        _node: &CharacterLevelWhitespaceCompression,
+    ) -> Option<CharacterLevelWhitespaceCompression> {
+        None
+    }
+
+    fn character_set_supported_by_font(
+        &mut self,
+        _node: &CharacterSetSupportedByFont,
+    ) -> Option<CharacterSetSupportedByFont> {
+        None
+    }
+
+    fn character_spacing_adjustment(
+        &mut self,
+        _node: &CharacterSpacingAdjustment,
+    ) -> Option<CharacterSpacingAdjustment> {
+        None
+    }
+
+    fn characters_which_cannot_begin_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotBeginALine,
+    ) -> Option<CharactersWhichCannotBeginALine> {
+        None
+    }
+
+    fn characters_which_cannot_end_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotEndALine,
+    ) -> Option<CharactersWhichCannotEndALine> {
+        None
+    }
+
+    fn checkbox_form_field_properties(
+        &mut self,
+        _node: &CheckboxFormFieldProperties,
+    ) -> Option<CheckboxFormFieldProperties> {
+        None
+    }
+
+    fn checkbox_form_field_properties_content(
+        &mut self,
+        _node: &CheckboxFormFieldPropertiesContent,
+    ) -> Option<CheckboxFormFieldPropertiesContent> {
+        None
+    }
+
+    fn checkbox_form_field_size(
+        &mut self,
+        _node: &CheckboxFormFieldSize,
+    ) -> Option<CheckboxFormFieldSize> {
+        None
+    }
+
+    fn checkbox_form_field_state(
+        &mut self,
+        _node: &CheckboxFormFieldState,
+    ) -> Option<CheckboxFormFieldState> {
+        None
+    }
+
+    fn child_div_elements(&mut self, _node: &ChildDivElements) -> Option<ChildDivElements> {
+        None
+    }
+
+    fn citation_structured_document_tag(
+        &mut self,
+        _node: &CitationStructuredDocumentTag,
+    ) -> Option<CitationStructuredDocumentTag> {
+        None
+    }
+
+    fn click_and_type_style(&mut self, _node: &ClickAndTypeStyle) -> Option<ClickAndTypeStyle> {
+        None
+    }
+
+    fn column_containing_e_mail_address(
+        &mut self,
+        _node: &ColumnContainingEMailAddress,
+    ) -> Option<ColumnContainingEMailAddress> {
+        None
+    }
+
+    fn column_definitions(&mut self, _node: &ColumnDefinitions) -> Option<ColumnDefinitions> {
+        None
+    }
+
+    fn column_delimiter_for_data_source(
+        &mut self,
+        _node: &ColumnDelimiterForDataSource,
+    ) -> Option<ColumnDelimiterForDataSource> {
+        None
+    }
+
+    fn combo_box_list_item(&mut self, _node: &ComboBoxListItem) -> Option<ComboBoxListItem> {
+        None
+    }
+
+    fn combo_box_structured_document_tag(
+        &mut self,
+        _node: &ComboBoxStructuredDocumentTag,
+    ) -> Option<ComboBoxStructuredDocumentTag> {
+        None
+    }
+
+    fn comment_anchor_range_end(
+        &mut self,
+        _node: &CommentAnchorRangeEnd,
+    ) -> Option<CommentAnchorRangeEnd> {
+        None
+    }
+
+    fn comment_anchor_range_start(
+        &mut self,
+        _node: &CommentAnchorRangeStart,
+    ) -> Option<CommentAnchorRangeStart> {
+        None
+    }
+
+    fn comment_content(&mut self, _node: &CommentContent) -> Option<CommentContent> {
+        None
+    }
+
+    fn comment_content_reference_mark(
+        &mut self,
+        _node: &CommentContentReferenceMark,
+    ) -> Option<CommentContentReferenceMark> {
+        None
+    }
+
+    fn comment_information_block(
+        &mut self,
+        _node: &CommentInformationBlock,
+    ) -> Option<CommentInformationBlock> {
+        None
+    }
+
+    fn comments_collection(&mut self, _node: &CommentsCollection) -> Option<CommentsCollection> {
+        None
+    }
+
+    fn compatibility_settings(
+        &mut self,
+        _node: &CompatibilitySettings,
+    ) -> Option<CompatibilitySettings> {
+        None
+    }
+
+    fn complex_field_character(
+        &mut self,
+        _node: &ComplexFieldCharacter,
+    ) -> Option<ComplexFieldCharacter> {
+        None
+    }
+
+    fn complex_field_character_content(
+        &mut self,
+        _node: &ComplexFieldCharacterContent,
+    ) -> Option<ComplexFieldCharacterContent> {
+        None
+    }
+
+    fn complex_script_bold(&mut self, _node: &ComplexScriptBold) -> Option<ComplexScriptBold> {
+        None
+    }
+
+    fn complex_script_font_size(
+        &mut self,
+        _node: &ComplexScriptFontSize,
+    ) -> Option<ComplexScriptFontSize> {
+        None
+    }
+
+    fn complex_script_italics(
+        &mut self,
+        _node: &ComplexScriptItalics,
+    ) -> Option<ComplexScriptItalics> {
+        None
+    }
+
+    fn compress_punctuation_at_start_of_line(
+        &mut self,
+        _node: &CompressPunctuationAtStartOfLine,
+    ) -> Option<CompressPunctuationAtStartOfLine> {
+        None
+    }
+
+    fn conflict_change(&mut self, _node: &ConflictChangeContent) -> Option<ConflictChangeContent> {
+        None
+    }
+
+    fn content_between_numbering_symbol_and_text(
+        &mut self,
+        _node: &ContentBetweenNumberingSymbolAndText,
+    ) -> Option<ContentBetweenNumberingSymbolAndText> {
+        None
+    }
+
+    fn content_block(&mut self, _node: &ContentBlockContent) -> Option<ContentBlockContent> {
+        None
+    }
+
+    fn content_block_items(
+        &mut self,
+        _node: &ContentBlockContent,
+    ) -> Option<Vec<ContentBlockContent>> {
+        None
+    }
+
+    fn content_cell(&mut self, _node: &ContentCellContent) -> Option<ContentCellContent> {
+        None
+    }
+
+    fn content_cell_items(
+        &mut self,
+        _node: &ContentCellContent,
+    ) -> Option<Vec<ContentCellContent>> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn content_row(&mut self, _node: &ContentRowContent) -> Option<ContentRowContent> {
+        None
+    }
+
+    fn content_row_items(&mut self, _node: &ContentRowContent) -> Option<Vec<ContentRowContent>> {
+        None
+    }
+
+    fn contents_of_glossary_document_entry(
+        &mut self,
+        _node: &ContentsOfGlossaryDocumentEntry,
+    ) -> Option<ContentsOfGlossaryDocumentEntry> {
+        None
+    }
+
+    fn continuation_separator_mark(
+        &mut self,
+        _node: &ContinuationSeparatorMark,
+    ) -> Option<ContinuationSeparatorMark> {
+        None
+    }
+
+    fn current_contents_are_placeholder_text(
+        &mut self,
+        _node: &CurrentContentsArePlaceholderText,
+    ) -> Option<CurrentContentsArePlaceholderText> {
+        None
+    }
+
+    fn custom_compatibility_setting(
+        &mut self,
+        _node: &CustomCompatibilitySetting,
+    ) -> Option<CustomCompatibilitySetting> {
+        None
+    }
+
+    fn custom_field_data(&mut self, _node: &CustomFieldData) -> Option<CustomFieldData> {
+        None
+    }
+
+    fn custom_tab_stop(&mut self, _node: &CustomTabStop) -> Option<CustomTabStop> {
+        None
+    }
+
+    fn custom_xml_attribute(&mut self, _node: &CustomXMLAttribute) -> Option<CustomXMLAttribute> {
+        None
+    }
+
+    fn custom_xml_data_date_storage_format(
+        &mut self,
+        _node: &CustomXMLDataDateStorageFormat,
+    ) -> Option<CustomXMLDataDateStorageFormat> {
+        None
+    }
+
+    fn custom_xml_element_placeholder_text(
+        &mut self,
+        _node: &CustomXMLElementPlaceholderText,
+    ) -> Option<CustomXMLElementPlaceholderText> {
+        None
+    }
+
+    fn custom_xml_element_properties(
+        &mut self,
+        _node: &CustomXMLElementProperties,
+    ) -> Option<CustomXMLElementProperties> {
+        None
+    }
+
+    fn custom_xml_markup_deletion_end(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionEnd,
+    ) -> Option<CustomXMLMarkupDeletionEnd> {
+        None
+    }
+
+    fn custom_xml_markup_deletion_start(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionStart,
+    ) -> Option<CustomXMLMarkupDeletionStart> {
+        None
+    }
+
+    fn custom_xml_markup_insertion_end(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionEnd,
+    ) -> Option<CustomXMLMarkupInsertionEnd> {
+        None
+    }
+
+    fn custom_xml_markup_insertion_start(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionStart,
+    ) -> Option<CustomXMLMarkupInsertionStart> {
+        None
+    }
+
+    fn custom_xml_markup_move_source_end(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceEnd,
+    ) -> Option<CustomXMLMarkupMoveSourceEnd> {
+        None
+    }
+
+    fn custom_xml_markup_move_source_start(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceStart,
+    ) -> Option<CustomXMLMarkupMoveSourceStart> {
+        None
+    }
+
+    fn custom_xml_move_to_range_end(
+        &mut self,
+        _node: &CustomXmlMoveToRangeEnd,
+    ) -> Option<CustomXmlMoveToRangeEnd> {
+        None
+    }
+
+    fn custom_xml_move_to_range_start(
+        &mut self,
+        _node: &CustomXmlMoveToRangeStart,
+    ) -> Option<CustomXmlMoveToRangeStart> {
+        None
+    }
+
+    fn custom_xsl_transform(&mut self, _node: &CustomXSLTransform) -> Option<CustomXSLTransform> {
+        None
+    }
+
+    fn data_about_single_data_source_record(
+        &mut self,
+        _node: &DataAboutSingleDataSourceRecord,
+    ) -> Option<DataAboutSingleDataSourceRecord> {
+        None
+    }
+
+    fn data_for_html_blockquote_element(
+        &mut self,
+        _node: &DataForHTMLBlockquoteElement,
+    ) -> Option<DataForHTMLBlockquoteElement> {
+        None
+    }
+
+    fn data_for_html_body_element(
+        &mut self,
+        _node: &DataForHTMLBodyElement,
+    ) -> Option<DataForHTMLBodyElement> {
+        None
+    }
+
+    fn data_source_connection_string(
+        &mut self,
+        _node: &DataSourceConnectionString,
+    ) -> Option<DataSourceConnectionString> {
+        None
+    }
+
+    fn data_source_file_path(&mut self, _node: &DataSourceFilePath) -> Option<DataSourceFilePath> {
+        None
+    }
+
+    fn data_source_table_name(
+        &mut self,
+        _node: &DataSourceTableName,
+    ) -> Option<DataSourceTableName> {
+        None
+    }
+
+    fn data_source_type(&mut self, _node: &DataSourceType) -> Option<DataSourceType> {
+        None
+    }
+
+    fn date_block_long_day_format(
+        &mut self,
+        _node: &DateBlockLongDayFormat,
+    ) -> Option<DateBlockLongDayFormat> {
+        None
+    }
+
+    fn date_block_long_month_format(
+        &mut self,
+        _node: &DateBlockLongMonthFormat,
+    ) -> Option<DateBlockLongMonthFormat> {
+        None
+    }
+
+    fn date_block_long_year_format(
+        &mut self,
+        _node: &DateBlockLongYearFormat,
+    ) -> Option<DateBlockLongYearFormat> {
+        None
+    }
+
+    fn date_block_short_day_format(
+        &mut self,
+        _node: &DateBlockShortDayFormat,
+    ) -> Option<DateBlockShortDayFormat> {
+        None
+    }
+
+    fn date_block_short_month_format(
+        &mut self,
+        _node: &DateBlockShortMonthFormat,
+    ) -> Option<DateBlockShortMonthFormat> {
+        None
+    }
+
+    fn date_block_short_year_format(
+        &mut self,
+        _node: &DateBlockShortYearFormat,
+    ) -> Option<DateBlockShortYearFormat> {
+        None
+    }
+
+    fn date_display_mask(&mut self, _node: &DateDisplayMask) -> Option<DateDisplayMask> {
+        None
+    }
+
+    fn date_picker_calendar_type(
+        &mut self,
+        _node: &DatePickerCalendarType,
+    ) -> Option<DatePickerCalendarType> {
+        None
+    }
+
+    fn date_structured_document_tag(
+        &mut self,
+        _node: &DateStructuredDocumentTag,
+    ) -> Option<DateStructuredDocumentTag> {
+        None
+    }
+
+    fn default_checkbox_form_field_state(
+        &mut self,
+        _node: &DefaultCheckboxFormFieldState,
+    ) -> Option<DefaultCheckboxFormFieldState> {
+        None
+    }
+
+    fn default_drop_down_list_item_index(
+        &mut self,
+        _node: &DefaultDropDownListItemIndex,
+    ) -> Option<DefaultDropDownListItemIndex> {
+        None
+    }
+
+    fn default_paragraph_properties(
+        &mut self,
+        _node: &DefaultParagraphProperties,
+    ) -> Option<DefaultParagraphProperties> {
+        None
+    }
+
+    fn default_properties_for_vml_objects_in_header_and_footer(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInHeaderAndFooter,
+    ) -> Option<DefaultPropertiesForVMLObjectsInHeaderAndFooter> {
+        None
+    }
+
+    fn default_properties_for_vml_objects_in_main_document(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInMainDocument,
+    ) -> Option<DefaultPropertiesForVMLObjectsInMainDocument> {
+        None
+    }
+
+    fn default_run_properties(
+        &mut self,
+        _node: &DefaultRunProperties,
+    ) -> Option<DefaultRunProperties> {
+        None
+    }
+
+    fn default_table_style(&mut self, _node: &DefaultTableStyle) -> Option<DefaultTableStyle> {
+        None
+    }
+
+    fn default_text_box_form_field_string(
+        &mut self,
+        _node: &DefaultTextBoxFormFieldString,
+    ) -> Option<DefaultTextBoxFormFieldString> {
+        None
+    }
+
+    fn del(&mut self, _node: &Del) -> Option<Del> {
+        None
+    }
+
+    fn deleted_field_code(&mut self, _node: &DeletedFieldCode) -> Option<DeletedFieldCode> {
+        None
+    }
+
+    fn deleted_math_control_character(
+        &mut self,
+        _node: &DeletedMathControlCharacter,
+    ) -> Option<DeletedMathControlCharacter> {
+        None
+    }
+
+    fn deleted_run_content(&mut self, _node: &DeletedRunContent) -> Option<DeletedRunContent> {
+        None
+    }
+
+    fn deleted_table_row(&mut self, _node: &DeletedTableRow) -> Option<DeletedTableRow> {
+        None
+    }
+
+    fn deleted_text(&mut self, _node: &DeletedText) -> Option<DeletedText> {
+        None
+    }
+
+    fn description_for_entry(
+        &mut self,
+        _node: &DescriptionForEntry,
+    ) -> Option<DescriptionForEntry> {
+        None
+    }
+
+    fn different_even_odd_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentEvenOddPageHeadersAndFooters,
+    ) -> Option<DifferentEvenOddPageHeadersAndFooters> {
+        None
+    }
+
+    fn different_first_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentFirstPageHeadersAndFooters,
+    ) -> Option<DifferentFirstPageHeadersAndFooters> {
+        None
+    }
+
+    fn disable_features_not_supported(
+        &mut self,
+        _node: &DisableFeaturesNotSupported,
+    ) -> Option<DisableFeaturesNotSupported> {
+        None
+    }
+
+    fn display_all_characters_as_capital_letters(
+        &mut self,
+        _node: &DisplayAllCharactersAsCapitalLetters,
+    ) -> Option<DisplayAllCharactersAsCapitalLetters> {
+        None
+    }
+
+    fn display_all_levels_using_arabic_numerals(
+        &mut self,
+        _node: &DisplayAllLevelsUsingArabicNumerals,
+    ) -> Option<DisplayAllLevelsUsingArabicNumerals> {
+        None
+    }
+
+    fn display_background_shape(
+        &mut self,
+        _node: &DisplayBackgroundShape,
+    ) -> Option<DisplayBackgroundShape> {
+        None
+    }
+
+    fn display_backslash_as_yen_sign(
+        &mut self,
+        _node: &DisplayBackslashAsYenSign,
+    ) -> Option<DisplayBackslashAsYenSign> {
+        None
+    }
+
+    fn display_character_outline(
+        &mut self,
+        _node: &DisplayCharacterOutline,
+    ) -> Option<DisplayCharacterOutline> {
+        None
+    }
+
+    fn display_page_column_breaks_present_in_frames(
+        &mut self,
+        _node: &DisplayPageColumnBreaksPresentInFrames,
+    ) -> Option<DisplayPageColumnBreaksPresentInFrames> {
+        None
+    }
+
+    fn distance_between_automatic_tab_stops(
+        &mut self,
+        _node: &DistanceBetweenAutomaticTabStops,
+    ) -> Option<DistanceBetweenAutomaticTabStops> {
+        None
+    }
+
+    fn distance_between_horizontal_gridlines(
+        &mut self,
+        _node: &DistanceBetweenHorizontalGridlines,
+    ) -> Option<DistanceBetweenHorizontalGridlines> {
+        None
+    }
+
+    fn distance_between_phonetic_guide_text(
+        &mut self,
+        _node: &DistanceBetweenPhoneticGuideText,
+    ) -> Option<DistanceBetweenPhoneticGuideText> {
+        None
+    }
+
+    fn distance_between_vertical_gridlines(
+        &mut self,
+        _node: &DistanceBetweenVerticalGridlines,
+    ) -> Option<DistanceBetweenVerticalGridlines> {
+        None
+    }
+
+    fn do_not_add_leading_between_lines_of_text(
+        &mut self,
+        _node: &DoNotAddLeadingBetweenLinesOfText,
+    ) -> Option<DoNotAddLeadingBetweenLinesOfText> {
+        None
+    }
+
+    fn do_not_allow_floating_tables_to_break_across_pages(
+        &mut self,
+        _node: &DoNotAllowFloatingTablesToBreakAcrossPages,
+    ) -> Option<DoNotAllowFloatingTablesToBreakAcrossPages> {
+        None
+    }
+
+    fn do_not_autofit_constrained_tables(
+        &mut self,
+        _node: &DoNotAutofitConstrainedTables,
+    ) -> Option<DoNotAutofitConstrainedTables> {
+        None
+    }
+
+    fn do_not_automatically_compress_images(
+        &mut self,
+        _node: &DoNotAutomaticallyCompressImages,
+    ) -> Option<DoNotAutomaticallyCompressImages> {
+        None
+    }
+
+    fn do_not_balance_text_columns_within_a_section(
+        &mut self,
+        _node: &DoNotBalanceTextColumnsWithinASection,
+    ) -> Option<DoNotBalanceTextColumnsWithinASection> {
+        None
+    }
+
+    fn do_not_break_constrained_forced_table(
+        &mut self,
+        _node: &DoNotBreakConstrainedForcedTable,
+    ) -> Option<DoNotBreakConstrainedForcedTable> {
+        None
+    }
+
+    fn do_not_bypass_east_asian_complex_script_layout_code(
+        &mut self,
+        _node: &DoNotBypassEastAsianComplexScriptLayoutCode,
+    ) -> Option<DoNotBypassEastAsianComplexScriptLayoutCode> {
+        None
+    }
+
+    fn do_not_center_content_on_lines_with_exact_line_height(
+        &mut self,
+        _node: &DoNotCenterContentOnLinesWithExactLineHeight,
+    ) -> Option<DoNotCenterContentOnLinesWithExactLineHeight> {
+        None
+    }
+
+    fn do_not_check_spelling_or_grammar(
+        &mut self,
+        _node: &DoNotCheckSpellingOrGrammar,
+    ) -> Option<DoNotCheckSpellingOrGrammar> {
+        None
+    }
+
+    fn do_not_create_custom_tab_stop_for_hanging_indent(
+        &mut self,
+        _node: &DoNotCreateCustomTabStopForHangingIndent,
+    ) -> Option<DoNotCreateCustomTabStopForHangingIndent> {
+        None
+    }
+
+    fn do_not_display_frameset_splitters(
+        &mut self,
+        _node: &DoNotDisplayFramesetSplitters,
+    ) -> Option<DoNotDisplayFramesetSplitters> {
+        None
+    }
+
+    fn do_not_display_grammatical_errors(
+        &mut self,
+        _node: &DoNotDisplayGrammaticalErrors,
+    ) -> Option<DoNotDisplayGrammaticalErrors> {
+        None
+    }
+
+    fn do_not_display_page_boundaries(
+        &mut self,
+        _node: &DoNotDisplayPageBoundaries,
+    ) -> Option<DoNotDisplayPageBoundaries> {
+        None
+    }
+
+    fn do_not_display_spelling_errors(
+        &mut self,
+        _node: &DoNotDisplaySpellingErrors,
+    ) -> Option<DoNotDisplaySpellingErrors> {
+        None
+    }
+
+    fn do_not_hyphenate_capital_letters(
+        &mut self,
+        _node: &DoNotHyphenateCapitalLetters,
+    ) -> Option<DoNotHyphenateCapitalLetters> {
+        None
+    }
+
+    fn do_not_include_subdocs_in_stats(
+        &mut self,
+        _node: &DoNotIncludeSubdocsInStats,
+    ) -> Option<DoNotIncludeSubdocsInStats> {
+        None
+    }
+
+    fn do_not_increase_line_height_for_raised_lowered_text(
+        &mut self,
+        _node: &DoNotIncreaseLineHeightForRaisedLoweredText,
+    ) -> Option<DoNotIncreaseLineHeightForRaisedLoweredText> {
+        None
+    }
+
+    fn do_not_place_supporting_files(
+        &mut self,
+        _node: &DoNotPlaceSupportingFiles,
+    ) -> Option<DoNotPlaceSupportingFiles> {
+        None
+    }
+
+    fn do_not_rely_on_css(&mut self, _node: &DoNotRelyOnCSS) -> Option<DoNotRelyOnCSS> {
+        None
+    }
+
+    fn do_not_show_form_field_indicator(
+        &mut self,
+        _node: &DoNotShowFormFieldIndicator,
+    ) -> Option<DoNotShowFormFieldIndicator> {
+        None
+    }
+
+    fn do_not_show_invalid_markup_indicator(
+        &mut self,
+        _node: &DoNotShowInvalidMarkupIndicator,
+    ) -> Option<DoNotShowInvalidMarkupIndicator> {
+        None
+    }
+
+    fn do_not_snap_to_document_grid_in_table_cells_with_objects(
+        &mut self,
+        _node: &DoNotSnapToDocumentGridInTableCellsWithObjects,
+    ) -> Option<DoNotSnapToDocumentGridInTableCellsWithObjects> {
+        None
+    }
+
+    fn do_not_suppress_blank_lines(
+        &mut self,
+        _node: &DoNotSuppressBlankLines,
+    ) -> Option<DoNotSuppressBlankLines> {
+        None
+    }
+
+    fn do_not_suppress_indentation(
+        &mut self,
+        _node: &DoNotSuppressIndentation,
+    ) -> Option<DoNotSuppressIndentation> {
+        None
+    }
+
+    fn do_not_suppress_paragraph_borders(
+        &mut self,
+        _node: &DoNotSuppressParagraphBorders,
+    ) -> Option<DoNotSuppressParagraphBorders> {
+        None
+    }
+
+    fn do_not_track_formatting(
+        &mut self,
+        _node: &DoNotTrackFormatting,
+    ) -> Option<DoNotTrackFormatting> {
+        None
+    }
+
+    fn do_not_use_east_asian_break_rules(
+        &mut self,
+        _node: &DoNotUseEastAsianBreakRules,
+    ) -> Option<DoNotUseEastAsianBreakRules> {
+        None
+    }
+
+    fn do_not_use_file_names(&mut self, _node: &DoNotUseFileNames) -> Option<DoNotUseFileNames> {
+        None
+    }
+
+    fn do_not_use_html_paragraph_auto_spacing(
+        &mut self,
+        _node: &DoNotUseHTMLParagraphAutoSpacing,
+    ) -> Option<DoNotUseHTMLParagraphAutoSpacing> {
+        None
+    }
+
+    fn do_not_use_indent_as_numbering_tab_stop(
+        &mut self,
+        _node: &DoNotUseIndentAsNumberingTabStop,
+    ) -> Option<DoNotUseIndentAsNumberingTabStop> {
+        None
+    }
+
+    fn do_not_use_margins_for_drawing_grid_origin(
+        &mut self,
+        _node: &DoNotUseMarginsForDrawingGridOrigin,
+    ) -> Option<DoNotUseMarginsForDrawingGridOrigin> {
+        None
+    }
+
+    fn do_not_use_move_syntax(&mut self, _node: &DoNotUseMoveSyntax) -> Option<DoNotUseMoveSyntax> {
+        None
+    }
+
+    fn do_not_validate_against_schema(
+        &mut self,
+        _node: &DoNotValidateAgainstSchema,
+    ) -> Option<DoNotValidateAgainstSchema> {
+        None
+    }
+
+    fn do_not_vert_align_cell_with_sp(
+        &mut self,
+        _node: &DoNotVertAlignCellWithSp,
+    ) -> Option<DoNotVertAlignCellWithSp> {
+        None
+    }
+
+    fn do_not_wrap_text_with_punct(
+        &mut self,
+        _node: &DoNotWrapTextWithPunct,
+    ) -> Option<DoNotWrapTextWithPunct> {
+        None
+    }
+
+    fn document(&mut self, _node: &Document) -> Option<Document> {
+        None
+    }
+
+    fn document_background(&mut self, _node: &DocumentBackground) -> Option<DocumentBackground> {
+        None
+    }
+
+    fn document_body(&mut self, _node: &DocumentBody) -> Option<DocumentBody> {
+        None
+    }
+
+    fn document_classification(
+        &mut self,
+        _node: &DocumentClassification,
+    ) -> Option<DocumentClassification> {
+        None
+    }
+
+    fn document_default_paragraph_and_run_properties(
+        &mut self,
+        _node: &DocumentDefaultParagraphAndRunProperties,
+    ) -> Option<DocumentDefaultParagraphAndRunProperties> {
+        None
+    }
+
+    fn document_editing_restrictions(
+        &mut self,
+        _node: &DocumentEditingRestrictions,
+    ) -> Option<DocumentEditingRestrictions> {
+        None
+    }
+
+    fn document_endnotes(&mut self, _node: &DocumentEndnotes) -> Option<DocumentEndnotes> {
+        None
+    }
+
+    fn document_final_section_properties(
+        &mut self,
+        _node: &DocumentFinalSectionProperties,
+    ) -> Option<DocumentFinalSectionProperties> {
+        None
+    }
+
+    fn document_footnotes(&mut self, _node: &DocumentFootnotes) -> Option<DocumentFootnotes> {
+        None
+    }
+
+    fn document_grid(&mut self, _node: &DocumentGrid) -> Option<DocumentGrid> {
+        None
+    }
+
+    fn document_grid_inter_line_paragraph_spacing(
+        &mut self,
+        _node: &DocumentGridInterLineParagraphSpacing,
+    ) -> Option<DocumentGridInterLineParagraphSpacing> {
+        None
+    }
+
+    fn document_part_category_filter(
+        &mut self,
+        _node: &DocumentPartCategoryFilter,
+    ) -> Option<DocumentPartCategoryFilter> {
+        None
+    }
+
+    fn document_part_gallery_filter(
+        &mut self,
+        _node: &DocumentPartGalleryFilter,
+    ) -> Option<DocumentPartGalleryFilter> {
+        None
+    }
+
+    fn document_part_gallery_structured_document_tag(
+        &mut self,
+        _node: &DocumentPartGalleryStructuredDocumentTag,
+    ) -> Option<DocumentPartGalleryStructuredDocumentTag> {
+        None
+    }
+
+    fn document_part_reference(
+        &mut self,
+        _node: &DocumentPartReference,
+    ) -> Option<DocumentPartReference> {
+        None
+    }
+
+    fn document_settings(&mut self, _node: &DocumentSettings) -> Option<DocumentSettings> {
+        None
+    }
+
+    fn document_variables(&mut self, _node: &DocumentVariables) -> Option<DocumentVariables> {
+        None
+    }
+
+    fn document_view_setting(
+        &mut self,
+        _node: &DocumentViewSetting,
+    ) -> Option<DocumentViewSetting> {
+        None
+    }
+
+    fn document_wide_endnote_properties(
+        &mut self,
+        _node: &DocumentWideEndnoteProperties,
+    ) -> Option<DocumentWideEndnoteProperties> {
+        None
+    }
+
+    fn document_wide_footnote_properties(
+        &mut self,
+        _node: &DocumentWideFootnoteProperties,
+    ) -> Option<DocumentWideFootnoteProperties> {
+        None
+    }
+
+    fn dont_justify_soft_line_break_lines(
+        &mut self,
+        _node: &DontJustifySoftLineBreakLines,
+    ) -> Option<DontJustifySoftLineBreakLines> {
+        None
+    }
+
+    fn dont_wrap_cell_content(
+        &mut self,
+        _node: &DontWrapCellContent,
+    ) -> Option<DontWrapCellContent> {
+        None
+    }
+
+    fn double_strikethrough(&mut self, _node: &DoubleStrikethrough) -> Option<DoubleStrikethrough> {
+        None
+    }
+
+    fn drawing_grid_horizontal_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridHorizontalGridUnitSize,
+    ) -> Option<DrawingGridHorizontalGridUnitSize> {
+        None
+    }
+
+    fn drawing_grid_horizontal_origin_point(
+        &mut self,
+        _node: &DrawingGridHorizontalOriginPoint,
+    ) -> Option<DrawingGridHorizontalOriginPoint> {
+        None
+    }
+
+    fn drawing_grid_vertical_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridVerticalGridUnitSize,
+    ) -> Option<DrawingGridVerticalGridUnitSize> {
+        None
+    }
+
+    fn drawing_grid_vertical_origin_point(
+        &mut self,
+        _node: &DrawingGridVerticalOriginPoint,
+    ) -> Option<DrawingGridVerticalOriginPoint> {
+        None
+    }
+
+    fn drawing_ml_object(&mut self, _node: &DrawingMLObject) -> Option<DrawingMLObject> {
+        None
+    }
+
+    fn drawing_object(&mut self, _node: &DrawingObjectContent) -> Option<DrawingObjectContent> {
+        None
+    }
+
+    fn drawing_object_items(
+        &mut self,
+        _node: &DrawingObjectContent,
+    ) -> Option<Vec<DrawingObjectContent>> {
+        None
+    }
+
+    fn drop_down_list_entry(&mut self, _node: &DropDownListEntry) -> Option<DropDownListEntry> {
+        None
+    }
+
+    fn drop_down_list_form_field_properties(
+        &mut self,
+        _node: &DropDownListFormFieldProperties,
+    ) -> Option<DropDownListFormFieldProperties> {
+        None
+    }
+
+    fn drop_down_list_selection(
+        &mut self,
+        _node: &DropDownListSelection,
+    ) -> Option<DropDownListSelection> {
+        None
+    }
+
+    fn drop_down_list_structured_document_tag(
+        &mut self,
+        _node: &DropDownListStructuredDocumentTag,
+    ) -> Option<DropDownListStructuredDocumentTag> {
+        None
+    }
+
+    fn e_mail_message_composition_style(
+        &mut self,
+        _node: &EMailMessageCompositionStyle,
+    ) -> Option<EMailMessageCompositionStyle> {
+        None
+    }
+
+    fn e_mail_message_reply_style(
+        &mut self,
+        _node: &EMailMessageReplyStyle,
+    ) -> Option<EMailMessageReplyStyle> {
+        None
+    }
+
+    fn e_mail_message_text_style(
+        &mut self,
+        _node: &EMailMessageTextStyle,
+    ) -> Option<EMailMessageTextStyle> {
+        None
+    }
+
+    fn east_asian_typography_rules(
+        &mut self,
+        _node: &EastAsianTypographyRules,
+    ) -> Option<EastAsianTypographyRules> {
+        None
+    }
+
+    fn east_asian_typography_settings(
+        &mut self,
+        _node: &EastAsianTypographySettings,
+    ) -> Option<EastAsianTypographySettings> {
+        None
+    }
+
+    fn embed_common_system_fonts(
+        &mut self,
+        _node: &EmbedCommonSystemFonts,
+    ) -> Option<EmbedCommonSystemFonts> {
+        None
+    }
+
+    fn embed_true_type_fonts(&mut self, _node: &EmbedTrueTypeFonts) -> Option<EmbedTrueTypeFonts> {
+        None
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
+        None
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObject) -> Option<EmbeddedObject> {
+        None
+    }
+
+    fn embedded_object_content(
+        &mut self,
+        _node: &EmbeddedObjectContent,
+    ) -> Option<EmbeddedObjectContent> {
+        None
+    }
+
+    fn embedded_object_properties(
+        &mut self,
+        _node: &EmbeddedObjectProperties,
+    ) -> Option<EmbeddedObjectProperties> {
+        None
+    }
+
+    fn embedded_video(&mut self, _node: &EmbeddedVideo) -> Option<EmbeddedVideo> {
+        None
+    }
+
+    fn embossing(&mut self, _node: &Embossing) -> Option<Embossing> {
+        None
+    }
+
+    fn emphasis_mark(&mut self, _node: &EmphasisMark) -> Option<EmphasisMark> {
+        None
+    }
+
+    fn endnote_content(&mut self, _node: &EndnoteContent) -> Option<EndnoteContent> {
+        None
+    }
+
+    fn endnote_placement(&mut self, _node: &EndnotePlacement) -> Option<EndnotePlacement> {
+        None
+    }
+
+    fn endnote_reference(&mut self, _node: &EndnoteReference) -> Option<EndnoteReference> {
+        None
+    }
+
+    fn endnote_reference_mark(
+        &mut self,
+        _node: &EndnoteReferenceMark,
+    ) -> Option<EndnoteReferenceMark> {
+        None
+    }
+
+    fn entry_categorization(&mut self, _node: &EntryCategorization) -> Option<EntryCategorization> {
+        None
+    }
+
+    fn entry_id(&mut self, _node: &EntryID) -> Option<EntryID> {
+        None
+    }
+
+    fn entry_insertion_behavior(
+        &mut self,
+        _node: &EntryInsertionBehavior,
+    ) -> Option<EntryInsertionBehavior> {
+        None
+    }
+
+    fn entry_insertion_behaviors(
+        &mut self,
+        _node: &EntryInsertionBehaviors,
+    ) -> Option<EntryInsertionBehaviors> {
+        None
+    }
+
+    fn entry_name(&mut self, _node: &EntryName) -> Option<EntryName> {
+        None
+    }
+
+    fn entry_type(&mut self, _node: &EntryType) -> Option<EntryType> {
+        None
+    }
+
+    fn entry_types(&mut self, _node: &EntryTypes) -> Option<EntryTypes> {
+        None
+    }
+
+    fn equation_structured_document_tag(
+        &mut self,
+        _node: &EquationStructuredDocumentTag,
+    ) -> Option<EquationStructuredDocumentTag> {
+        None
+    }
+
+    fn execute_on_form_field_entry(
+        &mut self,
+        _node: &ExecuteOnFormFieldEntry,
+    ) -> Option<ExecuteOnFormFieldEntry> {
+        None
+    }
+
+    fn execute_on_form_field_exit(
+        &mut self,
+        _node: &ExecuteOnFormFieldExit,
+    ) -> Option<ExecuteOnFormFieldExit> {
+        None
+    }
+
+    fn expanded_compressed_text(
+        &mut self,
+        _node: &ExpandedCompressedText,
+    ) -> Option<ExpandedCompressedText> {
+        None
+    }
+
+    fn external_content_import_properties(
+        &mut self,
+        _node: &ExternalContentImportProperties,
+    ) -> Option<ExternalContentImportProperties> {
+        None
+    }
+
+    fn external_data_source_merge_field_mapping(
+        &mut self,
+        _node: &ExternalDataSourceMergeFieldMapping,
+    ) -> Option<ExternalDataSourceMergeFieldMapping> {
+        None
+    }
+
+    fn field_code(&mut self, _node: &FieldCode) -> Option<FieldCode> {
+        None
+    }
+
+    fn first_row_contains_column_names(
+        &mut self,
+        _node: &FirstRowContainsColumnNames,
+    ) -> Option<FirstRowContainsColumnNames> {
+        None
+    }
+
+    fn fit_text_within_cell(&mut self, _node: &FitTextWithinCell) -> Option<FitTextWithinCell> {
+        None
+    }
+
+    fn fit_to_expanded_width_when_performing_full_justification(
+        &mut self,
+        _node: &FitToExpandedWidthWhenPerformingFullJustification,
+    ) -> Option<FitToExpandedWidthWhenPerformingFullJustification> {
+        None
+    }
+
+    fn floating_table_allows_overlap(
+        &mut self,
+        _node: &FloatingTableAllowsOverlap,
+    ) -> Option<FloatingTableAllowsOverlap> {
+        None
+    }
+
+    fn floating_table_positioning(
+        &mut self,
+        _node: &FloatingTablePositioning,
+    ) -> Option<FloatingTablePositioning> {
+        None
+    }
+
+    fn font_family(&mut self, _node: &FontFamily) -> Option<FontFamily> {
+        None
+    }
+
+    fn font_kerning(&mut self, _node: &FontKerning) -> Option<FontKerning> {
+        None
+    }
+
+    fn font_pitch(&mut self, _node: &FontPitch) -> Option<FontPitch> {
+        None
+    }
+
+    fn font_table_root_element(
+        &mut self,
+        _node: &FontTableRootElement,
+    ) -> Option<FontTableRootElement> {
+        None
+    }
+
+    fn footer(&mut self, _node: &Footer) -> Option<Footer> {
+        None
+    }
+
+    fn footer_reference(&mut self, _node: &FooterReference) -> Option<FooterReference> {
+        None
+    }
+
+    fn footnote_and_endnote_numbering_restart_location(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingRestartLocation,
+    ) -> Option<FootnoteAndEndnoteNumberingRestartLocation> {
+        None
+    }
+
+    fn footnote_and_endnote_numbering_starting_value(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingStartingValue,
+    ) -> Option<FootnoteAndEndnoteNumberingStartingValue> {
+        None
+    }
+
+    fn footnote_content(&mut self, _node: &FootnoteContent) -> Option<FootnoteContent> {
+        None
+    }
+
+    fn footnote_endnote_separator_mark(
+        &mut self,
+        _node: &FootnoteEndnoteSeparatorMark,
+    ) -> Option<FootnoteEndnoteSeparatorMark> {
+        None
+    }
+
+    fn footnote_placement(&mut self, _node: &FootnotePlacement) -> Option<FootnotePlacement> {
+        None
+    }
+
+    fn footnote_reference(&mut self, _node: &FootnoteReference) -> Option<FootnoteReference> {
+        None
+    }
+
+    fn footnote_reference_mark(
+        &mut self,
+        _node: &FootnoteReferenceMark,
+    ) -> Option<FootnoteReferenceMark> {
+        None
+    }
+
+    fn forget_last_tab_alignment(
+        &mut self,
+        _node: &ForgetLastTabAlignment,
+    ) -> Option<ForgetLastTabAlignment> {
+        None
+    }
+
+    fn form_field_enabled(&mut self, _node: &FormFieldEnabled) -> Option<FormFieldEnabled> {
+        None
+    }
+
+    fn form_field_name(&mut self, _node: &FormFieldName) -> Option<FormFieldName> {
+        None
+    }
+
+    fn form_field_properties(
+        &mut self,
+        _node: &FormFieldProperties,
+    ) -> Option<FormFieldProperties> {
+        None
+    }
+
+    fn form_field_properties_content(
+        &mut self,
+        _node: &FormFieldPropertiesContent,
+    ) -> Option<FormFieldPropertiesContent> {
+        None
+    }
+
+    fn form_field_properties_content_items(
+        &mut self,
+        _node: &FormFieldPropertiesContent,
+    ) -> Option<Vec<FormFieldPropertiesContent>> {
+        None
+    }
+
+    fn frame_cannot_be_resized(
+        &mut self,
+        _node: &FrameCannotBeResized,
+    ) -> Option<FrameCannotBeResized> {
+        None
+    }
+
+    fn frame_long_description(
+        &mut self,
+        _node: &FrameLongDescription,
+    ) -> Option<FrameLongDescription> {
+        None
+    }
+
+    fn frame_or_frameset_title(
+        &mut self,
+        _node: &FrameOrFramesetTitle,
+    ) -> Option<FrameOrFramesetTitle> {
+        None
+    }
+
+    fn frame_size(&mut self, _node: &FrameSize) -> Option<FrameSize> {
+        None
+    }
+
+    fn frameset_definition(
+        &mut self,
+        _node: &FramesetDefinitionContent,
+    ) -> Option<FramesetDefinitionContent> {
+        None
+    }
+
+    fn frameset_definition_items(
+        &mut self,
+        _node: &FramesetDefinitionContent,
+    ) -> Option<Vec<FramesetDefinitionContent>> {
+        None
+    }
+
+    fn frameset_layout(&mut self, _node: &FramesetLayout) -> Option<FramesetLayout> {
+        None
+    }
+
+    fn frameset_splitter_border_style(
+        &mut self,
+        _node: &FramesetSplitterBorderStyle,
+    ) -> Option<FramesetSplitterBorderStyle> {
+        None
+    }
+
+    fn frameset_splitter_properties(
+        &mut self,
+        _node: &FramesetSplitterProperties,
+    ) -> Option<FramesetSplitterProperties> {
+        None
+    }
+
+    fn frameset_splitter_width(
+        &mut self,
+        _node: &FramesetSplitterWidth,
+    ) -> Option<FramesetSplitterWidth> {
+        None
+    }
+
+    fn freeze_document_layout(
+        &mut self,
+        _node: &FreezeDocumentLayout,
+    ) -> Option<FreezeDocumentLayout> {
+        None
+    }
+
+    fn friendly_name(&mut self, _node: &FriendlyName) -> Option<FriendlyName> {
+        None
+    }
+
+    fn gallery_associated_with_entry(
+        &mut self,
+        _node: &GalleryAssociatedWithEntry,
+    ) -> Option<GalleryAssociatedWithEntry> {
+        None
+    }
+
+    fn generate_thumbnail_for_document_on_save(
+        &mut self,
+        _node: &GenerateThumbnailForDocumentOnSave,
+    ) -> Option<GenerateThumbnailForDocumentOnSave> {
+        None
+    }
+
+    fn glossary_document_entry(
+        &mut self,
+        _node: &GlossaryDocumentEntry,
+    ) -> Option<GlossaryDocumentEntry> {
+        None
+    }
+
+    fn glossary_document_entry_properties(
+        &mut self,
+        _node: &GlossaryDocumentEntryProperties,
+    ) -> Option<GlossaryDocumentEntryProperties> {
+        None
+    }
+
+    fn glossary_document_entry_properties_content(
+        &mut self,
+        _node: &GlossaryDocumentEntryPropertiesContent,
+    ) -> Option<GlossaryDocumentEntryPropertiesContent> {
+        None
+    }
+
+    fn glossary_document_entry_properties_content_items(
+        &mut self,
+        _node: &GlossaryDocumentEntryPropertiesContent,
+    ) -> Option<Vec<GlossaryDocumentEntryPropertiesContent>> {
+        None
+    }
+
+    fn glossary_document_root_element(
+        &mut self,
+        _node: &GlossaryDocumentRootElement,
+    ) -> Option<GlossaryDocumentRootElement> {
+        None
+    }
+
+    fn grammar_checking_settings(
+        &mut self,
+        _node: &GrammarCheckingSettings,
+    ) -> Option<GrammarCheckingSettings> {
+        None
+    }
+
+    fn grid_column_definition(
+        &mut self,
+        _node: &GridColumnDefinition,
+    ) -> Option<GridColumnDefinition> {
+        None
+    }
+
+    fn grid_columns_after_last_cell(
+        &mut self,
+        _node: &GridColumnsAfterLastCell,
+    ) -> Option<GridColumnsAfterLastCell> {
+        None
+    }
+
+    fn grid_columns_before_first_cell(
+        &mut self,
+        _node: &GridColumnsBeforeFirstCell,
+    ) -> Option<GridColumnsBeforeFirstCell> {
+        None
+    }
+
+    fn grid_columns_spanned(&mut self, _node: &GridColumnsSpanned) -> Option<GridColumnsSpanned> {
+        None
+    }
+
+    fn group_structured_document_tag(
+        &mut self,
+        _node: &GroupStructuredDocumentTag,
+    ) -> Option<GroupStructuredDocumentTag> {
+        None
+    }
+
+    fn gutter_on_right_side_of_page(
+        &mut self,
+        _node: &GutterOnRightSideOfPage,
+    ) -> Option<GutterOnRightSideOfPage> {
+        None
+    }
+
+    fn header(&mut self, _node: &Header) -> Option<Header> {
+        None
+    }
+
+    fn header_cell_reference(
+        &mut self,
+        _node: &HeaderCellReference,
+    ) -> Option<HeaderCellReference> {
+        None
+    }
+
+    fn header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+    ) -> Option<HeaderCellsAssociatedWithTableCell> {
+        None
+    }
+
+    fn header_definition_file_path(
+        &mut self,
+        _node: &HeaderDefinitionFilePath,
+    ) -> Option<HeaderDefinitionFilePath> {
+        None
+    }
+
+    fn header_reference(&mut self, _node: &HeaderReference) -> Option<HeaderReference> {
+        None
+    }
+
+    fn hidden_table_row_marker(
+        &mut self,
+        _node: &HiddenTableRowMarker,
+    ) -> Option<HiddenTableRowMarker> {
+        None
+    }
+
+    fn hidden_text(&mut self, _node: &HiddenText) -> Option<HiddenText> {
+        None
+    }
+
+    fn hide_style_from_main_user_interface(
+        &mut self,
+        _node: &HideStyleFromMainUserInterface,
+    ) -> Option<HideStyleFromMainUserInterface> {
+        None
+    }
+
+    fn horizontally_merged_cell(
+        &mut self,
+        _node: &HorizontallyMergedCell,
+    ) -> Option<HorizontallyMergedCell> {
+        None
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
+        None
+    }
+
+    fn hyphenation_zone(&mut self, _node: &HyphenationZone) -> Option<HyphenationZone> {
+        None
+    }
+
+    fn ignore_end_of_cell_marker(
+        &mut self,
+        _node: &IgnoreEndOfCellMarker,
+    ) -> Option<IgnoreEndOfCellMarker> {
+        None
+    }
+
+    fn ignore_exact_line_height_for_last_line_on_page(
+        &mut self,
+        _node: &IgnoreExactLineHeightForLastLineOnPage,
+    ) -> Option<IgnoreExactLineHeightForLastLineOnPage> {
+        None
+    }
+
+    fn ignore_minimum_line_height_for_first_line_on_page(
+        &mut self,
+        _node: &IgnoreMinimumLineHeightForFirstLineOnPage,
+    ) -> Option<IgnoreMinimumLineHeightForFirstLineOnPage> {
+        None
+    }
+
+    fn ignore_mixed_content(&mut self, _node: &IgnoreMixedContent) -> Option<IgnoreMixedContent> {
+        None
+    }
+
+    fn ignore_page_break_from_continuous_section_break(
+        &mut self,
+        _node: &IgnorePageBreakFromContinuousSectionBreak,
+    ) -> Option<IgnorePageBreakFromContinuousSectionBreak> {
+        None
+    }
+
+    fn ignore_spacing_above_and_below(
+        &mut self,
+        _node: &IgnoreSpacingAboveAndBelow,
+    ) -> Option<IgnoreSpacingAboveAndBelow> {
+        None
+    }
+
+    fn ignore_text_wrapping_around_objects_at_bottom_of_page(
+        &mut self,
+        _node: &IgnoreTextWrappingAroundObjectsAtBottomOfPage,
+    ) -> Option<IgnoreTextWrappingAroundObjectsAtBottomOfPage> {
+        None
+    }
+
+    fn ignore_vertical_alignment_in_textboxes(
+        &mut self,
+        _node: &IgnoreVerticalAlignmentInTextboxes,
+    ) -> Option<IgnoreVerticalAlignmentInTextboxes> {
+        None
+    }
+
+    fn imprinting(&mut self, _node: &Imprinting) -> Option<Imprinting> {
+        None
+    }
+
+    fn inclusion_exclusion_data_for_data_source(
+        &mut self,
+        _node: &InclusionExclusionDataForDataSource,
+    ) -> Option<InclusionExclusionDataForDataSource> {
+        None
+    }
+
+    fn index_of_column_being_mapped(
+        &mut self,
+        _node: &IndexOfColumnBeingMapped,
+    ) -> Option<IndexOfColumnBeingMapped> {
+        None
+    }
+
+    fn information_about_html_div_elements(
+        &mut self,
+        _node: &InformationAboutHTMLDivElements,
+    ) -> Option<InformationAboutHTMLDivElements> {
+        None
+    }
+
+    fn information_about_single_html_div_element(
+        &mut self,
+        _node: &InformationAboutSingleHTMLDivElement,
+    ) -> Option<InformationAboutSingleHTMLDivElement> {
+        None
+    }
+
+    fn inline_level_custom_xml_element(
+        &mut self,
+        _node: &InlineLevelCustomXMLElement,
+    ) -> Option<InlineLevelCustomXMLElement> {
+        None
+    }
+
+    fn inline_level_smart_tag(
+        &mut self,
+        _node: &InlineLevelSmartTag,
+    ) -> Option<InlineLevelSmartTag> {
+        None
+    }
+
+    fn inline_level_structured_document_tag(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTag,
+    ) -> Option<InlineLevelStructuredDocumentTag> {
+        None
+    }
+
+    fn inline_level_structured_document_tag_content(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTagContent,
+    ) -> Option<InlineLevelStructuredDocumentTagContent> {
+        None
+    }
+
+    fn inserted_math_control_character(
+        &mut self,
+        _node: &InsertedMathControlCharacter,
+    ) -> Option<InsertedMathControlCharacter> {
+        None
+    }
+
+    fn inserted_math_control_character_content(
+        &mut self,
+        _node: &InsertedMathControlCharacterContent,
+    ) -> Option<InsertedMathControlCharacterContent> {
+        None
+    }
+
+    fn inserted_run_content(&mut self, _node: &InsertedRunContent) -> Option<InsertedRunContent> {
+        None
+    }
+
+    fn inserted_table_row(&mut self, _node: &InsertedTableRow) -> Option<InsertedTableRow> {
+        None
+    }
+
+    fn invalidated_field_cache(
+        &mut self,
+        _node: &InvalidatedFieldCache,
+    ) -> Option<InvalidatedFieldCache> {
+        None
+    }
+
+    fn italic_font_style_embedding(
+        &mut self,
+        _node: &ItalicFontStyleEmbedding,
+    ) -> Option<ItalicFontStyleEmbedding> {
+        None
+    }
+
+    fn italics(&mut self, _node: &Italics) -> Option<Italics> {
+        None
+    }
+
+    fn justification(&mut self, _node: &Justification) -> Option<Justification> {
+        None
+    }
+
+    fn keep_all_lines_on_one_page(
+        &mut self,
+        _node: &KeepAllLinesOnOnePage,
+    ) -> Option<KeepAllLinesOnOnePage> {
+        None
+    }
+
+    fn keep_paragraph_with_next_paragraph(
+        &mut self,
+        _node: &KeepParagraphWithNextParagraph,
+    ) -> Option<KeepParagraphWithNextParagraph> {
+        None
+    }
+
+    fn keep_source_formatting_on_import(
+        &mut self,
+        _node: &KeepSourceFormattingOnImport,
+    ) -> Option<KeepSourceFormattingOnImport> {
+        None
+    }
+
+    fn language_id_for_phonetic_guide(
+        &mut self,
+        _node: &LanguageIDForPhoneticGuide,
+    ) -> Option<LanguageIDForPhoneticGuide> {
+        None
+    }
+
+    fn languages_for_run_content(
+        &mut self,
+        _node: &LanguagesForRunContent,
+    ) -> Option<LanguagesForRunContent> {
+        None
+    }
+
+    fn last_reviewed_abstract_numbering_definition(
+        &mut self,
+        _node: &LastReviewedAbstractNumberingDefinition,
+    ) -> Option<LastReviewedAbstractNumberingDefinition> {
+        None
+    }
+
+    fn latent_style_exception(
+        &mut self,
+        _node: &LatentStyleException,
+    ) -> Option<LatentStyleException> {
+        None
+    }
+
+    fn latent_style_information(
+        &mut self,
+        _node: &LatentStyleInformation,
+    ) -> Option<LatentStyleInformation> {
+        None
+    }
+
+    fn layout_raw_table_width(
+        &mut self,
+        _node: &LayoutRawTableWidth,
+    ) -> Option<LayoutRawTableWidth> {
+        None
+    }
+
+    fn left_and_right_margin_for_frame(
+        &mut self,
+        _node: &LeftAndRightMarginForFrame,
+    ) -> Option<LeftAndRightMarginForFrame> {
+        None
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> Option<LeftBorder> {
+        None
+    }
+
+    fn left_margin_for_html_div(
+        &mut self,
+        _node: &LeftMarginForHTMLDiv,
+    ) -> Option<LeftMarginForHTMLDiv> {
+        None
+    }
+
+    fn left_paragraph_border(
+        &mut self,
+        _node: &LeftParagraphBorder,
+    ) -> Option<LeftParagraphBorder> {
+        None
+    }
+
+    fn left_paragraph_border_tbl_width(
+        &mut self,
+        _node: &LeftParagraphBorderTblWidth,
+    ) -> Option<LeftParagraphBorderTblWidth> {
+        None
+    }
+
+    fn legacy_ethiopic_amharic_line_breaking_rules(
+        &mut self,
+        _node: &LegacyEthiopicAmharicLineBreakingRules,
+    ) -> Option<LegacyEthiopicAmharicLineBreakingRules> {
+        None
+    }
+
+    fn legacy_numbering_level_properties(
+        &mut self,
+        _node: &LegacyNumberingLevelProperties,
+    ) -> Option<LegacyNumberingLevelProperties> {
+        None
+    }
+
+    fn line_numbering_settings(
+        &mut self,
+        _node: &LineNumberingSettings,
+    ) -> Option<LineNumberingSettings> {
+        None
+    }
+
+    fn line_wrap_like_word6(&mut self, _node: &LineWrapLikeWord6) -> Option<LineWrapLikeWord6> {
+        None
+    }
+
+    fn line_wrap_trailing_spaces(
+        &mut self,
+        _node: &LineWrapTrailingSpaces,
+    ) -> Option<LineWrapTrailingSpaces> {
+        None
+    }
+
+    fn link_to_external_query_file(
+        &mut self,
+        _node: &LinkToExternalQueryFile,
+    ) -> Option<LinkToExternalQueryFile> {
+        None
+    }
+
+    fn linked_object_properties(
+        &mut self,
+        _node: &LinkedObjectProperties,
+    ) -> Option<LinkedObjectProperties> {
+        None
+    }
+
+    fn linked_style_reference(
+        &mut self,
+        _node: &LinkedStyleReference,
+    ) -> Option<LinkedStyleReference> {
+        None
+    }
+
+    fn list_of_glossary_document_entries(
+        &mut self,
+        _node: &ListOfGlossaryDocumentEntries,
+    ) -> Option<ListOfGlossaryDocumentEntries> {
+        None
+    }
+
+    fn list_separator_for_field_code_evaluation(
+        &mut self,
+        _node: &ListSeparatorForFieldCodeEvaluation,
+    ) -> Option<ListSeparatorForFieldCodeEvaluation> {
+        None
+    }
+
+    fn locking_setting(&mut self, _node: &LockingSetting) -> Option<LockingSetting> {
+        None
+    }
+
+    fn magnification_setting(
+        &mut self,
+        _node: &MagnificationSetting,
+    ) -> Option<MagnificationSetting> {
+        None
+    }
+
+    fn mail_merge_error_reporting_setting(
+        &mut self,
+        _node: &MailMergeErrorReportingSetting,
+    ) -> Option<MailMergeErrorReportingSetting> {
+        None
+    }
+
+    fn mail_merge_settings(&mut self, _node: &MailMergeSettings) -> Option<MailMergeSettings> {
+        None
+    }
+
+    fn maintain_link_to_existing_file(
+        &mut self,
+        _node: &MaintainLinkToExistingFile,
+    ) -> Option<MaintainLinkToExistingFile> {
+        None
+    }
+
+    fn manual_run_width(&mut self, _node: &ManualRunWidth) -> Option<ManualRunWidth> {
+        None
+    }
+
+    fn maximum_number_of_consecutively_hyphenated_lines(
+        &mut self,
+        _node: &MaximumNumberOfConsecutivelyHyphenatedLines,
+    ) -> Option<MaximumNumberOfConsecutivelyHyphenatedLines> {
+        None
+    }
+
+    fn merge_field_mapping(&mut self, _node: &MergeFieldMapping) -> Option<MergeFieldMapping> {
+        None
+    }
+
+    fn merged_document_destination(
+        &mut self,
+        _node: &MergedDocumentDestination,
+    ) -> Option<MergedDocumentDestination> {
+        None
+    }
+
+    fn merged_document_to_e_mail_attachment(
+        &mut self,
+        _node: &MergedDocumentToEMailAttachment,
+    ) -> Option<MergedDocumentToEMailAttachment> {
+        None
+    }
+
+    fn merged_e_mail_or_fax_subject_line(
+        &mut self,
+        _node: &MergedEMailOrFaxSubjectLine,
+    ) -> Option<MergedEMailOrFaxSubjectLine> {
+        None
+    }
+
+    fn mirror_page_margins(&mut self, _node: &MirrorPageMargins) -> Option<MirrorPageMargins> {
+        None
+    }
+
+    fn move_destination_location_container_end(
+        &mut self,
+        _node: &MoveDestinationLocationContainerEnd,
+    ) -> Option<MoveDestinationLocationContainerEnd> {
+        None
+    }
+
+    fn move_destination_location_container_start(
+        &mut self,
+        _node: &MoveDestinationLocationContainerStart,
+    ) -> Option<MoveDestinationLocationContainerStart> {
+        None
+    }
+
+    fn move_destination_paragraph(
+        &mut self,
+        _node: &MoveDestinationParagraph,
+    ) -> Option<MoveDestinationParagraph> {
+        None
+    }
+
+    fn move_destination_run_content(
+        &mut self,
+        _node: &MoveDestinationRunContent,
+    ) -> Option<MoveDestinationRunContent> {
+        None
+    }
+
+    fn move_source_location_container_end(
+        &mut self,
+        _node: &MoveSourceLocationContainerEnd,
+    ) -> Option<MoveSourceLocationContainerEnd> {
+        None
+    }
+
+    fn move_source_location_container_start(
+        &mut self,
+        _node: &MoveSourceLocationContainerStart,
+    ) -> Option<MoveSourceLocationContainerStart> {
+        None
+    }
+
+    fn move_source_paragraph(
+        &mut self,
+        _node: &MoveSourceParagraph,
+    ) -> Option<MoveSourceParagraph> {
+        None
+    }
+
+    fn move_source_run_content(
+        &mut self,
+        _node: &MoveSourceRunContent,
+    ) -> Option<MoveSourceRunContent> {
+        None
+    }
+
+    fn nested_frameset_definition(
+        &mut self,
+        _node: &NestedFramesetDefinition,
+    ) -> Option<NestedFramesetDefinition> {
+        None
+    }
+
+    fn never_kern_punctuation_characters(
+        &mut self,
+        _node: &NeverKernPunctuationCharacters,
+    ) -> Option<NeverKernPunctuationCharacters> {
+        None
+    }
+
+    fn non_breaking_hyphen_character(
+        &mut self,
+        _node: &NonBreakingHyphenCharacter,
+    ) -> Option<NonBreakingHyphenCharacter> {
+        None
+    }
+
+    fn non_complex_script_font_size(
+        &mut self,
+        _node: &NonComplexScriptFontSize,
+    ) -> Option<NonComplexScriptFontSize> {
+        None
+    }
+
+    fn not_a_true_type_outline_font(
+        &mut self,
+        _node: &NotATrueTypeOutlineFont,
+    ) -> Option<NotATrueTypeOutlineFont> {
+        None
+    }
+
+    fn number_of_columns_in_column_band(
+        &mut self,
+        _node: &NumberOfColumnsInColumnBand,
+    ) -> Option<NumberOfColumnsInColumnBand> {
+        None
+    }
+
+    fn number_of_pages_per_booklet(
+        &mut self,
+        _node: &NumberOfPagesPerBooklet,
+    ) -> Option<NumberOfPagesPerBooklet> {
+        None
+    }
+
+    fn number_of_rows_in_row_band(
+        &mut self,
+        _node: &NumberOfRowsInRowBand,
+    ) -> Option<NumberOfRowsInRowBand> {
+        None
+    }
+
+    fn numbering_definition_instance(
+        &mut self,
+        _node: &NumberingDefinitionInstance,
+    ) -> Option<NumberingDefinitionInstance> {
+        None
+    }
+
+    fn numbering_definition_instance_reference_num_id(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumId,
+    ) -> Option<NumberingDefinitionInstanceReferenceNumId> {
+        None
+    }
+
+    fn numbering_definition_instance_reference_num_pr(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumPr,
+    ) -> Option<NumberingDefinitionInstanceReferenceNumPr> {
+        None
+    }
+
+    fn numbering_definitions(
+        &mut self,
+        _node: &NumberingDefinitions,
+    ) -> Option<NumberingDefinitions> {
+        None
+    }
+
+    fn numbering_format(&mut self, _node: &NumberingFormat) -> Option<NumberingFormat> {
+        None
+    }
+
+    fn numbering_level_definition_override(
+        &mut self,
+        _node: &NumberingLevelDefinitionOverride,
+    ) -> Option<NumberingLevelDefinitionOverride> {
+        None
+    }
+
+    fn numbering_level_override_definition(
+        &mut self,
+        _node: &NumberingLevelOverrideDefinition,
+    ) -> Option<NumberingLevelOverrideDefinition> {
+        None
+    }
+
+    fn numbering_level_reference(
+        &mut self,
+        _node: &NumberingLevelReference,
+    ) -> Option<NumberingLevelReference> {
+        None
+    }
+
+    fn numbering_level_starting_value_override(
+        &mut self,
+        _node: &NumberingLevelStartingValueOverride,
+    ) -> Option<NumberingLevelStartingValueOverride> {
+        None
+    }
+
+    fn numbering_level_text(&mut self, _node: &NumberingLevelText) -> Option<NumberingLevelText> {
+        None
+    }
+
+    fn numbering_style_definition(
+        &mut self,
+        _node: &NumberingStyleDefinition,
+    ) -> Option<NumberingStyleDefinition> {
+        None
+    }
+
+    fn numbering_style_reference(
+        &mut self,
+        _node: &NumberingStyleReference,
+    ) -> Option<NumberingStyleReference> {
+        None
+    }
+
+    fn numbering_template_code(
+        &mut self,
+        _node: &NumberingTemplateCode,
+    ) -> Option<NumberingTemplateCode> {
+        None
+    }
+
+    fn odso_data_source_file_path(
+        &mut self,
+        _node: &ODSODataSourceFilePath,
+    ) -> Option<ODSODataSourceFilePath> {
+        None
+    }
+
+    fn odso_data_source_type(&mut self, _node: &ODSODataSourceType) -> Option<ODSODataSourceType> {
+        None
+    }
+
+    fn office_data_source_object_settings(
+        &mut self,
+        _node: &OfficeDataSourceObjectSettings,
+    ) -> Option<OfficeDataSourceObjectSettings> {
+        None
+    }
+
+    fn office_open_xml_math(&mut self, _node: &OfficeOpenXMLMath) -> Option<OfficeOpenXMLMath> {
+        None
+    }
+
+    fn only_allow_editing_of_form_fields(
+        &mut self,
+        _node: &OnlyAllowEditingOfFormFields,
+    ) -> Option<OnlyAllowEditingOfFormFields> {
+        None
+    }
+
+    fn only_expand_condense_text_by_whole_points(
+        &mut self,
+        _node: &OnlyExpandCondenseTextByWholePoints,
+    ) -> Option<OnlyExpandCondenseTextByWholePoints> {
+        None
+    }
+
+    fn only_print_form_field_content(
+        &mut self,
+        _node: &OnlyPrintFormFieldContent,
+    ) -> Option<OnlyPrintFormFieldContent> {
+        None
+    }
+
+    fn only_save_custom_xml_markup(
+        &mut self,
+        _node: &OnlySaveCustomXMLMarkup,
+    ) -> Option<OnlySaveCustomXMLMarkup> {
+        None
+    }
+
+    fn only_save_form_field_content(
+        &mut self,
+        _node: &OnlySaveFormFieldContent,
+    ) -> Option<OnlySaveFormFieldContent> {
+        None
+    }
+
+    fn optional_hyphen_character(
+        &mut self,
+        _node: &OptionalHyphenCharacter,
+    ) -> Option<OptionalHyphenCharacter> {
+        None
+    }
+
+    fn optional_user_interface_sorting_order(
+        &mut self,
+        _node: &OptionalUserInterfaceSortingOrder,
+    ) -> Option<OptionalUserInterfaceSortingOrder> {
+        None
+    }
+
+    fn original_document_revision_save_id(
+        &mut self,
+        _node: &OriginalDocumentRevisionSaveID,
+    ) -> Option<OriginalDocumentRevisionSaveID> {
+        None
+    }
+
+    fn output_encoding(&mut self, _node: &OutputEncoding) -> Option<OutputEncoding> {
+        None
+    }
+
+    fn page_border_excludes_footer(
+        &mut self,
+        _node: &PageBorderExcludesFooter,
+    ) -> Option<PageBorderExcludesFooter> {
+        None
+    }
+
+    fn page_border_excludes_header(
+        &mut self,
+        _node: &PageBorderExcludesHeader,
+    ) -> Option<PageBorderExcludesHeader> {
+        None
+    }
+
+    fn page_borders(&mut self, _node: &PageBorders) -> Option<PageBorders> {
+        None
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> Option<PageMargins> {
+        None
+    }
+
+    fn page_number_block(&mut self, _node: &PageNumberBlock) -> Option<PageNumberBlock> {
+        None
+    }
+
+    fn page_numbering_settings(
+        &mut self,
+        _node: &PageNumberingSettings,
+    ) -> Option<PageNumberingSettings> {
+        None
+    }
+
+    fn page_size(&mut self, _node: &PageSize) -> Option<PageSize> {
+        None
+    }
+
+    fn panose1typeface_classification_number(
+        &mut self,
+        _node: &Panose1TypefaceClassificationNumber,
+    ) -> Option<Panose1TypefaceClassificationNumber> {
+        None
+    }
+
+    fn paper_source_information(
+        &mut self,
+        _node: &PaperSourceInformation,
+    ) -> Option<PaperSourceInformation> {
+        None
+    }
+
+    fn paragraph(&mut self, _node: &Paragraph) -> Option<Paragraph> {
+        None
+    }
+
+    fn paragraph_alignment(&mut self, _node: &ParagraphAlignment) -> Option<ParagraphAlignment> {
+        None
+    }
+
+    fn paragraph_border_above_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphs,
+    ) -> Option<ParagraphBorderAboveIdenticalParagraphs> {
+        None
+    }
+
+    fn paragraph_border_above_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphsTblWidth,
+    ) -> Option<ParagraphBorderAboveIdenticalParagraphsTblWidth> {
+        None
+    }
+
+    fn paragraph_border_below_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphs,
+    ) -> Option<ParagraphBorderBelowIdenticalParagraphs> {
+        None
+    }
+
+    fn paragraph_border_below_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphsTblWidth,
+    ) -> Option<ParagraphBorderBelowIdenticalParagraphsTblWidth> {
+        None
+    }
+
+    fn paragraph_border_between_facing_pages(
+        &mut self,
+        _node: &ParagraphBorderBetweenFacingPages,
+    ) -> Option<ParagraphBorderBetweenFacingPages> {
+        None
+    }
+
+    fn paragraph_border_between_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBetweenIdenticalParagraphs,
+    ) -> Option<ParagraphBorderBetweenIdenticalParagraphs> {
+        None
+    }
+
+    fn paragraph_borders(&mut self, _node: &ParagraphBorders) -> Option<ParagraphBorders> {
+        None
+    }
+
+    fn paragraph_conditional_formatting(
+        &mut self,
+        _node: &ParagraphConditionalFormatting,
+    ) -> Option<ParagraphConditionalFormatting> {
+        None
+    }
+
+    fn paragraph_content(&mut self, _node: &ParagraphContent) -> Option<ParagraphContent> {
+        None
+    }
+
+    fn paragraph_content_items(
+        &mut self,
+        _node: &ParagraphContent,
+    ) -> Option<Vec<ParagraphContent>> {
+        None
+    }
+
+    fn paragraph_indentation(
+        &mut self,
+        _node: &ParagraphIndentation,
+    ) -> Option<ParagraphIndentation> {
+        None
+    }
+
+    fn paragraph_mark_is_always_hidden(
+        &mut self,
+        _node: &ParagraphMarkIsAlwaysHidden,
+    ) -> Option<ParagraphMarkIsAlwaysHidden> {
+        None
+    }
+
+    fn paragraph_mark_run_properties_revision(
+        &mut self,
+        _node: &ParagraphMarkRunPropertiesRevision,
+    ) -> Option<ParagraphMarkRunPropertiesRevision> {
+        None
+    }
+
+    fn paragraph_properties(&mut self, _node: &ParagraphProperties) -> Option<ParagraphProperties> {
+        None
+    }
+
+    fn paragraph_properties_p_pr_general(
+        &mut self,
+        _node: &ParagraphPropertiesPPrGeneral,
+    ) -> Option<ParagraphPropertiesPPrGeneral> {
+        None
+    }
+
+    fn paragraph_shading(&mut self, _node: &ParagraphShading) -> Option<ParagraphShading> {
+        None
+    }
+
+    fn paragraph_text_flow_direction(
+        &mut self,
+        _node: &ParagraphTextFlowDirection,
+    ) -> Option<ParagraphTextFlowDirection> {
+        None
+    }
+
+    fn parent_style_id(&mut self, _node: &ParentStyleID) -> Option<ParentStyleID> {
+        None
+    }
+
+    fn percentage_of_document_to_use(
+        &mut self,
+        _node: &PercentageOfDocumentToUse,
+    ) -> Option<PercentageOfDocumentToUse> {
+        None
+    }
+
+    fn phonetic_guide(&mut self, _node: &PhoneticGuide) -> Option<PhoneticGuide> {
+        None
+    }
+
+    fn phonetic_guide_base_text(
+        &mut self,
+        _node: &PhoneticGuideBaseText,
+    ) -> Option<PhoneticGuideBaseText> {
+        None
+    }
+
+    fn phonetic_guide_base_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideBaseTextFontSize,
+    ) -> Option<PhoneticGuideBaseTextFontSize> {
+        None
+    }
+
+    fn phonetic_guide_content(
+        &mut self,
+        _node: &PhoneticGuideContent,
+    ) -> Option<PhoneticGuideContent> {
+        None
+    }
+
+    fn phonetic_guide_content_items(
+        &mut self,
+        _node: &PhoneticGuideContent,
+    ) -> Option<Vec<PhoneticGuideContent>> {
+        None
+    }
+
+    fn phonetic_guide_properties(
+        &mut self,
+        _node: &PhoneticGuideProperties,
+    ) -> Option<PhoneticGuideProperties> {
+        None
+    }
+
+    fn phonetic_guide_text(&mut self, _node: &PhoneticGuideText) -> Option<PhoneticGuideText> {
+        None
+    }
+
+    fn phonetic_guide_text_alignment(
+        &mut self,
+        _node: &PhoneticGuideTextAlignment,
+    ) -> Option<PhoneticGuideTextAlignment> {
+        None
+    }
+
+    fn phonetic_guide_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideTextFontSize,
+    ) -> Option<PhoneticGuideTextFontSize> {
+        None
+    }
+
+    fn picture_numbering_symbol_definition(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinition,
+    ) -> Option<PictureNumberingSymbolDefinition> {
+        None
+    }
+
+    fn picture_numbering_symbol_definition_content(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionContent,
+    ) -> Option<PictureNumberingSymbolDefinitionContent> {
+        None
+    }
+
+    fn picture_numbering_symbol_definition_reference(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionReference,
+    ) -> Option<PictureNumberingSymbolDefinitionReference> {
+        None
+    }
+
+    fn picture_structured_document_tag(
+        &mut self,
+        _node: &PictureStructuredDocumentTag,
+    ) -> Option<PictureStructuredDocumentTag> {
+        None
+    }
+
+    fn pixels_per_inch_for_graphics_images(
+        &mut self,
+        _node: &PixelsPerInchForGraphicsImages,
+    ) -> Option<PixelsPerInchForGraphicsImages> {
+        None
+    }
+
+    fn placeholder_text_should_be_resaved(
+        &mut self,
+        _node: &PlaceholderTextShouldBeResaved,
+    ) -> Option<PlaceholderTextShouldBeResaved> {
+        None
+    }
+
+    fn plain_text_structured_document_tag(
+        &mut self,
+        _node: &PlainTextStructuredDocumentTag,
+    ) -> Option<PlainTextStructuredDocumentTag> {
+        None
+    }
+
+    fn position_gutter_at_top_of_page(
+        &mut self,
+        _node: &PositionGutterAtTopOfPage,
+    ) -> Option<PositionGutterAtTopOfPage> {
+        None
+    }
+
+    fn position_of_last_calculated_page_break(
+        &mut self,
+        _node: &PositionOfLastCalculatedPageBreak,
+    ) -> Option<PositionOfLastCalculatedPageBreak> {
+        None
+    }
+
+    fn predefined_merge_field_name(
+        &mut self,
+        _node: &PredefinedMergeFieldName,
+    ) -> Option<PredefinedMergeFieldName> {
+        None
+    }
+
+    fn preferred_table_cell_width(
+        &mut self,
+        _node: &PreferredTableCellWidth,
+    ) -> Option<PreferredTableCellWidth> {
+        None
+    }
+
+    fn preferred_table_width(
+        &mut self,
+        _node: &PreferredTableWidth,
+    ) -> Option<PreferredTableWidth> {
+        None
+    }
+
+    fn preferred_width_after_table_row(
+        &mut self,
+        _node: &PreferredWidthAfterTableRow,
+    ) -> Option<PreferredWidthAfterTableRow> {
+        None
+    }
+
+    fn preferred_width_before_table_row(
+        &mut self,
+        _node: &PreferredWidthBeforeTableRow,
+    ) -> Option<PreferredWidthBeforeTableRow> {
+        None
+    }
+
+    fn prevent_modification_of_themes_part(
+        &mut self,
+        _node: &PreventModificationOfThemesPart,
+    ) -> Option<PreventModificationOfThemesPart> {
+        None
+    }
+
+    fn prevent_replacement_of_styles_part(
+        &mut self,
+        _node: &PreventReplacementOfStylesPart,
+    ) -> Option<PreventReplacementOfStylesPart> {
+        None
+    }
+
+    fn prevent_text_frames_from_overlapping(
+        &mut self,
+        _node: &PreventTextFramesFromOverlapping,
+    ) -> Option<PreventTextFramesFromOverlapping> {
+        None
+    }
+
+    fn previous_numbering_field_properties(
+        &mut self,
+        _node: &PreviousNumberingFieldProperties,
+    ) -> Option<PreviousNumberingFieldProperties> {
+        None
+    }
+
+    fn previous_paragraph_mark_run_properties(
+        &mut self,
+        _node: &PreviousParagraphMarkRunProperties,
+    ) -> Option<PreviousParagraphMarkRunProperties> {
+        None
+    }
+
+    fn previous_paragraph_properties(
+        &mut self,
+        _node: &PreviousParagraphProperties,
+    ) -> Option<PreviousParagraphProperties> {
+        None
+    }
+
+    fn previous_run_properties(
+        &mut self,
+        _node: &PreviousRunProperties,
+    ) -> Option<PreviousRunProperties> {
+        None
+    }
+
+    fn previous_section_properties(
+        &mut self,
+        _node: &PreviousSectionProperties,
+    ) -> Option<PreviousSectionProperties> {
+        None
+    }
+
+    fn previous_table_cell_properties(
+        &mut self,
+        _node: &PreviousTableCellProperties,
+    ) -> Option<PreviousTableCellProperties> {
+        None
+    }
+
+    fn previous_table_grid(&mut self, _node: &PreviousTableGrid) -> Option<PreviousTableGrid> {
+        None
+    }
+
+    fn previous_table_level_property_exceptions(
+        &mut self,
+        _node: &PreviousTableLevelPropertyExceptions,
+    ) -> Option<PreviousTableLevelPropertyExceptions> {
+        None
+    }
+
+    fn previous_table_properties(
+        &mut self,
+        _node: &PreviousTableProperties,
+    ) -> Option<PreviousTableProperties> {
+        None
+    }
+
+    fn previous_table_row_properties(
+        &mut self,
+        _node: &PreviousTableRowProperties,
+    ) -> Option<PreviousTableRowProperties> {
+        None
+    }
+
+    fn primary_style(&mut self, _node: &PrimaryStyle) -> Option<PrimaryStyle> {
+        None
+    }
+
+    fn primary_style_name(&mut self, _node: &PrimaryStyleName) -> Option<PrimaryStyleName> {
+        None
+    }
+
+    fn print_body_text_before_header_footer_contents(
+        &mut self,
+        _node: &PrintBodyTextBeforeHeaderFooterContents,
+    ) -> Option<PrintBodyTextBeforeHeaderFooterContents> {
+        None
+    }
+
+    fn print_colors_as_black_and_white_without_dithering(
+        &mut self,
+        _node: &PrintColorsAsBlackAndWhiteWithoutDithering,
+    ) -> Option<PrintColorsAsBlackAndWhiteWithoutDithering> {
+        None
+    }
+
+    fn print_fractional_character_widths(
+        &mut self,
+        _node: &PrintFractionalCharacterWidths,
+    ) -> Option<PrintFractionalCharacterWidths> {
+        None
+    }
+
+    fn print_post_script_codes_with_document_text(
+        &mut self,
+        _node: &PrintPostScriptCodesWithDocumentText,
+    ) -> Option<PrintPostScriptCodesWithDocumentText> {
+        None
+    }
+
+    fn print_two_pages_per_sheet(
+        &mut self,
+        _node: &PrintTwoPagesPerSheet,
+    ) -> Option<PrintTwoPagesPerSheet> {
+        None
+    }
+
+    fn programmatic_tag(&mut self, _node: &ProgrammaticTag) -> Option<ProgrammaticTag> {
+        None
+    }
+
+    fn proofing_error_anchor(
+        &mut self,
+        _node: &ProofingErrorAnchor,
+    ) -> Option<ProofingErrorAnchor> {
+        None
+    }
+
+    fn properties_for_a_single_font(
+        &mut self,
+        _node: &PropertiesForASingleFont,
+    ) -> Option<PropertiesForASingleFont> {
+        None
+    }
+
+    fn query_for_data_source_records(
+        &mut self,
+        _node: &QueryForDataSourceRecords,
+    ) -> Option<QueryForDataSourceRecords> {
+        None
+    }
+
+    fn radix_point_for_field_code_evaluation(
+        &mut self,
+        _node: &RadixPointForFieldCodeEvaluation,
+    ) -> Option<RadixPointForFieldCodeEvaluation> {
+        None
+    }
+
+    fn range_markup(&mut self, _node: &RangeMarkupContent) -> Option<RangeMarkupContent> {
+        None
+    }
+
+    fn range_markup_items(
+        &mut self,
+        _node: &RangeMarkupContent,
+    ) -> Option<Vec<RangeMarkupContent>> {
+        None
+    }
+
+    fn range_permission_end(&mut self, _node: &RangePermissionEnd) -> Option<RangePermissionEnd> {
+        None
+    }
+
+    fn range_permission_start(
+        &mut self,
+        _node: &RangePermissionStart,
+    ) -> Option<RangePermissionStart> {
+        None
+    }
+
+    fn recalculate_fields_when_modified(
+        &mut self,
+        _node: &RecalculateFieldsWhenModified,
+    ) -> Option<RecalculateFieldsWhenModified> {
+        None
+    }
+
+    fn recommend_web_page_format(
+        &mut self,
+        _node: &RecommendWebPageFormat,
+    ) -> Option<RecommendWebPageFormat> {
+        None
+    }
+
+    fn record_currently_displayed_in_merged_document(
+        &mut self,
+        _node: &RecordCurrentlyDisplayedInMergedDocument,
+    ) -> Option<RecordCurrentlyDisplayedInMergedDocument> {
+        None
+    }
+
+    fn record_is_included_in_mail_merge(
+        &mut self,
+        _node: &RecordIsIncludedInMailMerge,
+    ) -> Option<RecordIsIncludedInMailMerge> {
+        None
+    }
+
+    fn reference_to_inclusion_exclusion_data(
+        &mut self,
+        _node: &ReferenceToInclusionExclusionData,
+    ) -> Option<ReferenceToInclusionExclusionData> {
+        None
+    }
+
+    fn reference_to_printer_settings_data(
+        &mut self,
+        _node: &ReferenceToPrinterSettingsData,
+    ) -> Option<ReferenceToPrinterSettingsData> {
+        None
+    }
+
+    fn referenced_character_style(
+        &mut self,
+        _node: &ReferencedCharacterStyle,
+    ) -> Option<ReferencedCharacterStyle> {
+        None
+    }
+
+    fn referenced_paragraph_style(
+        &mut self,
+        _node: &ReferencedParagraphStyle,
+    ) -> Option<ReferencedParagraphStyle> {
+        None
+    }
+
+    fn referenced_table_style(
+        &mut self,
+        _node: &ReferencedTableStyle,
+    ) -> Option<ReferencedTableStyle> {
+        None
+    }
+
+    fn regular_font_style_embedding(
+        &mut self,
+        _node: &RegularFontStyleEmbedding,
+    ) -> Option<RegularFontStyleEmbedding> {
+        None
+    }
+
+    fn remove_date_and_time_from_annotations(
+        &mut self,
+        _node: &RemoveDateAndTimeFromAnnotations,
+    ) -> Option<RemoveDateAndTimeFromAnnotations> {
+        None
+    }
+
+    fn remove_personal_information(
+        &mut self,
+        _node: &RemovePersonalInformation,
+    ) -> Option<RemovePersonalInformation> {
+        None
+    }
+
+    fn remove_semi_hidden_property(
+        &mut self,
+        _node: &RemoveSemiHiddenProperty,
+    ) -> Option<RemoveSemiHiddenProperty> {
+        None
+    }
+
+    fn remove_smart_tags_when_saving(
+        &mut self,
+        _node: &RemoveSmartTagsWhenSaving,
+    ) -> Option<RemoveSmartTagsWhenSaving> {
+        None
+    }
+
+    fn remove_structured_document_tag_when_edited(
+        &mut self,
+        _node: &RemoveStructuredDocumentTagWhenEdited,
+    ) -> Option<RemoveStructuredDocumentTagWhenEdited> {
+        None
+    }
+
+    fn repeat_table_row(&mut self, _node: &RepeatTableRow) -> Option<RepeatTableRow> {
+        None
+    }
+
+    fn require_exact_size_during_font_substitution(
+        &mut self,
+        _node: &RequireExactSizeDuringFontSubstitution,
+    ) -> Option<RequireExactSizeDuringFontSubstitution> {
+        None
+    }
+
+    fn restart_numbering_level_symbol(
+        &mut self,
+        _node: &RestartNumberingLevelSymbol,
+    ) -> Option<RestartNumberingLevelSymbol> {
+        None
+    }
+
+    fn reverse_book_fold_printing(
+        &mut self,
+        _node: &ReverseBookFoldPrinting,
+    ) -> Option<ReverseBookFoldPrinting> {
+        None
+    }
+
+    fn revision_identifier_for_style_definition(
+        &mut self,
+        _node: &RevisionIdentifierForStyleDefinition,
+    ) -> Option<RevisionIdentifierForStyleDefinition> {
+        None
+    }
+
+    fn revision_information_for_paragraph_properties(
+        &mut self,
+        _node: &RevisionInformationForParagraphProperties,
+    ) -> Option<RevisionInformationForParagraphProperties> {
+        None
+    }
+
+    fn revision_information_for_run_properties(
+        &mut self,
+        _node: &RevisionInformationForRunProperties,
+    ) -> Option<RevisionInformationForRunProperties> {
+        None
+    }
+
+    fn revision_information_for_section_properties(
+        &mut self,
+        _node: &RevisionInformationForSectionProperties,
+    ) -> Option<RevisionInformationForSectionProperties> {
+        None
+    }
+
+    fn revision_information_for_table_cell_properties(
+        &mut self,
+        _node: &RevisionInformationForTableCellProperties,
+    ) -> Option<RevisionInformationForTableCellProperties> {
+        None
+    }
+
+    fn revision_information_for_table_level_property_exceptions(
+        &mut self,
+        _node: &RevisionInformationForTableLevelPropertyExceptions,
+    ) -> Option<RevisionInformationForTableLevelPropertyExceptions> {
+        None
+    }
+
+    fn revision_information_for_table_properties(
+        &mut self,
+        _node: &RevisionInformationForTableProperties,
+    ) -> Option<RevisionInformationForTableProperties> {
+        None
+    }
+
+    fn revision_information_for_table_row_properties(
+        &mut self,
+        _node: &RevisionInformationForTableRowProperties,
+    ) -> Option<RevisionInformationForTableRowProperties> {
+        None
+    }
+
+    fn revision_save_id_values(
+        &mut self,
+        _node: &RevisionSaveIDValues,
+    ) -> Option<RevisionSaveIDValues> {
+        None
+    }
+
+    fn rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+    ) -> Option<RichTextBoxContentContainer> {
+        None
+    }
+
+    fn rich_text_structured_document_tag(
+        &mut self,
+        _node: &RichTextStructuredDocumentTag,
+    ) -> Option<RichTextStructuredDocumentTag> {
+        None
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> Option<RightBorder> {
+        None
+    }
+
+    fn right_margin_for_html_div(
+        &mut self,
+        _node: &RightMarginForHTMLDiv,
+    ) -> Option<RightMarginForHTMLDiv> {
+        None
+    }
+
+    fn right_paragraph_border(
+        &mut self,
+        _node: &RightParagraphBorder,
+    ) -> Option<RightParagraphBorder> {
+        None
+    }
+
+    fn right_paragraph_border_tbl_width(
+        &mut self,
+        _node: &RightParagraphBorderTblWidth,
+    ) -> Option<RightParagraphBorderTblWidth> {
+        None
+    }
+
+    fn right_to_left_paragraph_layout(
+        &mut self,
+        _node: &RightToLeftParagraphLayout,
+    ) -> Option<RightToLeftParagraphLayout> {
+        None
+    }
+
+    fn right_to_left_text(&mut self, _node: &RightToLeftText) -> Option<RightToLeftText> {
+        None
+    }
+
+    fn row_level_custom_xml_element(
+        &mut self,
+        _node: &RowLevelCustomXMLElement,
+    ) -> Option<RowLevelCustomXMLElement> {
+        None
+    }
+
+    fn row_level_structured_document_tag(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTag,
+    ) -> Option<RowLevelStructuredDocumentTag> {
+        None
+    }
+
+    fn row_level_structured_document_tag_content(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTagContent,
+    ) -> Option<RowLevelStructuredDocumentTagContent> {
+        None
+    }
+
+    fn run_content_color(&mut self, _node: &RunContentColor) -> Option<RunContentColor> {
+        None
+    }
+
+    fn run_fonts(&mut self, _node: &RunFonts) -> Option<RunFonts> {
+        None
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> Option<RunProperties> {
+        None
+    }
+
+    fn run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<RunPropertiesContent> {
+        None
+    }
+
+    fn run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<Vec<RunPropertiesContent>> {
+        None
+    }
+
+    fn run_properties_for_the_paragraph_mark(
+        &mut self,
+        _node: &RunPropertiesForTheParagraphMark,
+    ) -> Option<RunPropertiesForTheParagraphMark> {
+        None
+    }
+
+    fn save_smart_tag_data(&mut self, _node: &SaveSmartTagData) -> Option<SaveSmartTagData> {
+        None
+    }
+
+    fn save_through_custom_xsl_transform(
+        &mut self,
+        _node: &SaveThroughCustomXSLTransform,
+    ) -> Option<SaveThroughCustomXSLTransform> {
+        None
+    }
+
+    fn scrollbar_display_option(
+        &mut self,
+        _node: &ScrollbarDisplayOption,
+    ) -> Option<ScrollbarDisplayOption> {
+        None
+    }
+
+    fn section_properties(
+        &mut self,
+        _node: &SectionPropertiesContent,
+    ) -> Option<SectionPropertiesContent> {
+        None
+    }
+
+    fn section_properties_items(
+        &mut self,
+        _node: &SectionPropertiesContent,
+    ) -> Option<Vec<SectionPropertiesContent>> {
+        None
+    }
+
+    fn section_type(&mut self, _node: &SectionType) -> Option<SectionType> {
+        None
+    }
+
+    fn section_wide_endnote_properties(
+        &mut self,
+        _node: &SectionWideEndnoteProperties,
+    ) -> Option<SectionWideEndnoteProperties> {
+        None
+    }
+
+    fn section_wide_footnote_properties(
+        &mut self,
+        _node: &SectionWideFootnoteProperties,
+    ) -> Option<SectionWideFootnoteProperties> {
+        None
+    }
+
+    fn select_fld_with_first_or_last_char(
+        &mut self,
+        _node: &SelectFldWithFirstOrLastChar,
+    ) -> Option<SelectFldWithFirstOrLastChar> {
+        None
+    }
+
+    fn set_of_borders_for_html_div(
+        &mut self,
+        _node: &SetOfBordersForHTMLDiv,
+    ) -> Option<SetOfBordersForHTMLDiv> {
+        None
+    }
+
+    fn set_of_custom_tab_stops(
+        &mut self,
+        _node: &SetOfCustomTabStops,
+    ) -> Option<SetOfCustomTabStops> {
+        None
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> Option<Shadow> {
+        None
+    }
+
+    fn show_e_mail_message_header(
+        &mut self,
+        _node: &ShowEMailMessageHeader,
+    ) -> Option<ShowEMailMessageHeader> {
+        None
+    }
+
+    fn show_xml_tags(&mut self, _node: &ShowXMLTags) -> Option<ShowXMLTags> {
+        None
+    }
+
+    fn simple_field(&mut self, _node: &SimpleField) -> Option<SimpleField> {
+        None
+    }
+
+    fn single_automatic_captioning_setting(
+        &mut self,
+        _node: &SingleAutomaticCaptioningSetting,
+    ) -> Option<SingleAutomaticCaptioningSetting> {
+        None
+    }
+
+    fn single_caption_type_definition(
+        &mut self,
+        _node: &SingleCaptionTypeDefinition,
+    ) -> Option<SingleCaptionTypeDefinition> {
+        None
+    }
+
+    fn single_column_definition(
+        &mut self,
+        _node: &SingleColumnDefinition,
+    ) -> Option<SingleColumnDefinition> {
+        None
+    }
+
+    fn single_document_variable(
+        &mut self,
+        _node: &SingleDocumentVariable,
+    ) -> Option<SingleDocumentVariable> {
+        None
+    }
+
+    fn single_frame_properties(
+        &mut self,
+        _node: &SingleFrameProperties,
+    ) -> Option<SingleFrameProperties> {
+        None
+    }
+
+    fn single_strikethrough(&mut self, _node: &SingleStrikethrough) -> Option<SingleStrikethrough> {
+        None
+    }
+
+    fn single_table_cell_margins(
+        &mut self,
+        _node: &SingleTableCellMargins,
+    ) -> Option<SingleTableCellMargins> {
+        None
+    }
+
+    fn small_caps(&mut self, _node: &SmallCaps) -> Option<SmallCaps> {
+        None
+    }
+
+    fn smart_tag_properties(&mut self, _node: &SmartTagProperties) -> Option<SmartTagProperties> {
+        None
+    }
+
+    fn source_document_type(&mut self, _node: &SourceDocumentType) -> Option<SourceDocumentType> {
+        None
+    }
+
+    fn source_file_for_frame(&mut self, _node: &SourceFileForFrame) -> Option<SourceFileForFrame> {
+        None
+    }
+
+    fn spacing_between_lines_and_above_below_paragraph(
+        &mut self,
+        _node: &SpacingBetweenLinesAndAboveBelowParagraph,
+    ) -> Option<SpacingBetweenLinesAndAboveBelowParagraph> {
+        None
+    }
+
+    fn special_endnote_list(&mut self, _node: &SpecialEndnoteList) -> Option<SpecialEndnoteList> {
+        None
+    }
+
+    fn special_footnote_list(
+        &mut self,
+        _node: &SpecialFootnoteList,
+    ) -> Option<SpecialFootnoteList> {
+        None
+    }
+
+    fn spelling_and_grammatical_checking_state(
+        &mut self,
+        _node: &SpellingAndGrammaticalCheckingState,
+    ) -> Option<SpellingAndGrammaticalCheckingState> {
+        None
+    }
+
+    fn split_pg_break_and_para_mark(
+        &mut self,
+        _node: &SplitPgBreakAndParaMark,
+    ) -> Option<SplitPgBreakAndParaMark> {
+        None
+    }
+
+    fn start_paragraph_on_next_page(
+        &mut self,
+        _node: &StartParagraphOnNextPage,
+    ) -> Option<StartParagraphOnNextPage> {
+        None
+    }
+
+    fn starting_value(&mut self, _node: &StartingValue) -> Option<StartingValue> {
+        None
+    }
+
+    fn strict_kinsoku_rules(&mut self, _node: &StrictKinsokuRules) -> Option<StrictKinsokuRules> {
+        None
+    }
+
+    fn structured_document_tag_end_character_properties(
+        &mut self,
+        _node: &StructuredDocumentTagEndCharacterProperties,
+    ) -> Option<StructuredDocumentTagEndCharacterProperties> {
+        None
+    }
+
+    fn structured_document_tag_label(
+        &mut self,
+        _node: &StructuredDocumentTagLabel,
+    ) -> Option<StructuredDocumentTagLabel> {
+        None
+    }
+
+    fn structured_document_tag_navigation_order_index(
+        &mut self,
+        _node: &StructuredDocumentTagNavigationOrderIndex,
+    ) -> Option<StructuredDocumentTagNavigationOrderIndex> {
+        None
+    }
+
+    fn structured_document_tag_placeholder_text(
+        &mut self,
+        _node: &StructuredDocumentTagPlaceholderText,
+    ) -> Option<StructuredDocumentTagPlaceholderText> {
+        None
+    }
+
+    fn structured_document_tag_properties(
+        &mut self,
+        _node: &StructuredDocumentTagProperties,
+    ) -> Option<StructuredDocumentTagProperties> {
+        None
+    }
+
+    fn structured_document_tag_properties_content(
+        &mut self,
+        _node: &StructuredDocumentTagPropertiesContent,
+    ) -> Option<StructuredDocumentTagPropertiesContent> {
+        None
+    }
+
+    fn style_cannot_be_applied(
+        &mut self,
+        _node: &StyleCannotBeApplied,
+    ) -> Option<StyleCannotBeApplied> {
+        None
+    }
+
+    fn style_conditional_table_formatting_properties(
+        &mut self,
+        _node: &StyleConditionalTableFormattingProperties,
+    ) -> Option<StyleConditionalTableFormattingProperties> {
+        None
+    }
+
+    fn style_definition(&mut self, _node: &StyleDefinition) -> Option<StyleDefinition> {
+        None
+    }
+
+    fn style_definitions(&mut self, _node: &StyleDefinitions) -> Option<StyleDefinitions> {
+        None
+    }
+
+    fn style_for_next_paragraph(
+        &mut self,
+        _node: &StyleForNextParagraph,
+    ) -> Option<StyleForNextParagraph> {
+        None
+    }
+
+    fn subscript_superscript_text(
+        &mut self,
+        _node: &SubscriptSuperscriptText,
+    ) -> Option<SubscriptSuperscriptText> {
+        None
+    }
+
+    fn subset_fonts_when_embedding(
+        &mut self,
+        _node: &SubsetFontsWhenEmbedding,
+    ) -> Option<SubsetFontsWhenEmbedding> {
+        None
+    }
+
+    fn suggested_filtering(&mut self, _node: &SuggestedFiltering) -> Option<SuggestedFiltering> {
+        None
+    }
+
+    fn suggested_sorting(&mut self, _node: &SuggestedSorting) -> Option<SuggestedSorting> {
+        None
+    }
+
+    fn supplementary_smart_tag_information(
+        &mut self,
+        _node: &SupplementarySmartTagInformation,
+    ) -> Option<SupplementarySmartTagInformation> {
+        None
+    }
+
+    fn supported_unicode_subranges_and_code_pages(
+        &mut self,
+        _node: &SupportedUnicodeSubrangesAndCodePages,
+    ) -> Option<SupportedUnicodeSubrangesAndCodePages> {
+        None
+    }
+
+    fn suppress_endnotes_in_document(
+        &mut self,
+        _node: &SuppressEndnotesInDocument,
+    ) -> Option<SuppressEndnotesInDocument> {
+        None
+    }
+
+    fn suppress_hyphenation_for_paragraph(
+        &mut self,
+        _node: &SuppressHyphenationForParagraph,
+    ) -> Option<SuppressHyphenationForParagraph> {
+        None
+    }
+
+    fn suppress_line_numbers_for_paragraph(
+        &mut self,
+        _node: &SuppressLineNumbersForParagraph,
+    ) -> Option<SuppressLineNumbersForParagraph> {
+        None
+    }
+
+    fn suppress_sp_bf_after_pg_brk(
+        &mut self,
+        _node: &SuppressSpBfAfterPgBrk,
+    ) -> Option<SuppressSpBfAfterPgBrk> {
+        None
+    }
+
+    fn suppress_top_spacing(&mut self, _node: &SuppressTopSpacing) -> Option<SuppressTopSpacing> {
+        None
+    }
+
+    fn swap_paragraph_borders_on_odd_numbered_pages(
+        &mut self,
+        _node: &SwapParagraphBordersOnOddNumberedPages,
+    ) -> Option<SwapParagraphBordersOnOddNumberedPages> {
+        None
+    }
+
+    fn symbol_character(&mut self, _node: &SymbolCharacter) -> Option<SymbolCharacter> {
+        None
+    }
+
+    fn tab_character(&mut self, _node: &TabCharacter) -> Option<TabCharacter> {
+        None
+    }
+
+    fn table(&mut self, _node: &Table) -> Option<Table> {
+        None
+    }
+
+    fn table_alignment_exception(
+        &mut self,
+        _node: &TableAlignmentException,
+    ) -> Option<TableAlignmentException> {
+        None
+    }
+
+    fn table_borders(&mut self, _node: &TableBorders) -> Option<TableBorders> {
+        None
+    }
+
+    fn table_caption(&mut self, _node: &TableCaption) -> Option<TableCaption> {
+        None
+    }
+
+    fn table_cell(&mut self, _node: &TableCell) -> Option<TableCell> {
+        None
+    }
+
+    fn table_cell_borders(&mut self, _node: &TableCellBorders) -> Option<TableCellBorders> {
+        None
+    }
+
+    fn table_cell_deletion(&mut self, _node: &TableCellDeletion) -> Option<TableCellDeletion> {
+        None
+    }
+
+    fn table_cell_insertion(&mut self, _node: &TableCellInsertion) -> Option<TableCellInsertion> {
+        None
+    }
+
+    fn table_cell_leading_edge_border(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorder,
+    ) -> Option<TableCellLeadingEdgeBorder> {
+        None
+    }
+
+    fn table_cell_leading_edge_border_tbl_width(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorderTblWidth,
+    ) -> Option<TableCellLeadingEdgeBorderTblWidth> {
+        None
+    }
+
+    fn table_cell_margin_exceptions(
+        &mut self,
+        _node: &TableCellMarginExceptions,
+    ) -> Option<TableCellMarginExceptions> {
+        None
+    }
+
+    fn table_cell_properties(
+        &mut self,
+        _node: &TableCellProperties,
+    ) -> Option<TableCellProperties> {
+        None
+    }
+
+    fn table_cell_trailing_margin_exception(
+        &mut self,
+        _node: &TableCellTrailingMarginException,
+    ) -> Option<TableCellTrailingMarginException> {
+        None
+    }
+
+    fn table_cell_trailing_margin_exception_tbl_width(
+        &mut self,
+        _node: &TableCellTrailingMarginExceptionTblWidth,
+    ) -> Option<TableCellTrailingMarginExceptionTblWidth> {
+        None
+    }
+
+    fn table_cell_vertical_alignment(
+        &mut self,
+        _node: &TableCellVerticalAlignment,
+    ) -> Option<TableCellVerticalAlignment> {
+        None
+    }
+
+    fn table_description(&mut self, _node: &TableDescription) -> Option<TableDescription> {
+        None
+    }
+
+    fn table_grid(&mut self, _node: &TableGrid) -> Option<TableGrid> {
+        None
+    }
+
+    fn table_grid_column_revision_information(
+        &mut self,
+        _node: &TableGridColumnRevisionInformation,
+    ) -> Option<TableGridColumnRevisionInformation> {
+        None
+    }
+
+    fn table_indent_from_leading_margin(
+        &mut self,
+        _node: &TableIndentFromLeadingMargin,
+    ) -> Option<TableIndentFromLeadingMargin> {
+        None
+    }
+
+    fn table_inside_horizontal_edges_border(
+        &mut self,
+        _node: &TableInsideHorizontalEdgesBorder,
+    ) -> Option<TableInsideHorizontalEdgesBorder> {
+        None
+    }
+
+    fn table_inside_vertical_edges_border(
+        &mut self,
+        _node: &TableInsideVerticalEdgesBorder,
+    ) -> Option<TableInsideVerticalEdgesBorder> {
+        None
+    }
+
+    fn table_layout(&mut self, _node: &TableLayout) -> Option<TableLayout> {
+        None
+    }
+
+    fn table_level_property_exceptions(
+        &mut self,
+        _node: &TableLevelPropertyExceptions,
+    ) -> Option<TableLevelPropertyExceptions> {
+        None
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> Option<TableProperties> {
+        None
+    }
+
+    fn table_row(&mut self, _node: &TableRow) -> Option<TableRow> {
+        None
+    }
+
+    fn table_row_cannot_break_across_pages(
+        &mut self,
+        _node: &TableRowCannotBreakAcrossPages,
+    ) -> Option<TableRowCannotBreakAcrossPages> {
+        None
+    }
+
+    fn table_row_cell_spacing(
+        &mut self,
+        _node: &TableRowCellSpacing,
+    ) -> Option<TableRowCellSpacing> {
+        None
+    }
+
+    fn table_row_height(&mut self, _node: &TableRowHeight) -> Option<TableRowHeight> {
+        None
+    }
+
+    fn table_row_properties(&mut self, _node: &TableRowProperties) -> Option<TableRowProperties> {
+        None
+    }
+
+    fn table_row_properties_content(
+        &mut self,
+        _node: &TableRowPropertiesContent,
+    ) -> Option<TableRowPropertiesContent> {
+        None
+    }
+
+    fn table_row_properties_content_items(
+        &mut self,
+        _node: &TableRowPropertiesContent,
+    ) -> Option<Vec<TableRowPropertiesContent>> {
+        None
+    }
+
+    fn table_style_conditional_formatting_settings_exception(
+        &mut self,
+        _node: &TableStyleConditionalFormattingSettingsException,
+    ) -> Option<TableStyleConditionalFormattingSettingsException> {
+        None
+    }
+
+    fn target_screen_size_for_web_page(
+        &mut self,
+        _node: &TargetScreenSizeForWebPage,
+    ) -> Option<TargetScreenSizeForWebPage> {
+        None
+    }
+
+    fn text(&mut self, _node: &Text) -> Option<Text> {
+        None
+    }
+
+    fn text_border(&mut self, _node: &TextBorder) -> Option<TextBorder> {
+        None
+    }
+
+    fn text_box_form_field_formatting(
+        &mut self,
+        _node: &TextBoxFormFieldFormatting,
+    ) -> Option<TextBoxFormFieldFormatting> {
+        None
+    }
+
+    fn text_box_form_field_maximum_length(
+        &mut self,
+        _node: &TextBoxFormFieldMaximumLength,
+    ) -> Option<TextBoxFormFieldMaximumLength> {
+        None
+    }
+
+    fn text_box_form_field_properties(
+        &mut self,
+        _node: &TextBoxFormFieldProperties,
+    ) -> Option<TextBoxFormFieldProperties> {
+        None
+    }
+
+    fn text_box_form_field_type(
+        &mut self,
+        _node: &TextBoxFormFieldType,
+    ) -> Option<TextBoxFormFieldType> {
+        None
+    }
+
+    fn text_frame_properties(
+        &mut self,
+        _node: &TextFrameProperties,
+    ) -> Option<TextFrameProperties> {
+        None
+    }
+
+    fn text_highlighting(&mut self, _node: &TextHighlighting) -> Option<TextHighlighting> {
+        None
+    }
+
+    fn text_run(&mut self, _node: &TextRun) -> Option<TextRun> {
+        None
+    }
+
+    fn text_run_content(&mut self, _node: &TextRunContent) -> Option<TextRunContent> {
+        None
+    }
+
+    fn text_run_content_items(&mut self, _node: &TextRunContent) -> Option<Vec<TextRunContent>> {
+        None
+    }
+
+    fn textbox_tight_wrap(&mut self, _node: &TextboxTightWrap) -> Option<TextboxTightWrap> {
+        None
+    }
+
+    fn theme_color_mappings(&mut self, _node: &ThemeColorMappings) -> Option<ThemeColorMappings> {
+        None
+    }
+
+    fn theme_font_languages(&mut self, _node: &ThemeFontLanguages) -> Option<ThemeFontLanguages> {
+        None
+    }
+
+    fn top_and_bottom_margin_for_frame(
+        &mut self,
+        _node: &TopAndBottomMarginForFrame,
+    ) -> Option<TopAndBottomMarginForFrame> {
+        None
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
+        None
+    }
+
+    fn top_left_bottom_right_diagonal_border(
+        &mut self,
+        _node: &TopLeftBottomRightDiagonalBorder,
+    ) -> Option<TopLeftBottomRightDiagonalBorder> {
+        None
+    }
+
+    fn top_margin_for_html_div(
+        &mut self,
+        _node: &TopMarginForHTMLDiv,
+    ) -> Option<TopMarginForHTMLDiv> {
+        None
+    }
+
+    fn top_right_bottom_left_diagonal_border(
+        &mut self,
+        _node: &TopRightBottomLeftDiagonalBorder,
+    ) -> Option<TopRightBottomLeftDiagonalBorder> {
+        None
+    }
+
+    fn track_revisions_to_document(
+        &mut self,
+        _node: &TrackRevisionsToDocument,
+    ) -> Option<TrackRevisionsToDocument> {
+        None
+    }
+
+    fn tracked_run(&mut self, _node: &TrackedRunContent) -> Option<TrackedRunContent> {
+        None
+    }
+
+    fn tracked_run_items(&mut self, _node: &TrackedRunContent) -> Option<Vec<TrackedRunContent>> {
+        None
+    }
+
+    fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
+        &mut self,
+        _node: &TreatBackslashQuotationDelimiterAsTwoQuotationMarks,
+    ) -> Option<TreatBackslashQuotationDelimiterAsTwoQuotationMarks> {
+        None
+    }
+
+    fn truncate_font_heights_like_wp6(
+        &mut self,
+        _node: &TruncateFontHeightsLikeWP6,
+    ) -> Option<TruncateFontHeightsLikeWP6> {
+        None
+    }
+
+    fn udl_connection_string(
+        &mut self,
+        _node: &UDLConnectionString,
+    ) -> Option<UDLConnectionString> {
+        None
+    }
+
+    fn underline(&mut self, _node: &Underline) -> Option<Underline> {
+        None
+    }
+
+    fn underline_all_trailing_spaces(
+        &mut self,
+        _node: &UnderlineAllTrailingSpaces,
+    ) -> Option<UnderlineAllTrailingSpaces> {
+        None
+    }
+
+    fn underline_following_character_following_numbering(
+        &mut self,
+        _node: &UnderlineFollowingCharacterFollowingNumbering,
+    ) -> Option<UnderlineFollowingCharacterFollowingNumbering> {
+        None
+    }
+
+    fn unique_id(&mut self, _node: &UniqueID) -> Option<UniqueID> {
+        None
+    }
+
+    fn unique_value_for_record(
+        &mut self,
+        _node: &UniqueValueForRecord,
+    ) -> Option<UniqueValueForRecord> {
+        None
+    }
+
+    fn upgrade_document_on_open(
+        &mut self,
+        _node: &UpgradeDocumentOnOpen,
+    ) -> Option<UpgradeDocumentOnOpen> {
+        None
+    }
+
+    fn use_alt_kinsoku_line_break_rules(
+        &mut self,
+        _node: &UseAltKinsokuLineBreakRules,
+    ) -> Option<UseAltKinsokuLineBreakRules> {
+        None
+    }
+
+    fn use_ansi_kerning_pairs_from_fonts(
+        &mut self,
+        _node: &UseANSIKerningPairsFromFonts,
+    ) -> Option<UseANSIKerningPairsFromFonts> {
+        None
+    }
+
+    fn use_cached_paragraph_information_for_column_balancing(
+        &mut self,
+        _node: &UseCachedParagraphInformationForColumnBalancing,
+    ) -> Option<UseCachedParagraphInformationForColumnBalancing> {
+        None
+    }
+
+    fn use_complex_script_formatting_on_run(
+        &mut self,
+        _node: &UseComplexScriptFormattingOnRun,
+    ) -> Option<UseComplexScriptFormattingOnRun> {
+        None
+    }
+
+    fn use_country_based_address_field_ordering(
+        &mut self,
+        _node: &UseCountryBasedAddressFieldOrdering,
+    ) -> Option<UseCountryBasedAddressFieldOrdering> {
+        None
+    }
+
+    fn use_incorrect_inter_character_spacing_rules(
+        &mut self,
+        _node: &UseIncorrectInterCharacterSpacingRules,
+    ) -> Option<UseIncorrectInterCharacterSpacingRules> {
+        None
+    }
+
+    fn use_left_right_indents_as_inside_outside_indents(
+        &mut self,
+        _node: &UseLeftRightIndentsAsInsideOutsideIndents,
+    ) -> Option<UseLeftRightIndentsAsInsideOutsideIndents> {
+        None
+    }
+
+    fn use_normal_style_for_list(
+        &mut self,
+        _node: &UseNormalStyleForList,
+    ) -> Option<UseNormalStyleForList> {
+        None
+    }
+
+    fn use_printer_metrics_to_display_documents(
+        &mut self,
+        _node: &UsePrinterMetricsToDisplayDocuments,
+    ) -> Option<UsePrinterMetricsToDisplayDocuments> {
+        None
+    }
+
+    fn use_single_borderfor_contiguous_cells(
+        &mut self,
+        _node: &UseSingleBorderforContiguousCells,
+    ) -> Option<UseSingleBorderforContiguousCells> {
+        None
+    }
+
+    fn use_specific_small_caps_algorithm(
+        &mut self,
+        _node: &UseSpecificSmallCapsAlgorithm,
+    ) -> Option<UseSpecificSmallCapsAlgorithm> {
+        None
+    }
+
+    fn use_specific_space_width(
+        &mut self,
+        _node: &UseSpecificSpaceWidth,
+    ) -> Option<UseSpecificSpaceWidth> {
+        None
+    }
+
+    fn use_static_text_leading(
+        &mut self,
+        _node: &UseStaticTextLeading,
+    ) -> Option<UseStaticTextLeading> {
+        None
+    }
+
+    fn use_word2002table_style_rules(
+        &mut self,
+        _node: &UseWord2002TableStyleRules,
+    ) -> Option<UseWord2002TableStyleRules> {
+        None
+    }
+
+    fn utilize_vml_when_saving_as_web_page(
+        &mut self,
+        _node: &UtilizeVMLWhenSavingAsWebPage,
+    ) -> Option<UtilizeVMLWhenSavingAsWebPage> {
+        None
+    }
+
+    fn vertical_character_alignment_on_line(
+        &mut self,
+        _node: &VerticalCharacterAlignmentOnLine,
+    ) -> Option<VerticalCharacterAlignmentOnLine> {
+        None
+    }
+
+    fn vertically_merged_cell(
+        &mut self,
+        _node: &VerticallyMergedCell,
+    ) -> Option<VerticallyMergedCell> {
+        None
+    }
+
+    fn vertically_merged_split_table_cells(
+        &mut self,
+        _node: &VerticallyMergedSplitTableCells,
+    ) -> Option<VerticallyMergedSplitTableCells> {
+        None
+    }
+
+    fn vertically_raised_or_lowered_text(
+        &mut self,
+        _node: &VerticallyRaisedOrLoweredText,
+    ) -> Option<VerticallyRaisedOrLoweredText> {
+        None
+    }
+
+    fn view_merged_data_within_document(
+        &mut self,
+        _node: &ViewMergedDataWithinDocument,
+    ) -> Option<ViewMergedDataWithinDocument> {
+        None
+    }
+
+    fn visibility_of_annotation_types(
+        &mut self,
+        _node: &VisibilityOfAnnotationTypes,
+    ) -> Option<VisibilityOfAnnotationTypes> {
+        None
+    }
+
+    fn visually_right_to_left_table(
+        &mut self,
+        _node: &VisuallyRightToLeftTable,
+    ) -> Option<VisuallyRightToLeftTable> {
+        None
+    }
+
+    fn vml_element(&mut self, _node: &VmlElementContent) -> Option<VmlElementContent> {
+        None
+    }
+
+    fn vml_element_items(&mut self, _node: &VmlElementContent) -> Option<Vec<VmlElementContent>> {
+        None
+    }
+
+    fn vml_object(&mut self, _node: &VMLObject) -> Option<VMLObject> {
+        None
+    }
+
+    fn vml_office_drawing_element(
+        &mut self,
+        _node: &VmlOfficeDrawingElementContent,
+    ) -> Option<VmlOfficeDrawingElementContent> {
+        None
+    }
+
+    fn vml_office_drawing_element_items(
+        &mut self,
+        _node: &VmlOfficeDrawingElementContent,
+    ) -> Option<Vec<VmlOfficeDrawingElementContent>> {
+        None
+    }
+
+    fn web_hidden_text(&mut self, _node: &WebHiddenText) -> Option<WebHiddenText> {
+        None
+    }
+
+    fn web_page_settings(&mut self, _node: &WebPageSettings) -> Option<WebPageSettings> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_absolute_position_tab_character(
+        &mut self,
+        _node: &AbsolutePositionTabCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_abstract_numbering_definition(
+        &mut self,
+        _node: &AbstractNumberingDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_abstract_numbering_definition_identifier(
+        &mut self,
+        _node: &AbstractNumberingDefinitionIdentifier,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_abstract_numbering_definition_reference(
+        &mut self,
+        _node: &AbstractNumberingDefinitionReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_abstract_numbering_definition_type(
+        &mut self,
+        _node: &AbstractNumberingDefinitionType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_add_document_grid_line_pitch(
+        &mut self,
+        _node: &AddDocumentGridLinePitch,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_add_space_below_underlined_text(
+        &mut self,
+        _node: &AddSpaceBelowUnderlinedText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_adjust_spacing_east_asian_text_numbers(
+        &mut self,
+        _node: &AdjustSpacingEastAsianTextNumbers,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_adjust_spacing_latin_east_asian_text(
+        &mut self,
+        _node: &AdjustSpacingLatinEastAsianText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_align_paragraph_and_table_borders(
+        &mut self,
+        _node: &AlignParagraphAndTableBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_align_table_rows_independently(
+        &mut self,
+        _node: &AlignTableRowsIndependently,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_automatic_formatting_override(
+        &mut self,
+        _node: &AllowAutomaticFormattingOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_contextual_spacing_of_paragraphs_in_tables(
+        &mut self,
+        _node: &AllowContextualSpacingOfParagraphsInTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_first_last_line_display(
+        &mut self,
+        _node: &AllowFirstLastLineDisplay,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_line_breaking_at_character_level(
+        &mut self,
+        _node: &AllowLineBreakingAtCharacterLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_png_as_graphic_format(
+        &mut self,
+        _node: &AllowPNGAsGraphicFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_punctuation_extend_past_text_extents(
+        &mut self,
+        _node: &AllowPunctuationExtendPastTextExtents,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_saving_document_as_xml_file(
+        &mut self,
+        _node: &AllowSavingDocumentAsXMLFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_table_rows_to_wrap_inline_objects_independently(
+        &mut self,
+        _node: &AllowTableRowsToWrapInlineObjectsIndependently,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_allow_tables_to_auto_fit_into_page_margins(
+        &mut self,
+        _node: &AllowTablesToAutoFitIntoPageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alternate_names_for_font(
+        &mut self,
+        _node: &AlternateNamesForFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alternate_style_names(
+        &mut self,
+        _node: &AlternateStyleNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_always_merge_empty_namespace(
+        &mut self,
+        _node: &AlwaysMergeEmptyNamespace,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_always_show_placeholder_text(
+        &mut self,
+        _node: &AlwaysShowPlaceholderText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_always_use_fixed_width_for_hangul_characters(
+        &mut self,
+        _node: &AlwaysUseFixedWidthForHangulCharacters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor_for_imported_external_content(
+        &mut self,
+        _node: &AnchorForImportedExternalContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor_for_subdocument_location(
+        &mut self,
+        _node: &AnchorForSubdocumentLocation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_animated_text_effect(
+        &mut self,
+        _node: &AnimatedTextEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_help_text(
+        &mut self,
+        _node: &AssociatedHelpText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_html_div_id(
+        &mut self,
+        _node: &AssociatedHTMLDivID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_outline_level(
+        &mut self,
+        _node: &AssociatedOutlineLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_paragraph_style_name(
+        &mut self,
+        _node: &AssociatedParagraphStyleName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_status_text(
+        &mut self,
+        _node: &AssociatedStatusText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attached_custom_xml_schema(
+        &mut self,
+        _node: &AttachedCustomXMLSchema,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attached_document_template(
+        &mut self,
+        _node: &AttachedDocumentTemplate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_space_like_word95(
+        &mut self,
+        _node: &AutoSpaceLikeWord95,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_autofit_to_first_fixed_width_cell(
+        &mut self,
+        _node: &AutofitToFirstFixedWidthCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatic_captioning_settings(
+        &mut self,
+        _node: &AutomaticCaptioningSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_adjust_right_indent(
+        &mut self,
+        _node: &AutomaticallyAdjustRightIndent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_hyphenate_document_contents_when_displayed(
+        &mut self,
+        _node: &AutomaticallyHyphenateDocumentContentsWhenDisplayed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_merge_user_formatting(
+        &mut self,
+        _node: &AutomaticallyMergeUserFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_recalculate_fields_on_open(
+        &mut self,
+        _node: &AutomaticallyRecalculateFieldsOnOpen,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_size_form_field(
+        &mut self,
+        _node: &AutomaticallySizeFormField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_automatically_update_styles_from_document_template(
+        &mut self,
+        _node: &AutomaticallyUpdateStylesFromDocumentTemplate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_balance_single_byte_double_byte_width(
+        &mut self,
+        _node: &BalanceSingleByteDoubleByteWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bibliography_structured_document_tag(
+        &mut self,
+        _node: &BibliographyStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bidirectional_embedding_level(
+        &mut self,
+        _node: &BidirectionalEmbeddingLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bidirectional_override(
+        &mut self,
+        _node: &BidirectionalOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_block(
+        &mut self,
+        _node: &BlockContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_block_items(
+        &mut self,
+        _node: &BlockContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_block_level_custom_xml_element(
+        &mut self,
+        _node: &BlockLevelCustomXMLElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_block_level_structured_document_tag(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_block_level_structured_document_tag_content(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold(&mut self, _node: &Bold, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold_italic_font_style_embedding(
+        &mut self,
+        _node: &BoldItalicFontStyleEmbedding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold_style_font_style_embedding(
+        &mut self,
+        _node: &BoldStyleFontStyleEmbedding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_book_fold_printing(
+        &mut self,
+        _node: &BookFoldPrinting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bookmark_end(
+        &mut self,
+        _node: &BookmarkEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bookmark_start(
+        &mut self,
+        _node: &BookmarkStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_border(
+        &mut self,
+        _node: &BottomBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_margin_for_html_div(
+        &mut self,
+        _node: &BottomMarginForHTMLDiv,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_break(&mut self, _node: &Break, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_built_in_document_part(
+        &mut self,
+        _node: &BuiltInDocumentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_built_in_document_part_structured_document_tag(
+        &mut self,
+        _node: &BuiltInDocumentPartStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_caption_settings(
+        &mut self,
+        _node: &CaptionSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_carriage_return(
+        &mut self,
+        _node: &CarriageReturn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_level_custom_xml_element(
+        &mut self,
+        _node: &CellLevelCustomXMLElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_level_structured_document_tag(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_level_structured_document_tag_content(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_markup(
+        &mut self,
+        _node: &CellMarkupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_level_whitespace_compression(
+        &mut self,
+        _node: &CharacterLevelWhitespaceCompression,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_set_supported_by_font(
+        &mut self,
+        _node: &CharacterSetSupportedByFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_spacing_adjustment(
+        &mut self,
+        _node: &CharacterSpacingAdjustment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_characters_which_cannot_begin_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotBeginALine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_characters_which_cannot_end_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotEndALine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checkbox_form_field_properties(
+        &mut self,
+        _node: &CheckboxFormFieldProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checkbox_form_field_properties_content(
+        &mut self,
+        _node: &CheckboxFormFieldPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checkbox_form_field_size(
+        &mut self,
+        _node: &CheckboxFormFieldSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checkbox_form_field_state(
+        &mut self,
+        _node: &CheckboxFormFieldState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_child_div_elements(
+        &mut self,
+        _node: &ChildDivElements,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_citation_structured_document_tag(
+        &mut self,
+        _node: &CitationStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_click_and_type_style(
+        &mut self,
+        _node: &ClickAndTypeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_containing_e_mail_address(
+        &mut self,
+        _node: &ColumnContainingEMailAddress,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_definitions(
+        &mut self,
+        _node: &ColumnDefinitions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_delimiter_for_data_source(
+        &mut self,
+        _node: &ColumnDelimiterForDataSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_combo_box_list_item(
+        &mut self,
+        _node: &ComboBoxListItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_combo_box_structured_document_tag(
+        &mut self,
+        _node: &ComboBoxStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_anchor_range_end(
+        &mut self,
+        _node: &CommentAnchorRangeEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_anchor_range_start(
+        &mut self,
+        _node: &CommentAnchorRangeStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_content(
+        &mut self,
+        _node: &CommentContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_content_reference_mark(
+        &mut self,
+        _node: &CommentContentReferenceMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_information_block(
+        &mut self,
+        _node: &CommentInformationBlock,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments_collection(
+        &mut self,
+        _node: &CommentsCollection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compatibility_settings(
+        &mut self,
+        _node: &CompatibilitySettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_field_character(
+        &mut self,
+        _node: &ComplexFieldCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_field_character_content(
+        &mut self,
+        _node: &ComplexFieldCharacterContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_script_bold(
+        &mut self,
+        _node: &ComplexScriptBold,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_script_font_size(
+        &mut self,
+        _node: &ComplexScriptFontSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_script_italics(
+        &mut self,
+        _node: &ComplexScriptItalics,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compress_punctuation_at_start_of_line(
+        &mut self,
+        _node: &CompressPunctuationAtStartOfLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_change(
+        &mut self,
+        _node: &ConflictChangeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_between_numbering_symbol_and_text(
+        &mut self,
+        _node: &ContentBetweenNumberingSymbolAndText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_block(
+        &mut self,
+        _node: &ContentBlockContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_block_items(
+        &mut self,
+        _node: &ContentBlockContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_cell(
+        &mut self,
+        _node: &ContentCellContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_cell_items(
+        &mut self,
+        _node: &ContentCellContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_row(
+        &mut self,
+        _node: &ContentRowContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_row_items(
+        &mut self,
+        _node: &ContentRowContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contents_of_glossary_document_entry(
+        &mut self,
+        _node: &ContentsOfGlossaryDocumentEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_continuation_separator_mark(
+        &mut self,
+        _node: &ContinuationSeparatorMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_current_contents_are_placeholder_text(
+        &mut self,
+        _node: &CurrentContentsArePlaceholderText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_compatibility_setting(
+        &mut self,
+        _node: &CustomCompatibilitySetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_field_data(
+        &mut self,
+        _node: &CustomFieldData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_tab_stop(
+        &mut self,
+        _node: &CustomTabStop,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_attribute(
+        &mut self,
+        _node: &CustomXMLAttribute,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_data_date_storage_format(
+        &mut self,
+        _node: &CustomXMLDataDateStorageFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_element_placeholder_text(
+        &mut self,
+        _node: &CustomXMLElementPlaceholderText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_element_properties(
+        &mut self,
+        _node: &CustomXMLElementProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_deletion_end(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_deletion_start(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_insertion_end(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_insertion_start(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_move_source_end(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_markup_move_source_start(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_move_to_range_end(
+        &mut self,
+        _node: &CustomXmlMoveToRangeEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_move_to_range_start(
+        &mut self,
+        _node: &CustomXmlMoveToRangeStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xsl_transform(
+        &mut self,
+        _node: &CustomXSLTransform,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_about_single_data_source_record(
+        &mut self,
+        _node: &DataAboutSingleDataSourceRecord,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_for_html_blockquote_element(
+        &mut self,
+        _node: &DataForHTMLBlockquoteElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_for_html_body_element(
+        &mut self,
+        _node: &DataForHTMLBodyElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_source_connection_string(
+        &mut self,
+        _node: &DataSourceConnectionString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_source_file_path(
+        &mut self,
+        _node: &DataSourceFilePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_source_table_name(
+        &mut self,
+        _node: &DataSourceTableName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_source_type(
+        &mut self,
+        _node: &DataSourceType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_long_day_format(
+        &mut self,
+        _node: &DateBlockLongDayFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_long_month_format(
+        &mut self,
+        _node: &DateBlockLongMonthFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_long_year_format(
+        &mut self,
+        _node: &DateBlockLongYearFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_short_day_format(
+        &mut self,
+        _node: &DateBlockShortDayFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_short_month_format(
+        &mut self,
+        _node: &DateBlockShortMonthFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_block_short_year_format(
+        &mut self,
+        _node: &DateBlockShortYearFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_display_mask(
+        &mut self,
+        _node: &DateDisplayMask,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_picker_calendar_type(
+        &mut self,
+        _node: &DatePickerCalendarType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_structured_document_tag(
+        &mut self,
+        _node: &DateStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_checkbox_form_field_state(
+        &mut self,
+        _node: &DefaultCheckboxFormFieldState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_drop_down_list_item_index(
+        &mut self,
+        _node: &DefaultDropDownListItemIndex,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_paragraph_properties(
+        &mut self,
+        _node: &DefaultParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_properties_for_vml_objects_in_header_and_footer(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInHeaderAndFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_properties_for_vml_objects_in_main_document(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInMainDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_run_properties(
+        &mut self,
+        _node: &DefaultRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_table_style(
+        &mut self,
+        _node: &DefaultTableStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_text_box_form_field_string(
+        &mut self,
+        _node: &DefaultTextBoxFormFieldString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_del(&mut self, _node: &Del, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_field_code(
+        &mut self,
+        _node: &DeletedFieldCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_math_control_character(
+        &mut self,
+        _node: &DeletedMathControlCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_run_content(
+        &mut self,
+        _node: &DeletedRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_table_row(
+        &mut self,
+        _node: &DeletedTableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_text(
+        &mut self,
+        _node: &DeletedText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_description_for_entry(
+        &mut self,
+        _node: &DescriptionForEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_different_even_odd_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentEvenOddPageHeadersAndFooters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_different_first_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentFirstPageHeadersAndFooters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_disable_features_not_supported(
+        &mut self,
+        _node: &DisableFeaturesNotSupported,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_all_characters_as_capital_letters(
+        &mut self,
+        _node: &DisplayAllCharactersAsCapitalLetters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_all_levels_using_arabic_numerals(
+        &mut self,
+        _node: &DisplayAllLevelsUsingArabicNumerals,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_background_shape(
+        &mut self,
+        _node: &DisplayBackgroundShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_backslash_as_yen_sign(
+        &mut self,
+        _node: &DisplayBackslashAsYenSign,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_character_outline(
+        &mut self,
+        _node: &DisplayCharacterOutline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_display_page_column_breaks_present_in_frames(
+        &mut self,
+        _node: &DisplayPageColumnBreaksPresentInFrames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_distance_between_automatic_tab_stops(
+        &mut self,
+        _node: &DistanceBetweenAutomaticTabStops,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_distance_between_horizontal_gridlines(
+        &mut self,
+        _node: &DistanceBetweenHorizontalGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_distance_between_phonetic_guide_text(
+        &mut self,
+        _node: &DistanceBetweenPhoneticGuideText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_distance_between_vertical_gridlines(
+        &mut self,
+        _node: &DistanceBetweenVerticalGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_add_leading_between_lines_of_text(
+        &mut self,
+        _node: &DoNotAddLeadingBetweenLinesOfText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_allow_floating_tables_to_break_across_pages(
+        &mut self,
+        _node: &DoNotAllowFloatingTablesToBreakAcrossPages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_autofit_constrained_tables(
+        &mut self,
+        _node: &DoNotAutofitConstrainedTables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_automatically_compress_images(
+        &mut self,
+        _node: &DoNotAutomaticallyCompressImages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_balance_text_columns_within_a_section(
+        &mut self,
+        _node: &DoNotBalanceTextColumnsWithinASection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_break_constrained_forced_table(
+        &mut self,
+        _node: &DoNotBreakConstrainedForcedTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_bypass_east_asian_complex_script_layout_code(
+        &mut self,
+        _node: &DoNotBypassEastAsianComplexScriptLayoutCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_center_content_on_lines_with_exact_line_height(
+        &mut self,
+        _node: &DoNotCenterContentOnLinesWithExactLineHeight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_check_spelling_or_grammar(
+        &mut self,
+        _node: &DoNotCheckSpellingOrGrammar,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_create_custom_tab_stop_for_hanging_indent(
+        &mut self,
+        _node: &DoNotCreateCustomTabStopForHangingIndent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_display_frameset_splitters(
+        &mut self,
+        _node: &DoNotDisplayFramesetSplitters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_display_grammatical_errors(
+        &mut self,
+        _node: &DoNotDisplayGrammaticalErrors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_display_page_boundaries(
+        &mut self,
+        _node: &DoNotDisplayPageBoundaries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_display_spelling_errors(
+        &mut self,
+        _node: &DoNotDisplaySpellingErrors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_hyphenate_capital_letters(
+        &mut self,
+        _node: &DoNotHyphenateCapitalLetters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_include_subdocs_in_stats(
+        &mut self,
+        _node: &DoNotIncludeSubdocsInStats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_increase_line_height_for_raised_lowered_text(
+        &mut self,
+        _node: &DoNotIncreaseLineHeightForRaisedLoweredText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_place_supporting_files(
+        &mut self,
+        _node: &DoNotPlaceSupportingFiles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_rely_on_css(
+        &mut self,
+        _node: &DoNotRelyOnCSS,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_show_form_field_indicator(
+        &mut self,
+        _node: &DoNotShowFormFieldIndicator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_show_invalid_markup_indicator(
+        &mut self,
+        _node: &DoNotShowInvalidMarkupIndicator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_snap_to_document_grid_in_table_cells_with_objects(
+        &mut self,
+        _node: &DoNotSnapToDocumentGridInTableCellsWithObjects,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_suppress_blank_lines(
+        &mut self,
+        _node: &DoNotSuppressBlankLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_suppress_indentation(
+        &mut self,
+        _node: &DoNotSuppressIndentation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_suppress_paragraph_borders(
+        &mut self,
+        _node: &DoNotSuppressParagraphBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_track_formatting(
+        &mut self,
+        _node: &DoNotTrackFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_east_asian_break_rules(
+        &mut self,
+        _node: &DoNotUseEastAsianBreakRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_file_names(
+        &mut self,
+        _node: &DoNotUseFileNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_html_paragraph_auto_spacing(
+        &mut self,
+        _node: &DoNotUseHTMLParagraphAutoSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_indent_as_numbering_tab_stop(
+        &mut self,
+        _node: &DoNotUseIndentAsNumberingTabStop,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_margins_for_drawing_grid_origin(
+        &mut self,
+        _node: &DoNotUseMarginsForDrawingGridOrigin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_use_move_syntax(
+        &mut self,
+        _node: &DoNotUseMoveSyntax,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_validate_against_schema(
+        &mut self,
+        _node: &DoNotValidateAgainstSchema,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_vert_align_cell_with_sp(
+        &mut self,
+        _node: &DoNotVertAlignCellWithSp,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_do_not_wrap_text_with_punct(
+        &mut self,
+        _node: &DoNotWrapTextWithPunct,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document(
+        &mut self,
+        _node: &Document,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_background(
+        &mut self,
+        _node: &DocumentBackground,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_body(
+        &mut self,
+        _node: &DocumentBody,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_classification(
+        &mut self,
+        _node: &DocumentClassification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_default_paragraph_and_run_properties(
+        &mut self,
+        _node: &DocumentDefaultParagraphAndRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_editing_restrictions(
+        &mut self,
+        _node: &DocumentEditingRestrictions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_endnotes(
+        &mut self,
+        _node: &DocumentEndnotes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_final_section_properties(
+        &mut self,
+        _node: &DocumentFinalSectionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_footnotes(
+        &mut self,
+        _node: &DocumentFootnotes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_grid(
+        &mut self,
+        _node: &DocumentGrid,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_grid_inter_line_paragraph_spacing(
+        &mut self,
+        _node: &DocumentGridInterLineParagraphSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_part_category_filter(
+        &mut self,
+        _node: &DocumentPartCategoryFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_part_gallery_filter(
+        &mut self,
+        _node: &DocumentPartGalleryFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_part_gallery_structured_document_tag(
+        &mut self,
+        _node: &DocumentPartGalleryStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_part_reference(
+        &mut self,
+        _node: &DocumentPartReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_settings(
+        &mut self,
+        _node: &DocumentSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_variables(
+        &mut self,
+        _node: &DocumentVariables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_view_setting(
+        &mut self,
+        _node: &DocumentViewSetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_wide_endnote_properties(
+        &mut self,
+        _node: &DocumentWideEndnoteProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_wide_footnote_properties(
+        &mut self,
+        _node: &DocumentWideFootnoteProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dont_justify_soft_line_break_lines(
+        &mut self,
+        _node: &DontJustifySoftLineBreakLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dont_wrap_cell_content(
+        &mut self,
+        _node: &DontWrapCellContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_double_strikethrough(
+        &mut self,
+        _node: &DoubleStrikethrough,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_grid_horizontal_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridHorizontalGridUnitSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_grid_horizontal_origin_point(
+        &mut self,
+        _node: &DrawingGridHorizontalOriginPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_grid_vertical_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridVerticalGridUnitSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_grid_vertical_origin_point(
+        &mut self,
+        _node: &DrawingGridVerticalOriginPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_ml_object(
+        &mut self,
+        _node: &DrawingMLObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_object(
+        &mut self,
+        _node: &DrawingObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_object_items(
+        &mut self,
+        _node: &DrawingObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_list_entry(
+        &mut self,
+        _node: &DropDownListEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_list_form_field_properties(
+        &mut self,
+        _node: &DropDownListFormFieldProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_list_selection(
+        &mut self,
+        _node: &DropDownListSelection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_list_structured_document_tag(
+        &mut self,
+        _node: &DropDownListStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_e_mail_message_composition_style(
+        &mut self,
+        _node: &EMailMessageCompositionStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_e_mail_message_reply_style(
+        &mut self,
+        _node: &EMailMessageReplyStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_e_mail_message_text_style(
+        &mut self,
+        _node: &EMailMessageTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_east_asian_typography_rules(
+        &mut self,
+        _node: &EastAsianTypographyRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_east_asian_typography_settings(
+        &mut self,
+        _node: &EastAsianTypographySettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embed_common_system_fonts(
+        &mut self,
+        _node: &EmbedCommonSystemFonts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embed_true_type_fonts(
+        &mut self,
+        _node: &EmbedTrueTypeFonts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_control(
+        &mut self,
+        _node: &EmbeddedControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object(
+        &mut self,
+        _node: &EmbeddedObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_content(
+        &mut self,
+        _node: &EmbeddedObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_properties(
+        &mut self,
+        _node: &EmbeddedObjectProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_video(
+        &mut self,
+        _node: &EmbeddedVideo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embossing(
+        &mut self,
+        _node: &Embossing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_emphasis_mark(
+        &mut self,
+        _node: &EmphasisMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_endnote_content(
+        &mut self,
+        _node: &EndnoteContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_endnote_placement(
+        &mut self,
+        _node: &EndnotePlacement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_endnote_reference(
+        &mut self,
+        _node: &EndnoteReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_endnote_reference_mark(
+        &mut self,
+        _node: &EndnoteReferenceMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_categorization(
+        &mut self,
+        _node: &EntryCategorization,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_id(
+        &mut self,
+        _node: &EntryID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_insertion_behavior(
+        &mut self,
+        _node: &EntryInsertionBehavior,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_insertion_behaviors(
+        &mut self,
+        _node: &EntryInsertionBehaviors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_name(
+        &mut self,
+        _node: &EntryName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_type(
+        &mut self,
+        _node: &EntryType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entry_types(
+        &mut self,
+        _node: &EntryTypes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_equation_structured_document_tag(
+        &mut self,
+        _node: &EquationStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_execute_on_form_field_entry(
+        &mut self,
+        _node: &ExecuteOnFormFieldEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_execute_on_form_field_exit(
+        &mut self,
+        _node: &ExecuteOnFormFieldExit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_expanded_compressed_text(
+        &mut self,
+        _node: &ExpandedCompressedText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_content_import_properties(
+        &mut self,
+        _node: &ExternalContentImportProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_data_source_merge_field_mapping(
+        &mut self,
+        _node: &ExternalDataSourceMergeFieldMapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_field_code(
+        &mut self,
+        _node: &FieldCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_row_contains_column_names(
+        &mut self,
+        _node: &FirstRowContainsColumnNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fit_text_within_cell(
+        &mut self,
+        _node: &FitTextWithinCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fit_to_expanded_width_when_performing_full_justification(
+        &mut self,
+        _node: &FitToExpandedWidthWhenPerformingFullJustification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_floating_table_allows_overlap(
+        &mut self,
+        _node: &FloatingTableAllowsOverlap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_floating_table_positioning(
+        &mut self,
+        _node: &FloatingTablePositioning,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_family(
+        &mut self,
+        _node: &FontFamily,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_kerning(
+        &mut self,
+        _node: &FontKerning,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_pitch(
+        &mut self,
+        _node: &FontPitch,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_table_root_element(
+        &mut self,
+        _node: &FontTableRootElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footer(&mut self, _node: &Footer, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footer_reference(
+        &mut self,
+        _node: &FooterReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_and_endnote_numbering_restart_location(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingRestartLocation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_and_endnote_numbering_starting_value(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingStartingValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_content(
+        &mut self,
+        _node: &FootnoteContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_endnote_separator_mark(
+        &mut self,
+        _node: &FootnoteEndnoteSeparatorMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_placement(
+        &mut self,
+        _node: &FootnotePlacement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_reference(
+        &mut self,
+        _node: &FootnoteReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_footnote_reference_mark(
+        &mut self,
+        _node: &FootnoteReferenceMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_forget_last_tab_alignment(
+        &mut self,
+        _node: &ForgetLastTabAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_form_field_enabled(
+        &mut self,
+        _node: &FormFieldEnabled,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_form_field_name(
+        &mut self,
+        _node: &FormFieldName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_form_field_properties(
+        &mut self,
+        _node: &FormFieldProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_form_field_properties_content(
+        &mut self,
+        _node: &FormFieldPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_form_field_properties_content_items(
+        &mut self,
+        _node: &FormFieldPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frame_cannot_be_resized(
+        &mut self,
+        _node: &FrameCannotBeResized,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frame_long_description(
+        &mut self,
+        _node: &FrameLongDescription,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frame_or_frameset_title(
+        &mut self,
+        _node: &FrameOrFramesetTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frame_size(
+        &mut self,
+        _node: &FrameSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_definition(
+        &mut self,
+        _node: &FramesetDefinitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_definition_items(
+        &mut self,
+        _node: &FramesetDefinitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_layout(
+        &mut self,
+        _node: &FramesetLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_splitter_border_style(
+        &mut self,
+        _node: &FramesetSplitterBorderStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_splitter_properties(
+        &mut self,
+        _node: &FramesetSplitterProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_frameset_splitter_width(
+        &mut self,
+        _node: &FramesetSplitterWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_freeze_document_layout(
+        &mut self,
+        _node: &FreezeDocumentLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_friendly_name(
+        &mut self,
+        _node: &FriendlyName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gallery_associated_with_entry(
+        &mut self,
+        _node: &GalleryAssociatedWithEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_generate_thumbnail_for_document_on_save(
+        &mut self,
+        _node: &GenerateThumbnailForDocumentOnSave,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glossary_document_entry(
+        &mut self,
+        _node: &GlossaryDocumentEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glossary_document_entry_properties(
+        &mut self,
+        _node: &GlossaryDocumentEntryProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glossary_document_entry_properties_content(
+        &mut self,
+        _node: &GlossaryDocumentEntryPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glossary_document_entry_properties_content_items(
+        &mut self,
+        _node: &GlossaryDocumentEntryPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glossary_document_root_element(
+        &mut self,
+        _node: &GlossaryDocumentRootElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grammar_checking_settings(
+        &mut self,
+        _node: &GrammarCheckingSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_column_definition(
+        &mut self,
+        _node: &GridColumnDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_columns_after_last_cell(
+        &mut self,
+        _node: &GridColumnsAfterLastCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_columns_before_first_cell(
+        &mut self,
+        _node: &GridColumnsBeforeFirstCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_columns_spanned(
+        &mut self,
+        _node: &GridColumnsSpanned,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_structured_document_tag(
+        &mut self,
+        _node: &GroupStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gutter_on_right_side_of_page(
+        &mut self,
+        _node: &GutterOnRightSideOfPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header(&mut self, _node: &Header, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_cell_reference(
+        &mut self,
+        _node: &HeaderCellReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_definition_file_path(
+        &mut self,
+        _node: &HeaderDefinitionFilePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_reference(
+        &mut self,
+        _node: &HeaderReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_table_row_marker(
+        &mut self,
+        _node: &HiddenTableRowMarker,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_text(
+        &mut self,
+        _node: &HiddenText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_style_from_main_user_interface(
+        &mut self,
+        _node: &HideStyleFromMainUserInterface,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontally_merged_cell(
+        &mut self,
+        _node: &HorizontallyMergedCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink(
+        &mut self,
+        _node: &Hyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyphenation_zone(
+        &mut self,
+        _node: &HyphenationZone,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_end_of_cell_marker(
+        &mut self,
+        _node: &IgnoreEndOfCellMarker,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_exact_line_height_for_last_line_on_page(
+        &mut self,
+        _node: &IgnoreExactLineHeightForLastLineOnPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_minimum_line_height_for_first_line_on_page(
+        &mut self,
+        _node: &IgnoreMinimumLineHeightForFirstLineOnPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_mixed_content(
+        &mut self,
+        _node: &IgnoreMixedContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_page_break_from_continuous_section_break(
+        &mut self,
+        _node: &IgnorePageBreakFromContinuousSectionBreak,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_spacing_above_and_below(
+        &mut self,
+        _node: &IgnoreSpacingAboveAndBelow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_text_wrapping_around_objects_at_bottom_of_page(
+        &mut self,
+        _node: &IgnoreTextWrappingAroundObjectsAtBottomOfPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignore_vertical_alignment_in_textboxes(
+        &mut self,
+        _node: &IgnoreVerticalAlignmentInTextboxes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_imprinting(
+        &mut self,
+        _node: &Imprinting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inclusion_exclusion_data_for_data_source(
+        &mut self,
+        _node: &InclusionExclusionDataForDataSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_index_of_column_being_mapped(
+        &mut self,
+        _node: &IndexOfColumnBeingMapped,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_information_about_html_div_elements(
+        &mut self,
+        _node: &InformationAboutHTMLDivElements,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_information_about_single_html_div_element(
+        &mut self,
+        _node: &InformationAboutSingleHTMLDivElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inline_level_custom_xml_element(
+        &mut self,
+        _node: &InlineLevelCustomXMLElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inline_level_smart_tag(
+        &mut self,
+        _node: &InlineLevelSmartTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inline_level_structured_document_tag(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inline_level_structured_document_tag_content(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inserted_math_control_character(
+        &mut self,
+        _node: &InsertedMathControlCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inserted_math_control_character_content(
+        &mut self,
+        _node: &InsertedMathControlCharacterContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inserted_run_content(
+        &mut self,
+        _node: &InsertedRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inserted_table_row(
+        &mut self,
+        _node: &InsertedTableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_invalidated_field_cache(
+        &mut self,
+        _node: &InvalidatedFieldCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_italic_font_style_embedding(
+        &mut self,
+        _node: &ItalicFontStyleEmbedding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_italics(&mut self, _node: &Italics, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_justification(
+        &mut self,
+        _node: &Justification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_keep_all_lines_on_one_page(
+        &mut self,
+        _node: &KeepAllLinesOnOnePage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_keep_paragraph_with_next_paragraph(
+        &mut self,
+        _node: &KeepParagraphWithNextParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_keep_source_formatting_on_import(
+        &mut self,
+        _node: &KeepSourceFormattingOnImport,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_language_id_for_phonetic_guide(
+        &mut self,
+        _node: &LanguageIDForPhoneticGuide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_languages_for_run_content(
+        &mut self,
+        _node: &LanguagesForRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_last_reviewed_abstract_numbering_definition(
+        &mut self,
+        _node: &LastReviewedAbstractNumberingDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_latent_style_exception(
+        &mut self,
+        _node: &LatentStyleException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_latent_style_information(
+        &mut self,
+        _node: &LatentStyleInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_raw_table_width(
+        &mut self,
+        _node: &LayoutRawTableWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_and_right_margin_for_frame(
+        &mut self,
+        _node: &LeftAndRightMarginForFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_border(
+        &mut self,
+        _node: &LeftBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_margin_for_html_div(
+        &mut self,
+        _node: &LeftMarginForHTMLDiv,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_paragraph_border(
+        &mut self,
+        _node: &LeftParagraphBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_paragraph_border_tbl_width(
+        &mut self,
+        _node: &LeftParagraphBorderTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legacy_ethiopic_amharic_line_breaking_rules(
+        &mut self,
+        _node: &LegacyEthiopicAmharicLineBreakingRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legacy_numbering_level_properties(
+        &mut self,
+        _node: &LegacyNumberingLevelProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_numbering_settings(
+        &mut self,
+        _node: &LineNumberingSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_wrap_like_word6(
+        &mut self,
+        _node: &LineWrapLikeWord6,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_wrap_trailing_spaces(
+        &mut self,
+        _node: &LineWrapTrailingSpaces,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_link_to_external_query_file(
+        &mut self,
+        _node: &LinkToExternalQueryFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_object_properties(
+        &mut self,
+        _node: &LinkedObjectProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_style_reference(
+        &mut self,
+        _node: &LinkedStyleReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_glossary_document_entries(
+        &mut self,
+        _node: &ListOfGlossaryDocumentEntries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_separator_for_field_code_evaluation(
+        &mut self,
+        _node: &ListSeparatorForFieldCodeEvaluation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_locking_setting(
+        &mut self,
+        _node: &LockingSetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_magnification_setting(
+        &mut self,
+        _node: &MagnificationSetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mail_merge_error_reporting_setting(
+        &mut self,
+        _node: &MailMergeErrorReportingSetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mail_merge_settings(
+        &mut self,
+        _node: &MailMergeSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_maintain_link_to_existing_file(
+        &mut self,
+        _node: &MaintainLinkToExistingFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_manual_run_width(
+        &mut self,
+        _node: &ManualRunWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_maximum_number_of_consecutively_hyphenated_lines(
+        &mut self,
+        _node: &MaximumNumberOfConsecutivelyHyphenatedLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merge_field_mapping(
+        &mut self,
+        _node: &MergeFieldMapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merged_document_destination(
+        &mut self,
+        _node: &MergedDocumentDestination,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merged_document_to_e_mail_attachment(
+        &mut self,
+        _node: &MergedDocumentToEMailAttachment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merged_e_mail_or_fax_subject_line(
+        &mut self,
+        _node: &MergedEMailOrFaxSubjectLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mirror_page_margins(
+        &mut self,
+        _node: &MirrorPageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_destination_location_container_end(
+        &mut self,
+        _node: &MoveDestinationLocationContainerEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_destination_location_container_start(
+        &mut self,
+        _node: &MoveDestinationLocationContainerStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_destination_paragraph(
+        &mut self,
+        _node: &MoveDestinationParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_destination_run_content(
+        &mut self,
+        _node: &MoveDestinationRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_source_location_container_end(
+        &mut self,
+        _node: &MoveSourceLocationContainerEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_source_location_container_start(
+        &mut self,
+        _node: &MoveSourceLocationContainerStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_source_paragraph(
+        &mut self,
+        _node: &MoveSourceParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_source_run_content(
+        &mut self,
+        _node: &MoveSourceRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nested_frameset_definition(
+        &mut self,
+        _node: &NestedFramesetDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_never_kern_punctuation_characters(
+        &mut self,
+        _node: &NeverKernPunctuationCharacters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_breaking_hyphen_character(
+        &mut self,
+        _node: &NonBreakingHyphenCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_complex_script_font_size(
+        &mut self,
+        _node: &NonComplexScriptFontSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_not_a_true_type_outline_font(
+        &mut self,
+        _node: &NotATrueTypeOutlineFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_columns_in_column_band(
+        &mut self,
+        _node: &NumberOfColumnsInColumnBand,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_pages_per_booklet(
+        &mut self,
+        _node: &NumberOfPagesPerBooklet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_of_rows_in_row_band(
+        &mut self,
+        _node: &NumberOfRowsInRowBand,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_definition_instance(
+        &mut self,
+        _node: &NumberingDefinitionInstance,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_definition_instance_reference_num_id(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_definition_instance_reference_num_pr(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_definitions(
+        &mut self,
+        _node: &NumberingDefinitions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_format(
+        &mut self,
+        _node: &NumberingFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_level_definition_override(
+        &mut self,
+        _node: &NumberingLevelDefinitionOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_level_override_definition(
+        &mut self,
+        _node: &NumberingLevelOverrideDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_level_reference(
+        &mut self,
+        _node: &NumberingLevelReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_level_starting_value_override(
+        &mut self,
+        _node: &NumberingLevelStartingValueOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_level_text(
+        &mut self,
+        _node: &NumberingLevelText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_style_definition(
+        &mut self,
+        _node: &NumberingStyleDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_style_reference(
+        &mut self,
+        _node: &NumberingStyleReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numbering_template_code(
+        &mut self,
+        _node: &NumberingTemplateCode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odso_data_source_file_path(
+        &mut self,
+        _node: &ODSODataSourceFilePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odso_data_source_type(
+        &mut self,
+        _node: &ODSODataSourceType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_data_source_object_settings(
+        &mut self,
+        _node: &OfficeDataSourceObjectSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_open_xml_math(
+        &mut self,
+        _node: &OfficeOpenXMLMath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_only_allow_editing_of_form_fields(
+        &mut self,
+        _node: &OnlyAllowEditingOfFormFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_only_expand_condense_text_by_whole_points(
+        &mut self,
+        _node: &OnlyExpandCondenseTextByWholePoints,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_only_print_form_field_content(
+        &mut self,
+        _node: &OnlyPrintFormFieldContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_only_save_custom_xml_markup(
+        &mut self,
+        _node: &OnlySaveCustomXMLMarkup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_only_save_form_field_content(
+        &mut self,
+        _node: &OnlySaveFormFieldContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_optional_hyphen_character(
+        &mut self,
+        _node: &OptionalHyphenCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_optional_user_interface_sorting_order(
+        &mut self,
+        _node: &OptionalUserInterfaceSortingOrder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_original_document_revision_save_id(
+        &mut self,
+        _node: &OriginalDocumentRevisionSaveID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_output_encoding(
+        &mut self,
+        _node: &OutputEncoding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_border_excludes_footer(
+        &mut self,
+        _node: &PageBorderExcludesFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_border_excludes_header(
+        &mut self,
+        _node: &PageBorderExcludesHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_borders(
+        &mut self,
+        _node: &PageBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_margins(
+        &mut self,
+        _node: &PageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_number_block(
+        &mut self,
+        _node: &PageNumberBlock,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_numbering_settings(
+        &mut self,
+        _node: &PageNumberingSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_size(
+        &mut self,
+        _node: &PageSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_panose1typeface_classification_number(
+        &mut self,
+        _node: &Panose1TypefaceClassificationNumber,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paper_source_information(
+        &mut self,
+        _node: &PaperSourceInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph(
+        &mut self,
+        _node: &Paragraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_alignment(
+        &mut self,
+        _node: &ParagraphAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_above_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_above_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphsTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_below_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_below_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphsTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_between_facing_pages(
+        &mut self,
+        _node: &ParagraphBorderBetweenFacingPages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_border_between_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBetweenIdenticalParagraphs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_borders(
+        &mut self,
+        _node: &ParagraphBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_conditional_formatting(
+        &mut self,
+        _node: &ParagraphConditionalFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_content(
+        &mut self,
+        _node: &ParagraphContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_content_items(
+        &mut self,
+        _node: &ParagraphContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_indentation(
+        &mut self,
+        _node: &ParagraphIndentation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_mark_is_always_hidden(
+        &mut self,
+        _node: &ParagraphMarkIsAlwaysHidden,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_mark_run_properties_revision(
+        &mut self,
+        _node: &ParagraphMarkRunPropertiesRevision,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_properties(
+        &mut self,
+        _node: &ParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_properties_p_pr_general(
+        &mut self,
+        _node: &ParagraphPropertiesPPrGeneral,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_shading(
+        &mut self,
+        _node: &ParagraphShading,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_paragraph_text_flow_direction(
+        &mut self,
+        _node: &ParagraphTextFlowDirection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parent_style_id(
+        &mut self,
+        _node: &ParentStyleID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_percentage_of_document_to_use(
+        &mut self,
+        _node: &PercentageOfDocumentToUse,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide(
+        &mut self,
+        _node: &PhoneticGuide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_base_text(
+        &mut self,
+        _node: &PhoneticGuideBaseText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_base_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideBaseTextFontSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_content(
+        &mut self,
+        _node: &PhoneticGuideContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_content_items(
+        &mut self,
+        _node: &PhoneticGuideContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_properties(
+        &mut self,
+        _node: &PhoneticGuideProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_text(
+        &mut self,
+        _node: &PhoneticGuideText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_text_alignment(
+        &mut self,
+        _node: &PhoneticGuideTextAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_guide_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideTextFontSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_numbering_symbol_definition(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_numbering_symbol_definition_content(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_numbering_symbol_definition_reference(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_structured_document_tag(
+        &mut self,
+        _node: &PictureStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pixels_per_inch_for_graphics_images(
+        &mut self,
+        _node: &PixelsPerInchForGraphicsImages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_placeholder_text_should_be_resaved(
+        &mut self,
+        _node: &PlaceholderTextShouldBeResaved,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plain_text_structured_document_tag(
+        &mut self,
+        _node: &PlainTextStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_position_gutter_at_top_of_page(
+        &mut self,
+        _node: &PositionGutterAtTopOfPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_position_of_last_calculated_page_break(
+        &mut self,
+        _node: &PositionOfLastCalculatedPageBreak,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_predefined_merge_field_name(
+        &mut self,
+        _node: &PredefinedMergeFieldName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preferred_table_cell_width(
+        &mut self,
+        _node: &PreferredTableCellWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preferred_table_width(
+        &mut self,
+        _node: &PreferredTableWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preferred_width_after_table_row(
+        &mut self,
+        _node: &PreferredWidthAfterTableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preferred_width_before_table_row(
+        &mut self,
+        _node: &PreferredWidthBeforeTableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prevent_modification_of_themes_part(
+        &mut self,
+        _node: &PreventModificationOfThemesPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prevent_replacement_of_styles_part(
+        &mut self,
+        _node: &PreventReplacementOfStylesPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prevent_text_frames_from_overlapping(
+        &mut self,
+        _node: &PreventTextFramesFromOverlapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_numbering_field_properties(
+        &mut self,
+        _node: &PreviousNumberingFieldProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_paragraph_mark_run_properties(
+        &mut self,
+        _node: &PreviousParagraphMarkRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_paragraph_properties(
+        &mut self,
+        _node: &PreviousParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_run_properties(
+        &mut self,
+        _node: &PreviousRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_section_properties(
+        &mut self,
+        _node: &PreviousSectionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_table_cell_properties(
+        &mut self,
+        _node: &PreviousTableCellProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_table_grid(
+        &mut self,
+        _node: &PreviousTableGrid,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_table_level_property_exceptions(
+        &mut self,
+        _node: &PreviousTableLevelPropertyExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_table_properties(
+        &mut self,
+        _node: &PreviousTableProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_previous_table_row_properties(
+        &mut self,
+        _node: &PreviousTableRowProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_primary_style(
+        &mut self,
+        _node: &PrimaryStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_primary_style_name(
+        &mut self,
+        _node: &PrimaryStyleName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_body_text_before_header_footer_contents(
+        &mut self,
+        _node: &PrintBodyTextBeforeHeaderFooterContents,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_colors_as_black_and_white_without_dithering(
+        &mut self,
+        _node: &PrintColorsAsBlackAndWhiteWithoutDithering,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_fractional_character_widths(
+        &mut self,
+        _node: &PrintFractionalCharacterWidths,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_post_script_codes_with_document_text(
+        &mut self,
+        _node: &PrintPostScriptCodesWithDocumentText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_two_pages_per_sheet(
+        &mut self,
+        _node: &PrintTwoPagesPerSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_programmatic_tag(
+        &mut self,
+        _node: &ProgrammaticTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_proofing_error_anchor(
+        &mut self,
+        _node: &ProofingErrorAnchor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_properties_for_a_single_font(
+        &mut self,
+        _node: &PropertiesForASingleFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn write_protection(&mut self, _node: &WriteProtection) -> Option<WriteProtection> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_for_data_source_records(
+        &mut self,
+        _node: &QueryForDataSourceRecords,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radix_point_for_field_code_evaluation(
+        &mut self,
+        _node: &RadixPointForFieldCodeEvaluation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_markup(
+        &mut self,
+        _node: &RangeMarkupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_markup_items(
+        &mut self,
+        _node: &RangeMarkupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_permission_end(
+        &mut self,
+        _node: &RangePermissionEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_permission_start(
+        &mut self,
+        _node: &RangePermissionStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_recalculate_fields_when_modified(
+        &mut self,
+        _node: &RecalculateFieldsWhenModified,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_recommend_web_page_format(
+        &mut self,
+        _node: &RecommendWebPageFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_record_currently_displayed_in_merged_document(
+        &mut self,
+        _node: &RecordCurrentlyDisplayedInMergedDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_record_is_included_in_mail_merge(
+        &mut self,
+        _node: &RecordIsIncludedInMailMerge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_to_inclusion_exclusion_data(
+        &mut self,
+        _node: &ReferenceToInclusionExclusionData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_to_printer_settings_data(
+        &mut self,
+        _node: &ReferenceToPrinterSettingsData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_referenced_character_style(
+        &mut self,
+        _node: &ReferencedCharacterStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_referenced_paragraph_style(
+        &mut self,
+        _node: &ReferencedParagraphStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_referenced_table_style(
+        &mut self,
+        _node: &ReferencedTableStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_regular_font_style_embedding(
+        &mut self,
+        _node: &RegularFontStyleEmbedding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_remove_date_and_time_from_annotations(
+        &mut self,
+        _node: &RemoveDateAndTimeFromAnnotations,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_remove_personal_information(
+        &mut self,
+        _node: &RemovePersonalInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_remove_semi_hidden_property(
+        &mut self,
+        _node: &RemoveSemiHiddenProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_remove_smart_tags_when_saving(
+        &mut self,
+        _node: &RemoveSmartTagsWhenSaving,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_remove_structured_document_tag_when_edited(
+        &mut self,
+        _node: &RemoveStructuredDocumentTagWhenEdited,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_repeat_table_row(
+        &mut self,
+        _node: &RepeatTableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_require_exact_size_during_font_substitution(
+        &mut self,
+        _node: &RequireExactSizeDuringFontSubstitution,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_restart_numbering_level_symbol(
+        &mut self,
+        _node: &RestartNumberingLevelSymbol,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reverse_book_fold_printing(
+        &mut self,
+        _node: &ReverseBookFoldPrinting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_identifier_for_style_definition(
+        &mut self,
+        _node: &RevisionIdentifierForStyleDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_paragraph_properties(
+        &mut self,
+        _node: &RevisionInformationForParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_run_properties(
+        &mut self,
+        _node: &RevisionInformationForRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_section_properties(
+        &mut self,
+        _node: &RevisionInformationForSectionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_table_cell_properties(
+        &mut self,
+        _node: &RevisionInformationForTableCellProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_table_level_property_exceptions(
+        &mut self,
+        _node: &RevisionInformationForTableLevelPropertyExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_table_properties(
+        &mut self,
+        _node: &RevisionInformationForTableProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_information_for_table_row_properties(
+        &mut self,
+        _node: &RevisionInformationForTableRowProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_save_id_values(
+        &mut self,
+        _node: &RevisionSaveIDValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text_structured_document_tag(
+        &mut self,
+        _node: &RichTextStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_border(
+        &mut self,
+        _node: &RightBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_margin_for_html_div(
+        &mut self,
+        _node: &RightMarginForHTMLDiv,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_paragraph_border(
+        &mut self,
+        _node: &RightParagraphBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_paragraph_border_tbl_width(
+        &mut self,
+        _node: &RightParagraphBorderTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_to_left_paragraph_layout(
+        &mut self,
+        _node: &RightToLeftParagraphLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_to_left_text(
+        &mut self,
+        _node: &RightToLeftText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_level_custom_xml_element(
+        &mut self,
+        _node: &RowLevelCustomXMLElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_level_structured_document_tag(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_level_structured_document_tag_content(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTagContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_content_color(
+        &mut self,
+        _node: &RunContentColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_fonts(
+        &mut self,
+        _node: &RunFonts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties(
+        &mut self,
+        _node: &RunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_for_the_paragraph_mark(
+        &mut self,
+        _node: &RunPropertiesForTheParagraphMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_save_smart_tag_data(
+        &mut self,
+        _node: &SaveSmartTagData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_save_through_custom_xsl_transform(
+        &mut self,
+        _node: &SaveThroughCustomXSLTransform,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scrollbar_display_option(
+        &mut self,
+        _node: &ScrollbarDisplayOption,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_properties(
+        &mut self,
+        _node: &SectionPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_properties_items(
+        &mut self,
+        _node: &SectionPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_type(
+        &mut self,
+        _node: &SectionType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_wide_endnote_properties(
+        &mut self,
+        _node: &SectionWideEndnoteProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_section_wide_footnote_properties(
+        &mut self,
+        _node: &SectionWideFootnoteProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_select_fld_with_first_or_last_char(
+        &mut self,
+        _node: &SelectFldWithFirstOrLastChar,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_borders_for_html_div(
+        &mut self,
+        _node: &SetOfBordersForHTMLDiv,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_custom_tab_stops(
+        &mut self,
+        _node: &SetOfCustomTabStops,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shadow(&mut self, _node: &Shadow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_e_mail_message_header(
+        &mut self,
+        _node: &ShowEMailMessageHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_xml_tags(
+        &mut self,
+        _node: &ShowXMLTags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_simple_field(
+        &mut self,
+        _node: &SimpleField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_automatic_captioning_setting(
+        &mut self,
+        _node: &SingleAutomaticCaptioningSetting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_caption_type_definition(
+        &mut self,
+        _node: &SingleCaptionTypeDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_column_definition(
+        &mut self,
+        _node: &SingleColumnDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_document_variable(
+        &mut self,
+        _node: &SingleDocumentVariable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_frame_properties(
+        &mut self,
+        _node: &SingleFrameProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_strikethrough(
+        &mut self,
+        _node: &SingleStrikethrough,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_table_cell_margins(
+        &mut self,
+        _node: &SingleTableCellMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_small_caps(
+        &mut self,
+        _node: &SmallCaps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tag_properties(
+        &mut self,
+        _node: &SmartTagProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_document_type(
+        &mut self,
+        _node: &SourceDocumentType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_file_for_frame(
+        &mut self,
+        _node: &SourceFileForFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spacing_between_lines_and_above_below_paragraph(
+        &mut self,
+        _node: &SpacingBetweenLinesAndAboveBelowParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_special_endnote_list(
+        &mut self,
+        _node: &SpecialEndnoteList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_special_footnote_list(
+        &mut self,
+        _node: &SpecialFootnoteList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spelling_and_grammatical_checking_state(
+        &mut self,
+        _node: &SpellingAndGrammaticalCheckingState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_pg_break_and_para_mark(
+        &mut self,
+        _node: &SplitPgBreakAndParaMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_start_paragraph_on_next_page(
+        &mut self,
+        _node: &StartParagraphOnNextPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_starting_value(
+        &mut self,
+        _node: &StartingValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_strict_kinsoku_rules(
+        &mut self,
+        _node: &StrictKinsokuRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_end_character_properties(
+        &mut self,
+        _node: &StructuredDocumentTagEndCharacterProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_label(
+        &mut self,
+        _node: &StructuredDocumentTagLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_navigation_order_index(
+        &mut self,
+        _node: &StructuredDocumentTagNavigationOrderIndex,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_placeholder_text(
+        &mut self,
+        _node: &StructuredDocumentTagPlaceholderText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_properties(
+        &mut self,
+        _node: &StructuredDocumentTagProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_structured_document_tag_properties_content(
+        &mut self,
+        _node: &StructuredDocumentTagPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_cannot_be_applied(
+        &mut self,
+        _node: &StyleCannotBeApplied,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_conditional_table_formatting_properties(
+        &mut self,
+        _node: &StyleConditionalTableFormattingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_definition(
+        &mut self,
+        _node: &StyleDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_definitions(
+        &mut self,
+        _node: &StyleDefinitions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_for_next_paragraph(
+        &mut self,
+        _node: &StyleForNextParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subscript_superscript_text(
+        &mut self,
+        _node: &SubscriptSuperscriptText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subset_fonts_when_embedding(
+        &mut self,
+        _node: &SubsetFontsWhenEmbedding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suggested_filtering(
+        &mut self,
+        _node: &SuggestedFiltering,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suggested_sorting(
+        &mut self,
+        _node: &SuggestedSorting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_supplementary_smart_tag_information(
+        &mut self,
+        _node: &SupplementarySmartTagInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_supported_unicode_subranges_and_code_pages(
+        &mut self,
+        _node: &SupportedUnicodeSubrangesAndCodePages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suppress_endnotes_in_document(
+        &mut self,
+        _node: &SuppressEndnotesInDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suppress_hyphenation_for_paragraph(
+        &mut self,
+        _node: &SuppressHyphenationForParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suppress_line_numbers_for_paragraph(
+        &mut self,
+        _node: &SuppressLineNumbersForParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suppress_sp_bf_after_pg_brk(
+        &mut self,
+        _node: &SuppressSpBfAfterPgBrk,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_suppress_top_spacing(
+        &mut self,
+        _node: &SuppressTopSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_swap_paragraph_borders_on_odd_numbered_pages(
+        &mut self,
+        _node: &SwapParagraphBordersOnOddNumberedPages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_symbol_character(
+        &mut self,
+        _node: &SymbolCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_character(
+        &mut self,
+        _node: &TabCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table(&mut self, _node: &Table, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_alignment_exception(
+        &mut self,
+        _node: &TableAlignmentException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_borders(
+        &mut self,
+        _node: &TableBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_caption(
+        &mut self,
+        _node: &TableCaption,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell(
+        &mut self,
+        _node: &TableCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_borders(
+        &mut self,
+        _node: &TableCellBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_deletion(
+        &mut self,
+        _node: &TableCellDeletion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_insertion(
+        &mut self,
+        _node: &TableCellInsertion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_leading_edge_border(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_leading_edge_border_tbl_width(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorderTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_margin_exceptions(
+        &mut self,
+        _node: &TableCellMarginExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_properties(
+        &mut self,
+        _node: &TableCellProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_trailing_margin_exception(
+        &mut self,
+        _node: &TableCellTrailingMarginException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_trailing_margin_exception_tbl_width(
+        &mut self,
+        _node: &TableCellTrailingMarginExceptionTblWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_vertical_alignment(
+        &mut self,
+        _node: &TableCellVerticalAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_description(
+        &mut self,
+        _node: &TableDescription,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_grid(
+        &mut self,
+        _node: &TableGrid,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_grid_column_revision_information(
+        &mut self,
+        _node: &TableGridColumnRevisionInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_indent_from_leading_margin(
+        &mut self,
+        _node: &TableIndentFromLeadingMargin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_inside_horizontal_edges_border(
+        &mut self,
+        _node: &TableInsideHorizontalEdgesBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_inside_vertical_edges_border(
+        &mut self,
+        _node: &TableInsideVerticalEdgesBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_layout(
+        &mut self,
+        _node: &TableLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_level_property_exceptions(
+        &mut self,
+        _node: &TableLevelPropertyExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_properties(
+        &mut self,
+        _node: &TableProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row(
+        &mut self,
+        _node: &TableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_cannot_break_across_pages(
+        &mut self,
+        _node: &TableRowCannotBreakAcrossPages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_cell_spacing(
+        &mut self,
+        _node: &TableRowCellSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_height(
+        &mut self,
+        _node: &TableRowHeight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_properties(
+        &mut self,
+        _node: &TableRowProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_properties_content(
+        &mut self,
+        _node: &TableRowPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row_properties_content_items(
+        &mut self,
+        _node: &TableRowPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_conditional_formatting_settings_exception(
+        &mut self,
+        _node: &TableStyleConditionalFormattingSettingsException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_target_screen_size_for_web_page(
+        &mut self,
+        _node: &TargetScreenSizeForWebPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_border(
+        &mut self,
+        _node: &TextBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_form_field_formatting(
+        &mut self,
+        _node: &TextBoxFormFieldFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_form_field_maximum_length(
+        &mut self,
+        _node: &TextBoxFormFieldMaximumLength,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_form_field_properties(
+        &mut self,
+        _node: &TextBoxFormFieldProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_box_form_field_type(
+        &mut self,
+        _node: &TextBoxFormFieldType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_frame_properties(
+        &mut self,
+        _node: &TextFrameProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_highlighting(
+        &mut self,
+        _node: &TextHighlighting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_run(
+        &mut self,
+        _node: &TextRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_run_content(
+        &mut self,
+        _node: &TextRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_run_content_items(
+        &mut self,
+        _node: &TextRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_textbox_tight_wrap(
+        &mut self,
+        _node: &TextboxTightWrap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme_color_mappings(
+        &mut self,
+        _node: &ThemeColorMappings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme_font_languages(
+        &mut self,
+        _node: &ThemeFontLanguages,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_and_bottom_margin_for_frame(
+        &mut self,
+        _node: &TopAndBottomMarginForFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_border(
+        &mut self,
+        _node: &TopBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_left_bottom_right_diagonal_border(
+        &mut self,
+        _node: &TopLeftBottomRightDiagonalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_margin_for_html_div(
+        &mut self,
+        _node: &TopMarginForHTMLDiv,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_right_bottom_left_diagonal_border(
+        &mut self,
+        _node: &TopRightBottomLeftDiagonalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_track_revisions_to_document(
+        &mut self,
+        _node: &TrackRevisionsToDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tracked_run(
+        &mut self,
+        _node: &TrackedRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tracked_run_items(
+        &mut self,
+        _node: &TrackedRunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_treat_backslash_quotation_delimiter_as_two_quotation_marks(
+        &mut self,
+        _node: &TreatBackslashQuotationDelimiterAsTwoQuotationMarks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_truncate_font_heights_like_wp6(
+        &mut self,
+        _node: &TruncateFontHeightsLikeWP6,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_udl_connection_string(
+        &mut self,
+        _node: &UDLConnectionString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline(
+        &mut self,
+        _node: &Underline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_all_trailing_spaces(
+        &mut self,
+        _node: &UnderlineAllTrailingSpaces,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_following_character_following_numbering(
+        &mut self,
+        _node: &UnderlineFollowingCharacterFollowingNumbering,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unique_id(
+        &mut self,
+        _node: &UniqueID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unique_value_for_record(
+        &mut self,
+        _node: &UniqueValueForRecord,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_upgrade_document_on_open(
+        &mut self,
+        _node: &UpgradeDocumentOnOpen,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_alt_kinsoku_line_break_rules(
+        &mut self,
+        _node: &UseAltKinsokuLineBreakRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_ansi_kerning_pairs_from_fonts(
+        &mut self,
+        _node: &UseANSIKerningPairsFromFonts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_cached_paragraph_information_for_column_balancing(
+        &mut self,
+        _node: &UseCachedParagraphInformationForColumnBalancing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_complex_script_formatting_on_run(
+        &mut self,
+        _node: &UseComplexScriptFormattingOnRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_country_based_address_field_ordering(
+        &mut self,
+        _node: &UseCountryBasedAddressFieldOrdering,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_incorrect_inter_character_spacing_rules(
+        &mut self,
+        _node: &UseIncorrectInterCharacterSpacingRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_left_right_indents_as_inside_outside_indents(
+        &mut self,
+        _node: &UseLeftRightIndentsAsInsideOutsideIndents,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_normal_style_for_list(
+        &mut self,
+        _node: &UseNormalStyleForList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_printer_metrics_to_display_documents(
+        &mut self,
+        _node: &UsePrinterMetricsToDisplayDocuments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_single_borderfor_contiguous_cells(
+        &mut self,
+        _node: &UseSingleBorderforContiguousCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_specific_small_caps_algorithm(
+        &mut self,
+        _node: &UseSpecificSmallCapsAlgorithm,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_specific_space_width(
+        &mut self,
+        _node: &UseSpecificSpaceWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_static_text_leading(
+        &mut self,
+        _node: &UseStaticTextLeading,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_word2002table_style_rules(
+        &mut self,
+        _node: &UseWord2002TableStyleRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_utilize_vml_when_saving_as_web_page(
+        &mut self,
+        _node: &UtilizeVMLWhenSavingAsWebPage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_character_alignment_on_line(
+        &mut self,
+        _node: &VerticalCharacterAlignmentOnLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertically_merged_cell(
+        &mut self,
+        _node: &VerticallyMergedCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertically_merged_split_table_cells(
+        &mut self,
+        _node: &VerticallyMergedSplitTableCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertically_raised_or_lowered_text(
+        &mut self,
+        _node: &VerticallyRaisedOrLoweredText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_merged_data_within_document(
+        &mut self,
+        _node: &ViewMergedDataWithinDocument,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_visibility_of_annotation_types(
+        &mut self,
+        _node: &VisibilityOfAnnotationTypes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_visually_right_to_left_table(
+        &mut self,
+        _node: &VisuallyRightToLeftTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_element(
+        &mut self,
+        _node: &VmlElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_element_items(
+        &mut self,
+        _node: &VmlElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_object(
+        &mut self,
+        _node: &VMLObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_office_drawing_element(
+        &mut self,
+        _node: &VmlOfficeDrawingElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vml_office_drawing_element_items(
+        &mut self,
+        _node: &VmlOfficeDrawingElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_hidden_text(
+        &mut self,
+        _node: &WebHiddenText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_page_settings(
+        &mut self,
+        _node: &WebPageSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_write_protection(
+        &mut self,
+        _node: &WriteProtection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_mapping(
+        &mut self,
+        _node: &XMLMapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xml_mapping(&mut self, _node: &XMLMapping) -> Option<XMLMapping> {
+        None
+    }
+}
+
 /// 17.11.1 `continuationSeparator` (Continuation Separator Mark): the tag
 /// `w:continuationSeparator`, schema type `CT_Empty`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -16567,6 +28908,3887 @@ pub struct VisibilityOfAnnotationTypes {
     pub ins_del: Option<super::common_simple_types::OnOffValue>,
     pub markup: Option<super::common_simple_types::OnOffValue>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `w` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::wordprocessing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn absolute_position_tab_character(
+        &mut self,
+        _node: &AbsolutePositionTabCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn abstract_numbering_definition(
+        &mut self,
+        _node: &AbstractNumberingDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn abstract_numbering_definition_identifier(
+        &mut self,
+        _node: &AbstractNumberingDefinitionIdentifier,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn abstract_numbering_definition_reference(
+        &mut self,
+        _node: &AbstractNumberingDefinitionReference,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn abstract_numbering_definition_type(
+        &mut self,
+        _node: &AbstractNumberingDefinitionType,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn add_document_grid_line_pitch(
+        &mut self,
+        _node: &AddDocumentGridLinePitch,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn add_space_below_underlined_text(
+        &mut self,
+        _node: &AddSpaceBelowUnderlinedText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn adjust_spacing_east_asian_text_numbers(
+        &mut self,
+        _node: &AdjustSpacingEastAsianTextNumbers,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn adjust_spacing_latin_east_asian_text(
+        &mut self,
+        _node: &AdjustSpacingLatinEastAsianText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn align_paragraph_and_table_borders(
+        &mut self,
+        _node: &AlignParagraphAndTableBorders,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn align_table_rows_independently(
+        &mut self,
+        _node: &AlignTableRowsIndependently,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_automatic_formatting_override(
+        &mut self,
+        _node: &AllowAutomaticFormattingOverride,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_contextual_spacing_of_paragraphs_in_tables(
+        &mut self,
+        _node: &AllowContextualSpacingOfParagraphsInTables,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_first_last_line_display(
+        &mut self,
+        _node: &AllowFirstLastLineDisplay,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_line_breaking_at_character_level(
+        &mut self,
+        _node: &AllowLineBreakingAtCharacterLevel,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_png_as_graphic_format(&mut self, _node: &AllowPNGAsGraphicFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_punctuation_extend_past_text_extents(
+        &mut self,
+        _node: &AllowPunctuationExtendPastTextExtents,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_saving_document_as_xml_file(
+        &mut self,
+        _node: &AllowSavingDocumentAsXMLFile,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_table_rows_to_wrap_inline_objects_independently(
+        &mut self,
+        _node: &AllowTableRowsToWrapInlineObjectsIndependently,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn allow_tables_to_auto_fit_into_page_margins(
+        &mut self,
+        _node: &AllowTablesToAutoFitIntoPageMargins,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alternate_names_for_font(&mut self, _node: &AlternateNamesForFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alternate_style_names(&mut self, _node: &AlternateStyleNames) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn always_merge_empty_namespace(
+        &mut self,
+        _node: &AlwaysMergeEmptyNamespace,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn always_show_placeholder_text(
+        &mut self,
+        _node: &AlwaysShowPlaceholderText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn always_use_fixed_width_for_hangul_characters(
+        &mut self,
+        _node: &AlwaysUseFixedWidthForHangulCharacters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchor_for_imported_external_content(
+        &mut self,
+        _node: &AnchorForImportedExternalContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchor_for_subdocument_location(
+        &mut self,
+        _node: &AnchorForSubdocumentLocation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn animated_text_effect(&mut self, _node: &AnimatedTextEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn associated_help_text(&mut self, _node: &AssociatedHelpText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn associated_html_div_id(&mut self, _node: &AssociatedHTMLDivID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn associated_outline_level(&mut self, _node: &AssociatedOutlineLevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn associated_paragraph_style_name(
+        &mut self,
+        _node: &AssociatedParagraphStyleName,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn associated_status_text(&mut self, _node: &AssociatedStatusText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attached_custom_xml_schema(&mut self, _node: &AttachedCustomXMLSchema) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attached_document_template(&mut self, _node: &AttachedDocumentTemplate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_space_like_word95(&mut self, _node: &AutoSpaceLikeWord95) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn autofit_to_first_fixed_width_cell(
+        &mut self,
+        _node: &AutofitToFirstFixedWidthCell,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatic_captioning_settings(
+        &mut self,
+        _node: &AutomaticCaptioningSettings,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_adjust_right_indent(
+        &mut self,
+        _node: &AutomaticallyAdjustRightIndent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_hyphenate_document_contents_when_displayed(
+        &mut self,
+        _node: &AutomaticallyHyphenateDocumentContentsWhenDisplayed,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_merge_user_formatting(
+        &mut self,
+        _node: &AutomaticallyMergeUserFormatting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_recalculate_fields_on_open(
+        &mut self,
+        _node: &AutomaticallyRecalculateFieldsOnOpen,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_size_form_field(
+        &mut self,
+        _node: &AutomaticallySizeFormField,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn automatically_update_styles_from_document_template(
+        &mut self,
+        _node: &AutomaticallyUpdateStylesFromDocumentTemplate,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn balance_single_byte_double_byte_width(
+        &mut self,
+        _node: &BalanceSingleByteDoubleByteWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bibliography_structured_document_tag(
+        &mut self,
+        _node: &BibliographyStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bidirectional_embedding_level(
+        &mut self,
+        _node: &BidirectionalEmbeddingLevel,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bidirectional_override(&mut self, _node: &BidirectionalOverride) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn block(&mut self, _node: &BlockContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn block_level_custom_xml_element(
+        &mut self,
+        _node: &BlockLevelCustomXMLElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn block_level_structured_document_tag(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn block_level_structured_document_tag_content(
+        &mut self,
+        _node: &BlockLevelStructuredDocumentTagContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold(&mut self, _node: &Bold) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold_italic_font_style_embedding(
+        &mut self,
+        _node: &BoldItalicFontStyleEmbedding,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold_style_font_style_embedding(
+        &mut self,
+        _node: &BoldStyleFontStyleEmbedding,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn book_fold_printing(&mut self, _node: &BookFoldPrinting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bookmark_end(&mut self, _node: &BookmarkEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bookmark_start(&mut self, _node: &BookmarkStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_margin_for_html_div(&mut self, _node: &BottomMarginForHTMLDiv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#break(&mut self, _node: &Break) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn built_in_document_part(&mut self, _node: &BuiltInDocumentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn built_in_document_part_structured_document_tag(
+        &mut self,
+        _node: &BuiltInDocumentPartStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn caption_settings(&mut self, _node: &CaptionSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn carriage_return(&mut self, _node: &CarriageReturn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_level_custom_xml_element(
+        &mut self,
+        _node: &CellLevelCustomXMLElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_level_structured_document_tag(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_level_structured_document_tag_content(
+        &mut self,
+        _node: &CellLevelStructuredDocumentTagContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_markup(&mut self, _node: &CellMarkupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_level_whitespace_compression(
+        &mut self,
+        _node: &CharacterLevelWhitespaceCompression,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_set_supported_by_font(
+        &mut self,
+        _node: &CharacterSetSupportedByFont,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_spacing_adjustment(
+        &mut self,
+        _node: &CharacterSpacingAdjustment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn characters_which_cannot_begin_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotBeginALine,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn characters_which_cannot_end_a_line(
+        &mut self,
+        _node: &CharactersWhichCannotEndALine,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checkbox_form_field_properties(
+        &mut self,
+        _node: &CheckboxFormFieldProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checkbox_form_field_properties_content(
+        &mut self,
+        _node: &CheckboxFormFieldPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checkbox_form_field_size(&mut self, _node: &CheckboxFormFieldSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checkbox_form_field_state(&mut self, _node: &CheckboxFormFieldState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn child_div_elements(&mut self, _node: &ChildDivElements) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn citation_structured_document_tag(
+        &mut self,
+        _node: &CitationStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn click_and_type_style(&mut self, _node: &ClickAndTypeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_containing_e_mail_address(
+        &mut self,
+        _node: &ColumnContainingEMailAddress,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_definitions(&mut self, _node: &ColumnDefinitions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_delimiter_for_data_source(
+        &mut self,
+        _node: &ColumnDelimiterForDataSource,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn combo_box_list_item(&mut self, _node: &ComboBoxListItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn combo_box_structured_document_tag(
+        &mut self,
+        _node: &ComboBoxStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_anchor_range_end(&mut self, _node: &CommentAnchorRangeEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_anchor_range_start(&mut self, _node: &CommentAnchorRangeStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_content(&mut self, _node: &CommentContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_content_reference_mark(
+        &mut self,
+        _node: &CommentContentReferenceMark,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_information_block(&mut self, _node: &CommentInformationBlock) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments_collection(&mut self, _node: &CommentsCollection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn compatibility_settings(&mut self, _node: &CompatibilitySettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_field_character(&mut self, _node: &ComplexFieldCharacter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_field_character_content(
+        &mut self,
+        _node: &ComplexFieldCharacterContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_script_bold(&mut self, _node: &ComplexScriptBold) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_script_font_size(&mut self, _node: &ComplexScriptFontSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_script_italics(&mut self, _node: &ComplexScriptItalics) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn compress_punctuation_at_start_of_line(
+        &mut self,
+        _node: &CompressPunctuationAtStartOfLine,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_change(&mut self, _node: &ConflictChangeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_between_numbering_symbol_and_text(
+        &mut self,
+        _node: &ContentBetweenNumberingSymbolAndText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_block(&mut self, _node: &ContentBlockContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_cell(&mut self, _node: &ContentCellContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_row(&mut self, _node: &ContentRowContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contents_of_glossary_document_entry(
+        &mut self,
+        _node: &ContentsOfGlossaryDocumentEntry,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn continuation_separator_mark(
+        &mut self,
+        _node: &ContinuationSeparatorMark,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn current_contents_are_placeholder_text(
+        &mut self,
+        _node: &CurrentContentsArePlaceholderText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_compatibility_setting(
+        &mut self,
+        _node: &CustomCompatibilitySetting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_field_data(&mut self, _node: &CustomFieldData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_tab_stop(&mut self, _node: &CustomTabStop) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_attribute(&mut self, _node: &CustomXMLAttribute) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_data_date_storage_format(
+        &mut self,
+        _node: &CustomXMLDataDateStorageFormat,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_element_placeholder_text(
+        &mut self,
+        _node: &CustomXMLElementPlaceholderText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_element_properties(
+        &mut self,
+        _node: &CustomXMLElementProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_deletion_end(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_deletion_start(
+        &mut self,
+        _node: &CustomXMLMarkupDeletionStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_insertion_end(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_insertion_start(
+        &mut self,
+        _node: &CustomXMLMarkupInsertionStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_move_source_end(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_markup_move_source_start(
+        &mut self,
+        _node: &CustomXMLMarkupMoveSourceStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_move_to_range_end(&mut self, _node: &CustomXmlMoveToRangeEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_move_to_range_start(
+        &mut self,
+        _node: &CustomXmlMoveToRangeStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xsl_transform(&mut self, _node: &CustomXSLTransform) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_about_single_data_source_record(
+        &mut self,
+        _node: &DataAboutSingleDataSourceRecord,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_for_html_blockquote_element(
+        &mut self,
+        _node: &DataForHTMLBlockquoteElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_for_html_body_element(&mut self, _node: &DataForHTMLBodyElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_source_connection_string(
+        &mut self,
+        _node: &DataSourceConnectionString,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_source_file_path(&mut self, _node: &DataSourceFilePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_source_table_name(&mut self, _node: &DataSourceTableName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_source_type(&mut self, _node: &DataSourceType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_long_day_format(&mut self, _node: &DateBlockLongDayFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_long_month_format(
+        &mut self,
+        _node: &DateBlockLongMonthFormat,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_long_year_format(&mut self, _node: &DateBlockLongYearFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_short_day_format(&mut self, _node: &DateBlockShortDayFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_short_month_format(
+        &mut self,
+        _node: &DateBlockShortMonthFormat,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_block_short_year_format(
+        &mut self,
+        _node: &DateBlockShortYearFormat,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_display_mask(&mut self, _node: &DateDisplayMask) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_picker_calendar_type(&mut self, _node: &DatePickerCalendarType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_structured_document_tag(
+        &mut self,
+        _node: &DateStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_checkbox_form_field_state(
+        &mut self,
+        _node: &DefaultCheckboxFormFieldState,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_drop_down_list_item_index(
+        &mut self,
+        _node: &DefaultDropDownListItemIndex,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_paragraph_properties(
+        &mut self,
+        _node: &DefaultParagraphProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_properties_for_vml_objects_in_header_and_footer(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInHeaderAndFooter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_properties_for_vml_objects_in_main_document(
+        &mut self,
+        _node: &DefaultPropertiesForVMLObjectsInMainDocument,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_run_properties(&mut self, _node: &DefaultRunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_table_style(&mut self, _node: &DefaultTableStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_text_box_form_field_string(
+        &mut self,
+        _node: &DefaultTextBoxFormFieldString,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn del(&mut self, _node: &Del) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_field_code(&mut self, _node: &DeletedFieldCode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_math_control_character(
+        &mut self,
+        _node: &DeletedMathControlCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_run_content(&mut self, _node: &DeletedRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_table_row(&mut self, _node: &DeletedTableRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_text(&mut self, _node: &DeletedText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn description_for_entry(&mut self, _node: &DescriptionForEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn different_even_odd_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentEvenOddPageHeadersAndFooters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn different_first_page_headers_and_footers(
+        &mut self,
+        _node: &DifferentFirstPageHeadersAndFooters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn disable_features_not_supported(
+        &mut self,
+        _node: &DisableFeaturesNotSupported,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_all_characters_as_capital_letters(
+        &mut self,
+        _node: &DisplayAllCharactersAsCapitalLetters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_all_levels_using_arabic_numerals(
+        &mut self,
+        _node: &DisplayAllLevelsUsingArabicNumerals,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_background_shape(&mut self, _node: &DisplayBackgroundShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_backslash_as_yen_sign(
+        &mut self,
+        _node: &DisplayBackslashAsYenSign,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_character_outline(&mut self, _node: &DisplayCharacterOutline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn display_page_column_breaks_present_in_frames(
+        &mut self,
+        _node: &DisplayPageColumnBreaksPresentInFrames,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn distance_between_automatic_tab_stops(
+        &mut self,
+        _node: &DistanceBetweenAutomaticTabStops,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn distance_between_horizontal_gridlines(
+        &mut self,
+        _node: &DistanceBetweenHorizontalGridlines,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn distance_between_phonetic_guide_text(
+        &mut self,
+        _node: &DistanceBetweenPhoneticGuideText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn distance_between_vertical_gridlines(
+        &mut self,
+        _node: &DistanceBetweenVerticalGridlines,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_add_leading_between_lines_of_text(
+        &mut self,
+        _node: &DoNotAddLeadingBetweenLinesOfText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_allow_floating_tables_to_break_across_pages(
+        &mut self,
+        _node: &DoNotAllowFloatingTablesToBreakAcrossPages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_autofit_constrained_tables(
+        &mut self,
+        _node: &DoNotAutofitConstrainedTables,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_automatically_compress_images(
+        &mut self,
+        _node: &DoNotAutomaticallyCompressImages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_balance_text_columns_within_a_section(
+        &mut self,
+        _node: &DoNotBalanceTextColumnsWithinASection,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_break_constrained_forced_table(
+        &mut self,
+        _node: &DoNotBreakConstrainedForcedTable,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_bypass_east_asian_complex_script_layout_code(
+        &mut self,
+        _node: &DoNotBypassEastAsianComplexScriptLayoutCode,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_center_content_on_lines_with_exact_line_height(
+        &mut self,
+        _node: &DoNotCenterContentOnLinesWithExactLineHeight,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_check_spelling_or_grammar(
+        &mut self,
+        _node: &DoNotCheckSpellingOrGrammar,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_create_custom_tab_stop_for_hanging_indent(
+        &mut self,
+        _node: &DoNotCreateCustomTabStopForHangingIndent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_display_frameset_splitters(
+        &mut self,
+        _node: &DoNotDisplayFramesetSplitters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_display_grammatical_errors(
+        &mut self,
+        _node: &DoNotDisplayGrammaticalErrors,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_display_page_boundaries(
+        &mut self,
+        _node: &DoNotDisplayPageBoundaries,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_display_spelling_errors(
+        &mut self,
+        _node: &DoNotDisplaySpellingErrors,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_hyphenate_capital_letters(
+        &mut self,
+        _node: &DoNotHyphenateCapitalLetters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_include_subdocs_in_stats(
+        &mut self,
+        _node: &DoNotIncludeSubdocsInStats,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_increase_line_height_for_raised_lowered_text(
+        &mut self,
+        _node: &DoNotIncreaseLineHeightForRaisedLoweredText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_place_supporting_files(
+        &mut self,
+        _node: &DoNotPlaceSupportingFiles,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_rely_on_css(&mut self, _node: &DoNotRelyOnCSS) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_show_form_field_indicator(
+        &mut self,
+        _node: &DoNotShowFormFieldIndicator,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_show_invalid_markup_indicator(
+        &mut self,
+        _node: &DoNotShowInvalidMarkupIndicator,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_snap_to_document_grid_in_table_cells_with_objects(
+        &mut self,
+        _node: &DoNotSnapToDocumentGridInTableCellsWithObjects,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_suppress_blank_lines(&mut self, _node: &DoNotSuppressBlankLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_suppress_indentation(&mut self, _node: &DoNotSuppressIndentation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_suppress_paragraph_borders(
+        &mut self,
+        _node: &DoNotSuppressParagraphBorders,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_track_formatting(&mut self, _node: &DoNotTrackFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_east_asian_break_rules(
+        &mut self,
+        _node: &DoNotUseEastAsianBreakRules,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_file_names(&mut self, _node: &DoNotUseFileNames) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_html_paragraph_auto_spacing(
+        &mut self,
+        _node: &DoNotUseHTMLParagraphAutoSpacing,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_indent_as_numbering_tab_stop(
+        &mut self,
+        _node: &DoNotUseIndentAsNumberingTabStop,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_margins_for_drawing_grid_origin(
+        &mut self,
+        _node: &DoNotUseMarginsForDrawingGridOrigin,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_use_move_syntax(&mut self, _node: &DoNotUseMoveSyntax) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_validate_against_schema(
+        &mut self,
+        _node: &DoNotValidateAgainstSchema,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_vert_align_cell_with_sp(
+        &mut self,
+        _node: &DoNotVertAlignCellWithSp,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn do_not_wrap_text_with_punct(&mut self, _node: &DoNotWrapTextWithPunct) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document(&mut self, _node: &Document) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_background(&mut self, _node: &DocumentBackground) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_body(&mut self, _node: &DocumentBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_classification(&mut self, _node: &DocumentClassification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_default_paragraph_and_run_properties(
+        &mut self,
+        _node: &DocumentDefaultParagraphAndRunProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_editing_restrictions(
+        &mut self,
+        _node: &DocumentEditingRestrictions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_endnotes(&mut self, _node: &DocumentEndnotes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_final_section_properties(
+        &mut self,
+        _node: &DocumentFinalSectionProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_footnotes(&mut self, _node: &DocumentFootnotes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_grid(&mut self, _node: &DocumentGrid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_grid_inter_line_paragraph_spacing(
+        &mut self,
+        _node: &DocumentGridInterLineParagraphSpacing,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_part_category_filter(
+        &mut self,
+        _node: &DocumentPartCategoryFilter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_part_gallery_filter(
+        &mut self,
+        _node: &DocumentPartGalleryFilter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_part_gallery_structured_document_tag(
+        &mut self,
+        _node: &DocumentPartGalleryStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_part_reference(&mut self, _node: &DocumentPartReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_settings(&mut self, _node: &DocumentSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_variables(&mut self, _node: &DocumentVariables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_view_setting(&mut self, _node: &DocumentViewSetting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_wide_endnote_properties(
+        &mut self,
+        _node: &DocumentWideEndnoteProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_wide_footnote_properties(
+        &mut self,
+        _node: &DocumentWideFootnoteProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dont_justify_soft_line_break_lines(
+        &mut self,
+        _node: &DontJustifySoftLineBreakLines,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dont_wrap_cell_content(&mut self, _node: &DontWrapCellContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn double_strikethrough(&mut self, _node: &DoubleStrikethrough) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_grid_horizontal_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridHorizontalGridUnitSize,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_grid_horizontal_origin_point(
+        &mut self,
+        _node: &DrawingGridHorizontalOriginPoint,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_grid_vertical_grid_unit_size(
+        &mut self,
+        _node: &DrawingGridVerticalGridUnitSize,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_grid_vertical_origin_point(
+        &mut self,
+        _node: &DrawingGridVerticalOriginPoint,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_ml_object(&mut self, _node: &DrawingMLObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_object(&mut self, _node: &DrawingObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_list_entry(&mut self, _node: &DropDownListEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_list_form_field_properties(
+        &mut self,
+        _node: &DropDownListFormFieldProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_list_selection(&mut self, _node: &DropDownListSelection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_list_structured_document_tag(
+        &mut self,
+        _node: &DropDownListStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn e_mail_message_composition_style(
+        &mut self,
+        _node: &EMailMessageCompositionStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn e_mail_message_reply_style(&mut self, _node: &EMailMessageReplyStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn e_mail_message_text_style(&mut self, _node: &EMailMessageTextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn east_asian_typography_rules(&mut self, _node: &EastAsianTypographyRules) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn east_asian_typography_settings(
+        &mut self,
+        _node: &EastAsianTypographySettings,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embed_common_system_fonts(&mut self, _node: &EmbedCommonSystemFonts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embed_true_type_fonts(&mut self, _node: &EmbedTrueTypeFonts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_content(&mut self, _node: &EmbeddedObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_properties(&mut self, _node: &EmbeddedObjectProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_video(&mut self, _node: &EmbeddedVideo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embossing(&mut self, _node: &Embossing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn emphasis_mark(&mut self, _node: &EmphasisMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn endnote_content(&mut self, _node: &EndnoteContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn endnote_placement(&mut self, _node: &EndnotePlacement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn endnote_reference(&mut self, _node: &EndnoteReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn endnote_reference_mark(&mut self, _node: &EndnoteReferenceMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_categorization(&mut self, _node: &EntryCategorization) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_id(&mut self, _node: &EntryID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_insertion_behavior(&mut self, _node: &EntryInsertionBehavior) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_insertion_behaviors(&mut self, _node: &EntryInsertionBehaviors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_name(&mut self, _node: &EntryName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_type(&mut self, _node: &EntryType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entry_types(&mut self, _node: &EntryTypes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn equation_structured_document_tag(
+        &mut self,
+        _node: &EquationStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn execute_on_form_field_entry(&mut self, _node: &ExecuteOnFormFieldEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn execute_on_form_field_exit(&mut self, _node: &ExecuteOnFormFieldExit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn expanded_compressed_text(&mut self, _node: &ExpandedCompressedText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_content_import_properties(
+        &mut self,
+        _node: &ExternalContentImportProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_data_source_merge_field_mapping(
+        &mut self,
+        _node: &ExternalDataSourceMergeFieldMapping,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn field_code(&mut self, _node: &FieldCode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_row_contains_column_names(
+        &mut self,
+        _node: &FirstRowContainsColumnNames,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fit_text_within_cell(&mut self, _node: &FitTextWithinCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fit_to_expanded_width_when_performing_full_justification(
+        &mut self,
+        _node: &FitToExpandedWidthWhenPerformingFullJustification,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn floating_table_allows_overlap(
+        &mut self,
+        _node: &FloatingTableAllowsOverlap,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn floating_table_positioning(&mut self, _node: &FloatingTablePositioning) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_family(&mut self, _node: &FontFamily) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_kerning(&mut self, _node: &FontKerning) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_pitch(&mut self, _node: &FontPitch) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_table_root_element(&mut self, _node: &FontTableRootElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footer(&mut self, _node: &Footer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footer_reference(&mut self, _node: &FooterReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_and_endnote_numbering_restart_location(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingRestartLocation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_and_endnote_numbering_starting_value(
+        &mut self,
+        _node: &FootnoteAndEndnoteNumberingStartingValue,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_content(&mut self, _node: &FootnoteContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_endnote_separator_mark(
+        &mut self,
+        _node: &FootnoteEndnoteSeparatorMark,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_placement(&mut self, _node: &FootnotePlacement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_reference(&mut self, _node: &FootnoteReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn footnote_reference_mark(&mut self, _node: &FootnoteReferenceMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn forget_last_tab_alignment(&mut self, _node: &ForgetLastTabAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn form_field_enabled(&mut self, _node: &FormFieldEnabled) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn form_field_name(&mut self, _node: &FormFieldName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn form_field_properties(&mut self, _node: &FormFieldProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn form_field_properties_content(
+        &mut self,
+        _node: &FormFieldPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frame_cannot_be_resized(&mut self, _node: &FrameCannotBeResized) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frame_long_description(&mut self, _node: &FrameLongDescription) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frame_or_frameset_title(&mut self, _node: &FrameOrFramesetTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frame_size(&mut self, _node: &FrameSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frameset_definition(&mut self, _node: &FramesetDefinitionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frameset_layout(&mut self, _node: &FramesetLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frameset_splitter_border_style(
+        &mut self,
+        _node: &FramesetSplitterBorderStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frameset_splitter_properties(
+        &mut self,
+        _node: &FramesetSplitterProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn frameset_splitter_width(&mut self, _node: &FramesetSplitterWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn freeze_document_layout(&mut self, _node: &FreezeDocumentLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn friendly_name(&mut self, _node: &FriendlyName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gallery_associated_with_entry(
+        &mut self,
+        _node: &GalleryAssociatedWithEntry,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn generate_thumbnail_for_document_on_save(
+        &mut self,
+        _node: &GenerateThumbnailForDocumentOnSave,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glossary_document_entry(&mut self, _node: &GlossaryDocumentEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glossary_document_entry_properties(
+        &mut self,
+        _node: &GlossaryDocumentEntryProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glossary_document_entry_properties_content(
+        &mut self,
+        _node: &GlossaryDocumentEntryPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glossary_document_root_element(
+        &mut self,
+        _node: &GlossaryDocumentRootElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grammar_checking_settings(&mut self, _node: &GrammarCheckingSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_column_definition(&mut self, _node: &GridColumnDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_columns_after_last_cell(
+        &mut self,
+        _node: &GridColumnsAfterLastCell,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_columns_before_first_cell(
+        &mut self,
+        _node: &GridColumnsBeforeFirstCell,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_columns_spanned(&mut self, _node: &GridColumnsSpanned) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_structured_document_tag(
+        &mut self,
+        _node: &GroupStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gutter_on_right_side_of_page(&mut self, _node: &GutterOnRightSideOfPage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header(&mut self, _node: &Header) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_cell_reference(&mut self, _node: &HeaderCellReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_definition_file_path(&mut self, _node: &HeaderDefinitionFilePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_reference(&mut self, _node: &HeaderReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_table_row_marker(&mut self, _node: &HiddenTableRowMarker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_text(&mut self, _node: &HiddenText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_style_from_main_user_interface(
+        &mut self,
+        _node: &HideStyleFromMainUserInterface,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontally_merged_cell(&mut self, _node: &HorizontallyMergedCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyphenation_zone(&mut self, _node: &HyphenationZone) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_end_of_cell_marker(&mut self, _node: &IgnoreEndOfCellMarker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_exact_line_height_for_last_line_on_page(
+        &mut self,
+        _node: &IgnoreExactLineHeightForLastLineOnPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_minimum_line_height_for_first_line_on_page(
+        &mut self,
+        _node: &IgnoreMinimumLineHeightForFirstLineOnPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_mixed_content(&mut self, _node: &IgnoreMixedContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_page_break_from_continuous_section_break(
+        &mut self,
+        _node: &IgnorePageBreakFromContinuousSectionBreak,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_spacing_above_and_below(
+        &mut self,
+        _node: &IgnoreSpacingAboveAndBelow,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_text_wrapping_around_objects_at_bottom_of_page(
+        &mut self,
+        _node: &IgnoreTextWrappingAroundObjectsAtBottomOfPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignore_vertical_alignment_in_textboxes(
+        &mut self,
+        _node: &IgnoreVerticalAlignmentInTextboxes,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn imprinting(&mut self, _node: &Imprinting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inclusion_exclusion_data_for_data_source(
+        &mut self,
+        _node: &InclusionExclusionDataForDataSource,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn index_of_column_being_mapped(
+        &mut self,
+        _node: &IndexOfColumnBeingMapped,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn information_about_html_div_elements(
+        &mut self,
+        _node: &InformationAboutHTMLDivElements,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn information_about_single_html_div_element(
+        &mut self,
+        _node: &InformationAboutSingleHTMLDivElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inline_level_custom_xml_element(
+        &mut self,
+        _node: &InlineLevelCustomXMLElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inline_level_smart_tag(&mut self, _node: &InlineLevelSmartTag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inline_level_structured_document_tag(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inline_level_structured_document_tag_content(
+        &mut self,
+        _node: &InlineLevelStructuredDocumentTagContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inserted_math_control_character(
+        &mut self,
+        _node: &InsertedMathControlCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inserted_math_control_character_content(
+        &mut self,
+        _node: &InsertedMathControlCharacterContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inserted_run_content(&mut self, _node: &InsertedRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inserted_table_row(&mut self, _node: &InsertedTableRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn invalidated_field_cache(&mut self, _node: &InvalidatedFieldCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn italic_font_style_embedding(&mut self, _node: &ItalicFontStyleEmbedding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn italics(&mut self, _node: &Italics) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn justification(&mut self, _node: &Justification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn keep_all_lines_on_one_page(&mut self, _node: &KeepAllLinesOnOnePage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn keep_paragraph_with_next_paragraph(
+        &mut self,
+        _node: &KeepParagraphWithNextParagraph,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn keep_source_formatting_on_import(
+        &mut self,
+        _node: &KeepSourceFormattingOnImport,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn language_id_for_phonetic_guide(
+        &mut self,
+        _node: &LanguageIDForPhoneticGuide,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn languages_for_run_content(&mut self, _node: &LanguagesForRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn last_reviewed_abstract_numbering_definition(
+        &mut self,
+        _node: &LastReviewedAbstractNumberingDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn latent_style_exception(&mut self, _node: &LatentStyleException) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn latent_style_information(&mut self, _node: &LatentStyleInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_raw_table_width(&mut self, _node: &LayoutRawTableWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_and_right_margin_for_frame(
+        &mut self,
+        _node: &LeftAndRightMarginForFrame,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_margin_for_html_div(&mut self, _node: &LeftMarginForHTMLDiv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_paragraph_border(&mut self, _node: &LeftParagraphBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_paragraph_border_tbl_width(
+        &mut self,
+        _node: &LeftParagraphBorderTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legacy_ethiopic_amharic_line_breaking_rules(
+        &mut self,
+        _node: &LegacyEthiopicAmharicLineBreakingRules,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legacy_numbering_level_properties(
+        &mut self,
+        _node: &LegacyNumberingLevelProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_numbering_settings(&mut self, _node: &LineNumberingSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_wrap_like_word6(&mut self, _node: &LineWrapLikeWord6) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_wrap_trailing_spaces(&mut self, _node: &LineWrapTrailingSpaces) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn link_to_external_query_file(&mut self, _node: &LinkToExternalQueryFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_object_properties(&mut self, _node: &LinkedObjectProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_style_reference(&mut self, _node: &LinkedStyleReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_glossary_document_entries(
+        &mut self,
+        _node: &ListOfGlossaryDocumentEntries,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_separator_for_field_code_evaluation(
+        &mut self,
+        _node: &ListSeparatorForFieldCodeEvaluation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn locking_setting(&mut self, _node: &LockingSetting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn magnification_setting(&mut self, _node: &MagnificationSetting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mail_merge_error_reporting_setting(
+        &mut self,
+        _node: &MailMergeErrorReportingSetting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mail_merge_settings(&mut self, _node: &MailMergeSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn maintain_link_to_existing_file(
+        &mut self,
+        _node: &MaintainLinkToExistingFile,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn manual_run_width(&mut self, _node: &ManualRunWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn maximum_number_of_consecutively_hyphenated_lines(
+        &mut self,
+        _node: &MaximumNumberOfConsecutivelyHyphenatedLines,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merge_field_mapping(&mut self, _node: &MergeFieldMapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merged_document_destination(
+        &mut self,
+        _node: &MergedDocumentDestination,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merged_document_to_e_mail_attachment(
+        &mut self,
+        _node: &MergedDocumentToEMailAttachment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merged_e_mail_or_fax_subject_line(
+        &mut self,
+        _node: &MergedEMailOrFaxSubjectLine,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mirror_page_margins(&mut self, _node: &MirrorPageMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_destination_location_container_end(
+        &mut self,
+        _node: &MoveDestinationLocationContainerEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_destination_location_container_start(
+        &mut self,
+        _node: &MoveDestinationLocationContainerStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_destination_paragraph(&mut self, _node: &MoveDestinationParagraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_destination_run_content(
+        &mut self,
+        _node: &MoveDestinationRunContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_source_location_container_end(
+        &mut self,
+        _node: &MoveSourceLocationContainerEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_source_location_container_start(
+        &mut self,
+        _node: &MoveSourceLocationContainerStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_source_paragraph(&mut self, _node: &MoveSourceParagraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_source_run_content(&mut self, _node: &MoveSourceRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nested_frameset_definition(&mut self, _node: &NestedFramesetDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn never_kern_punctuation_characters(
+        &mut self,
+        _node: &NeverKernPunctuationCharacters,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_breaking_hyphen_character(
+        &mut self,
+        _node: &NonBreakingHyphenCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_complex_script_font_size(
+        &mut self,
+        _node: &NonComplexScriptFontSize,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn not_a_true_type_outline_font(&mut self, _node: &NotATrueTypeOutlineFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_columns_in_column_band(
+        &mut self,
+        _node: &NumberOfColumnsInColumnBand,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_pages_per_booklet(&mut self, _node: &NumberOfPagesPerBooklet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_of_rows_in_row_band(&mut self, _node: &NumberOfRowsInRowBand) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_definition_instance(
+        &mut self,
+        _node: &NumberingDefinitionInstance,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_definition_instance_reference_num_id(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumId,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_definition_instance_reference_num_pr(
+        &mut self,
+        _node: &NumberingDefinitionInstanceReferenceNumPr,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_definitions(&mut self, _node: &NumberingDefinitions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_format(&mut self, _node: &NumberingFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_level_definition_override(
+        &mut self,
+        _node: &NumberingLevelDefinitionOverride,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_level_override_definition(
+        &mut self,
+        _node: &NumberingLevelOverrideDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_level_reference(&mut self, _node: &NumberingLevelReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_level_starting_value_override(
+        &mut self,
+        _node: &NumberingLevelStartingValueOverride,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_level_text(&mut self, _node: &NumberingLevelText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_style_definition(&mut self, _node: &NumberingStyleDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_style_reference(&mut self, _node: &NumberingStyleReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numbering_template_code(&mut self, _node: &NumberingTemplateCode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odso_data_source_file_path(&mut self, _node: &ODSODataSourceFilePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odso_data_source_type(&mut self, _node: &ODSODataSourceType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_data_source_object_settings(
+        &mut self,
+        _node: &OfficeDataSourceObjectSettings,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_open_xml_math(&mut self, _node: &OfficeOpenXMLMath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn only_allow_editing_of_form_fields(
+        &mut self,
+        _node: &OnlyAllowEditingOfFormFields,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn only_expand_condense_text_by_whole_points(
+        &mut self,
+        _node: &OnlyExpandCondenseTextByWholePoints,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn only_print_form_field_content(
+        &mut self,
+        _node: &OnlyPrintFormFieldContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn only_save_custom_xml_markup(&mut self, _node: &OnlySaveCustomXMLMarkup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn only_save_form_field_content(
+        &mut self,
+        _node: &OnlySaveFormFieldContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn optional_hyphen_character(&mut self, _node: &OptionalHyphenCharacter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn optional_user_interface_sorting_order(
+        &mut self,
+        _node: &OptionalUserInterfaceSortingOrder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn original_document_revision_save_id(
+        &mut self,
+        _node: &OriginalDocumentRevisionSaveID,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn output_encoding(&mut self, _node: &OutputEncoding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_border_excludes_footer(&mut self, _node: &PageBorderExcludesFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_border_excludes_header(&mut self, _node: &PageBorderExcludesHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_borders(&mut self, _node: &PageBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_number_block(&mut self, _node: &PageNumberBlock) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_numbering_settings(&mut self, _node: &PageNumberingSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_size(&mut self, _node: &PageSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn panose1typeface_classification_number(
+        &mut self,
+        _node: &Panose1TypefaceClassificationNumber,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paper_source_information(&mut self, _node: &PaperSourceInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph(&mut self, _node: &Paragraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_alignment(&mut self, _node: &ParagraphAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_above_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphs,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_above_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderAboveIdenticalParagraphsTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_below_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphs,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_below_identical_paragraphs_tbl_width(
+        &mut self,
+        _node: &ParagraphBorderBelowIdenticalParagraphsTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_between_facing_pages(
+        &mut self,
+        _node: &ParagraphBorderBetweenFacingPages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_border_between_identical_paragraphs(
+        &mut self,
+        _node: &ParagraphBorderBetweenIdenticalParagraphs,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_borders(&mut self, _node: &ParagraphBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_conditional_formatting(
+        &mut self,
+        _node: &ParagraphConditionalFormatting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_content(&mut self, _node: &ParagraphContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_indentation(&mut self, _node: &ParagraphIndentation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_mark_is_always_hidden(
+        &mut self,
+        _node: &ParagraphMarkIsAlwaysHidden,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_mark_run_properties_revision(
+        &mut self,
+        _node: &ParagraphMarkRunPropertiesRevision,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_properties(&mut self, _node: &ParagraphProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_properties_p_pr_general(
+        &mut self,
+        _node: &ParagraphPropertiesPPrGeneral,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_shading(&mut self, _node: &ParagraphShading) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn paragraph_text_flow_direction(
+        &mut self,
+        _node: &ParagraphTextFlowDirection,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parent_style_id(&mut self, _node: &ParentStyleID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn percentage_of_document_to_use(
+        &mut self,
+        _node: &PercentageOfDocumentToUse,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide(&mut self, _node: &PhoneticGuide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_base_text(&mut self, _node: &PhoneticGuideBaseText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_base_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideBaseTextFontSize,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_content(&mut self, _node: &PhoneticGuideContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_properties(&mut self, _node: &PhoneticGuideProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_text(&mut self, _node: &PhoneticGuideText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_text_alignment(
+        &mut self,
+        _node: &PhoneticGuideTextAlignment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_guide_text_font_size(
+        &mut self,
+        _node: &PhoneticGuideTextFontSize,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_numbering_symbol_definition(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_numbering_symbol_definition_content(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_numbering_symbol_definition_reference(
+        &mut self,
+        _node: &PictureNumberingSymbolDefinitionReference,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_structured_document_tag(
+        &mut self,
+        _node: &PictureStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pixels_per_inch_for_graphics_images(
+        &mut self,
+        _node: &PixelsPerInchForGraphicsImages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn placeholder_text_should_be_resaved(
+        &mut self,
+        _node: &PlaceholderTextShouldBeResaved,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plain_text_structured_document_tag(
+        &mut self,
+        _node: &PlainTextStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn position_gutter_at_top_of_page(
+        &mut self,
+        _node: &PositionGutterAtTopOfPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn position_of_last_calculated_page_break(
+        &mut self,
+        _node: &PositionOfLastCalculatedPageBreak,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn predefined_merge_field_name(&mut self, _node: &PredefinedMergeFieldName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preferred_table_cell_width(&mut self, _node: &PreferredTableCellWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preferred_table_width(&mut self, _node: &PreferredTableWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preferred_width_after_table_row(
+        &mut self,
+        _node: &PreferredWidthAfterTableRow,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preferred_width_before_table_row(
+        &mut self,
+        _node: &PreferredWidthBeforeTableRow,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prevent_modification_of_themes_part(
+        &mut self,
+        _node: &PreventModificationOfThemesPart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prevent_replacement_of_styles_part(
+        &mut self,
+        _node: &PreventReplacementOfStylesPart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prevent_text_frames_from_overlapping(
+        &mut self,
+        _node: &PreventTextFramesFromOverlapping,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_numbering_field_properties(
+        &mut self,
+        _node: &PreviousNumberingFieldProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_paragraph_mark_run_properties(
+        &mut self,
+        _node: &PreviousParagraphMarkRunProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_paragraph_properties(
+        &mut self,
+        _node: &PreviousParagraphProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_run_properties(&mut self, _node: &PreviousRunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_section_properties(
+        &mut self,
+        _node: &PreviousSectionProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_table_cell_properties(
+        &mut self,
+        _node: &PreviousTableCellProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_table_grid(&mut self, _node: &PreviousTableGrid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_table_level_property_exceptions(
+        &mut self,
+        _node: &PreviousTableLevelPropertyExceptions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_table_properties(&mut self, _node: &PreviousTableProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn previous_table_row_properties(
+        &mut self,
+        _node: &PreviousTableRowProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn primary_style(&mut self, _node: &PrimaryStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn primary_style_name(&mut self, _node: &PrimaryStyleName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_body_text_before_header_footer_contents(
+        &mut self,
+        _node: &PrintBodyTextBeforeHeaderFooterContents,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_colors_as_black_and_white_without_dithering(
+        &mut self,
+        _node: &PrintColorsAsBlackAndWhiteWithoutDithering,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_fractional_character_widths(
+        &mut self,
+        _node: &PrintFractionalCharacterWidths,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_post_script_codes_with_document_text(
+        &mut self,
+        _node: &PrintPostScriptCodesWithDocumentText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_two_pages_per_sheet(&mut self, _node: &PrintTwoPagesPerSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn programmatic_tag(&mut self, _node: &ProgrammaticTag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn proofing_error_anchor(&mut self, _node: &ProofingErrorAnchor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn properties_for_a_single_font(
+        &mut self,
+        _node: &PropertiesForASingleFont,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_for_data_source_records(
+        &mut self,
+        _node: &QueryForDataSourceRecords,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radix_point_for_field_code_evaluation(
+        &mut self,
+        _node: &RadixPointForFieldCodeEvaluation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_markup(&mut self, _node: &RangeMarkupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_permission_end(&mut self, _node: &RangePermissionEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_permission_start(&mut self, _node: &RangePermissionStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn recalculate_fields_when_modified(
+        &mut self,
+        _node: &RecalculateFieldsWhenModified,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn recommend_web_page_format(&mut self, _node: &RecommendWebPageFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn record_currently_displayed_in_merged_document(
+        &mut self,
+        _node: &RecordCurrentlyDisplayedInMergedDocument,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn record_is_included_in_mail_merge(
+        &mut self,
+        _node: &RecordIsIncludedInMailMerge,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_to_inclusion_exclusion_data(
+        &mut self,
+        _node: &ReferenceToInclusionExclusionData,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_to_printer_settings_data(
+        &mut self,
+        _node: &ReferenceToPrinterSettingsData,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn referenced_character_style(&mut self, _node: &ReferencedCharacterStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn referenced_paragraph_style(&mut self, _node: &ReferencedParagraphStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn referenced_table_style(&mut self, _node: &ReferencedTableStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn regular_font_style_embedding(
+        &mut self,
+        _node: &RegularFontStyleEmbedding,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn remove_date_and_time_from_annotations(
+        &mut self,
+        _node: &RemoveDateAndTimeFromAnnotations,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn remove_personal_information(
+        &mut self,
+        _node: &RemovePersonalInformation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn remove_semi_hidden_property(&mut self, _node: &RemoveSemiHiddenProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn remove_smart_tags_when_saving(
+        &mut self,
+        _node: &RemoveSmartTagsWhenSaving,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn remove_structured_document_tag_when_edited(
+        &mut self,
+        _node: &RemoveStructuredDocumentTagWhenEdited,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn repeat_table_row(&mut self, _node: &RepeatTableRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn require_exact_size_during_font_substitution(
+        &mut self,
+        _node: &RequireExactSizeDuringFontSubstitution,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn restart_numbering_level_symbol(
+        &mut self,
+        _node: &RestartNumberingLevelSymbol,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reverse_book_fold_printing(&mut self, _node: &ReverseBookFoldPrinting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_identifier_for_style_definition(
+        &mut self,
+        _node: &RevisionIdentifierForStyleDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_paragraph_properties(
+        &mut self,
+        _node: &RevisionInformationForParagraphProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_run_properties(
+        &mut self,
+        _node: &RevisionInformationForRunProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_section_properties(
+        &mut self,
+        _node: &RevisionInformationForSectionProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_table_cell_properties(
+        &mut self,
+        _node: &RevisionInformationForTableCellProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_table_level_property_exceptions(
+        &mut self,
+        _node: &RevisionInformationForTableLevelPropertyExceptions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_table_properties(
+        &mut self,
+        _node: &RevisionInformationForTableProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_information_for_table_row_properties(
+        &mut self,
+        _node: &RevisionInformationForTableRowProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_save_id_values(&mut self, _node: &RevisionSaveIDValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text_box_content_container(
+        &mut self,
+        _node: &RichTextBoxContentContainer,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text_structured_document_tag(
+        &mut self,
+        _node: &RichTextStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_margin_for_html_div(&mut self, _node: &RightMarginForHTMLDiv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_paragraph_border(&mut self, _node: &RightParagraphBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_paragraph_border_tbl_width(
+        &mut self,
+        _node: &RightParagraphBorderTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_to_left_paragraph_layout(
+        &mut self,
+        _node: &RightToLeftParagraphLayout,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_to_left_text(&mut self, _node: &RightToLeftText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_level_custom_xml_element(
+        &mut self,
+        _node: &RowLevelCustomXMLElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_level_structured_document_tag(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTag,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_level_structured_document_tag_content(
+        &mut self,
+        _node: &RowLevelStructuredDocumentTagContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_content_color(&mut self, _node: &RunContentColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_fonts(&mut self, _node: &RunFonts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties_content(&mut self, _node: &RunPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties_for_the_paragraph_mark(
+        &mut self,
+        _node: &RunPropertiesForTheParagraphMark,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn save_smart_tag_data(&mut self, _node: &SaveSmartTagData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn save_through_custom_xsl_transform(
+        &mut self,
+        _node: &SaveThroughCustomXSLTransform,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scrollbar_display_option(&mut self, _node: &ScrollbarDisplayOption) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_properties(&mut self, _node: &SectionPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_type(&mut self, _node: &SectionType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_wide_endnote_properties(
+        &mut self,
+        _node: &SectionWideEndnoteProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn section_wide_footnote_properties(
+        &mut self,
+        _node: &SectionWideFootnoteProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn select_fld_with_first_or_last_char(
+        &mut self,
+        _node: &SelectFldWithFirstOrLastChar,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_of_borders_for_html_div(&mut self, _node: &SetOfBordersForHTMLDiv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_of_custom_tab_stops(&mut self, _node: &SetOfCustomTabStops) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_e_mail_message_header(&mut self, _node: &ShowEMailMessageHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_xml_tags(&mut self, _node: &ShowXMLTags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn simple_field(&mut self, _node: &SimpleField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_automatic_captioning_setting(
+        &mut self,
+        _node: &SingleAutomaticCaptioningSetting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_caption_type_definition(
+        &mut self,
+        _node: &SingleCaptionTypeDefinition,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_column_definition(&mut self, _node: &SingleColumnDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_document_variable(&mut self, _node: &SingleDocumentVariable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_frame_properties(&mut self, _node: &SingleFrameProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_strikethrough(&mut self, _node: &SingleStrikethrough) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_table_cell_margins(&mut self, _node: &SingleTableCellMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn small_caps(&mut self, _node: &SmallCaps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tag_properties(&mut self, _node: &SmartTagProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source_document_type(&mut self, _node: &SourceDocumentType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source_file_for_frame(&mut self, _node: &SourceFileForFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spacing_between_lines_and_above_below_paragraph(
+        &mut self,
+        _node: &SpacingBetweenLinesAndAboveBelowParagraph,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn special_endnote_list(&mut self, _node: &SpecialEndnoteList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn special_footnote_list(&mut self, _node: &SpecialFootnoteList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spelling_and_grammatical_checking_state(
+        &mut self,
+        _node: &SpellingAndGrammaticalCheckingState,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_pg_break_and_para_mark(&mut self, _node: &SplitPgBreakAndParaMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn start_paragraph_on_next_page(
+        &mut self,
+        _node: &StartParagraphOnNextPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn starting_value(&mut self, _node: &StartingValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn strict_kinsoku_rules(&mut self, _node: &StrictKinsokuRules) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_end_character_properties(
+        &mut self,
+        _node: &StructuredDocumentTagEndCharacterProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_label(
+        &mut self,
+        _node: &StructuredDocumentTagLabel,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_navigation_order_index(
+        &mut self,
+        _node: &StructuredDocumentTagNavigationOrderIndex,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_placeholder_text(
+        &mut self,
+        _node: &StructuredDocumentTagPlaceholderText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_properties(
+        &mut self,
+        _node: &StructuredDocumentTagProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn structured_document_tag_properties_content(
+        &mut self,
+        _node: &StructuredDocumentTagPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_cannot_be_applied(&mut self, _node: &StyleCannotBeApplied) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_conditional_table_formatting_properties(
+        &mut self,
+        _node: &StyleConditionalTableFormattingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_definition(&mut self, _node: &StyleDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_definitions(&mut self, _node: &StyleDefinitions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_for_next_paragraph(&mut self, _node: &StyleForNextParagraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subscript_superscript_text(&mut self, _node: &SubscriptSuperscriptText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subset_fonts_when_embedding(&mut self, _node: &SubsetFontsWhenEmbedding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suggested_filtering(&mut self, _node: &SuggestedFiltering) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suggested_sorting(&mut self, _node: &SuggestedSorting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn supplementary_smart_tag_information(
+        &mut self,
+        _node: &SupplementarySmartTagInformation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn supported_unicode_subranges_and_code_pages(
+        &mut self,
+        _node: &SupportedUnicodeSubrangesAndCodePages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suppress_endnotes_in_document(
+        &mut self,
+        _node: &SuppressEndnotesInDocument,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suppress_hyphenation_for_paragraph(
+        &mut self,
+        _node: &SuppressHyphenationForParagraph,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suppress_line_numbers_for_paragraph(
+        &mut self,
+        _node: &SuppressLineNumbersForParagraph,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suppress_sp_bf_after_pg_brk(&mut self, _node: &SuppressSpBfAfterPgBrk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn suppress_top_spacing(&mut self, _node: &SuppressTopSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn swap_paragraph_borders_on_odd_numbered_pages(
+        &mut self,
+        _node: &SwapParagraphBordersOnOddNumberedPages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn symbol_character(&mut self, _node: &SymbolCharacter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_character(&mut self, _node: &TabCharacter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table(&mut self, _node: &Table) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_alignment_exception(&mut self, _node: &TableAlignmentException) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_borders(&mut self, _node: &TableBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_caption(&mut self, _node: &TableCaption) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell(&mut self, _node: &TableCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_borders(&mut self, _node: &TableCellBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_deletion(&mut self, _node: &TableCellDeletion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_insertion(&mut self, _node: &TableCellInsertion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_leading_edge_border(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_leading_edge_border_tbl_width(
+        &mut self,
+        _node: &TableCellLeadingEdgeBorderTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_margin_exceptions(
+        &mut self,
+        _node: &TableCellMarginExceptions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_properties(&mut self, _node: &TableCellProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_trailing_margin_exception(
+        &mut self,
+        _node: &TableCellTrailingMarginException,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_trailing_margin_exception_tbl_width(
+        &mut self,
+        _node: &TableCellTrailingMarginExceptionTblWidth,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_vertical_alignment(
+        &mut self,
+        _node: &TableCellVerticalAlignment,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_description(&mut self, _node: &TableDescription) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_grid(&mut self, _node: &TableGrid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_grid_column_revision_information(
+        &mut self,
+        _node: &TableGridColumnRevisionInformation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_indent_from_leading_margin(
+        &mut self,
+        _node: &TableIndentFromLeadingMargin,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_inside_horizontal_edges_border(
+        &mut self,
+        _node: &TableInsideHorizontalEdgesBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_inside_vertical_edges_border(
+        &mut self,
+        _node: &TableInsideVerticalEdgesBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_layout(&mut self, _node: &TableLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_level_property_exceptions(
+        &mut self,
+        _node: &TableLevelPropertyExceptions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row(&mut self, _node: &TableRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row_cannot_break_across_pages(
+        &mut self,
+        _node: &TableRowCannotBreakAcrossPages,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row_cell_spacing(&mut self, _node: &TableRowCellSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row_height(&mut self, _node: &TableRowHeight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row_properties(&mut self, _node: &TableRowProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row_properties_content(
+        &mut self,
+        _node: &TableRowPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_conditional_formatting_settings_exception(
+        &mut self,
+        _node: &TableStyleConditionalFormattingSettingsException,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn target_screen_size_for_web_page(
+        &mut self,
+        _node: &TargetScreenSizeForWebPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text(&mut self, _node: &Text) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_border(&mut self, _node: &TextBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_form_field_formatting(
+        &mut self,
+        _node: &TextBoxFormFieldFormatting,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_form_field_maximum_length(
+        &mut self,
+        _node: &TextBoxFormFieldMaximumLength,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_form_field_properties(
+        &mut self,
+        _node: &TextBoxFormFieldProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_box_form_field_type(&mut self, _node: &TextBoxFormFieldType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_frame_properties(&mut self, _node: &TextFrameProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_highlighting(&mut self, _node: &TextHighlighting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_run(&mut self, _node: &TextRun) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_run_content(&mut self, _node: &TextRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn textbox_tight_wrap(&mut self, _node: &TextboxTightWrap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme_color_mappings(&mut self, _node: &ThemeColorMappings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme_font_languages(&mut self, _node: &ThemeFontLanguages) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_and_bottom_margin_for_frame(
+        &mut self,
+        _node: &TopAndBottomMarginForFrame,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_left_bottom_right_diagonal_border(
+        &mut self,
+        _node: &TopLeftBottomRightDiagonalBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_margin_for_html_div(&mut self, _node: &TopMarginForHTMLDiv) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_right_bottom_left_diagonal_border(
+        &mut self,
+        _node: &TopRightBottomLeftDiagonalBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn track_revisions_to_document(&mut self, _node: &TrackRevisionsToDocument) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tracked_run(&mut self, _node: &TrackedRunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
+        &mut self,
+        _node: &TreatBackslashQuotationDelimiterAsTwoQuotationMarks,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn truncate_font_heights_like_wp6(
+        &mut self,
+        _node: &TruncateFontHeightsLikeWP6,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn udl_connection_string(&mut self, _node: &UDLConnectionString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline(&mut self, _node: &Underline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_all_trailing_spaces(
+        &mut self,
+        _node: &UnderlineAllTrailingSpaces,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_following_character_following_numbering(
+        &mut self,
+        _node: &UnderlineFollowingCharacterFollowingNumbering,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unique_id(&mut self, _node: &UniqueID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unique_value_for_record(&mut self, _node: &UniqueValueForRecord) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn upgrade_document_on_open(&mut self, _node: &UpgradeDocumentOnOpen) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_alt_kinsoku_line_break_rules(
+        &mut self,
+        _node: &UseAltKinsokuLineBreakRules,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_ansi_kerning_pairs_from_fonts(
+        &mut self,
+        _node: &UseANSIKerningPairsFromFonts,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_cached_paragraph_information_for_column_balancing(
+        &mut self,
+        _node: &UseCachedParagraphInformationForColumnBalancing,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_complex_script_formatting_on_run(
+        &mut self,
+        _node: &UseComplexScriptFormattingOnRun,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_country_based_address_field_ordering(
+        &mut self,
+        _node: &UseCountryBasedAddressFieldOrdering,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_incorrect_inter_character_spacing_rules(
+        &mut self,
+        _node: &UseIncorrectInterCharacterSpacingRules,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_left_right_indents_as_inside_outside_indents(
+        &mut self,
+        _node: &UseLeftRightIndentsAsInsideOutsideIndents,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_normal_style_for_list(&mut self, _node: &UseNormalStyleForList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_printer_metrics_to_display_documents(
+        &mut self,
+        _node: &UsePrinterMetricsToDisplayDocuments,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_single_borderfor_contiguous_cells(
+        &mut self,
+        _node: &UseSingleBorderforContiguousCells,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_specific_small_caps_algorithm(
+        &mut self,
+        _node: &UseSpecificSmallCapsAlgorithm,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_specific_space_width(&mut self, _node: &UseSpecificSpaceWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_static_text_leading(&mut self, _node: &UseStaticTextLeading) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_word2002table_style_rules(
+        &mut self,
+        _node: &UseWord2002TableStyleRules,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn utilize_vml_when_saving_as_web_page(
+        &mut self,
+        _node: &UtilizeVMLWhenSavingAsWebPage,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_character_alignment_on_line(
+        &mut self,
+        _node: &VerticalCharacterAlignmentOnLine,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertically_merged_cell(&mut self, _node: &VerticallyMergedCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertically_merged_split_table_cells(
+        &mut self,
+        _node: &VerticallyMergedSplitTableCells,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertically_raised_or_lowered_text(
+        &mut self,
+        _node: &VerticallyRaisedOrLoweredText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_merged_data_within_document(
+        &mut self,
+        _node: &ViewMergedDataWithinDocument,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn visibility_of_annotation_types(
+        &mut self,
+        _node: &VisibilityOfAnnotationTypes,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn visually_right_to_left_table(
+        &mut self,
+        _node: &VisuallyRightToLeftTable,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vml_element(&mut self, _node: &VmlElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vml_object(&mut self, _node: &VMLObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vml_office_drawing_element(
+        &mut self,
+        _node: &VmlOfficeDrawingElementContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_hidden_text(&mut self, _node: &WebHiddenText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_page_settings(&mut self, _node: &WebPageSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn write_protection(&mut self, _node: &WriteProtection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_mapping(&mut self, _node: &XMLMapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 17.4.1 `bidiVisual` (Visually Right to Left Table): the tag `w:bidiVisual`, schema type

@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/spreadsheetml/2006/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_X: Option<NamespaceId> = Some(118);
@@ -6255,6 +6259,6673 @@ pub struct ConsolidationSource {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `x` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::spreadsheet` is never asked.
+pub trait Context: markup::Context {
+    fn alignment(&mut self, _node: &Alignment) -> Option<Alignment> {
+        None
+    }
+
+    fn author(&mut self, _node: &Author) -> Option<Author> {
+        None
+    }
+
+    fn authors(&mut self, _node: &Authors) -> Option<Authors> {
+        None
+    }
+
+    fn auto_filter_column(&mut self, _node: &AutoFilterColumn) -> Option<AutoFilterColumn> {
+        None
+    }
+
+    fn auto_filter_column_content(
+        &mut self,
+        _node: &AutoFilterColumnContent,
+    ) -> Option<AutoFilterColumnContent> {
+        None
+    }
+
+    fn auto_filter_settings(&mut self, _node: &AutoFilterSettings) -> Option<AutoFilterSettings> {
+        None
+    }
+
+    fn auto_sort_scope(&mut self, _node: &AutoSortScope) -> Option<AutoSortScope> {
+        None
+    }
+
+    fn background_color(&mut self, _node: &BackgroundColor) -> Option<BackgroundColor> {
+        None
+    }
+
+    fn background_image(&mut self, _node: &BackgroundImage) -> Option<BackgroundImage> {
+        None
+    }
+
+    fn bold(&mut self, _node: &Bold) -> Option<Bold> {
+        None
+    }
+
+    fn boolean(&mut self, _node: &Boolean) -> Option<Boolean> {
+        None
+    }
+
+    fn border(&mut self, _node: &Border) -> Option<Border> {
+        None
+    }
+
+    fn borders(&mut self, _node: &Borders) -> Option<Borders> {
+        None
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
+        None
+    }
+
+    fn r#break(&mut self, _node: &Break) -> Option<Break> {
+        None
+    }
+
+    fn cache_item(&mut self, _node: &CacheItemContent) -> Option<CacheItemContent> {
+        None
+    }
+
+    fn cache_item_items(&mut self, _node: &CacheItemContent) -> Option<Vec<CacheItemContent>> {
+        None
+    }
+
+    fn cached_worksheet_data(
+        &mut self,
+        _node: &CachedWorksheetData,
+    ) -> Option<CachedWorksheetData> {
+        None
+    }
+
+    fn calculated_column_formula(
+        &mut self,
+        _node: &CalculatedColumnFormula,
+    ) -> Option<CalculatedColumnFormula> {
+        None
+    }
+
+    fn calculated_item(&mut self, _node: &CalculatedItem) -> Option<CalculatedItem> {
+        None
+    }
+
+    fn calculated_items(&mut self, _node: &CalculatedItems) -> Option<CalculatedItems> {
+        None
+    }
+
+    fn calculated_member(&mut self, _node: &CalculatedMember) -> Option<CalculatedMember> {
+        None
+    }
+
+    fn calculated_members(&mut self, _node: &CalculatedMembers) -> Option<CalculatedMembers> {
+        None
+    }
+
+    fn calculation_chain_info(
+        &mut self,
+        _node: &CalculationChainInfo,
+    ) -> Option<CalculationChainInfo> {
+        None
+    }
+
+    fn calculation_properties(
+        &mut self,
+        _node: &CalculationProperties,
+    ) -> Option<CalculationProperties> {
+        None
+    }
+
+    fn cell(&mut self, _node: &Cell) -> Option<Cell> {
+        None
+    }
+
+    fn cell_calc_cell(&mut self, _node: &CellCalcCell) -> Option<CellCalcCell> {
+        None
+    }
+
+    fn cell_formats(&mut self, _node: &CellFormats) -> Option<CellFormats> {
+        None
+    }
+
+    fn cell_metadata(&mut self, _node: &CellMetadata) -> Option<CellMetadata> {
+        None
+    }
+
+    fn cell_properties(&mut self, _node: &CellProperties) -> Option<CellProperties> {
+        None
+    }
+
+    fn cell_smart_tag(&mut self, _node: &CellSmartTag) -> Option<CellSmartTag> {
+        None
+    }
+
+    fn cell_smart_tags(&mut self, _node: &CellSmartTags) -> Option<CellSmartTags> {
+        None
+    }
+
+    fn cell_style(&mut self, _node: &CellStyle) -> Option<CellStyle> {
+        None
+    }
+
+    fn cell_styles(&mut self, _node: &CellStyles) -> Option<CellStyles> {
+        None
+    }
+
+    fn cell_value(&mut self, _node: &CellValue) -> Option<CellValue> {
+        None
+    }
+
+    fn cell_watch_item(&mut self, _node: &CellWatchItem) -> Option<CellWatchItem> {
+        None
+    }
+
+    fn cell_watch_items(&mut self, _node: &CellWatchItems) -> Option<CellWatchItems> {
+        None
+    }
+
+    fn character_set(&mut self, _node: &CharacterSet) -> Option<CharacterSet> {
+        None
+    }
+
+    fn character_value(&mut self, _node: &CharacterValue) -> Option<CharacterValue> {
+        None
+    }
+
+    fn character_value_x_string_element(
+        &mut self,
+        _node: &CharacterValueXStringElement,
+    ) -> Option<CharacterValueXStringElement> {
+        None
+    }
+
+    fn chart_sheet(&mut self, _node: &ChartSheet) -> Option<ChartSheet> {
+        None
+    }
+
+    fn chart_sheet_page_setup(
+        &mut self,
+        _node: &ChartSheetPageSetup,
+    ) -> Option<ChartSheetPageSetup> {
+        None
+    }
+
+    fn chart_sheet_properties(
+        &mut self,
+        _node: &ChartSheetProperties,
+    ) -> Option<ChartSheetProperties> {
+        None
+    }
+
+    fn chart_sheet_protection(
+        &mut self,
+        _node: &ChartSheetProtection,
+    ) -> Option<ChartSheetProtection> {
+        None
+    }
+
+    fn chart_sheet_view(&mut self, _node: &ChartSheetView) -> Option<ChartSheetView> {
+        None
+    }
+
+    fn chart_sheet_views(&mut self, _node: &ChartSheetViews) -> Option<ChartSheetViews> {
+        None
+    }
+
+    fn color_filter_criteria(
+        &mut self,
+        _node: &ColorFilterCriteria,
+    ) -> Option<ColorFilterCriteria> {
+        None
+    }
+
+    fn color_indexes(&mut self, _node: &ColorIndexes) -> Option<ColorIndexes> {
+        None
+    }
+
+    fn color_scale(&mut self, _node: &ColorScale) -> Option<ColorScale> {
+        None
+    }
+
+    fn colors(&mut self, _node: &Colors) -> Option<Colors> {
+        None
+    }
+
+    fn column_fields(&mut self, _node: &ColumnFields) -> Option<ColumnFields> {
+        None
+    }
+
+    fn column_information(&mut self, _node: &ColumnInformation) -> Option<ColumnInformation> {
+        None
+    }
+
+    fn column_items(&mut self, _node: &ColumnItems) -> Option<ColumnItems> {
+        None
+    }
+
+    fn column_olap_hierarchies(
+        &mut self,
+        _node: &ColumnOLAPHierarchies,
+    ) -> Option<ColumnOLAPHierarchies> {
+        None
+    }
+
+    fn column_olap_hierarchy_references(
+        &mut self,
+        _node: &ColumnOLAPHierarchyReferences,
+    ) -> Option<ColumnOLAPHierarchyReferences> {
+        None
+    }
+
+    fn column_width_formatting(
+        &mut self,
+        _node: &ColumnWidthFormatting,
+    ) -> Option<ColumnWidthFormatting> {
+        None
+    }
+
+    fn column_xml_properties(
+        &mut self,
+        _node: &ColumnXMLProperties,
+    ) -> Option<ColumnXMLProperties> {
+        None
+    }
+
+    fn comment(&mut self, _node: &Comment) -> Option<Comment> {
+        None
+    }
+
+    fn comment_properties(&mut self, _node: &CommentProperties) -> Option<CommentProperties> {
+        None
+    }
+
+    fn comment_text(&mut self, _node: &CommentText) -> Option<CommentText> {
+        None
+    }
+
+    fn comments(&mut self, _node: &Comments) -> Option<Comments> {
+        None
+    }
+
+    fn condense(&mut self, _node: &Condense) -> Option<Condense> {
+        None
+    }
+
+    fn conditional_format_value_object(
+        &mut self,
+        _node: &ConditionalFormatValueObject,
+    ) -> Option<ConditionalFormatValueObject> {
+        None
+    }
+
+    fn conditional_formats(&mut self, _node: &ConditionalFormats) -> Option<ConditionalFormats> {
+        None
+    }
+
+    fn conditional_formatting(
+        &mut self,
+        _node: &ConditionalFormatting,
+    ) -> Option<ConditionalFormatting> {
+        None
+    }
+
+    fn conditional_formatting_conditional_format(
+        &mut self,
+        _node: &ConditionalFormattingConditionalFormat,
+    ) -> Option<ConditionalFormattingConditionalFormat> {
+        None
+    }
+
+    fn conditional_formatting_rule(
+        &mut self,
+        _node: &ConditionalFormattingRule,
+    ) -> Option<ConditionalFormattingRule> {
+        None
+    }
+
+    fn connection(&mut self, _node: &Connection) -> Option<Connection> {
+        None
+    }
+
+    fn connections(&mut self, _node: &Connections) -> Option<Connections> {
+        None
+    }
+
+    fn consolidation_source(&mut self, _node: &ConsolidationSource) -> Option<ConsolidationSource> {
+        None
+    }
+
+    fn custom_chart_sheet_view(
+        &mut self,
+        _node: &CustomChartSheetView,
+    ) -> Option<CustomChartSheetView> {
+        None
+    }
+
+    fn custom_chart_sheet_views(
+        &mut self,
+        _node: &CustomChartSheetViews,
+    ) -> Option<CustomChartSheetViews> {
+        None
+    }
+
+    fn custom_filter_criteria(
+        &mut self,
+        _node: &CustomFilterCriteria,
+    ) -> Option<CustomFilterCriteria> {
+        None
+    }
+
+    fn custom_filters(&mut self, _node: &CustomFilters) -> Option<CustomFilters> {
+        None
+    }
+
+    fn custom_properties(&mut self, _node: &CustomProperties) -> Option<CustomProperties> {
+        None
+    }
+
+    fn custom_property(&mut self, _node: &CustomProperty) -> Option<CustomProperty> {
+        None
+    }
+
+    fn custom_sheet_view(&mut self, _node: &CustomSheetView) -> Option<CustomSheetView> {
+        None
+    }
+
+    fn custom_sheet_views(&mut self, _node: &CustomSheetViews) -> Option<CustomSheetViews> {
+        None
+    }
+
+    fn custom_workbook_view(&mut self, _node: &CustomWorkbookView) -> Option<CustomWorkbookView> {
+        None
+    }
+
+    fn custom_workbook_views(
+        &mut self,
+        _node: &CustomWorkbookViews,
+    ) -> Option<CustomWorkbookViews> {
+        None
+    }
+
+    fn data_bar(&mut self, _node: &DataBar) -> Option<DataBar> {
+        None
+    }
+
+    fn data_bar_color(&mut self, _node: &DataBarColor) -> Option<DataBarColor> {
+        None
+    }
+
+    fn data_consolidate(&mut self, _node: &DataConsolidate) -> Option<DataConsolidate> {
+        None
+    }
+
+    fn data_consolidation_reference(
+        &mut self,
+        _node: &DataConsolidationReference,
+    ) -> Option<DataConsolidationReference> {
+        None
+    }
+
+    fn data_consolidation_references(
+        &mut self,
+        _node: &DataConsolidationReferences,
+    ) -> Option<DataConsolidationReferences> {
+        None
+    }
+
+    fn data_field_item(&mut self, _node: &DataFieldItem) -> Option<DataFieldItem> {
+        None
+    }
+
+    fn data_fields(&mut self, _node: &DataFields) -> Option<DataFields> {
+        None
+    }
+
+    fn data_validation(&mut self, _node: &DataValidation) -> Option<DataValidation> {
+        None
+    }
+
+    fn data_validations(&mut self, _node: &DataValidations) -> Option<DataValidations> {
+        None
+    }
+
+    fn database_properties(&mut self, _node: &DatabaseProperties) -> Option<DatabaseProperties> {
+        None
+    }
+
+    fn date_grouping(&mut self, _node: &DateGrouping) -> Option<DateGrouping> {
+        None
+    }
+
+    fn date_time(&mut self, _node: &DateTime) -> Option<DateTime> {
+        None
+    }
+
+    fn dde_connection(&mut self, _node: &DDEConnection) -> Option<DDEConnection> {
+        None
+    }
+
+    fn dde_item_definition(&mut self, _node: &DDEItemDefinition) -> Option<DDEItemDefinition> {
+        None
+    }
+
+    fn dde_items_collection(&mut self, _node: &DDEItemsCollection) -> Option<DDEItemsCollection> {
+        None
+    }
+
+    fn dde_link_value(&mut self, _node: &DDELinkValue) -> Option<DDELinkValue> {
+        None
+    }
+
+    fn dde_name_values(&mut self, _node: &DDENameValues) -> Option<DDENameValues> {
+        None
+    }
+
+    fn defined_name(&mut self, _node: &DefinedName) -> Option<DefinedName> {
+        None
+    }
+
+    fn defined_name_external_defined_name(
+        &mut self,
+        _node: &DefinedNameExternalDefinedName,
+    ) -> Option<DefinedNameExternalDefinedName> {
+        None
+    }
+
+    fn defined_names(&mut self, _node: &DefinedNames) -> Option<DefinedNames> {
+        None
+    }
+
+    fn deleted_field(&mut self, _node: &DeletedField) -> Option<DeletedField> {
+        None
+    }
+
+    fn deleted_fields(&mut self, _node: &DeletedFields) -> Option<DeletedFields> {
+        None
+    }
+
+    fn diagonal(&mut self, _node: &Diagonal) -> Option<Diagonal> {
+        None
+    }
+
+    fn dialog_sheet(&mut self, _node: &DialogSheet) -> Option<DialogSheet> {
+        None
+    }
+
+    fn discrete_grouping_properties(
+        &mut self,
+        _node: &DiscreteGroupingProperties,
+    ) -> Option<DiscreteGroupingProperties> {
+        None
+    }
+
+    fn drawing(&mut self, _node: &Drawing) -> Option<Drawing> {
+        None
+    }
+
+    fn drawing_reference_in_header_footer(
+        &mut self,
+        _node: &DrawingReferenceInHeaderFooter,
+    ) -> Option<DrawingReferenceInHeaderFooter> {
+        None
+    }
+
+    fn dynamic_filter(&mut self, _node: &DynamicFilter) -> Option<DynamicFilter> {
+        None
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> Option<EmbeddedControl> {
+        None
+    }
+
+    fn embedded_control_properties(
+        &mut self,
+        _node: &EmbeddedControlProperties,
+    ) -> Option<EmbeddedControlProperties> {
+        None
+    }
+
+    fn embedded_controls(&mut self, _node: &EmbeddedControls) -> Option<EmbeddedControls> {
+        None
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObject) -> Option<EmbeddedObject> {
+        None
+    }
+
+    fn embedded_object_properties(
+        &mut self,
+        _node: &EmbeddedObjectProperties,
+    ) -> Option<EmbeddedObjectProperties> {
+        None
+    }
+
+    fn embedded_object_size(&mut self, _node: &EmbeddedObjectSize) -> Option<EmbeddedObjectSize> {
+        None
+    }
+
+    fn embedded_objects(&mut self, _node: &EmbeddedObjects) -> Option<EmbeddedObjects> {
+        None
+    }
+
+    fn entries(&mut self, _node: &Entries) -> Option<Entries> {
+        None
+    }
+
+    fn entries_content(&mut self, _node: &EntriesContent) -> Option<EntriesContent> {
+        None
+    }
+
+    fn entries_content_items(&mut self, _node: &EntriesContent) -> Option<Vec<EntriesContent>> {
+        None
+    }
+
+    fn error_value(&mut self, _node: &ErrorValue) -> Option<ErrorValue> {
+        None
+    }
+
+    fn even_page_footer(&mut self, _node: &EvenPageFooter) -> Option<EvenPageFooter> {
+        None
+    }
+
+    fn even_page_header(&mut self, _node: &EvenPageHeader) -> Option<EvenPageHeader> {
+        None
+    }
+
+    fn extend(&mut self, _node: &Extend) -> Option<Extend> {
+        None
+    }
+
+    fn extension(&mut self, _node: &Extension) -> Option<Extension> {
+        None
+    }
+
+    fn external_cell_data(&mut self, _node: &ExternalCellData) -> Option<ExternalCellData> {
+        None
+    }
+
+    fn external_reference(&mut self, _node: &ExternalReference) -> Option<ExternalReference> {
+        None
+    }
+
+    fn external_reference_content(
+        &mut self,
+        _node: &ExternalReferenceContent,
+    ) -> Option<ExternalReferenceContent> {
+        None
+    }
+
+    fn external_reference_external_link(
+        &mut self,
+        _node: &ExternalReferenceExternalLink,
+    ) -> Option<ExternalReferenceExternalLink> {
+        None
+    }
+
+    fn external_references(&mut self, _node: &ExternalReferences) -> Option<ExternalReferences> {
+        None
+    }
+
+    fn external_sheet_data_set(
+        &mut self,
+        _node: &ExternalSheetDataSet,
+    ) -> Option<ExternalSheetDataSet> {
+        None
+    }
+
+    fn external_workbook(&mut self, _node: &ExternalWorkbook) -> Option<ExternalWorkbook> {
+        None
+    }
+
+    fn field(&mut self, _node: &Field) -> Option<Field> {
+        None
+    }
+
+    fn field_group_properties(
+        &mut self,
+        _node: &FieldGroupProperties,
+    ) -> Option<FieldGroupProperties> {
+        None
+    }
+
+    fn field_items(&mut self, _node: &FieldItems) -> Option<FieldItems> {
+        None
+    }
+
+    fn fields(&mut self, _node: &Fields) -> Option<Fields> {
+        None
+    }
+
+    fn fields_usage(&mut self, _node: &FieldsUsage) -> Option<FieldsUsage> {
+        None
+    }
+
+    fn file_recovery_properties(
+        &mut self,
+        _node: &FileRecoveryProperties,
+    ) -> Option<FileRecoveryProperties> {
+        None
+    }
+
+    fn file_sharing(&mut self, _node: &FileSharing) -> Option<FileSharing> {
+        None
+    }
+
+    fn file_version(&mut self, _node: &FileVersion) -> Option<FileVersion> {
+        None
+    }
+
+    fn fill(&mut self, _node: &Fill) -> Option<Fill> {
+        None
+    }
+
+    fn fill_content(&mut self, _node: &FillContent) -> Option<FillContent> {
+        None
+    }
+
+    fn fills(&mut self, _node: &Fills) -> Option<Fills> {
+        None
+    }
+
+    fn filter(&mut self, _node: &Filter) -> Option<Filter> {
+        None
+    }
+
+    fn filter_criteria(&mut self, _node: &FilterCriteria) -> Option<FilterCriteria> {
+        None
+    }
+
+    fn filters(&mut self, _node: &Filters) -> Option<Filters> {
+        None
+    }
+
+    fn first_page_footer(&mut self, _node: &FirstPageFooter) -> Option<FirstPageFooter> {
+        None
+    }
+
+    fn first_page_header(&mut self, _node: &FirstPageHeader) -> Option<FirstPageHeader> {
+        None
+    }
+
+    fn font(&mut self, _node: &Font) -> Option<Font> {
+        None
+    }
+
+    fn font_content(&mut self, _node: &FontContent) -> Option<FontContent> {
+        None
+    }
+
+    fn font_content_items(&mut self, _node: &FontContent) -> Option<Vec<FontContent>> {
+        None
+    }
+
+    fn font_family(&mut self, _node: &FontFamily) -> Option<FontFamily> {
+        None
+    }
+
+    fn font_family_int_property(
+        &mut self,
+        _node: &FontFamilyIntProperty,
+    ) -> Option<FontFamilyIntProperty> {
+        None
+    }
+
+    fn font_name(&mut self, _node: &FontName) -> Option<FontName> {
+        None
+    }
+
+    fn font_r_font(&mut self, _node: &FontRFont) -> Option<FontRFont> {
+        None
+    }
+
+    fn font_size(&mut self, _node: &FontSize) -> Option<FontSize> {
+        None
+    }
+
+    fn fonts(&mut self, _node: &Fonts) -> Option<Fonts> {
+        None
+    }
+
+    fn foreground_color(&mut self, _node: &ForegroundColor) -> Option<ForegroundColor> {
+        None
+    }
+
+    fn format(&mut self, _node: &Format) -> Option<Format> {
+        None
+    }
+
+    fn formats(&mut self, _node: &Formats) -> Option<Formats> {
+        None
+    }
+
+    fn formatting(&mut self, _node: &Formatting) -> Option<Formatting> {
+        None
+    }
+
+    fn formatting_records(&mut self, _node: &FormattingRecords) -> Option<FormattingRecords> {
+        None
+    }
+
+    fn formula(&mut self, _node: &Formula) -> Option<Formula> {
+        None
+    }
+
+    fn formula1(&mut self, _node: &Formula1) -> Option<Formula1> {
+        None
+    }
+
+    fn formula2(&mut self, _node: &Formula2) -> Option<Formula2> {
+        None
+    }
+
+    fn formula_f(&mut self, _node: &FormulaF) -> Option<FormulaF> {
+        None
+    }
+
+    fn function_group(&mut self, _node: &FunctionGroup) -> Option<FunctionGroup> {
+        None
+    }
+
+    fn function_groups(&mut self, _node: &FunctionGroups) -> Option<FunctionGroups> {
+        None
+    }
+
+    fn future_feature_data_storage_area(
+        &mut self,
+        _node: &FutureFeatureDataStorageArea,
+    ) -> Option<FutureFeatureDataStorageArea> {
+        None
+    }
+
+    fn future_metadata(&mut self, _node: &FutureMetadata) -> Option<FutureMetadata> {
+        None
+    }
+
+    fn future_metadata_block(
+        &mut self,
+        _node: &FutureMetadataBlock,
+    ) -> Option<FutureMetadataBlock> {
+        None
+    }
+
+    fn generic_object_link_connection(
+        &mut self,
+        _node: &GenericObjectLinkConnection,
+    ) -> Option<GenericObjectLinkConnection> {
+        None
+    }
+
+    fn gradient(&mut self, _node: &Gradient) -> Option<Gradient> {
+        None
+    }
+
+    fn gradient_stop(&mut self, _node: &GradientStop) -> Option<GradientStop> {
+        None
+    }
+
+    fn header(&mut self, _node: &Header) -> Option<Header> {
+        None
+    }
+
+    fn header_footer_settings(
+        &mut self,
+        _node: &HeaderFooterSettings,
+    ) -> Option<HeaderFooterSettings> {
+        None
+    }
+
+    fn horizontal_inner_borders(
+        &mut self,
+        _node: &HorizontalInnerBorders,
+    ) -> Option<HorizontalInnerBorders> {
+        None
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
+        None
+    }
+
+    fn hyperlinks(&mut self, _node: &Hyperlinks) -> Option<Hyperlinks> {
+        None
+    }
+
+    fn icon_filter(&mut self, _node: &IconFilter) -> Option<IconFilter> {
+        None
+    }
+
+    fn icon_set(&mut self, _node: &IconSet) -> Option<IconSet> {
+        None
+    }
+
+    fn ignored_error(&mut self, _node: &IgnoredError) -> Option<IgnoredError> {
+        None
+    }
+
+    fn ignored_errors(&mut self, _node: &IgnoredErrors) -> Option<IgnoredErrors> {
+        None
+    }
+
+    fn input_cells(&mut self, _node: &InputCells) -> Option<InputCells> {
+        None
+    }
+
+    fn italic(&mut self, _node: &Italic) -> Option<Italic> {
+        None
+    }
+
+    fn kpimdx_metadata(&mut self, _node: &KPIMDXMetadata) -> Option<KPIMDXMetadata> {
+        None
+    }
+
+    fn leading_edge_border_left(
+        &mut self,
+        _node: &LeadingEdgeBorderLeft,
+    ) -> Option<LeadingEdgeBorderLeft> {
+        None
+    }
+
+    fn leading_edge_border_start(
+        &mut self,
+        _node: &LeadingEdgeBorderStart,
+    ) -> Option<LeadingEdgeBorderStart> {
+        None
+    }
+
+    fn legacy_drawing_reference(
+        &mut self,
+        _node: &LegacyDrawingReference,
+    ) -> Option<LegacyDrawingReference> {
+        None
+    }
+
+    fn legacy_drawing_reference_in_header_footer(
+        &mut self,
+        _node: &LegacyDrawingReferenceInHeaderFooter,
+    ) -> Option<LegacyDrawingReferenceInHeaderFooter> {
+        None
+    }
+
+    fn list_of_comments(&mut self, _node: &ListOfComments) -> Option<ListOfComments> {
+        None
+    }
+
+    fn main(&mut self, _node: &Main) -> Option<Main> {
+        None
+    }
+
+    fn mdx_metadata_information(
+        &mut self,
+        _node: &MDXMetadataInformation,
+    ) -> Option<MDXMetadataInformation> {
+        None
+    }
+
+    fn mdx_metadata_record(&mut self, _node: &MDXMetadataRecord) -> Option<MDXMetadataRecord> {
+        None
+    }
+
+    fn member(&mut self, _node: &Member) -> Option<Member> {
+        None
+    }
+
+    fn member_properties_map(
+        &mut self,
+        _node: &MemberPropertiesMap,
+    ) -> Option<MemberPropertiesMap> {
+        None
+    }
+
+    fn member_property_index(
+        &mut self,
+        _node: &MemberPropertyIndex,
+    ) -> Option<MemberPropertyIndex> {
+        None
+    }
+
+    fn member_property_mdx_metadata(
+        &mut self,
+        _node: &MemberPropertyMDXMetadata,
+    ) -> Option<MemberPropertyMDXMetadata> {
+        None
+    }
+
+    fn member_unique_name_index(
+        &mut self,
+        _node: &MemberUniqueNameIndex,
+    ) -> Option<MemberUniqueNameIndex> {
+        None
+    }
+
+    fn members(&mut self, _node: &Members) -> Option<Members> {
+        None
+    }
+
+    fn merge_cells(&mut self, _node: &MergeCells) -> Option<MergeCells> {
+        None
+    }
+
+    fn merged_cell(&mut self, _node: &MergedCell) -> Option<MergedCell> {
+        None
+    }
+
+    fn metadata(&mut self, _node: &Metadata) -> Option<Metadata> {
+        None
+    }
+
+    fn metadata_block(&mut self, _node: &MetadataBlock) -> Option<MetadataBlock> {
+        None
+    }
+
+    fn metadata_record(&mut self, _node: &MetadataRecord) -> Option<MetadataRecord> {
+        None
+    }
+
+    fn metadata_string_store(
+        &mut self,
+        _node: &MetadataStringStore,
+    ) -> Option<MetadataStringStore> {
+        None
+    }
+
+    fn metadata_type_information(
+        &mut self,
+        _node: &MetadataTypeInformation,
+    ) -> Option<MetadataTypeInformation> {
+        None
+    }
+
+    fn metadata_types_collection(
+        &mut self,
+        _node: &MetadataTypesCollection,
+    ) -> Option<MetadataTypesCollection> {
+        None
+    }
+
+    fn mru_colors(&mut self, _node: &MRUColors) -> Option<MRUColors> {
+        None
+    }
+
+    fn multidimensional_expression_metadata(
+        &mut self,
+        _node: &MultidimensionalExpressionMetadataContent,
+    ) -> Option<MultidimensionalExpressionMetadataContent> {
+        None
+    }
+
+    fn named_links(&mut self, _node: &NamedLinks) -> Option<NamedLinks> {
+        None
+    }
+
+    fn nested_revision(&mut self, _node: &NestedRevisionContent) -> Option<NestedRevisionContent> {
+        None
+    }
+
+    fn nested_revision_items(
+        &mut self,
+        _node: &NestedRevisionContent,
+    ) -> Option<Vec<NestedRevisionContent>> {
+        None
+    }
+
+    fn new_cell_data(&mut self, _node: &NewCellData) -> Option<NewCellData> {
+        None
+    }
+
+    fn new_formatting_information(
+        &mut self,
+        _node: &NewFormattingInformation,
+    ) -> Option<NewFormattingInformation> {
+        None
+    }
+
+    fn no_value(&mut self, _node: &NoValue) -> Option<NoValue> {
+        None
+    }
+
+    fn no_value_table_missing(
+        &mut self,
+        _node: &NoValueTableMissing,
+    ) -> Option<NoValueTableMissing> {
+        None
+    }
+
+    fn number_format(&mut self, _node: &NumberFormat) -> Option<NumberFormat> {
+        None
+    }
+
+    fn number_formats(&mut self, _node: &NumberFormats) -> Option<NumberFormats> {
+        None
+    }
+
+    fn numeric(&mut self, _node: &Numeric) -> Option<Numeric> {
+        None
+    }
+
+    fn object_cell_anchor(&mut self, _node: &ObjectCellAnchor) -> Option<ObjectCellAnchor> {
+        None
+    }
+
+    fn object_link_item(&mut self, _node: &ObjectLinkItem) -> Option<ObjectLinkItem> {
+        None
+    }
+
+    fn object_link_items(&mut self, _node: &ObjectLinkItems) -> Option<ObjectLinkItems> {
+        None
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> Option<OddHeader> {
+        None
+    }
+
+    fn odd_page_footer(&mut self, _node: &OddPageFooter) -> Option<OddPageFooter> {
+        None
+    }
+
+    fn olap_dimension(&mut self, _node: &OLAPDimension) -> Option<OLAPDimension> {
+        None
+    }
+
+    fn olap_dimensions(&mut self, _node: &OLAPDimensions) -> Option<OLAPDimensions> {
+        None
+    }
+
+    fn olap_group(&mut self, _node: &OLAPGroup) -> Option<OLAPGroup> {
+        None
+    }
+
+    fn olap_group_items(&mut self, _node: &OLAPGroupItems) -> Option<OLAPGroupItems> {
+        None
+    }
+
+    fn olap_group_member(&mut self, _node: &OLAPGroupMember) -> Option<OLAPGroupMember> {
+        None
+    }
+
+    fn olap_group_members(&mut self, _node: &OLAPGroupMembers) -> Option<OLAPGroupMembers> {
+        None
+    }
+
+    fn olap_grouping_levels_group_level(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevel,
+    ) -> Option<OLAPGroupingLevelsGroupLevel> {
+        None
+    }
+
+    fn olap_grouping_levels_group_levels(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevels,
+    ) -> Option<OLAPGroupingLevelsGroupLevels> {
+        None
+    }
+
+    fn olap_hierarchy(&mut self, _node: &OLAPHierarchy) -> Option<OLAPHierarchy> {
+        None
+    }
+
+    fn olap_level_groups(&mut self, _node: &OLAPLevelGroups) -> Option<OLAPLevelGroups> {
+        None
+    }
+
+    fn olap_measure_group_map(
+        &mut self,
+        _node: &OLAPMeasureGroupMap,
+    ) -> Option<OLAPMeasureGroupMap> {
+        None
+    }
+
+    fn olap_measure_group_maps(
+        &mut self,
+        _node: &OLAPMeasureGroupMaps,
+    ) -> Option<OLAPMeasureGroupMaps> {
+        None
+    }
+
+    fn olap_measure_group_measure_group(
+        &mut self,
+        _node: &OLAPMeasureGroupMeasureGroup,
+    ) -> Option<OLAPMeasureGroupMeasureGroup> {
+        None
+    }
+
+    fn olap_measure_groups(&mut self, _node: &OLAPMeasureGroups) -> Option<OLAPMeasureGroups> {
+        None
+    }
+
+    fn olap_member_properties(
+        &mut self,
+        _node: &OLAPMemberProperties,
+    ) -> Option<OLAPMemberProperties> {
+        None
+    }
+
+    fn olap_member_property(&mut self, _node: &OLAPMemberProperty) -> Option<OLAPMemberProperty> {
+        None
+    }
+
+    fn olap_properties(&mut self, _node: &OLAPProperties) -> Option<OLAPProperties> {
+        None
+    }
+
+    fn olap_query_cache(&mut self, _node: &OLAPQueryCache) -> Option<OLAPQueryCache> {
+        None
+    }
+
+    fn olap_set(&mut self, _node: &OLAPSet) -> Option<OLAPSet> {
+        None
+    }
+
+    fn olapkp_is(&mut self, _node: &OLAPKPIs) -> Option<OLAPKPIs> {
+        None
+    }
+
+    fn olapkpi(&mut self, _node: &OLAPKPI) -> Option<OLAPKPI> {
+        None
+    }
+
+    fn old_cell_data(&mut self, _node: &OldCellData) -> Option<OldCellData> {
+        None
+    }
+
+    fn old_formatting_information(
+        &mut self,
+        _node: &OldFormattingInformation,
+    ) -> Option<OldFormattingInformation> {
+        None
+    }
+
+    fn old_formula(&mut self, _node: &OldFormula) -> Option<OldFormula> {
+        None
+    }
+
+    fn outline(&mut self, _node: &Outline) -> Option<Outline> {
+        None
+    }
+
+    fn outline_properties(&mut self, _node: &OutlineProperties) -> Option<OutlineProperties> {
+        None
+    }
+
+    fn page_field(&mut self, _node: &PageField) -> Option<PageField> {
+        None
+    }
+
+    fn page_field_items(&mut self, _node: &PageFieldItems) -> Option<PageFieldItems> {
+        None
+    }
+
+    fn page_item(&mut self, _node: &PageItem) -> Option<PageItem> {
+        None
+    }
+
+    fn page_item_values(&mut self, _node: &PageItemValues) -> Option<PageItemValues> {
+        None
+    }
+
+    fn page_items(&mut self, _node: &PageItems) -> Option<PageItems> {
+        None
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> Option<PageMargins> {
+        None
+    }
+
+    fn page_setup_properties(
+        &mut self,
+        _node: &PageSetupProperties,
+    ) -> Option<PageSetupProperties> {
+        None
+    }
+
+    fn page_setup_settings(&mut self, _node: &PageSetupSettings) -> Option<PageSetupSettings> {
+        None
+    }
+
+    fn parameter_properties(&mut self, _node: &ParameterProperties) -> Option<ParameterProperties> {
+        None
+    }
+
+    fn pattern(&mut self, _node: &Pattern) -> Option<Pattern> {
+        None
+    }
+
+    fn phonetic_properties(&mut self, _node: &PhoneticProperties) -> Option<PhoneticProperties> {
+        None
+    }
+
+    fn phonetic_run(&mut self, _node: &PhoneticRun) -> Option<PhoneticRun> {
+        None
+    }
+
+    fn pivot_area(&mut self, _node: &PivotArea) -> Option<PivotArea> {
+        None
+    }
+
+    fn pivot_areas(&mut self, _node: &PivotAreas) -> Option<PivotAreas> {
+        None
+    }
+
+    fn pivot_cache(&mut self, _node: &PivotCache) -> Option<PivotCache> {
+        None
+    }
+
+    fn pivot_cache_definition(
+        &mut self,
+        _node: &PivotCacheDefinition,
+    ) -> Option<PivotCacheDefinition> {
+        None
+    }
+
+    fn pivot_cache_field(&mut self, _node: &PivotCacheField) -> Option<PivotCacheField> {
+        None
+    }
+
+    fn pivot_cache_field_id(&mut self, _node: &PivotCacheFieldId) -> Option<PivotCacheFieldId> {
+        None
+    }
+
+    fn pivot_cache_fields(&mut self, _node: &PivotCacheFields) -> Option<PivotCacheFields> {
+        None
+    }
+
+    fn pivot_cache_hierarchies(
+        &mut self,
+        _node: &PivotCacheHierarchies,
+    ) -> Option<PivotCacheHierarchies> {
+        None
+    }
+
+    fn pivot_cache_hierarchy(
+        &mut self,
+        _node: &PivotCacheHierarchy,
+    ) -> Option<PivotCacheHierarchy> {
+        None
+    }
+
+    fn pivot_cache_record(&mut self, _node: &PivotCacheRecord) -> Option<PivotCacheRecord> {
+        None
+    }
+
+    fn pivot_cache_record_content(
+        &mut self,
+        _node: &PivotCacheRecordContent,
+    ) -> Option<PivotCacheRecordContent> {
+        None
+    }
+
+    fn pivot_cache_record_content_items(
+        &mut self,
+        _node: &PivotCacheRecordContent,
+    ) -> Option<Vec<PivotCacheRecordContent>> {
+        None
+    }
+
+    fn pivot_cache_records(&mut self, _node: &PivotCacheRecords) -> Option<PivotCacheRecords> {
+        None
+    }
+
+    fn pivot_cache_source_description(
+        &mut self,
+        _node: &PivotCacheSourceDescription,
+    ) -> Option<PivotCacheSourceDescription> {
+        None
+    }
+
+    fn pivot_cache_source_description_content(
+        &mut self,
+        _node: &PivotCacheSourceDescriptionContent,
+    ) -> Option<PivotCacheSourceDescriptionContent> {
+        None
+    }
+
+    fn pivot_caches(&mut self, _node: &PivotCaches) -> Option<PivotCaches> {
+        None
+    }
+
+    fn pivot_chart_format(&mut self, _node: &PivotChartFormat) -> Option<PivotChartFormat> {
+        None
+    }
+
+    fn pivot_chart_formats(&mut self, _node: &PivotChartFormats) -> Option<PivotChartFormats> {
+        None
+    }
+
+    fn pivot_table_advanced_filter(
+        &mut self,
+        _node: &PivotTableAdvancedFilter,
+    ) -> Option<PivotTableAdvancedFilter> {
+        None
+    }
+
+    fn pivot_table_definition(
+        &mut self,
+        _node: &PivotTableDefinition,
+    ) -> Option<PivotTableDefinition> {
+        None
+    }
+
+    fn pivot_table_field(&mut self, _node: &PivotTableField) -> Option<PivotTableField> {
+        None
+    }
+
+    fn pivot_table_field_item(
+        &mut self,
+        _node: &PivotTableFieldItem,
+    ) -> Option<PivotTableFieldItem> {
+        None
+    }
+
+    fn pivot_table_fields(&mut self, _node: &PivotTableFields) -> Option<PivotTableFields> {
+        None
+    }
+
+    fn pivot_table_format(&mut self, _node: &PivotTableFormat) -> Option<PivotTableFormat> {
+        None
+    }
+
+    fn pivot_table_formats(&mut self, _node: &PivotTableFormats) -> Option<PivotTableFormats> {
+        None
+    }
+
+    fn pivot_table_location(&mut self, _node: &PivotTableLocation) -> Option<PivotTableLocation> {
+        None
+    }
+
+    fn pivot_table_olap_hierarchies(
+        &mut self,
+        _node: &PivotTableOLAPHierarchies,
+    ) -> Option<PivotTableOLAPHierarchies> {
+        None
+    }
+
+    fn pivot_table_selection(
+        &mut self,
+        _node: &PivotTableSelection,
+    ) -> Option<PivotTableSelection> {
+        None
+    }
+
+    fn pivot_table_style(&mut self, _node: &PivotTableStyle) -> Option<PivotTableStyle> {
+        None
+    }
+
+    fn print_options(&mut self, _node: &PrintOptions) -> Option<PrintOptions> {
+        None
+    }
+
+    fn protected_range(&mut self, _node: &ProtectedRange) -> Option<ProtectedRange> {
+        None
+    }
+
+    fn protected_ranges(&mut self, _node: &ProtectedRanges) -> Option<ProtectedRanges> {
+        None
+    }
+
+    fn protection_properties(
+        &mut self,
+        _node: &ProtectionProperties,
+    ) -> Option<ProtectionProperties> {
+        None
+    }
+
+    fn query(&mut self, _node: &Query) -> Option<Query> {
+        None
+    }
+
+    fn query_parameters(&mut self, _node: &QueryParameters) -> Option<QueryParameters> {
+        None
+    }
+
+    fn query_table(&mut self, _node: &QueryTable) -> Option<QueryTable> {
+        None
+    }
+
+    fn query_table_field(&mut self, _node: &QueryTableField) -> Option<QueryTableField> {
+        None
+    }
+
+    fn query_table_fields(&mut self, _node: &QueryTableFields) -> Option<QueryTableFields> {
+        None
+    }
+
+    fn query_table_refresh_information(
+        &mut self,
+        _node: &QueryTableRefreshInformation,
+    ) -> Option<QueryTableRefreshInformation> {
+        None
+    }
+
+    fn range_grouping_properties(
+        &mut self,
+        _node: &RangeGroupingProperties,
+    ) -> Option<RangeGroupingProperties> {
+        None
+    }
+
+    fn range_set(&mut self, _node: &RangeSet) -> Option<RangeSet> {
+        None
+    }
+
+    fn range_sets(&mut self, _node: &RangeSets) -> Option<RangeSets> {
+        None
+    }
+
+    fn reference(&mut self, _node: &Reference) -> Option<Reference> {
+        None
+    }
+
+    fn references(&mut self, _node: &References) -> Option<References> {
+        None
+    }
+
+    fn references_tr(&mut self, _node: &ReferencesTr) -> Option<ReferencesTr> {
+        None
+    }
+
+    fn reviewed(&mut self, _node: &Reviewed) -> Option<Reviewed> {
+        None
+    }
+
+    fn reviewed_list(&mut self, _node: &ReviewedList) -> Option<ReviewedList> {
+        None
+    }
+
+    fn revision_auto_format(&mut self, _node: &RevisionAutoFormat) -> Option<RevisionAutoFormat> {
+        None
+    }
+
+    fn revision_cell_change(&mut self, _node: &RevisionCellChange) -> Option<RevisionCellChange> {
+        None
+    }
+
+    fn revision_cell_comment(
+        &mut self,
+        _node: &RevisionCellComment,
+    ) -> Option<RevisionCellComment> {
+        None
+    }
+
+    fn revision_cell_move(&mut self, _node: &RevisionCellMove) -> Option<RevisionCellMove> {
+        None
+    }
+
+    fn revision_custom_view(&mut self, _node: &RevisionCustomView) -> Option<RevisionCustomView> {
+        None
+    }
+
+    fn revision_defined_name(
+        &mut self,
+        _node: &RevisionDefinedName,
+    ) -> Option<RevisionDefinedName> {
+        None
+    }
+
+    fn revision_format(&mut self, _node: &RevisionFormat) -> Option<RevisionFormat> {
+        None
+    }
+
+    fn revision_headers(&mut self, _node: &RevisionHeaders) -> Option<RevisionHeaders> {
+        None
+    }
+
+    fn revision_insert_sheet(
+        &mut self,
+        _node: &RevisionInsertSheet,
+    ) -> Option<RevisionInsertSheet> {
+        None
+    }
+
+    fn revision_merge_conflict(
+        &mut self,
+        _node: &RevisionMergeConflict,
+    ) -> Option<RevisionMergeConflict> {
+        None
+    }
+
+    fn revision_query_table(&mut self, _node: &RevisionQueryTable) -> Option<RevisionQueryTable> {
+        None
+    }
+
+    fn revision_row_column_insert_delete(
+        &mut self,
+        _node: &RevisionRowColumnInsertDelete,
+    ) -> Option<RevisionRowColumnInsertDelete> {
+        None
+    }
+
+    fn revision_sheet_name(&mut self, _node: &RevisionSheetName) -> Option<RevisionSheetName> {
+        None
+    }
+
+    fn revisions(&mut self, _node: &Revisions) -> Option<Revisions> {
+        None
+    }
+
+    fn revisions_content(&mut self, _node: &RevisionsContent) -> Option<RevisionsContent> {
+        None
+    }
+
+    fn revisions_content_items(
+        &mut self,
+        _node: &RevisionsContent,
+    ) -> Option<Vec<RevisionsContent>> {
+        None
+    }
+
+    fn rgb_color(&mut self, _node: &RGBColor) -> Option<RGBColor> {
+        None
+    }
+
+    fn rich_text_inline(&mut self, _node: &RichTextInline) -> Option<RichTextInline> {
+        None
+    }
+
+    fn rich_text_run(&mut self, _node: &RichTextRun) -> Option<RichTextRun> {
+        None
+    }
+
+    fn row(&mut self, _node: &Row) -> Option<Row> {
+        None
+    }
+
+    fn row_breaks(&mut self, _node: &RowBreaks) -> Option<RowBreaks> {
+        None
+    }
+
+    fn row_external_row(&mut self, _node: &RowExternalRow) -> Option<RowExternalRow> {
+        None
+    }
+
+    fn row_fields(&mut self, _node: &RowFields) -> Option<RowFields> {
+        None
+    }
+
+    fn row_items(&mut self, _node: &RowItems) -> Option<RowItems> {
+        None
+    }
+
+    fn row_items_i(&mut self, _node: &RowItemsI) -> Option<RowItemsI> {
+        None
+    }
+
+    fn row_olap_hierarchies(&mut self, _node: &RowOLAPHierarchies) -> Option<RowOLAPHierarchies> {
+        None
+    }
+
+    fn row_olap_hierarchy_references(
+        &mut self,
+        _node: &RowOLAPHierarchyReferences,
+    ) -> Option<RowOLAPHierarchyReferences> {
+        None
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> Option<RunProperties> {
+        None
+    }
+
+    fn run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<RunPropertiesContent> {
+        None
+    }
+
+    fn run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<Vec<RunPropertiesContent>> {
+        None
+    }
+
+    fn scenario(&mut self, _node: &Scenario) -> Option<Scenario> {
+        None
+    }
+
+    fn scenarios(&mut self, _node: &Scenarios) -> Option<Scenarios> {
+        None
+    }
+
+    fn scheme(&mut self, _node: &Scheme) -> Option<Scheme> {
+        None
+    }
+
+    fn security_descriptor(&mut self, _node: &SecurityDescriptor) -> Option<SecurityDescriptor> {
+        None
+    }
+
+    fn selection(&mut self, _node: &Selection) -> Option<Selection> {
+        None
+    }
+
+    fn server_format(&mut self, _node: &ServerFormat) -> Option<ServerFormat> {
+        None
+    }
+
+    fn server_formats(&mut self, _node: &ServerFormats) -> Option<ServerFormats> {
+        None
+    }
+
+    fn set_mdx_metadata(&mut self, _node: &SetMDXMetadata) -> Option<SetMDXMetadata> {
+        None
+    }
+
+    fn sets(&mut self, _node: &Sets) -> Option<Sets> {
+        None
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> Option<Shadow> {
+        None
+    }
+
+    fn shared_items(&mut self, _node: &SharedItems) -> Option<SharedItems> {
+        None
+    }
+
+    fn shared_items_index(&mut self, _node: &SharedItemsIndex) -> Option<SharedItemsIndex> {
+        None
+    }
+
+    fn shared_string_table(&mut self, _node: &SharedStringTable) -> Option<SharedStringTable> {
+        None
+    }
+
+    fn sheet_calculation_properties(
+        &mut self,
+        _node: &SheetCalculationProperties,
+    ) -> Option<SheetCalculationProperties> {
+        None
+    }
+
+    fn sheet_data(&mut self, _node: &SheetData) -> Option<SheetData> {
+        None
+    }
+
+    fn sheet_format_properties(
+        &mut self,
+        _node: &SheetFormatProperties,
+    ) -> Option<SheetFormatProperties> {
+        None
+    }
+
+    fn sheet_id(&mut self, _node: &SheetId) -> Option<SheetId> {
+        None
+    }
+
+    fn sheet_id_map(&mut self, _node: &SheetIdMap) -> Option<SheetIdMap> {
+        None
+    }
+
+    fn sheet_information(&mut self, _node: &SheetInformation) -> Option<SheetInformation> {
+        None
+    }
+
+    fn sheet_name(&mut self, _node: &SheetName) -> Option<SheetName> {
+        None
+    }
+
+    fn sheet_properties(&mut self, _node: &SheetProperties) -> Option<SheetProperties> {
+        None
+    }
+
+    fn sheet_protection_options(
+        &mut self,
+        _node: &SheetProtectionOptions,
+    ) -> Option<SheetProtectionOptions> {
+        None
+    }
+
+    fn sheet_tab_color(&mut self, _node: &SheetTabColor) -> Option<SheetTabColor> {
+        None
+    }
+
+    fn sheet_views(&mut self, _node: &SheetViews) -> Option<SheetViews> {
+        None
+    }
+
+    fn sheets(&mut self, _node: &Sheets) -> Option<Sheets> {
+        None
+    }
+
+    fn single_cells(&mut self, _node: &SingleCells) -> Option<SingleCells> {
+        None
+    }
+
+    fn smart_tag_properties_cell_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesCellSmartTagPr,
+    ) -> Option<SmartTagPropertiesCellSmartTagPr> {
+        None
+    }
+
+    fn smart_tag_properties_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesSmartTagPr,
+    ) -> Option<SmartTagPropertiesSmartTagPr> {
+        None
+    }
+
+    fn smart_tag_type(&mut self, _node: &SmartTagType) -> Option<SmartTagType> {
+        None
+    }
+
+    fn smart_tag_types(&mut self, _node: &SmartTagTypes) -> Option<SmartTagTypes> {
+        None
+    }
+
+    fn smart_tags(&mut self, _node: &SmartTags) -> Option<SmartTags> {
+        None
+    }
+
+    fn sort_by_tuple(&mut self, _node: &SortByTuple) -> Option<SortByTuple> {
+        None
+    }
+
+    fn sort_condition(&mut self, _node: &SortCondition) -> Option<SortCondition> {
+        None
+    }
+
+    fn sort_state(&mut self, _node: &SortState) -> Option<SortState> {
+        None
+    }
+
+    fn strike_through(&mut self, _node: &StrikeThrough) -> Option<StrikeThrough> {
+        None
+    }
+
+    fn string_item(&mut self, _node: &StringItem) -> Option<StringItem> {
+        None
+    }
+
+    fn strings_in_subtopic(&mut self, _node: &StringsInSubtopic) -> Option<StringsInSubtopic> {
+        None
+    }
+
+    fn style_sheet(&mut self, _node: &StyleSheet) -> Option<StyleSheet> {
+        None
+    }
+
+    fn supporting_workbook_sheet_names(
+        &mut self,
+        _node: &SupportingWorkbookSheetNames,
+    ) -> Option<SupportingWorkbookSheetNames> {
+        None
+    }
+
+    fn table(&mut self, _node: &Table) -> Option<Table> {
+        None
+    }
+
+    fn table_column(&mut self, _node: &TableColumn) -> Option<TableColumn> {
+        None
+    }
+
+    fn table_columns(&mut self, _node: &TableColumns) -> Option<TableColumns> {
+        None
+    }
+
+    fn table_part(&mut self, _node: &TablePart) -> Option<TablePart> {
+        None
+    }
+
+    fn table_parts(&mut self, _node: &TableParts) -> Option<TableParts> {
+        None
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> Option<TableProperties> {
+        None
+    }
+
+    fn table_style(&mut self, _node: &TableStyle) -> Option<TableStyle> {
+        None
+    }
+
+    fn table_style_table_style_element(
+        &mut self,
+        _node: &TableStyleTableStyleElement,
+    ) -> Option<TableStyleTableStyleElement> {
+        None
+    }
+
+    fn table_style_table_style_info(
+        &mut self,
+        _node: &TableStyleTableStyleInfo,
+    ) -> Option<TableStyleTableStyleInfo> {
+        None
+    }
+
+    fn table_styles(&mut self, _node: &TableStyles) -> Option<TableStyles> {
+        None
+    }
+
+    fn tables(&mut self, _node: &Tables) -> Option<Tables> {
+        None
+    }
+
+    fn tables_content(&mut self, _node: &TablesContent) -> Option<TablesContent> {
+        None
+    }
+
+    fn tables_content_items(&mut self, _node: &TablesContent) -> Option<Vec<TablesContent>> {
+        None
+    }
+
+    fn text(&mut self, _node: &Text) -> Option<Text> {
+        None
+    }
+
+    fn text_import_field_settings(
+        &mut self,
+        _node: &TextImportFieldSettings,
+    ) -> Option<TextImportFieldSettings> {
+        None
+    }
+
+    fn text_import_settings(&mut self, _node: &TextImportSettings) -> Option<TextImportSettings> {
+        None
+    }
+
+    fn top10(&mut self, _node: &Top10) -> Option<Top10> {
+        None
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
+        None
+    }
+
+    fn topic(&mut self, _node: &Topic) -> Option<Topic> {
+        None
+    }
+
+    fn totals_row_formula(&mut self, _node: &TotalsRowFormula) -> Option<TotalsRowFormula> {
+        None
+    }
+
+    fn trailing_edge_border_end(
+        &mut self,
+        _node: &TrailingEdgeBorderEnd,
+    ) -> Option<TrailingEdgeBorderEnd> {
+        None
+    }
+
+    fn trailing_edge_border_right(
+        &mut self,
+        _node: &TrailingEdgeBorderRight,
+    ) -> Option<TrailingEdgeBorderRight> {
+        None
+    }
+
+    fn tuple(&mut self, _node: &Tuple) -> Option<Tuple> {
+        None
+    }
+
+    fn tuple_cache(&mut self, _node: &TupleCache) -> Option<TupleCache> {
+        None
+    }
+
+    fn tuple_mdx_metadata(&mut self, _node: &TupleMDXMetadata) -> Option<TupleMDXMetadata> {
+        None
+    }
+
+    fn tuples(&mut self, _node: &Tuples) -> Option<Tuples> {
+        None
+    }
+
+    fn underline(&mut self, _node: &Underline) -> Option<Underline> {
+        None
+    }
+
+    fn undo(&mut self, _node: &Undo) -> Option<Undo> {
+        None
+    }
+
+    fn user_information(&mut self, _node: &UserInformation) -> Option<UserInformation> {
+        None
+    }
+
+    fn user_list(&mut self, _node: &UserList) -> Option<UserList> {
+        None
+    }
+
+    fn value(&mut self, _node: &Value) -> Option<Value> {
+        None
+    }
+
+    fn value_metadata(&mut self, _node: &ValueMetadata) -> Option<ValueMetadata> {
+        None
+    }
+
+    fn vertical_alignment(&mut self, _node: &VerticalAlignment) -> Option<VerticalAlignment> {
+        None
+    }
+
+    fn vertical_inner_border(
+        &mut self,
+        _node: &VerticalInnerBorder,
+    ) -> Option<VerticalInnerBorder> {
+        None
+    }
+
+    fn vertical_page_breaks(&mut self, _node: &VerticalPageBreaks) -> Option<VerticalPageBreaks> {
+        None
+    }
+
+    fn view_pane(&mut self, _node: &ViewPane) -> Option<ViewPane> {
+        None
+    }
+
+    fn volatile_dependency_type(
+        &mut self,
+        _node: &VolatileDependencyType,
+    ) -> Option<VolatileDependencyType> {
+        None
+    }
+
+    fn volatile_dependency_types(
+        &mut self,
+        _node: &VolatileDependencyTypes,
+    ) -> Option<VolatileDependencyTypes> {
+        None
+    }
+
+    fn web_publish_objects(&mut self, _node: &WebPublishObjects) -> Option<WebPublishObjects> {
+        None
+    }
+
+    fn web_publishing_item(&mut self, _node: &WebPublishingItem) -> Option<WebPublishingItem> {
+        None
+    }
+
+    fn web_publishing_items(&mut self, _node: &WebPublishingItems) -> Option<WebPublishingItems> {
+        None
+    }
+
+    fn web_publishing_object(
+        &mut self,
+        _node: &WebPublishingObject,
+    ) -> Option<WebPublishingObject> {
+        None
+    }
+
+    fn web_publishing_properties(
+        &mut self,
+        _node: &WebPublishingProperties,
+    ) -> Option<WebPublishingProperties> {
+        None
+    }
+
+    fn web_query_properties(&mut self, _node: &WebQueryProperties) -> Option<WebQueryProperties> {
+        None
+    }
+
+    fn workbook(&mut self, _node: &Workbook) -> Option<Workbook> {
+        None
+    }
+
+    fn workbook_properties(&mut self, _node: &WorkbookProperties) -> Option<WorkbookProperties> {
+        None
+    }
+
+    fn workbook_protection(&mut self, _node: &WorkbookProtection) -> Option<WorkbookProtection> {
+        None
+    }
+
+    fn workbook_view(&mut self, _node: &WorkbookView) -> Option<WorkbookView> {
+        None
+    }
+
+    fn workbook_views(&mut self, _node: &WorkbookViews) -> Option<WorkbookViews> {
+        None
+    }
+
+    fn worksheet(&mut self, _node: &Worksheet) -> Option<Worksheet> {
+        None
+    }
+
+    fn worksheet_dimensions(&mut self, _node: &WorksheetDimensions) -> Option<WorksheetDimensions> {
+        None
+    }
+
+    fn worksheet_pivot_cache_source(
+        &mut self,
+        _node: &WorksheetPivotCacheSource,
+    ) -> Option<WorksheetPivotCacheSource> {
+        None
+    }
+
+    fn worksheet_view(&mut self, _node: &WorksheetView) -> Option<WorksheetView> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alignment(
+        &mut self,
+        _node: &Alignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_author(&mut self, _node: &Author, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_authors(&mut self, _node: &Authors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_filter_column(
+        &mut self,
+        _node: &AutoFilterColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_filter_column_content(
+        &mut self,
+        _node: &AutoFilterColumnContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_filter_settings(
+        &mut self,
+        _node: &AutoFilterSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_sort_scope(
+        &mut self,
+        _node: &AutoSortScope,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_color(
+        &mut self,
+        _node: &BackgroundColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_image(
+        &mut self,
+        _node: &BackgroundImage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bold(&mut self, _node: &Bold, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_boolean(&mut self, _node: &Boolean, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border(&mut self, _node: &Border, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_borders(&mut self, _node: &Borders, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_border(
+        &mut self,
+        _node: &BottomBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_break(&mut self, _node: &Break, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cache_item(
+        &mut self,
+        _node: &CacheItemContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cache_item_items(
+        &mut self,
+        _node: &CacheItemContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cached_worksheet_data(
+        &mut self,
+        _node: &CachedWorksheetData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_column_formula(
+        &mut self,
+        _node: &CalculatedColumnFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_item(
+        &mut self,
+        _node: &CalculatedItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_items(
+        &mut self,
+        _node: &CalculatedItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_member(
+        &mut self,
+        _node: &CalculatedMember,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculated_members(
+        &mut self,
+        _node: &CalculatedMembers,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculation_chain_info(
+        &mut self,
+        _node: &CalculationChainInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_calculation_properties(
+        &mut self,
+        _node: &CalculationProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell(&mut self, _node: &Cell, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_calc_cell(
+        &mut self,
+        _node: &CellCalcCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_formats(
+        &mut self,
+        _node: &CellFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_metadata(
+        &mut self,
+        _node: &CellMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_properties(
+        &mut self,
+        _node: &CellProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_smart_tag(
+        &mut self,
+        _node: &CellSmartTag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_smart_tags(
+        &mut self,
+        _node: &CellSmartTags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_style(
+        &mut self,
+        _node: &CellStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_styles(
+        &mut self,
+        _node: &CellStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_value(
+        &mut self,
+        _node: &CellValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_watch_item(
+        &mut self,
+        _node: &CellWatchItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell_watch_items(
+        &mut self,
+        _node: &CellWatchItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_set(
+        &mut self,
+        _node: &CharacterSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_value(
+        &mut self,
+        _node: &CharacterValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_value_x_string_element(
+        &mut self,
+        _node: &CharacterValueXStringElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet(
+        &mut self,
+        _node: &ChartSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet_page_setup(
+        &mut self,
+        _node: &ChartSheetPageSetup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet_properties(
+        &mut self,
+        _node: &ChartSheetProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet_protection(
+        &mut self,
+        _node: &ChartSheetProtection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet_view(
+        &mut self,
+        _node: &ChartSheetView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_sheet_views(
+        &mut self,
+        _node: &ChartSheetViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_filter_criteria(
+        &mut self,
+        _node: &ColorFilterCriteria,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_indexes(
+        &mut self,
+        _node: &ColorIndexes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_scale(
+        &mut self,
+        _node: &ColorScale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_colors(&mut self, _node: &Colors, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_fields(
+        &mut self,
+        _node: &ColumnFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_information(
+        &mut self,
+        _node: &ColumnInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_items(
+        &mut self,
+        _node: &ColumnItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_olap_hierarchies(
+        &mut self,
+        _node: &ColumnOLAPHierarchies,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_olap_hierarchy_references(
+        &mut self,
+        _node: &ColumnOLAPHierarchyReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_width_formatting(
+        &mut self,
+        _node: &ColumnWidthFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_xml_properties(
+        &mut self,
+        _node: &ColumnXMLProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_properties(
+        &mut self,
+        _node: &CommentProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment_text(
+        &mut self,
+        _node: &CommentText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments(
+        &mut self,
+        _node: &Comments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_condense(
+        &mut self,
+        _node: &Condense,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conditional_format_value_object(
+        &mut self,
+        _node: &ConditionalFormatValueObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conditional_formats(
+        &mut self,
+        _node: &ConditionalFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conditional_formatting(
+        &mut self,
+        _node: &ConditionalFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conditional_formatting_conditional_format(
+        &mut self,
+        _node: &ConditionalFormattingConditionalFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conditional_formatting_rule(
+        &mut self,
+        _node: &ConditionalFormattingRule,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection(
+        &mut self,
+        _node: &Connection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connections(
+        &mut self,
+        _node: &Connections,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_consolidation_source(
+        &mut self,
+        _node: &ConsolidationSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_chart_sheet_view(
+        &mut self,
+        _node: &CustomChartSheetView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_chart_sheet_views(
+        &mut self,
+        _node: &CustomChartSheetViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_filter_criteria(
+        &mut self,
+        _node: &CustomFilterCriteria,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_filters(
+        &mut self,
+        _node: &CustomFilters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_properties(
+        &mut self,
+        _node: &CustomProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_property(
+        &mut self,
+        _node: &CustomProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_sheet_view(
+        &mut self,
+        _node: &CustomSheetView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_sheet_views(
+        &mut self,
+        _node: &CustomSheetViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_workbook_view(
+        &mut self,
+        _node: &CustomWorkbookView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_workbook_views(
+        &mut self,
+        _node: &CustomWorkbookViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_bar(
+        &mut self,
+        _node: &DataBar,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_bar_color(
+        &mut self,
+        _node: &DataBarColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_consolidate(
+        &mut self,
+        _node: &DataConsolidate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_consolidation_reference(
+        &mut self,
+        _node: &DataConsolidationReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_consolidation_references(
+        &mut self,
+        _node: &DataConsolidationReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_field_item(
+        &mut self,
+        _node: &DataFieldItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_fields(
+        &mut self,
+        _node: &DataFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_validation(
+        &mut self,
+        _node: &DataValidation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_validations(
+        &mut self,
+        _node: &DataValidations,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_database_properties(
+        &mut self,
+        _node: &DatabaseProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_grouping(
+        &mut self,
+        _node: &DateGrouping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date_time(
+        &mut self,
+        _node: &DateTime,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dde_connection(
+        &mut self,
+        _node: &DDEConnection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dde_item_definition(
+        &mut self,
+        _node: &DDEItemDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dde_items_collection(
+        &mut self,
+        _node: &DDEItemsCollection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dde_link_value(
+        &mut self,
+        _node: &DDELinkValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dde_name_values(
+        &mut self,
+        _node: &DDENameValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_defined_name(
+        &mut self,
+        _node: &DefinedName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_defined_name_external_defined_name(
+        &mut self,
+        _node: &DefinedNameExternalDefinedName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_defined_names(
+        &mut self,
+        _node: &DefinedNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_field(
+        &mut self,
+        _node: &DeletedField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_deleted_fields(
+        &mut self,
+        _node: &DeletedFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagonal(
+        &mut self,
+        _node: &Diagonal,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dialog_sheet(
+        &mut self,
+        _node: &DialogSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_discrete_grouping_properties(
+        &mut self,
+        _node: &DiscreteGroupingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing(&mut self, _node: &Drawing, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drawing_reference_in_header_footer(
+        &mut self,
+        _node: &DrawingReferenceInHeaderFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dynamic_filter(
+        &mut self,
+        _node: &DynamicFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_control(
+        &mut self,
+        _node: &EmbeddedControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_control_properties(
+        &mut self,
+        _node: &EmbeddedControlProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_controls(
+        &mut self,
+        _node: &EmbeddedControls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object(
+        &mut self,
+        _node: &EmbeddedObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_properties(
+        &mut self,
+        _node: &EmbeddedObjectProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_object_size(
+        &mut self,
+        _node: &EmbeddedObjectSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embedded_objects(
+        &mut self,
+        _node: &EmbeddedObjects,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entries(&mut self, _node: &Entries, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entries_content(
+        &mut self,
+        _node: &EntriesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entries_content_items(
+        &mut self,
+        _node: &EntriesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_error_value(
+        &mut self,
+        _node: &ErrorValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_page_footer(
+        &mut self,
+        _node: &EvenPageFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_page_header(
+        &mut self,
+        _node: &EvenPageHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extend(&mut self, _node: &Extend, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension(
+        &mut self,
+        _node: &Extension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_cell_data(
+        &mut self,
+        _node: &ExternalCellData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_reference(
+        &mut self,
+        _node: &ExternalReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_reference_content(
+        &mut self,
+        _node: &ExternalReferenceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_reference_external_link(
+        &mut self,
+        _node: &ExternalReferenceExternalLink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_references(
+        &mut self,
+        _node: &ExternalReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_sheet_data_set(
+        &mut self,
+        _node: &ExternalSheetDataSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_workbook(
+        &mut self,
+        _node: &ExternalWorkbook,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_field(&mut self, _node: &Field, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_field_group_properties(
+        &mut self,
+        _node: &FieldGroupProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_field_items(
+        &mut self,
+        _node: &FieldItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fields(&mut self, _node: &Fields, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fields_usage(
+        &mut self,
+        _node: &FieldsUsage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_file_recovery_properties(
+        &mut self,
+        _node: &FileRecoveryProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_file_sharing(
+        &mut self,
+        _node: &FileSharing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_file_version(
+        &mut self,
+        _node: &FileVersion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill(&mut self, _node: &Fill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_content(
+        &mut self,
+        _node: &FillContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fills(&mut self, _node: &Fills, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filter_criteria(
+        &mut self,
+        _node: &FilterCriteria,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filters(&mut self, _node: &Filters, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_page_footer(
+        &mut self,
+        _node: &FirstPageFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_page_header(
+        &mut self,
+        _node: &FirstPageHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font(&mut self, _node: &Font, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_content(
+        &mut self,
+        _node: &FontContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_content_items(
+        &mut self,
+        _node: &FontContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_family(
+        &mut self,
+        _node: &FontFamily,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_family_int_property(
+        &mut self,
+        _node: &FontFamilyIntProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_name(
+        &mut self,
+        _node: &FontName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_r_font(
+        &mut self,
+        _node: &FontRFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_size(
+        &mut self,
+        _node: &FontSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fonts(&mut self, _node: &Fonts, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_foreground_color(
+        &mut self,
+        _node: &ForegroundColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_format(&mut self, _node: &Format, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formats(&mut self, _node: &Formats, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formatting(
+        &mut self,
+        _node: &Formatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formatting_records(
+        &mut self,
+        _node: &FormattingRecords,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula(&mut self, _node: &Formula, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula1(
+        &mut self,
+        _node: &Formula1,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula2(
+        &mut self,
+        _node: &Formula2,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula_f(
+        &mut self,
+        _node: &FormulaF,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_function_group(
+        &mut self,
+        _node: &FunctionGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_function_groups(
+        &mut self,
+        _node: &FunctionGroups,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_future_feature_data_storage_area(
+        &mut self,
+        _node: &FutureFeatureDataStorageArea,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_future_metadata(
+        &mut self,
+        _node: &FutureMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_future_metadata_block(
+        &mut self,
+        _node: &FutureMetadataBlock,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_generic_object_link_connection(
+        &mut self,
+        _node: &GenericObjectLinkConnection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient(
+        &mut self,
+        _node: &Gradient,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_stop(
+        &mut self,
+        _node: &GradientStop,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header(&mut self, _node: &Header, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_footer_settings(
+        &mut self,
+        _node: &HeaderFooterSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontal_inner_borders(
+        &mut self,
+        _node: &HorizontalInnerBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink(
+        &mut self,
+        _node: &Hyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlinks(
+        &mut self,
+        _node: &Hyperlinks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_icon_filter(
+        &mut self,
+        _node: &IconFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_icon_set(
+        &mut self,
+        _node: &IconSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignored_error(
+        &mut self,
+        _node: &IgnoredError,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignored_errors(
+        &mut self,
+        _node: &IgnoredErrors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_input_cells(
+        &mut self,
+        _node: &InputCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_italic(&mut self, _node: &Italic, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_kpimdx_metadata(
+        &mut self,
+        _node: &KPIMDXMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_leading_edge_border_left(
+        &mut self,
+        _node: &LeadingEdgeBorderLeft,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_leading_edge_border_start(
+        &mut self,
+        _node: &LeadingEdgeBorderStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legacy_drawing_reference(
+        &mut self,
+        _node: &LegacyDrawingReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legacy_drawing_reference_in_header_footer(
+        &mut self,
+        _node: &LegacyDrawingReferenceInHeaderFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_comments(
+        &mut self,
+        _node: &ListOfComments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_main(&mut self, _node: &Main, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mdx_metadata_information(
+        &mut self,
+        _node: &MDXMetadataInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mdx_metadata_record(
+        &mut self,
+        _node: &MDXMetadataRecord,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_member(&mut self, _node: &Member, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_member_properties_map(
+        &mut self,
+        _node: &MemberPropertiesMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_member_property_index(
+        &mut self,
+        _node: &MemberPropertyIndex,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_member_property_mdx_metadata(
+        &mut self,
+        _node: &MemberPropertyMDXMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_member_unique_name_index(
+        &mut self,
+        _node: &MemberUniqueNameIndex,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_members(&mut self, _node: &Members, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merge_cells(
+        &mut self,
+        _node: &MergeCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_merged_cell(
+        &mut self,
+        _node: &MergedCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata(
+        &mut self,
+        _node: &Metadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata_block(
+        &mut self,
+        _node: &MetadataBlock,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata_record(
+        &mut self,
+        _node: &MetadataRecord,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata_string_store(
+        &mut self,
+        _node: &MetadataStringStore,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata_type_information(
+        &mut self,
+        _node: &MetadataTypeInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_metadata_types_collection(
+        &mut self,
+        _node: &MetadataTypesCollection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mru_colors(
+        &mut self,
+        _node: &MRUColors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_multidimensional_expression_metadata(
+        &mut self,
+        _node: &MultidimensionalExpressionMetadataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_named_links(
+        &mut self,
+        _node: &NamedLinks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nested_revision(
+        &mut self,
+        _node: &NestedRevisionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nested_revision_items(
+        &mut self,
+        _node: &NestedRevisionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_new_cell_data(
+        &mut self,
+        _node: &NewCellData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_new_formatting_information(
+        &mut self,
+        _node: &NewFormattingInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_value(
+        &mut self,
+        _node: &NoValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_value_table_missing(
+        &mut self,
+        _node: &NoValueTableMissing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_format(
+        &mut self,
+        _node: &NumberFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number_formats(
+        &mut self,
+        _node: &NumberFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numeric(&mut self, _node: &Numeric, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_cell_anchor(
+        &mut self,
+        _node: &ObjectCellAnchor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_link_item(
+        &mut self,
+        _node: &ObjectLinkItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_link_items(
+        &mut self,
+        _node: &ObjectLinkItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_header(
+        &mut self,
+        _node: &OddHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_page_footer(
+        &mut self,
+        _node: &OddPageFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_dimension(
+        &mut self,
+        _node: &OLAPDimension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_dimensions(
+        &mut self,
+        _node: &OLAPDimensions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_group(
+        &mut self,
+        _node: &OLAPGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_group_items(
+        &mut self,
+        _node: &OLAPGroupItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_group_member(
+        &mut self,
+        _node: &OLAPGroupMember,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_group_members(
+        &mut self,
+        _node: &OLAPGroupMembers,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_grouping_levels_group_level(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_grouping_levels_group_levels(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_hierarchy(
+        &mut self,
+        _node: &OLAPHierarchy,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_level_groups(
+        &mut self,
+        _node: &OLAPLevelGroups,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_measure_group_map(
+        &mut self,
+        _node: &OLAPMeasureGroupMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_measure_group_maps(
+        &mut self,
+        _node: &OLAPMeasureGroupMaps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_measure_group_measure_group(
+        &mut self,
+        _node: &OLAPMeasureGroupMeasureGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_measure_groups(
+        &mut self,
+        _node: &OLAPMeasureGroups,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_member_properties(
+        &mut self,
+        _node: &OLAPMemberProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_member_property(
+        &mut self,
+        _node: &OLAPMemberProperty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_properties(
+        &mut self,
+        _node: &OLAPProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_query_cache(
+        &mut self,
+        _node: &OLAPQueryCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olap_set(
+        &mut self,
+        _node: &OLAPSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olapkp_is(
+        &mut self,
+        _node: &OLAPKPIs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_olapkpi(&mut self, _node: &OLAPKPI, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_old_cell_data(
+        &mut self,
+        _node: &OldCellData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_old_formatting_information(
+        &mut self,
+        _node: &OldFormattingInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_old_formula(
+        &mut self,
+        _node: &OldFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outline(&mut self, _node: &Outline, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outline_properties(
+        &mut self,
+        _node: &OutlineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_field(
+        &mut self,
+        _node: &PageField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_field_items(
+        &mut self,
+        _node: &PageFieldItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_item(
+        &mut self,
+        _node: &PageItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_item_values(
+        &mut self,
+        _node: &PageItemValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_items(
+        &mut self,
+        _node: &PageItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_margins(
+        &mut self,
+        _node: &PageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_setup_properties(
+        &mut self,
+        _node: &PageSetupProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_setup_settings(
+        &mut self,
+        _node: &PageSetupSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parameter_properties(
+        &mut self,
+        _node: &ParameterProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pattern(&mut self, _node: &Pattern, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_properties(
+        &mut self,
+        _node: &PhoneticProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phonetic_run(
+        &mut self,
+        _node: &PhoneticRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_area(
+        &mut self,
+        _node: &PivotArea,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_areas(
+        &mut self,
+        _node: &PivotAreas,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache(
+        &mut self,
+        _node: &PivotCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_definition(
+        &mut self,
+        _node: &PivotCacheDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_field(
+        &mut self,
+        _node: &PivotCacheField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_field_id(
+        &mut self,
+        _node: &PivotCacheFieldId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_fields(
+        &mut self,
+        _node: &PivotCacheFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_hierarchies(
+        &mut self,
+        _node: &PivotCacheHierarchies,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_hierarchy(
+        &mut self,
+        _node: &PivotCacheHierarchy,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_record(
+        &mut self,
+        _node: &PivotCacheRecord,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_record_content(
+        &mut self,
+        _node: &PivotCacheRecordContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_record_content_items(
+        &mut self,
+        _node: &PivotCacheRecordContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_records(
+        &mut self,
+        _node: &PivotCacheRecords,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_source_description(
+        &mut self,
+        _node: &PivotCacheSourceDescription,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_cache_source_description_content(
+        &mut self,
+        _node: &PivotCacheSourceDescriptionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_caches(
+        &mut self,
+        _node: &PivotCaches,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_chart_format(
+        &mut self,
+        _node: &PivotChartFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_chart_formats(
+        &mut self,
+        _node: &PivotChartFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_advanced_filter(
+        &mut self,
+        _node: &PivotTableAdvancedFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_definition(
+        &mut self,
+        _node: &PivotTableDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_field(
+        &mut self,
+        _node: &PivotTableField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_field_item(
+        &mut self,
+        _node: &PivotTableFieldItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_fields(
+        &mut self,
+        _node: &PivotTableFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_format(
+        &mut self,
+        _node: &PivotTableFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_formats(
+        &mut self,
+        _node: &PivotTableFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_location(
+        &mut self,
+        _node: &PivotTableLocation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_olap_hierarchies(
+        &mut self,
+        _node: &PivotTableOLAPHierarchies,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_selection(
+        &mut self,
+        _node: &PivotTableSelection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_style(
+        &mut self,
+        _node: &PivotTableStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_options(
+        &mut self,
+        _node: &PrintOptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_protected_range(
+        &mut self,
+        _node: &ProtectedRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_protected_ranges(
+        &mut self,
+        _node: &ProtectedRanges,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_protection_properties(
+        &mut self,
+        _node: &ProtectionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query(&mut self, _node: &Query, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_parameters(
+        &mut self,
+        _node: &QueryParameters,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_table(
+        &mut self,
+        _node: &QueryTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_table_field(
+        &mut self,
+        _node: &QueryTableField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_table_fields(
+        &mut self,
+        _node: &QueryTableFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_query_table_refresh_information(
+        &mut self,
+        _node: &QueryTableRefreshInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_grouping_properties(
+        &mut self,
+        _node: &RangeGroupingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_set(
+        &mut self,
+        _node: &RangeSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_range_sets(
+        &mut self,
+        _node: &RangeSets,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference(
+        &mut self,
+        _node: &Reference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_references(
+        &mut self,
+        _node: &References,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_references_tr(
+        &mut self,
+        _node: &ReferencesTr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reviewed(
+        &mut self,
+        _node: &Reviewed,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reviewed_list(
+        &mut self,
+        _node: &ReviewedList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_auto_format(
+        &mut self,
+        _node: &RevisionAutoFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_cell_change(
+        &mut self,
+        _node: &RevisionCellChange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_cell_comment(
+        &mut self,
+        _node: &RevisionCellComment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_cell_move(
+        &mut self,
+        _node: &RevisionCellMove,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_custom_view(
+        &mut self,
+        _node: &RevisionCustomView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_defined_name(
+        &mut self,
+        _node: &RevisionDefinedName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_format(
+        &mut self,
+        _node: &RevisionFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_headers(
+        &mut self,
+        _node: &RevisionHeaders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_insert_sheet(
+        &mut self,
+        _node: &RevisionInsertSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_merge_conflict(
+        &mut self,
+        _node: &RevisionMergeConflict,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_query_table(
+        &mut self,
+        _node: &RevisionQueryTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_row_column_insert_delete(
+        &mut self,
+        _node: &RevisionRowColumnInsertDelete,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_sheet_name(
+        &mut self,
+        _node: &RevisionSheetName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revisions(
+        &mut self,
+        _node: &Revisions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revisions_content(
+        &mut self,
+        _node: &RevisionsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revisions_content_items(
+        &mut self,
+        _node: &RevisionsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rgb_color(
+        &mut self,
+        _node: &RGBColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text_inline(
+        &mut self,
+        _node: &RichTextInline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_text_run(
+        &mut self,
+        _node: &RichTextRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row(&mut self, _node: &Row, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_breaks(
+        &mut self,
+        _node: &RowBreaks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_external_row(
+        &mut self,
+        _node: &RowExternalRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_fields(
+        &mut self,
+        _node: &RowFields,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_items(
+        &mut self,
+        _node: &RowItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_items_i(
+        &mut self,
+        _node: &RowItemsI,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_olap_hierarchies(
+        &mut self,
+        _node: &RowOLAPHierarchies,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_olap_hierarchy_references(
+        &mut self,
+        _node: &RowOLAPHierarchyReferences,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties(
+        &mut self,
+        _node: &RunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scenario(
+        &mut self,
+        _node: &Scenario,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scenarios(
+        &mut self,
+        _node: &Scenarios,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scheme(&mut self, _node: &Scheme, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_security_descriptor(
+        &mut self,
+        _node: &SecurityDescriptor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_selection(
+        &mut self,
+        _node: &Selection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_server_format(
+        &mut self,
+        _node: &ServerFormat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_server_formats(
+        &mut self,
+        _node: &ServerFormats,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_mdx_metadata(
+        &mut self,
+        _node: &SetMDXMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sets(&mut self, _node: &Sets, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shadow(&mut self, _node: &Shadow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shared_items(
+        &mut self,
+        _node: &SharedItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shared_items_index(
+        &mut self,
+        _node: &SharedItemsIndex,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shared_string_table(
+        &mut self,
+        _node: &SharedStringTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_calculation_properties(
+        &mut self,
+        _node: &SheetCalculationProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_data(
+        &mut self,
+        _node: &SheetData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_format_properties(
+        &mut self,
+        _node: &SheetFormatProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_id(
+        &mut self,
+        _node: &SheetId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_id_map(
+        &mut self,
+        _node: &SheetIdMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_information(
+        &mut self,
+        _node: &SheetInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_name(
+        &mut self,
+        _node: &SheetName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_properties(
+        &mut self,
+        _node: &SheetProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_protection_options(
+        &mut self,
+        _node: &SheetProtectionOptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_tab_color(
+        &mut self,
+        _node: &SheetTabColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_views(
+        &mut self,
+        _node: &SheetViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheets(&mut self, _node: &Sheets, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_cells(
+        &mut self,
+        _node: &SingleCells,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tag_properties_cell_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesCellSmartTagPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tag_properties_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesSmartTagPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tag_type(
+        &mut self,
+        _node: &SmartTagType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tag_types(
+        &mut self,
+        _node: &SmartTagTypes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_smart_tags(
+        &mut self,
+        _node: &SmartTags,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_by_tuple(
+        &mut self,
+        _node: &SortByTuple,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_condition(
+        &mut self,
+        _node: &SortCondition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_state(
+        &mut self,
+        _node: &SortState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_strike_through(
+        &mut self,
+        _node: &StrikeThrough,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_item(
+        &mut self,
+        _node: &StringItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_strings_in_subtopic(
+        &mut self,
+        _node: &StringsInSubtopic,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_sheet(
+        &mut self,
+        _node: &StyleSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_supporting_workbook_sheet_names(
+        &mut self,
+        _node: &SupportingWorkbookSheetNames,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table(&mut self, _node: &Table, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_column(
+        &mut self,
+        _node: &TableColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_columns(
+        &mut self,
+        _node: &TableColumns,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_part(
+        &mut self,
+        _node: &TablePart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_parts(
+        &mut self,
+        _node: &TableParts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_properties(
+        &mut self,
+        _node: &TableProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style(
+        &mut self,
+        _node: &TableStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_table_style_element(
+        &mut self,
+        _node: &TableStyleTableStyleElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_table_style_info(
+        &mut self,
+        _node: &TableStyleTableStyleInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_styles(
+        &mut self,
+        _node: &TableStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tables(&mut self, _node: &Tables, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tables_content(
+        &mut self,
+        _node: &TablesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tables_content_items(
+        &mut self,
+        _node: &TablesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_import_field_settings(
+        &mut self,
+        _node: &TextImportFieldSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_import_settings(
+        &mut self,
+        _node: &TextImportSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top10(&mut self, _node: &Top10, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_border(
+        &mut self,
+        _node: &TopBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_topic(&mut self, _node: &Topic, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_totals_row_formula(
+        &mut self,
+        _node: &TotalsRowFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trailing_edge_border_end(
+        &mut self,
+        _node: &TrailingEdgeBorderEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trailing_edge_border_right(
+        &mut self,
+        _node: &TrailingEdgeBorderRight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tuple(&mut self, _node: &Tuple, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tuple_cache(
+        &mut self,
+        _node: &TupleCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tuple_mdx_metadata(
+        &mut self,
+        _node: &TupleMDXMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tuples(&mut self, _node: &Tuples, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline(
+        &mut self,
+        _node: &Underline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_undo(&mut self, _node: &Undo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_user_information(
+        &mut self,
+        _node: &UserInformation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_user_list(
+        &mut self,
+        _node: &UserList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value(&mut self, _node: &Value, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_metadata(
+        &mut self,
+        _node: &ValueMetadata,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_alignment(
+        &mut self,
+        _node: &VerticalAlignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_inner_border(
+        &mut self,
+        _node: &VerticalInnerBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_page_breaks(
+        &mut self,
+        _node: &VerticalPageBreaks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_pane(
+        &mut self,
+        _node: &ViewPane,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_volatile_dependency_type(
+        &mut self,
+        _node: &VolatileDependencyType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_volatile_dependency_types(
+        &mut self,
+        _node: &VolatileDependencyTypes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_publish_objects(
+        &mut self,
+        _node: &WebPublishObjects,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_publishing_item(
+        &mut self,
+        _node: &WebPublishingItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_publishing_items(
+        &mut self,
+        _node: &WebPublishingItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_publishing_object(
+        &mut self,
+        _node: &WebPublishingObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_publishing_properties(
+        &mut self,
+        _node: &WebPublishingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_query_properties(
+        &mut self,
+        _node: &WebQueryProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook(
+        &mut self,
+        _node: &Workbook,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook_properties(
+        &mut self,
+        _node: &WorkbookProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook_protection(
+        &mut self,
+        _node: &WorkbookProtection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook_view(
+        &mut self,
+        _node: &WorkbookView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_workbook_views(
+        &mut self,
+        _node: &WorkbookViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet(
+        &mut self,
+        _node: &Worksheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_dimensions(
+        &mut self,
+        _node: &WorksheetDimensions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_pivot_cache_source(
+        &mut self,
+        _node: &WorksheetPivotCacheSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_view(
+        &mut self,
+        _node: &WorksheetView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_column_properties(
+        &mut self,
+        _node: &XMLColumnProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_mapping_data_binding(
+        &mut self,
+        _node: &XMLMappingDataBinding,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_mapping_map_info(
+        &mut self,
+        _node: &XMLMappingMapInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_mapping_properties(
+        &mut self,
+        _node: &XMLMappingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xml_schema(
+        &mut self,
+        _node: &XMLSchema,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xml_column_properties(
+        &mut self,
+        _node: &XMLColumnProperties,
+    ) -> Option<XMLColumnProperties> {
+        None
+    }
+
+    fn xml_mapping_data_binding(
+        &mut self,
+        _node: &XMLMappingDataBinding,
+    ) -> Option<XMLMappingDataBinding> {
+        None
+    }
+
+    fn xml_mapping_map_info(&mut self, _node: &XMLMappingMapInfo) -> Option<XMLMappingMapInfo> {
+        None
+    }
+
+    fn xml_mapping_properties(
+        &mut self,
+        _node: &XMLMappingProperties,
+    ) -> Option<XMLMappingProperties> {
+        None
+    }
+
+    fn xml_schema(&mut self, _node: &XMLSchema) -> Option<XMLSchema> {
+        None
+    }
+}
+
 /// 18.18.16 `ST_CredMethod` (Credentials Method): the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -11640,6 +18311,1820 @@ pub enum VisibilityTypesMember {
     Hidden,
     VeryHidden,
     Visible,
+}
+
+/// The hooks of a visitor for the `x` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::spreadsheet` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn alignment(&mut self, _node: &Alignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn author(&mut self, _node: &Author) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn authors(&mut self, _node: &Authors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_filter_column(&mut self, _node: &AutoFilterColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_filter_column_content(&mut self, _node: &AutoFilterColumnContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_filter_settings(&mut self, _node: &AutoFilterSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_sort_scope(&mut self, _node: &AutoSortScope) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_color(&mut self, _node: &BackgroundColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_image(&mut self, _node: &BackgroundImage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bold(&mut self, _node: &Bold) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn boolean(&mut self, _node: &Boolean) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border(&mut self, _node: &Border) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn borders(&mut self, _node: &Borders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#break(&mut self, _node: &Break) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cache_item(&mut self, _node: &CacheItemContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cached_worksheet_data(&mut self, _node: &CachedWorksheetData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_column_formula(&mut self, _node: &CalculatedColumnFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_item(&mut self, _node: &CalculatedItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_items(&mut self, _node: &CalculatedItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_member(&mut self, _node: &CalculatedMember) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculated_members(&mut self, _node: &CalculatedMembers) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculation_chain_info(&mut self, _node: &CalculationChainInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn calculation_properties(&mut self, _node: &CalculationProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell(&mut self, _node: &Cell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_calc_cell(&mut self, _node: &CellCalcCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_formats(&mut self, _node: &CellFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_metadata(&mut self, _node: &CellMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_properties(&mut self, _node: &CellProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_smart_tag(&mut self, _node: &CellSmartTag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_smart_tags(&mut self, _node: &CellSmartTags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_style(&mut self, _node: &CellStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_styles(&mut self, _node: &CellStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_value(&mut self, _node: &CellValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_watch_item(&mut self, _node: &CellWatchItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell_watch_items(&mut self, _node: &CellWatchItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_set(&mut self, _node: &CharacterSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_value(&mut self, _node: &CharacterValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_value_x_string_element(
+        &mut self,
+        _node: &CharacterValueXStringElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet(&mut self, _node: &ChartSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet_page_setup(&mut self, _node: &ChartSheetPageSetup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet_properties(&mut self, _node: &ChartSheetProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet_protection(&mut self, _node: &ChartSheetProtection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet_view(&mut self, _node: &ChartSheetView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_sheet_views(&mut self, _node: &ChartSheetViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_filter_criteria(&mut self, _node: &ColorFilterCriteria) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_indexes(&mut self, _node: &ColorIndexes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_scale(&mut self, _node: &ColorScale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn colors(&mut self, _node: &Colors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_fields(&mut self, _node: &ColumnFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_information(&mut self, _node: &ColumnInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_items(&mut self, _node: &ColumnItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_olap_hierarchies(&mut self, _node: &ColumnOLAPHierarchies) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_olap_hierarchy_references(
+        &mut self,
+        _node: &ColumnOLAPHierarchyReferences,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_width_formatting(&mut self, _node: &ColumnWidthFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_xml_properties(&mut self, _node: &ColumnXMLProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment(&mut self, _node: &Comment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_properties(&mut self, _node: &CommentProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment_text(&mut self, _node: &CommentText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments(&mut self, _node: &Comments) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn condense(&mut self, _node: &Condense) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conditional_format_value_object(
+        &mut self,
+        _node: &ConditionalFormatValueObject,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conditional_formats(&mut self, _node: &ConditionalFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conditional_formatting(&mut self, _node: &ConditionalFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conditional_formatting_conditional_format(
+        &mut self,
+        _node: &ConditionalFormattingConditionalFormat,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conditional_formatting_rule(
+        &mut self,
+        _node: &ConditionalFormattingRule,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection(&mut self, _node: &Connection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connections(&mut self, _node: &Connections) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn consolidation_source(&mut self, _node: &ConsolidationSource) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_chart_sheet_view(&mut self, _node: &CustomChartSheetView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_chart_sheet_views(&mut self, _node: &CustomChartSheetViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_filter_criteria(&mut self, _node: &CustomFilterCriteria) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_filters(&mut self, _node: &CustomFilters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_properties(&mut self, _node: &CustomProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_property(&mut self, _node: &CustomProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_sheet_view(&mut self, _node: &CustomSheetView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_sheet_views(&mut self, _node: &CustomSheetViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_workbook_view(&mut self, _node: &CustomWorkbookView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_workbook_views(&mut self, _node: &CustomWorkbookViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_bar(&mut self, _node: &DataBar) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_bar_color(&mut self, _node: &DataBarColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_consolidate(&mut self, _node: &DataConsolidate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_consolidation_reference(
+        &mut self,
+        _node: &DataConsolidationReference,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_consolidation_references(
+        &mut self,
+        _node: &DataConsolidationReferences,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_field_item(&mut self, _node: &DataFieldItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_fields(&mut self, _node: &DataFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_validation(&mut self, _node: &DataValidation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_validations(&mut self, _node: &DataValidations) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn database_properties(&mut self, _node: &DatabaseProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_grouping(&mut self, _node: &DateGrouping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date_time(&mut self, _node: &DateTime) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dde_connection(&mut self, _node: &DDEConnection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dde_item_definition(&mut self, _node: &DDEItemDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dde_items_collection(&mut self, _node: &DDEItemsCollection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dde_link_value(&mut self, _node: &DDELinkValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dde_name_values(&mut self, _node: &DDENameValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn defined_name(&mut self, _node: &DefinedName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn defined_name_external_defined_name(
+        &mut self,
+        _node: &DefinedNameExternalDefinedName,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn defined_names(&mut self, _node: &DefinedNames) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_field(&mut self, _node: &DeletedField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn deleted_fields(&mut self, _node: &DeletedFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagonal(&mut self, _node: &Diagonal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dialog_sheet(&mut self, _node: &DialogSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn discrete_grouping_properties(
+        &mut self,
+        _node: &DiscreteGroupingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing(&mut self, _node: &Drawing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drawing_reference_in_header_footer(
+        &mut self,
+        _node: &DrawingReferenceInHeaderFooter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dynamic_filter(&mut self, _node: &DynamicFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_control(&mut self, _node: &EmbeddedControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_control_properties(
+        &mut self,
+        _node: &EmbeddedControlProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_controls(&mut self, _node: &EmbeddedControls) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object(&mut self, _node: &EmbeddedObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_properties(&mut self, _node: &EmbeddedObjectProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_object_size(&mut self, _node: &EmbeddedObjectSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embedded_objects(&mut self, _node: &EmbeddedObjects) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entries(&mut self, _node: &Entries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entries_content(&mut self, _node: &EntriesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn error_value(&mut self, _node: &ErrorValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_page_footer(&mut self, _node: &EvenPageFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_page_header(&mut self, _node: &EvenPageHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extend(&mut self, _node: &Extend) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension(&mut self, _node: &Extension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_cell_data(&mut self, _node: &ExternalCellData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_reference(&mut self, _node: &ExternalReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_reference_content(&mut self, _node: &ExternalReferenceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_reference_external_link(
+        &mut self,
+        _node: &ExternalReferenceExternalLink,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_references(&mut self, _node: &ExternalReferences) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_sheet_data_set(&mut self, _node: &ExternalSheetDataSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_workbook(&mut self, _node: &ExternalWorkbook) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn field(&mut self, _node: &Field) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn field_group_properties(&mut self, _node: &FieldGroupProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn field_items(&mut self, _node: &FieldItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fields(&mut self, _node: &Fields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fields_usage(&mut self, _node: &FieldsUsage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn file_recovery_properties(&mut self, _node: &FileRecoveryProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn file_sharing(&mut self, _node: &FileSharing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn file_version(&mut self, _node: &FileVersion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill(&mut self, _node: &Fill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_content(&mut self, _node: &FillContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fills(&mut self, _node: &Fills) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filter(&mut self, _node: &Filter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filter_criteria(&mut self, _node: &FilterCriteria) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filters(&mut self, _node: &Filters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_page_footer(&mut self, _node: &FirstPageFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_page_header(&mut self, _node: &FirstPageHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font(&mut self, _node: &Font) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_content(&mut self, _node: &FontContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_family(&mut self, _node: &FontFamily) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_family_int_property(&mut self, _node: &FontFamilyIntProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_name(&mut self, _node: &FontName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_r_font(&mut self, _node: &FontRFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_size(&mut self, _node: &FontSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fonts(&mut self, _node: &Fonts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn foreground_color(&mut self, _node: &ForegroundColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn format(&mut self, _node: &Format) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formats(&mut self, _node: &Formats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formatting(&mut self, _node: &Formatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formatting_records(&mut self, _node: &FormattingRecords) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula(&mut self, _node: &Formula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula1(&mut self, _node: &Formula1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula2(&mut self, _node: &Formula2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula_f(&mut self, _node: &FormulaF) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn function_group(&mut self, _node: &FunctionGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn function_groups(&mut self, _node: &FunctionGroups) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn future_feature_data_storage_area(
+        &mut self,
+        _node: &FutureFeatureDataStorageArea,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn future_metadata(&mut self, _node: &FutureMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn future_metadata_block(&mut self, _node: &FutureMetadataBlock) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn generic_object_link_connection(
+        &mut self,
+        _node: &GenericObjectLinkConnection,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient(&mut self, _node: &Gradient) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_stop(&mut self, _node: &GradientStop) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header(&mut self, _node: &Header) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_footer_settings(&mut self, _node: &HeaderFooterSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontal_inner_borders(&mut self, _node: &HorizontalInnerBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlinks(&mut self, _node: &Hyperlinks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn icon_filter(&mut self, _node: &IconFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn icon_set(&mut self, _node: &IconSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignored_error(&mut self, _node: &IgnoredError) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignored_errors(&mut self, _node: &IgnoredErrors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn input_cells(&mut self, _node: &InputCells) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn italic(&mut self, _node: &Italic) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn kpimdx_metadata(&mut self, _node: &KPIMDXMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn leading_edge_border_left(&mut self, _node: &LeadingEdgeBorderLeft) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn leading_edge_border_start(&mut self, _node: &LeadingEdgeBorderStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legacy_drawing_reference(&mut self, _node: &LegacyDrawingReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legacy_drawing_reference_in_header_footer(
+        &mut self,
+        _node: &LegacyDrawingReferenceInHeaderFooter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_comments(&mut self, _node: &ListOfComments) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn main(&mut self, _node: &Main) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mdx_metadata_information(&mut self, _node: &MDXMetadataInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mdx_metadata_record(&mut self, _node: &MDXMetadataRecord) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn member(&mut self, _node: &Member) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn member_properties_map(&mut self, _node: &MemberPropertiesMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn member_property_index(&mut self, _node: &MemberPropertyIndex) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn member_property_mdx_metadata(
+        &mut self,
+        _node: &MemberPropertyMDXMetadata,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn member_unique_name_index(&mut self, _node: &MemberUniqueNameIndex) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn members(&mut self, _node: &Members) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merge_cells(&mut self, _node: &MergeCells) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn merged_cell(&mut self, _node: &MergedCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata(&mut self, _node: &Metadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata_block(&mut self, _node: &MetadataBlock) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata_record(&mut self, _node: &MetadataRecord) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata_string_store(&mut self, _node: &MetadataStringStore) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata_type_information(&mut self, _node: &MetadataTypeInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn metadata_types_collection(&mut self, _node: &MetadataTypesCollection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mru_colors(&mut self, _node: &MRUColors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn multidimensional_expression_metadata(
+        &mut self,
+        _node: &MultidimensionalExpressionMetadataContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn named_links(&mut self, _node: &NamedLinks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nested_revision(&mut self, _node: &NestedRevisionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn new_cell_data(&mut self, _node: &NewCellData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn new_formatting_information(&mut self, _node: &NewFormattingInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_value(&mut self, _node: &NoValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_value_table_missing(&mut self, _node: &NoValueTableMissing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_format(&mut self, _node: &NumberFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number_formats(&mut self, _node: &NumberFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numeric(&mut self, _node: &Numeric) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_cell_anchor(&mut self, _node: &ObjectCellAnchor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_link_item(&mut self, _node: &ObjectLinkItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_link_items(&mut self, _node: &ObjectLinkItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_page_footer(&mut self, _node: &OddPageFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_dimension(&mut self, _node: &OLAPDimension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_dimensions(&mut self, _node: &OLAPDimensions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_group(&mut self, _node: &OLAPGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_group_items(&mut self, _node: &OLAPGroupItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_group_member(&mut self, _node: &OLAPGroupMember) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_group_members(&mut self, _node: &OLAPGroupMembers) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_grouping_levels_group_level(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevel,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_grouping_levels_group_levels(
+        &mut self,
+        _node: &OLAPGroupingLevelsGroupLevels,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_hierarchy(&mut self, _node: &OLAPHierarchy) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_level_groups(&mut self, _node: &OLAPLevelGroups) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_measure_group_map(&mut self, _node: &OLAPMeasureGroupMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_measure_group_maps(&mut self, _node: &OLAPMeasureGroupMaps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_measure_group_measure_group(
+        &mut self,
+        _node: &OLAPMeasureGroupMeasureGroup,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_measure_groups(&mut self, _node: &OLAPMeasureGroups) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_member_properties(&mut self, _node: &OLAPMemberProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_member_property(&mut self, _node: &OLAPMemberProperty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_properties(&mut self, _node: &OLAPProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_query_cache(&mut self, _node: &OLAPQueryCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olap_set(&mut self, _node: &OLAPSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olapkp_is(&mut self, _node: &OLAPKPIs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn olapkpi(&mut self, _node: &OLAPKPI) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn old_cell_data(&mut self, _node: &OldCellData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn old_formatting_information(&mut self, _node: &OldFormattingInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn old_formula(&mut self, _node: &OldFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outline(&mut self, _node: &Outline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outline_properties(&mut self, _node: &OutlineProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_field(&mut self, _node: &PageField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_field_items(&mut self, _node: &PageFieldItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_item(&mut self, _node: &PageItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_item_values(&mut self, _node: &PageItemValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_items(&mut self, _node: &PageItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_setup_properties(&mut self, _node: &PageSetupProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_setup_settings(&mut self, _node: &PageSetupSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parameter_properties(&mut self, _node: &ParameterProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pattern(&mut self, _node: &Pattern) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_properties(&mut self, _node: &PhoneticProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phonetic_run(&mut self, _node: &PhoneticRun) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_area(&mut self, _node: &PivotArea) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_areas(&mut self, _node: &PivotAreas) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache(&mut self, _node: &PivotCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_definition(&mut self, _node: &PivotCacheDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_field(&mut self, _node: &PivotCacheField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_field_id(&mut self, _node: &PivotCacheFieldId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_fields(&mut self, _node: &PivotCacheFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_hierarchies(&mut self, _node: &PivotCacheHierarchies) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_hierarchy(&mut self, _node: &PivotCacheHierarchy) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_record(&mut self, _node: &PivotCacheRecord) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_record_content(&mut self, _node: &PivotCacheRecordContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_records(&mut self, _node: &PivotCacheRecords) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_source_description(
+        &mut self,
+        _node: &PivotCacheSourceDescription,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_cache_source_description_content(
+        &mut self,
+        _node: &PivotCacheSourceDescriptionContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_caches(&mut self, _node: &PivotCaches) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_chart_format(&mut self, _node: &PivotChartFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_chart_formats(&mut self, _node: &PivotChartFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_advanced_filter(&mut self, _node: &PivotTableAdvancedFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_definition(&mut self, _node: &PivotTableDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_field(&mut self, _node: &PivotTableField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_field_item(&mut self, _node: &PivotTableFieldItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_fields(&mut self, _node: &PivotTableFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_format(&mut self, _node: &PivotTableFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_formats(&mut self, _node: &PivotTableFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_location(&mut self, _node: &PivotTableLocation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_olap_hierarchies(
+        &mut self,
+        _node: &PivotTableOLAPHierarchies,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_selection(&mut self, _node: &PivotTableSelection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_style(&mut self, _node: &PivotTableStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_options(&mut self, _node: &PrintOptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn protected_range(&mut self, _node: &ProtectedRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn protected_ranges(&mut self, _node: &ProtectedRanges) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn protection_properties(&mut self, _node: &ProtectionProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query(&mut self, _node: &Query) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_parameters(&mut self, _node: &QueryParameters) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_table(&mut self, _node: &QueryTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_table_field(&mut self, _node: &QueryTableField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_table_fields(&mut self, _node: &QueryTableFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn query_table_refresh_information(
+        &mut self,
+        _node: &QueryTableRefreshInformation,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_grouping_properties(&mut self, _node: &RangeGroupingProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_set(&mut self, _node: &RangeSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn range_sets(&mut self, _node: &RangeSets) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference(&mut self, _node: &Reference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn references(&mut self, _node: &References) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn references_tr(&mut self, _node: &ReferencesTr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reviewed(&mut self, _node: &Reviewed) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reviewed_list(&mut self, _node: &ReviewedList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_auto_format(&mut self, _node: &RevisionAutoFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_cell_change(&mut self, _node: &RevisionCellChange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_cell_comment(&mut self, _node: &RevisionCellComment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_cell_move(&mut self, _node: &RevisionCellMove) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_custom_view(&mut self, _node: &RevisionCustomView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_defined_name(&mut self, _node: &RevisionDefinedName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_format(&mut self, _node: &RevisionFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_headers(&mut self, _node: &RevisionHeaders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_insert_sheet(&mut self, _node: &RevisionInsertSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_merge_conflict(&mut self, _node: &RevisionMergeConflict) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_query_table(&mut self, _node: &RevisionQueryTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_row_column_insert_delete(
+        &mut self,
+        _node: &RevisionRowColumnInsertDelete,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_sheet_name(&mut self, _node: &RevisionSheetName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revisions(&mut self, _node: &Revisions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revisions_content(&mut self, _node: &RevisionsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rgb_color(&mut self, _node: &RGBColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text_inline(&mut self, _node: &RichTextInline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_text_run(&mut self, _node: &RichTextRun) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row(&mut self, _node: &Row) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_breaks(&mut self, _node: &RowBreaks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_external_row(&mut self, _node: &RowExternalRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_fields(&mut self, _node: &RowFields) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_items(&mut self, _node: &RowItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_items_i(&mut self, _node: &RowItemsI) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_olap_hierarchies(&mut self, _node: &RowOLAPHierarchies) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_olap_hierarchy_references(
+        &mut self,
+        _node: &RowOLAPHierarchyReferences,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties_content(&mut self, _node: &RunPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scenario(&mut self, _node: &Scenario) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scenarios(&mut self, _node: &Scenarios) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scheme(&mut self, _node: &Scheme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn security_descriptor(&mut self, _node: &SecurityDescriptor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn selection(&mut self, _node: &Selection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn server_format(&mut self, _node: &ServerFormat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn server_formats(&mut self, _node: &ServerFormats) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_mdx_metadata(&mut self, _node: &SetMDXMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sets(&mut self, _node: &Sets) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shared_items(&mut self, _node: &SharedItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shared_items_index(&mut self, _node: &SharedItemsIndex) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shared_string_table(&mut self, _node: &SharedStringTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_calculation_properties(
+        &mut self,
+        _node: &SheetCalculationProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_data(&mut self, _node: &SheetData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_format_properties(&mut self, _node: &SheetFormatProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_id(&mut self, _node: &SheetId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_id_map(&mut self, _node: &SheetIdMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_information(&mut self, _node: &SheetInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_name(&mut self, _node: &SheetName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_properties(&mut self, _node: &SheetProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_protection_options(&mut self, _node: &SheetProtectionOptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_tab_color(&mut self, _node: &SheetTabColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_views(&mut self, _node: &SheetViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheets(&mut self, _node: &Sheets) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_cells(&mut self, _node: &SingleCells) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tag_properties_cell_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesCellSmartTagPr,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tag_properties_smart_tag_pr(
+        &mut self,
+        _node: &SmartTagPropertiesSmartTagPr,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tag_type(&mut self, _node: &SmartTagType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tag_types(&mut self, _node: &SmartTagTypes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn smart_tags(&mut self, _node: &SmartTags) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_by_tuple(&mut self, _node: &SortByTuple) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_condition(&mut self, _node: &SortCondition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_state(&mut self, _node: &SortState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn strike_through(&mut self, _node: &StrikeThrough) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_item(&mut self, _node: &StringItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn strings_in_subtopic(&mut self, _node: &StringsInSubtopic) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_sheet(&mut self, _node: &StyleSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn supporting_workbook_sheet_names(
+        &mut self,
+        _node: &SupportingWorkbookSheetNames,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table(&mut self, _node: &Table) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_column(&mut self, _node: &TableColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_columns(&mut self, _node: &TableColumns) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_part(&mut self, _node: &TablePart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_parts(&mut self, _node: &TableParts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style(&mut self, _node: &TableStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_table_style_element(
+        &mut self,
+        _node: &TableStyleTableStyleElement,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_table_style_info(
+        &mut self,
+        _node: &TableStyleTableStyleInfo,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_styles(&mut self, _node: &TableStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tables(&mut self, _node: &Tables) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tables_content(&mut self, _node: &TablesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text(&mut self, _node: &Text) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_import_field_settings(&mut self, _node: &TextImportFieldSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_import_settings(&mut self, _node: &TextImportSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top10(&mut self, _node: &Top10) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn topic(&mut self, _node: &Topic) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn totals_row_formula(&mut self, _node: &TotalsRowFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trailing_edge_border_end(&mut self, _node: &TrailingEdgeBorderEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trailing_edge_border_right(&mut self, _node: &TrailingEdgeBorderRight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tuple(&mut self, _node: &Tuple) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tuple_cache(&mut self, _node: &TupleCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tuple_mdx_metadata(&mut self, _node: &TupleMDXMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tuples(&mut self, _node: &Tuples) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline(&mut self, _node: &Underline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn undo(&mut self, _node: &Undo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn user_information(&mut self, _node: &UserInformation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn user_list(&mut self, _node: &UserList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value(&mut self, _node: &Value) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_metadata(&mut self, _node: &ValueMetadata) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_alignment(&mut self, _node: &VerticalAlignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_inner_border(&mut self, _node: &VerticalInnerBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_page_breaks(&mut self, _node: &VerticalPageBreaks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_pane(&mut self, _node: &ViewPane) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn volatile_dependency_type(&mut self, _node: &VolatileDependencyType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn volatile_dependency_types(&mut self, _node: &VolatileDependencyTypes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_publish_objects(&mut self, _node: &WebPublishObjects) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_publishing_item(&mut self, _node: &WebPublishingItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_publishing_items(&mut self, _node: &WebPublishingItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_publishing_object(&mut self, _node: &WebPublishingObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_publishing_properties(&mut self, _node: &WebPublishingProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn web_query_properties(&mut self, _node: &WebQueryProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook(&mut self, _node: &Workbook) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook_properties(&mut self, _node: &WorkbookProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook_protection(&mut self, _node: &WorkbookProtection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook_view(&mut self, _node: &WorkbookView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn workbook_views(&mut self, _node: &WorkbookViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet(&mut self, _node: &Worksheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet_dimensions(&mut self, _node: &WorksheetDimensions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet_pivot_cache_source(
+        &mut self,
+        _node: &WorksheetPivotCacheSource,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet_view(&mut self, _node: &WorksheetView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_column_properties(&mut self, _node: &XMLColumnProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_mapping_data_binding(&mut self, _node: &XMLMappingDataBinding) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_mapping_map_info(&mut self, _node: &XMLMappingMapInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_mapping_properties(&mut self, _node: &XMLMappingProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xml_schema(&mut self, _node: &XMLSchema) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 18.15.5 `volType` (Volatile Dependency Type): the tag `x:volType`, schema type `CT_VolType`.

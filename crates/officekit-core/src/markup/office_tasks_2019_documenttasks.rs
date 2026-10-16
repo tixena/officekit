@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/tasks/2019/documenttasks`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_OEL: Option<NamespaceId> = Some(62);
 const NS_T: Option<NamespaceId> = Some(92);
@@ -421,6 +425,275 @@ pub struct Comment {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `t` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_tasks_2019_documenttasks` is never asked.
+pub trait Context: markup::Context {
+    fn anchor(&mut self, _node: &Anchor) -> Option<Anchor> {
+        None
+    }
+
+    fn assign(&mut self, _node: &Assign) -> Option<Assign> {
+        None
+    }
+
+    fn attribution(&mut self, _node: &Attribution) -> Option<Attribution> {
+        None
+    }
+
+    fn comment(&mut self, _node: &Comment) -> Option<Comment> {
+        None
+    }
+
+    fn create(&mut self, _node: &Create) -> Option<Create> {
+        None
+    }
+
+    fn delete(&mut self, _node: &Delete) -> Option<Delete> {
+        None
+    }
+
+    fn event(&mut self, _node: &Event) -> Option<Event> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn history(&mut self, _node: &History) -> Option<History> {
+        None
+    }
+
+    fn priority(&mut self, _node: &Priority) -> Option<Priority> {
+        None
+    }
+
+    fn progress(&mut self, _node: &Progress) -> Option<Progress> {
+        None
+    }
+
+    fn schedule(&mut self, _node: &Schedule) -> Option<Schedule> {
+        None
+    }
+
+    fn set_title(&mut self, _node: &SetTitle) -> Option<SetTitle> {
+        None
+    }
+
+    fn task(&mut self, _node: &Task) -> Option<Task> {
+        None
+    }
+
+    fn task_history_event(
+        &mut self,
+        _node: &TaskHistoryEventContent,
+    ) -> Option<TaskHistoryEventContent> {
+        None
+    }
+
+    fn tasks(&mut self, _node: &Tasks) -> Option<Tasks> {
+        None
+    }
+
+    fn unassign(&mut self, _node: &Unassign) -> Option<Unassign> {
+        None
+    }
+
+    fn unassign_all(&mut self, _node: &UnassignAll) -> Option<UnassignAll> {
+        None
+    }
+
+    fn undelete(&mut self, _node: &Undelete) -> Option<Undelete> {
+        None
+    }
+
+    fn undo(&mut self, _node: &Undo) -> Option<Undo> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor(&mut self, _node: &Anchor, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_assign(&mut self, _node: &Assign, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attribution(
+        &mut self,
+        _node: &Attribution,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_create(&mut self, _node: &Create, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delete(&mut self, _node: &Delete, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_event(&mut self, _node: &Event, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_history(&mut self, _node: &History, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_priority(
+        &mut self,
+        _node: &Priority,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_progress(
+        &mut self,
+        _node: &Progress,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_schedule(
+        &mut self,
+        _node: &Schedule,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_title(
+        &mut self,
+        _node: &SetTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task(&mut self, _node: &Task, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_history_event(
+        &mut self,
+        _node: &TaskHistoryEventContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tasks(&mut self, _node: &Tasks, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unassign(
+        &mut self,
+        _node: &Unassign,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unassign_all(
+        &mut self,
+        _node: &UnassignAll,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_undelete(
+        &mut self,
+        _node: &Undelete,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_undo(&mut self, _node: &Undo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `t:Create`, schema type `CT_TaskCreateEventInfo` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -562,6 +835,93 @@ pub struct Undelete {
 pub struct Undo {
     pub id: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `t` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_tasks_2019_documenttasks` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn anchor(&mut self, _node: &Anchor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn assign(&mut self, _node: &Assign) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attribution(&mut self, _node: &Attribution) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment(&mut self, _node: &Comment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn create(&mut self, _node: &Create) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delete(&mut self, _node: &Delete) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn event(&mut self, _node: &Event) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn history(&mut self, _node: &History) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn priority(&mut self, _node: &Priority) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn progress(&mut self, _node: &Progress) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn schedule(&mut self, _node: &Schedule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_title(&mut self, _node: &SetTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task(&mut self, _node: &Task) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_history_event(&mut self, _node: &TaskHistoryEventContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tasks(&mut self, _node: &Tasks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unassign(&mut self, _node: &Unassign) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unassign_all(&mut self, _node: &UnassignAll) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn undelete(&mut self, _node: &Undelete) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn undo(&mut self, _node: &Undo) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Anchor {

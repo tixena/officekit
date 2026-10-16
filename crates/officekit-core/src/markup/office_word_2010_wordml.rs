@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -1015,6 +1019,1020 @@ pub struct ContentPart {
     pub xfrm: Option<Box<Xfrm>>,
 }
 
+/// The hooks of a context for the `w14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2010_wordml` is never asked.
+pub trait Context: markup::Context {
+    fn alpha(&mut self, _node: &Alpha) -> Option<Alpha> {
+        None
+    }
+
+    fn bevel(&mut self, _node: &Bevel) -> Option<Bevel> {
+        None
+    }
+
+    fn bevel_b(&mut self, _node: &BevelB) -> Option<BevelB> {
+        None
+    }
+
+    fn bevel_t(&mut self, _node: &BevelT) -> Option<BevelT> {
+        None
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn camera(&mut self, _node: &Camera) -> Option<Camera> {
+        None
+    }
+
+    fn checkbox(&mut self, _node: &Checkbox) -> Option<Checkbox> {
+        None
+    }
+
+    fn checked(&mut self, _node: &Checked) -> Option<Checked> {
+        None
+    }
+
+    fn checked_state(&mut self, _node: &CheckedState) -> Option<CheckedState> {
+        None
+    }
+
+    fn cntxt_alts(&mut self, _node: &CntxtAlts) -> Option<CntxtAlts> {
+        None
+    }
+
+    fn color(&mut self, _node: &ColorContent) -> Option<ColorContent> {
+        None
+    }
+
+    fn color_transform(&mut self, _node: &ColorTransformContent) -> Option<ColorTransformContent> {
+        None
+    }
+
+    fn color_transform_items(
+        &mut self,
+        _node: &ColorTransformContent,
+    ) -> Option<Vec<ColorTransformContent>> {
+        None
+    }
+
+    fn conflict_del_run_track_change(
+        &mut self,
+        _node: &ConflictDelRunTrackChange,
+    ) -> Option<ConflictDelRunTrackChange> {
+        None
+    }
+
+    fn conflict_del_track_change(
+        &mut self,
+        _node: &ConflictDelTrackChange,
+    ) -> Option<ConflictDelTrackChange> {
+        None
+    }
+
+    fn conflict_ins_run_track_change(
+        &mut self,
+        _node: &ConflictInsRunTrackChange,
+    ) -> Option<ConflictInsRunTrackChange> {
+        None
+    }
+
+    fn conflict_ins_track_change(
+        &mut self,
+        _node: &ConflictInsTrackChange,
+    ) -> Option<ConflictInsTrackChange> {
+        None
+    }
+
+    fn conflict_mode(&mut self, _node: &ConflictMode) -> Option<ConflictMode> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn contour_clr(&mut self, _node: &ContourClr) -> Option<ContourClr> {
+        None
+    }
+
+    fn custom_xml_conflict_del_range_end(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeEnd,
+    ) -> Option<CustomXmlConflictDelRangeEnd> {
+        None
+    }
+
+    fn custom_xml_conflict_del_range_start(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeStart,
+    ) -> Option<CustomXmlConflictDelRangeStart> {
+        None
+    }
+
+    fn custom_xml_conflict_ins_range_end(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeEnd,
+    ) -> Option<CustomXmlConflictInsRangeEnd> {
+        None
+    }
+
+    fn custom_xml_conflict_ins_range_start(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeStart,
+    ) -> Option<CustomXmlConflictInsRangeStart> {
+        None
+    }
+
+    fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> Option<DefaultImageDpi> {
+        None
+    }
+
+    fn discard_image_editing_data(
+        &mut self,
+        _node: &DiscardImageEditingData,
+    ) -> Option<DiscardImageEditingData> {
+        None
+    }
+
+    fn doc_id(&mut self, _node: &DocId) -> Option<DocId> {
+        None
+    }
+
+    fn entity_picker(&mut self, _node: &EntityPicker) -> Option<EntityPicker> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn extrusion_clr(&mut self, _node: &ExtrusionClr) -> Option<ExtrusionClr> {
+        None
+    }
+
+    fn fill_properties(&mut self, _node: &FillPropertiesContent) -> Option<FillPropertiesContent> {
+        None
+    }
+
+    fn fill_to_rect(&mut self, _node: &FillToRect) -> Option<FillToRect> {
+        None
+    }
+
+    fn glow(&mut self, _node: &Glow) -> Option<Glow> {
+        None
+    }
+
+    fn grad_fill(&mut self, _node: &GradFill) -> Option<GradFill> {
+        None
+    }
+
+    fn gradient_fill_properties(
+        &mut self,
+        _node: &GradientFillPropertiesContent,
+    ) -> Option<GradientFillPropertiesContent> {
+        None
+    }
+
+    fn gs(&mut self, _node: &Gs) -> Option<Gs> {
+        None
+    }
+
+    fn gs_lst(&mut self, _node: &GsLst) -> Option<GsLst> {
+        None
+    }
+
+    fn hue_mod(&mut self, _node: &HueMod) -> Option<HueMod> {
+        None
+    }
+
+    fn ligatures(&mut self, _node: &Ligatures) -> Option<Ligatures> {
+        None
+    }
+
+    fn light_rig(&mut self, _node: &LightRig) -> Option<LightRig> {
+        None
+    }
+
+    fn lin(&mut self, _node: &Lin) -> Option<Lin> {
+        None
+    }
+
+    fn line_join(&mut self, _node: &LineJoinContent) -> Option<LineJoinContent> {
+        None
+    }
+
+    fn lum(&mut self, _node: &Lum) -> Option<Lum> {
+        None
+    }
+
+    fn lum_mod(&mut self, _node: &LumMod) -> Option<LumMod> {
+        None
+    }
+
+    fn lum_off(&mut self, _node: &LumOff) -> Option<LumOff> {
+        None
+    }
+
+    fn miter(&mut self, _node: &Miter) -> Option<Miter> {
+        None
+    }
+
+    fn no_fill(&mut self, _node: &NoFill) -> Option<NoFill> {
+        None
+    }
+
+    fn num_form(&mut self, _node: &NumForm) -> Option<NumForm> {
+        None
+    }
+
+    fn num_spacing(&mut self, _node: &NumSpacing) -> Option<NumSpacing> {
+        None
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
+        None
+    }
+
+    fn path(&mut self, _node: &Path) -> Option<Path> {
+        None
+    }
+
+    fn props3d(&mut self, _node: &Props3d) -> Option<Props3d> {
+        None
+    }
+
+    fn prst_dash(&mut self, _node: &PrstDash) -> Option<PrstDash> {
+        None
+    }
+
+    fn reflection(&mut self, _node: &Reflection) -> Option<Reflection> {
+        None
+    }
+
+    fn rot(&mut self, _node: &Rot) -> Option<Rot> {
+        None
+    }
+
+    fn round(&mut self, _node: &Round) -> Option<Round> {
+        None
+    }
+
+    fn sat(&mut self, _node: &Sat) -> Option<Sat> {
+        None
+    }
+
+    fn sat_mod(&mut self, _node: &SatMod) -> Option<SatMod> {
+        None
+    }
+
+    fn sat_off(&mut self, _node: &SatOff) -> Option<SatOff> {
+        None
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> Option<Scene3d> {
+        None
+    }
+
+    fn scheme_clr(&mut self, _node: &SchemeClr) -> Option<SchemeClr> {
+        None
+    }
+
+    fn shade(&mut self, _node: &Shade) -> Option<Shade> {
+        None
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> Option<Shadow> {
+        None
+    }
+
+    fn solid_fill(&mut self, _node: &SolidFill) -> Option<SolidFill> {
+        None
+    }
+
+    fn srgb_clr(&mut self, _node: &SrgbClr) -> Option<SrgbClr> {
+        None
+    }
+
+    fn style_set(&mut self, _node: &StyleSet) -> Option<StyleSet> {
+        None
+    }
+
+    fn stylistic_sets(&mut self, _node: &StylisticSets) -> Option<StylisticSets> {
+        None
+    }
+
+    fn text_fill(&mut self, _node: &TextFill) -> Option<TextFill> {
+        None
+    }
+
+    fn text_outline(&mut self, _node: &TextOutline) -> Option<TextOutline> {
+        None
+    }
+
+    fn tint(&mut self, _node: &Tint) -> Option<Tint> {
+        None
+    }
+
+    fn unchecked_state(&mut self, _node: &UncheckedState) -> Option<UncheckedState> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha(&mut self, _node: &Alpha, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bevel(&mut self, _node: &Bevel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bevel_b(&mut self, _node: &BevelB, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bevel_t(&mut self, _node: &BevelT, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_content_part_pr(
+        &mut self,
+        _node: &CNvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera(&mut self, _node: &Camera, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checkbox(
+        &mut self,
+        _node: &Checkbox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checked(&mut self, _node: &Checked, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_checked_state(
+        &mut self,
+        _node: &CheckedState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cntxt_alts(
+        &mut self,
+        _node: &CntxtAlts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color(
+        &mut self,
+        _node: &ColorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform(
+        &mut self,
+        _node: &ColorTransformContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_items(
+        &mut self,
+        _node: &ColorTransformContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_del_run_track_change(
+        &mut self,
+        _node: &ConflictDelRunTrackChange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_del_track_change(
+        &mut self,
+        _node: &ConflictDelTrackChange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_ins_run_track_change(
+        &mut self,
+        _node: &ConflictInsRunTrackChange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_ins_track_change(
+        &mut self,
+        _node: &ConflictInsTrackChange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_conflict_mode(
+        &mut self,
+        _node: &ConflictMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contour_clr(
+        &mut self,
+        _node: &ContourClr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_conflict_del_range_end(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_conflict_del_range_start(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_conflict_ins_range_end(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_conflict_ins_range_start(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_image_dpi(
+        &mut self,
+        _node: &DefaultImageDpi,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_discard_image_editing_data(
+        &mut self,
+        _node: &DiscardImageEditingData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_doc_id(&mut self, _node: &DocId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entity_picker(
+        &mut self,
+        _node: &EntityPicker,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extrusion_clr(
+        &mut self,
+        _node: &ExtrusionClr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_properties(
+        &mut self,
+        _node: &FillPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_to_rect(
+        &mut self,
+        _node: &FillToRect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glow(&mut self, _node: &Glow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grad_fill(
+        &mut self,
+        _node: &GradFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_fill_properties(
+        &mut self,
+        _node: &GradientFillPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gs(&mut self, _node: &Gs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gs_lst(&mut self, _node: &GsLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue_mod(&mut self, _node: &HueMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ligatures(
+        &mut self,
+        _node: &Ligatures,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_light_rig(
+        &mut self,
+        _node: &LightRig,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lin(&mut self, _node: &Lin, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_join(
+        &mut self,
+        _node: &LineJoinContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lum(&mut self, _node: &Lum, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lum_mod(&mut self, _node: &LumMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lum_off(&mut self, _node: &LumOff, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_miter(&mut self, _node: &Miter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_fill(&mut self, _node: &NoFill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_form(
+        &mut self,
+        _node: &NumForm,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_spacing(
+        &mut self,
+        _node: &NumSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_content_part_pr(
+        &mut self,
+        _node: &NvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_path(&mut self, _node: &Path, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_props3d(&mut self, _node: &Props3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_prst_dash(
+        &mut self,
+        _node: &PrstDash,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reflection(
+        &mut self,
+        _node: &Reflection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rot(&mut self, _node: &Rot, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_round(&mut self, _node: &Round, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sat(&mut self, _node: &Sat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sat_mod(&mut self, _node: &SatMod, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sat_off(&mut self, _node: &SatOff, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scene3d(&mut self, _node: &Scene3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scheme_clr(
+        &mut self,
+        _node: &SchemeClr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shade(&mut self, _node: &Shade, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shadow(&mut self, _node: &Shadow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_solid_fill(
+        &mut self,
+        _node: &SolidFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_srgb_clr(
+        &mut self,
+        _node: &SrgbClr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_set(
+        &mut self,
+        _node: &StyleSet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_stylistic_sets(
+        &mut self,
+        _node: &StylisticSets,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_fill(
+        &mut self,
+        _node: &TextFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_outline(
+        &mut self,
+        _node: &TextOutline,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tint(&mut self, _node: &Tint, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unchecked_state(
+        &mut self,
+        _node: &UncheckedState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// The tag `w14:contourClr`, schema type `CT_Color` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1800,6 +2818,322 @@ pub struct Tint {
 #[non_exhaustive]
 pub struct UncheckedState {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `w14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2010_wordml` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn alpha(&mut self, _node: &Alpha) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bevel(&mut self, _node: &Bevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bevel_b(&mut self, _node: &BevelB) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bevel_t(&mut self, _node: &BevelT) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera(&mut self, _node: &Camera) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checkbox(&mut self, _node: &Checkbox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checked(&mut self, _node: &Checked) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn checked_state(&mut self, _node: &CheckedState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cntxt_alts(&mut self, _node: &CntxtAlts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color(&mut self, _node: &ColorContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform(&mut self, _node: &ColorTransformContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_del_run_track_change(
+        &mut self,
+        _node: &ConflictDelRunTrackChange,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_del_track_change(&mut self, _node: &ConflictDelTrackChange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_ins_run_track_change(
+        &mut self,
+        _node: &ConflictInsRunTrackChange,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_ins_track_change(&mut self, _node: &ConflictInsTrackChange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn conflict_mode(&mut self, _node: &ConflictMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contour_clr(&mut self, _node: &ContourClr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_conflict_del_range_end(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_conflict_del_range_start(
+        &mut self,
+        _node: &CustomXmlConflictDelRangeStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_conflict_ins_range_end(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeEnd,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_conflict_ins_range_start(
+        &mut self,
+        _node: &CustomXmlConflictInsRangeStart,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_image_dpi(&mut self, _node: &DefaultImageDpi) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn discard_image_editing_data(&mut self, _node: &DiscardImageEditingData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn doc_id(&mut self, _node: &DocId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entity_picker(&mut self, _node: &EntityPicker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extrusion_clr(&mut self, _node: &ExtrusionClr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_properties(&mut self, _node: &FillPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_to_rect(&mut self, _node: &FillToRect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glow(&mut self, _node: &Glow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grad_fill(&mut self, _node: &GradFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_fill_properties(
+        &mut self,
+        _node: &GradientFillPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gs(&mut self, _node: &Gs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gs_lst(&mut self, _node: &GsLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue_mod(&mut self, _node: &HueMod) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ligatures(&mut self, _node: &Ligatures) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn light_rig(&mut self, _node: &LightRig) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lin(&mut self, _node: &Lin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_join(&mut self, _node: &LineJoinContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lum(&mut self, _node: &Lum) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lum_mod(&mut self, _node: &LumMod) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lum_off(&mut self, _node: &LumOff) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn miter(&mut self, _node: &Miter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_fill(&mut self, _node: &NoFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_form(&mut self, _node: &NumForm) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_spacing(&mut self, _node: &NumSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn path(&mut self, _node: &Path) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn props3d(&mut self, _node: &Props3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn prst_dash(&mut self, _node: &PrstDash) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reflection(&mut self, _node: &Reflection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rot(&mut self, _node: &Rot) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn round(&mut self, _node: &Round) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sat(&mut self, _node: &Sat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sat_mod(&mut self, _node: &SatMod) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sat_off(&mut self, _node: &SatOff) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scheme_clr(&mut self, _node: &SchemeClr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shade(&mut self, _node: &Shade) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shadow(&mut self, _node: &Shadow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn solid_fill(&mut self, _node: &SolidFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn srgb_clr(&mut self, _node: &SrgbClr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_set(&mut self, _node: &StyleSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn stylistic_sets(&mut self, _node: &StylisticSets) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_fill(&mut self, _node: &TextFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_outline(&mut self, _node: &TextOutline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tint(&mut self, _node: &Tint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unchecked_state(&mut self, _node: &UncheckedState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `w14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.

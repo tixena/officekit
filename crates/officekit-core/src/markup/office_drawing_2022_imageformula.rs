@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2022/imageformula`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_AIF: Option<NamespaceId> = Some(11);
 
@@ -231,12 +235,48 @@ static IMAGE_FORMULA_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `aif` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2022_imageformula` is never asked.
+pub trait Context: markup::Context {
+    fn image_formula(&mut self, _node: &ImageFormula) -> Option<ImageFormula> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_image_formula(
+        &mut self,
+        _node: &ImageFormula,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `aif:imageFormula`, schema type `CT_ImageFormula` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct ImageFormula {
     pub formula: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `aif` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2022_imageformula` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn image_formula(&mut self, _node: &ImageFormula) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ImageFormula {

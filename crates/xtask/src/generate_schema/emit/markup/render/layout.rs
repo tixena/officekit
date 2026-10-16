@@ -526,21 +526,9 @@ fn literal(path: &str, fields: &[(String, Expr)], shape: Shape) -> Option<String
         return Some(format!("{path} {{}}"));
     }
     let nested = shape.nested();
-    let field_shape = nested.sub_width(1)?;
     let mut list = Vec::new();
     for (name, value) in fields {
-        let after = field_shape.offset_left(name.len() + 2);
-        let field = if let Some(rewritten) = after.and_then(|inner| value.rewrite(inner)) {
-            format!("{name}: {rewritten}")
-        } else {
-            let below = nested.nested();
-            let rewritten = value.rewrite(below)?;
-            let mut out = format!("{name}:\n");
-            pad(below.indent, &mut out);
-            out.push_str(&rewritten);
-            out
-        };
-        list.push(field);
+        list.push(field_value(nested, name, value)?);
     }
     let one_line = shape
         .width
@@ -563,6 +551,36 @@ fn literal(path: &str, fields: &[(String, Expr)], shape: Shape) -> Option<String
     out.push('\n');
     pad(shape.indent, &mut out);
     out.push('}');
+    Some(out)
+}
+
+/// One field of a struct literal laid out a field per line, at `indent`:
+/// `name: value,`, the value on the field's line when it fits there, else on
+/// the next line one step in.
+#[must_use]
+pub fn field(indent: usize, name: &str, value: &Expr) -> String {
+    let mut out = String::new();
+    pad(indent, &mut out);
+    let text = field_value(Shape::indented(indent), name, value)
+        .unwrap_or_else(|| format!("{name}: {}", value.one_line()));
+    out.push_str(&text);
+    out.push_str(",\n");
+    out
+}
+
+/// A struct literal's field, `name: value`, on the line `nested` gives it.
+fn field_value(nested: Shape, name: &str, value: &Expr) -> Option<String> {
+    let after = nested
+        .sub_width(1)
+        .and_then(|inner| inner.offset_left(name.len() + 2));
+    if let Some(rewritten) = after.and_then(|inner| value.rewrite(inner)) {
+        return Some(format!("{name}: {rewritten}"));
+    }
+    let below = nested.nested();
+    let rewritten = value.rewrite(below)?;
+    let mut out = format!("{name}:\n");
+    pad(below.indent, &mut out);
+    out.push_str(&rewritten);
     Some(out)
 }
 

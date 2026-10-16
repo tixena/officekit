@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2014/revision`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_X: Option<NamespaceId> = Some(118);
@@ -1105,6 +1109,814 @@ pub struct Comments {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xr` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2014_revision` is never asked.
+pub trait Context: markup::Context {
+    fn auto_filter(&mut self, _node: &AutoFilter) -> Option<AutoFilter> {
+        None
+    }
+
+    fn body(&mut self, _node: &Body) -> Option<Body> {
+        None
+    }
+
+    fn c(&mut self, _node: &C) -> Option<C> {
+        None
+    }
+
+    fn ccse(&mut self, _node: &Ccse) -> Option<Ccse> {
+        None
+    }
+
+    fn comments(&mut self, _node: &Comments) -> Option<Comments> {
+        None
+    }
+
+    fn data_validation(&mut self, _node: &DataValidation) -> Option<DataValidation> {
+        None
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn f(&mut self, _node: &F) -> Option<F> {
+        None
+    }
+
+    fn formula(&mut self, _node: &Formula) -> Option<Formula> {
+        None
+    }
+
+    fn freeze_panes(&mut self, _node: &FreezePanes) -> Option<FreezePanes> {
+        None
+    }
+
+    fn future(&mut self, _node: &Future) -> Option<Future> {
+        None
+    }
+
+    fn hdr_rev_ex_header(&mut self, _node: &HdrRevExHeader) -> Option<HdrRevExHeader> {
+        None
+    }
+
+    fn hdr_state_based_header(
+        &mut self,
+        _node: &HdrStateBasedHeader,
+    ) -> Option<HdrStateBasedHeader> {
+        None
+    }
+
+    fn hide_unhide_sheet(&mut self, _node: &HideUnhideSheet) -> Option<HideUnhideSheet> {
+        None
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
+        None
+    }
+
+    fn is(&mut self, _node: &Is) -> Option<Is> {
+        None
+    }
+
+    fn link(&mut self, _node: &Link) -> Option<Link> {
+        None
+    }
+
+    fn oart_anchor(&mut self, _node: &OartAnchor) -> Option<OartAnchor> {
+        None
+    }
+
+    fn object_state(&mut self, _node: &ObjectState) -> Option<ObjectState> {
+        None
+    }
+
+    fn outline(&mut self, _node: &Outline) -> Option<Outline> {
+        None
+    }
+
+    fn outlines(&mut self, _node: &Outlines) -> Option<Outlines> {
+        None
+    }
+
+    fn pivot_table_definition(
+        &mut self,
+        _node: &PivotTableDefinition,
+    ) -> Option<PivotTableDefinition> {
+        None
+    }
+
+    fn r#ref(&mut self, _node: &Ref) -> Option<Ref> {
+        None
+    }
+
+    fn reference_map(&mut self, _node: &ReferenceMapContent) -> Option<ReferenceMapContent> {
+        None
+    }
+
+    fn reference_map_items(
+        &mut self,
+        _node: &ReferenceMapContent,
+    ) -> Option<Vec<ReferenceMapContent>> {
+        None
+    }
+
+    fn refmap(&mut self, _node: &Refmap) -> Option<Refmap> {
+        None
+    }
+
+    fn rev_hdrs(&mut self, _node: &RevHdrs) -> Option<RevHdrs> {
+        None
+    }
+
+    fn rev_stream(&mut self, _node: &RevStream) -> Option<RevStream> {
+        None
+    }
+
+    fn revision_change_object(
+        &mut self,
+        _node: &RevisionChangeObjectContent,
+    ) -> Option<RevisionChangeObjectContent> {
+        None
+    }
+
+    fn revision_group(&mut self, _node: &RevisionGroupContent) -> Option<RevisionGroupContent> {
+        None
+    }
+
+    fn revision_group_items(
+        &mut self,
+        _node: &RevisionGroupContent,
+    ) -> Option<Vec<RevisionGroupContent>> {
+        None
+    }
+
+    fn revision_ptr(&mut self, _node: &RevisionPtr) -> Option<RevisionPtr> {
+        None
+    }
+
+    fn revision_state(&mut self, _node: &RevisionStateContent) -> Option<RevisionStateContent> {
+        None
+    }
+
+    fn revision_stream(&mut self, _node: &RevisionStreamContent) -> Option<RevisionStreamContent> {
+        None
+    }
+
+    fn revision_stream_items(
+        &mut self,
+        _node: &RevisionStreamContent,
+    ) -> Option<Vec<RevisionStreamContent>> {
+        None
+    }
+
+    fn row_col_visual_ops(&mut self, _node: &RowColVisualOps) -> Option<RowColVisualOps> {
+        None
+    }
+
+    fn sheet_uid(&mut self, _node: &SheetUid) -> Option<SheetUid> {
+        None
+    }
+
+    fn show_gridlines_headings(
+        &mut self,
+        _node: &ShowGridlinesHeadings,
+    ) -> Option<ShowGridlinesHeadings> {
+        None
+    }
+
+    fn sparkline_group(&mut self, _node: &SparklineGroup) -> Option<SparklineGroup> {
+        None
+    }
+
+    fn state_based_object(
+        &mut self,
+        _node: &StateBasedObjectContent,
+    ) -> Option<StateBasedObjectContent> {
+        None
+    }
+
+    fn test(&mut self, _node: &Test) -> Option<Test> {
+        None
+    }
+
+    fn v(&mut self, _node: &V) -> Option<V> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_filter(
+        &mut self,
+        _node: &AutoFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_body(&mut self, _node: &Body, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c(&mut self, _node: &C, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ccse(&mut self, _node: &Ccse, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comments(
+        &mut self,
+        _node: &Comments,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_validation(
+        &mut self,
+        _node: &DataValidation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula(&mut self, _node: &Formula, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_freeze_panes(
+        &mut self,
+        _node: &FreezePanes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_future(&mut self, _node: &Future, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hdr_rev_ex_header(
+        &mut self,
+        _node: &HdrRevExHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hdr_state_based_header(
+        &mut self,
+        _node: &HdrStateBasedHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_unhide_sheet(
+        &mut self,
+        _node: &HideUnhideSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink(
+        &mut self,
+        _node: &Hyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_is(&mut self, _node: &Is, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_link(&mut self, _node: &Link, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_oart_anchor(
+        &mut self,
+        _node: &OartAnchor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_state(
+        &mut self,
+        _node: &ObjectState,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outline(&mut self, _node: &Outline, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outlines(
+        &mut self,
+        _node: &Outlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_table_definition(
+        &mut self,
+        _node: &PivotTableDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ref(&mut self, _node: &Ref, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_map(
+        &mut self,
+        _node: &ReferenceMapContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reference_map_items(
+        &mut self,
+        _node: &ReferenceMapContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_refmap(&mut self, _node: &Refmap, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rev_hdrs(
+        &mut self,
+        _node: &RevHdrs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rev_stream(
+        &mut self,
+        _node: &RevStream,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_change_object(
+        &mut self,
+        _node: &RevisionChangeObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_group(
+        &mut self,
+        _node: &RevisionGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_group_items(
+        &mut self,
+        _node: &RevisionGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_ptr(
+        &mut self,
+        _node: &RevisionPtr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_state(
+        &mut self,
+        _node: &RevisionStateContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_stream(
+        &mut self,
+        _node: &RevisionStreamContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_revision_stream_items(
+        &mut self,
+        _node: &RevisionStreamContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_col_visual_ops(
+        &mut self,
+        _node: &RowColVisualOps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sheet_uid(
+        &mut self,
+        _node: &SheetUid,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_gridlines_headings(
+        &mut self,
+        _node: &ShowGridlinesHeadings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sparkline_group(
+        &mut self,
+        _node: &SparklineGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_state_based_object(
+        &mut self,
+        _node: &StateBasedObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_test(&mut self, _node: &Test, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_def_name(
+        &mut self,
+        _node: &XrrDefName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_list(
+        &mut self,
+        _node: &XrrList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_list_exp_r(
+        &mut self,
+        _node: &XrrListExpR,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_sheet(
+        &mut self,
+        _node: &XrrSheet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_trim(
+        &mut self,
+        _node: &XrrTrim,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrr_uspt(
+        &mut self,
+        _node: &XrrUspt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrc(&mut self, _node: &Xrrc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrco(&mut self, _node: &Xrrco, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrdo(&mut self, _node: &Xrrdo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrf(&mut self, _node: &Xrrf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrftr(&mut self, _node: &Xrrftr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrg(&mut self, _node: &Xrrg, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrm(&mut self, _node: &Xrrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrrc(&mut self, _node: &Xrrrc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xrrtest(&mut self, _node: &Xrrtest, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xrr_def_name(&mut self, _node: &XrrDefName) -> Option<XrrDefName> {
+        None
+    }
+
+    fn xrr_list(&mut self, _node: &XrrList) -> Option<XrrList> {
+        None
+    }
+
+    fn xrr_list_exp_r(&mut self, _node: &XrrListExpR) -> Option<XrrListExpR> {
+        None
+    }
+
+    fn xrr_sheet(&mut self, _node: &XrrSheet) -> Option<XrrSheet> {
+        None
+    }
+
+    fn xrr_trim(&mut self, _node: &XrrTrim) -> Option<XrrTrim> {
+        None
+    }
+
+    fn xrr_uspt(&mut self, _node: &XrrUspt) -> Option<XrrUspt> {
+        None
+    }
+
+    fn xrrc(&mut self, _node: &Xrrc) -> Option<Xrrc> {
+        None
+    }
+
+    fn xrrco(&mut self, _node: &Xrrco) -> Option<Xrrco> {
+        None
+    }
+
+    fn xrrdo(&mut self, _node: &Xrrdo) -> Option<Xrrdo> {
+        None
+    }
+
+    fn xrrf(&mut self, _node: &Xrrf) -> Option<Xrrf> {
+        None
+    }
+
+    fn xrrftr(&mut self, _node: &Xrrftr) -> Option<Xrrftr> {
+        None
+    }
+
+    fn xrrg(&mut self, _node: &Xrrg) -> Option<Xrrg> {
+        None
+    }
+
+    fn xrrm(&mut self, _node: &Xrrm) -> Option<Xrrm> {
+        None
+    }
+
+    fn xrrrc(&mut self, _node: &Xrrrc) -> Option<Xrrrc> {
+        None
+    }
+
+    fn xrrtest(&mut self, _node: &Xrrtest) -> Option<Xrrtest> {
+        None
+    }
+}
+
 /// The tag `xr:dataValidation`, schema type `CT_DataValidation` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1757,6 +2569,233 @@ pub struct Test {
 pub struct V {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xr` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2014_revision` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn auto_filter(&mut self, _node: &AutoFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn body(&mut self, _node: &Body) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c(&mut self, _node: &C) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ccse(&mut self, _node: &Ccse) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comments(&mut self, _node: &Comments) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_validation(&mut self, _node: &DataValidation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn f(&mut self, _node: &F) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula(&mut self, _node: &Formula) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn freeze_panes(&mut self, _node: &FreezePanes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn future(&mut self, _node: &Future) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hdr_rev_ex_header(&mut self, _node: &HdrRevExHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hdr_state_based_header(&mut self, _node: &HdrStateBasedHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_unhide_sheet(&mut self, _node: &HideUnhideSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn is(&mut self, _node: &Is) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn link(&mut self, _node: &Link) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn oart_anchor(&mut self, _node: &OartAnchor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_state(&mut self, _node: &ObjectState) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outline(&mut self, _node: &Outline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outlines(&mut self, _node: &Outlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_table_definition(&mut self, _node: &PivotTableDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#ref(&mut self, _node: &Ref) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reference_map(&mut self, _node: &ReferenceMapContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn refmap(&mut self, _node: &Refmap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rev_hdrs(&mut self, _node: &RevHdrs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rev_stream(&mut self, _node: &RevStream) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_change_object(&mut self, _node: &RevisionChangeObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_group(&mut self, _node: &RevisionGroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_ptr(&mut self, _node: &RevisionPtr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_state(&mut self, _node: &RevisionStateContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn revision_stream(&mut self, _node: &RevisionStreamContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_col_visual_ops(&mut self, _node: &RowColVisualOps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sheet_uid(&mut self, _node: &SheetUid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_gridlines_headings(&mut self, _node: &ShowGridlinesHeadings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sparkline_group(&mut self, _node: &SparklineGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn state_based_object(&mut self, _node: &StateBasedObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn test(&mut self, _node: &Test) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v(&mut self, _node: &V) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_def_name(&mut self, _node: &XrrDefName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_list(&mut self, _node: &XrrList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_list_exp_r(&mut self, _node: &XrrListExpR) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_sheet(&mut self, _node: &XrrSheet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_trim(&mut self, _node: &XrrTrim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrr_uspt(&mut self, _node: &XrrUspt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrc(&mut self, _node: &Xrrc) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrco(&mut self, _node: &Xrrco) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrdo(&mut self, _node: &Xrrdo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrf(&mut self, _node: &Xrrf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrftr(&mut self, _node: &Xrrftr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrg(&mut self, _node: &Xrrg) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrm(&mut self, _node: &Xrrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrrc(&mut self, _node: &Xrrrc) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xrrtest(&mut self, _node: &Xrrtest) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `xr:xrrDefName`, schema type `CT_RevExDefinedName` of SDK 3.5.1's data.

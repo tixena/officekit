@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_XXPIM: Option<NamespaceId> = Some(166);
 
@@ -245,6 +249,71 @@ static IGNORABLE_AFTER_VERSION_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `xxpim` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2020_pivot_nov2020` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn data_field_future_data(
+        &mut self,
+        _node: &DataFieldFutureData,
+    ) -> Option<DataFieldFutureData> {
+        None
+    }
+
+    fn ignorable_after_version(
+        &mut self,
+        _node: &IgnorableAfterVersion,
+    ) -> Option<IgnorableAfterVersion> {
+        None
+    }
+
+    fn implicit_measure_support(
+        &mut self,
+        _node: &ImplicitMeasureSupport,
+    ) -> Option<ImplicitMeasureSupport> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_field_future_data(
+        &mut self,
+        _node: &DataFieldFutureData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ignorable_after_version(
+        &mut self,
+        _node: &IgnorableAfterVersion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_implicit_measure_support(
+        &mut self,
+        _node: &ImplicitMeasureSupport,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xxpim:dataFieldFutureData`, schema type `CT_DataFieldFutureData` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -268,6 +337,25 @@ pub struct IgnorableAfterVersion {
 pub struct ImplicitMeasureSupport {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xxpim` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2020_pivot_nov2020` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn data_field_future_data(&mut self, _node: &DataFieldFutureData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ignorable_after_version(&mut self, _node: &IgnorableAfterVersion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn implicit_measure_support(&mut self, _node: &ImplicitMeasureSupport) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for DataFieldFutureData {

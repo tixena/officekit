@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2012/chart`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
@@ -754,6 +758,715 @@ pub struct CategoryFilterExceptions {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `c15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2012_chart` is never asked.
+pub trait Context: markup::Context {
+    fn auto_cat(&mut self, _node: &AutoCat) -> Option<AutoCat> {
+        None
+    }
+
+    fn bubble3d(&mut self, _node: &Bubble3D) -> Option<Bubble3D> {
+        None
+    }
+
+    fn cat(&mut self, _node: &Cat) -> Option<Cat> {
+        None
+    }
+
+    fn category_filter_exception(
+        &mut self,
+        _node: &CategoryFilterException,
+    ) -> Option<CategoryFilterException> {
+        None
+    }
+
+    fn category_filter_exceptions(
+        &mut self,
+        _node: &CategoryFilterExceptions,
+    ) -> Option<CategoryFilterExceptions> {
+        None
+    }
+
+    fn d_lbl(&mut self, _node: &DLbl) -> Option<DLbl> {
+        None
+    }
+
+    fn datalabels_range(&mut self, _node: &DatalabelsRange) -> Option<DatalabelsRange> {
+        None
+    }
+
+    fn dlbl_field_table(&mut self, _node: &DlblFieldTable) -> Option<DlblFieldTable> {
+        None
+    }
+
+    fn dlbl_field_table_cache(
+        &mut self,
+        _node: &DlblFieldTableCache,
+    ) -> Option<DlblFieldTableCache> {
+        None
+    }
+
+    fn dlbl_ft_entry(&mut self, _node: &DlblFTEntry) -> Option<DlblFTEntry> {
+        None
+    }
+
+    fn dlbl_range_cache(&mut self, _node: &DlblRangeCache) -> Option<DlblRangeCache> {
+        None
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> Option<Explosion> {
+        None
+    }
+
+    fn f(&mut self, _node: &F) -> Option<F> {
+        None
+    }
+
+    fn filtered_area_series(&mut self, _node: &FilteredAreaSeries) -> Option<FilteredAreaSeries> {
+        None
+    }
+
+    fn filtered_bar_series(&mut self, _node: &FilteredBarSeries) -> Option<FilteredBarSeries> {
+        None
+    }
+
+    fn filtered_bubble_series(
+        &mut self,
+        _node: &FilteredBubbleSeries,
+    ) -> Option<FilteredBubbleSeries> {
+        None
+    }
+
+    fn filtered_category_title(
+        &mut self,
+        _node: &FilteredCategoryTitle,
+    ) -> Option<FilteredCategoryTitle> {
+        None
+    }
+
+    fn filtered_line_series(&mut self, _node: &FilteredLineSeries) -> Option<FilteredLineSeries> {
+        None
+    }
+
+    fn filtered_pie_series(&mut self, _node: &FilteredPieSeries) -> Option<FilteredPieSeries> {
+        None
+    }
+
+    fn filtered_radar_series(
+        &mut self,
+        _node: &FilteredRadarSeries,
+    ) -> Option<FilteredRadarSeries> {
+        None
+    }
+
+    fn filtered_scatter_series(
+        &mut self,
+        _node: &FilteredScatterSeries,
+    ) -> Option<FilteredScatterSeries> {
+        None
+    }
+
+    fn filtered_series_title(
+        &mut self,
+        _node: &FilteredSeriesTitle,
+    ) -> Option<FilteredSeriesTitle> {
+        None
+    }
+
+    fn filtered_surface_series(
+        &mut self,
+        _node: &FilteredSurfaceSeries,
+    ) -> Option<FilteredSurfaceSeries> {
+        None
+    }
+
+    fn formula_ref(&mut self, _node: &FormulaRef) -> Option<FormulaRef> {
+        None
+    }
+
+    fn full_ref(&mut self, _node: &FullRef) -> Option<FullRef> {
+        None
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> Option<InvertIfNegative> {
+        None
+    }
+
+    fn layout(&mut self, _node: &Layout) -> Option<Layout> {
+        None
+    }
+
+    fn leader_lines(&mut self, _node: &LeaderLines) -> Option<LeaderLines> {
+        None
+    }
+
+    fn level_ref(&mut self, _node: &LevelRef) -> Option<LevelRef> {
+        None
+    }
+
+    fn marker(&mut self, _node: &Marker) -> Option<Marker> {
+        None
+    }
+
+    fn num_fmt(&mut self, _node: &NumFmt) -> Option<NumFmt> {
+        None
+    }
+
+    fn pivot_source(&mut self, _node: &PivotSource) -> Option<PivotSource> {
+        None
+    }
+
+    fn ser_area_ser(&mut self, _node: &SerAreaSer) -> Option<SerAreaSer> {
+        None
+    }
+
+    fn ser_bar_ser(&mut self, _node: &SerBarSer) -> Option<SerBarSer> {
+        None
+    }
+
+    fn ser_bubble_ser(&mut self, _node: &SerBubbleSer) -> Option<SerBubbleSer> {
+        None
+    }
+
+    fn ser_line_ser(&mut self, _node: &SerLineSer) -> Option<SerLineSer> {
+        None
+    }
+
+    fn ser_pie_ser(&mut self, _node: &SerPieSer) -> Option<SerPieSer> {
+        None
+    }
+
+    fn ser_radar_ser(&mut self, _node: &SerRadarSer) -> Option<SerRadarSer> {
+        None
+    }
+
+    fn ser_scatter_ser(&mut self, _node: &SerScatterSer) -> Option<SerScatterSer> {
+        None
+    }
+
+    fn ser_surface_ser(&mut self, _node: &SerSurfaceSer) -> Option<SerSurfaceSer> {
+        None
+    }
+
+    fn show_data_labels_range(
+        &mut self,
+        _node: &ShowDataLabelsRange,
+    ) -> Option<ShowDataLabelsRange> {
+        None
+    }
+
+    fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> Option<ShowLeaderLines> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn sqref(&mut self, _node: &Sqref) -> Option<Sqref> {
+        None
+    }
+
+    fn tx(&mut self, _node: &Tx) -> Option<Tx> {
+        None
+    }
+
+    fn txfld_guid(&mut self, _node: &TxfldGUID) -> Option<TxfldGUID> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_cat(
+        &mut self,
+        _node: &AutoCat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bubble3d(
+        &mut self,
+        _node: &Bubble3D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cat(&mut self, _node: &Cat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_filter_exception(
+        &mut self,
+        _node: &CategoryFilterException,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_filter_exceptions(
+        &mut self,
+        _node: &CategoryFilterExceptions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_d_lbl(&mut self, _node: &DLbl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_datalabels_range(
+        &mut self,
+        _node: &DatalabelsRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dlbl_field_table(
+        &mut self,
+        _node: &DlblFieldTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dlbl_field_table_cache(
+        &mut self,
+        _node: &DlblFieldTableCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dlbl_ft_entry(
+        &mut self,
+        _node: &DlblFTEntry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dlbl_range_cache(
+        &mut self,
+        _node: &DlblRangeCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_explosion(
+        &mut self,
+        _node: &Explosion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_area_series(
+        &mut self,
+        _node: &FilteredAreaSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_bar_series(
+        &mut self,
+        _node: &FilteredBarSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_bubble_series(
+        &mut self,
+        _node: &FilteredBubbleSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_category_title(
+        &mut self,
+        _node: &FilteredCategoryTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_line_series(
+        &mut self,
+        _node: &FilteredLineSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_pie_series(
+        &mut self,
+        _node: &FilteredPieSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_radar_series(
+        &mut self,
+        _node: &FilteredRadarSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_scatter_series(
+        &mut self,
+        _node: &FilteredScatterSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_series_title(
+        &mut self,
+        _node: &FilteredSeriesTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filtered_surface_series(
+        &mut self,
+        _node: &FilteredSurfaceSeries,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_formula_ref(
+        &mut self,
+        _node: &FormulaRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_full_ref(
+        &mut self,
+        _node: &FullRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_invert_if_negative(
+        &mut self,
+        _node: &InvertIfNegative,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout(&mut self, _node: &Layout, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_leader_lines(
+        &mut self,
+        _node: &LeaderLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_level_ref(
+        &mut self,
+        _node: &LevelRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_marker(&mut self, _node: &Marker, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_fmt(&mut self, _node: &NumFmt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_source(
+        &mut self,
+        _node: &PivotSource,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_area_ser(
+        &mut self,
+        _node: &SerAreaSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_bar_ser(
+        &mut self,
+        _node: &SerBarSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_bubble_ser(
+        &mut self,
+        _node: &SerBubbleSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_line_ser(
+        &mut self,
+        _node: &SerLineSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_pie_ser(
+        &mut self,
+        _node: &SerPieSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_radar_ser(
+        &mut self,
+        _node: &SerRadarSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_scatter_ser(
+        &mut self,
+        _node: &SerScatterSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ser_surface_ser(
+        &mut self,
+        _node: &SerSurfaceSer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_data_labels_range(
+        &mut self,
+        _node: &ShowDataLabelsRange,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_leader_lines(
+        &mut self,
+        _node: &ShowLeaderLines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sqref(&mut self, _node: &Sqref, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx(&mut self, _node: &Tx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_txfld_guid(
+        &mut self,
+        _node: &TxfldGUID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_x_for_save(
+        &mut self,
+        _node: &XForSave,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn x_for_save(&mut self, _node: &XForSave) -> Option<XForSave> {
+        None
+    }
+}
+
 /// The tag `c15:dLbl`, schema type `CT_DLbl` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1189,6 +1902,201 @@ pub struct Tx {
 pub struct TxfldGUID {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `c15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2012_chart` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn auto_cat(&mut self, _node: &AutoCat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bubble3d(&mut self, _node: &Bubble3D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cat(&mut self, _node: &Cat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_filter_exception(&mut self, _node: &CategoryFilterException) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_filter_exceptions(&mut self, _node: &CategoryFilterExceptions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn d_lbl(&mut self, _node: &DLbl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn datalabels_range(&mut self, _node: &DatalabelsRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dlbl_field_table(&mut self, _node: &DlblFieldTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dlbl_field_table_cache(&mut self, _node: &DlblFieldTableCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dlbl_ft_entry(&mut self, _node: &DlblFTEntry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dlbl_range_cache(&mut self, _node: &DlblRangeCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn explosion(&mut self, _node: &Explosion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn f(&mut self, _node: &F) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_area_series(&mut self, _node: &FilteredAreaSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_bar_series(&mut self, _node: &FilteredBarSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_bubble_series(&mut self, _node: &FilteredBubbleSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_category_title(&mut self, _node: &FilteredCategoryTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_line_series(&mut self, _node: &FilteredLineSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_pie_series(&mut self, _node: &FilteredPieSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_radar_series(&mut self, _node: &FilteredRadarSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_scatter_series(&mut self, _node: &FilteredScatterSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_series_title(&mut self, _node: &FilteredSeriesTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filtered_surface_series(&mut self, _node: &FilteredSurfaceSeries) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn formula_ref(&mut self, _node: &FormulaRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn full_ref(&mut self, _node: &FullRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn invert_if_negative(&mut self, _node: &InvertIfNegative) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout(&mut self, _node: &Layout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn leader_lines(&mut self, _node: &LeaderLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn level_ref(&mut self, _node: &LevelRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn marker(&mut self, _node: &Marker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_fmt(&mut self, _node: &NumFmt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_source(&mut self, _node: &PivotSource) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_area_ser(&mut self, _node: &SerAreaSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_bar_ser(&mut self, _node: &SerBarSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_bubble_ser(&mut self, _node: &SerBubbleSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_line_ser(&mut self, _node: &SerLineSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_pie_ser(&mut self, _node: &SerPieSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_radar_ser(&mut self, _node: &SerRadarSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_scatter_ser(&mut self, _node: &SerScatterSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ser_surface_ser(&mut self, _node: &SerSurfaceSer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_data_labels_range(&mut self, _node: &ShowDataLabelsRange) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_leader_lines(&mut self, _node: &ShowLeaderLines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sqref(&mut self, _node: &Sqref) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx(&mut self, _node: &Tx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn txfld_guid(&mut self, _node: &TxfldGUID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn x_for_save(&mut self, _node: &XForSave) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `c15:xForSave`, schema type `CT_Boolean` of SDK 3.5.1's data.

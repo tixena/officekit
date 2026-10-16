@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chartex`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_CX: Option<NamespaceId> = Some(39);
@@ -1619,6 +1623,1969 @@ pub struct ClrMapOvr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `cx` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2014_chartex` is never asked.
+pub trait Context: markup::Context {
+    fn address(&mut self, _node: &Address) -> Option<Address> {
+        None
+    }
+
+    fn aggregation(&mut self, _node: &Aggregation) -> Option<Aggregation> {
+        None
+    }
+
+    fn axis(&mut self, _node: &Axis) -> Option<Axis> {
+        None
+    }
+
+    fn axis_content(&mut self, _node: &AxisContent) -> Option<AxisContent> {
+        None
+    }
+
+    fn axis_id(&mut self, _node: &AxisId) -> Option<AxisId> {
+        None
+    }
+
+    fn bin_count(&mut self, _node: &BinCount) -> Option<BinCount> {
+        None
+    }
+
+    fn bin_size(&mut self, _node: &BinSize) -> Option<BinSize> {
+        None
+    }
+
+    fn binary(&mut self, _node: &Binary) -> Option<Binary> {
+        None
+    }
+
+    fn binning(&mut self, _node: &Binning) -> Option<Binning> {
+        None
+    }
+
+    fn binning_content(&mut self, _node: &BinningContent) -> Option<BinningContent> {
+        None
+    }
+
+    fn cat_scaling(&mut self, _node: &CatScaling) -> Option<CatScaling> {
+        None
+    }
+
+    fn chart_chart(&mut self, _node: &ChartChart) -> Option<ChartChart> {
+        None
+    }
+
+    fn chart_data(&mut self, _node: &ChartData) -> Option<ChartData> {
+        None
+    }
+
+    fn chart_rel_id(&mut self, _node: &ChartRelId) -> Option<ChartRelId> {
+        None
+    }
+
+    fn chart_space(&mut self, _node: &ChartSpace) -> Option<ChartSpace> {
+        None
+    }
+
+    fn clear(&mut self, _node: &Clear) -> Option<Clear> {
+        None
+    }
+
+    fn clr_map_ovr(&mut self, _node: &ClrMapOvr) -> Option<ClrMapOvr> {
+        None
+    }
+
+    fn copyright(&mut self, _node: &Copyright) -> Option<Copyright> {
+        None
+    }
+
+    fn copyrights(&mut self, _node: &Copyrights) -> Option<Copyrights> {
+        None
+    }
+
+    fn data(&mut self, _node: &Data) -> Option<Data> {
+        None
+    }
+
+    fn data_content(&mut self, _node: &DataContent) -> Option<DataContent> {
+        None
+    }
+
+    fn data_content_items(&mut self, _node: &DataContent) -> Option<Vec<DataContent>> {
+        None
+    }
+
+    fn data_id(&mut self, _node: &DataId) -> Option<DataId> {
+        None
+    }
+
+    fn data_label(&mut self, _node: &DataLabel) -> Option<DataLabel> {
+        None
+    }
+
+    fn data_label_hidden(&mut self, _node: &DataLabelHidden) -> Option<DataLabelHidden> {
+        None
+    }
+
+    fn data_labels(&mut self, _node: &DataLabels) -> Option<DataLabels> {
+        None
+    }
+
+    fn data_pt(&mut self, _node: &DataPt) -> Option<DataPt> {
+        None
+    }
+
+    fn entity_type(&mut self, _node: &EntityType) -> Option<EntityType> {
+        None
+    }
+
+    fn even_footer(&mut self, _node: &EvenFooter) -> Option<EvenFooter> {
+        None
+    }
+
+    fn even_header(&mut self, _node: &EvenHeader) -> Option<EvenHeader> {
+        None
+    }
+
+    fn ext(&mut self, _node: &Ext) -> Option<Ext> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn external_data(&mut self, _node: &ExternalData) -> Option<ExternalData> {
+        None
+    }
+
+    fn extreme_value(&mut self, _node: &ExtremeValue) -> Option<ExtremeValue> {
+        None
+    }
+
+    fn f(&mut self, _node: &F) -> Option<F> {
+        None
+    }
+
+    fn first_footer(&mut self, _node: &FirstFooter) -> Option<FirstFooter> {
+        None
+    }
+
+    fn first_header(&mut self, _node: &FirstHeader) -> Option<FirstHeader> {
+        None
+    }
+
+    fn fmt_ovr(&mut self, _node: &FmtOvr) -> Option<FmtOvr> {
+        None
+    }
+
+    fn fmt_ovrs(&mut self, _node: &FmtOvrs) -> Option<FmtOvrs> {
+        None
+    }
+
+    fn geo_cache(&mut self, _node: &GeoCache) -> Option<GeoCache> {
+        None
+    }
+
+    fn geo_child_entities(&mut self, _node: &GeoChildEntities) -> Option<GeoChildEntities> {
+        None
+    }
+
+    fn geo_child_entities_query(
+        &mut self,
+        _node: &GeoChildEntitiesQuery,
+    ) -> Option<GeoChildEntitiesQuery> {
+        None
+    }
+
+    fn geo_child_entities_query_result(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResult,
+    ) -> Option<GeoChildEntitiesQueryResult> {
+        None
+    }
+
+    fn geo_child_entities_query_results(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResults,
+    ) -> Option<GeoChildEntitiesQueryResults> {
+        None
+    }
+
+    fn geo_child_types(&mut self, _node: &GeoChildTypes) -> Option<GeoChildTypes> {
+        None
+    }
+
+    fn geo_data(&mut self, _node: &GeoData) -> Option<GeoData> {
+        None
+    }
+
+    fn geo_data_entity_query(&mut self, _node: &GeoDataEntityQuery) -> Option<GeoDataEntityQuery> {
+        None
+    }
+
+    fn geo_data_entity_query_result(
+        &mut self,
+        _node: &GeoDataEntityQueryResult,
+    ) -> Option<GeoDataEntityQueryResult> {
+        None
+    }
+
+    fn geo_data_entity_query_results(
+        &mut self,
+        _node: &GeoDataEntityQueryResults,
+    ) -> Option<GeoDataEntityQueryResults> {
+        None
+    }
+
+    fn geo_data_point_query(&mut self, _node: &GeoDataPointQuery) -> Option<GeoDataPointQuery> {
+        None
+    }
+
+    fn geo_data_point_to_entity_query(
+        &mut self,
+        _node: &GeoDataPointToEntityQuery,
+    ) -> Option<GeoDataPointToEntityQuery> {
+        None
+    }
+
+    fn geo_data_point_to_entity_query_result(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResult,
+    ) -> Option<GeoDataPointToEntityQueryResult> {
+        None
+    }
+
+    fn geo_data_point_to_entity_query_results(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResults,
+    ) -> Option<GeoDataPointToEntityQueryResults> {
+        None
+    }
+
+    fn geo_entity(&mut self, _node: &GeoEntity) -> Option<GeoEntity> {
+        None
+    }
+
+    fn geo_hierarchy_entity(&mut self, _node: &GeoHierarchyEntity) -> Option<GeoHierarchyEntity> {
+        None
+    }
+
+    fn geo_location(&mut self, _node: &GeoLocation) -> Option<GeoLocation> {
+        None
+    }
+
+    fn geo_location_query(&mut self, _node: &GeoLocationQuery) -> Option<GeoLocationQuery> {
+        None
+    }
+
+    fn geo_location_query_result(
+        &mut self,
+        _node: &GeoLocationQueryResult,
+    ) -> Option<GeoLocationQueryResult> {
+        None
+    }
+
+    fn geo_location_query_results(
+        &mut self,
+        _node: &GeoLocationQueryResults,
+    ) -> Option<GeoLocationQueryResults> {
+        None
+    }
+
+    fn geo_locations(&mut self, _node: &GeoLocations) -> Option<GeoLocations> {
+        None
+    }
+
+    fn geo_parent_entities_query(
+        &mut self,
+        _node: &GeoParentEntitiesQuery,
+    ) -> Option<GeoParentEntitiesQuery> {
+        None
+    }
+
+    fn geo_parent_entities_query_result(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResult,
+    ) -> Option<GeoParentEntitiesQueryResult> {
+        None
+    }
+
+    fn geo_parent_entities_query_results(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResults,
+    ) -> Option<GeoParentEntitiesQueryResults> {
+        None
+    }
+
+    fn geo_parent_entity(&mut self, _node: &GeoParentEntity) -> Option<GeoParentEntity> {
+        None
+    }
+
+    fn geo_polygon(&mut self, _node: &GeoPolygon) -> Option<GeoPolygon> {
+        None
+    }
+
+    fn geo_polygons(&mut self, _node: &GeoPolygons) -> Option<GeoPolygons> {
+        None
+    }
+
+    fn geography(&mut self, _node: &Geography) -> Option<Geography> {
+        None
+    }
+
+    fn geography_cache(&mut self, _node: &GeographyCacheContent) -> Option<GeographyCacheContent> {
+        None
+    }
+
+    fn geography_cache_items(
+        &mut self,
+        _node: &GeographyCacheContent,
+    ) -> Option<Vec<GeographyCacheContent>> {
+        None
+    }
+
+    fn header_footer(&mut self, _node: &HeaderFooter) -> Option<HeaderFooter> {
+        None
+    }
+
+    fn idx(&mut self, _node: &Idx) -> Option<Idx> {
+        None
+    }
+
+    fn layout_pr(&mut self, _node: &LayoutPr) -> Option<LayoutPr> {
+        None
+    }
+
+    fn legend(&mut self, _node: &Legend) -> Option<Legend> {
+        None
+    }
+
+    fn lvl_numeric_level(&mut self, _node: &LvlNumericLevel) -> Option<LvlNumericLevel> {
+        None
+    }
+
+    fn lvl_string_level(&mut self, _node: &LvlStringLevel) -> Option<LvlStringLevel> {
+        None
+    }
+
+    fn major_gridlines(&mut self, _node: &MajorGridlines) -> Option<MajorGridlines> {
+        None
+    }
+
+    fn major_tick_marks(&mut self, _node: &MajorTickMarks) -> Option<MajorTickMarks> {
+        None
+    }
+
+    fn max(&mut self, _node: &Max) -> Option<Max> {
+        None
+    }
+
+    fn max_color(&mut self, _node: &MaxColor) -> Option<MaxColor> {
+        None
+    }
+
+    fn mid(&mut self, _node: &Mid) -> Option<Mid> {
+        None
+    }
+
+    fn mid_color(&mut self, _node: &MidColor) -> Option<MidColor> {
+        None
+    }
+
+    fn min(&mut self, _node: &Min) -> Option<Min> {
+        None
+    }
+
+    fn min_color(&mut self, _node: &MinColor) -> Option<MinColor> {
+        None
+    }
+
+    fn minor_gridlines(&mut self, _node: &MinorGridlines) -> Option<MinorGridlines> {
+        None
+    }
+
+    fn minor_tick_marks(&mut self, _node: &MinorTickMarks) -> Option<MinorTickMarks> {
+        None
+    }
+
+    fn nf(&mut self, _node: &Nf) -> Option<Nf> {
+        None
+    }
+
+    fn num_dim(&mut self, _node: &NumDim) -> Option<NumDim> {
+        None
+    }
+
+    fn num_fmt(&mut self, _node: &NumFmt) -> Option<NumFmt> {
+        None
+    }
+
+    fn number(&mut self, _node: &Number) -> Option<Number> {
+        None
+    }
+
+    fn numeric_dimension(
+        &mut self,
+        _node: &NumericDimensionContent,
+    ) -> Option<NumericDimensionContent> {
+        None
+    }
+
+    fn numeric_dimension_items(
+        &mut self,
+        _node: &NumericDimensionContent,
+    ) -> Option<Vec<NumericDimensionContent>> {
+        None
+    }
+
+    fn odd_footer(&mut self, _node: &OddFooter) -> Option<OddFooter> {
+        None
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> Option<OddHeader> {
+        None
+    }
+
+    fn offset(&mut self, _node: &Offset) -> Option<Offset> {
+        None
+    }
+
+    fn openxmlsdk49becffa3b034d138272d6ccb22579e3(
+        &mut self,
+        _node: &Openxmlsdk49BECFFA3B034D138272D6CCB22579E3,
+    ) -> Option<Openxmlsdk49BECFFA3B034D138272D6CCB22579E3> {
+        None
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> Option<PageMargins> {
+        None
+    }
+
+    fn page_setup(&mut self, _node: &PageSetup) -> Option<PageSetup> {
+        None
+    }
+
+    fn parent_label_layout(&mut self, _node: &ParentLabelLayout) -> Option<ParentLabelLayout> {
+        None
+    }
+
+    fn percent(&mut self, _node: &Percent) -> Option<Percent> {
+        None
+    }
+
+    fn plot_area(&mut self, _node: &PlotArea) -> Option<PlotArea> {
+        None
+    }
+
+    fn plot_area_region(&mut self, _node: &PlotAreaRegion) -> Option<PlotAreaRegion> {
+        None
+    }
+
+    fn plot_surface(&mut self, _node: &PlotSurface) -> Option<PlotSurface> {
+        None
+    }
+
+    fn print_settings(&mut self, _node: &PrintSettings) -> Option<PrintSettings> {
+        None
+    }
+
+    fn pt_numeric_value(&mut self, _node: &PtNumericValue) -> Option<PtNumericValue> {
+        None
+    }
+
+    fn pt_string_value(&mut self, _node: &PtStringValue) -> Option<PtStringValue> {
+        None
+    }
+
+    fn region_label_layout(&mut self, _node: &RegionLabelLayout) -> Option<RegionLabelLayout> {
+        None
+    }
+
+    fn rich(&mut self, _node: &Rich) -> Option<Rich> {
+        None
+    }
+
+    fn separator(&mut self, _node: &Separator) -> Option<Separator> {
+        None
+    }
+
+    fn series(&mut self, _node: &Series) -> Option<Series> {
+        None
+    }
+
+    fn series_layout_properties(
+        &mut self,
+        _node: &SeriesLayoutPropertiesContent,
+    ) -> Option<SeriesLayoutPropertiesContent> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn statistics(&mut self, _node: &Statistics) -> Option<Statistics> {
+        None
+    }
+
+    fn str_dim(&mut self, _node: &StrDim) -> Option<StrDim> {
+        None
+    }
+
+    fn string_dimension(
+        &mut self,
+        _node: &StringDimensionContent,
+    ) -> Option<StringDimensionContent> {
+        None
+    }
+
+    fn string_dimension_items(
+        &mut self,
+        _node: &StringDimensionContent,
+    ) -> Option<Vec<StringDimensionContent>> {
+        None
+    }
+
+    fn subtotals(&mut self, _node: &Subtotals) -> Option<Subtotals> {
+        None
+    }
+
+    fn text(&mut self, _node: &TextContent) -> Option<TextContent> {
+        None
+    }
+
+    fn text_data(&mut self, _node: &TextDataContent) -> Option<TextDataContent> {
+        None
+    }
+
+    fn tick_labels(&mut self, _node: &TickLabels) -> Option<TickLabels> {
+        None
+    }
+
+    fn title_axis_title(&mut self, _node: &TitleAxisTitle) -> Option<TitleAxisTitle> {
+        None
+    }
+
+    fn title_chart_title(&mut self, _node: &TitleChartTitle) -> Option<TitleChartTitle> {
+        None
+    }
+
+    fn tx(&mut self, _node: &Tx) -> Option<Tx> {
+        None
+    }
+
+    fn tx_data(&mut self, _node: &TxData) -> Option<TxData> {
+        None
+    }
+
+    fn tx_pr(&mut self, _node: &TxPr) -> Option<TxPr> {
+        None
+    }
+
+    fn units(&mut self, _node: &Units) -> Option<Units> {
+        None
+    }
+
+    fn units_label(&mut self, _node: &UnitsLabel) -> Option<UnitsLabel> {
+        None
+    }
+
+    fn v(&mut self, _node: &V) -> Option<V> {
+        None
+    }
+
+    fn val_scaling(&mut self, _node: &ValScaling) -> Option<ValScaling> {
+        None
+    }
+
+    fn value_color_end_position(
+        &mut self,
+        _node: &ValueColorEndPositionContent,
+    ) -> Option<ValueColorEndPositionContent> {
+        None
+    }
+
+    fn value_color_middle_position(
+        &mut self,
+        _node: &ValueColorMiddlePositionContent,
+    ) -> Option<ValueColorMiddlePositionContent> {
+        None
+    }
+
+    fn value_color_positions(
+        &mut self,
+        _node: &ValueColorPositions,
+    ) -> Option<ValueColorPositions> {
+        None
+    }
+
+    fn value_colors(&mut self, _node: &ValueColors) -> Option<ValueColors> {
+        None
+    }
+
+    fn visibility_data_label_visibilities(
+        &mut self,
+        _node: &VisibilityDataLabelVisibilities,
+    ) -> Option<VisibilityDataLabelVisibilities> {
+        None
+    }
+
+    fn visibility_series_element_visibilities(
+        &mut self,
+        _node: &VisibilitySeriesElementVisibilities,
+    ) -> Option<VisibilitySeriesElementVisibilities> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_address(&mut self, _node: &Address, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_aggregation(
+        &mut self,
+        _node: &Aggregation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis(&mut self, _node: &Axis, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_content(
+        &mut self,
+        _node: &AxisContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_axis_id(&mut self, _node: &AxisId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bin_count(
+        &mut self,
+        _node: &BinCount,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bin_size(
+        &mut self,
+        _node: &BinSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binary(&mut self, _node: &Binary, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binning(&mut self, _node: &Binning, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_binning_content(
+        &mut self,
+        _node: &BinningContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cat_scaling(
+        &mut self,
+        _node: &CatScaling,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_chart(
+        &mut self,
+        _node: &ChartChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_data(
+        &mut self,
+        _node: &ChartData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_rel_id(
+        &mut self,
+        _node: &ChartRelId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_space(
+        &mut self,
+        _node: &ChartSpace,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_clear(&mut self, _node: &Clear, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_clr_map_ovr(
+        &mut self,
+        _node: &ClrMapOvr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_copyright(
+        &mut self,
+        _node: &Copyright,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_copyrights(
+        &mut self,
+        _node: &Copyrights,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data(&mut self, _node: &Data, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_content(
+        &mut self,
+        _node: &DataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_content_items(
+        &mut self,
+        _node: &DataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_id(&mut self, _node: &DataId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label(
+        &mut self,
+        _node: &DataLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_label_hidden(
+        &mut self,
+        _node: &DataLabelHidden,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_labels(
+        &mut self,
+        _node: &DataLabels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_pt(&mut self, _node: &DataPt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_entity_type(
+        &mut self,
+        _node: &EntityType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_footer(
+        &mut self,
+        _node: &EvenFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_even_header(
+        &mut self,
+        _node: &EvenHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext(&mut self, _node: &Ext, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_data(
+        &mut self,
+        _node: &ExternalData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extreme_value(
+        &mut self,
+        _node: &ExtremeValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_f(&mut self, _node: &F, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_footer(
+        &mut self,
+        _node: &FirstFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_header(
+        &mut self,
+        _node: &FirstHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fmt_ovr(&mut self, _node: &FmtOvr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fmt_ovrs(
+        &mut self,
+        _node: &FmtOvrs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_cache(
+        &mut self,
+        _node: &GeoCache,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_child_entities(
+        &mut self,
+        _node: &GeoChildEntities,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_child_entities_query(
+        &mut self,
+        _node: &GeoChildEntitiesQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_child_entities_query_result(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResult,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_child_entities_query_results(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_child_types(
+        &mut self,
+        _node: &GeoChildTypes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data(
+        &mut self,
+        _node: &GeoData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_entity_query(
+        &mut self,
+        _node: &GeoDataEntityQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_entity_query_result(
+        &mut self,
+        _node: &GeoDataEntityQueryResult,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_entity_query_results(
+        &mut self,
+        _node: &GeoDataEntityQueryResults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_point_query(
+        &mut self,
+        _node: &GeoDataPointQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_point_to_entity_query(
+        &mut self,
+        _node: &GeoDataPointToEntityQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_point_to_entity_query_result(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResult,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_data_point_to_entity_query_results(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_entity(
+        &mut self,
+        _node: &GeoEntity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_hierarchy_entity(
+        &mut self,
+        _node: &GeoHierarchyEntity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_location(
+        &mut self,
+        _node: &GeoLocation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_location_query(
+        &mut self,
+        _node: &GeoLocationQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_location_query_result(
+        &mut self,
+        _node: &GeoLocationQueryResult,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_location_query_results(
+        &mut self,
+        _node: &GeoLocationQueryResults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_locations(
+        &mut self,
+        _node: &GeoLocations,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_parent_entities_query(
+        &mut self,
+        _node: &GeoParentEntitiesQuery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_parent_entities_query_result(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResult,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_parent_entities_query_results(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_parent_entity(
+        &mut self,
+        _node: &GeoParentEntity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_polygon(
+        &mut self,
+        _node: &GeoPolygon,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geo_polygons(
+        &mut self,
+        _node: &GeoPolygons,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geography(
+        &mut self,
+        _node: &Geography,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geography_cache(
+        &mut self,
+        _node: &GeographyCacheContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geography_cache_items(
+        &mut self,
+        _node: &GeographyCacheContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_footer(
+        &mut self,
+        _node: &HeaderFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_idx(&mut self, _node: &Idx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_pr(
+        &mut self,
+        _node: &LayoutPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_legend(&mut self, _node: &Legend, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lvl_numeric_level(
+        &mut self,
+        _node: &LvlNumericLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lvl_string_level(
+        &mut self,
+        _node: &LvlStringLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_gridlines(
+        &mut self,
+        _node: &MajorGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_tick_marks(
+        &mut self,
+        _node: &MajorTickMarks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_max(&mut self, _node: &Max, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_max_color(
+        &mut self,
+        _node: &MaxColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mid(&mut self, _node: &Mid, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mid_color(
+        &mut self,
+        _node: &MidColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_min(&mut self, _node: &Min, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_min_color(
+        &mut self,
+        _node: &MinColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_gridlines(
+        &mut self,
+        _node: &MinorGridlines,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_tick_marks(
+        &mut self,
+        _node: &MinorTickMarks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nf(&mut self, _node: &Nf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_dim(&mut self, _node: &NumDim, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_num_fmt(&mut self, _node: &NumFmt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_number(&mut self, _node: &Number, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numeric_dimension(
+        &mut self,
+        _node: &NumericDimensionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numeric_dimension_items(
+        &mut self,
+        _node: &NumericDimensionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_footer(
+        &mut self,
+        _node: &OddFooter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_odd_header(
+        &mut self,
+        _node: &OddHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_offset(&mut self, _node: &Offset, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_openxmlsdk49becffa3b034d138272d6ccb22579e3(
+        &mut self,
+        _node: &Openxmlsdk49BECFFA3B034D138272D6CCB22579E3,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_margins(
+        &mut self,
+        _node: &PageMargins,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_page_setup(
+        &mut self,
+        _node: &PageSetup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parent_label_layout(
+        &mut self,
+        _node: &ParentLabelLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_percent(&mut self, _node: &Percent, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area(
+        &mut self,
+        _node: &PlotArea,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_area_region(
+        &mut self,
+        _node: &PlotAreaRegion,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plot_surface(
+        &mut self,
+        _node: &PlotSurface,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_print_settings(
+        &mut self,
+        _node: &PrintSettings,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pt_numeric_value(
+        &mut self,
+        _node: &PtNumericValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pt_string_value(
+        &mut self,
+        _node: &PtStringValue,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_region_label_layout(
+        &mut self,
+        _node: &RegionLabelLayout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich(&mut self, _node: &Rich, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_separator(
+        &mut self,
+        _node: &Separator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series(&mut self, _node: &Series, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_series_layout_properties(
+        &mut self,
+        _node: &SeriesLayoutPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_statistics(
+        &mut self,
+        _node: &Statistics,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_str_dim(&mut self, _node: &StrDim, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_dimension(
+        &mut self,
+        _node: &StringDimensionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_string_dimension_items(
+        &mut self,
+        _node: &StringDimensionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subtotals(
+        &mut self,
+        _node: &Subtotals,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text(
+        &mut self,
+        _node: &TextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_data(
+        &mut self,
+        _node: &TextDataContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tick_labels(
+        &mut self,
+        _node: &TickLabels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title_axis_title(
+        &mut self,
+        _node: &TitleAxisTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title_chart_title(
+        &mut self,
+        _node: &TitleChartTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx(&mut self, _node: &Tx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_data(&mut self, _node: &TxData, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_pr(&mut self, _node: &TxPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_units(&mut self, _node: &Units, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_units_label(
+        &mut self,
+        _node: &UnitsLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_v(&mut self, _node: &V, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_val_scaling(
+        &mut self,
+        _node: &ValScaling,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_color_end_position(
+        &mut self,
+        _node: &ValueColorEndPositionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_color_middle_position(
+        &mut self,
+        _node: &ValueColorMiddlePositionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_color_positions(
+        &mut self,
+        _node: &ValueColorPositions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value_colors(
+        &mut self,
+        _node: &ValueColors,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_visibility_data_label_visibilities(
+        &mut self,
+        _node: &VisibilityDataLabelVisibilities,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_visibility_series_element_visibilities(
+        &mut self,
+        _node: &VisibilitySeriesElementVisibilities,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `cx:copyright`, schema type `string` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -2924,6 +4891,578 @@ pub struct VisibilitySeriesElementVisibilities {
     pub nonoutliers: Option<String>,
     pub outliers: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `cx` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2014_chartex` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn address(&mut self, _node: &Address) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn aggregation(&mut self, _node: &Aggregation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis(&mut self, _node: &Axis) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_content(&mut self, _node: &AxisContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn axis_id(&mut self, _node: &AxisId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bin_count(&mut self, _node: &BinCount) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bin_size(&mut self, _node: &BinSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binary(&mut self, _node: &Binary) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binning(&mut self, _node: &Binning) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn binning_content(&mut self, _node: &BinningContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cat_scaling(&mut self, _node: &CatScaling) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_chart(&mut self, _node: &ChartChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_data(&mut self, _node: &ChartData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_rel_id(&mut self, _node: &ChartRelId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_space(&mut self, _node: &ChartSpace) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn clear(&mut self, _node: &Clear) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn clr_map_ovr(&mut self, _node: &ClrMapOvr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn copyright(&mut self, _node: &Copyright) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn copyrights(&mut self, _node: &Copyrights) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data(&mut self, _node: &Data) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_content(&mut self, _node: &DataContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_id(&mut self, _node: &DataId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_label(&mut self, _node: &DataLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_label_hidden(&mut self, _node: &DataLabelHidden) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_labels(&mut self, _node: &DataLabels) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_pt(&mut self, _node: &DataPt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn entity_type(&mut self, _node: &EntityType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_footer(&mut self, _node: &EvenFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn even_header(&mut self, _node: &EvenHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext(&mut self, _node: &Ext) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn external_data(&mut self, _node: &ExternalData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extreme_value(&mut self, _node: &ExtremeValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn f(&mut self, _node: &F) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_footer(&mut self, _node: &FirstFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_header(&mut self, _node: &FirstHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fmt_ovr(&mut self, _node: &FmtOvr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fmt_ovrs(&mut self, _node: &FmtOvrs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_cache(&mut self, _node: &GeoCache) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_child_entities(&mut self, _node: &GeoChildEntities) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_child_entities_query(&mut self, _node: &GeoChildEntitiesQuery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_child_entities_query_result(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResult,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_child_entities_query_results(
+        &mut self,
+        _node: &GeoChildEntitiesQueryResults,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_child_types(&mut self, _node: &GeoChildTypes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data(&mut self, _node: &GeoData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_entity_query(&mut self, _node: &GeoDataEntityQuery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_entity_query_result(
+        &mut self,
+        _node: &GeoDataEntityQueryResult,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_entity_query_results(
+        &mut self,
+        _node: &GeoDataEntityQueryResults,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_point_query(&mut self, _node: &GeoDataPointQuery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_point_to_entity_query(
+        &mut self,
+        _node: &GeoDataPointToEntityQuery,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_point_to_entity_query_result(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResult,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_data_point_to_entity_query_results(
+        &mut self,
+        _node: &GeoDataPointToEntityQueryResults,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_entity(&mut self, _node: &GeoEntity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_hierarchy_entity(&mut self, _node: &GeoHierarchyEntity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_location(&mut self, _node: &GeoLocation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_location_query(&mut self, _node: &GeoLocationQuery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_location_query_result(&mut self, _node: &GeoLocationQueryResult) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_location_query_results(&mut self, _node: &GeoLocationQueryResults) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_locations(&mut self, _node: &GeoLocations) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_parent_entities_query(&mut self, _node: &GeoParentEntitiesQuery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_parent_entities_query_result(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResult,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_parent_entities_query_results(
+        &mut self,
+        _node: &GeoParentEntitiesQueryResults,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_parent_entity(&mut self, _node: &GeoParentEntity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_polygon(&mut self, _node: &GeoPolygon) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geo_polygons(&mut self, _node: &GeoPolygons) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geography(&mut self, _node: &Geography) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geography_cache(&mut self, _node: &GeographyCacheContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_footer(&mut self, _node: &HeaderFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn idx(&mut self, _node: &Idx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_pr(&mut self, _node: &LayoutPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn legend(&mut self, _node: &Legend) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lvl_numeric_level(&mut self, _node: &LvlNumericLevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lvl_string_level(&mut self, _node: &LvlStringLevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_gridlines(&mut self, _node: &MajorGridlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_tick_marks(&mut self, _node: &MajorTickMarks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn max(&mut self, _node: &Max) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn max_color(&mut self, _node: &MaxColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mid(&mut self, _node: &Mid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mid_color(&mut self, _node: &MidColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn min(&mut self, _node: &Min) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn min_color(&mut self, _node: &MinColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_gridlines(&mut self, _node: &MinorGridlines) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_tick_marks(&mut self, _node: &MinorTickMarks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nf(&mut self, _node: &Nf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_dim(&mut self, _node: &NumDim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn num_fmt(&mut self, _node: &NumFmt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn number(&mut self, _node: &Number) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numeric_dimension(&mut self, _node: &NumericDimensionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_footer(&mut self, _node: &OddFooter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn odd_header(&mut self, _node: &OddHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn offset(&mut self, _node: &Offset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn openxmlsdk49becffa3b034d138272d6ccb22579e3(
+        &mut self,
+        _node: &Openxmlsdk49BECFFA3B034D138272D6CCB22579E3,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_margins(&mut self, _node: &PageMargins) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn page_setup(&mut self, _node: &PageSetup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parent_label_layout(&mut self, _node: &ParentLabelLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn percent(&mut self, _node: &Percent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_area(&mut self, _node: &PlotArea) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_area_region(&mut self, _node: &PlotAreaRegion) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plot_surface(&mut self, _node: &PlotSurface) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn print_settings(&mut self, _node: &PrintSettings) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pt_numeric_value(&mut self, _node: &PtNumericValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pt_string_value(&mut self, _node: &PtStringValue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn region_label_layout(&mut self, _node: &RegionLabelLayout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich(&mut self, _node: &Rich) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn separator(&mut self, _node: &Separator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series(&mut self, _node: &Series) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn series_layout_properties(
+        &mut self,
+        _node: &SeriesLayoutPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn statistics(&mut self, _node: &Statistics) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn str_dim(&mut self, _node: &StrDim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn string_dimension(&mut self, _node: &StringDimensionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subtotals(&mut self, _node: &Subtotals) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text(&mut self, _node: &TextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_data(&mut self, _node: &TextDataContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tick_labels(&mut self, _node: &TickLabels) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title_axis_title(&mut self, _node: &TitleAxisTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title_chart_title(&mut self, _node: &TitleChartTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx(&mut self, _node: &Tx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_data(&mut self, _node: &TxData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_pr(&mut self, _node: &TxPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn units(&mut self, _node: &Units) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn units_label(&mut self, _node: &UnitsLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn v(&mut self, _node: &V) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn val_scaling(&mut self, _node: &ValScaling) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_color_end_position(
+        &mut self,
+        _node: &ValueColorEndPositionContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_color_middle_position(
+        &mut self,
+        _node: &ValueColorMiddlePositionContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_color_positions(&mut self, _node: &ValueColorPositions) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value_colors(&mut self, _node: &ValueColors) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn visibility_data_label_visibilities(
+        &mut self,
+        _node: &VisibilityDataLabelVisibilities,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn visibility_series_element_visibilities(
+        &mut self,
+        _node: &VisibilitySeriesElementVisibilities,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Address {

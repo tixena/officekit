@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/richvaluerel`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_X: Option<NamespaceId> = Some(118);
@@ -250,6 +254,53 @@ static RICH_VALUE_RELS_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `xlrvrel` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2022_richvaluerel` is never asked.
+pub trait Context: markup::Context {
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn rel(&mut self, _node: &Rel) -> Option<Rel> {
+        None
+    }
+
+    fn rich_value_rels(&mut self, _node: &RichValueRels) -> Option<RichValueRels> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rel(&mut self, _node: &Rel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_value_rels(
+        &mut self,
+        _node: &RichValueRels,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xlrvrel:extLst`, schema type `CT_ExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -273,6 +324,25 @@ pub struct RichValueRels {
     pub ext_lst: Option<Box<ExtLst>>,
     pub rel: Vec<Rel>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xlrvrel` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2022_richvaluerel` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rel(&mut self, _node: &Rel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_value_rels(&mut self, _node: &RichValueRels) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExtLst {

@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/roamingSettings`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_PROAM: Option<NamespaceId> = Some(78);
 
@@ -248,6 +252,50 @@ static VALUE_SHAPE: markup::Shape = markup::Shape {
     text: true,
 };
 
+/// The hooks of a context for the `pRoam` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2012_roaming_settings` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn key(&mut self, _node: &Key) -> Option<Key> {
+        None
+    }
+
+    fn props(&mut self, _node: &Props) -> Option<Props> {
+        None
+    }
+
+    fn value(&mut self, _node: &Value) -> Option<Value> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_key(&mut self, _node: &Key, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_props(&mut self, _node: &Props, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_value(&mut self, _node: &Value, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `pRoam:key`, schema type `string` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -271,6 +319,25 @@ pub struct Props {
 pub struct Value {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `pRoam` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2012_roaming_settings` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn key(&mut self, _node: &Key) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn props(&mut self, _node: &Props) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn value(&mut self, _node: &Value) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Key {

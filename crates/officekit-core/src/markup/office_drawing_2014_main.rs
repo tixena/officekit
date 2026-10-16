@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A16: Option<NamespaceId> = Some(3);
 
@@ -266,6 +270,83 @@ pub struct ColId {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `a16` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2014_main` is never asked.
+pub trait Context: markup::Context {
+    fn col_id(&mut self, _node: &ColId) -> Option<ColId> {
+        None
+    }
+
+    fn creation_id(&mut self, _node: &CreationId) -> Option<CreationId> {
+        None
+    }
+
+    fn cxn_de_refs(&mut self, _node: &CxnDERefs) -> Option<CxnDERefs> {
+        None
+    }
+
+    fn pred_de_ref(&mut self, _node: &PredDERef) -> Option<PredDERef> {
+        None
+    }
+
+    fn row_id(&mut self, _node: &RowId) -> Option<RowId> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_col_id(&mut self, _node: &ColId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_creation_id(
+        &mut self,
+        _node: &CreationId,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cxn_de_refs(
+        &mut self,
+        _node: &CxnDERefs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pred_de_ref(
+        &mut self,
+        _node: &PredDERef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_id(&mut self, _node: &RowId, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `a16:creationId`, schema type `CT_CreationId` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -297,6 +378,33 @@ pub struct PredDERef {
 #[non_exhaustive]
 pub struct RowId {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `a16` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2014_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn col_id(&mut self, _node: &ColId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn creation_id(&mut self, _node: &CreationId) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cxn_de_refs(&mut self, _node: &CxnDERefs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pred_de_ref(&mut self, _node: &PredDERef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_id(&mut self, _node: &RowId) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ColId {

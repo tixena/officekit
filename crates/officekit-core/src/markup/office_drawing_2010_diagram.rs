@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2010/diagram`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DGM14: Option<NamespaceId> = Some(43);
@@ -264,12 +268,63 @@ pub struct CNvPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `dgm14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2010_diagram` is never asked.
+pub trait Context: markup::Context {
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn recolor_img(&mut self, _node: &RecolorImg) -> Option<RecolorImg> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_recolor_img(
+        &mut self,
+        _node: &RecolorImg,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `dgm14:recolorImg`, schema type `CT_Boolean` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct RecolorImg {
     pub unknown: markup::Unknown,
     pub val: Option<String>,
+}
+
+/// The hooks of a visitor for the `dgm14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2010_diagram` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn recolor_img(&mut self, _node: &RecolorImg) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CNvPr {

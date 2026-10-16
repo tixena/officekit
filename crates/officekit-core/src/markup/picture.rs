@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/picture`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
@@ -303,6 +307,111 @@ static SHAPE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `pic` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::picture` is never asked.
+pub trait Context: markup::Context {
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> Option<NonVisualDrawingProperties> {
+        None
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> Option<NonVisualPictureDrawingProperties> {
+        None
+    }
+
+    fn non_visual_picture_properties(
+        &mut self,
+        _node: &NonVisualPictureProperties,
+    ) -> Option<NonVisualPictureProperties> {
+        None
+    }
+
+    fn picture(&mut self, _node: &Picture) -> Option<Picture> {
+        None
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_picture_properties(
+        &mut self,
+        _node: &NonVisualPictureProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_fill(
+        &mut self,
+        _node: &PictureFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 20.2.2.3 `cNvPr` (Non-Visual Drawing Properties): the tag `pic:cNvPr`, schema type
 /// `CT_NonVisualDrawingProps`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -378,6 +487,46 @@ pub struct ShapeProperties {
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: markup::Unknown,
     pub xfrm_transform2d: Option<Box<super::drawing::XfrmTransform2D>>,
+}
+
+/// The hooks of a visitor for the `pic` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::picture` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_picture_properties(
+        &mut self,
+        _node: &NonVisualPictureProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture(&mut self, _node: &Picture) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for NonVisualDrawingProperties {

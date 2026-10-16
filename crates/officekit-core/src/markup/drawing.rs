@@ -216,13 +216,17 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
 use crate::markup::Write as _;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::{Measure, ValueError};
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -5155,6 +5159,5794 @@ pub struct ContentPartLocks {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `a` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::drawing` is never asked.
+pub trait Context: markup::Context {
+    fn accent1(&mut self, _node: &Accent1) -> Option<Accent1> {
+        None
+    }
+
+    fn accent2(&mut self, _node: &Accent2) -> Option<Accent2> {
+        None
+    }
+
+    fn accent3(&mut self, _node: &Accent3) -> Option<Accent3> {
+        None
+    }
+
+    fn accent4(&mut self, _node: &Accent4) -> Option<Accent4> {
+        None
+    }
+
+    fn accent5(&mut self, _node: &Accent5) -> Option<Accent5> {
+        None
+    }
+
+    fn accent6(&mut self, _node: &Accent6) -> Option<Accent6> {
+        None
+    }
+
+    fn alpha(&mut self, _node: &Alpha) -> Option<Alpha> {
+        None
+    }
+
+    fn alpha_bi_level_effect(&mut self, _node: &AlphaBiLevelEffect) -> Option<AlphaBiLevelEffect> {
+        None
+    }
+
+    fn alpha_ceiling_effect(&mut self, _node: &AlphaCeilingEffect) -> Option<AlphaCeilingEffect> {
+        None
+    }
+
+    fn alpha_floor_effect(&mut self, _node: &AlphaFloorEffect) -> Option<AlphaFloorEffect> {
+        None
+    }
+
+    fn alpha_inset_outset_effect(
+        &mut self,
+        _node: &AlphaInsetOutsetEffect,
+    ) -> Option<AlphaInsetOutsetEffect> {
+        None
+    }
+
+    fn alpha_inverse_effect(&mut self, _node: &AlphaInverseEffect) -> Option<AlphaInverseEffect> {
+        None
+    }
+
+    fn alpha_modulate_effect(
+        &mut self,
+        _node: &AlphaModulateEffect,
+    ) -> Option<AlphaModulateEffect> {
+        None
+    }
+
+    fn alpha_modulate_fixed_effect(
+        &mut self,
+        _node: &AlphaModulateFixedEffect,
+    ) -> Option<AlphaModulateFixedEffect> {
+        None
+    }
+
+    fn alpha_modulation(&mut self, _node: &AlphaModulation) -> Option<AlphaModulation> {
+        None
+    }
+
+    fn alpha_offset(&mut self, _node: &AlphaOffset) -> Option<AlphaOffset> {
+        None
+    }
+
+    fn alpha_replace_effect(&mut self, _node: &AlphaReplaceEffect) -> Option<AlphaReplaceEffect> {
+        None
+    }
+
+    fn anchor_point(&mut self, _node: &AnchorPoint) -> Option<AnchorPoint> {
+        None
+    }
+
+    fn any_element(&mut self, _node: &AnyElementContent) -> Option<AnyElementContent> {
+        None
+    }
+
+    fn any_element_items(&mut self, _node: &AnyElementContent) -> Option<Vec<AnyElementContent>> {
+        None
+    }
+
+    fn apply3d_shape_properties(
+        &mut self,
+        _node: &Apply3DShapeProperties,
+    ) -> Option<Apply3DShapeProperties> {
+        None
+    }
+
+    fn audio_end_time(&mut self, _node: &AudioEndTime) -> Option<AudioEndTime> {
+        None
+    }
+
+    fn audio_from_cd(&mut self, _node: &AudioFromCD) -> Option<AudioFromCD> {
+        None
+    }
+
+    fn audio_from_file(&mut self, _node: &AudioFromFile) -> Option<AudioFromFile> {
+        None
+    }
+
+    fn audio_from_wav_file(&mut self, _node: &AudioFromWAVFile) -> Option<AudioFromWAVFile> {
+        None
+    }
+
+    fn audio_start_time(&mut self, _node: &AudioStartTime) -> Option<AudioStartTime> {
+        None
+    }
+
+    fn auto_numbered_bullet(&mut self, _node: &AutoNumberedBullet) -> Option<AutoNumberedBullet> {
+        None
+    }
+
+    fn backdrop_plane(&mut self, _node: &BackdropPlane) -> Option<BackdropPlane> {
+        None
+    }
+
+    fn background_color(&mut self, _node: &BackgroundColor) -> Option<BackgroundColor> {
+        None
+    }
+
+    fn background_fill_style_list(
+        &mut self,
+        _node: &BackgroundFillStyleList,
+    ) -> Option<BackgroundFillStyleList> {
+        None
+    }
+
+    fn band1horizontal(&mut self, _node: &Band1Horizontal) -> Option<Band1Horizontal> {
+        None
+    }
+
+    fn band1vertical(&mut self, _node: &Band1Vertical) -> Option<Band1Vertical> {
+        None
+    }
+
+    fn band2horizontal(&mut self, _node: &Band2Horizontal) -> Option<Band2Horizontal> {
+        None
+    }
+
+    fn band2vertical(&mut self, _node: &Band2Vertical) -> Option<Band2Vertical> {
+        None
+    }
+
+    fn bevel(&mut self, _node: &Bevel) -> Option<Bevel> {
+        None
+    }
+
+    fn bi_level(&mut self, _node: &BiLevel) -> Option<BiLevel> {
+        None
+    }
+
+    fn blend_effect(&mut self, _node: &BlendEffect) -> Option<BlendEffect> {
+        None
+    }
+
+    fn blip(&mut self, _node: &Blip) -> Option<Blip> {
+        None
+    }
+
+    fn blip_content(&mut self, _node: &BlipContent) -> Option<BlipContent> {
+        None
+    }
+
+    fn blip_content_items(&mut self, _node: &BlipContent) -> Option<Vec<BlipContent>> {
+        None
+    }
+
+    fn blue(&mut self, _node: &Blue) -> Option<Blue> {
+        None
+    }
+
+    fn blue_modulation(&mut self, _node: &BlueModulation) -> Option<BlueModulation> {
+        None
+    }
+
+    fn blue_offset(&mut self, _node: &BlueOffset) -> Option<BlueOffset> {
+        None
+    }
+
+    fn blur_effect(&mut self, _node: &BlurEffect) -> Option<BlurEffect> {
+        None
+    }
+
+    fn body_properties(&mut self, _node: &BodyProperties) -> Option<BodyProperties> {
+        None
+    }
+
+    fn bottom_bevel(&mut self, _node: &BottomBevel) -> Option<BottomBevel> {
+        None
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> Option<BottomBorder> {
+        None
+    }
+
+    fn bottom_border_line_properties(
+        &mut self,
+        _node: &BottomBorderLineProperties,
+    ) -> Option<BottomBorderLineProperties> {
+        None
+    }
+
+    fn bottom_left_to_top_right_border_line_properties(
+        &mut self,
+        _node: &BottomLeftToTopRightBorderLineProperties,
+    ) -> Option<BottomLeftToTopRightBorderLineProperties> {
+        None
+    }
+
+    fn build_chart(&mut self, _node: &BuildChart) -> Option<BuildChart> {
+        None
+    }
+
+    fn build_diagram(&mut self, _node: &BuildDiagram) -> Option<BuildDiagram> {
+        None
+    }
+
+    fn build_sub_elements(
+        &mut self,
+        _node: &BuildSubElementsContent,
+    ) -> Option<BuildSubElementsContent> {
+        None
+    }
+
+    fn bullet_size_follows_text(
+        &mut self,
+        _node: &BulletSizeFollowsText,
+    ) -> Option<BulletSizeFollowsText> {
+        None
+    }
+
+    fn bullet_size_percentage(
+        &mut self,
+        _node: &BulletSizePercentage,
+    ) -> Option<BulletSizePercentage> {
+        None
+    }
+
+    fn bullet_size_points(&mut self, _node: &BulletSizePoints) -> Option<BulletSizePoints> {
+        None
+    }
+
+    fn camera(&mut self, _node: &Camera) -> Option<Camera> {
+        None
+    }
+
+    fn cell3d(&mut self, _node: &Cell3D) -> Option<Cell3D> {
+        None
+    }
+
+    fn change_color_from(&mut self, _node: &ChangeColorFrom) -> Option<ChangeColorFrom> {
+        None
+    }
+
+    fn change_color_to(&mut self, _node: &ChangeColorTo) -> Option<ChangeColorTo> {
+        None
+    }
+
+    fn character_bullet(&mut self, _node: &CharacterBullet) -> Option<CharacterBullet> {
+        None
+    }
+
+    fn chart_to_animate(&mut self, _node: &ChartToAnimate) -> Option<ChartToAnimate> {
+        None
+    }
+
+    fn child_extents(&mut self, _node: &ChildExtents) -> Option<ChildExtents> {
+        None
+    }
+
+    fn child_offset(&mut self, _node: &ChildOffset) -> Option<ChildOffset> {
+        None
+    }
+
+    fn click_hyperlink(&mut self, _node: &ClickHyperlink) -> Option<ClickHyperlink> {
+        None
+    }
+
+    fn close_shape_path(&mut self, _node: &CloseShapePath) -> Option<CloseShapePath> {
+        None
+    }
+
+    fn color(&mut self, _node: &ColorContent) -> Option<ColorContent> {
+        None
+    }
+
+    fn color_change_effect(&mut self, _node: &ColorChangeEffect) -> Option<ColorChangeEffect> {
+        None
+    }
+
+    fn color_items(&mut self, _node: &ColorContent) -> Option<Vec<ColorContent>> {
+        None
+    }
+
+    fn color_map(&mut self, _node: &ColorMap) -> Option<ColorMap> {
+        None
+    }
+
+    fn color_scheme(&mut self, _node: &ColorScheme) -> Option<ColorScheme> {
+        None
+    }
+
+    fn color_scheme_map_override(
+        &mut self,
+        _node: &ColorSchemeMapOverrideContent,
+    ) -> Option<ColorSchemeMapOverrideContent> {
+        None
+    }
+
+    fn color_specified(&mut self, _node: &ColorSpecified) -> Option<ColorSpecified> {
+        None
+    }
+
+    fn color_transform(&mut self, _node: &ColorTransformContent) -> Option<ColorTransformContent> {
+        None
+    }
+
+    fn color_transform_items(
+        &mut self,
+        _node: &ColorTransformContent,
+    ) -> Option<Vec<ColorTransformContent>> {
+        None
+    }
+
+    fn complement(&mut self, _node: &Complement) -> Option<Complement> {
+        None
+    }
+
+    fn complex_script_font(&mut self, _node: &ComplexScriptFont) -> Option<ComplexScriptFont> {
+        None
+    }
+
+    fn connection_end(&mut self, _node: &ConnectionEnd) -> Option<ConnectionEnd> {
+        None
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> Option<ConnectionShape> {
+        None
+    }
+
+    fn connection_shape_locks(
+        &mut self,
+        _node: &ConnectionShapeLocks,
+    ) -> Option<ConnectionShapeLocks> {
+        None
+    }
+
+    fn connection_start(&mut self, _node: &ConnectionStart) -> Option<ConnectionStart> {
+        None
+    }
+
+    fn content_part_locks(&mut self, _node: &ContentPartLocks) -> Option<ContentPartLocks> {
+        None
+    }
+
+    fn contour_color(&mut self, _node: &ContourColor) -> Option<ContourColor> {
+        None
+    }
+
+    fn custom_color(&mut self, _node: &CustomColor) -> Option<CustomColor> {
+        None
+    }
+
+    fn custom_color_list(&mut self, _node: &CustomColorList) -> Option<CustomColorList> {
+        None
+    }
+
+    fn custom_dash(&mut self, _node: &CustomDash) -> Option<CustomDash> {
+        None
+    }
+
+    fn custom_geometry(&mut self, _node: &CustomGeometry) -> Option<CustomGeometry> {
+        None
+    }
+
+    fn dark1(&mut self, _node: &Dark1) -> Option<Dark1> {
+        None
+    }
+
+    fn dark2(&mut self, _node: &Dark2) -> Option<Dark2> {
+        None
+    }
+
+    fn dash_stop(&mut self, _node: &DashStop) -> Option<DashStop> {
+        None
+    }
+
+    fn default_paragraph_style(
+        &mut self,
+        _node: &DefaultParagraphStyle,
+    ) -> Option<DefaultParagraphStyle> {
+        None
+    }
+
+    fn default_text_run_properties(
+        &mut self,
+        _node: &DefaultTextRunProperties,
+    ) -> Option<DefaultTextRunProperties> {
+        None
+    }
+
+    fn diagram_to_animate(&mut self, _node: &DiagramToAnimate) -> Option<DiagramToAnimate> {
+        None
+    }
+
+    fn draw_arc_to(&mut self, _node: &DrawArcTo) -> Option<DrawArcTo> {
+        None
+    }
+
+    fn draw_cubic_bezier_curve_to(
+        &mut self,
+        _node: &DrawCubicBezierCurveTo,
+    ) -> Option<DrawCubicBezierCurveTo> {
+        None
+    }
+
+    fn draw_line_to(&mut self, _node: &DrawLineTo) -> Option<DrawLineTo> {
+        None
+    }
+
+    fn draw_quadratic_bezier_curve_to(
+        &mut self,
+        _node: &DrawQuadraticBezierCurveTo,
+    ) -> Option<DrawQuadraticBezierCurveTo> {
+        None
+    }
+
+    fn duotone_effect(&mut self, _node: &DuotoneEffect) -> Option<DuotoneEffect> {
+        None
+    }
+
+    fn east_asian_font(&mut self, _node: &EastAsianFont) -> Option<EastAsianFont> {
+        None
+    }
+
+    fn effect(&mut self, _node: &Effect) -> Option<Effect> {
+        None
+    }
+
+    fn effect_container(
+        &mut self,
+        _node: &EffectContainerContent,
+    ) -> Option<EffectContainerContent> {
+        None
+    }
+
+    fn effect_container_cont(
+        &mut self,
+        _node: &EffectContainerCont,
+    ) -> Option<EffectContainerCont> {
+        None
+    }
+
+    fn effect_container_effect_dag(
+        &mut self,
+        _node: &EffectContainerEffectDag,
+    ) -> Option<EffectContainerEffectDag> {
+        None
+    }
+
+    fn effect_container_effect_lst(
+        &mut self,
+        _node: &EffectContainerEffectLst,
+    ) -> Option<EffectContainerEffectLst> {
+        None
+    }
+
+    fn effect_container_items(
+        &mut self,
+        _node: &EffectContainerContent,
+    ) -> Option<Vec<EffectContainerContent>> {
+        None
+    }
+
+    fn effect_effect_reference(
+        &mut self,
+        _node: &EffectEffectReference,
+    ) -> Option<EffectEffectReference> {
+        None
+    }
+
+    fn effect_properties(
+        &mut self,
+        _node: &EffectPropertiesContent,
+    ) -> Option<EffectPropertiesContent> {
+        None
+    }
+
+    fn effect_reference(&mut self, _node: &EffectReference) -> Option<EffectReference> {
+        None
+    }
+
+    fn effect_style(&mut self, _node: &EffectStyle) -> Option<EffectStyle> {
+        None
+    }
+
+    fn effect_style_list(&mut self, _node: &EffectStyleList) -> Option<EffectStyleList> {
+        None
+    }
+
+    fn end_paragraph_run_properties(
+        &mut self,
+        _node: &EndParagraphRunProperties,
+    ) -> Option<EndParagraphRunProperties> {
+        None
+    }
+
+    fn extension(&mut self, _node: &Extension) -> Option<Extension> {
+        None
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> Option<ExtensionList> {
+        None
+    }
+
+    fn extents(&mut self, _node: &Extents) -> Option<Extents> {
+        None
+    }
+
+    fn extra_color_scheme(&mut self, _node: &ExtraColorScheme) -> Option<ExtraColorScheme> {
+        None
+    }
+
+    fn extra_color_scheme_list(
+        &mut self,
+        _node: &ExtraColorSchemeList,
+    ) -> Option<ExtraColorSchemeList> {
+        None
+    }
+
+    fn extrusion_color(&mut self, _node: &ExtrusionColor) -> Option<ExtrusionColor> {
+        None
+    }
+
+    fn fill(&mut self, _node: &Fill) -> Option<Fill> {
+        None
+    }
+
+    fn fill_fill_effect(&mut self, _node: &FillFillEffect) -> Option<FillFillEffect> {
+        None
+    }
+
+    fn fill_mode(&mut self, _node: &FillModeContent) -> Option<FillModeContent> {
+        None
+    }
+
+    fn fill_overlay_effect(&mut self, _node: &FillOverlayEffect) -> Option<FillOverlayEffect> {
+        None
+    }
+
+    fn fill_properties(&mut self, _node: &FillPropertiesContent) -> Option<FillPropertiesContent> {
+        None
+    }
+
+    fn fill_properties_items(
+        &mut self,
+        _node: &FillPropertiesContent,
+    ) -> Option<Vec<FillPropertiesContent>> {
+        None
+    }
+
+    fn fill_rectangle(&mut self, _node: &FillRectangle) -> Option<FillRectangle> {
+        None
+    }
+
+    fn fill_reference(&mut self, _node: &FillReference) -> Option<FillReference> {
+        None
+    }
+
+    fn fill_style_list(&mut self, _node: &FillStyleList) -> Option<FillStyleList> {
+        None
+    }
+
+    fn fill_to_rectangle(&mut self, _node: &FillToRectangle) -> Option<FillToRectangle> {
+        None
+    }
+
+    fn first_column(&mut self, _node: &FirstColumn) -> Option<FirstColumn> {
+        None
+    }
+
+    fn first_row(&mut self, _node: &FirstRow) -> Option<FirstRow> {
+        None
+    }
+
+    fn follow_text_bu_clr_tx(&mut self, _node: &FollowTextBuClrTx) -> Option<FollowTextBuClrTx> {
+        None
+    }
+
+    fn follow_text_bu_font_tx(&mut self, _node: &FollowTextBuFontTx) -> Option<FollowTextBuFontTx> {
+        None
+    }
+
+    fn followed_hyperlink(&mut self, _node: &FollowedHyperlink) -> Option<FollowedHyperlink> {
+        None
+    }
+
+    fn font(&mut self, _node: &Font) -> Option<Font> {
+        None
+    }
+
+    fn font_font_collection(&mut self, _node: &FontFontCollection) -> Option<FontFontCollection> {
+        None
+    }
+
+    fn font_reference(&mut self, _node: &FontReference) -> Option<FontReference> {
+        None
+    }
+
+    fn font_scheme(&mut self, _node: &FontScheme) -> Option<FontScheme> {
+        None
+    }
+
+    fn foreground_color(&mut self, _node: &ForegroundColor) -> Option<ForegroundColor> {
+        None
+    }
+
+    fn format_scheme(&mut self, _node: &FormatScheme) -> Option<FormatScheme> {
+        None
+    }
+
+    fn gamma(&mut self, _node: &Gamma) -> Option<Gamma> {
+        None
+    }
+
+    fn geometry(&mut self, _node: &GeometryContent) -> Option<GeometryContent> {
+        None
+    }
+
+    fn glow_effect(&mut self, _node: &GlowEffect) -> Option<GlowEffect> {
+        None
+    }
+
+    fn gradient_fill(&mut self, _node: &GradientFill) -> Option<GradientFill> {
+        None
+    }
+
+    fn gradient_fill_content(
+        &mut self,
+        _node: &GradientFillContent,
+    ) -> Option<GradientFillContent> {
+        None
+    }
+
+    fn gradient_stop_list(&mut self, _node: &GradientStopList) -> Option<GradientStopList> {
+        None
+    }
+
+    fn gradient_stops(&mut self, _node: &GradientStops) -> Option<GradientStops> {
+        None
+    }
+
+    fn graphic_element(&mut self, _node: &GraphicElementContent) -> Option<GraphicElementContent> {
+        None
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
+        None
+    }
+
+    fn graphic_frame_locks(&mut self, _node: &GraphicFrameLocks) -> Option<GraphicFrameLocks> {
+        None
+    }
+
+    fn graphic_object(&mut self, _node: &GraphicObject) -> Option<GraphicObject> {
+        None
+    }
+
+    fn graphic_object_data(&mut self, _node: &GraphicObjectData) -> Option<GraphicObjectData> {
+        None
+    }
+
+    fn gray(&mut self, _node: &Gray) -> Option<Gray> {
+        None
+    }
+
+    fn gray_scale_effect(&mut self, _node: &GrayScaleEffect) -> Option<GrayScaleEffect> {
+        None
+    }
+
+    fn green(&mut self, _node: &Green) -> Option<Green> {
+        None
+    }
+
+    fn green_modulation(&mut self, _node: &GreenModulation) -> Option<GreenModulation> {
+        None
+    }
+
+    fn green_offset(&mut self, _node: &GreenOffset) -> Option<GreenOffset> {
+        None
+    }
+
+    fn group_fill(&mut self, _node: &GroupFill) -> Option<GroupFill> {
+        None
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> Option<GroupShape> {
+        None
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
+        None
+    }
+
+    fn group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+    ) -> Option<Vec<GroupShapeContent>> {
+        None
+    }
+
+    fn group_shape_locks(&mut self, _node: &GroupShapeLocks) -> Option<GroupShapeLocks> {
+        None
+    }
+
+    fn header_cell_reference(
+        &mut self,
+        _node: &HeaderCellReference,
+    ) -> Option<HeaderCellReference> {
+        None
+    }
+
+    fn header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+    ) -> Option<HeaderCellsAssociatedWithTableCell> {
+        None
+    }
+
+    fn highlight_color(&mut self, _node: &HighlightColor) -> Option<HighlightColor> {
+        None
+    }
+
+    fn horizontal_ratio(&mut self, _node: &HorizontalRatio) -> Option<HorizontalRatio> {
+        None
+    }
+
+    fn hue(&mut self, _node: &Hue) -> Option<Hue> {
+        None
+    }
+
+    fn hue_modulate(&mut self, _node: &HueModulate) -> Option<HueModulate> {
+        None
+    }
+
+    fn hue_offset(&mut self, _node: &HueOffset) -> Option<HueOffset> {
+        None
+    }
+
+    fn hue_saturation_luminance_color_model(
+        &mut self,
+        _node: &HueSaturationLuminanceColorModel,
+    ) -> Option<HueSaturationLuminanceColorModel> {
+        None
+    }
+
+    fn hue_saturation_luminance_effect(
+        &mut self,
+        _node: &HueSaturationLuminanceEffect,
+    ) -> Option<HueSaturationLuminanceEffect> {
+        None
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
+        None
+    }
+
+    fn hyperlink_for_hover(&mut self, _node: &HyperlinkForHover) -> Option<HyperlinkForHover> {
+        None
+    }
+
+    fn hyperlink_sound(&mut self, _node: &HyperlinkSound) -> Option<HyperlinkSound> {
+        None
+    }
+
+    fn inner_shadow_effect(&mut self, _node: &InnerShadowEffect) -> Option<InnerShadowEffect> {
+        None
+    }
+
+    fn inside_horizontal_border(
+        &mut self,
+        _node: &InsideHorizontalBorder,
+    ) -> Option<InsideHorizontalBorder> {
+        None
+    }
+
+    fn inside_vertical_border(
+        &mut self,
+        _node: &InsideVerticalBorder,
+    ) -> Option<InsideVerticalBorder> {
+        None
+    }
+
+    fn inverse(&mut self, _node: &Inverse) -> Option<Inverse> {
+        None
+    }
+
+    fn inverse_gamma(&mut self, _node: &InverseGamma) -> Option<InverseGamma> {
+        None
+    }
+
+    fn last_column(&mut self, _node: &LastColumn) -> Option<LastColumn> {
+        None
+    }
+
+    fn last_row(&mut self, _node: &LastRow) -> Option<LastRow> {
+        None
+    }
+
+    fn latin_font(&mut self, _node: &LatinFont) -> Option<LatinFont> {
+        None
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> Option<LeftBorder> {
+        None
+    }
+
+    fn left_border_line_properties(
+        &mut self,
+        _node: &LeftBorderLineProperties,
+    ) -> Option<LeftBorderLineProperties> {
+        None
+    }
+
+    fn light1(&mut self, _node: &Light1) -> Option<Light1> {
+        None
+    }
+
+    fn light2(&mut self, _node: &Light2) -> Option<Light2> {
+        None
+    }
+
+    fn light_rig(&mut self, _node: &LightRig) -> Option<LightRig> {
+        None
+    }
+
+    fn line_dash(&mut self, _node: &LineDashContent) -> Option<LineDashContent> {
+        None
+    }
+
+    fn line_default(&mut self, _node: &LineDefault) -> Option<LineDefault> {
+        None
+    }
+
+    fn line_fill(&mut self, _node: &LineFillContent) -> Option<LineFillContent> {
+        None
+    }
+
+    fn line_head_end_style(&mut self, _node: &LineHeadEndStyle) -> Option<LineHeadEndStyle> {
+        None
+    }
+
+    fn line_join(&mut self, _node: &LineJoinContent) -> Option<LineJoinContent> {
+        None
+    }
+
+    fn line_join_bevel(&mut self, _node: &LineJoinBevel) -> Option<LineJoinBevel> {
+        None
+    }
+
+    fn line_reference(&mut self, _node: &LineReference) -> Option<LineReference> {
+        None
+    }
+
+    fn line_spacing(&mut self, _node: &LineSpacing) -> Option<LineSpacing> {
+        None
+    }
+
+    fn line_style_list(&mut self, _node: &LineStyleList) -> Option<LineStyleList> {
+        None
+    }
+
+    fn linear_gradient_fill(&mut self, _node: &LinearGradientFill) -> Option<LinearGradientFill> {
+        None
+    }
+
+    fn list_level1text_style(
+        &mut self,
+        _node: &ListLevel1TextStyle,
+    ) -> Option<ListLevel1TextStyle> {
+        None
+    }
+
+    fn list_level2text_style(
+        &mut self,
+        _node: &ListLevel2TextStyle,
+    ) -> Option<ListLevel2TextStyle> {
+        None
+    }
+
+    fn list_level3text_style(
+        &mut self,
+        _node: &ListLevel3TextStyle,
+    ) -> Option<ListLevel3TextStyle> {
+        None
+    }
+
+    fn list_level4text_style(
+        &mut self,
+        _node: &ListLevel4TextStyle,
+    ) -> Option<ListLevel4TextStyle> {
+        None
+    }
+
+    fn list_level5text_style(
+        &mut self,
+        _node: &ListLevel5TextStyle,
+    ) -> Option<ListLevel5TextStyle> {
+        None
+    }
+
+    fn list_level6text_style(
+        &mut self,
+        _node: &ListLevel6TextStyle,
+    ) -> Option<ListLevel6TextStyle> {
+        None
+    }
+
+    fn list_level7text_style(
+        &mut self,
+        _node: &ListLevel7TextStyle,
+    ) -> Option<ListLevel7TextStyle> {
+        None
+    }
+
+    fn list_level8text_style(
+        &mut self,
+        _node: &ListLevel8TextStyle,
+    ) -> Option<ListLevel8TextStyle> {
+        None
+    }
+
+    fn list_level9text_style(
+        &mut self,
+        _node: &ListLevel9TextStyle,
+    ) -> Option<ListLevel9TextStyle> {
+        None
+    }
+
+    fn list_of_shape_adjust_handles(
+        &mut self,
+        _node: &ListOfShapeAdjustHandles,
+    ) -> Option<ListOfShapeAdjustHandles> {
+        None
+    }
+
+    fn list_of_shape_adjust_values(
+        &mut self,
+        _node: &ListOfShapeAdjustValues,
+    ) -> Option<ListOfShapeAdjustValues> {
+        None
+    }
+
+    fn list_of_shape_connection_sites(
+        &mut self,
+        _node: &ListOfShapeConnectionSites,
+    ) -> Option<ListOfShapeConnectionSites> {
+        None
+    }
+
+    fn list_of_shape_guides(&mut self, _node: &ListOfShapeGuides) -> Option<ListOfShapeGuides> {
+        None
+    }
+
+    fn list_of_shape_paths(&mut self, _node: &ListOfShapePaths) -> Option<ListOfShapePaths> {
+        None
+    }
+
+    fn luminance(&mut self, _node: &Luminance) -> Option<Luminance> {
+        None
+    }
+
+    fn luminance_effect(&mut self, _node: &LuminanceEffect) -> Option<LuminanceEffect> {
+        None
+    }
+
+    fn luminance_modulation(&mut self, _node: &LuminanceModulation) -> Option<LuminanceModulation> {
+        None
+    }
+
+    fn luminance_offset(&mut self, _node: &LuminanceOffset) -> Option<LuminanceOffset> {
+        None
+    }
+
+    fn major_font(&mut self, _node: &MajorFont) -> Option<MajorFont> {
+        None
+    }
+
+    fn master_color_mapping(&mut self, _node: &MasterColorMapping) -> Option<MasterColorMapping> {
+        None
+    }
+
+    fn minor_fonts(&mut self, _node: &MinorFonts) -> Option<MinorFonts> {
+        None
+    }
+
+    fn miter_line_join(&mut self, _node: &MiterLineJoin) -> Option<MiterLineJoin> {
+        None
+    }
+
+    fn mouse_over_hyperlink(&mut self, _node: &MouseOverHyperlink) -> Option<MouseOverHyperlink> {
+        None
+    }
+
+    fn move_path_to(&mut self, _node: &MovePathTo) -> Option<MovePathTo> {
+        None
+    }
+
+    fn no_auto_fit(&mut self, _node: &NoAutoFit) -> Option<NoAutoFit> {
+        None
+    }
+
+    fn no_bullet(&mut self, _node: &NoBullet) -> Option<NoBullet> {
+        None
+    }
+
+    fn no_fill(&mut self, _node: &NoFill) -> Option<NoFill> {
+        None
+    }
+
+    fn no_text_in3d_scene(&mut self, _node: &NoTextIn3DScene) -> Option<NoTextIn3DScene> {
+        None
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> Option<NonVisualConnectorShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> Option<NonVisualDrawingProperties> {
+        None
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> Option<NonVisualGraphicFrameDrawingProperties> {
+        None
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> Option<NonVisualGroupShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> Option<NonVisualPictureDrawingProperties> {
+        None
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> Option<NonVisualPropertiesForAConnectionShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> Option<NonVisualPropertiesForAGraphicFrame> {
+        None
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> Option<NonVisualPropertiesForAGroupShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> Option<NonVisualPropertiesForAPicture> {
+        None
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> Option<NonVisualPropertiesForAShape> {
+        None
+    }
+
+    fn non_visual_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualShapeDrawingProperties,
+    ) -> Option<NonVisualShapeDrawingProperties> {
+        None
+    }
+
+    fn normal(&mut self, _node: &Normal) -> Option<Normal> {
+        None
+    }
+
+    fn normal_auto_fit(&mut self, _node: &NormalAutoFit) -> Option<NormalAutoFit> {
+        None
+    }
+
+    fn northeast_cell(&mut self, _node: &NortheastCell) -> Option<NortheastCell> {
+        None
+    }
+
+    fn northwest_cell(&mut self, _node: &NorthwestCell) -> Option<NorthwestCell> {
+        None
+    }
+
+    fn object_defaults(&mut self, _node: &ObjectDefaults) -> Option<ObjectDefaults> {
+        None
+    }
+
+    fn offset(&mut self, _node: &Offset) -> Option<Offset> {
+        None
+    }
+
+    fn outer_shadow_effect(&mut self, _node: &OuterShadowEffect) -> Option<OuterShadowEffect> {
+        None
+    }
+
+    fn outline(&mut self, _node: &Outline) -> Option<Outline> {
+        None
+    }
+
+    fn override_color_mapping(
+        &mut self,
+        _node: &OverrideColorMapping,
+    ) -> Option<OverrideColorMapping> {
+        None
+    }
+
+    fn path_gradient(&mut self, _node: &PathGradient) -> Option<PathGradient> {
+        None
+    }
+
+    fn pattern_fill(&mut self, _node: &PatternFill) -> Option<PatternFill> {
+        None
+    }
+
+    fn picture(&mut self, _node: &Picture) -> Option<Picture> {
+        None
+    }
+
+    fn picture_bullet(&mut self, _node: &PictureBullet) -> Option<PictureBullet> {
+        None
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
+        None
+    }
+
+    fn picture_locks(&mut self, _node: &PictureLocks) -> Option<PictureLocks> {
+        None
+    }
+
+    fn polar_adjust_handle(&mut self, _node: &PolarAdjustHandle) -> Option<PolarAdjustHandle> {
+        None
+    }
+
+    fn preset_color(&mut self, _node: &PresetColor) -> Option<PresetColor> {
+        None
+    }
+
+    fn preset_dash(&mut self, _node: &PresetDash) -> Option<PresetDash> {
+        None
+    }
+
+    fn preset_geometry(&mut self, _node: &PresetGeometry) -> Option<PresetGeometry> {
+        None
+    }
+
+    fn preset_shadow(&mut self, _node: &PresetShadow) -> Option<PresetShadow> {
+        None
+    }
+
+    fn preset_text_warp(&mut self, _node: &PresetTextWarp) -> Option<PresetTextWarp> {
+        None
+    }
+
+    fn quick_time_from_file(&mut self, _node: &QuickTimeFromFile) -> Option<QuickTimeFromFile> {
+        None
+    }
+
+    fn red(&mut self, _node: &Red) -> Option<Red> {
+        None
+    }
+
+    fn red_modulation(&mut self, _node: &RedModulation) -> Option<RedModulation> {
+        None
+    }
+
+    fn red_offset(&mut self, _node: &RedOffset) -> Option<RedOffset> {
+        None
+    }
+
+    fn reflection_effect(&mut self, _node: &ReflectionEffect) -> Option<ReflectionEffect> {
+        None
+    }
+
+    fn relative_offset_effect(
+        &mut self,
+        _node: &RelativeOffsetEffect,
+    ) -> Option<RelativeOffsetEffect> {
+        None
+    }
+
+    fn rgb_color_model_hex_variant(
+        &mut self,
+        _node: &RGBColorModelHexVariant,
+    ) -> Option<RGBColorModelHexVariant> {
+        None
+    }
+
+    fn rgb_color_model_percentage_variant(
+        &mut self,
+        _node: &RGBColorModelPercentageVariant,
+    ) -> Option<RGBColorModelPercentageVariant> {
+        None
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> Option<RightBorder> {
+        None
+    }
+
+    fn right_border_line_properties(
+        &mut self,
+        _node: &RightBorderLineProperties,
+    ) -> Option<RightBorderLineProperties> {
+        None
+    }
+
+    fn right_to_left_run(&mut self, _node: &RightToLeftRun) -> Option<RightToLeftRun> {
+        None
+    }
+
+    fn rotation(&mut self, _node: &Rotation) -> Option<Rotation> {
+        None
+    }
+
+    fn round_line_join(&mut self, _node: &RoundLineJoin) -> Option<RoundLineJoin> {
+        None
+    }
+
+    fn saturation(&mut self, _node: &Saturation) -> Option<Saturation> {
+        None
+    }
+
+    fn saturation_modulation(
+        &mut self,
+        _node: &SaturationModulation,
+    ) -> Option<SaturationModulation> {
+        None
+    }
+
+    fn saturation_offset(&mut self, _node: &SaturationOffset) -> Option<SaturationOffset> {
+        None
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> Option<Scene3d> {
+        None
+    }
+
+    fn scheme_color(&mut self, _node: &SchemeColor) -> Option<SchemeColor> {
+        None
+    }
+
+    fn shade(&mut self, _node: &Shade) -> Option<Shade> {
+        None
+    }
+
+    fn shape(&mut self, _node: &Shape) -> Option<Shape> {
+        None
+    }
+
+    fn shape_adjust_handles(
+        &mut self,
+        _node: &ShapeAdjustHandlesContent,
+    ) -> Option<ShapeAdjustHandlesContent> {
+        None
+    }
+
+    fn shape_adjust_handles_items(
+        &mut self,
+        _node: &ShapeAdjustHandlesContent,
+    ) -> Option<Vec<ShapeAdjustHandlesContent>> {
+        None
+    }
+
+    fn shape_auto_fit(&mut self, _node: &ShapeAutoFit) -> Option<ShapeAutoFit> {
+        None
+    }
+
+    fn shape_connection_site(
+        &mut self,
+        _node: &ShapeConnectionSite,
+    ) -> Option<ShapeConnectionSite> {
+        None
+    }
+
+    fn shape_default(&mut self, _node: &ShapeDefault) -> Option<ShapeDefault> {
+        None
+    }
+
+    fn shape_guide(&mut self, _node: &ShapeGuide) -> Option<ShapeGuide> {
+        None
+    }
+
+    fn shape_locks(&mut self, _node: &ShapeLocks) -> Option<ShapeLocks> {
+        None
+    }
+
+    fn shape_path(&mut self, _node: &ShapePath) -> Option<ShapePath> {
+        None
+    }
+
+    fn shape_path_content(&mut self, _node: &ShapePathContent) -> Option<ShapePathContent> {
+        None
+    }
+
+    fn shape_path_content_items(
+        &mut self,
+        _node: &ShapePathContent,
+    ) -> Option<Vec<ShapePathContent>> {
+        None
+    }
+
+    fn shape_path_point(&mut self, _node: &ShapePathPoint) -> Option<ShapePathPoint> {
+        None
+    }
+
+    fn shape_position_coordinate(
+        &mut self,
+        _node: &ShapePositionCoordinate,
+    ) -> Option<ShapePositionCoordinate> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
+        None
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> Option<ShapeTextBody> {
+        None
+    }
+
+    fn shape_text_rectangle(&mut self, _node: &ShapeTextRectangle) -> Option<ShapeTextRectangle> {
+        None
+    }
+
+    fn soft_edge_effect(&mut self, _node: &SoftEdgeEffect) -> Option<SoftEdgeEffect> {
+        None
+    }
+
+    fn solid_color_replacement(
+        &mut self,
+        _node: &SolidColorReplacement,
+    ) -> Option<SolidColorReplacement> {
+        None
+    }
+
+    fn solid_fill(&mut self, _node: &SolidFill) -> Option<SolidFill> {
+        None
+    }
+
+    fn source_rectangle(&mut self, _node: &SourceRectangle) -> Option<SourceRectangle> {
+        None
+    }
+
+    fn southeast_cell(&mut self, _node: &SoutheastCell) -> Option<SoutheastCell> {
+        None
+    }
+
+    fn southwest_cell(&mut self, _node: &SouthwestCell) -> Option<SouthwestCell> {
+        None
+    }
+
+    fn space_after(&mut self, _node: &SpaceAfter) -> Option<SpaceAfter> {
+        None
+    }
+
+    fn space_before(&mut self, _node: &SpaceBefore) -> Option<SpaceBefore> {
+        None
+    }
+
+    fn spacing_percent(&mut self, _node: &SpacingPercent) -> Option<SpacingPercent> {
+        None
+    }
+
+    fn spacing_points(&mut self, _node: &SpacingPoints) -> Option<SpacingPoints> {
+        None
+    }
+
+    fn specified(&mut self, _node: &Specified) -> Option<Specified> {
+        None
+    }
+
+    fn stretch(&mut self, _node: &Stretch) -> Option<Stretch> {
+        None
+    }
+
+    fn symbol_font(&mut self, _node: &SymbolFont) -> Option<SymbolFont> {
+        None
+    }
+
+    fn system_color(&mut self, _node: &SystemColor) -> Option<SystemColor> {
+        None
+    }
+
+    fn tab_list(&mut self, _node: &TabList) -> Option<TabList> {
+        None
+    }
+
+    fn tab_stop(&mut self, _node: &TabStop) -> Option<TabStop> {
+        None
+    }
+
+    fn table(&mut self, _node: &Table) -> Option<Table> {
+        None
+    }
+
+    fn table_background(&mut self, _node: &TableBackground) -> Option<TableBackground> {
+        None
+    }
+
+    fn table_background_effect(
+        &mut self,
+        _node: &TableBackgroundEffectContent,
+    ) -> Option<TableBackgroundEffectContent> {
+        None
+    }
+
+    fn table_cell(&mut self, _node: &TableCell) -> Option<TableCell> {
+        None
+    }
+
+    fn table_cell_borders(&mut self, _node: &TableCellBorders) -> Option<TableCellBorders> {
+        None
+    }
+
+    fn table_cell_properties(
+        &mut self,
+        _node: &TableCellProperties,
+    ) -> Option<TableCellProperties> {
+        None
+    }
+
+    fn table_cell_style(&mut self, _node: &TableCellStyle) -> Option<TableCellStyle> {
+        None
+    }
+
+    fn table_cell_text_style(&mut self, _node: &TableCellTextStyle) -> Option<TableCellTextStyle> {
+        None
+    }
+
+    fn table_cell_text_style_font(
+        &mut self,
+        _node: &TableCellTextStyleFontContent,
+    ) -> Option<TableCellTextStyleFontContent> {
+        None
+    }
+
+    fn table_grid(&mut self, _node: &TableGrid) -> Option<TableGrid> {
+        None
+    }
+
+    fn table_grid_column(&mut self, _node: &TableGridColumn) -> Option<TableGridColumn> {
+        None
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> Option<TableProperties> {
+        None
+    }
+
+    fn table_properties_style(
+        &mut self,
+        _node: &TablePropertiesStyleContent,
+    ) -> Option<TablePropertiesStyleContent> {
+        None
+    }
+
+    fn table_row(&mut self, _node: &TableRow) -> Option<TableRow> {
+        None
+    }
+
+    fn table_style(&mut self, _node: &TableStyle) -> Option<TableStyle> {
+        None
+    }
+
+    fn table_style_id(&mut self, _node: &TableStyleID) -> Option<TableStyleID> {
+        None
+    }
+
+    fn table_style_list(&mut self, _node: &TableStyleList) -> Option<TableStyleList> {
+        None
+    }
+
+    fn table_style_tbl_style(&mut self, _node: &TableStyleTblStyle) -> Option<TableStyleTblStyle> {
+        None
+    }
+
+    fn tail_line_end_style(&mut self, _node: &TailLineEndStyle) -> Option<TailLineEndStyle> {
+        None
+    }
+
+    fn text3d(&mut self, _node: &Text3DContent) -> Option<Text3DContent> {
+        None
+    }
+
+    fn text_autofit(&mut self, _node: &TextAutofitContent) -> Option<TextAutofitContent> {
+        None
+    }
+
+    fn text_bullet(&mut self, _node: &TextBulletContent) -> Option<TextBulletContent> {
+        None
+    }
+
+    fn text_bullet_color(
+        &mut self,
+        _node: &TextBulletColorContent,
+    ) -> Option<TextBulletColorContent> {
+        None
+    }
+
+    fn text_bullet_size(&mut self, _node: &TextBulletSizeContent) -> Option<TextBulletSizeContent> {
+        None
+    }
+
+    fn text_bullet_typeface(
+        &mut self,
+        _node: &TextBulletTypefaceContent,
+    ) -> Option<TextBulletTypefaceContent> {
+        None
+    }
+
+    fn text_default(&mut self, _node: &TextDefault) -> Option<TextDefault> {
+        None
+    }
+
+    fn text_field(&mut self, _node: &TextField) -> Option<TextField> {
+        None
+    }
+
+    fn text_line_break(&mut self, _node: &TextLineBreak) -> Option<TextLineBreak> {
+        None
+    }
+
+    fn text_list_styles(&mut self, _node: &TextListStyles) -> Option<TextListStyles> {
+        None
+    }
+
+    fn text_paragraph_properties(
+        &mut self,
+        _node: &TextParagraphProperties,
+    ) -> Option<TextParagraphProperties> {
+        None
+    }
+
+    fn text_paragraphs(&mut self, _node: &TextParagraphs) -> Option<TextParagraphs> {
+        None
+    }
+
+    fn text_paragraphs_content(
+        &mut self,
+        _node: &TextParagraphsContent,
+    ) -> Option<TextParagraphsContent> {
+        None
+    }
+
+    fn text_paragraphs_content_items(
+        &mut self,
+        _node: &TextParagraphsContent,
+    ) -> Option<Vec<TextParagraphsContent>> {
+        None
+    }
+
+    fn text_run(&mut self, _node: &TextRun) -> Option<TextRun> {
+        None
+    }
+
+    fn text_run_properties(&mut self, _node: &TextRunProperties) -> Option<TextRunProperties> {
+        None
+    }
+
+    fn text_shape(&mut self, _node: &TextShape) -> Option<TextShape> {
+        None
+    }
+
+    fn text_shape_content(&mut self, _node: &TextShapeContent) -> Option<TextShapeContent> {
+        None
+    }
+
+    fn text_spacing(&mut self, _node: &TextSpacingContent) -> Option<TextSpacingContent> {
+        None
+    }
+
+    fn text_string(&mut self, _node: &TextString) -> Option<TextString> {
+        None
+    }
+
+    fn text_underline_fill(
+        &mut self,
+        _node: &TextUnderlineFillContent,
+    ) -> Option<TextUnderlineFillContent> {
+        None
+    }
+
+    fn text_underline_line(
+        &mut self,
+        _node: &TextUnderlineLineContent,
+    ) -> Option<TextUnderlineLineContent> {
+        None
+    }
+
+    fn theme(&mut self, _node: &Theme) -> Option<Theme> {
+        None
+    }
+
+    fn theme_elements(&mut self, _node: &ThemeElements) -> Option<ThemeElements> {
+        None
+    }
+
+    fn theme_manager(&mut self, _node: &ThemeManager) -> Option<ThemeManager> {
+        None
+    }
+
+    fn theme_override(&mut self, _node: &ThemeOverride) -> Option<ThemeOverride> {
+        None
+    }
+
+    fn themeable_fill_style(
+        &mut self,
+        _node: &ThemeableFillStyleContent,
+    ) -> Option<ThemeableFillStyleContent> {
+        None
+    }
+
+    fn themeable_line_style(
+        &mut self,
+        _node: &ThemeableLineStyleContent,
+    ) -> Option<ThemeableLineStyleContent> {
+        None
+    }
+
+    fn tile(&mut self, _node: &Tile) -> Option<Tile> {
+        None
+    }
+
+    fn tile_rectangle(&mut self, _node: &TileRectangle) -> Option<TileRectangle> {
+        None
+    }
+
+    fn tint(&mut self, _node: &Tint) -> Option<Tint> {
+        None
+    }
+
+    fn tint_effect(&mut self, _node: &TintEffect) -> Option<TintEffect> {
+        None
+    }
+
+    fn top_bevel(&mut self, _node: &TopBevel) -> Option<TopBevel> {
+        None
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> Option<TopBorder> {
+        None
+    }
+
+    fn top_border_line_properties(
+        &mut self,
+        _node: &TopBorderLineProperties,
+    ) -> Option<TopBorderLineProperties> {
+        None
+    }
+
+    fn top_left_to_bottom_right_border(
+        &mut self,
+        _node: &TopLeftToBottomRightBorder,
+    ) -> Option<TopLeftToBottomRightBorder> {
+        None
+    }
+
+    fn top_left_to_bottom_right_border_line_properties(
+        &mut self,
+        _node: &TopLeftToBottomRightBorderLineProperties,
+    ) -> Option<TopLeftToBottomRightBorderLineProperties> {
+        None
+    }
+
+    fn top_right_to_bottom_left_border(
+        &mut self,
+        _node: &TopRightToBottomLeftBorder,
+    ) -> Option<TopRightToBottomLeftBorder> {
+        None
+    }
+
+    fn transform_effect(&mut self, _node: &TransformEffect) -> Option<TransformEffect> {
+        None
+    }
+
+    fn underline_fill(&mut self, _node: &UnderlineFill) -> Option<UnderlineFill> {
+        None
+    }
+
+    fn underline_fill_properties_follow_text(
+        &mut self,
+        _node: &UnderlineFillPropertiesFollowText,
+    ) -> Option<UnderlineFillPropertiesFollowText> {
+        None
+    }
+
+    fn underline_follows_text(
+        &mut self,
+        _node: &UnderlineFollowsText,
+    ) -> Option<UnderlineFollowsText> {
+        None
+    }
+
+    fn underline_stroke(&mut self, _node: &UnderlineStroke) -> Option<UnderlineStroke> {
+        None
+    }
+
+    fn up_vector(&mut self, _node: &UpVector) -> Option<UpVector> {
+        None
+    }
+
+    fn use_shape_text_rectangle(
+        &mut self,
+        _node: &UseShapeTextRectangle,
+    ) -> Option<UseShapeTextRectangle> {
+        None
+    }
+
+    fn vertical_ratio(&mut self, _node: &VerticalRatio) -> Option<VerticalRatio> {
+        None
+    }
+
+    fn video_from_file(&mut self, _node: &VideoFromFile) -> Option<VideoFromFile> {
+        None
+    }
+
+    fn visual_group_shape_properties(
+        &mut self,
+        _node: &VisualGroupShapeProperties,
+    ) -> Option<VisualGroupShapeProperties> {
+        None
+    }
+
+    fn whole_table(&mut self, _node: &WholeTable) -> Option<WholeTable> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent1(&mut self, _node: &Accent1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent2(&mut self, _node: &Accent2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent3(&mut self, _node: &Accent3, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent4(&mut self, _node: &Accent4, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent5(&mut self, _node: &Accent5, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent6(&mut self, _node: &Accent6, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha(&mut self, _node: &Alpha, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_bi_level_effect(
+        &mut self,
+        _node: &AlphaBiLevelEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_ceiling_effect(
+        &mut self,
+        _node: &AlphaCeilingEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_floor_effect(
+        &mut self,
+        _node: &AlphaFloorEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_inset_outset_effect(
+        &mut self,
+        _node: &AlphaInsetOutsetEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_inverse_effect(
+        &mut self,
+        _node: &AlphaInverseEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_modulate_effect(
+        &mut self,
+        _node: &AlphaModulateEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_modulate_fixed_effect(
+        &mut self,
+        _node: &AlphaModulateFixedEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_modulation(
+        &mut self,
+        _node: &AlphaModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_offset(
+        &mut self,
+        _node: &AlphaOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alpha_replace_effect(
+        &mut self,
+        _node: &AlphaReplaceEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchor_point(
+        &mut self,
+        _node: &AnchorPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_any_element(
+        &mut self,
+        _node: &AnyElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_any_element_items(
+        &mut self,
+        _node: &AnyElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_apply3d_shape_properties(
+        &mut self,
+        _node: &Apply3DShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio_end_time(
+        &mut self,
+        _node: &AudioEndTime,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio_from_cd(
+        &mut self,
+        _node: &AudioFromCD,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio_from_file(
+        &mut self,
+        _node: &AudioFromFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio_from_wav_file(
+        &mut self,
+        _node: &AudioFromWAVFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_audio_start_time(
+        &mut self,
+        _node: &AudioStartTime,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_numbered_bullet(
+        &mut self,
+        _node: &AutoNumberedBullet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backdrop_plane(
+        &mut self,
+        _node: &BackdropPlane,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_color(
+        &mut self,
+        _node: &BackgroundColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_fill_style_list(
+        &mut self,
+        _node: &BackgroundFillStyleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band1horizontal(
+        &mut self,
+        _node: &Band1Horizontal,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band1vertical(
+        &mut self,
+        _node: &Band1Vertical,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band2horizontal(
+        &mut self,
+        _node: &Band2Horizontal,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_band2vertical(
+        &mut self,
+        _node: &Band2Vertical,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bevel(&mut self, _node: &Bevel, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bi_level(
+        &mut self,
+        _node: &BiLevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blend_effect(
+        &mut self,
+        _node: &BlendEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip(&mut self, _node: &Blip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip_content(
+        &mut self,
+        _node: &BlipContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip_content_items(
+        &mut self,
+        _node: &BlipContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blue(&mut self, _node: &Blue, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blue_modulation(
+        &mut self,
+        _node: &BlueModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blue_offset(
+        &mut self,
+        _node: &BlueOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blur_effect(
+        &mut self,
+        _node: &BlurEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_body_properties(
+        &mut self,
+        _node: &BodyProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_bevel(
+        &mut self,
+        _node: &BottomBevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_border(
+        &mut self,
+        _node: &BottomBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_border_line_properties(
+        &mut self,
+        _node: &BottomBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_left_to_top_right_border_line_properties(
+        &mut self,
+        _node: &BottomLeftToTopRightBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_chart(
+        &mut self,
+        _node: &BuildChart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_diagram(
+        &mut self,
+        _node: &BuildDiagram,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_build_sub_elements(
+        &mut self,
+        _node: &BuildSubElementsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bullet_size_follows_text(
+        &mut self,
+        _node: &BulletSizeFollowsText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bullet_size_percentage(
+        &mut self,
+        _node: &BulletSizePercentage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bullet_size_points(
+        &mut self,
+        _node: &BulletSizePoints,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera(&mut self, _node: &Camera, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cell3d(&mut self, _node: &Cell3D, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_change_color_from(
+        &mut self,
+        _node: &ChangeColorFrom,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_change_color_to(
+        &mut self,
+        _node: &ChangeColorTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character_bullet(
+        &mut self,
+        _node: &CharacterBullet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_chart_to_animate(
+        &mut self,
+        _node: &ChartToAnimate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_child_extents(
+        &mut self,
+        _node: &ChildExtents,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_child_offset(
+        &mut self,
+        _node: &ChildOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_click_hyperlink(
+        &mut self,
+        _node: &ClickHyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_close_shape_path(
+        &mut self,
+        _node: &CloseShapePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color(
+        &mut self,
+        _node: &ColorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_change_effect(
+        &mut self,
+        _node: &ColorChangeEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_items(
+        &mut self,
+        _node: &ColorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_map(
+        &mut self,
+        _node: &ColorMap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_scheme(
+        &mut self,
+        _node: &ColorScheme,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_scheme_map_override(
+        &mut self,
+        _node: &ColorSchemeMapOverrideContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_specified(
+        &mut self,
+        _node: &ColorSpecified,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform(
+        &mut self,
+        _node: &ColorTransformContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_items(
+        &mut self,
+        _node: &ColorTransformContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complement(
+        &mut self,
+        _node: &Complement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_complex_script_font(
+        &mut self,
+        _node: &ComplexScriptFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_end(
+        &mut self,
+        _node: &ConnectionEnd,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_shape(
+        &mut self,
+        _node: &ConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_shape_locks(
+        &mut self,
+        _node: &ConnectionShapeLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_start(
+        &mut self,
+        _node: &ConnectionStart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part_locks(
+        &mut self,
+        _node: &ContentPartLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contour_color(
+        &mut self,
+        _node: &ContourColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_color(
+        &mut self,
+        _node: &CustomColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_color_list(
+        &mut self,
+        _node: &CustomColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_dash(
+        &mut self,
+        _node: &CustomDash,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_geometry(
+        &mut self,
+        _node: &CustomGeometry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dark1(&mut self, _node: &Dark1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dark2(&mut self, _node: &Dark2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dash_stop(
+        &mut self,
+        _node: &DashStop,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_paragraph_style(
+        &mut self,
+        _node: &DefaultParagraphStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_text_run_properties(
+        &mut self,
+        _node: &DefaultTextRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagram_to_animate(
+        &mut self,
+        _node: &DiagramToAnimate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_draw_arc_to(
+        &mut self,
+        _node: &DrawArcTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_draw_cubic_bezier_curve_to(
+        &mut self,
+        _node: &DrawCubicBezierCurveTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_draw_line_to(
+        &mut self,
+        _node: &DrawLineTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_draw_quadratic_bezier_curve_to(
+        &mut self,
+        _node: &DrawQuadraticBezierCurveTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_duotone_effect(
+        &mut self,
+        _node: &DuotoneEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_east_asian_font(
+        &mut self,
+        _node: &EastAsianFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect(&mut self, _node: &Effect, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_container(
+        &mut self,
+        _node: &EffectContainerContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_container_cont(
+        &mut self,
+        _node: &EffectContainerCont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_container_effect_dag(
+        &mut self,
+        _node: &EffectContainerEffectDag,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_container_effect_lst(
+        &mut self,
+        _node: &EffectContainerEffectLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_container_items(
+        &mut self,
+        _node: &EffectContainerContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_effect_reference(
+        &mut self,
+        _node: &EffectEffectReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_properties(
+        &mut self,
+        _node: &EffectPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_reference(
+        &mut self,
+        _node: &EffectReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_style(
+        &mut self,
+        _node: &EffectStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_style_list(
+        &mut self,
+        _node: &EffectStyleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_end_paragraph_run_properties(
+        &mut self,
+        _node: &EndParagraphRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension(
+        &mut self,
+        _node: &Extension,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension_list(
+        &mut self,
+        _node: &ExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extents(&mut self, _node: &Extents, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extra_color_scheme(
+        &mut self,
+        _node: &ExtraColorScheme,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extra_color_scheme_list(
+        &mut self,
+        _node: &ExtraColorSchemeList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extrusion_color(
+        &mut self,
+        _node: &ExtrusionColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill(&mut self, _node: &Fill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_fill_effect(
+        &mut self,
+        _node: &FillFillEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_mode(
+        &mut self,
+        _node: &FillModeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_overlay_effect(
+        &mut self,
+        _node: &FillOverlayEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_properties(
+        &mut self,
+        _node: &FillPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_properties_items(
+        &mut self,
+        _node: &FillPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_rectangle(
+        &mut self,
+        _node: &FillRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_reference(
+        &mut self,
+        _node: &FillReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_style_list(
+        &mut self,
+        _node: &FillStyleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_to_rectangle(
+        &mut self,
+        _node: &FillToRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_column(
+        &mut self,
+        _node: &FirstColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_row(
+        &mut self,
+        _node: &FirstRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_follow_text_bu_clr_tx(
+        &mut self,
+        _node: &FollowTextBuClrTx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_follow_text_bu_font_tx(
+        &mut self,
+        _node: &FollowTextBuFontTx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_followed_hyperlink(
+        &mut self,
+        _node: &FollowedHyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font(&mut self, _node: &Font, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_font_collection(
+        &mut self,
+        _node: &FontFontCollection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_reference(
+        &mut self,
+        _node: &FontReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_scheme(
+        &mut self,
+        _node: &FontScheme,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_foreground_color(
+        &mut self,
+        _node: &ForegroundColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_format_scheme(
+        &mut self,
+        _node: &FormatScheme,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gamma(&mut self, _node: &Gamma, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geometry(
+        &mut self,
+        _node: &GeometryContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_glow_effect(
+        &mut self,
+        _node: &GlowEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_fill(
+        &mut self,
+        _node: &GradientFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_fill_content(
+        &mut self,
+        _node: &GradientFillContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_stop_list(
+        &mut self,
+        _node: &GradientStopList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gradient_stops(
+        &mut self,
+        _node: &GradientStops,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_element(
+        &mut self,
+        _node: &GraphicElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame(
+        &mut self,
+        _node: &GraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame_locks(
+        &mut self,
+        _node: &GraphicFrameLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_object(
+        &mut self,
+        _node: &GraphicObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_object_data(
+        &mut self,
+        _node: &GraphicObjectData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gray(&mut self, _node: &Gray, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gray_scale_effect(
+        &mut self,
+        _node: &GrayScaleEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_green(&mut self, _node: &Green, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_green_modulation(
+        &mut self,
+        _node: &GreenModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_green_offset(
+        &mut self,
+        _node: &GreenOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_fill(
+        &mut self,
+        _node: &GroupFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape(
+        &mut self,
+        _node: &GroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_locks(
+        &mut self,
+        _node: &GroupShapeLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_cell_reference(
+        &mut self,
+        _node: &HeaderCellReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_highlight_color(
+        &mut self,
+        _node: &HighlightColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_horizontal_ratio(
+        &mut self,
+        _node: &HorizontalRatio,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue(&mut self, _node: &Hue, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue_modulate(
+        &mut self,
+        _node: &HueModulate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue_offset(
+        &mut self,
+        _node: &HueOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue_saturation_luminance_color_model(
+        &mut self,
+        _node: &HueSaturationLuminanceColorModel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hue_saturation_luminance_effect(
+        &mut self,
+        _node: &HueSaturationLuminanceEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink(
+        &mut self,
+        _node: &Hyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink_for_hover(
+        &mut self,
+        _node: &HyperlinkForHover,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink_sound(
+        &mut self,
+        _node: &HyperlinkSound,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inner_shadow_effect(
+        &mut self,
+        _node: &InnerShadowEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inside_horizontal_border(
+        &mut self,
+        _node: &InsideHorizontalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inside_vertical_border(
+        &mut self,
+        _node: &InsideVerticalBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inverse(&mut self, _node: &Inverse, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inverse_gamma(
+        &mut self,
+        _node: &InverseGamma,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_last_column(
+        &mut self,
+        _node: &LastColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_last_row(
+        &mut self,
+        _node: &LastRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_latin_font(
+        &mut self,
+        _node: &LatinFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_border(
+        &mut self,
+        _node: &LeftBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_border_line_properties(
+        &mut self,
+        _node: &LeftBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_light1(&mut self, _node: &Light1, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_light2(&mut self, _node: &Light2, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_light_rig(
+        &mut self,
+        _node: &LightRig,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_dash(
+        &mut self,
+        _node: &LineDashContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_default(
+        &mut self,
+        _node: &LineDefault,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_fill(
+        &mut self,
+        _node: &LineFillContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_head_end_style(
+        &mut self,
+        _node: &LineHeadEndStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_join(
+        &mut self,
+        _node: &LineJoinContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_join_bevel(
+        &mut self,
+        _node: &LineJoinBevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_reference(
+        &mut self,
+        _node: &LineReference,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_spacing(
+        &mut self,
+        _node: &LineSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_style_list(
+        &mut self,
+        _node: &LineStyleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linear_gradient_fill(
+        &mut self,
+        _node: &LinearGradientFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level1text_style(
+        &mut self,
+        _node: &ListLevel1TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level2text_style(
+        &mut self,
+        _node: &ListLevel2TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level3text_style(
+        &mut self,
+        _node: &ListLevel3TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level4text_style(
+        &mut self,
+        _node: &ListLevel4TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level5text_style(
+        &mut self,
+        _node: &ListLevel5TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level6text_style(
+        &mut self,
+        _node: &ListLevel6TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level7text_style(
+        &mut self,
+        _node: &ListLevel7TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level8text_style(
+        &mut self,
+        _node: &ListLevel8TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_level9text_style(
+        &mut self,
+        _node: &ListLevel9TextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_shape_adjust_handles(
+        &mut self,
+        _node: &ListOfShapeAdjustHandles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_shape_adjust_values(
+        &mut self,
+        _node: &ListOfShapeAdjustValues,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_shape_connection_sites(
+        &mut self,
+        _node: &ListOfShapeConnectionSites,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_shape_guides(
+        &mut self,
+        _node: &ListOfShapeGuides,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_shape_paths(
+        &mut self,
+        _node: &ListOfShapePaths,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_luminance(
+        &mut self,
+        _node: &Luminance,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_luminance_effect(
+        &mut self,
+        _node: &LuminanceEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_luminance_modulation(
+        &mut self,
+        _node: &LuminanceModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_luminance_offset(
+        &mut self,
+        _node: &LuminanceOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_major_font(
+        &mut self,
+        _node: &MajorFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_master_color_mapping(
+        &mut self,
+        _node: &MasterColorMapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minor_fonts(
+        &mut self,
+        _node: &MinorFonts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_miter_line_join(
+        &mut self,
+        _node: &MiterLineJoin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_mouse_over_hyperlink(
+        &mut self,
+        _node: &MouseOverHyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_move_path_to(
+        &mut self,
+        _node: &MovePathTo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_auto_fit(
+        &mut self,
+        _node: &NoAutoFit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_bullet(
+        &mut self,
+        _node: &NoBullet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_fill(&mut self, _node: &NoFill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_text_in3d_scene(
+        &mut self,
+        _node: &NoTextIn3DScene,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal(&mut self, _node: &Normal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal_auto_fit(
+        &mut self,
+        _node: &NormalAutoFit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_northeast_cell(
+        &mut self,
+        _node: &NortheastCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_northwest_cell(
+        &mut self,
+        _node: &NorthwestCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_defaults(
+        &mut self,
+        _node: &ObjectDefaults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_offset(&mut self, _node: &Offset, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outer_shadow_effect(
+        &mut self,
+        _node: &OuterShadowEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_outline(&mut self, _node: &Outline, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_override_color_mapping(
+        &mut self,
+        _node: &OverrideColorMapping,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_path_gradient(
+        &mut self,
+        _node: &PathGradient,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pattern_fill(
+        &mut self,
+        _node: &PatternFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_bullet(
+        &mut self,
+        _node: &PictureBullet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_fill(
+        &mut self,
+        _node: &PictureFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_locks(
+        &mut self,
+        _node: &PictureLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_polar_adjust_handle(
+        &mut self,
+        _node: &PolarAdjustHandle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preset_color(
+        &mut self,
+        _node: &PresetColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preset_dash(
+        &mut self,
+        _node: &PresetDash,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preset_geometry(
+        &mut self,
+        _node: &PresetGeometry,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preset_shadow(
+        &mut self,
+        _node: &PresetShadow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preset_text_warp(
+        &mut self,
+        _node: &PresetTextWarp,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_quick_time_from_file(
+        &mut self,
+        _node: &QuickTimeFromFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_red(&mut self, _node: &Red, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_red_modulation(
+        &mut self,
+        _node: &RedModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_red_offset(
+        &mut self,
+        _node: &RedOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reflection_effect(
+        &mut self,
+        _node: &ReflectionEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_relative_offset_effect(
+        &mut self,
+        _node: &RelativeOffsetEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rgb_color_model_hex_variant(
+        &mut self,
+        _node: &RGBColorModelHexVariant,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rgb_color_model_percentage_variant(
+        &mut self,
+        _node: &RGBColorModelPercentageVariant,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_border(
+        &mut self,
+        _node: &RightBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_border_line_properties(
+        &mut self,
+        _node: &RightBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_to_left_run(
+        &mut self,
+        _node: &RightToLeftRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rotation(
+        &mut self,
+        _node: &Rotation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_round_line_join(
+        &mut self,
+        _node: &RoundLineJoin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_saturation(
+        &mut self,
+        _node: &Saturation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_saturation_modulation(
+        &mut self,
+        _node: &SaturationModulation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_saturation_offset(
+        &mut self,
+        _node: &SaturationOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scene3d(&mut self, _node: &Scene3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scheme_color(
+        &mut self,
+        _node: &SchemeColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shade(&mut self, _node: &Shade, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_adjust_handles(
+        &mut self,
+        _node: &ShapeAdjustHandlesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_adjust_handles_items(
+        &mut self,
+        _node: &ShapeAdjustHandlesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_auto_fit(
+        &mut self,
+        _node: &ShapeAutoFit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_connection_site(
+        &mut self,
+        _node: &ShapeConnectionSite,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_default(
+        &mut self,
+        _node: &ShapeDefault,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_guide(
+        &mut self,
+        _node: &ShapeGuide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_locks(
+        &mut self,
+        _node: &ShapeLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_path(
+        &mut self,
+        _node: &ShapePath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_path_content(
+        &mut self,
+        _node: &ShapePathContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_path_content_items(
+        &mut self,
+        _node: &ShapePathContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_path_point(
+        &mut self,
+        _node: &ShapePathPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_position_coordinate(
+        &mut self,
+        _node: &ShapePositionCoordinate,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_style(
+        &mut self,
+        _node: &ShapeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text_body(
+        &mut self,
+        _node: &ShapeTextBody,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text_rectangle(
+        &mut self,
+        _node: &ShapeTextRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_soft_edge_effect(
+        &mut self,
+        _node: &SoftEdgeEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_solid_color_replacement(
+        &mut self,
+        _node: &SolidColorReplacement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_solid_fill(
+        &mut self,
+        _node: &SolidFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_source_rectangle(
+        &mut self,
+        _node: &SourceRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_southeast_cell(
+        &mut self,
+        _node: &SoutheastCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_southwest_cell(
+        &mut self,
+        _node: &SouthwestCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_space_after(
+        &mut self,
+        _node: &SpaceAfter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_space_before(
+        &mut self,
+        _node: &SpaceBefore,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spacing_percent(
+        &mut self,
+        _node: &SpacingPercent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spacing_points(
+        &mut self,
+        _node: &SpacingPoints,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_specified(
+        &mut self,
+        _node: &Specified,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_stretch(&mut self, _node: &Stretch, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_symbol_font(
+        &mut self,
+        _node: &SymbolFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_system_color(
+        &mut self,
+        _node: &SystemColor,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_list(
+        &mut self,
+        _node: &TabList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_stop(
+        &mut self,
+        _node: &TabStop,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table(&mut self, _node: &Table, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_background(
+        &mut self,
+        _node: &TableBackground,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_background_effect(
+        &mut self,
+        _node: &TableBackgroundEffectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell(
+        &mut self,
+        _node: &TableCell,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_borders(
+        &mut self,
+        _node: &TableCellBorders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_properties(
+        &mut self,
+        _node: &TableCellProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_style(
+        &mut self,
+        _node: &TableCellStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_text_style(
+        &mut self,
+        _node: &TableCellTextStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_cell_text_style_font(
+        &mut self,
+        _node: &TableCellTextStyleFontContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_grid(
+        &mut self,
+        _node: &TableGrid,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_grid_column(
+        &mut self,
+        _node: &TableGridColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_properties(
+        &mut self,
+        _node: &TableProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_properties_style(
+        &mut self,
+        _node: &TablePropertiesStyleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_row(
+        &mut self,
+        _node: &TableRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style(
+        &mut self,
+        _node: &TableStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_id(
+        &mut self,
+        _node: &TableStyleID,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_list(
+        &mut self,
+        _node: &TableStyleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_table_style_tbl_style(
+        &mut self,
+        _node: &TableStyleTblStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tail_line_end_style(
+        &mut self,
+        _node: &TailLineEndStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text3d(
+        &mut self,
+        _node: &Text3DContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_autofit(
+        &mut self,
+        _node: &TextAutofitContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_bullet(
+        &mut self,
+        _node: &TextBulletContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_bullet_color(
+        &mut self,
+        _node: &TextBulletColorContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_bullet_size(
+        &mut self,
+        _node: &TextBulletSizeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_bullet_typeface(
+        &mut self,
+        _node: &TextBulletTypefaceContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_default(
+        &mut self,
+        _node: &TextDefault,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_field(
+        &mut self,
+        _node: &TextField,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_line_break(
+        &mut self,
+        _node: &TextLineBreak,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_list_styles(
+        &mut self,
+        _node: &TextListStyles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_paragraph_properties(
+        &mut self,
+        _node: &TextParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_paragraphs(
+        &mut self,
+        _node: &TextParagraphs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_paragraphs_content(
+        &mut self,
+        _node: &TextParagraphsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_paragraphs_content_items(
+        &mut self,
+        _node: &TextParagraphsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_run(
+        &mut self,
+        _node: &TextRun,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_run_properties(
+        &mut self,
+        _node: &TextRunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_shape(
+        &mut self,
+        _node: &TextShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_shape_content(
+        &mut self,
+        _node: &TextShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_spacing(
+        &mut self,
+        _node: &TextSpacingContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_string(
+        &mut self,
+        _node: &TextString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_underline_fill(
+        &mut self,
+        _node: &TextUnderlineFillContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_underline_line(
+        &mut self,
+        _node: &TextUnderlineLineContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme(&mut self, _node: &Theme, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme_elements(
+        &mut self,
+        _node: &ThemeElements,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme_manager(
+        &mut self,
+        _node: &ThemeManager,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_theme_override(
+        &mut self,
+        _node: &ThemeOverride,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_themeable_fill_style(
+        &mut self,
+        _node: &ThemeableFillStyleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_themeable_line_style(
+        &mut self,
+        _node: &ThemeableLineStyleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tile(&mut self, _node: &Tile, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tile_rectangle(
+        &mut self,
+        _node: &TileRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tint(&mut self, _node: &Tint, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tint_effect(
+        &mut self,
+        _node: &TintEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_bevel(
+        &mut self,
+        _node: &TopBevel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_border(
+        &mut self,
+        _node: &TopBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_border_line_properties(
+        &mut self,
+        _node: &TopBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_left_to_bottom_right_border(
+        &mut self,
+        _node: &TopLeftToBottomRightBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_left_to_bottom_right_border_line_properties(
+        &mut self,
+        _node: &TopLeftToBottomRightBorderLineProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_right_to_bottom_left_border(
+        &mut self,
+        _node: &TopRightToBottomLeftBorder,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_transform_effect(
+        &mut self,
+        _node: &TransformEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_fill(
+        &mut self,
+        _node: &UnderlineFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_fill_properties_follow_text(
+        &mut self,
+        _node: &UnderlineFillPropertiesFollowText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_follows_text(
+        &mut self,
+        _node: &UnderlineFollowsText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_underline_stroke(
+        &mut self,
+        _node: &UnderlineStroke,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_up_vector(
+        &mut self,
+        _node: &UpVector,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_shape_text_rectangle(
+        &mut self,
+        _node: &UseShapeTextRectangle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_ratio(
+        &mut self,
+        _node: &VerticalRatio,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_video_from_file(
+        &mut self,
+        _node: &VideoFromFile,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_visual_group_shape_properties(
+        &mut self,
+        _node: &VisualGroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_whole_table(
+        &mut self,
+        _node: &WholeTable,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm_group_transform2d(
+        &mut self,
+        _node: &XfrmGroupTransform2D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm_transform2d(
+        &mut self,
+        _node: &XfrmTransform2D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xy_adjust_handle(
+        &mut self,
+        _node: &XYAdjustHandle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm_group_transform2d(
+        &mut self,
+        _node: &XfrmGroupTransform2D,
+    ) -> Option<XfrmGroupTransform2D> {
+        None
+    }
+
+    fn xfrm_transform2d(&mut self, _node: &XfrmTransform2D) -> Option<XfrmTransform2D> {
+        None
+    }
+
+    fn xy_adjust_handle(&mut self, _node: &XYAdjustHandle) -> Option<XYAdjustHandle> {
+        None
+    }
+}
+
 /// 20.1.5.6 `contourClr` (Contour Color): the tag `a:contourClr`, schema type `CT_Color`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -9889,6 +15681,1568 @@ pub struct VideoFromFile {
     pub extension_list: Option<Box<ExtensionList>>,
     pub link: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `a` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn accent1(&mut self, _node: &Accent1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent2(&mut self, _node: &Accent2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent3(&mut self, _node: &Accent3) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent4(&mut self, _node: &Accent4) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent5(&mut self, _node: &Accent5) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent6(&mut self, _node: &Accent6) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha(&mut self, _node: &Alpha) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_bi_level_effect(&mut self, _node: &AlphaBiLevelEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_ceiling_effect(&mut self, _node: &AlphaCeilingEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_floor_effect(&mut self, _node: &AlphaFloorEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_inset_outset_effect(&mut self, _node: &AlphaInsetOutsetEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_inverse_effect(&mut self, _node: &AlphaInverseEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_modulate_effect(&mut self, _node: &AlphaModulateEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_modulate_fixed_effect(&mut self, _node: &AlphaModulateFixedEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_modulation(&mut self, _node: &AlphaModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_offset(&mut self, _node: &AlphaOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alpha_replace_effect(&mut self, _node: &AlphaReplaceEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchor_point(&mut self, _node: &AnchorPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn any_element(&mut self, _node: &AnyElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn apply3d_shape_properties(&mut self, _node: &Apply3DShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio_end_time(&mut self, _node: &AudioEndTime) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio_from_cd(&mut self, _node: &AudioFromCD) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio_from_file(&mut self, _node: &AudioFromFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio_from_wav_file(&mut self, _node: &AudioFromWAVFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn audio_start_time(&mut self, _node: &AudioStartTime) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn auto_numbered_bullet(&mut self, _node: &AutoNumberedBullet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn backdrop_plane(&mut self, _node: &BackdropPlane) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_color(&mut self, _node: &BackgroundColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_fill_style_list(&mut self, _node: &BackgroundFillStyleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band1horizontal(&mut self, _node: &Band1Horizontal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band1vertical(&mut self, _node: &Band1Vertical) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band2horizontal(&mut self, _node: &Band2Horizontal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn band2vertical(&mut self, _node: &Band2Vertical) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bevel(&mut self, _node: &Bevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bi_level(&mut self, _node: &BiLevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blend_effect(&mut self, _node: &BlendEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blip(&mut self, _node: &Blip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blip_content(&mut self, _node: &BlipContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blue(&mut self, _node: &Blue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blue_modulation(&mut self, _node: &BlueModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blue_offset(&mut self, _node: &BlueOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blur_effect(&mut self, _node: &BlurEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn body_properties(&mut self, _node: &BodyProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_bevel(&mut self, _node: &BottomBevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_border(&mut self, _node: &BottomBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_border_line_properties(
+        &mut self,
+        _node: &BottomBorderLineProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_left_to_top_right_border_line_properties(
+        &mut self,
+        _node: &BottomLeftToTopRightBorderLineProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_chart(&mut self, _node: &BuildChart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_diagram(&mut self, _node: &BuildDiagram) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn build_sub_elements(&mut self, _node: &BuildSubElementsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bullet_size_follows_text(&mut self, _node: &BulletSizeFollowsText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bullet_size_percentage(&mut self, _node: &BulletSizePercentage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bullet_size_points(&mut self, _node: &BulletSizePoints) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera(&mut self, _node: &Camera) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cell3d(&mut self, _node: &Cell3D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn change_color_from(&mut self, _node: &ChangeColorFrom) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn change_color_to(&mut self, _node: &ChangeColorTo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character_bullet(&mut self, _node: &CharacterBullet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn chart_to_animate(&mut self, _node: &ChartToAnimate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn child_extents(&mut self, _node: &ChildExtents) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn child_offset(&mut self, _node: &ChildOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn click_hyperlink(&mut self, _node: &ClickHyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn close_shape_path(&mut self, _node: &CloseShapePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color(&mut self, _node: &ColorContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_change_effect(&mut self, _node: &ColorChangeEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_map(&mut self, _node: &ColorMap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_scheme(&mut self, _node: &ColorScheme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_scheme_map_override(
+        &mut self,
+        _node: &ColorSchemeMapOverrideContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_specified(&mut self, _node: &ColorSpecified) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform(&mut self, _node: &ColorTransformContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complement(&mut self, _node: &Complement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn complex_script_font(&mut self, _node: &ComplexScriptFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_end(&mut self, _node: &ConnectionEnd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_shape_locks(&mut self, _node: &ConnectionShapeLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_start(&mut self, _node: &ConnectionStart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part_locks(&mut self, _node: &ContentPartLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contour_color(&mut self, _node: &ContourColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_color(&mut self, _node: &CustomColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_color_list(&mut self, _node: &CustomColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_dash(&mut self, _node: &CustomDash) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_geometry(&mut self, _node: &CustomGeometry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dark1(&mut self, _node: &Dark1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dark2(&mut self, _node: &Dark2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dash_stop(&mut self, _node: &DashStop) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_paragraph_style(&mut self, _node: &DefaultParagraphStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_text_run_properties(&mut self, _node: &DefaultTextRunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagram_to_animate(&mut self, _node: &DiagramToAnimate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn draw_arc_to(&mut self, _node: &DrawArcTo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn draw_cubic_bezier_curve_to(&mut self, _node: &DrawCubicBezierCurveTo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn draw_line_to(&mut self, _node: &DrawLineTo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn draw_quadratic_bezier_curve_to(
+        &mut self,
+        _node: &DrawQuadraticBezierCurveTo,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn duotone_effect(&mut self, _node: &DuotoneEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn east_asian_font(&mut self, _node: &EastAsianFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect(&mut self, _node: &Effect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_container(&mut self, _node: &EffectContainerContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_container_cont(&mut self, _node: &EffectContainerCont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_container_effect_dag(&mut self, _node: &EffectContainerEffectDag) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_container_effect_lst(&mut self, _node: &EffectContainerEffectLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_effect_reference(&mut self, _node: &EffectEffectReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_properties(&mut self, _node: &EffectPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_reference(&mut self, _node: &EffectReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_style(&mut self, _node: &EffectStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_style_list(&mut self, _node: &EffectStyleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn end_paragraph_run_properties(
+        &mut self,
+        _node: &EndParagraphRunProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension(&mut self, _node: &Extension) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extents(&mut self, _node: &Extents) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extra_color_scheme(&mut self, _node: &ExtraColorScheme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extra_color_scheme_list(&mut self, _node: &ExtraColorSchemeList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extrusion_color(&mut self, _node: &ExtrusionColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill(&mut self, _node: &Fill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_fill_effect(&mut self, _node: &FillFillEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_mode(&mut self, _node: &FillModeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_overlay_effect(&mut self, _node: &FillOverlayEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_properties(&mut self, _node: &FillPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_rectangle(&mut self, _node: &FillRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_reference(&mut self, _node: &FillReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_style_list(&mut self, _node: &FillStyleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_to_rectangle(&mut self, _node: &FillToRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_column(&mut self, _node: &FirstColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_row(&mut self, _node: &FirstRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn follow_text_bu_clr_tx(&mut self, _node: &FollowTextBuClrTx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn follow_text_bu_font_tx(&mut self, _node: &FollowTextBuFontTx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn followed_hyperlink(&mut self, _node: &FollowedHyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font(&mut self, _node: &Font) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_font_collection(&mut self, _node: &FontFontCollection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_reference(&mut self, _node: &FontReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_scheme(&mut self, _node: &FontScheme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn foreground_color(&mut self, _node: &ForegroundColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn format_scheme(&mut self, _node: &FormatScheme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gamma(&mut self, _node: &Gamma) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geometry(&mut self, _node: &GeometryContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn glow_effect(&mut self, _node: &GlowEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_fill(&mut self, _node: &GradientFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_fill_content(&mut self, _node: &GradientFillContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_stop_list(&mut self, _node: &GradientStopList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gradient_stops(&mut self, _node: &GradientStops) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_element(&mut self, _node: &GraphicElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame_locks(&mut self, _node: &GraphicFrameLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_object(&mut self, _node: &GraphicObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_object_data(&mut self, _node: &GraphicObjectData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gray(&mut self, _node: &Gray) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gray_scale_effect(&mut self, _node: &GrayScaleEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn green(&mut self, _node: &Green) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn green_modulation(&mut self, _node: &GreenModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn green_offset(&mut self, _node: &GreenOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_fill(&mut self, _node: &GroupFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_locks(&mut self, _node: &GroupShapeLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_cell_reference(&mut self, _node: &HeaderCellReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn header_cells_associated_with_table_cell(
+        &mut self,
+        _node: &HeaderCellsAssociatedWithTableCell,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn highlight_color(&mut self, _node: &HighlightColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn horizontal_ratio(&mut self, _node: &HorizontalRatio) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue(&mut self, _node: &Hue) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue_modulate(&mut self, _node: &HueModulate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue_offset(&mut self, _node: &HueOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue_saturation_luminance_color_model(
+        &mut self,
+        _node: &HueSaturationLuminanceColorModel,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hue_saturation_luminance_effect(
+        &mut self,
+        _node: &HueSaturationLuminanceEffect,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink_for_hover(&mut self, _node: &HyperlinkForHover) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink_sound(&mut self, _node: &HyperlinkSound) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inner_shadow_effect(&mut self, _node: &InnerShadowEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inside_horizontal_border(&mut self, _node: &InsideHorizontalBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inside_vertical_border(&mut self, _node: &InsideVerticalBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inverse(&mut self, _node: &Inverse) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inverse_gamma(&mut self, _node: &InverseGamma) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn last_column(&mut self, _node: &LastColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn last_row(&mut self, _node: &LastRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn latin_font(&mut self, _node: &LatinFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_border(&mut self, _node: &LeftBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_border_line_properties(&mut self, _node: &LeftBorderLineProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn light1(&mut self, _node: &Light1) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn light2(&mut self, _node: &Light2) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn light_rig(&mut self, _node: &LightRig) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_dash(&mut self, _node: &LineDashContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_default(&mut self, _node: &LineDefault) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_fill(&mut self, _node: &LineFillContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_head_end_style(&mut self, _node: &LineHeadEndStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_join(&mut self, _node: &LineJoinContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_join_bevel(&mut self, _node: &LineJoinBevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_reference(&mut self, _node: &LineReference) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_spacing(&mut self, _node: &LineSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_style_list(&mut self, _node: &LineStyleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linear_gradient_fill(&mut self, _node: &LinearGradientFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level1text_style(&mut self, _node: &ListLevel1TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level2text_style(&mut self, _node: &ListLevel2TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level3text_style(&mut self, _node: &ListLevel3TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level4text_style(&mut self, _node: &ListLevel4TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level5text_style(&mut self, _node: &ListLevel5TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level6text_style(&mut self, _node: &ListLevel6TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level7text_style(&mut self, _node: &ListLevel7TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level8text_style(&mut self, _node: &ListLevel8TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_level9text_style(&mut self, _node: &ListLevel9TextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_shape_adjust_handles(
+        &mut self,
+        _node: &ListOfShapeAdjustHandles,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_shape_adjust_values(&mut self, _node: &ListOfShapeAdjustValues) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_shape_connection_sites(
+        &mut self,
+        _node: &ListOfShapeConnectionSites,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_shape_guides(&mut self, _node: &ListOfShapeGuides) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_shape_paths(&mut self, _node: &ListOfShapePaths) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn luminance(&mut self, _node: &Luminance) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn luminance_effect(&mut self, _node: &LuminanceEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn luminance_modulation(&mut self, _node: &LuminanceModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn luminance_offset(&mut self, _node: &LuminanceOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn major_font(&mut self, _node: &MajorFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn master_color_mapping(&mut self, _node: &MasterColorMapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minor_fonts(&mut self, _node: &MinorFonts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn miter_line_join(&mut self, _node: &MiterLineJoin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn mouse_over_hyperlink(&mut self, _node: &MouseOverHyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn move_path_to(&mut self, _node: &MovePathTo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_auto_fit(&mut self, _node: &NoAutoFit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_bullet(&mut self, _node: &NoBullet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_fill(&mut self, _node: &NoFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_text_in3d_scene(&mut self, _node: &NoTextIn3DScene) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal(&mut self, _node: &Normal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal_auto_fit(&mut self, _node: &NormalAutoFit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn northeast_cell(&mut self, _node: &NortheastCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn northwest_cell(&mut self, _node: &NorthwestCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_defaults(&mut self, _node: &ObjectDefaults) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn offset(&mut self, _node: &Offset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outer_shadow_effect(&mut self, _node: &OuterShadowEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn outline(&mut self, _node: &Outline) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn override_color_mapping(&mut self, _node: &OverrideColorMapping) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn path_gradient(&mut self, _node: &PathGradient) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pattern_fill(&mut self, _node: &PatternFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture(&mut self, _node: &Picture) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_bullet(&mut self, _node: &PictureBullet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_locks(&mut self, _node: &PictureLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn polar_adjust_handle(&mut self, _node: &PolarAdjustHandle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preset_color(&mut self, _node: &PresetColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preset_dash(&mut self, _node: &PresetDash) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preset_geometry(&mut self, _node: &PresetGeometry) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preset_shadow(&mut self, _node: &PresetShadow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preset_text_warp(&mut self, _node: &PresetTextWarp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn quick_time_from_file(&mut self, _node: &QuickTimeFromFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn red(&mut self, _node: &Red) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn red_modulation(&mut self, _node: &RedModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn red_offset(&mut self, _node: &RedOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reflection_effect(&mut self, _node: &ReflectionEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn relative_offset_effect(&mut self, _node: &RelativeOffsetEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rgb_color_model_hex_variant(&mut self, _node: &RGBColorModelHexVariant) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rgb_color_model_percentage_variant(
+        &mut self,
+        _node: &RGBColorModelPercentageVariant,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_border(&mut self, _node: &RightBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_border_line_properties(
+        &mut self,
+        _node: &RightBorderLineProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_to_left_run(&mut self, _node: &RightToLeftRun) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rotation(&mut self, _node: &Rotation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn round_line_join(&mut self, _node: &RoundLineJoin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn saturation(&mut self, _node: &Saturation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn saturation_modulation(&mut self, _node: &SaturationModulation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn saturation_offset(&mut self, _node: &SaturationOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scheme_color(&mut self, _node: &SchemeColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shade(&mut self, _node: &Shade) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape(&mut self, _node: &Shape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_adjust_handles(&mut self, _node: &ShapeAdjustHandlesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_auto_fit(&mut self, _node: &ShapeAutoFit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_connection_site(&mut self, _node: &ShapeConnectionSite) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_default(&mut self, _node: &ShapeDefault) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_guide(&mut self, _node: &ShapeGuide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_locks(&mut self, _node: &ShapeLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_path(&mut self, _node: &ShapePath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_path_content(&mut self, _node: &ShapePathContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_path_point(&mut self, _node: &ShapePathPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_position_coordinate(&mut self, _node: &ShapePositionCoordinate) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text_rectangle(&mut self, _node: &ShapeTextRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn soft_edge_effect(&mut self, _node: &SoftEdgeEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn solid_color_replacement(&mut self, _node: &SolidColorReplacement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn solid_fill(&mut self, _node: &SolidFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn source_rectangle(&mut self, _node: &SourceRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn southeast_cell(&mut self, _node: &SoutheastCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn southwest_cell(&mut self, _node: &SouthwestCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn space_after(&mut self, _node: &SpaceAfter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn space_before(&mut self, _node: &SpaceBefore) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spacing_percent(&mut self, _node: &SpacingPercent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spacing_points(&mut self, _node: &SpacingPoints) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn specified(&mut self, _node: &Specified) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn stretch(&mut self, _node: &Stretch) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn symbol_font(&mut self, _node: &SymbolFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn system_color(&mut self, _node: &SystemColor) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_list(&mut self, _node: &TabList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_stop(&mut self, _node: &TabStop) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table(&mut self, _node: &Table) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_background(&mut self, _node: &TableBackground) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_background_effect(&mut self, _node: &TableBackgroundEffectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell(&mut self, _node: &TableCell) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_borders(&mut self, _node: &TableCellBorders) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_properties(&mut self, _node: &TableCellProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_style(&mut self, _node: &TableCellStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_text_style(&mut self, _node: &TableCellTextStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_cell_text_style_font(
+        &mut self,
+        _node: &TableCellTextStyleFontContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_grid(&mut self, _node: &TableGrid) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_grid_column(&mut self, _node: &TableGridColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_properties(&mut self, _node: &TableProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_properties_style(&mut self, _node: &TablePropertiesStyleContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_row(&mut self, _node: &TableRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style(&mut self, _node: &TableStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_id(&mut self, _node: &TableStyleID) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_list(&mut self, _node: &TableStyleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn table_style_tbl_style(&mut self, _node: &TableStyleTblStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tail_line_end_style(&mut self, _node: &TailLineEndStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text3d(&mut self, _node: &Text3DContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_autofit(&mut self, _node: &TextAutofitContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_bullet(&mut self, _node: &TextBulletContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_bullet_color(&mut self, _node: &TextBulletColorContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_bullet_size(&mut self, _node: &TextBulletSizeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_bullet_typeface(&mut self, _node: &TextBulletTypefaceContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_default(&mut self, _node: &TextDefault) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_field(&mut self, _node: &TextField) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_line_break(&mut self, _node: &TextLineBreak) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_list_styles(&mut self, _node: &TextListStyles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_paragraph_properties(&mut self, _node: &TextParagraphProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_paragraphs(&mut self, _node: &TextParagraphs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_paragraphs_content(&mut self, _node: &TextParagraphsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_run(&mut self, _node: &TextRun) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_run_properties(&mut self, _node: &TextRunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_shape(&mut self, _node: &TextShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_shape_content(&mut self, _node: &TextShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_spacing(&mut self, _node: &TextSpacingContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_string(&mut self, _node: &TextString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_underline_fill(&mut self, _node: &TextUnderlineFillContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_underline_line(&mut self, _node: &TextUnderlineLineContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme(&mut self, _node: &Theme) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme_elements(&mut self, _node: &ThemeElements) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme_manager(&mut self, _node: &ThemeManager) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn theme_override(&mut self, _node: &ThemeOverride) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn themeable_fill_style(&mut self, _node: &ThemeableFillStyleContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn themeable_line_style(&mut self, _node: &ThemeableLineStyleContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tile(&mut self, _node: &Tile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tile_rectangle(&mut self, _node: &TileRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tint(&mut self, _node: &Tint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tint_effect(&mut self, _node: &TintEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_bevel(&mut self, _node: &TopBevel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_border(&mut self, _node: &TopBorder) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_border_line_properties(&mut self, _node: &TopBorderLineProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_left_to_bottom_right_border(
+        &mut self,
+        _node: &TopLeftToBottomRightBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_left_to_bottom_right_border_line_properties(
+        &mut self,
+        _node: &TopLeftToBottomRightBorderLineProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_right_to_bottom_left_border(
+        &mut self,
+        _node: &TopRightToBottomLeftBorder,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn transform_effect(&mut self, _node: &TransformEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_fill(&mut self, _node: &UnderlineFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_fill_properties_follow_text(
+        &mut self,
+        _node: &UnderlineFillPropertiesFollowText,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_follows_text(&mut self, _node: &UnderlineFollowsText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn underline_stroke(&mut self, _node: &UnderlineStroke) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn up_vector(&mut self, _node: &UpVector) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_shape_text_rectangle(&mut self, _node: &UseShapeTextRectangle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_ratio(&mut self, _node: &VerticalRatio) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn video_from_file(&mut self, _node: &VideoFromFile) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn visual_group_shape_properties(
+        &mut self,
+        _node: &VisualGroupShapeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn whole_table(&mut self, _node: &WholeTable) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm_group_transform2d(&mut self, _node: &XfrmGroupTransform2D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm_transform2d(&mut self, _node: &XfrmTransform2D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xy_adjust_handle(&mut self, _node: &XYAdjustHandle) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 20.1.2.2.22 `grpSpPr` (Visual Group Shape Properties): the tag `a:grpSpPr`, schema type

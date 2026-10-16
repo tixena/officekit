@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/2009/07/customui`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_MSO14: Option<NamespaceId> = Some(58);
 
@@ -2898,6 +2902,1760 @@ pub struct Commands {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `mso14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_2009_07_customui` is never asked.
+pub trait Context: markup::Context {
+    fn backstage(&mut self, _node: &Backstage) -> Option<Backstage> {
+        None
+    }
+
+    fn backstage_content(&mut self, _node: &BackstageContent) -> Option<BackstageContent> {
+        None
+    }
+
+    fn backstage_content_items(
+        &mut self,
+        _node: &BackstageContent,
+    ) -> Option<Vec<BackstageContent>> {
+        None
+    }
+
+    fn backstage_groups(
+        &mut self,
+        _node: &BackstageGroupsContent,
+    ) -> Option<BackstageGroupsContent> {
+        None
+    }
+
+    fn backstage_groups_items(
+        &mut self,
+        _node: &BackstageGroupsContent,
+    ) -> Option<Vec<BackstageGroupsContent>> {
+        None
+    }
+
+    fn backstage_menu_group(
+        &mut self,
+        _node: &BackstageMenuGroupContent,
+    ) -> Option<BackstageMenuGroupContent> {
+        None
+    }
+
+    fn backstage_menu_group_items(
+        &mut self,
+        _node: &BackstageMenuGroupContent,
+    ) -> Option<Vec<BackstageMenuGroupContent>> {
+        None
+    }
+
+    fn bottom_items(&mut self, _node: &BottomItems) -> Option<BottomItems> {
+        None
+    }
+
+    fn r#box(&mut self, _node: &BoxContent) -> Option<BoxContent> {
+        None
+    }
+
+    fn box_box(&mut self, _node: &BoxBox) -> Option<BoxBox> {
+        None
+    }
+
+    fn box_items(&mut self, _node: &BoxContent) -> Option<Vec<BoxContent>> {
+        None
+    }
+
+    fn button_backstage_fast_command_button(
+        &mut self,
+        _node: &ButtonBackstageFastCommandButton,
+    ) -> Option<ButtonBackstageFastCommandButton> {
+        None
+    }
+
+    fn button_backstage_group_button(
+        &mut self,
+        _node: &ButtonBackstageGroupButton,
+    ) -> Option<ButtonBackstageGroupButton> {
+        None
+    }
+
+    fn button_backstage_menu_button(
+        &mut self,
+        _node: &ButtonBackstageMenuButton,
+    ) -> Option<ButtonBackstageMenuButton> {
+        None
+    }
+
+    fn button_backstage_regular_button(
+        &mut self,
+        _node: &ButtonBackstageRegularButton,
+    ) -> Option<ButtonBackstageRegularButton> {
+        None
+    }
+
+    fn button_button(&mut self, _node: &ButtonButton) -> Option<ButtonButton> {
+        None
+    }
+
+    fn button_button_regular(
+        &mut self,
+        _node: &ButtonButtonRegular,
+    ) -> Option<ButtonButtonRegular> {
+        None
+    }
+
+    fn button_group(&mut self, _node: &ButtonGroup) -> Option<ButtonGroup> {
+        None
+    }
+
+    fn button_group_content(&mut self, _node: &ButtonGroupContent) -> Option<ButtonGroupContent> {
+        None
+    }
+
+    fn button_group_content_items(
+        &mut self,
+        _node: &ButtonGroupContent,
+    ) -> Option<Vec<ButtonGroupContent>> {
+        None
+    }
+
+    fn button_visible_button(
+        &mut self,
+        _node: &ButtonVisibleButton,
+    ) -> Option<ButtonVisibleButton> {
+        None
+    }
+
+    fn category_task_form_group_category(
+        &mut self,
+        _node: &CategoryTaskFormGroupCategory,
+    ) -> Option<CategoryTaskFormGroupCategory> {
+        None
+    }
+
+    fn category_task_group_category(
+        &mut self,
+        _node: &CategoryTaskGroupCategory,
+    ) -> Option<CategoryTaskGroupCategory> {
+        None
+    }
+
+    fn check_box_backstage_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageCheckBox,
+    ) -> Option<CheckBoxBackstageCheckBox> {
+        None
+    }
+
+    fn check_box_backstage_menu_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageMenuCheckBox,
+    ) -> Option<CheckBoxBackstageMenuCheckBox> {
+        None
+    }
+
+    fn check_box_check_box(&mut self, _node: &CheckBoxCheckBox) -> Option<CheckBoxCheckBox> {
+        None
+    }
+
+    fn combo_box_backstage_combo_box(
+        &mut self,
+        _node: &ComboBoxBackstageComboBox,
+    ) -> Option<ComboBoxBackstageComboBox> {
+        None
+    }
+
+    fn combo_box_combo_box(&mut self, _node: &ComboBoxComboBox) -> Option<ComboBoxComboBox> {
+        None
+    }
+
+    fn command(&mut self, _node: &Command) -> Option<Command> {
+        None
+    }
+
+    fn commands(&mut self, _node: &Commands) -> Option<Commands> {
+        None
+    }
+
+    fn context_menu(&mut self, _node: &ContextMenu) -> Option<ContextMenu> {
+        None
+    }
+
+    fn context_menu_content(&mut self, _node: &ContextMenuContent) -> Option<ContextMenuContent> {
+        None
+    }
+
+    fn context_menu_content_items(
+        &mut self,
+        _node: &ContextMenuContent,
+    ) -> Option<Vec<ContextMenuContent>> {
+        None
+    }
+
+    fn context_menus(&mut self, _node: &ContextMenus) -> Option<ContextMenus> {
+        None
+    }
+
+    fn contextual_tabs(&mut self, _node: &ContextualTabs) -> Option<ContextualTabs> {
+        None
+    }
+
+    fn control_control_clone(
+        &mut self,
+        _node: &ControlControlClone,
+    ) -> Option<ControlControlClone> {
+        None
+    }
+
+    fn control_control_clone_qat(
+        &mut self,
+        _node: &ControlControlCloneQat,
+    ) -> Option<ControlControlCloneQat> {
+        None
+    }
+
+    fn control_control_clone_regular(
+        &mut self,
+        _node: &ControlControlCloneRegular,
+    ) -> Option<ControlControlCloneRegular> {
+        None
+    }
+
+    fn custom_ui(&mut self, _node: &CustomUI) -> Option<CustomUI> {
+        None
+    }
+
+    fn dialog_box_launcher(&mut self, _node: &DialogBoxLauncher) -> Option<DialogBoxLauncher> {
+        None
+    }
+
+    fn document_controls(&mut self, _node: &DocumentControls) -> Option<DocumentControls> {
+        None
+    }
+
+    fn drop_down_backstage_drop_down(
+        &mut self,
+        _node: &DropDownBackstageDropDown,
+    ) -> Option<DropDownBackstageDropDown> {
+        None
+    }
+
+    fn drop_down_drop_down_regular(
+        &mut self,
+        _node: &DropDownDropDownRegular,
+    ) -> Option<DropDownDropDownRegular> {
+        None
+    }
+
+    fn dynamic_menu_dynamic_menu(
+        &mut self,
+        _node: &DynamicMenuDynamicMenu,
+    ) -> Option<DynamicMenuDynamicMenu> {
+        None
+    }
+
+    fn dynamic_menu_dynamic_menu_regular(
+        &mut self,
+        _node: &DynamicMenuDynamicMenuRegular,
+    ) -> Option<DynamicMenuDynamicMenuRegular> {
+        None
+    }
+
+    fn edit_box_backstage_edit_box(
+        &mut self,
+        _node: &EditBoxBackstageEditBox,
+    ) -> Option<EditBoxBackstageEditBox> {
+        None
+    }
+
+    fn edit_box_edit_box(&mut self, _node: &EditBoxEditBox) -> Option<EditBoxEditBox> {
+        None
+    }
+
+    fn first_column(&mut self, _node: &FirstColumn) -> Option<FirstColumn> {
+        None
+    }
+
+    fn gallery_gallery(&mut self, _node: &GalleryGallery) -> Option<GalleryGallery> {
+        None
+    }
+
+    fn gallery_gallery_regular(
+        &mut self,
+        _node: &GalleryGalleryRegular,
+    ) -> Option<GalleryGalleryRegular> {
+        None
+    }
+
+    fn group(&mut self, _node: &GroupContent) -> Option<GroupContent> {
+        None
+    }
+
+    fn group_backstage_group(
+        &mut self,
+        _node: &GroupBackstageGroup,
+    ) -> Option<GroupBackstageGroup> {
+        None
+    }
+
+    fn group_box(&mut self, _node: &GroupBox) -> Option<GroupBox> {
+        None
+    }
+
+    fn group_controls(&mut self, _node: &GroupControlsContent) -> Option<GroupControlsContent> {
+        None
+    }
+
+    fn group_controls_items(
+        &mut self,
+        _node: &GroupControlsContent,
+    ) -> Option<Vec<GroupControlsContent>> {
+        None
+    }
+
+    fn group_group(&mut self, _node: &GroupGroup) -> Option<GroupGroup> {
+        None
+    }
+
+    fn group_items(&mut self, _node: &GroupContent) -> Option<Vec<GroupContent>> {
+        None
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> Option<Hyperlink> {
+        None
+    }
+
+    fn image_control(&mut self, _node: &ImageControl) -> Option<ImageControl> {
+        None
+    }
+
+    fn item_backstage_item(&mut self, _node: &ItemBackstageItem) -> Option<ItemBackstageItem> {
+        None
+    }
+
+    fn item_item(&mut self, _node: &ItemItem) -> Option<ItemItem> {
+        None
+    }
+
+    fn label_control_backstage_label_control(
+        &mut self,
+        _node: &LabelControlBackstageLabelControl,
+    ) -> Option<LabelControlBackstageLabelControl> {
+        None
+    }
+
+    fn label_control_label_control(
+        &mut self,
+        _node: &LabelControlLabelControl,
+    ) -> Option<LabelControlLabelControl> {
+        None
+    }
+
+    fn layout_container(&mut self, _node: &LayoutContainer) -> Option<LayoutContainer> {
+        None
+    }
+
+    fn menu(&mut self, _node: &MenuContent) -> Option<MenuContent> {
+        None
+    }
+
+    fn menu_backstage_primary_menu(
+        &mut self,
+        _node: &MenuBackstagePrimaryMenu,
+    ) -> Option<MenuBackstagePrimaryMenu> {
+        None
+    }
+
+    fn menu_backstage_sub_menu(
+        &mut self,
+        _node: &MenuBackstageSubMenu,
+    ) -> Option<MenuBackstageSubMenu> {
+        None
+    }
+
+    fn menu_group(&mut self, _node: &MenuGroup) -> Option<MenuGroup> {
+        None
+    }
+
+    fn menu_items(&mut self, _node: &MenuContent) -> Option<Vec<MenuContent>> {
+        None
+    }
+
+    fn menu_menu(&mut self, _node: &MenuMenu) -> Option<MenuMenu> {
+        None
+    }
+
+    fn menu_menu_regular(&mut self, _node: &MenuMenuRegular) -> Option<MenuMenuRegular> {
+        None
+    }
+
+    fn menu_menu_root(&mut self, _node: &MenuMenuRoot) -> Option<MenuMenuRoot> {
+        None
+    }
+
+    fn menu_menu_with_title(&mut self, _node: &MenuMenuWithTitle) -> Option<MenuMenuWithTitle> {
+        None
+    }
+
+    fn menu_separator_menu_separator(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparator,
+    ) -> Option<MenuSeparatorMenuSeparator> {
+        None
+    }
+
+    fn menu_separator_menu_separator_no_title(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparatorNoTitle,
+    ) -> Option<MenuSeparatorMenuSeparatorNoTitle> {
+        None
+    }
+
+    fn menu_with_title(&mut self, _node: &MenuWithTitleContent) -> Option<MenuWithTitleContent> {
+        None
+    }
+
+    fn menu_with_title_items(
+        &mut self,
+        _node: &MenuWithTitleContent,
+    ) -> Option<Vec<MenuWithTitleContent>> {
+        None
+    }
+
+    fn primary_item(&mut self, _node: &PrimaryItem) -> Option<PrimaryItem> {
+        None
+    }
+
+    fn primary_item_content(&mut self, _node: &PrimaryItemContent) -> Option<PrimaryItemContent> {
+        None
+    }
+
+    fn qat(&mut self, _node: &Qat) -> Option<Qat> {
+        None
+    }
+
+    fn quick_access_toolbar_items(
+        &mut self,
+        _node: &QuickAccessToolbarItemsContent,
+    ) -> Option<QuickAccessToolbarItemsContent> {
+        None
+    }
+
+    fn quick_access_toolbar_items_items(
+        &mut self,
+        _node: &QuickAccessToolbarItemsContent,
+    ) -> Option<Vec<QuickAccessToolbarItemsContent>> {
+        None
+    }
+
+    fn radio_button(&mut self, _node: &RadioButton) -> Option<RadioButton> {
+        None
+    }
+
+    fn radio_group(&mut self, _node: &RadioGroup) -> Option<RadioGroup> {
+        None
+    }
+
+    fn ribbon(&mut self, _node: &Ribbon) -> Option<Ribbon> {
+        None
+    }
+
+    fn ribbon_content(&mut self, _node: &RibbonContent) -> Option<RibbonContent> {
+        None
+    }
+
+    fn ribbon_content_items(&mut self, _node: &RibbonContent) -> Option<Vec<RibbonContent>> {
+        None
+    }
+
+    fn second_column(&mut self, _node: &SecondColumn) -> Option<SecondColumn> {
+        None
+    }
+
+    fn separator(&mut self, _node: &Separator) -> Option<Separator> {
+        None
+    }
+
+    fn shared_controls(&mut self, _node: &SharedControls) -> Option<SharedControls> {
+        None
+    }
+
+    fn simple_groups(&mut self, _node: &SimpleGroupsContent) -> Option<SimpleGroupsContent> {
+        None
+    }
+
+    fn simple_groups_items(
+        &mut self,
+        _node: &SimpleGroupsContent,
+    ) -> Option<Vec<SimpleGroupsContent>> {
+        None
+    }
+
+    fn split_button(&mut self, _node: &SplitButtonContent) -> Option<SplitButtonContent> {
+        None
+    }
+
+    fn split_button_split_button(
+        &mut self,
+        _node: &SplitButtonSplitButton,
+    ) -> Option<SplitButtonSplitButton> {
+        None
+    }
+
+    fn split_button_split_button_regular(
+        &mut self,
+        _node: &SplitButtonSplitButtonRegular,
+    ) -> Option<SplitButtonSplitButtonRegular> {
+        None
+    }
+
+    fn split_button_split_button_with_title(
+        &mut self,
+        _node: &SplitButtonSplitButtonWithTitle,
+    ) -> Option<SplitButtonSplitButtonWithTitle> {
+        None
+    }
+
+    fn tab_backstage_tab(&mut self, _node: &TabBackstageTab) -> Option<TabBackstageTab> {
+        None
+    }
+
+    fn tab_set(&mut self, _node: &TabSet) -> Option<TabSet> {
+        None
+    }
+
+    fn tab_tab(&mut self, _node: &TabTab) -> Option<TabTab> {
+        None
+    }
+
+    fn tabs(&mut self, _node: &Tabs) -> Option<Tabs> {
+        None
+    }
+
+    fn task_form_group(&mut self, _node: &TaskFormGroup) -> Option<TaskFormGroup> {
+        None
+    }
+
+    fn task_group(&mut self, _node: &TaskGroup) -> Option<TaskGroup> {
+        None
+    }
+
+    fn task_task_form_group_task(
+        &mut self,
+        _node: &TaskTaskFormGroupTask,
+    ) -> Option<TaskTaskFormGroupTask> {
+        None
+    }
+
+    fn task_task_group_task(&mut self, _node: &TaskTaskGroupTask) -> Option<TaskTaskGroupTask> {
+        None
+    }
+
+    fn toggle_button_backstage_menu_toggle_button(
+        &mut self,
+        _node: &ToggleButtonBackstageMenuToggleButton,
+    ) -> Option<ToggleButtonBackstageMenuToggleButton> {
+        None
+    }
+
+    fn toggle_button_toggle_button(
+        &mut self,
+        _node: &ToggleButtonToggleButton,
+    ) -> Option<ToggleButtonToggleButton> {
+        None
+    }
+
+    fn toggle_button_toggle_button_regular(
+        &mut self,
+        _node: &ToggleButtonToggleButtonRegular,
+    ) -> Option<ToggleButtonToggleButtonRegular> {
+        None
+    }
+
+    fn toggle_button_visible_toggle_button(
+        &mut self,
+        _node: &ToggleButtonVisibleToggleButton,
+    ) -> Option<ToggleButtonVisibleToggleButton> {
+        None
+    }
+
+    fn top_items(&mut self, _node: &TopItems) -> Option<TopItems> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage(
+        &mut self,
+        _node: &Backstage,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_content(
+        &mut self,
+        _node: &BackstageContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_content_items(
+        &mut self,
+        _node: &BackstageContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_groups(
+        &mut self,
+        _node: &BackstageGroupsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_groups_items(
+        &mut self,
+        _node: &BackstageGroupsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_menu_group(
+        &mut self,
+        _node: &BackstageMenuGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_backstage_menu_group_items(
+        &mut self,
+        _node: &BackstageMenuGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bottom_items(
+        &mut self,
+        _node: &BottomItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_box(&mut self, _node: &BoxContent, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_box_box(&mut self, _node: &BoxBox, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_box_items(
+        &mut self,
+        _node: &BoxContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_backstage_fast_command_button(
+        &mut self,
+        _node: &ButtonBackstageFastCommandButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_backstage_group_button(
+        &mut self,
+        _node: &ButtonBackstageGroupButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_backstage_menu_button(
+        &mut self,
+        _node: &ButtonBackstageMenuButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_backstage_regular_button(
+        &mut self,
+        _node: &ButtonBackstageRegularButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_button(
+        &mut self,
+        _node: &ButtonButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_button_regular(
+        &mut self,
+        _node: &ButtonButtonRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_group(
+        &mut self,
+        _node: &ButtonGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_group_content(
+        &mut self,
+        _node: &ButtonGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_group_content_items(
+        &mut self,
+        _node: &ButtonGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_button_visible_button(
+        &mut self,
+        _node: &ButtonVisibleButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_task_form_group_category(
+        &mut self,
+        _node: &CategoryTaskFormGroupCategory,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_task_group_category(
+        &mut self,
+        _node: &CategoryTaskGroupCategory,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_check_box_backstage_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageCheckBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_check_box_backstage_menu_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageMenuCheckBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_check_box_check_box(
+        &mut self,
+        _node: &CheckBoxCheckBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_combo_box_backstage_combo_box(
+        &mut self,
+        _node: &ComboBoxBackstageComboBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_combo_box_combo_box(
+        &mut self,
+        _node: &ComboBoxComboBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_command(&mut self, _node: &Command, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_commands(
+        &mut self,
+        _node: &Commands,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_context_menu(
+        &mut self,
+        _node: &ContextMenu,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_context_menu_content(
+        &mut self,
+        _node: &ContextMenuContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_context_menu_content_items(
+        &mut self,
+        _node: &ContextMenuContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_context_menus(
+        &mut self,
+        _node: &ContextMenus,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_contextual_tabs(
+        &mut self,
+        _node: &ContextualTabs,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_control_control_clone(
+        &mut self,
+        _node: &ControlControlClone,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_control_control_clone_qat(
+        &mut self,
+        _node: &ControlControlCloneQat,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_control_control_clone_regular(
+        &mut self,
+        _node: &ControlControlCloneRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_ui(
+        &mut self,
+        _node: &CustomUI,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dialog_box_launcher(
+        &mut self,
+        _node: &DialogBoxLauncher,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_document_controls(
+        &mut self,
+        _node: &DocumentControls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_backstage_drop_down(
+        &mut self,
+        _node: &DropDownBackstageDropDown,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_drop_down_drop_down_regular(
+        &mut self,
+        _node: &DropDownDropDownRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dynamic_menu_dynamic_menu(
+        &mut self,
+        _node: &DynamicMenuDynamicMenu,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dynamic_menu_dynamic_menu_regular(
+        &mut self,
+        _node: &DynamicMenuDynamicMenuRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_edit_box_backstage_edit_box(
+        &mut self,
+        _node: &EditBoxBackstageEditBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_edit_box_edit_box(
+        &mut self,
+        _node: &EditBoxEditBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_first_column(
+        &mut self,
+        _node: &FirstColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gallery_gallery(
+        &mut self,
+        _node: &GalleryGallery,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_gallery_gallery_regular(
+        &mut self,
+        _node: &GalleryGalleryRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group(
+        &mut self,
+        _node: &GroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_backstage_group(
+        &mut self,
+        _node: &GroupBackstageGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_box(
+        &mut self,
+        _node: &GroupBox,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_controls(
+        &mut self,
+        _node: &GroupControlsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_controls_items(
+        &mut self,
+        _node: &GroupControlsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_group(
+        &mut self,
+        _node: &GroupGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_items(
+        &mut self,
+        _node: &GroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hyperlink(
+        &mut self,
+        _node: &Hyperlink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_image_control(
+        &mut self,
+        _node: &ImageControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_item_backstage_item(
+        &mut self,
+        _node: &ItemBackstageItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_item_item(
+        &mut self,
+        _node: &ItemItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label_control_backstage_label_control(
+        &mut self,
+        _node: &LabelControlBackstageLabelControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label_control_label_control(
+        &mut self,
+        _node: &LabelControlLabelControl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_container(
+        &mut self,
+        _node: &LayoutContainer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu(
+        &mut self,
+        _node: &MenuContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_backstage_primary_menu(
+        &mut self,
+        _node: &MenuBackstagePrimaryMenu,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_backstage_sub_menu(
+        &mut self,
+        _node: &MenuBackstageSubMenu,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_group(
+        &mut self,
+        _node: &MenuGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_items(
+        &mut self,
+        _node: &MenuContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_menu(
+        &mut self,
+        _node: &MenuMenu,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_menu_regular(
+        &mut self,
+        _node: &MenuMenuRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_menu_root(
+        &mut self,
+        _node: &MenuMenuRoot,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_menu_with_title(
+        &mut self,
+        _node: &MenuMenuWithTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_separator_menu_separator(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_separator_menu_separator_no_title(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparatorNoTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_with_title(
+        &mut self,
+        _node: &MenuWithTitleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_menu_with_title_items(
+        &mut self,
+        _node: &MenuWithTitleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_primary_item(
+        &mut self,
+        _node: &PrimaryItem,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_primary_item_content(
+        &mut self,
+        _node: &PrimaryItemContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_qat(&mut self, _node: &Qat, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_quick_access_toolbar_items(
+        &mut self,
+        _node: &QuickAccessToolbarItemsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_quick_access_toolbar_items_items(
+        &mut self,
+        _node: &QuickAccessToolbarItemsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radio_button(
+        &mut self,
+        _node: &RadioButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radio_group(
+        &mut self,
+        _node: &RadioGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ribbon(&mut self, _node: &Ribbon, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ribbon_content(
+        &mut self,
+        _node: &RibbonContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ribbon_content_items(
+        &mut self,
+        _node: &RibbonContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_second_column(
+        &mut self,
+        _node: &SecondColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_separator(
+        &mut self,
+        _node: &Separator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shared_controls(
+        &mut self,
+        _node: &SharedControls,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_simple_groups(
+        &mut self,
+        _node: &SimpleGroupsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_simple_groups_items(
+        &mut self,
+        _node: &SimpleGroupsContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_button(
+        &mut self,
+        _node: &SplitButtonContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_button_split_button(
+        &mut self,
+        _node: &SplitButtonSplitButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_button_split_button_regular(
+        &mut self,
+        _node: &SplitButtonSplitButtonRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_split_button_split_button_with_title(
+        &mut self,
+        _node: &SplitButtonSplitButtonWithTitle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_backstage_tab(
+        &mut self,
+        _node: &TabBackstageTab,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_set(&mut self, _node: &TabSet, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tab_tab(&mut self, _node: &TabTab, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tabs(&mut self, _node: &Tabs, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_form_group(
+        &mut self,
+        _node: &TaskFormGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_group(
+        &mut self,
+        _node: &TaskGroup,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_task_form_group_task(
+        &mut self,
+        _node: &TaskTaskFormGroupTask,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_task_group_task(
+        &mut self,
+        _node: &TaskTaskGroupTask,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_toggle_button_backstage_menu_toggle_button(
+        &mut self,
+        _node: &ToggleButtonBackstageMenuToggleButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_toggle_button_toggle_button(
+        &mut self,
+        _node: &ToggleButtonToggleButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_toggle_button_toggle_button_regular(
+        &mut self,
+        _node: &ToggleButtonToggleButtonRegular,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_toggle_button_visible_toggle_button(
+        &mut self,
+        _node: &ToggleButtonVisibleToggleButton,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_top_items(
+        &mut self,
+        _node: &TopItems,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `mso14:contextMenu`, schema type `CT_ContextMenu` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -4566,6 +6324,460 @@ pub struct ToggleButtonVisibleToggleButton {
 pub struct TopItems {
     pub content: Vec<GroupControlsContent>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `mso14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_2009_07_customui` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn backstage(&mut self, _node: &Backstage) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn backstage_content(&mut self, _node: &BackstageContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn backstage_groups(&mut self, _node: &BackstageGroupsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn backstage_menu_group(&mut self, _node: &BackstageMenuGroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bottom_items(&mut self, _node: &BottomItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#box(&mut self, _node: &BoxContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn box_box(&mut self, _node: &BoxBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_backstage_fast_command_button(
+        &mut self,
+        _node: &ButtonBackstageFastCommandButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_backstage_group_button(
+        &mut self,
+        _node: &ButtonBackstageGroupButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_backstage_menu_button(
+        &mut self,
+        _node: &ButtonBackstageMenuButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_backstage_regular_button(
+        &mut self,
+        _node: &ButtonBackstageRegularButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_button(&mut self, _node: &ButtonButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_button_regular(&mut self, _node: &ButtonButtonRegular) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_group(&mut self, _node: &ButtonGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_group_content(&mut self, _node: &ButtonGroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn button_visible_button(&mut self, _node: &ButtonVisibleButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_task_form_group_category(
+        &mut self,
+        _node: &CategoryTaskFormGroupCategory,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_task_group_category(
+        &mut self,
+        _node: &CategoryTaskGroupCategory,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn check_box_backstage_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageCheckBox,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn check_box_backstage_menu_check_box(
+        &mut self,
+        _node: &CheckBoxBackstageMenuCheckBox,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn check_box_check_box(&mut self, _node: &CheckBoxCheckBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn combo_box_backstage_combo_box(
+        &mut self,
+        _node: &ComboBoxBackstageComboBox,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn combo_box_combo_box(&mut self, _node: &ComboBoxComboBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn command(&mut self, _node: &Command) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn commands(&mut self, _node: &Commands) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn context_menu(&mut self, _node: &ContextMenu) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn context_menu_content(&mut self, _node: &ContextMenuContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn context_menus(&mut self, _node: &ContextMenus) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn contextual_tabs(&mut self, _node: &ContextualTabs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn control_control_clone(&mut self, _node: &ControlControlClone) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn control_control_clone_qat(&mut self, _node: &ControlControlCloneQat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn control_control_clone_regular(
+        &mut self,
+        _node: &ControlControlCloneRegular,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_ui(&mut self, _node: &CustomUI) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dialog_box_launcher(&mut self, _node: &DialogBoxLauncher) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn document_controls(&mut self, _node: &DocumentControls) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_backstage_drop_down(
+        &mut self,
+        _node: &DropDownBackstageDropDown,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn drop_down_drop_down_regular(&mut self, _node: &DropDownDropDownRegular) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dynamic_menu_dynamic_menu(&mut self, _node: &DynamicMenuDynamicMenu) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dynamic_menu_dynamic_menu_regular(
+        &mut self,
+        _node: &DynamicMenuDynamicMenuRegular,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn edit_box_backstage_edit_box(&mut self, _node: &EditBoxBackstageEditBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn edit_box_edit_box(&mut self, _node: &EditBoxEditBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn first_column(&mut self, _node: &FirstColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gallery_gallery(&mut self, _node: &GalleryGallery) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn gallery_gallery_regular(&mut self, _node: &GalleryGalleryRegular) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group(&mut self, _node: &GroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_backstage_group(&mut self, _node: &GroupBackstageGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_box(&mut self, _node: &GroupBox) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_controls(&mut self, _node: &GroupControlsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_group(&mut self, _node: &GroupGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hyperlink(&mut self, _node: &Hyperlink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn image_control(&mut self, _node: &ImageControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn item_backstage_item(&mut self, _node: &ItemBackstageItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn item_item(&mut self, _node: &ItemItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label_control_backstage_label_control(
+        &mut self,
+        _node: &LabelControlBackstageLabelControl,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label_control_label_control(&mut self, _node: &LabelControlLabelControl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_container(&mut self, _node: &LayoutContainer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu(&mut self, _node: &MenuContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_backstage_primary_menu(&mut self, _node: &MenuBackstagePrimaryMenu) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_backstage_sub_menu(&mut self, _node: &MenuBackstageSubMenu) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_group(&mut self, _node: &MenuGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_menu(&mut self, _node: &MenuMenu) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_menu_regular(&mut self, _node: &MenuMenuRegular) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_menu_root(&mut self, _node: &MenuMenuRoot) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_menu_with_title(&mut self, _node: &MenuMenuWithTitle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_separator_menu_separator(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparator,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_separator_menu_separator_no_title(
+        &mut self,
+        _node: &MenuSeparatorMenuSeparatorNoTitle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn menu_with_title(&mut self, _node: &MenuWithTitleContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn primary_item(&mut self, _node: &PrimaryItem) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn primary_item_content(&mut self, _node: &PrimaryItemContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn qat(&mut self, _node: &Qat) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn quick_access_toolbar_items(
+        &mut self,
+        _node: &QuickAccessToolbarItemsContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radio_button(&mut self, _node: &RadioButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radio_group(&mut self, _node: &RadioGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ribbon(&mut self, _node: &Ribbon) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ribbon_content(&mut self, _node: &RibbonContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn second_column(&mut self, _node: &SecondColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn separator(&mut self, _node: &Separator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shared_controls(&mut self, _node: &SharedControls) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn simple_groups(&mut self, _node: &SimpleGroupsContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_button(&mut self, _node: &SplitButtonContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_button_split_button(&mut self, _node: &SplitButtonSplitButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_button_split_button_regular(
+        &mut self,
+        _node: &SplitButtonSplitButtonRegular,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn split_button_split_button_with_title(
+        &mut self,
+        _node: &SplitButtonSplitButtonWithTitle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_backstage_tab(&mut self, _node: &TabBackstageTab) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_set(&mut self, _node: &TabSet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tab_tab(&mut self, _node: &TabTab) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tabs(&mut self, _node: &Tabs) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_form_group(&mut self, _node: &TaskFormGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_group(&mut self, _node: &TaskGroup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_task_form_group_task(&mut self, _node: &TaskTaskFormGroupTask) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_task_group_task(&mut self, _node: &TaskTaskGroupTask) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn toggle_button_backstage_menu_toggle_button(
+        &mut self,
+        _node: &ToggleButtonBackstageMenuToggleButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn toggle_button_toggle_button(&mut self, _node: &ToggleButtonToggleButton) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn toggle_button_toggle_button_regular(
+        &mut self,
+        _node: &ToggleButtonToggleButtonRegular,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn toggle_button_visible_toggle_button(
+        &mut self,
+        _node: &ToggleButtonVisibleToggleButton,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn top_items(&mut self, _node: &TopItems) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Backstage {

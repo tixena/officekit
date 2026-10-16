@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2024/pivotAutoRefresh`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_XLPAR: Option<NamespaceId> = Some(136);
 
@@ -237,6 +241,43 @@ static AUTO_REFRESH_SHAPE: markup::Shape = markup::Shape {
 pub struct AutoRefresh {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a context for the `xlpar` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2024_pivot_auto_refresh` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn auto_refresh(&mut self, _node: &AutoRefresh) -> Option<AutoRefresh> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_auto_refresh(
+        &mut self,
+        _node: &AutoRefresh,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// The hooks of a visitor for the `xlpar` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2024_pivot_auto_refresh` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn auto_refresh(&mut self, _node: &AutoRefresh) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AutoRefresh {

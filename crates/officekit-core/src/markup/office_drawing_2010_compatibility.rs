@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2010/compatibility`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_COM14: Option<NamespaceId> = Some(32);
 
@@ -237,6 +241,42 @@ static COMPAT_SP_SHAPE: markup::Shape = markup::Shape {
 pub struct CompatSp {
     pub spid: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a context for the `com14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2010_compatibility` is never asked.
+pub trait Context: markup::Context {
+    fn compat_sp(&mut self, _node: &CompatSp) -> Option<CompatSp> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compat_sp(
+        &mut self,
+        _node: &CompatSp,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// The hooks of a visitor for the `com14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2010_compatibility` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn compat_sp(&mut self, _node: &CompatSp) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CompatSp {

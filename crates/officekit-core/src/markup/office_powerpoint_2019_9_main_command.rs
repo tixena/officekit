@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2019/9/main/command`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_PC: Option<NamespaceId> = Some(81);
 const NS_PC2: Option<NamespaceId> = Some(82);
@@ -291,6 +295,95 @@ pub struct CmRplyMkLst {
     pub cm_mk_lst: Box<CmMkLst>,
     pub cm_rply_mk: Box<CmRplyMk>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a context for the `pc2` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2019_9_main_command` is never asked.
+pub trait Context: markup::Context {
+    fn cm_mk(&mut self, _node: &CmMK) -> Option<CmMK> {
+        None
+    }
+
+    fn cm_mk_lst(&mut self, _node: &CmMkLst) -> Option<CmMkLst> {
+        None
+    }
+
+    fn cm_rply_mk(&mut self, _node: &CmRplyMk) -> Option<CmRplyMk> {
+        None
+    }
+
+    fn cm_rply_mk_lst(&mut self, _node: &CmRplyMkLst) -> Option<CmRplyMkLst> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_mk(&mut self, _node: &CmMK, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_mk_lst(
+        &mut self,
+        _node: &CmMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_rply_mk(
+        &mut self,
+        _node: &CmRplyMk,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cm_rply_mk_lst(
+        &mut self,
+        _node: &CmRplyMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// The hooks of a visitor for the `pc2` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2019_9_main_command` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn cm_mk(&mut self, _node: &CmMK) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cm_mk_lst(&mut self, _node: &CmMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cm_rply_mk(&mut self, _node: &CmRplyMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cm_rply_mk_lst(&mut self, _node: &CmRplyMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CmMK {

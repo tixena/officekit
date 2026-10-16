@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/diagram`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DGM: Option<NamespaceId> = Some(42);
@@ -1554,6 +1558,1226 @@ pub enum ConstraintTypeMember {
     W,
     WArH,
     WOff,
+}
+
+/// The hooks of a context for the `dgm` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::diagram` is never asked.
+pub trait Context: markup::Context {
+    fn algorithm(&mut self, _node: &Algorithm) -> Option<Algorithm> {
+        None
+    }
+
+    fn background_formatting(
+        &mut self,
+        _node: &BackgroundFormatting,
+    ) -> Option<BackgroundFormatting> {
+        None
+    }
+
+    fn category(&mut self, _node: &Category) -> Option<Category> {
+        None
+    }
+
+    fn category_list(&mut self, _node: &CategoryList) -> Option<CategoryList> {
+        None
+    }
+
+    fn category_list_sd_categories(
+        &mut self,
+        _node: &CategoryListSDCategories,
+    ) -> Option<CategoryListSDCategories> {
+        None
+    }
+
+    fn category_sd_category(&mut self, _node: &CategorySDCategory) -> Option<CategorySDCategory> {
+        None
+    }
+
+    fn choose_element(&mut self, _node: &ChooseElement) -> Option<ChooseElement> {
+        None
+    }
+
+    fn color_transform_category(
+        &mut self,
+        _node: &ColorTransformCategory,
+    ) -> Option<ColorTransformCategory> {
+        None
+    }
+
+    fn color_transform_category_list(
+        &mut self,
+        _node: &ColorTransformCategoryList,
+    ) -> Option<ColorTransformCategoryList> {
+        None
+    }
+
+    fn color_transform_definition_header(
+        &mut self,
+        _node: &ColorTransformDefinitionHeader,
+    ) -> Option<ColorTransformDefinitionHeader> {
+        None
+    }
+
+    fn color_transform_definitions(
+        &mut self,
+        _node: &ColorTransformDefinitions,
+    ) -> Option<ColorTransformDefinitions> {
+        None
+    }
+
+    fn color_transform_header_list(
+        &mut self,
+        _node: &ColorTransformHeaderList,
+    ) -> Option<ColorTransformHeaderList> {
+        None
+    }
+
+    fn color_transform_sample_data(
+        &mut self,
+        _node: &ColorTransformSampleData,
+    ) -> Option<ColorTransformSampleData> {
+        None
+    }
+
+    fn connection(&mut self, _node: &Connection) -> Option<Connection> {
+        None
+    }
+
+    fn connection_list(&mut self, _node: &ConnectionList) -> Option<ConnectionList> {
+        None
+    }
+
+    fn constraint(&mut self, _node: &Constraint) -> Option<Constraint> {
+        None
+    }
+
+    fn constraint_list(&mut self, _node: &ConstraintList) -> Option<ConstraintList> {
+        None
+    }
+
+    fn data_model(&mut self, _node: &DataModel) -> Option<DataModel> {
+        None
+    }
+
+    fn description(&mut self, _node: &Description) -> Option<Description> {
+        None
+    }
+
+    fn description_ct_description(
+        &mut self,
+        _node: &DescriptionCTDescription,
+    ) -> Option<DescriptionCTDescription> {
+        None
+    }
+
+    fn diagram_direction(&mut self, _node: &DiagramDirection) -> Option<DiagramDirection> {
+        None
+    }
+
+    fn diagram_layout_header_list(
+        &mut self,
+        _node: &DiagramLayoutHeaderList,
+    ) -> Option<DiagramLayoutHeaderList> {
+        None
+    }
+
+    fn effect_color_list(&mut self, _node: &EffectColorList) -> Option<EffectColorList> {
+        None
+    }
+
+    fn r#else(&mut self, _node: &Else) -> Option<Else> {
+        None
+    }
+
+    fn explicit_relationships_to_diagram_parts(
+        &mut self,
+        _node: &ExplicitRelationshipsToDiagramParts,
+    ) -> Option<ExplicitRelationshipsToDiagramParts> {
+        None
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> Option<ExtensionList> {
+        None
+    }
+
+    fn fill_color_list(&mut self, _node: &FillColorList) -> Option<FillColorList> {
+        None
+    }
+
+    fn for_each(&mut self, _node: &ForEach) -> Option<ForEach> {
+        None
+    }
+
+    fn r#if(&mut self, _node: &If) -> Option<If> {
+        None
+    }
+
+    fn layout_definition(&mut self, _node: &LayoutDefinition) -> Option<LayoutDefinition> {
+        None
+    }
+
+    fn layout_definition_header(
+        &mut self,
+        _node: &LayoutDefinitionHeader,
+    ) -> Option<LayoutDefinitionHeader> {
+        None
+    }
+
+    fn layout_element(&mut self, _node: &LayoutElementContent) -> Option<LayoutElementContent> {
+        None
+    }
+
+    fn layout_element_items(
+        &mut self,
+        _node: &LayoutElementContent,
+    ) -> Option<Vec<LayoutElementContent>> {
+        None
+    }
+
+    fn layout_node(&mut self, _node: &LayoutNode) -> Option<LayoutNode> {
+        None
+    }
+
+    fn layout_node_content(&mut self, _node: &LayoutNodeContent) -> Option<LayoutNodeContent> {
+        None
+    }
+
+    fn layout_node_content_items(
+        &mut self,
+        _node: &LayoutNodeContent,
+    ) -> Option<Vec<LayoutNodeContent>> {
+        None
+    }
+
+    fn level_animation(&mut self, _node: &LevelAnimation) -> Option<LevelAnimation> {
+        None
+    }
+
+    fn line_color_list(&mut self, _node: &LineColorList) -> Option<LineColorList> {
+        None
+    }
+
+    fn list_of_style_definition_headers(
+        &mut self,
+        _node: &ListOfStyleDefinitionHeaders,
+    ) -> Option<ListOfStyleDefinitionHeaders> {
+        None
+    }
+
+    fn maximum_children(&mut self, _node: &MaximumChildren) -> Option<MaximumChildren> {
+        None
+    }
+
+    fn one_by_one_animation_string(
+        &mut self,
+        _node: &OneByOneAnimationString,
+    ) -> Option<OneByOneAnimationString> {
+        None
+    }
+
+    fn organization_chart_branch_style(
+        &mut self,
+        _node: &OrganizationChartBranchStyle,
+    ) -> Option<OrganizationChartBranchStyle> {
+        None
+    }
+
+    fn parameter(&mut self, _node: &Parameter) -> Option<Parameter> {
+        None
+    }
+
+    fn point(&mut self, _node: &Point) -> Option<Point> {
+        None
+    }
+
+    fn point_list(&mut self, _node: &PointList) -> Option<PointList> {
+        None
+    }
+
+    fn preferred_number_of_children(
+        &mut self,
+        _node: &PreferredNumberOfChildren,
+    ) -> Option<PreferredNumberOfChildren> {
+        None
+    }
+
+    fn presentation_layout_variables(
+        &mut self,
+        _node: &PresentationLayoutVariables,
+    ) -> Option<PresentationLayoutVariables> {
+        None
+    }
+
+    fn presentation_of(&mut self, _node: &PresentationOf) -> Option<PresentationOf> {
+        None
+    }
+
+    fn property_set(&mut self, _node: &PropertySet) -> Option<PropertySet> {
+        None
+    }
+
+    fn rule(&mut self, _node: &Rule) -> Option<Rule> {
+        None
+    }
+
+    fn rule_list(&mut self, _node: &RuleList) -> Option<RuleList> {
+        None
+    }
+
+    fn sample_data(&mut self, _node: &SampleData) -> Option<SampleData> {
+        None
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> Option<Scene3d> {
+        None
+    }
+
+    fn shape(&mut self, _node: &Shape) -> Option<Shape> {
+        None
+    }
+
+    fn shape_adjust(&mut self, _node: &ShapeAdjust) -> Option<ShapeAdjust> {
+        None
+    }
+
+    fn shape_adjust_list(&mut self, _node: &ShapeAdjustList) -> Option<ShapeAdjustList> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn shape_resize_style(&mut self, _node: &ShapeResizeStyle) -> Option<ShapeResizeStyle> {
+        None
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
+        None
+    }
+
+    fn show_insert_node(&mut self, _node: &ShowInsertNode) -> Option<ShowInsertNode> {
+        None
+    }
+
+    fn show_organization_chart_user_interface(
+        &mut self,
+        _node: &ShowOrganizationChartUserInterface,
+    ) -> Option<ShowOrganizationChartUserInterface> {
+        None
+    }
+
+    fn sp3d(&mut self, _node: &Sp3d) -> Option<Sp3d> {
+        None
+    }
+
+    fn style_data(&mut self, _node: &StyleData) -> Option<StyleData> {
+        None
+    }
+
+    fn style_definition(&mut self, _node: &StyleDefinition) -> Option<StyleDefinition> {
+        None
+    }
+
+    fn style_definition_header(
+        &mut self,
+        _node: &StyleDefinitionHeader,
+    ) -> Option<StyleDefinitionHeader> {
+        None
+    }
+
+    fn style_label(&mut self, _node: &StyleLabel) -> Option<StyleLabel> {
+        None
+    }
+
+    fn style_label_description(
+        &mut self,
+        _node: &StyleLabelDescription,
+    ) -> Option<StyleLabelDescription> {
+        None
+    }
+
+    fn style_label_style_label(
+        &mut self,
+        _node: &StyleLabelStyleLabel,
+    ) -> Option<StyleLabelStyleLabel> {
+        None
+    }
+
+    fn text_body(&mut self, _node: &TextBody) -> Option<TextBody> {
+        None
+    }
+
+    fn text_effect_color_list(
+        &mut self,
+        _node: &TextEffectColorList,
+    ) -> Option<TextEffectColorList> {
+        None
+    }
+
+    fn text_fill_color_list(&mut self, _node: &TextFillColorList) -> Option<TextFillColorList> {
+        None
+    }
+
+    fn text_line_color_list(&mut self, _node: &TextLineColorList) -> Option<TextLineColorList> {
+        None
+    }
+
+    fn text_properties(&mut self, _node: &TextProperties) -> Option<TextProperties> {
+        None
+    }
+
+    fn title(&mut self, _node: &Title) -> Option<Title> {
+        None
+    }
+
+    fn title_ct_name(&mut self, _node: &TitleCTName) -> Option<TitleCTName> {
+        None
+    }
+
+    fn title_sd_name(&mut self, _node: &TitleSDName) -> Option<TitleSDName> {
+        None
+    }
+
+    fn variable_list(&mut self, _node: &VariableList) -> Option<VariableList> {
+        None
+    }
+
+    fn whole_e2o_formatting(&mut self, _node: &WholeE2OFormatting) -> Option<WholeE2OFormatting> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_algorithm(
+        &mut self,
+        _node: &Algorithm,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_formatting(
+        &mut self,
+        _node: &BackgroundFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category(
+        &mut self,
+        _node: &Category,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_list(
+        &mut self,
+        _node: &CategoryList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_list_sd_categories(
+        &mut self,
+        _node: &CategoryListSDCategories,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_category_sd_category(
+        &mut self,
+        _node: &CategorySDCategory,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_choose_element(
+        &mut self,
+        _node: &ChooseElement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_category(
+        &mut self,
+        _node: &ColorTransformCategory,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_category_list(
+        &mut self,
+        _node: &ColorTransformCategoryList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_definition_header(
+        &mut self,
+        _node: &ColorTransformDefinitionHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_definitions(
+        &mut self,
+        _node: &ColorTransformDefinitions,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_header_list(
+        &mut self,
+        _node: &ColorTransformHeaderList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_transform_sample_data(
+        &mut self,
+        _node: &ColorTransformSampleData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection(
+        &mut self,
+        _node: &Connection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_list(
+        &mut self,
+        _node: &ConnectionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_constraint(
+        &mut self,
+        _node: &Constraint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_constraint_list(
+        &mut self,
+        _node: &ConstraintList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_data_model(
+        &mut self,
+        _node: &DataModel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_description(
+        &mut self,
+        _node: &Description,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_description_ct_description(
+        &mut self,
+        _node: &DescriptionCTDescription,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagram_direction(
+        &mut self,
+        _node: &DiagramDirection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_diagram_layout_header_list(
+        &mut self,
+        _node: &DiagramLayoutHeaderList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_color_list(
+        &mut self,
+        _node: &EffectColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_else(&mut self, _node: &Else, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_explicit_relationships_to_diagram_parts(
+        &mut self,
+        _node: &ExplicitRelationshipsToDiagramParts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_extension_list(
+        &mut self,
+        _node: &ExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_color_list(
+        &mut self,
+        _node: &FillColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_for_each(
+        &mut self,
+        _node: &ForEach,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_if(&mut self, _node: &If, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_definition(
+        &mut self,
+        _node: &LayoutDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_definition_header(
+        &mut self,
+        _node: &LayoutDefinitionHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_element(
+        &mut self,
+        _node: &LayoutElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_element_items(
+        &mut self,
+        _node: &LayoutElementContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_node(
+        &mut self,
+        _node: &LayoutNode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_node_content(
+        &mut self,
+        _node: &LayoutNodeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_layout_node_content_items(
+        &mut self,
+        _node: &LayoutNodeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_level_animation(
+        &mut self,
+        _node: &LevelAnimation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_color_list(
+        &mut self,
+        _node: &LineColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_list_of_style_definition_headers(
+        &mut self,
+        _node: &ListOfStyleDefinitionHeaders,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_maximum_children(
+        &mut self,
+        _node: &MaximumChildren,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_one_by_one_animation_string(
+        &mut self,
+        _node: &OneByOneAnimationString,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_organization_chart_branch_style(
+        &mut self,
+        _node: &OrganizationChartBranchStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_parameter(
+        &mut self,
+        _node: &Parameter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_point(&mut self, _node: &Point, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_point_list(
+        &mut self,
+        _node: &PointList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_preferred_number_of_children(
+        &mut self,
+        _node: &PreferredNumberOfChildren,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_layout_variables(
+        &mut self,
+        _node: &PresentationLayoutVariables,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_presentation_of(
+        &mut self,
+        _node: &PresentationOf,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_property_set(
+        &mut self,
+        _node: &PropertySet,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rule(&mut self, _node: &Rule, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rule_list(
+        &mut self,
+        _node: &RuleList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sample_data(
+        &mut self,
+        _node: &SampleData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scene3d(&mut self, _node: &Scene3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_adjust(
+        &mut self,
+        _node: &ShapeAdjust,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_adjust_list(
+        &mut self,
+        _node: &ShapeAdjustList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_resize_style(
+        &mut self,
+        _node: &ShapeResizeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_style(
+        &mut self,
+        _node: &ShapeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_insert_node(
+        &mut self,
+        _node: &ShowInsertNode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_show_organization_chart_user_interface(
+        &mut self,
+        _node: &ShowOrganizationChartUserInterface,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp3d(&mut self, _node: &Sp3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_data(
+        &mut self,
+        _node: &StyleData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_definition(
+        &mut self,
+        _node: &StyleDefinition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_definition_header(
+        &mut self,
+        _node: &StyleDefinitionHeader,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_label(
+        &mut self,
+        _node: &StyleLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_label_description(
+        &mut self,
+        _node: &StyleLabelDescription,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style_label_style_label(
+        &mut self,
+        _node: &StyleLabelStyleLabel,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_body(
+        &mut self,
+        _node: &TextBody,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_effect_color_list(
+        &mut self,
+        _node: &TextEffectColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_fill_color_list(
+        &mut self,
+        _node: &TextFillColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_line_color_list(
+        &mut self,
+        _node: &TextLineColorList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text_properties(
+        &mut self,
+        _node: &TextProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title(&mut self, _node: &Title, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title_ct_name(
+        &mut self,
+        _node: &TitleCTName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title_sd_name(
+        &mut self,
+        _node: &TitleSDName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_variable_list(
+        &mut self,
+        _node: &VariableList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_whole_e2o_formatting(
+        &mut self,
+        _node: &WholeE2OFormatting,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
 }
 
 /// 21.4.7.22 `ST_ContinueDirection` (Continue Direction): the text the file carried.
@@ -2915,6 +4139,344 @@ pub enum VerticalAlignmentMember {
     Mid,
     None,
     T,
+}
+
+/// The hooks of a visitor for the `dgm` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::diagram` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn algorithm(&mut self, _node: &Algorithm) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_formatting(&mut self, _node: &BackgroundFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category(&mut self, _node: &Category) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_list(&mut self, _node: &CategoryList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_list_sd_categories(&mut self, _node: &CategoryListSDCategories) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn category_sd_category(&mut self, _node: &CategorySDCategory) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn choose_element(&mut self, _node: &ChooseElement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_category(&mut self, _node: &ColorTransformCategory) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_category_list(
+        &mut self,
+        _node: &ColorTransformCategoryList,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_definition_header(
+        &mut self,
+        _node: &ColorTransformDefinitionHeader,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_definitions(
+        &mut self,
+        _node: &ColorTransformDefinitions,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_header_list(&mut self, _node: &ColorTransformHeaderList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_transform_sample_data(&mut self, _node: &ColorTransformSampleData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection(&mut self, _node: &Connection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_list(&mut self, _node: &ConnectionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn constraint(&mut self, _node: &Constraint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn constraint_list(&mut self, _node: &ConstraintList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn data_model(&mut self, _node: &DataModel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn description(&mut self, _node: &Description) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn description_ct_description(&mut self, _node: &DescriptionCTDescription) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagram_direction(&mut self, _node: &DiagramDirection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn diagram_layout_header_list(&mut self, _node: &DiagramLayoutHeaderList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_color_list(&mut self, _node: &EffectColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#else(&mut self, _node: &Else) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn explicit_relationships_to_diagram_parts(
+        &mut self,
+        _node: &ExplicitRelationshipsToDiagramParts,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn extension_list(&mut self, _node: &ExtensionList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_color_list(&mut self, _node: &FillColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn for_each(&mut self, _node: &ForEach) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#if(&mut self, _node: &If) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_definition(&mut self, _node: &LayoutDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_definition_header(&mut self, _node: &LayoutDefinitionHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_element(&mut self, _node: &LayoutElementContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_node(&mut self, _node: &LayoutNode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn layout_node_content(&mut self, _node: &LayoutNodeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn level_animation(&mut self, _node: &LevelAnimation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_color_list(&mut self, _node: &LineColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn list_of_style_definition_headers(
+        &mut self,
+        _node: &ListOfStyleDefinitionHeaders,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn maximum_children(&mut self, _node: &MaximumChildren) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn one_by_one_animation_string(&mut self, _node: &OneByOneAnimationString) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn organization_chart_branch_style(
+        &mut self,
+        _node: &OrganizationChartBranchStyle,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn parameter(&mut self, _node: &Parameter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn point(&mut self, _node: &Point) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn point_list(&mut self, _node: &PointList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn preferred_number_of_children(
+        &mut self,
+        _node: &PreferredNumberOfChildren,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_layout_variables(
+        &mut self,
+        _node: &PresentationLayoutVariables,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn presentation_of(&mut self, _node: &PresentationOf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn property_set(&mut self, _node: &PropertySet) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rule(&mut self, _node: &Rule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rule_list(&mut self, _node: &RuleList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sample_data(&mut self, _node: &SampleData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape(&mut self, _node: &Shape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_adjust(&mut self, _node: &ShapeAdjust) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_adjust_list(&mut self, _node: &ShapeAdjustList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_resize_style(&mut self, _node: &ShapeResizeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_insert_node(&mut self, _node: &ShowInsertNode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn show_organization_chart_user_interface(
+        &mut self,
+        _node: &ShowOrganizationChartUserInterface,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp3d(&mut self, _node: &Sp3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_data(&mut self, _node: &StyleData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_definition(&mut self, _node: &StyleDefinition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_definition_header(&mut self, _node: &StyleDefinitionHeader) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_label(&mut self, _node: &StyleLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_label_description(&mut self, _node: &StyleLabelDescription) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style_label_style_label(&mut self, _node: &StyleLabelStyleLabel) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_body(&mut self, _node: &TextBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_effect_color_list(&mut self, _node: &TextEffectColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_fill_color_list(&mut self, _node: &TextFillColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_line_color_list(&mut self, _node: &TextLineColorList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text_properties(&mut self, _node: &TextProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title(&mut self, _node: &Title) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title_ct_name(&mut self, _node: &TitleCTName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title_sd_name(&mut self, _node: &TitleSDName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn variable_list(&mut self, _node: &VariableList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn whole_e2o_formatting(&mut self, _node: &WholeE2OFormatting) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 21.4.3.9 whole (Whole E2O Formatting): the tag `dgm:whole`, schema type `CT_WholeE2oFormatting`.

@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingGroup`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
@@ -378,6 +382,167 @@ pub struct CNvPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `wpg` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2010_wordprocessing_group` is never asked.
+pub trait Context: markup::Context {
+    fn c_nv_fr_pr(&mut self, _node: &CNvFrPr) -> Option<CNvFrPr> {
+        None
+    }
+
+    fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> Option<CNvGrpSpPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
+        None
+    }
+
+    fn grp_sp(&mut self, _node: &GrpSp) -> Option<GrpSp> {
+        None
+    }
+
+    fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> Option<GrpSpPr> {
+        None
+    }
+
+    fn wgp(&mut self, _node: &Wgp) -> Option<Wgp> {
+        None
+    }
+
+    fn wordprocessing_group(
+        &mut self,
+        _node: &WordprocessingGroupContent,
+    ) -> Option<WordprocessingGroupContent> {
+        None
+    }
+
+    fn wordprocessing_group_items(
+        &mut self,
+        _node: &WordprocessingGroupContent,
+    ) -> Option<Vec<WordprocessingGroupContent>> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_fr_pr(
+        &mut self,
+        _node: &CNvFrPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_grp_sp_pr(
+        &mut self,
+        _node: &CNvGrpSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame(
+        &mut self,
+        _node: &GraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp(&mut self, _node: &GrpSp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_pr(
+        &mut self,
+        _node: &GrpSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wgp(&mut self, _node: &Wgp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_group(
+        &mut self,
+        _node: &WordprocessingGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_group_items(
+        &mut self,
+        _node: &WordprocessingGroupContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// The tag `wpg:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -421,6 +586,53 @@ pub struct GrpSpPr {
     pub scene3d: Option<Box<super::drawing::Scene3d>>,
     pub unknown: markup::Unknown,
     pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
+}
+
+/// The hooks of a visitor for the `wpg` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2010_wordprocessing_group` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn c_nv_fr_pr(&mut self, _node: &CNvFrPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_grp_sp_pr(&mut self, _node: &CNvGrpSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp(&mut self, _node: &GrpSp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_pr(&mut self, _node: &GrpSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wgp(&mut self, _node: &Wgp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_group(&mut self, _node: &WordprocessingGroupContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `wpg:wgp`, schema type `CT_WordprocessingGroup` of SDK 3.5.1's data.

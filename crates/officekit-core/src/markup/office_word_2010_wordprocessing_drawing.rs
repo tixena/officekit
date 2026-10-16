@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_WP14: Option<NamespaceId> = Some(113);
 
@@ -266,6 +270,107 @@ static SIZE_REL_V_SHAPE: markup::Shape = markup::Shape {
     slots: &[markup::Slot::single((NS_WP14, "pctHeight"))],
     text: false,
 };
+
+/// The hooks of a context for the `wp14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2010_wordprocessing_drawing` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn pct_height(&mut self, _node: &PctHeight) -> Option<PctHeight> {
+        None
+    }
+
+    fn pct_pos_h_offset(&mut self, _node: &PctPosHOffset) -> Option<PctPosHOffset> {
+        None
+    }
+
+    fn pct_pos_v_offset(&mut self, _node: &PctPosVOffset) -> Option<PctPosVOffset> {
+        None
+    }
+
+    fn pct_width(&mut self, _node: &PctWidth) -> Option<PctWidth> {
+        None
+    }
+
+    fn size_rel_h(&mut self, _node: &SizeRelH) -> Option<SizeRelH> {
+        None
+    }
+
+    fn size_rel_v(&mut self, _node: &SizeRelV) -> Option<SizeRelV> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pct_height(
+        &mut self,
+        _node: &PctHeight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pct_pos_h_offset(
+        &mut self,
+        _node: &PctPosHOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pct_pos_v_offset(
+        &mut self,
+        _node: &PctPosVOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pct_width(
+        &mut self,
+        _node: &PctWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_size_rel_h(
+        &mut self,
+        _node: &SizeRelH,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_size_rel_v(
+        &mut self,
+        _node: &SizeRelV,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
 
 /// The tag `wp14:pctHeight`, schema type `ST_PositivePercentage` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -347,6 +452,37 @@ pub struct SizeRelV {
     pub pct_height: Box<PctHeight>,
     pub relative_from: Option<SizeRelFromV>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `wp14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2010_wordprocessing_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn pct_height(&mut self, _node: &PctHeight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pct_pos_h_offset(&mut self, _node: &PctPosHOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pct_pos_v_offset(&mut self, _node: &PctPosVOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pct_width(&mut self, _node: &PctWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn size_rel_h(&mut self, _node: &SizeRelH) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn size_rel_v(&mut self, _node: &SizeRelV) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for PctHeight {

@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/pivotVersionInfo`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_XXPVI: Option<NamespaceId> = Some(167);
 
@@ -274,6 +278,92 @@ pub struct CacheVersionInfo {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xxpvi` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2022_pivot_version_info` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn cache_version_info(&mut self, _node: &CacheVersionInfo) -> Option<CacheVersionInfo> {
+        None
+    }
+
+    fn last_refresh_feature(&mut self, _node: &LastRefreshFeature) -> Option<LastRefreshFeature> {
+        None
+    }
+
+    fn last_update_feature(&mut self, _node: &LastUpdateFeature) -> Option<LastUpdateFeature> {
+        None
+    }
+
+    fn pivot_version_info(&mut self, _node: &PivotVersionInfo) -> Option<PivotVersionInfo> {
+        None
+    }
+
+    fn required_feature(&mut self, _node: &RequiredFeature) -> Option<RequiredFeature> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cache_version_info(
+        &mut self,
+        _node: &CacheVersionInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_last_refresh_feature(
+        &mut self,
+        _node: &LastRefreshFeature,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_last_update_feature(
+        &mut self,
+        _node: &LastUpdateFeature,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pivot_version_info(
+        &mut self,
+        _node: &PivotVersionInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_required_feature(
+        &mut self,
+        _node: &RequiredFeature,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xxpvi:lastRefreshFeature`, schema type `string` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -305,6 +395,33 @@ pub struct PivotVersionInfo {
 pub struct RequiredFeature {
     pub unknown: markup::Unknown,
     pub value: String,
+}
+
+/// The hooks of a visitor for the `xxpvi` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2022_pivot_version_info` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn cache_version_info(&mut self, _node: &CacheVersionInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn last_refresh_feature(&mut self, _node: &LastRefreshFeature) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn last_update_feature(&mut self, _node: &LastUpdateFeature) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pivot_version_info(&mut self, _node: &PivotVersionInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn required_feature(&mut self, _node: &RequiredFeature) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for CacheVersionInfo {

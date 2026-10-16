@@ -14,7 +14,7 @@ use core::num::ParseFloatError;
 use core::{mem, slice};
 use std::io;
 
-use crate::stream::transform::Written;
+use crate::stream::transform::{Place, Unchanged, WriteThrough, Written};
 use crate::stream::writer::PartWriter;
 use crate::validation::schema::matches_pattern;
 use crate::xml;
@@ -22,7 +22,7 @@ use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use crate::xml::name::table::NAMESPACES;
 use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 use crate::xml::values::{DateTime, Measure, ValueError, parse};
-use crate::xml::write::is_whitespace_text;
+use crate::xml::write::{is_whitespace_text, qualified};
 
 #[cfg(test)]
 mod tests;
@@ -204,6 +204,21 @@ enum SlotOccurs {
 /// and its local name.
 pub type Tag = (Option<NamespaceId>, &'static str);
 
+/// Writes a typed node through a `PartWriter` (D37).
+///
+/// Its declared attributes go in schema order, then the unknown ones, and its
+/// declared children in schema order, each written through, with each list's
+/// `Other` items among them and each `Extra` at its place (D8). An element
+/// nothing is written into ends as an empty tag, as the generic tree writes it.
+pub struct Through<'out, 'sink, 'node> {
+    element: Element,
+    opened: bool,
+    out: &'out mut PartWriter<'sink>,
+    place: Place<'node>,
+    shape: &'static Shape,
+    unknown: &'node Unknown,
+}
+
 /// What every node carries besides its declared attributes and children (D8).
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
@@ -213,6 +228,15 @@ pub struct Unknown {
     /// Unknown children at positions no list covers.
     pub children: Vec<Extra>,
     pub namespace_declarations: Vec<NamespaceDeclaration>,
+}
+
+/// Walks a typed node's children for a visitor in document order: its
+/// declared children in schema order, with each `Extra` before the declared
+/// child its place names and the rest after the last one (D8).
+#[derive(Debug)]
+pub struct Walk<'node> {
+    known: usize,
+    unknown: &'node Unknown,
 }
 
 /// The namespaces a wildcard position (`xsd:any`) allows.
@@ -260,6 +284,51 @@ pub trait ChildField {
 pub trait Hex: Sized {
     /// The number `text` spells in hexadecimal digits.
     fn from_hex(text: &str) -> Option<Self>;
+}
+
+/// Every enum of the typed tree: whether an item is one of its arms, and the
+/// list hooks a list of its items asks (D20, D37).
+pub trait Item: Sized {
+    /// Whether the item is one of the enum's arms, not its `Other` node.
+    #[must_use]
+    fn is_declared(&self) -> bool;
+
+    /// The list hook: `Some` puts any number of items, none included, in the
+    /// item's place; `None`, the default and the answer for an enum no list
+    /// holds, leaves the item to its own `transform`.
+    fn items(&self, _ctx: &mut dyn Context) -> Option<Vec<Self>> {
+        None
+    }
+
+    /// The list write hook: `Written::Yes` means it wrote any number of items,
+    /// none included, in the item's place.
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_items(
+        &self,
+        _ctx: &mut dyn Context,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// A declared child's field as the traversals see it: one node boxed, an
+/// optional one, or a list.
+pub trait Nodes {
+    type Node;
+
+    /// The nodes the field holds, in document order.
+    fn nodes(&self) -> &[Self::Node];
+
+    /// The field rebuilt with each of its nodes transformed.
+    #[must_use]
+    fn transform_nodes(&self, ctx: &mut dyn Context) -> Self
+    where
+        Self: Sized,
+        Self::Node: Transform;
 }
 
 /// A node of the typed tree read from a generic element.
@@ -437,6 +506,51 @@ where
         for node in self {
             node.write_into(writer);
         }
+    }
+}
+
+impl<T> Nodes for Box<T> {
+    type Node = T;
+
+    fn nodes(&self) -> &[T] {
+        slice::from_ref(self)
+    }
+
+    fn transform_nodes(&self, ctx: &mut dyn Context) -> Self
+    where
+        T: Transform,
+    {
+        Self::new(self.as_ref().transform(ctx))
+    }
+}
+
+impl<T> Nodes for Option<Box<T>> {
+    type Node = T;
+
+    fn nodes(&self) -> &[T] {
+        self.as_deref().map_or(&[], slice::from_ref)
+    }
+
+    fn transform_nodes(&self, ctx: &mut dyn Context) -> Self
+    where
+        T: Transform,
+    {
+        self.as_deref().map(|node| Box::new(node.transform(ctx)))
+    }
+}
+
+impl<T> Nodes for Vec<T> {
+    type Node = T;
+
+    fn nodes(&self) -> &[T] {
+        self.as_slice()
+    }
+
+    fn transform_nodes(&self, ctx: &mut dyn Context) -> Self
+    where
+        T: Transform,
+    {
+        self.iter().map(|node| node.transform(ctx)).collect()
     }
 }
 
@@ -755,9 +869,15 @@ impl Scope {
         element
     }
 
-    /// Close the frame the last `element` opened.
+    /// Close the frame the last `element` or `start` opened.
     pub fn end(&mut self) {
         self.frames.pop();
+    }
+
+    /// Open a frame with an element's own declarations, for an element
+    /// written by its name; `end` closes it.
+    pub fn start(&mut self, declarations: &[NamespaceDeclaration]) {
+        self.frames.push(declarations.to_vec());
     }
 }
 
@@ -833,6 +953,159 @@ impl Slot {
     }
 }
 
+impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
+    /// Write the declared attribute at `index` of the shape, when it has a
+    /// value; every attribute comes before the first child.
+    pub fn attribute<V>(&mut self, index: usize, value: &V)
+    where
+        V: AttributeValue,
+    {
+        if let (Some(text), Some(tag)) = (value.text(), self.shape.attributes.get(index)) {
+            self.out
+                .scope()
+                .attribute(&mut self.element, tag.0.map(uri), tag.1, text);
+        }
+    }
+
+    /// Write a declared child field of a struct type: each node written
+    /// through after the `Extra`s placed before it.
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn child<F>(&mut self, field: &F, ctx: &mut dyn Context) -> io::Result<()>
+    where
+        F: Nodes,
+        F::Node: WriteThrough,
+    {
+        self.open()?;
+        for node in field.nodes() {
+            self.place.before_known(ctx, self.out)?;
+            node.write_through(ctx, self.out)?;
+        }
+        Ok(())
+    }
+
+    /// Write a single declared child of an enum type: written through after
+    /// the `Extra`s placed before it, unless it is an `Other` node.
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn choice<F>(&mut self, field: &F, ctx: &mut dyn Context) -> io::Result<()>
+    where
+        F: Nodes,
+        F::Node: Item + WriteThrough,
+    {
+        self.open()?;
+        for node in field.nodes() {
+            if node.is_declared() {
+                self.place.before_known(ctx, self.out)?;
+            }
+            node.write_through(ctx, self.out)?;
+        }
+        Ok(())
+    }
+
+    /// Write the `Extra`s placed after the last declared child, and the end
+    /// tag; an empty tag when nothing was written into the element.
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn finish(mut self, ctx: &mut dyn Context) -> io::Result<()> {
+        self.open()?;
+        self.place.finish(ctx, self.out)?;
+        self.out.end(&qualified(&self.element.name))
+    }
+
+    /// Write a list of an enum type: for each item, after the `Extra`s placed
+    /// before it, its list write hook, then its list hook, whose items are
+    /// written as they are, then the item written through (D37).
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn items<F>(&mut self, field: &F, ctx: &mut dyn Context) -> io::Result<()>
+    where
+        F: Nodes,
+        F::Node: Item + WriteThrough,
+    {
+        self.open()?;
+        for item in field.nodes() {
+            if item.is_declared() {
+                self.place.before_known(ctx, self.out)?;
+            }
+            if item.write_items(ctx, self.out)? == Written::Yes {
+                continue;
+            }
+            if let Some(spliced) = item.items(ctx) {
+                for node in &spliced {
+                    node.write_through(&mut Unchanged, self.out)?;
+                }
+            } else {
+                item.write_through(ctx, self.out)?;
+            }
+        }
+        Ok(())
+    }
+
+    /// Start writing a node of `shape` with the unknown content it keeps:
+    /// its element takes the prefix `out` binds to its namespace, or declares
+    /// the table's.
+    #[must_use]
+    pub fn new(
+        out: &'out mut PartWriter<'sink>,
+        shape: &'static Shape,
+        unknown: &'node Unknown,
+    ) -> Self {
+        let (namespace, local) = shape.name;
+        let element = out.scope().element(
+            namespace.map_or("", uri),
+            local,
+            &unknown.namespace_declarations,
+        );
+        Self {
+            element,
+            opened: false,
+            out,
+            place: Place::new(unknown),
+            shape,
+            unknown,
+        }
+    }
+
+    /// Hand the start tag to the part writer, which holds it back until the
+    /// element's first content, once every attribute is known.
+    fn open(&mut self) -> io::Result<()> {
+        if !self.opened {
+            self.opened = true;
+            self.element
+                .attributes
+                .extend(self.unknown.attributes.iter().cloned());
+            self.out.open(&self.element)?;
+        }
+        Ok(())
+    }
+
+    /// Write simple content's text, before the nodes kept after it.
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn text<T>(&mut self, text: &T) -> io::Result<()>
+    where
+        T: AsRef<str> + ?Sized,
+    {
+        self.open()?;
+        let value = text.as_ref();
+        if value.is_empty() {
+            return Ok(());
+        }
+        self.out.text(value)
+    }
+}
+
 impl Transform for Element {
     fn transform(&self, ctx: &mut dyn Context) -> Self {
         ctx.element(self)
@@ -888,6 +1161,78 @@ impl Visit for Node {
                 child.visit(visitor);
             }
         }
+    }
+}
+
+impl<'node> Walk<'node> {
+    /// Show the visitor the `Extra`s placed before the next declared child.
+    fn before_known(&mut self, visitor: &mut dyn Visitor) {
+        let known = self.known;
+        for extra in self
+            .unknown
+            .children
+            .iter()
+            .filter(|extra| extra.after == known)
+        {
+            extra.node.visit(visitor);
+        }
+        self.known += 1;
+    }
+
+    /// Visit a declared child field of a struct type: each node after the
+    /// `Extra`s placed before it.
+    pub fn child<F>(&mut self, field: &F, visitor: &mut dyn Visitor)
+    where
+        F: Nodes,
+        F::Node: Visit,
+    {
+        for node in field.nodes() {
+            self.before_known(visitor);
+            node.visit(visitor);
+        }
+    }
+
+    /// Visit a single declared child of an enum type: after the `Extra`s
+    /// placed before it, unless it is an `Other` node.
+    pub fn choice<F>(&mut self, field: &F, visitor: &mut dyn Visitor)
+    where
+        F: Nodes,
+        F::Node: Item + Visit,
+    {
+        for node in field.nodes() {
+            if node.is_declared() {
+                self.before_known(visitor);
+            }
+            node.visit(visitor);
+        }
+    }
+
+    /// Visit the `Extra`s placed after the last declared child.
+    pub fn finish(self, visitor: &mut dyn Visitor) {
+        let known = self.known;
+        for extra in self
+            .unknown
+            .children
+            .iter()
+            .filter(|extra| extra.after >= known)
+        {
+            extra.node.visit(visitor);
+        }
+    }
+
+    /// Visit a list of an enum type: each item after the `Extra`s placed
+    /// before it, unless it is an `Other` node.
+    pub fn items<F>(&mut self, field: &F, visitor: &mut dyn Visitor)
+    where
+        F: Nodes,
+        F::Node: Item + Visit,
+    {
+        self.choice(field, visitor);
+    }
+
+    #[must_use]
+    pub const fn new(unknown: &'node Unknown) -> Self {
+        Self { known: 0, unknown }
     }
 }
 
@@ -1280,6 +1625,91 @@ pub fn text<'text>(
         Ok(text)
     } else {
         Err(invalid(text, simple_type))
+    }
+}
+
+/// A tree or list hook's answer about `node`, from the hooks a namespace
+/// accessor gave: `None` when it gave none.
+pub fn ask<H, T, R, F>(hooks: Option<&mut H>, hook: F, node: &T) -> Option<R>
+where
+    H: ?Sized,
+    F: FnOnce(&mut H, &T) -> Option<R>,
+{
+    let found = hooks?;
+    hook(found, node)
+}
+
+/// A write hook's answer about `node`, from the hooks a namespace accessor
+/// gave: `Written::No` when it gave none.
+///
+/// # Errors
+///
+/// The sink's.
+pub fn ask_write<H, T, F>(
+    hooks: Option<&mut H>,
+    hook: F,
+    node: &T,
+    out: &mut PartWriter<'_>,
+) -> io::Result<Written>
+where
+    H: ?Sized,
+    F: FnOnce(&mut H, &T, &mut PartWriter<'_>) -> io::Result<Written>,
+{
+    hooks.map_or(Ok(Written::No), |found| hook(found, node, out))
+}
+
+/// A visitor hook's answer about `node`, from the hooks a namespace accessor
+/// gave: `Descend::Yes` when it gave none.
+pub fn show<H, T, F>(hooks: Option<&mut H>, hook: F, node: &T) -> Descend
+where
+    H: ?Sized,
+    F: FnOnce(&mut H, &T) -> Descend,
+{
+    hooks.map_or(Descend::Yes, |found| hook(found, node))
+}
+
+/// A declared child field of a struct type, or a single one of an enum type,
+/// rebuilt with each node transformed.
+#[must_use]
+pub fn transform_child<F>(field: &F, ctx: &mut dyn Context) -> F
+where
+    F: Nodes,
+    F::Node: Transform,
+{
+    field.transform_nodes(ctx)
+}
+
+/// A list of an enum type rebuilt (D20): each item's list hook first, whose
+/// `Some` puts any number of items, none included, in its place, and the
+/// item's `transform` otherwise.
+pub fn transform_items<T>(items: &[T], ctx: &mut dyn Context) -> Vec<T>
+where
+    T: Item + Transform,
+{
+    let mut out = Vec::with_capacity(items.len());
+    for item in items {
+        match item.items(ctx) {
+            Some(spliced) => out.extend(spliced),
+            None => out.push(item.transform(ctx)),
+        }
+    }
+    out
+}
+
+/// A node's unknown content rebuilt: each `Extra`'s node transformed through
+/// the root `element` hook, the attributes and declarations as they are.
+pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context) -> Unknown {
+    Unknown {
+        attributes: unknown.attributes.clone(),
+        children: unknown
+            .children
+            .iter()
+            .map(|extra| Extra {
+                after: extra.after,
+                node: extra.node.transform(ctx),
+            })
+            .collect(),
+        namespace_declarations: unknown.namespace_declarations.clone(),
     }
 }
 

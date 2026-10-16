@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/2020/mipLabelMetadata`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_CLBL: Option<NamespaceId> = Some(31);
 
@@ -267,6 +271,64 @@ static LABEL_LIST_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `clbl` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_2020_mip_label_metadata` is never asked.
+pub trait Context: markup::Context {
+    fn ext(&mut self, _node: &Ext) -> Option<Ext> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn label(&mut self, _node: &Label) -> Option<Label> {
+        None
+    }
+
+    fn label_list(&mut self, _node: &LabelList) -> Option<LabelList> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext(&mut self, _node: &Ext, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label(&mut self, _node: &Label, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_label_list(
+        &mut self,
+        _node: &LabelList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `clbl:ext`, schema type `CT_ClassificationExtension` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -307,6 +369,29 @@ pub struct LabelList {
     pub ext_lst: Option<Box<ExtLst>>,
     pub label: Vec<Label>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `clbl` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_2020_mip_label_metadata` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ext(&mut self, _node: &Ext) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label(&mut self, _node: &Label) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn label_list(&mut self, _node: &LabelList) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Ext {

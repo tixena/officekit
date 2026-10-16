@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XNSV: Option<NamespaceId> = Some(150);
@@ -370,6 +374,185 @@ pub struct ColumnFilter {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xnsv` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2019_namedsheetviews` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn column_filter(&mut self, _node: &ColumnFilter) -> Option<ColumnFilter> {
+        None
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> Option<Dxf> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn filter(&mut self, _node: &Filter) -> Option<Filter> {
+        None
+    }
+
+    fn named_sheet_view(&mut self, _node: &NamedSheetView) -> Option<NamedSheetView> {
+        None
+    }
+
+    fn named_sheet_views(&mut self, _node: &NamedSheetViews) -> Option<NamedSheetViews> {
+        None
+    }
+
+    fn nsv_filter(&mut self, _node: &NsvFilter) -> Option<NsvFilter> {
+        None
+    }
+
+    fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> Option<RichSortCondition> {
+        None
+    }
+
+    fn sort_condition(&mut self, _node: &SortCondition) -> Option<SortCondition> {
+        None
+    }
+
+    fn sort_rule(&mut self, _node: &SortRule) -> Option<SortRule> {
+        None
+    }
+
+    fn sort_rule_content(&mut self, _node: &SortRuleContent) -> Option<SortRuleContent> {
+        None
+    }
+
+    fn sort_rules(&mut self, _node: &SortRules) -> Option<SortRules> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_filter(
+        &mut self,
+        _node: &ColumnFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dxf(&mut self, _node: &Dxf, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_filter(&mut self, _node: &Filter, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_named_sheet_view(
+        &mut self,
+        _node: &NamedSheetView,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_named_sheet_views(
+        &mut self,
+        _node: &NamedSheetViews,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nsv_filter(
+        &mut self,
+        _node: &NsvFilter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rich_sort_condition(
+        &mut self,
+        _node: &RichSortCondition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_condition(
+        &mut self,
+        _node: &SortCondition,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_rule(
+        &mut self,
+        _node: &SortRule,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_rule_content(
+        &mut self,
+        _node: &SortRuleContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sort_rules(
+        &mut self,
+        _node: &SortRules,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xnsv:dxf`, schema type `CT_Dxf` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -495,6 +678,61 @@ pub struct SortRules {
     pub sort_method: Option<super::spreadsheet::SortMethod>,
     pub sort_rule: Vec<SortRule>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xnsv` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2019_namedsheetviews` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn column_filter(&mut self, _node: &ColumnFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dxf(&mut self, _node: &Dxf) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn filter(&mut self, _node: &Filter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn named_sheet_view(&mut self, _node: &NamedSheetView) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn named_sheet_views(&mut self, _node: &NamedSheetViews) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nsv_filter(&mut self, _node: &NsvFilter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rich_sort_condition(&mut self, _node: &RichSortCondition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_condition(&mut self, _node: &SortCondition) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_rule(&mut self, _node: &SortRule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_rule_content(&mut self, _node: &SortRuleContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sort_rules(&mut self, _node: &SortRules) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ColumnFilter {

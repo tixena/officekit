@@ -222,7 +222,7 @@ pub(crate) fn qualified(name: &QName) -> String {
 
 /// The content of a start tag: the name, the namespace declarations, then the
 /// attributes.
-fn start_tag(element: &Element, tag: &str) -> String {
+pub(crate) fn start_tag(element: &Element, tag: &str) -> String {
     let mut content = tag.to_owned();
     for declaration in &element.namespace_declarations {
         content.push_str(" xmlns");

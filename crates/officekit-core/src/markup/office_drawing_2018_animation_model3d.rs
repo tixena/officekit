@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2018/animation/model3d`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A3DANIM: Option<NamespaceId> = Some(5);
@@ -280,6 +284,68 @@ pub struct AnimPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `a3danim` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2018_animation_model3d` is never asked.
+pub trait Context: markup::Context {
+    fn anim_pr(&mut self, _node: &AnimPr) -> Option<AnimPr> {
+        None
+    }
+
+    fn embed_anim(&mut self, _node: &EmbedAnim) -> Option<EmbedAnim> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn poster_frame(&mut self, _node: &PosterFrame) -> Option<PosterFrame> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anim_pr(&mut self, _node: &AnimPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_embed_anim(
+        &mut self,
+        _node: &EmbedAnim,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_poster_frame(
+        &mut self,
+        _node: &PosterFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `a3danim:embedAnim`, schema type `CT_EmbeddedAnimation` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -305,6 +371,29 @@ pub struct PosterFrame {
     pub anim_id: Option<String>,
     pub frame: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `a3danim` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2018_animation_model3d` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn anim_pr(&mut self, _node: &AnimPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn embed_anim(&mut self, _node: &EmbedAnim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn poster_frame(&mut self, _node: &PosterFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AnimPr {

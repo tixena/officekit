@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2025/externalCodeService2`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_XLECS2: Option<NamespaceId> = Some(134);
 
@@ -231,6 +235,35 @@ static EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE: markup::Shape = markup::Shape
     text: false,
 };
 
+/// The hooks of a context for the `xlecs2` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_spreadsheetml_2025_external_code_service2` is
+/// never asked.
+pub trait Context: markup::Context {
+    fn external_code_service_image_as_input(
+        &mut self,
+        _node: &ExternalCodeServiceImageAsInput,
+    ) -> Option<ExternalCodeServiceImageAsInput> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_external_code_service_image_as_input(
+        &mut self,
+        _node: &ExternalCodeServiceImageAsInput,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `xlecs2:externalCodeServiceImageAsInput`, schema type
 /// `CT_ExternalCodeServiceImageAsInput` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -239,6 +272,20 @@ pub struct ExternalCodeServiceImageAsInput {
     pub max_height: Option<String>,
     pub max_width: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xlecs2` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_spreadsheetml_2025_external_code_service2` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn external_code_service_image_as_input(
+        &mut self,
+        _node: &ExternalCodeServiceImageAsInput,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for ExternalCodeServiceImageAsInput {

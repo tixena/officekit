@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2017/3/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_P173: Option<NamespaceId> = Some(69);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -252,6 +256,57 @@ static TRACKS_INFO_SHAPE: markup::Shape = markup::Shape {
     slots: &[markup::Slot::single((NS_P173, "trackLst"))],
     text: false,
 };
+
+/// The hooks of a context for the `p173` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2017_3_main` is never asked.
+pub trait Context: markup::Context {
+    fn track(&mut self, _node: &Track) -> Option<Track> {
+        None
+    }
+
+    fn track_lst(&mut self, _node: &TrackLst) -> Option<TrackLst> {
+        None
+    }
+
+    fn tracks_info(&mut self, _node: &TracksInfo) -> Option<TracksInfo> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_track(&mut self, _node: &Track, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_track_lst(
+        &mut self,
+        _node: &TrackLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tracks_info(
+        &mut self,
+        _node: &TracksInfo,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
 
 /// `ST_DisplayLocation`: the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -292,6 +347,25 @@ pub struct TracksInfo {
     pub display_loc: Option<DisplayLocation>,
     pub track_lst: Option<Box<TrackLst>>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `p173` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2017_3_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn track(&mut self, _node: &Track) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn track_lst(&mut self, _node: &TrackLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tracks_info(&mut self, _node: &TracksInfo) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl AsRef<str> for DisplayLocation {

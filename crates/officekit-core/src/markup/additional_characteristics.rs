@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_AC: Option<NamespaceId> = Some(7);
 
@@ -259,6 +263,52 @@ pub enum CharacteristicRelationshipTypesMember {
     Lt,
 }
 
+/// The hooks of a context for the `ac` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::additional_characteristics` is never asked.
+pub trait Context: markup::Context {
+    fn set_of_additional_characteristics(
+        &mut self,
+        _node: &SetOfAdditionalCharacteristics,
+    ) -> Option<SetOfAdditionalCharacteristics> {
+        None
+    }
+
+    fn single_characteristic(
+        &mut self,
+        _node: &SingleCharacteristic,
+    ) -> Option<SingleCharacteristic> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_additional_characteristics(
+        &mut self,
+        _node: &SetOfAdditionalCharacteristics,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_single_characteristic(
+        &mut self,
+        _node: &SingleCharacteristic,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.7.2.1 `additionalCharacteristics` (Set of Additional Characteristics): the tag
 /// `ac:additionalCharacteristics`, schema type `CT_AdditionalCharacteristics`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -278,6 +328,24 @@ pub struct SingleCharacteristic {
     pub unknown: markup::Unknown,
     pub val: Option<String>,
     pub vocabulary: Option<String>,
+}
+
+/// The hooks of a visitor for the `ac` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::additional_characteristics` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn set_of_additional_characteristics(
+        &mut self,
+        _node: &SetOfAdditionalCharacteristics,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn single_characteristic(&mut self, _node: &SingleCharacteristic) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl AsRef<str> for CharacteristicRelationshipTypes {

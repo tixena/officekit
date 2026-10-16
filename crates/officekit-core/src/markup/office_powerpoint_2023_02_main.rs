@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2023/02/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_P232: Option<NamespaceId> = Some(77);
 
@@ -264,6 +268,82 @@ pub struct Cameo {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `p232` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2023_02_main` is never asked.
+pub trait Context: markup::Context {
+    fn cameo(&mut self, _node: &Cameo) -> Option<Cameo> {
+        None
+    }
+
+    fn ph_type_ext(&mut self, _node: &PhTypeExt) -> Option<PhTypeExt> {
+        None
+    }
+
+    fn placeholder_type(
+        &mut self,
+        _node: &PlaceholderTypeContent,
+    ) -> Option<PlaceholderTypeContent> {
+        None
+    }
+
+    fn r#type(&mut self, _node: &Type) -> Option<Type> {
+        None
+    }
+
+    fn unknown(&mut self, _node: &Unknown) -> Option<Unknown> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cameo(&mut self, _node: &Cameo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ph_type_ext(
+        &mut self,
+        _node: &PhTypeExt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_placeholder_type(
+        &mut self,
+        _node: &PlaceholderTypeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_type(&mut self, _node: &Type, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unknown(&mut self, _node: &Unknown, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `p232:phTypeExt`, schema type `CT_PlaceholderTypeExtension` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -294,6 +374,33 @@ pub struct Type {
 #[non_exhaustive]
 pub struct Unknown {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `p232` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2023_02_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn cameo(&mut self, _node: &Cameo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ph_type_ext(&mut self, _node: &PhTypeExt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn placeholder_type(&mut self, _node: &PlaceholderTypeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#type(&mut self, _node: &Type) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unknown(&mut self, _node: &Unknown) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Cameo {

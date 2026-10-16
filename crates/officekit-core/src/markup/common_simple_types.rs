@@ -314,6 +314,16 @@ pub enum CalendarTypesMember {
     Thai,
 }
 
+/// The hooks of a context for the `s` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::common_simple_types` is never asked.
+pub trait Context: markup::Context {}
+
 /// 20.1.2.1 `ST_AlgClass` (Cryptographic Algorithm Classes): the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -477,6 +487,13 @@ pub enum VerticalPositioningLocationMember {
     Subscript,
     Superscript,
 }
+
+/// The hooks of a visitor for the `s` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::common_simple_types` is never asked.
+pub trait Visitor: markup::Visitor {}
 
 /// 22.9.2.21 `ST_XmlName` (XML Name): the text the file carried.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]

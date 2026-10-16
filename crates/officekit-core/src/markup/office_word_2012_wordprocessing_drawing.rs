@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2012/wordprocessingDrawing`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_WP15: Option<NamespaceId> = Some(114);
 
@@ -230,6 +234,43 @@ static WEB_VIDEO_PR_SHAPE: markup::Shape = markup::Shape {
     slots: &[],
     text: false,
 };
+
+/// The hooks of a context for the `wp15` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2012_wordprocessing_drawing` is never
+/// asked.
+pub trait Context: markup::Context {
+    fn web_video_pr(&mut self, _node: &WebVideoPr) -> Option<WebVideoPr> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_web_video_pr(
+        &mut self,
+        _node: &WebVideoPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
+/// The hooks of a visitor for the `wp15` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2012_wordprocessing_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn web_video_pr(&mut self, _node: &WebVideoPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+}
 
 /// The tag `wp15:webVideoPr`, schema type `CT_WebVideoPr` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]

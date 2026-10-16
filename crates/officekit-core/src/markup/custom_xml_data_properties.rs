@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/customXml`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_DS: Option<NamespaceId> = Some(46);
 
@@ -254,6 +258,70 @@ pub struct AssociatedXMLSchema {
     pub uri: Option<String>,
 }
 
+/// The hooks of a context for the `ds` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::custom_xml_data_properties` is never asked.
+pub trait Context: markup::Context {
+    fn associated_xml_schema(
+        &mut self,
+        _node: &AssociatedXMLSchema,
+    ) -> Option<AssociatedXMLSchema> {
+        None
+    }
+
+    fn custom_xml_data_properties(
+        &mut self,
+        _node: &CustomXMLDataProperties,
+    ) -> Option<CustomXMLDataProperties> {
+        None
+    }
+
+    fn set_of_associated_xml_schemas(
+        &mut self,
+        _node: &SetOfAssociatedXMLSchemas,
+    ) -> Option<SetOfAssociatedXMLSchemas> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_associated_xml_schema(
+        &mut self,
+        _node: &AssociatedXMLSchema,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_custom_xml_data_properties(
+        &mut self,
+        _node: &CustomXMLDataProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_set_of_associated_xml_schemas(
+        &mut self,
+        _node: &SetOfAssociatedXMLSchemas,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.5.2.1 `datastoreItem` (Custom XML Data Properties): the tag `ds:datastoreItem`, schema type
 /// `CT_DatastoreItem`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -271,6 +339,28 @@ pub struct CustomXMLDataProperties {
 pub struct SetOfAssociatedXMLSchemas {
     pub associated_xml_schema: Vec<AssociatedXMLSchema>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `ds` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::custom_xml_data_properties` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn associated_xml_schema(&mut self, _node: &AssociatedXMLSchema) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn custom_xml_data_properties(&mut self, _node: &CustomXMLDataProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn set_of_associated_xml_schemas(
+        &mut self,
+        _node: &SetOfAssociatedXMLSchemas,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for AssociatedXMLSchema {

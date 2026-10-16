@@ -242,6 +242,16 @@ fn markup_summary(out: &mut dyn Write, summary: &markup::Summary) -> Result<()> 
         summary.newtypes,
         summary.member_enums,
     )?;
+    writeln!(
+        out,
+        "  traversal: {} tree hooks, {} list hooks, {} write hooks, {} visitor hooks; {} \
+         accessors on each root hook trait",
+        summary.tree_hooks,
+        summary.list_hooks,
+        summary.write_hooks,
+        summary.visitor_hooks,
+        summary.modules,
+    )?;
     Ok(())
 }
 

@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2010/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
@@ -982,6 +986,801 @@ pub struct ContentPart {
     pub xfrm: Option<Box<Xfrm>>,
 }
 
+/// The hooks of a context for the `a14` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2010_main` is never asked.
+pub trait Context: markup::Context {
+    fn artistic_blur(&mut self, _node: &ArtisticBlur) -> Option<ArtisticBlur> {
+        None
+    }
+
+    fn artistic_cement(&mut self, _node: &ArtisticCement) -> Option<ArtisticCement> {
+        None
+    }
+
+    fn artistic_chalk_sketch(
+        &mut self,
+        _node: &ArtisticChalkSketch,
+    ) -> Option<ArtisticChalkSketch> {
+        None
+    }
+
+    fn artistic_crisscross_etching(
+        &mut self,
+        _node: &ArtisticCrisscrossEtching,
+    ) -> Option<ArtisticCrisscrossEtching> {
+        None
+    }
+
+    fn artistic_cutout(&mut self, _node: &ArtisticCutout) -> Option<ArtisticCutout> {
+        None
+    }
+
+    fn artistic_film_grain(&mut self, _node: &ArtisticFilmGrain) -> Option<ArtisticFilmGrain> {
+        None
+    }
+
+    fn artistic_glass(&mut self, _node: &ArtisticGlass) -> Option<ArtisticGlass> {
+        None
+    }
+
+    fn artistic_glow_diffused(
+        &mut self,
+        _node: &ArtisticGlowDiffused,
+    ) -> Option<ArtisticGlowDiffused> {
+        None
+    }
+
+    fn artistic_glow_edges(&mut self, _node: &ArtisticGlowEdges) -> Option<ArtisticGlowEdges> {
+        None
+    }
+
+    fn artistic_light_screen(
+        &mut self,
+        _node: &ArtisticLightScreen,
+    ) -> Option<ArtisticLightScreen> {
+        None
+    }
+
+    fn artistic_line_drawing(
+        &mut self,
+        _node: &ArtisticLineDrawing,
+    ) -> Option<ArtisticLineDrawing> {
+        None
+    }
+
+    fn artistic_marker(&mut self, _node: &ArtisticMarker) -> Option<ArtisticMarker> {
+        None
+    }
+
+    fn artistic_mosiaic_bubbles(
+        &mut self,
+        _node: &ArtisticMosiaicBubbles,
+    ) -> Option<ArtisticMosiaicBubbles> {
+        None
+    }
+
+    fn artistic_paint_brush(&mut self, _node: &ArtisticPaintBrush) -> Option<ArtisticPaintBrush> {
+        None
+    }
+
+    fn artistic_paint_strokes(
+        &mut self,
+        _node: &ArtisticPaintStrokes,
+    ) -> Option<ArtisticPaintStrokes> {
+        None
+    }
+
+    fn artistic_pastels_smooth(
+        &mut self,
+        _node: &ArtisticPastelsSmooth,
+    ) -> Option<ArtisticPastelsSmooth> {
+        None
+    }
+
+    fn artistic_pencil_grayscale(
+        &mut self,
+        _node: &ArtisticPencilGrayscale,
+    ) -> Option<ArtisticPencilGrayscale> {
+        None
+    }
+
+    fn artistic_pencil_sketch(
+        &mut self,
+        _node: &ArtisticPencilSketch,
+    ) -> Option<ArtisticPencilSketch> {
+        None
+    }
+
+    fn artistic_photocopy(&mut self, _node: &ArtisticPhotocopy) -> Option<ArtisticPhotocopy> {
+        None
+    }
+
+    fn artistic_plastic_wrap(
+        &mut self,
+        _node: &ArtisticPlasticWrap,
+    ) -> Option<ArtisticPlasticWrap> {
+        None
+    }
+
+    fn artistic_texturizer(&mut self, _node: &ArtisticTexturizer) -> Option<ArtisticTexturizer> {
+        None
+    }
+
+    fn artistic_watercolor_sponge(
+        &mut self,
+        _node: &ArtisticWatercolorSponge,
+    ) -> Option<ArtisticWatercolorSponge> {
+        None
+    }
+
+    fn background_mark(&mut self, _node: &BackgroundMark) -> Option<BackgroundMark> {
+        None
+    }
+
+    fn background_removal(&mut self, _node: &BackgroundRemoval) -> Option<BackgroundRemoval> {
+        None
+    }
+
+    fn brightness_contrast(&mut self, _node: &BrightnessContrast) -> Option<BrightnessContrast> {
+        None
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> Option<CNvContentPartPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn camera_tool(&mut self, _node: &CameraTool) -> Option<CameraTool> {
+        None
+    }
+
+    fn color_temperature(&mut self, _node: &ColorTemperature) -> Option<ColorTemperature> {
+        None
+    }
+
+    fn compat_ext(&mut self, _node: &CompatExt) -> Option<CompatExt> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn cp_locks(&mut self, _node: &CpLocks) -> Option<CpLocks> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn foreground_mark(&mut self, _node: &ForegroundMark) -> Option<ForegroundMark> {
+        None
+    }
+
+    fn hidden_effects(&mut self, _node: &HiddenEffects) -> Option<HiddenEffects> {
+        None
+    }
+
+    fn hidden_fill(&mut self, _node: &HiddenFill) -> Option<HiddenFill> {
+        None
+    }
+
+    fn hidden_line(&mut self, _node: &HiddenLine) -> Option<HiddenLine> {
+        None
+    }
+
+    fn hidden_scene3d(&mut self, _node: &HiddenScene3d) -> Option<HiddenScene3d> {
+        None
+    }
+
+    fn hidden_sp3d(&mut self, _node: &HiddenSp3d) -> Option<HiddenSp3d> {
+        None
+    }
+
+    fn img_effect(&mut self, _node: &ImgEffect) -> Option<ImgEffect> {
+        None
+    }
+
+    fn img_layer(&mut self, _node: &ImgLayer) -> Option<ImgLayer> {
+        None
+    }
+
+    fn img_props(&mut self, _node: &ImgProps) -> Option<ImgProps> {
+        None
+    }
+
+    fn is_canvas(&mut self, _node: &IsCanvas) -> Option<IsCanvas> {
+        None
+    }
+
+    fn m(&mut self, _node: &M) -> Option<M> {
+        None
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> Option<NvContentPartPr> {
+        None
+    }
+
+    fn picture_effect(&mut self, _node: &PictureEffectContent) -> Option<PictureEffectContent> {
+        None
+    }
+
+    fn saturation(&mut self, _node: &Saturation) -> Option<Saturation> {
+        None
+    }
+
+    fn shadow_obscured(&mut self, _node: &ShadowObscured) -> Option<ShadowObscured> {
+        None
+    }
+
+    fn sharpen_soften(&mut self, _node: &SharpenSoften) -> Option<SharpenSoften> {
+        None
+    }
+
+    fn use_local_dpi(&mut self, _node: &UseLocalDpi) -> Option<UseLocalDpi> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_blur(
+        &mut self,
+        _node: &ArtisticBlur,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_cement(
+        &mut self,
+        _node: &ArtisticCement,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_chalk_sketch(
+        &mut self,
+        _node: &ArtisticChalkSketch,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_crisscross_etching(
+        &mut self,
+        _node: &ArtisticCrisscrossEtching,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_cutout(
+        &mut self,
+        _node: &ArtisticCutout,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_film_grain(
+        &mut self,
+        _node: &ArtisticFilmGrain,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_glass(
+        &mut self,
+        _node: &ArtisticGlass,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_glow_diffused(
+        &mut self,
+        _node: &ArtisticGlowDiffused,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_glow_edges(
+        &mut self,
+        _node: &ArtisticGlowEdges,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_light_screen(
+        &mut self,
+        _node: &ArtisticLightScreen,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_line_drawing(
+        &mut self,
+        _node: &ArtisticLineDrawing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_marker(
+        &mut self,
+        _node: &ArtisticMarker,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_mosiaic_bubbles(
+        &mut self,
+        _node: &ArtisticMosiaicBubbles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_paint_brush(
+        &mut self,
+        _node: &ArtisticPaintBrush,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_paint_strokes(
+        &mut self,
+        _node: &ArtisticPaintStrokes,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_pastels_smooth(
+        &mut self,
+        _node: &ArtisticPastelsSmooth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_pencil_grayscale(
+        &mut self,
+        _node: &ArtisticPencilGrayscale,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_pencil_sketch(
+        &mut self,
+        _node: &ArtisticPencilSketch,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_photocopy(
+        &mut self,
+        _node: &ArtisticPhotocopy,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_plastic_wrap(
+        &mut self,
+        _node: &ArtisticPlasticWrap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_texturizer(
+        &mut self,
+        _node: &ArtisticTexturizer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_artistic_watercolor_sponge(
+        &mut self,
+        _node: &ArtisticWatercolorSponge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_mark(
+        &mut self,
+        _node: &BackgroundMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_background_removal(
+        &mut self,
+        _node: &BackgroundRemoval,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_brightness_contrast(
+        &mut self,
+        _node: &BrightnessContrast,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_content_part_pr(
+        &mut self,
+        _node: &CNvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera_tool(
+        &mut self,
+        _node: &CameraTool,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_color_temperature(
+        &mut self,
+        _node: &ColorTemperature,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compat_ext(
+        &mut self,
+        _node: &CompatExt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cp_locks(
+        &mut self,
+        _node: &CpLocks,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_foreground_mark(
+        &mut self,
+        _node: &ForegroundMark,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_effects(
+        &mut self,
+        _node: &HiddenEffects,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_fill(
+        &mut self,
+        _node: &HiddenFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_line(
+        &mut self,
+        _node: &HiddenLine,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_scene3d(
+        &mut self,
+        _node: &HiddenScene3d,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hidden_sp3d(
+        &mut self,
+        _node: &HiddenSp3d,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_effect(
+        &mut self,
+        _node: &ImgEffect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_layer(
+        &mut self,
+        _node: &ImgLayer,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_props(
+        &mut self,
+        _node: &ImgProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_is_canvas(
+        &mut self,
+        _node: &IsCanvas,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_m(&mut self, _node: &M, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nv_content_part_pr(
+        &mut self,
+        _node: &NvContentPartPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_effect(
+        &mut self,
+        _node: &PictureEffectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_saturation(
+        &mut self,
+        _node: &Saturation,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shadow_obscured(
+        &mut self,
+        _node: &ShadowObscured,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sharpen_soften(
+        &mut self,
+        _node: &SharpenSoften,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_local_dpi(
+        &mut self,
+        _node: &UseLocalDpi,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// The tag `a14:cpLocks`, schema type `CT_ContentPartLocking` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1194,6 +1993,220 @@ pub struct SharpenSoften {
 pub struct UseLocalDpi {
     pub unknown: markup::Unknown,
     pub val: Option<String>,
+}
+
+/// The hooks of a visitor for the `a14` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2010_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn artistic_blur(&mut self, _node: &ArtisticBlur) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_cement(&mut self, _node: &ArtisticCement) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_chalk_sketch(&mut self, _node: &ArtisticChalkSketch) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_crisscross_etching(
+        &mut self,
+        _node: &ArtisticCrisscrossEtching,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_cutout(&mut self, _node: &ArtisticCutout) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_film_grain(&mut self, _node: &ArtisticFilmGrain) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_glass(&mut self, _node: &ArtisticGlass) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_glow_diffused(&mut self, _node: &ArtisticGlowDiffused) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_glow_edges(&mut self, _node: &ArtisticGlowEdges) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_light_screen(&mut self, _node: &ArtisticLightScreen) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_line_drawing(&mut self, _node: &ArtisticLineDrawing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_marker(&mut self, _node: &ArtisticMarker) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_mosiaic_bubbles(&mut self, _node: &ArtisticMosiaicBubbles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_paint_brush(&mut self, _node: &ArtisticPaintBrush) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_paint_strokes(&mut self, _node: &ArtisticPaintStrokes) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_pastels_smooth(&mut self, _node: &ArtisticPastelsSmooth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_pencil_grayscale(&mut self, _node: &ArtisticPencilGrayscale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_pencil_sketch(&mut self, _node: &ArtisticPencilSketch) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_photocopy(&mut self, _node: &ArtisticPhotocopy) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_plastic_wrap(&mut self, _node: &ArtisticPlasticWrap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_texturizer(&mut self, _node: &ArtisticTexturizer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn artistic_watercolor_sponge(&mut self, _node: &ArtisticWatercolorSponge) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_mark(&mut self, _node: &BackgroundMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn background_removal(&mut self, _node: &BackgroundRemoval) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn brightness_contrast(&mut self, _node: &BrightnessContrast) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_content_part_pr(&mut self, _node: &CNvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera_tool(&mut self, _node: &CameraTool) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn color_temperature(&mut self, _node: &ColorTemperature) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn compat_ext(&mut self, _node: &CompatExt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cp_locks(&mut self, _node: &CpLocks) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn foreground_mark(&mut self, _node: &ForegroundMark) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_effects(&mut self, _node: &HiddenEffects) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_fill(&mut self, _node: &HiddenFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_line(&mut self, _node: &HiddenLine) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_scene3d(&mut self, _node: &HiddenScene3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hidden_sp3d(&mut self, _node: &HiddenSp3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_effect(&mut self, _node: &ImgEffect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_layer(&mut self, _node: &ImgLayer) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_props(&mut self, _node: &ImgProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn is_canvas(&mut self, _node: &IsCanvas) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn m(&mut self, _node: &M) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nv_content_part_pr(&mut self, _node: &NvContentPartPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_effect(&mut self, _node: &PictureEffectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn saturation(&mut self, _node: &Saturation) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shadow_obscured(&mut self, _node: &ShadowObscured) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sharpen_soften(&mut self, _node: &SharpenSoften) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_local_dpi(&mut self, _node: &UseLocalDpi) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `a14:xfrm`, schema type `CT_Transform2D` of SDK 3.5.1's data.

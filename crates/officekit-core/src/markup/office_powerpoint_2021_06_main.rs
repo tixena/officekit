@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2021/06/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P216: Option<NamespaceId> = Some(74);
@@ -409,6 +413,233 @@ pub struct Comment {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `p216` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_powerpoint_2021_06_main` is never asked.
+pub trait Context: markup::Context {
+    fn add(&mut self, _node: &Add) -> Option<Add> {
+        None
+    }
+
+    fn anchr(&mut self, _node: &Anchr) -> Option<Anchr> {
+        None
+    }
+
+    fn asgn(&mut self, _node: &Asgn) -> Option<Asgn> {
+        None
+    }
+
+    fn atrbtn(&mut self, _node: &Atrbtn) -> Option<Atrbtn> {
+        None
+    }
+
+    fn comment(&mut self, _node: &Comment) -> Option<Comment> {
+        None
+    }
+
+    fn date(&mut self, _node: &Date) -> Option<Date> {
+        None
+    }
+
+    fn event(&mut self, _node: &Event) -> Option<Event> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn history(&mut self, _node: &History) -> Option<History> {
+        None
+    }
+
+    fn pcnt_cmplt(&mut self, _node: &PcntCmplt) -> Option<PcntCmplt> {
+        None
+    }
+
+    fn pri(&mut self, _node: &Pri) -> Option<Pri> {
+        None
+    }
+
+    fn task_history_details(&mut self, _node: &TaskHistoryDetails) -> Option<TaskHistoryDetails> {
+        None
+    }
+
+    fn task_history_event(
+        &mut self,
+        _node: &TaskHistoryEventContent,
+    ) -> Option<TaskHistoryEventContent> {
+        None
+    }
+
+    fn title(&mut self, _node: &Title) -> Option<Title> {
+        None
+    }
+
+    fn un_asgn(&mut self, _node: &UnAsgn) -> Option<UnAsgn> {
+        None
+    }
+
+    fn unasgn_all(&mut self, _node: &UnasgnAll) -> Option<UnasgnAll> {
+        None
+    }
+
+    fn undo(&mut self, _node: &Undo) -> Option<Undo> {
+        None
+    }
+
+    fn unknown(&mut self, _node: &Unknown) -> Option<Unknown> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_add(&mut self, _node: &Add, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_anchr(&mut self, _node: &Anchr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_asgn(&mut self, _node: &Asgn, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_atrbtn(&mut self, _node: &Atrbtn, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_comment(&mut self, _node: &Comment, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_date(&mut self, _node: &Date, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_event(&mut self, _node: &Event, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_history(&mut self, _node: &History, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pcnt_cmplt(
+        &mut self,
+        _node: &PcntCmplt,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pri(&mut self, _node: &Pri, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_history_details(
+        &mut self,
+        _node: &TaskHistoryDetails,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_task_history_event(
+        &mut self,
+        _node: &TaskHistoryEventContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_title(&mut self, _node: &Title, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_un_asgn(&mut self, _node: &UnAsgn, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unasgn_all(
+        &mut self,
+        _node: &UnasgnAll,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_undo(&mut self, _node: &Undo, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unknown(&mut self, _node: &Unknown, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `p216:date`, schema type `CT_TaskScheduleEventInfo` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -525,6 +756,85 @@ pub struct Undo {
 #[non_exhaustive]
 pub struct Unknown {
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `p216` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_powerpoint_2021_06_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn add(&mut self, _node: &Add) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn anchr(&mut self, _node: &Anchr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn asgn(&mut self, _node: &Asgn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn atrbtn(&mut self, _node: &Atrbtn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn comment(&mut self, _node: &Comment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn date(&mut self, _node: &Date) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn event(&mut self, _node: &Event) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn history(&mut self, _node: &History) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pcnt_cmplt(&mut self, _node: &PcntCmplt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pri(&mut self, _node: &Pri) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_history_details(&mut self, _node: &TaskHistoryDetails) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn task_history_event(&mut self, _node: &TaskHistoryEventContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn title(&mut self, _node: &Title) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn un_asgn(&mut self, _node: &UnAsgn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unasgn_all(&mut self, _node: &UnasgnAll) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn undo(&mut self, _node: &Undo) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unknown(&mut self, _node: &Unknown) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for Add {

@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
@@ -301,6 +305,111 @@ pub struct Bg {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `wpc` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2010_wordprocessing_canvas` is never asked.
+pub trait Context: markup::Context {
+    fn bg(&mut self, _node: &Bg) -> Option<Bg> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
+        None
+    }
+
+    fn whole(&mut self, _node: &Whole) -> Option<Whole> {
+        None
+    }
+
+    fn wordprocessing_canvas(
+        &mut self,
+        _node: &WordprocessingCanvasContent,
+    ) -> Option<WordprocessingCanvasContent> {
+        None
+    }
+
+    fn wordprocessing_canvas_items(
+        &mut self,
+        _node: &WordprocessingCanvasContent,
+    ) -> Option<Vec<WordprocessingCanvasContent>> {
+        None
+    }
+
+    fn wpc(&mut self, _node: &Wpc) -> Option<Wpc> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bg(&mut self, _node: &Bg, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame(
+        &mut self,
+        _node: &GraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_whole(&mut self, _node: &Whole, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_canvas(
+        &mut self,
+        _node: &WordprocessingCanvasContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wordprocessing_canvas_items(
+        &mut self,
+        _node: &WordprocessingCanvasContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wpc(&mut self, _node: &Wpc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `wpc:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -319,6 +428,37 @@ pub struct GraphicFrame {
     pub graphic_object: Box<super::drawing::GraphicObject>,
     pub unknown: markup::Unknown,
     pub xfrm: Box<super::office_word_2010_wordprocessing_group::Xfrm>,
+}
+
+/// The hooks of a visitor for the `wpc` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2010_wordprocessing_canvas` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn bg(&mut self, _node: &Bg) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn whole(&mut self, _node: &Whole) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wordprocessing_canvas(&mut self, _node: &WordprocessingCanvasContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wpc(&mut self, _node: &Wpc) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `wpc:whole`, schema type `CT_WholeE2oFormatting` of SDK 3.5.1's data.

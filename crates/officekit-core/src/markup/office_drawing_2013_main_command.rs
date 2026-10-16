@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2013/main/command`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_OAC: Option<NamespaceId> = Some(61);
@@ -1232,7 +1236,7 @@ static TX_BODY_PKG_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
-static CONTEXT_SHAPE: markup::Shape = markup::Shape {
+static CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "len"), (None, "hash")],
     name: (NS_OAC, "context"),
     slots: &[],
@@ -1546,10 +1550,1653 @@ pub struct CompressPicPr {
     pub use_local_dpi: Option<String>,
 }
 
+/// The hooks of a context for the `oac` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2013_main_command` is never asked.
+pub trait Context: markup::Context {
+    fn blip_fill_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillBlipFillProperties,
+    ) -> Option<BlipFillBlipFillProperties> {
+        None
+    }
+
+    fn blip_fill_reset_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillResetBlipFillProperties,
+    ) -> Option<BlipFillResetBlipFillProperties> {
+        None
+    }
+
+    fn body_pr(&mut self, _node: &BodyPr) -> Option<BodyPr> {
+        None
+    }
+
+    fn bounds(&mut self, _node: &Bounds) -> Option<Bounds> {
+        None
+    }
+
+    fn bw_mode(&mut self, _node: &BwMode) -> Option<BwMode> {
+        None
+    }
+
+    fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrModifyNonVisualConnectorProps,
+    ) -> Option<CNvCxnSpPrModifyNonVisualConnectorProps> {
+        None
+    }
+
+    fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrResetNonVisualConnectorProps,
+    ) -> Option<CNvCxnSpPrResetNonVisualConnectorProps> {
+        None
+    }
+
+    fn c_nv_graphic_frame_pr(&mut self, _node: &CNvGraphicFramePr) -> Option<CNvGraphicFramePr> {
+        None
+    }
+
+    fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps,
+    ) -> Option<CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps> {
+        None
+    }
+
+    fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrNonVisualGroupDrawingShapeProps,
+    ) -> Option<CNvGrpSpPrNonVisualGroupDrawingShapeProps> {
+        None
+    }
+
+    fn c_nv_ink_pr(&mut self, _node: &CNvInkPr) -> Option<CNvInkPr> {
+        None
+    }
+
+    fn c_nv_pic_pr_modify_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrModifyNonVisualPictureProps,
+    ) -> Option<CNvPicPrModifyNonVisualPictureProps> {
+        None
+    }
+
+    fn c_nv_pic_pr_reset_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrResetNonVisualPictureProps,
+    ) -> Option<CNvPicPrResetNonVisualPictureProps> {
+        None
+    }
+
+    fn c_nv_pr_modify_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrModifyNonVisualDrawingProps,
+    ) -> Option<CNvPrModifyNonVisualDrawingProps> {
+        None
+    }
+
+    fn c_nv_pr_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrNonVisualDrawingProps,
+    ) -> Option<CNvPrNonVisualDrawingProps> {
+        None
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> Option<CNvSpPr> {
+        None
+    }
+
+    fn compress_pic_pr(&mut self, _node: &CompressPicPr) -> Option<CompressPicPr> {
+        None
+    }
+
+    fn context_text_char_range_context(
+        &mut self,
+        _node: &ContextTextCharRangeContext,
+    ) -> Option<ContextTextCharRangeContext> {
+        None
+    }
+
+    fn cxn_sp_mk(&mut self, _node: &CxnSpMk) -> Option<CxnSpMk> {
+        None
+    }
+
+    fn cxn_sp_mk_lst(&mut self, _node: &CxnSpMkLst) -> Option<CxnSpMkLst> {
+        None
+    }
+
+    fn dc_mk_lst(&mut self, _node: &DcMkLst) -> Option<DcMkLst> {
+        None
+    }
+
+    fn de_master_mk_lst(&mut self, _node: &DeMasterMkLst) -> Option<DeMasterMkLst> {
+        None
+    }
+
+    fn de_mk_lst(&mut self, _node: &DeMkLst) -> Option<DeMkLst> {
+        None
+    }
+
+    fn de_pkg(&mut self, _node: &DePkg) -> Option<DePkg> {
+        None
+    }
+
+    fn de_src_mk_lst(&mut self, _node: &DeSrcMkLst) -> Option<DeSrcMkLst> {
+        None
+    }
+
+    fn de_tgt_mk_lst(&mut self, _node: &DeTgtMkLst) -> Option<DeTgtMkLst> {
+        None
+    }
+
+    fn dg_mk_lst(&mut self, _node: &DgMkLst) -> Option<DgMkLst> {
+        None
+    }
+
+    fn dpi(&mut self, _node: &Dpi) -> Option<Dpi> {
+        None
+    }
+
+    fn dr_sel_lst(&mut self, _node: &DrSelLst) -> Option<DrSelLst> {
+        None
+    }
+
+    fn editor_sel_lst(&mut self, _node: &EditorSelLst) -> Option<EditorSelLst> {
+        None
+    }
+
+    fn effect(&mut self, _node: &Effect) -> Option<Effect> {
+        None
+    }
+
+    fn effect_ref(&mut self, _node: &EffectRef) -> Option<EffectRef> {
+        None
+    }
+
+    fn end_cxn_connection(&mut self, _node: &EndCxnConnection) -> Option<EndCxnConnection> {
+        None
+    }
+
+    fn end_cxn_empty(&mut self, _node: &EndCxnEmpty) -> Option<EndCxnEmpty> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn fill(&mut self, _node: &Fill) -> Option<Fill> {
+        None
+    }
+
+    fn fill_mode(&mut self, _node: &FillMode) -> Option<FillMode> {
+        None
+    }
+
+    fn fill_rect(&mut self, _node: &FillRect) -> Option<FillRect> {
+        None
+    }
+
+    fn fill_ref(&mut self, _node: &FillRef) -> Option<FillRef> {
+        None
+    }
+
+    fn font_ref(&mut self, _node: &FontRef) -> Option<FontRef> {
+        None
+    }
+
+    fn geom(&mut self, _node: &Geom) -> Option<Geom> {
+        None
+    }
+
+    fn graphic_frame_mk(&mut self, _node: &GraphicFrameMk) -> Option<GraphicFrameMk> {
+        None
+    }
+
+    fn graphic_frame_mk_lst(&mut self, _node: &GraphicFrameMkLst) -> Option<GraphicFrameMkLst> {
+        None
+    }
+
+    fn graphic_parent_mk_lst(&mut self, _node: &GraphicParentMkLst) -> Option<GraphicParentMkLst> {
+        None
+    }
+
+    fn grid_col_mk_lst(&mut self, _node: &GridColMkLst) -> Option<GridColMkLst> {
+        None
+    }
+
+    fn group_command(&mut self, _node: &GroupCommandContent) -> Option<GroupCommandContent> {
+        None
+    }
+
+    fn group_command_items(
+        &mut self,
+        _node: &GroupCommandContent,
+    ) -> Option<Vec<GroupCommandContent>> {
+        None
+    }
+
+    fn grp_cmd(&mut self, _node: &GrpCmd) -> Option<GrpCmd> {
+        None
+    }
+
+    fn grp_sp_mk(&mut self, _node: &GrpSpMk) -> Option<GrpSpMk> {
+        None
+    }
+
+    fn grp_sp_mk_lst(&mut self, _node: &GrpSpMkLst) -> Option<GrpSpMkLst> {
+        None
+    }
+
+    fn grp_sp_pr_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrGroupShapeProperties,
+    ) -> Option<GrpSpPrGroupShapeProperties> {
+        None
+    }
+
+    fn grp_sp_pr_reset_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrResetGroupShapeProperties,
+    ) -> Option<GrpSpPrResetGroupShapeProperties> {
+        None
+    }
+
+    fn hlink_click_empty(&mut self, _node: &HlinkClickEmpty) -> Option<HlinkClickEmpty> {
+        None
+    }
+
+    fn hlink_click_hyperlink_props(
+        &mut self,
+        _node: &HlinkClickHyperlinkProps,
+    ) -> Option<HlinkClickHyperlinkProps> {
+        None
+    }
+
+    fn hlink_hover_empty(&mut self, _node: &HlinkHoverEmpty) -> Option<HlinkHoverEmpty> {
+        None
+    }
+
+    fn hlink_hover_hyperlink_props(
+        &mut self,
+        _node: &HlinkHoverHyperlinkProps,
+    ) -> Option<HlinkHoverHyperlinkProps> {
+        None
+    }
+
+    fn hlink_mk_lst(&mut self, _node: &HlinkMkLst) -> Option<HlinkMkLst> {
+        None
+    }
+
+    fn hlink_modify_hyperlink_props(
+        &mut self,
+        _node: &HlinkModifyHyperlinkProps,
+    ) -> Option<HlinkModifyHyperlinkProps> {
+        None
+    }
+
+    fn hlink_reset_hyperlink_props(
+        &mut self,
+        _node: &HlinkResetHyperlinkProps,
+    ) -> Option<HlinkResetHyperlinkProps> {
+        None
+    }
+
+    fn img_data(&mut self, _node: &ImgData) -> Option<ImgData> {
+        None
+    }
+
+    fn img_link(&mut self, _node: &ImgLink) -> Option<ImgLink> {
+        None
+    }
+
+    fn img_url(&mut self, _node: &ImgUrl) -> Option<ImgUrl> {
+        None
+    }
+
+    fn ink_mk(&mut self, _node: &InkMk) -> Option<InkMk> {
+        None
+    }
+
+    fn ink_mk_lst(&mut self, _node: &InkMkLst) -> Option<InkMkLst> {
+        None
+    }
+
+    fn lf_pr(&mut self, _node: &LfPr) -> Option<LfPr> {
+        None
+    }
+
+    fn line_props(&mut self, _node: &LineProps) -> Option<LineProps> {
+        None
+    }
+
+    fn ln(&mut self, _node: &Ln) -> Option<Ln> {
+        None
+    }
+
+    fn ln_ref(&mut self, _node: &LnRef) -> Option<LnRef> {
+        None
+    }
+
+    fn model3d_mk_lst(&mut self, _node: &Model3DMkLst) -> Option<Model3DMkLst> {
+        None
+    }
+
+    fn no_adjust_handles(&mut self, _node: &NoAdjustHandles) -> Option<NoAdjustHandles> {
+        None
+    }
+
+    fn no_change_arrowheads(&mut self, _node: &NoChangeArrowheads) -> Option<NoChangeArrowheads> {
+        None
+    }
+
+    fn no_change_aspect(&mut self, _node: &NoChangeAspect) -> Option<NoChangeAspect> {
+        None
+    }
+
+    fn no_change_shape_type(&mut self, _node: &NoChangeShapeType) -> Option<NoChangeShapeType> {
+        None
+    }
+
+    fn no_edit_points(&mut self, _node: &NoEditPoints) -> Option<NoEditPoints> {
+        None
+    }
+
+    fn no_grp(&mut self, _node: &NoGrp) -> Option<NoGrp> {
+        None
+    }
+
+    fn no_move(&mut self, _node: &NoMove) -> Option<NoMove> {
+        None
+    }
+
+    fn no_resize(&mut self, _node: &NoResize) -> Option<NoResize> {
+        None
+    }
+
+    fn no_rot(&mut self, _node: &NoRot) -> Option<NoRot> {
+        None
+    }
+
+    fn no_select(&mut self, _node: &NoSelect) -> Option<NoSelect> {
+        None
+    }
+
+    fn off(&mut self, _node: &Off) -> Option<Off> {
+        None
+    }
+
+    fn orig_img_data(&mut self, _node: &OrigImgData) -> Option<OrigImgData> {
+        None
+    }
+
+    fn p_pr(&mut self, _node: &PPr) -> Option<PPr> {
+        None
+    }
+
+    fn pic_mk(&mut self, _node: &PicMk) -> Option<PicMk> {
+        None
+    }
+
+    fn pic_mk_lst(&mut self, _node: &PicMkLst) -> Option<PicMkLst> {
+        None
+    }
+
+    fn reset(&mut self, _node: &Reset) -> Option<Reset> {
+        None
+    }
+
+    fn rot_with_shape(&mut self, _node: &RotWithShape) -> Option<RotWithShape> {
+        None
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> Option<Scene3d> {
+        None
+    }
+
+    fn snd_data(&mut self, _node: &SndData) -> Option<SndData> {
+        None
+    }
+
+    fn sp3d(&mut self, _node: &Sp3d) -> Option<Sp3d> {
+        None
+    }
+
+    fn sp_mk(&mut self, _node: &SpMk) -> Option<SpMk> {
+        None
+    }
+
+    fn sp_mk_lst_shape_moniker_list(
+        &mut self,
+        _node: &SpMkLstShapeMonikerList,
+    ) -> Option<SpMkLstShapeMonikerList> {
+        None
+    }
+
+    fn sp_mk_lst_shape_props_moniker_list(
+        &mut self,
+        _node: &SpMkLstShapePropsMonikerList,
+    ) -> Option<SpMkLstShapePropsMonikerList> {
+        None
+    }
+
+    fn sp_pr_reset_shape_properties(
+        &mut self,
+        _node: &SpPrResetShapeProperties,
+    ) -> Option<SpPrResetShapeProperties> {
+        None
+    }
+
+    fn sp_pr_shape_properties(
+        &mut self,
+        _node: &SpPrShapeProperties,
+    ) -> Option<SpPrShapeProperties> {
+        None
+    }
+
+    fn src_rect_empty(&mut self, _node: &SrcRectEmpty) -> Option<SrcRectEmpty> {
+        None
+    }
+
+    fn src_rect_relative_rect_props(
+        &mut self,
+        _node: &SrcRectRelativeRectProps,
+    ) -> Option<SrcRectRelativeRectProps> {
+        None
+    }
+
+    fn st_cxn_connection(&mut self, _node: &StCxnConnection) -> Option<StCxnConnection> {
+        None
+    }
+
+    fn st_cxn_empty(&mut self, _node: &StCxnEmpty) -> Option<StCxnEmpty> {
+        None
+    }
+
+    fn style(&mut self, _node: &Style) -> Option<Style> {
+        None
+    }
+
+    fn svg_blip_mk_lst(&mut self, _node: &SvgBlipMkLst) -> Option<SvgBlipMkLst> {
+        None
+    }
+
+    fn tbl_mk_lst(&mut self, _node: &TblMkLst) -> Option<TblMkLst> {
+        None
+    }
+
+    fn tc_mk_lst(&mut self, _node: &TcMkLst) -> Option<TcMkLst> {
+        None
+    }
+
+    fn tr_mk_lst(&mut self, _node: &TrMkLst) -> Option<TrMkLst> {
+        None
+    }
+
+    fn tx_body_mk_lst(&mut self, _node: &TxBodyMkLst) -> Option<TxBodyMkLst> {
+        None
+    }
+
+    fn tx_body_pkg(&mut self, _node: &TxBodyPkg) -> Option<TxBodyPkg> {
+        None
+    }
+
+    fn tx_mk_lst(&mut self, _node: &TxMkLst) -> Option<TxMkLst> {
+        None
+    }
+
+    fn use_bounds(&mut self, _node: &UseBounds) -> Option<UseBounds> {
+        None
+    }
+
+    fn view_sel_lst(&mut self, _node: &ViewSelLst) -> Option<ViewSelLst> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip_fill_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillBlipFillProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip_fill_reset_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillResetBlipFillProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_body_pr(&mut self, _node: &BodyPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bounds(&mut self, _node: &Bounds, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bw_mode(&mut self, _node: &BwMode, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_cxn_sp_pr_modify_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrModifyNonVisualConnectorProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_cxn_sp_pr_reset_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrResetNonVisualConnectorProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_graphic_frame_pr(
+        &mut self,
+        _node: &CNvGraphicFramePr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrNonVisualGroupDrawingShapeProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_ink_pr(
+        &mut self,
+        _node: &CNvInkPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pic_pr_modify_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrModifyNonVisualPictureProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pic_pr_reset_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrResetNonVisualPictureProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr_modify_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrModifyNonVisualDrawingProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrNonVisualDrawingProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_sp_pr(
+        &mut self,
+        _node: &CNvSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_compress_pic_pr(
+        &mut self,
+        _node: &CompressPicPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_context_text_char_range_context(
+        &mut self,
+        _node: &ContextTextCharRangeContext,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cxn_sp_mk(
+        &mut self,
+        _node: &CxnSpMk,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_cxn_sp_mk_lst(
+        &mut self,
+        _node: &CxnSpMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dc_mk_lst(
+        &mut self,
+        _node: &DcMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_de_master_mk_lst(
+        &mut self,
+        _node: &DeMasterMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_de_mk_lst(
+        &mut self,
+        _node: &DeMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_de_pkg(&mut self, _node: &DePkg, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_de_src_mk_lst(
+        &mut self,
+        _node: &DeSrcMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_de_tgt_mk_lst(
+        &mut self,
+        _node: &DeTgtMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dg_mk_lst(
+        &mut self,
+        _node: &DgMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dpi(&mut self, _node: &Dpi, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dr_sel_lst(
+        &mut self,
+        _node: &DrSelLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_editor_sel_lst(
+        &mut self,
+        _node: &EditorSelLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect(&mut self, _node: &Effect, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_effect_ref(
+        &mut self,
+        _node: &EffectRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_end_cxn_connection(
+        &mut self,
+        _node: &EndCxnConnection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_end_cxn_empty(
+        &mut self,
+        _node: &EndCxnEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill(&mut self, _node: &Fill, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_mode(
+        &mut self,
+        _node: &FillMode,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_rect(
+        &mut self,
+        _node: &FillRect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fill_ref(
+        &mut self,
+        _node: &FillRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_font_ref(
+        &mut self,
+        _node: &FontRef,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_geom(&mut self, _node: &Geom, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame_mk(
+        &mut self,
+        _node: &GraphicFrameMk,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame_mk_lst(
+        &mut self,
+        _node: &GraphicFrameMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_parent_mk_lst(
+        &mut self,
+        _node: &GraphicParentMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grid_col_mk_lst(
+        &mut self,
+        _node: &GridColMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_command(
+        &mut self,
+        _node: &GroupCommandContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_command_items(
+        &mut self,
+        _node: &GroupCommandContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_cmd(&mut self, _node: &GrpCmd, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_mk(
+        &mut self,
+        _node: &GrpSpMk,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_mk_lst(
+        &mut self,
+        _node: &GrpSpMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_pr_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrGroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grp_sp_pr_reset_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrResetGroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_click_empty(
+        &mut self,
+        _node: &HlinkClickEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_click_hyperlink_props(
+        &mut self,
+        _node: &HlinkClickHyperlinkProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_hover_empty(
+        &mut self,
+        _node: &HlinkHoverEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_hover_hyperlink_props(
+        &mut self,
+        _node: &HlinkHoverHyperlinkProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_mk_lst(
+        &mut self,
+        _node: &HlinkMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_modify_hyperlink_props(
+        &mut self,
+        _node: &HlinkModifyHyperlinkProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hlink_reset_hyperlink_props(
+        &mut self,
+        _node: &HlinkResetHyperlinkProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_data(
+        &mut self,
+        _node: &ImgData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_link(
+        &mut self,
+        _node: &ImgLink,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_img_url(&mut self, _node: &ImgUrl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ink_mk(&mut self, _node: &InkMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ink_mk_lst(
+        &mut self,
+        _node: &InkMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lf_pr(&mut self, _node: &LfPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_line_props(
+        &mut self,
+        _node: &LineProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ln(&mut self, _node: &Ln, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ln_ref(&mut self, _node: &LnRef, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_mk_lst(
+        &mut self,
+        _node: &Model3DMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_adjust_handles(
+        &mut self,
+        _node: &NoAdjustHandles,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_change_arrowheads(
+        &mut self,
+        _node: &NoChangeArrowheads,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_change_aspect(
+        &mut self,
+        _node: &NoChangeAspect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_change_shape_type(
+        &mut self,
+        _node: &NoChangeShapeType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_edit_points(
+        &mut self,
+        _node: &NoEditPoints,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_grp(&mut self, _node: &NoGrp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_move(&mut self, _node: &NoMove, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_resize(
+        &mut self,
+        _node: &NoResize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_rot(&mut self, _node: &NoRot, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_select(
+        &mut self,
+        _node: &NoSelect,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_off(&mut self, _node: &Off, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_orig_img_data(
+        &mut self,
+        _node: &OrigImgData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_p_pr(&mut self, _node: &PPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pic_mk(&mut self, _node: &PicMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pic_mk_lst(
+        &mut self,
+        _node: &PicMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_reset(&mut self, _node: &Reset, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rot_with_shape(
+        &mut self,
+        _node: &RotWithShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scene3d(&mut self, _node: &Scene3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_snd_data(
+        &mut self,
+        _node: &SndData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp3d(&mut self, _node: &Sp3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_mk(&mut self, _node: &SpMk, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_mk_lst_shape_moniker_list(
+        &mut self,
+        _node: &SpMkLstShapeMonikerList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_mk_lst_shape_props_moniker_list(
+        &mut self,
+        _node: &SpMkLstShapePropsMonikerList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr_reset_shape_properties(
+        &mut self,
+        _node: &SpPrResetShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr_shape_properties(
+        &mut self,
+        _node: &SpPrShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_src_rect_empty(
+        &mut self,
+        _node: &SrcRectEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_src_rect_relative_rect_props(
+        &mut self,
+        _node: &SrcRectRelativeRectProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_st_cxn_connection(
+        &mut self,
+        _node: &StCxnConnection,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_st_cxn_empty(
+        &mut self,
+        _node: &StCxnEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_svg_blip_mk_lst(
+        &mut self,
+        _node: &SvgBlipMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tbl_mk_lst(
+        &mut self,
+        _node: &TblMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tc_mk_lst(
+        &mut self,
+        _node: &TcMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tr_mk_lst(
+        &mut self,
+        _node: &TrMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_body_mk_lst(
+        &mut self,
+        _node: &TxBodyMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_body_pkg(
+        &mut self,
+        _node: &TxBodyPkg,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_tx_mk_lst(
+        &mut self,
+        _node: &TxMkLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_bounds(
+        &mut self,
+        _node: &UseBounds,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_view_sel_lst(
+        &mut self,
+        _node: &ViewSelLst,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm_empty(
+        &mut self,
+        _node: &XfrmEmpty,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm_modify_transform_props(
+        &mut self,
+        _node: &XfrmModifyTransformProps,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm_transform2d(
+        &mut self,
+        _node: &XfrmTransform2D,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm_empty(&mut self, _node: &XfrmEmpty) -> Option<XfrmEmpty> {
+        None
+    }
+
+    fn xfrm_modify_transform_props(
+        &mut self,
+        _node: &XfrmModifyTransformProps,
+    ) -> Option<XfrmModifyTransformProps> {
+        None
+    }
+
+    fn xfrm_transform2d(&mut self, _node: &XfrmTransform2D) -> Option<XfrmTransform2D> {
+        None
+    }
+}
+
 /// The tag `oac:context`, schema type `CT_TextCharRangeContext` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct Context {
+pub struct ContextTextCharRangeContext {
     pub hash: Option<String>,
     pub len: Option<String>,
     pub unknown: markup::Unknown,
@@ -2324,6 +3971,504 @@ pub struct ViewSelLst {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a visitor for the `oac` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2013_main_command` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn blip_fill_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillBlipFillProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blip_fill_reset_blip_fill_properties(
+        &mut self,
+        _node: &BlipFillResetBlipFillProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn body_pr(&mut self, _node: &BodyPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bounds(&mut self, _node: &Bounds) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bw_mode(&mut self, _node: &BwMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrModifyNonVisualConnectorProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
+        &mut self,
+        _node: &CNvCxnSpPrResetNonVisualConnectorProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_graphic_frame_pr(&mut self, _node: &CNvGraphicFramePr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
+        &mut self,
+        _node: &CNvGrpSpPrNonVisualGroupDrawingShapeProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_ink_pr(&mut self, _node: &CNvInkPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pic_pr_modify_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrModifyNonVisualPictureProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pic_pr_reset_non_visual_picture_props(
+        &mut self,
+        _node: &CNvPicPrResetNonVisualPictureProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr_modify_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrModifyNonVisualDrawingProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr_non_visual_drawing_props(
+        &mut self,
+        _node: &CNvPrNonVisualDrawingProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn compress_pic_pr(&mut self, _node: &CompressPicPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn context_text_char_range_context(
+        &mut self,
+        _node: &ContextTextCharRangeContext,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cxn_sp_mk(&mut self, _node: &CxnSpMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn cxn_sp_mk_lst(&mut self, _node: &CxnSpMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dc_mk_lst(&mut self, _node: &DcMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn de_master_mk_lst(&mut self, _node: &DeMasterMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn de_mk_lst(&mut self, _node: &DeMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn de_pkg(&mut self, _node: &DePkg) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn de_src_mk_lst(&mut self, _node: &DeSrcMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn de_tgt_mk_lst(&mut self, _node: &DeTgtMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dg_mk_lst(&mut self, _node: &DgMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dpi(&mut self, _node: &Dpi) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dr_sel_lst(&mut self, _node: &DrSelLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn editor_sel_lst(&mut self, _node: &EditorSelLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect(&mut self, _node: &Effect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn effect_ref(&mut self, _node: &EffectRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn end_cxn_connection(&mut self, _node: &EndCxnConnection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn end_cxn_empty(&mut self, _node: &EndCxnEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill(&mut self, _node: &Fill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_mode(&mut self, _node: &FillMode) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_rect(&mut self, _node: &FillRect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fill_ref(&mut self, _node: &FillRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn font_ref(&mut self, _node: &FontRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn geom(&mut self, _node: &Geom) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame_mk(&mut self, _node: &GraphicFrameMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame_mk_lst(&mut self, _node: &GraphicFrameMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_parent_mk_lst(&mut self, _node: &GraphicParentMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grid_col_mk_lst(&mut self, _node: &GridColMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_command(&mut self, _node: &GroupCommandContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_cmd(&mut self, _node: &GrpCmd) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_mk(&mut self, _node: &GrpSpMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_mk_lst(&mut self, _node: &GrpSpMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_pr_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrGroupShapeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grp_sp_pr_reset_group_shape_properties(
+        &mut self,
+        _node: &GrpSpPrResetGroupShapeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_click_empty(&mut self, _node: &HlinkClickEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_click_hyperlink_props(&mut self, _node: &HlinkClickHyperlinkProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_hover_empty(&mut self, _node: &HlinkHoverEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_hover_hyperlink_props(&mut self, _node: &HlinkHoverHyperlinkProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_mk_lst(&mut self, _node: &HlinkMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_modify_hyperlink_props(
+        &mut self,
+        _node: &HlinkModifyHyperlinkProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hlink_reset_hyperlink_props(&mut self, _node: &HlinkResetHyperlinkProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_data(&mut self, _node: &ImgData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_link(&mut self, _node: &ImgLink) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn img_url(&mut self, _node: &ImgUrl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ink_mk(&mut self, _node: &InkMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ink_mk_lst(&mut self, _node: &InkMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lf_pr(&mut self, _node: &LfPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn line_props(&mut self, _node: &LineProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ln(&mut self, _node: &Ln) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ln_ref(&mut self, _node: &LnRef) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d_mk_lst(&mut self, _node: &Model3DMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_adjust_handles(&mut self, _node: &NoAdjustHandles) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_change_arrowheads(&mut self, _node: &NoChangeArrowheads) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_change_aspect(&mut self, _node: &NoChangeAspect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_change_shape_type(&mut self, _node: &NoChangeShapeType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_edit_points(&mut self, _node: &NoEditPoints) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_grp(&mut self, _node: &NoGrp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_move(&mut self, _node: &NoMove) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_resize(&mut self, _node: &NoResize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_rot(&mut self, _node: &NoRot) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_select(&mut self, _node: &NoSelect) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn off(&mut self, _node: &Off) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn orig_img_data(&mut self, _node: &OrigImgData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn p_pr(&mut self, _node: &PPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pic_mk(&mut self, _node: &PicMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pic_mk_lst(&mut self, _node: &PicMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn reset(&mut self, _node: &Reset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rot_with_shape(&mut self, _node: &RotWithShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scene3d(&mut self, _node: &Scene3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn snd_data(&mut self, _node: &SndData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp3d(&mut self, _node: &Sp3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_mk(&mut self, _node: &SpMk) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_mk_lst_shape_moniker_list(&mut self, _node: &SpMkLstShapeMonikerList) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_mk_lst_shape_props_moniker_list(
+        &mut self,
+        _node: &SpMkLstShapePropsMonikerList,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr_reset_shape_properties(
+        &mut self,
+        _node: &SpPrResetShapeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr_shape_properties(&mut self, _node: &SpPrShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn src_rect_empty(&mut self, _node: &SrcRectEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn src_rect_relative_rect_props(
+        &mut self,
+        _node: &SrcRectRelativeRectProps,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn st_cxn_connection(&mut self, _node: &StCxnConnection) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn st_cxn_empty(&mut self, _node: &StCxnEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style(&mut self, _node: &Style) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn svg_blip_mk_lst(&mut self, _node: &SvgBlipMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tbl_mk_lst(&mut self, _node: &TblMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tc_mk_lst(&mut self, _node: &TcMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tr_mk_lst(&mut self, _node: &TrMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_body_mk_lst(&mut self, _node: &TxBodyMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_body_pkg(&mut self, _node: &TxBodyPkg) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn tx_mk_lst(&mut self, _node: &TxMkLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_bounds(&mut self, _node: &UseBounds) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn view_sel_lst(&mut self, _node: &ViewSelLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm_empty(&mut self, _node: &XfrmEmpty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm_modify_transform_props(&mut self, _node: &XfrmModifyTransformProps) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm_transform2d(&mut self, _node: &XfrmTransform2D) -> markup::Descend {
+        markup::Descend::Yes
+    }
+}
+
 /// The tag `oac:xfrm`, schema type `CT_Empty` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -2638,15 +4783,15 @@ impl markup::Write for CompressPicPr {
     }
 }
 
-impl markup::Read for Context {
+impl markup::Read for ContextTextCharRangeContext {
     fn read(element: &xml::element::Element) -> Self {
-        read::context(element)
+        read::context_text_char_range_context(element)
     }
 }
 
-impl markup::Write for Context {
+impl markup::Write for ContextTextCharRangeContext {
     fn write_into(&self, writer: &mut markup::Writer<'_, '_>) {
-        let element = write::context(self, writer.scope());
+        let element = write::context_text_char_range_context(self, writer.scope());
         writer.known(element);
     }
 }

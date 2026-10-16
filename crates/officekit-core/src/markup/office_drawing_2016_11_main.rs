@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2016/11/main`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A1611: Option<NamespaceId> = Some(4);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -232,12 +236,48 @@ static PIC_ATTR_SRC_URL_SHAPE: markup::Shape = markup::Shape {
     text: false,
 };
 
+/// The hooks of a context for the `a1611` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2016_11_main` is never asked.
+pub trait Context: markup::Context {
+    fn pic_attr_src_url(&mut self, _node: &PicAttrSrcUrl) -> Option<PicAttrSrcUrl> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pic_attr_src_url(
+        &mut self,
+        _node: &PicAttrSrcUrl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `a1611:picAttrSrcUrl`, schema type `CT_PictureAttributionSourceURL` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct PicAttrSrcUrl {
     pub id: Option<String>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `a1611` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2016_11_main` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn pic_attr_src_url(&mut self, _node: &PicAttrSrcUrl) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 impl markup::Read for PicAttrSrcUrl {

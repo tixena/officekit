@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2017/model3d`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
 use crate::markup::Write as _;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_A3DANIM: Option<NamespaceId> = Some(5);
@@ -804,6 +808,556 @@ pub struct Clr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `am3d` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_drawing_2017_model3d` is never asked.
+pub trait Context: markup::Context {
+    fn ambient_light(&mut self, _node: &AmbientLight) -> Option<AmbientLight> {
+        None
+    }
+
+    fn attr_src_url(&mut self, _node: &AttrSrcUrl) -> Option<AttrSrcUrl> {
+        None
+    }
+
+    fn blip(&mut self, _node: &Blip) -> Option<Blip> {
+        None
+    }
+
+    fn camera(&mut self, _node: &Camera) -> Option<Camera> {
+        None
+    }
+
+    fn clr(&mut self, _node: &Clr) -> Option<Clr> {
+        None
+    }
+
+    fn dir_light(&mut self, _node: &DirLight) -> Option<DirLight> {
+        None
+    }
+
+    fn ext(&mut self, _node: &Ext) -> Option<Ext> {
+        None
+    }
+
+    fn ext_lst_model3d_extension_list(
+        &mut self,
+        _node: &ExtLstModel3DExtensionList,
+    ) -> Option<ExtLstModel3DExtensionList> {
+        None
+    }
+
+    fn ext_lst_office_art_extension_list(
+        &mut self,
+        _node: &ExtLstOfficeArtExtensionList,
+    ) -> Option<ExtLstOfficeArtExtensionList> {
+        None
+    }
+
+    fn illuminance(&mut self, _node: &Illuminance) -> Option<Illuminance> {
+        None
+    }
+
+    fn intensity(&mut self, _node: &Intensity) -> Option<Intensity> {
+        None
+    }
+
+    fn look_at(&mut self, _node: &LookAt) -> Option<LookAt> {
+        None
+    }
+
+    fn meter_per_model_unit(&mut self, _node: &MeterPerModelUnit) -> Option<MeterPerModelUnit> {
+        None
+    }
+
+    fn model3d(&mut self, _node: &Model3d) -> Option<Model3d> {
+        None
+    }
+
+    fn model3d_camera(&mut self, _node: &Model3DCameraContent) -> Option<Model3DCameraContent> {
+        None
+    }
+
+    fn model3d_extension(
+        &mut self,
+        _node: &Model3DExtensionContent,
+    ) -> Option<Model3DExtensionContent> {
+        None
+    }
+
+    fn model3d_light(&mut self, _node: &Model3DLightContent) -> Option<Model3DLightContent> {
+        None
+    }
+
+    fn model3d_light_items(
+        &mut self,
+        _node: &Model3DLightContent,
+    ) -> Option<Vec<Model3DLightContent>> {
+        None
+    }
+
+    fn model3d_viewport(
+        &mut self,
+        _node: &Model3DViewportContent,
+    ) -> Option<Model3DViewportContent> {
+        None
+    }
+
+    fn obj_viewport(&mut self, _node: &ObjViewport) -> Option<ObjViewport> {
+        None
+    }
+
+    fn orthographic(&mut self, _node: &Orthographic) -> Option<Orthographic> {
+        None
+    }
+
+    fn perspective(&mut self, _node: &Perspective) -> Option<Perspective> {
+        None
+    }
+
+    fn pos(&mut self, _node: &Pos) -> Option<Pos> {
+        None
+    }
+
+    fn post_trans(&mut self, _node: &PostTrans) -> Option<PostTrans> {
+        None
+    }
+
+    fn pre_trans(&mut self, _node: &PreTrans) -> Option<PreTrans> {
+        None
+    }
+
+    fn pt_light(&mut self, _node: &PtLight) -> Option<PtLight> {
+        None
+    }
+
+    fn raster(&mut self, _node: &Raster) -> Option<Raster> {
+        None
+    }
+
+    fn rot(&mut self, _node: &Rot) -> Option<Rot> {
+        None
+    }
+
+    fn scale(&mut self, _node: &Scale) -> Option<Scale> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn spot_light(&mut self, _node: &SpotLight) -> Option<SpotLight> {
+        None
+    }
+
+    fn sx(&mut self, _node: &Sx) -> Option<Sx> {
+        None
+    }
+
+    fn sy(&mut self, _node: &Sy) -> Option<Sy> {
+        None
+    }
+
+    fn sz_positive_ratio(&mut self, _node: &SzPositiveRatio) -> Option<SzPositiveRatio> {
+        None
+    }
+
+    fn sz_ratio(&mut self, _node: &SzRatio) -> Option<SzRatio> {
+        None
+    }
+
+    fn trans(&mut self, _node: &Trans) -> Option<Trans> {
+        None
+    }
+
+    fn unk_light(&mut self, _node: &UnkLight) -> Option<UnkLight> {
+        None
+    }
+
+    fn up(&mut self, _node: &Up) -> Option<Up> {
+        None
+    }
+
+    fn win_viewport(&mut self, _node: &WinViewport) -> Option<WinViewport> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ambient_light(
+        &mut self,
+        _node: &AmbientLight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_attr_src_url(
+        &mut self,
+        _node: &AttrSrcUrl,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_blip(&mut self, _node: &Blip, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_camera(&mut self, _node: &Camera, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_clr(&mut self, _node: &Clr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_dir_light(
+        &mut self,
+        _node: &DirLight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext(&mut self, _node: &Ext, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst_model3d_extension_list(
+        &mut self,
+        _node: &ExtLstModel3DExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst_office_art_extension_list(
+        &mut self,
+        _node: &ExtLstOfficeArtExtensionList,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_illuminance(
+        &mut self,
+        _node: &Illuminance,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_intensity(
+        &mut self,
+        _node: &Intensity,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_look_at(&mut self, _node: &LookAt, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_meter_per_model_unit(
+        &mut self,
+        _node: &MeterPerModelUnit,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d(&mut self, _node: &Model3d, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_camera(
+        &mut self,
+        _node: &Model3DCameraContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_extension(
+        &mut self,
+        _node: &Model3DExtensionContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_light(
+        &mut self,
+        _node: &Model3DLightContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_light_items(
+        &mut self,
+        _node: &Model3DLightContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_model3d_viewport(
+        &mut self,
+        _node: &Model3DViewportContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_obj_viewport(
+        &mut self,
+        _node: &ObjViewport,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_orthographic(
+        &mut self,
+        _node: &Orthographic,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_perspective(
+        &mut self,
+        _node: &Perspective,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pos(&mut self, _node: &Pos, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_post_trans(
+        &mut self,
+        _node: &PostTrans,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pre_trans(
+        &mut self,
+        _node: &PreTrans,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pt_light(
+        &mut self,
+        _node: &PtLight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_raster(&mut self, _node: &Raster, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_rot(&mut self, _node: &Rot, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_scale(&mut self, _node: &Scale, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_spot_light(
+        &mut self,
+        _node: &SpotLight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sx(&mut self, _node: &Sx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sy(&mut self, _node: &Sy, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sz_positive_ratio(
+        &mut self,
+        _node: &SzPositiveRatio,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sz_ratio(
+        &mut self,
+        _node: &SzRatio,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_trans(&mut self, _node: &Trans, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_unk_light(
+        &mut self,
+        _node: &UnkLight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_up(&mut self, _node: &Up, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_win_viewport(
+        &mut self,
+        _node: &WinViewport,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// The tag `am3d:dirLight`, schema type `CT_DirectionalLight` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1305,6 +1859,171 @@ pub struct Up {
     pub dy: Option<super::drawing::Coordinate>,
     pub dz: Option<super::drawing::Coordinate>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `am3d` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_drawing_2017_model3d` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn ambient_light(&mut self, _node: &AmbientLight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn attr_src_url(&mut self, _node: &AttrSrcUrl) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn blip(&mut self, _node: &Blip) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn camera(&mut self, _node: &Camera) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn clr(&mut self, _node: &Clr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn dir_light(&mut self, _node: &DirLight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext(&mut self, _node: &Ext) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst_model3d_extension_list(
+        &mut self,
+        _node: &ExtLstModel3DExtensionList,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst_office_art_extension_list(
+        &mut self,
+        _node: &ExtLstOfficeArtExtensionList,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn illuminance(&mut self, _node: &Illuminance) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn intensity(&mut self, _node: &Intensity) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn look_at(&mut self, _node: &LookAt) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn meter_per_model_unit(&mut self, _node: &MeterPerModelUnit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d(&mut self, _node: &Model3d) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d_camera(&mut self, _node: &Model3DCameraContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d_extension(&mut self, _node: &Model3DExtensionContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d_light(&mut self, _node: &Model3DLightContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn model3d_viewport(&mut self, _node: &Model3DViewportContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn obj_viewport(&mut self, _node: &ObjViewport) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn orthographic(&mut self, _node: &Orthographic) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn perspective(&mut self, _node: &Perspective) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pos(&mut self, _node: &Pos) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn post_trans(&mut self, _node: &PostTrans) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pre_trans(&mut self, _node: &PreTrans) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pt_light(&mut self, _node: &PtLight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn raster(&mut self, _node: &Raster) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn rot(&mut self, _node: &Rot) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn scale(&mut self, _node: &Scale) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn spot_light(&mut self, _node: &SpotLight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sx(&mut self, _node: &Sx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sy(&mut self, _node: &Sy) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sz_positive_ratio(&mut self, _node: &SzPositiveRatio) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sz_ratio(&mut self, _node: &SzRatio) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn trans(&mut self, _node: &Trans) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn unk_light(&mut self, _node: &UnkLight) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn up(&mut self, _node: &Up) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn win_viewport(&mut self, _node: &WinViewport) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `am3d:winViewport`, schema type `CT_WindowViewport` of SDK 3.5.1's data.

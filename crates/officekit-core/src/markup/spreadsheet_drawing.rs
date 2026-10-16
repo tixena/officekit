@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_R: Option<NamespaceId> = Some(88);
@@ -712,6 +716,668 @@ pub struct ContentPart {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `xdr` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::spreadsheet_drawing` is never asked.
+pub trait Context: markup::Context {
+    fn absolute_anchor_shape_size(
+        &mut self,
+        _node: &AbsoluteAnchorShapeSize,
+    ) -> Option<AbsoluteAnchorShapeSize> {
+        None
+    }
+
+    fn client_data(&mut self, _node: &ClientData) -> Option<ClientData> {
+        None
+    }
+
+    fn col(&mut self, _node: &Col) -> Option<Col> {
+        None
+    }
+
+    fn column_offset(&mut self, _node: &ColumnOffset) -> Option<ColumnOffset> {
+        None
+    }
+
+    fn connection_non_visual_shape_properties(
+        &mut self,
+        _node: &ConnectionNonVisualShapeProperties,
+    ) -> Option<ConnectionNonVisualShapeProperties> {
+        None
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> Option<ConnectionShape> {
+        None
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> Option<ContentPart> {
+        None
+    }
+
+    fn ending_anchor_point(&mut self, _node: &EndingAnchorPoint) -> Option<EndingAnchorPoint> {
+        None
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> Option<GraphicFrame> {
+        None
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> Option<GroupShape> {
+        None
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> Option<GroupShapeContent> {
+        None
+    }
+
+    fn group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+    ) -> Option<Vec<GroupShapeContent>> {
+        None
+    }
+
+    fn group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+    ) -> Option<GroupShapeProperties> {
+        None
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> Option<NonVisualConnectorShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> Option<NonVisualDrawingProperties> {
+        None
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> Option<NonVisualGraphicFrameDrawingProperties> {
+        None
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> Option<NonVisualGroupShapeDrawingProperties> {
+        None
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> Option<NonVisualPictureDrawingProperties> {
+        None
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> Option<NonVisualPropertiesForAConnectionShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> Option<NonVisualPropertiesForAGraphicFrame> {
+        None
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> Option<NonVisualPropertiesForAGroupShape> {
+        None
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> Option<NonVisualPropertiesForAPicture> {
+        None
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> Option<NonVisualPropertiesForAShape> {
+        None
+    }
+
+    fn object(&mut self, _node: &ObjectContent) -> Option<ObjectContent> {
+        None
+    }
+
+    fn one_cell_anchor_shape_size(
+        &mut self,
+        _node: &OneCellAnchorShapeSize,
+    ) -> Option<OneCellAnchorShapeSize> {
+        None
+    }
+
+    fn picture(&mut self, _node: &Picture) -> Option<Picture> {
+        None
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> Option<PictureFill> {
+        None
+    }
+
+    fn position(&mut self, _node: &Position) -> Option<Position> {
+        None
+    }
+
+    fn row(&mut self, _node: &Row) -> Option<Row> {
+        None
+    }
+
+    fn row_offset(&mut self, _node: &RowOffset) -> Option<RowOffset> {
+        None
+    }
+
+    fn shape(&mut self, _node: &Shape) -> Option<Shape> {
+        None
+    }
+
+    fn shape_extent(&mut self, _node: &ShapeExtent) -> Option<ShapeExtent> {
+        None
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> Option<ShapeProperties> {
+        None
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> Option<ShapeStyle> {
+        None
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> Option<ShapeTextBody> {
+        None
+    }
+
+    fn starting_anchor_point(
+        &mut self,
+        _node: &StartingAnchorPoint,
+    ) -> Option<StartingAnchorPoint> {
+        None
+    }
+
+    fn two_cell_anchor_shape_size(
+        &mut self,
+        _node: &TwoCellAnchorShapeSize,
+    ) -> Option<TwoCellAnchorShapeSize> {
+        None
+    }
+
+    fn worksheet_drawing(&mut self, _node: &WorksheetDrawing) -> Option<WorksheetDrawing> {
+        None
+    }
+
+    fn worksheet_drawing_content(
+        &mut self,
+        _node: &WorksheetDrawingContent,
+    ) -> Option<WorksheetDrawingContent> {
+        None
+    }
+
+    fn worksheet_drawing_content_items(
+        &mut self,
+        _node: &WorksheetDrawingContent,
+    ) -> Option<Vec<WorksheetDrawingContent>> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_absolute_anchor_shape_size(
+        &mut self,
+        _node: &AbsoluteAnchorShapeSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_client_data(
+        &mut self,
+        _node: &ClientData,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_col(&mut self, _node: &Col, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_column_offset(
+        &mut self,
+        _node: &ColumnOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_non_visual_shape_properties(
+        &mut self,
+        _node: &ConnectionNonVisualShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_connection_shape(
+        &mut self,
+        _node: &ConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_content_part(
+        &mut self,
+        _node: &ContentPart,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ending_anchor_point(
+        &mut self,
+        _node: &EndingAnchorPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_graphic_frame(
+        &mut self,
+        _node: &GraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape(
+        &mut self,
+        _node: &GroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_content_items(
+        &mut self,
+        _node: &GroupShapeContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_shape_properties(
+        &mut self,
+        _node: &GroupShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object(
+        &mut self,
+        _node: &ObjectContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_one_cell_anchor_shape_size(
+        &mut self,
+        _node: &OneCellAnchorShapeSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture(&mut self, _node: &Picture, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_picture_fill(
+        &mut self,
+        _node: &PictureFill,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_position(
+        &mut self,
+        _node: &Position,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row(&mut self, _node: &Row, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_offset(
+        &mut self,
+        _node: &RowOffset,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape(&mut self, _node: &Shape, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_extent(
+        &mut self,
+        _node: &ShapeExtent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_properties(
+        &mut self,
+        _node: &ShapeProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_style(
+        &mut self,
+        _node: &ShapeStyle,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text_body(
+        &mut self,
+        _node: &ShapeTextBody,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_starting_anchor_point(
+        &mut self,
+        _node: &StartingAnchorPoint,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_two_cell_anchor_shape_size(
+        &mut self,
+        _node: &TwoCellAnchorShapeSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_drawing(
+        &mut self,
+        _node: &WorksheetDrawing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_drawing_content(
+        &mut self,
+        _node: &WorksheetDrawingContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_worksheet_drawing_content_items(
+        &mut self,
+        _node: &WorksheetDrawingContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_xfrm(&mut self, _node: &Xfrm, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> Option<Xfrm> {
+        None
+    }
+}
+
 /// 20.5.2.32 to (Ending Anchor Point): the tag `xdr:to`, schema type `CT_Marker`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -1060,6 +1726,202 @@ pub struct TwoCellAnchorShapeSize {
     pub ending_anchor_point: Box<EndingAnchorPoint>,
     pub starting_anchor_point: Box<StartingAnchorPoint>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `xdr` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::spreadsheet_drawing` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn absolute_anchor_shape_size(&mut self, _node: &AbsoluteAnchorShapeSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn client_data(&mut self, _node: &ClientData) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn col(&mut self, _node: &Col) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn column_offset(&mut self, _node: &ColumnOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_non_visual_shape_properties(
+        &mut self,
+        _node: &ConnectionNonVisualShapeProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn connection_shape(&mut self, _node: &ConnectionShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn content_part(&mut self, _node: &ContentPart) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ending_anchor_point(&mut self, _node: &EndingAnchorPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn graphic_frame(&mut self, _node: &GraphicFrame) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape(&mut self, _node: &GroupShape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_content(&mut self, _node: &GroupShapeContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_shape_properties(&mut self, _node: &GroupShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_connector_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualConnectorShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_drawing_properties(
+        &mut self,
+        _node: &NonVisualDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_graphic_frame_drawing_properties(
+        &mut self,
+        _node: &NonVisualGraphicFrameDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_group_shape_drawing_properties(
+        &mut self,
+        _node: &NonVisualGroupShapeDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_picture_drawing_properties(
+        &mut self,
+        _node: &NonVisualPictureDrawingProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_connection_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAConnectionShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_graphic_frame(
+        &mut self,
+        _node: &NonVisualPropertiesForAGraphicFrame,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_group_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAGroupShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_picture(
+        &mut self,
+        _node: &NonVisualPropertiesForAPicture,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn non_visual_properties_for_a_shape(
+        &mut self,
+        _node: &NonVisualPropertiesForAShape,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object(&mut self, _node: &ObjectContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn one_cell_anchor_shape_size(&mut self, _node: &OneCellAnchorShapeSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture(&mut self, _node: &Picture) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn picture_fill(&mut self, _node: &PictureFill) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn position(&mut self, _node: &Position) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row(&mut self, _node: &Row) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_offset(&mut self, _node: &RowOffset) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape(&mut self, _node: &Shape) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_extent(&mut self, _node: &ShapeExtent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_properties(&mut self, _node: &ShapeProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_style(&mut self, _node: &ShapeStyle) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text_body(&mut self, _node: &ShapeTextBody) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn starting_anchor_point(&mut self, _node: &StartingAnchorPoint) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn two_cell_anchor_shape_size(&mut self, _node: &TwoCellAnchorShapeSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet_drawing(&mut self, _node: &WorksheetDrawing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn worksheet_drawing_content(&mut self, _node: &WorksheetDrawingContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn xfrm(&mut self, _node: &Xfrm) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 20.5.2.35 `wsDr` (Worksheet Drawing): the tag `xdr:wsDr`, schema type `CT_Drawing`.

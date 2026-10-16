@@ -216,11 +216,15 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingShape`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::NamespaceId;
+use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_W: Option<NamespaceId> = Some(97);
@@ -442,6 +446,171 @@ pub struct CNvSpPr {
     pub unknown: markup::Unknown,
 }
 
+/// The hooks of a context for the `wps` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::office_word_2010_wordprocessing_shape` is never asked.
+pub trait Context: markup::Context {
+    fn body_pr(&mut self, _node: &BodyPr) -> Option<BodyPr> {
+        None
+    }
+
+    fn c_nv_cn_pr(&mut self, _node: &CNvCnPr) -> Option<CNvCnPr> {
+        None
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> Option<CNvPr> {
+        None
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> Option<CNvSpPr> {
+        None
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> Option<ExtLst> {
+        None
+    }
+
+    fn linked_txbx(&mut self, _node: &LinkedTxbx) -> Option<LinkedTxbx> {
+        None
+    }
+
+    fn shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+    ) -> Option<ShapeNonVisualPropertiesContent> {
+        None
+    }
+
+    fn shape_text(&mut self, _node: &ShapeTextContent) -> Option<ShapeTextContent> {
+        None
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> Option<SpPr> {
+        None
+    }
+
+    fn style(&mut self, _node: &Style) -> Option<Style> {
+        None
+    }
+
+    fn txbx(&mut self, _node: &Txbx) -> Option<Txbx> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_body_pr(&mut self, _node: &BodyPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_cn_pr(
+        &mut self,
+        _node: &CNvCnPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_pr(&mut self, _node: &CNvPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_c_nv_sp_pr(
+        &mut self,
+        _node: &CNvSpPr,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_ext_lst(&mut self, _node: &ExtLst, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_linked_txbx(
+        &mut self,
+        _node: &LinkedTxbx,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shape_text(
+        &mut self,
+        _node: &ShapeTextContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sp_pr(&mut self, _node: &SpPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_style(&mut self, _node: &Style, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_txbx(&mut self, _node: &Txbx, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wsp(&mut self, _node: &Wsp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    fn wsp(&mut self, _node: &Wsp) -> Option<Wsp> {
+        None
+    }
+}
+
 /// The tag `wps:extLst`, schema type `CT_OfficeArtExtensionList` of SDK 3.5.1's data.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -514,6 +683,64 @@ pub struct Txbx {
     pub rich_text_box_content_container:
         Option<Box<super::wordprocessing::RichTextBoxContentContainer>>,
     pub unknown: markup::Unknown,
+}
+
+/// The hooks of a visitor for the `wps` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from
+/// `markup::Visitor::office_word_2010_wordprocessing_shape` is never asked.
+pub trait Visitor: markup::Visitor {
+    fn body_pr(&mut self, _node: &BodyPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_cn_pr(&mut self, _node: &CNvCnPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_pr(&mut self, _node: &CNvPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn c_nv_sp_pr(&mut self, _node: &CNvSpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn ext_lst(&mut self, _node: &ExtLst) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn linked_txbx(&mut self, _node: &LinkedTxbx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_non_visual_properties(
+        &mut self,
+        _node: &ShapeNonVisualPropertiesContent,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shape_text(&mut self, _node: &ShapeTextContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sp_pr(&mut self, _node: &SpPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn style(&mut self, _node: &Style) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn txbx(&mut self, _node: &Txbx) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wsp(&mut self, _node: &Wsp) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// The tag `wps:wsp`, schema type `CT_WordprocessingShape` of SDK 3.5.1's data.

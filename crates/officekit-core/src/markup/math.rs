@@ -216,12 +216,16 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/math`.
 
 pub mod read;
+mod traversal;
 pub mod write;
 
 use crate::markup;
+use crate::stream::transform::Written;
+use crate::stream::writer::PartWriter;
 use crate::xml;
 use crate::xml::name::{NamespaceId, OfficeVersion};
 use crate::xml::values::ValueError;
+use std::io;
 
 const NS_M: Option<NamespaceId> = Some(52);
 const NS_W: Option<NamespaceId> = Some(97);
@@ -1656,6 +1660,2036 @@ pub struct Character {
     pub val: Option<StChar>,
 }
 
+/// The hooks of a context for the `m` namespace (D12, D20, D37).
+///
+/// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
+/// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
+/// node in its place; a list hook answers `None` to leave the item to its own `transform`, or any
+/// number of items, none included, in its place; a write hook answers `Written::No` to leave the
+/// node to its tree hook, or writes in its place and answers `Written::Yes`. A context that does
+/// not return itself from `markup::Context::math` is never asked.
+pub trait Context: markup::Context {
+    fn accent(&mut self, _node: &Accent) -> Option<Accent> {
+        None
+    }
+
+    fn accent_properties(&mut self, _node: &AccentProperties) -> Option<AccentProperties> {
+        None
+    }
+
+    fn align_scripts(&mut self, _node: &AlignScripts) -> Option<AlignScripts> {
+        None
+    }
+
+    fn alignment(&mut self, _node: &Alignment) -> Option<Alignment> {
+        None
+    }
+
+    fn argument_properties(&mut self, _node: &ArgumentProperties) -> Option<ArgumentProperties> {
+        None
+    }
+
+    fn argument_size(&mut self, _node: &ArgumentSize) -> Option<ArgumentSize> {
+        None
+    }
+
+    fn array_object(&mut self, _node: &ArrayObject) -> Option<ArrayObject> {
+        None
+    }
+
+    fn array_properties(&mut self, _node: &ArrayProperties) -> Option<ArrayProperties> {
+        None
+    }
+
+    fn bar(&mut self, _node: &Bar) -> Option<Bar> {
+        None
+    }
+
+    fn bar_properties(&mut self, _node: &BarProperties) -> Option<BarProperties> {
+        None
+    }
+
+    fn border_box_object(&mut self, _node: &BorderBoxObject) -> Option<BorderBoxObject> {
+        None
+    }
+
+    fn border_box_properties(
+        &mut self,
+        _node: &BorderBoxProperties,
+    ) -> Option<BorderBoxProperties> {
+        None
+    }
+
+    fn border_box_strikethrough_bottom_left_to_top_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughBottomLeftToTopRight,
+    ) -> Option<BorderBoxStrikethroughBottomLeftToTopRight> {
+        None
+    }
+
+    fn border_box_strikethrough_horizontal(
+        &mut self,
+        _node: &BorderBoxStrikethroughHorizontal,
+    ) -> Option<BorderBoxStrikethroughHorizontal> {
+        None
+    }
+
+    fn border_box_strikethrough_top_left_to_bottom_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughTopLeftToBottomRight,
+    ) -> Option<BorderBoxStrikethroughTopLeftToBottomRight> {
+        None
+    }
+
+    fn border_box_strikethrough_vertical(
+        &mut self,
+        _node: &BorderBoxStrikethroughVertical,
+    ) -> Option<BorderBoxStrikethroughVertical> {
+        None
+    }
+
+    fn box_object(&mut self, _node: &BoxObject) -> Option<BoxObject> {
+        None
+    }
+
+    fn box_properties(&mut self, _node: &BoxProperties) -> Option<BoxProperties> {
+        None
+    }
+
+    fn r#break(&mut self, _node: &Break) -> Option<Break> {
+        None
+    }
+
+    fn break_on_binary_operators(
+        &mut self,
+        _node: &BreakOnBinaryOperators,
+    ) -> Option<BreakOnBinaryOperators> {
+        None
+    }
+
+    fn break_on_binary_subtraction(
+        &mut self,
+        _node: &BreakOnBinarySubtraction,
+    ) -> Option<BreakOnBinarySubtraction> {
+        None
+    }
+
+    fn character(&mut self, _node: &Character) -> Option<Character> {
+        None
+    }
+
+    fn control_properties(&mut self, _node: &ControlProperties) -> Option<ControlProperties> {
+        None
+    }
+
+    fn control_properties_content(
+        &mut self,
+        _node: &ControlPropertiesContent,
+    ) -> Option<ControlPropertiesContent> {
+        None
+    }
+
+    fn default_justification(
+        &mut self,
+        _node: &DefaultJustification,
+    ) -> Option<DefaultJustification> {
+        None
+    }
+
+    fn degree(&mut self, _node: &Degree) -> Option<Degree> {
+        None
+    }
+
+    fn delimiter_beginning_character(
+        &mut self,
+        _node: &DelimiterBeginningCharacter,
+    ) -> Option<DelimiterBeginningCharacter> {
+        None
+    }
+
+    fn delimiter_ending_character(
+        &mut self,
+        _node: &DelimiterEndingCharacter,
+    ) -> Option<DelimiterEndingCharacter> {
+        None
+    }
+
+    fn delimiter_object(&mut self, _node: &DelimiterObject) -> Option<DelimiterObject> {
+        None
+    }
+
+    fn delimiter_properties(&mut self, _node: &DelimiterProperties) -> Option<DelimiterProperties> {
+        None
+    }
+
+    fn delimiter_separator_character(
+        &mut self,
+        _node: &DelimiterSeparatorCharacter,
+    ) -> Option<DelimiterSeparatorCharacter> {
+        None
+    }
+
+    fn denominator(&mut self, _node: &Denominator) -> Option<Denominator> {
+        None
+    }
+
+    fn differential(&mut self, _node: &Differential) -> Option<Differential> {
+        None
+    }
+
+    fn e(&mut self, _node: &E) -> Option<E> {
+        None
+    }
+
+    fn fraction_object(&mut self, _node: &FractionObject) -> Option<FractionObject> {
+        None
+    }
+
+    fn fraction_properties(&mut self, _node: &FractionProperties) -> Option<FractionProperties> {
+        None
+    }
+
+    fn fraction_type(&mut self, _node: &FractionType) -> Option<FractionType> {
+        None
+    }
+
+    fn function_apply_object(
+        &mut self,
+        _node: &FunctionApplyObject,
+    ) -> Option<FunctionApplyObject> {
+        None
+    }
+
+    fn function_name(&mut self, _node: &FunctionName) -> Option<FunctionName> {
+        None
+    }
+
+    fn function_properties(&mut self, _node: &FunctionProperties) -> Option<FunctionProperties> {
+        None
+    }
+
+    fn group_character_object(
+        &mut self,
+        _node: &GroupCharacterObject,
+    ) -> Option<GroupCharacterObject> {
+        None
+    }
+
+    fn group_character_properties(
+        &mut self,
+        _node: &GroupCharacterProperties,
+    ) -> Option<GroupCharacterProperties> {
+        None
+    }
+
+    fn grow(&mut self, _node: &Grow) -> Option<Grow> {
+        None
+    }
+
+    fn hide_bottom_edge(&mut self, _node: &HideBottomEdge) -> Option<HideBottomEdge> {
+        None
+    }
+
+    fn hide_degree(&mut self, _node: &HideDegree) -> Option<HideDegree> {
+        None
+    }
+
+    fn hide_left_edge(&mut self, _node: &HideLeftEdge) -> Option<HideLeftEdge> {
+        None
+    }
+
+    fn hide_right_edge(&mut self, _node: &HideRightEdge) -> Option<HideRightEdge> {
+        None
+    }
+
+    fn hide_top_edge(&mut self, _node: &HideTopEdge) -> Option<HideTopEdge> {
+        None
+    }
+
+    fn integral_limit_locations(
+        &mut self,
+        _node: &IntegralLimitLocations,
+    ) -> Option<IntegralLimitLocations> {
+        None
+    }
+
+    fn inter_equation_spacing(
+        &mut self,
+        _node: &InterEquationSpacing,
+    ) -> Option<InterEquationSpacing> {
+        None
+    }
+
+    fn intra_equation_spacing(
+        &mut self,
+        _node: &IntraEquationSpacing,
+    ) -> Option<IntraEquationSpacing> {
+        None
+    }
+
+    fn justification(&mut self, _node: &Justification) -> Option<Justification> {
+        None
+    }
+
+    fn left_margin(&mut self, _node: &LeftMargin) -> Option<LeftMargin> {
+        None
+    }
+
+    fn lim_loc(&mut self, _node: &LimLoc) -> Option<LimLoc> {
+        None
+    }
+
+    fn limit(&mut self, _node: &Limit) -> Option<Limit> {
+        None
+    }
+
+    fn literal(&mut self, _node: &Literal) -> Option<Literal> {
+        None
+    }
+
+    fn lower_limit_object(&mut self, _node: &LowerLimitObject) -> Option<LowerLimitObject> {
+        None
+    }
+
+    fn lower_limit_properties(
+        &mut self,
+        _node: &LowerLimitProperties,
+    ) -> Option<LowerLimitProperties> {
+        None
+    }
+
+    fn math_font(&mut self, _node: &MathFont) -> Option<MathFont> {
+        None
+    }
+
+    fn math_properties(&mut self, _node: &MathProperties) -> Option<MathProperties> {
+        None
+    }
+
+    fn math_properties_content(
+        &mut self,
+        _node: &MathPropertiesContent,
+    ) -> Option<MathPropertiesContent> {
+        None
+    }
+
+    fn matrix_base_justification(
+        &mut self,
+        _node: &MatrixBaseJustification,
+    ) -> Option<MatrixBaseJustification> {
+        None
+    }
+
+    fn matrix_column(&mut self, _node: &MatrixColumn) -> Option<MatrixColumn> {
+        None
+    }
+
+    fn matrix_column_count(&mut self, _node: &MatrixColumnCount) -> Option<MatrixColumnCount> {
+        None
+    }
+
+    fn matrix_column_gap(&mut self, _node: &MatrixColumnGap) -> Option<MatrixColumnGap> {
+        None
+    }
+
+    fn matrix_column_gap_rule(
+        &mut self,
+        _node: &MatrixColumnGapRule,
+    ) -> Option<MatrixColumnGapRule> {
+        None
+    }
+
+    fn matrix_column_justification(
+        &mut self,
+        _node: &MatrixColumnJustification,
+    ) -> Option<MatrixColumnJustification> {
+        None
+    }
+
+    fn matrix_column_properties(
+        &mut self,
+        _node: &MatrixColumnProperties,
+    ) -> Option<MatrixColumnProperties> {
+        None
+    }
+
+    fn matrix_columns(&mut self, _node: &MatrixColumns) -> Option<MatrixColumns> {
+        None
+    }
+
+    fn matrix_object(&mut self, _node: &MatrixObject) -> Option<MatrixObject> {
+        None
+    }
+
+    fn matrix_properties(&mut self, _node: &MatrixProperties) -> Option<MatrixProperties> {
+        None
+    }
+
+    fn matrix_row(&mut self, _node: &MatrixRow) -> Option<MatrixRow> {
+        None
+    }
+
+    fn maximum_distribution(&mut self, _node: &MaximumDistribution) -> Option<MaximumDistribution> {
+        None
+    }
+
+    fn minimum_matrix_column_width(
+        &mut self,
+        _node: &MinimumMatrixColumnWidth,
+    ) -> Option<MinimumMatrixColumnWidth> {
+        None
+    }
+
+    fn nary(&mut self, _node: &Nary) -> Option<Nary> {
+        None
+    }
+
+    fn nary_lim(&mut self, _node: &NaryLim) -> Option<NaryLim> {
+        None
+    }
+
+    fn nary_pr(&mut self, _node: &NaryPr) -> Option<NaryPr> {
+        None
+    }
+
+    fn no_break(&mut self, _node: &NoBreak) -> Option<NoBreak> {
+        None
+    }
+
+    fn normal_text(&mut self, _node: &NormalText) -> Option<NormalText> {
+        None
+    }
+
+    fn numerator(&mut self, _node: &Numerator) -> Option<Numerator> {
+        None
+    }
+
+    fn object_distribution(&mut self, _node: &ObjectDistribution) -> Option<ObjectDistribution> {
+        None
+    }
+
+    fn office_math(&mut self, _node: &OfficeMath) -> Option<OfficeMath> {
+        None
+    }
+
+    fn office_math_content(&mut self, _node: &OfficeMathContent) -> Option<OfficeMathContent> {
+        None
+    }
+
+    fn office_math_content_items(
+        &mut self,
+        _node: &OfficeMathContent,
+    ) -> Option<Vec<OfficeMathContent>> {
+        None
+    }
+
+    fn office_math_paragraph(
+        &mut self,
+        _node: &OfficeMathParagraph,
+    ) -> Option<OfficeMathParagraph> {
+        None
+    }
+
+    fn office_math_paragraph_properties(
+        &mut self,
+        _node: &OfficeMathParagraphProperties,
+    ) -> Option<OfficeMathParagraphProperties> {
+        None
+    }
+
+    fn operator_emulator(&mut self, _node: &OperatorEmulator) -> Option<OperatorEmulator> {
+        None
+    }
+
+    fn phantom_object(&mut self, _node: &PhantomObject) -> Option<PhantomObject> {
+        None
+    }
+
+    fn phantom_properties(&mut self, _node: &PhantomProperties) -> Option<PhantomProperties> {
+        None
+    }
+
+    fn phantom_show(&mut self, _node: &PhantomShow) -> Option<PhantomShow> {
+        None
+    }
+
+    fn phantom_zero_ascent(&mut self, _node: &PhantomZeroAscent) -> Option<PhantomZeroAscent> {
+        None
+    }
+
+    fn phantom_zero_descent(&mut self, _node: &PhantomZeroDescent) -> Option<PhantomZeroDescent> {
+        None
+    }
+
+    fn phantom_zero_width(&mut self, _node: &PhantomZeroWidth) -> Option<PhantomZeroWidth> {
+        None
+    }
+
+    fn plc_hide(&mut self, _node: &PlcHide) -> Option<PlcHide> {
+        None
+    }
+
+    fn position(&mut self, _node: &Position) -> Option<Position> {
+        None
+    }
+
+    fn post_paragraph_spacing(
+        &mut self,
+        _node: &PostParagraphSpacing,
+    ) -> Option<PostParagraphSpacing> {
+        None
+    }
+
+    fn pre_paragraph_spacing(
+        &mut self,
+        _node: &PreParagraphSpacing,
+    ) -> Option<PreParagraphSpacing> {
+        None
+    }
+
+    fn pre_sub_superscript_object(
+        &mut self,
+        _node: &PreSubSuperscriptObject,
+    ) -> Option<PreSubSuperscriptObject> {
+        None
+    }
+
+    fn pre_sub_superscript_properties(
+        &mut self,
+        _node: &PreSubSuperscriptProperties,
+    ) -> Option<PreSubSuperscriptProperties> {
+        None
+    }
+
+    fn r_sp(&mut self, _node: &RSp) -> Option<RSp> {
+        None
+    }
+
+    fn radical_object(&mut self, _node: &RadicalObject) -> Option<RadicalObject> {
+        None
+    }
+
+    fn radical_properties(&mut self, _node: &RadicalProperties) -> Option<RadicalProperties> {
+        None
+    }
+
+    fn right_margin(&mut self, _node: &RightMargin) -> Option<RightMargin> {
+        None
+    }
+
+    fn row_spacing_rule(&mut self, _node: &RowSpacingRule) -> Option<RowSpacingRule> {
+        None
+    }
+
+    fn run(&mut self, _node: &Run) -> Option<Run> {
+        None
+    }
+
+    fn run_content(&mut self, _node: &RunContent) -> Option<RunContent> {
+        None
+    }
+
+    fn run_content_items(&mut self, _node: &RunContent) -> Option<Vec<RunContent>> {
+        None
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> Option<RunProperties> {
+        None
+    }
+
+    fn run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<RunPropertiesContent> {
+        None
+    }
+
+    fn run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+    ) -> Option<Vec<RunPropertiesContent>> {
+        None
+    }
+
+    fn script(&mut self, _node: &Script) -> Option<Script> {
+        None
+    }
+
+    fn shp(&mut self, _node: &Shp) -> Option<Shp> {
+        None
+    }
+
+    fn small_fraction(&mut self, _node: &SmallFraction) -> Option<SmallFraction> {
+        None
+    }
+
+    fn sty(&mut self, _node: &Sty) -> Option<Sty> {
+        None
+    }
+
+    fn sub(&mut self, _node: &Sub) -> Option<Sub> {
+        None
+    }
+
+    fn sub_hide(&mut self, _node: &SubHide) -> Option<SubHide> {
+        None
+    }
+
+    fn sub_superscript_object(
+        &mut self,
+        _node: &SubSuperscriptObject,
+    ) -> Option<SubSuperscriptObject> {
+        None
+    }
+
+    fn sub_superscript_properties(
+        &mut self,
+        _node: &SubSuperscriptProperties,
+    ) -> Option<SubSuperscriptProperties> {
+        None
+    }
+
+    fn subscript_object(&mut self, _node: &SubscriptObject) -> Option<SubscriptObject> {
+        None
+    }
+
+    fn subscript_properties(&mut self, _node: &SubscriptProperties) -> Option<SubscriptProperties> {
+        None
+    }
+
+    fn sup(&mut self, _node: &Sup) -> Option<Sup> {
+        None
+    }
+
+    fn sup_hide(&mut self, _node: &SupHide) -> Option<SupHide> {
+        None
+    }
+
+    fn superscript_object(&mut self, _node: &SuperscriptObject) -> Option<SuperscriptObject> {
+        None
+    }
+
+    fn superscript_properties(
+        &mut self,
+        _node: &SuperscriptProperties,
+    ) -> Option<SuperscriptProperties> {
+        None
+    }
+
+    fn text(&mut self, _node: &Text) -> Option<Text> {
+        None
+    }
+
+    fn transp(&mut self, _node: &Transp) -> Option<Transp> {
+        None
+    }
+
+    fn upper_limit_object(&mut self, _node: &UpperLimitObject) -> Option<UpperLimitObject> {
+        None
+    }
+
+    fn upper_limit_properties(
+        &mut self,
+        _node: &UpperLimitProperties,
+    ) -> Option<UpperLimitProperties> {
+        None
+    }
+
+    fn use_display_math_defaults(
+        &mut self,
+        _node: &UseDisplayMathDefaults,
+    ) -> Option<UseDisplayMathDefaults> {
+        None
+    }
+
+    fn vertical_justification(
+        &mut self,
+        _node: &VerticalJustification,
+    ) -> Option<VerticalJustification> {
+        None
+    }
+
+    fn wrap_indent(&mut self, _node: &WrapIndent) -> Option<WrapIndent> {
+        None
+    }
+
+    fn wrap_right(&mut self, _node: &WrapRight) -> Option<WrapRight> {
+        None
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent(&mut self, _node: &Accent, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_accent_properties(
+        &mut self,
+        _node: &AccentProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_align_scripts(
+        &mut self,
+        _node: &AlignScripts,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_alignment(
+        &mut self,
+        _node: &Alignment,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_argument_properties(
+        &mut self,
+        _node: &ArgumentProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_argument_size(
+        &mut self,
+        _node: &ArgumentSize,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_object(
+        &mut self,
+        _node: &ArrayObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_array_properties(
+        &mut self,
+        _node: &ArrayProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar(&mut self, _node: &Bar, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_bar_properties(
+        &mut self,
+        _node: &BarProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_object(
+        &mut self,
+        _node: &BorderBoxObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_properties(
+        &mut self,
+        _node: &BorderBoxProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_strikethrough_bottom_left_to_top_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughBottomLeftToTopRight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_strikethrough_horizontal(
+        &mut self,
+        _node: &BorderBoxStrikethroughHorizontal,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_strikethrough_top_left_to_bottom_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughTopLeftToBottomRight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_border_box_strikethrough_vertical(
+        &mut self,
+        _node: &BorderBoxStrikethroughVertical,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_box_object(
+        &mut self,
+        _node: &BoxObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_box_properties(
+        &mut self,
+        _node: &BoxProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_break(&mut self, _node: &Break, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_break_on_binary_operators(
+        &mut self,
+        _node: &BreakOnBinaryOperators,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_break_on_binary_subtraction(
+        &mut self,
+        _node: &BreakOnBinarySubtraction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_character(
+        &mut self,
+        _node: &Character,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_control_properties(
+        &mut self,
+        _node: &ControlProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_control_properties_content(
+        &mut self,
+        _node: &ControlPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_default_justification(
+        &mut self,
+        _node: &DefaultJustification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_degree(&mut self, _node: &Degree, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delimiter_beginning_character(
+        &mut self,
+        _node: &DelimiterBeginningCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delimiter_ending_character(
+        &mut self,
+        _node: &DelimiterEndingCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delimiter_object(
+        &mut self,
+        _node: &DelimiterObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delimiter_properties(
+        &mut self,
+        _node: &DelimiterProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_delimiter_separator_character(
+        &mut self,
+        _node: &DelimiterSeparatorCharacter,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_denominator(
+        &mut self,
+        _node: &Denominator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_differential(
+        &mut self,
+        _node: &Differential,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_e(&mut self, _node: &E, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fraction_object(
+        &mut self,
+        _node: &FractionObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fraction_properties(
+        &mut self,
+        _node: &FractionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_fraction_type(
+        &mut self,
+        _node: &FractionType,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_function_apply_object(
+        &mut self,
+        _node: &FunctionApplyObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_function_name(
+        &mut self,
+        _node: &FunctionName,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_function_properties(
+        &mut self,
+        _node: &FunctionProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_character_object(
+        &mut self,
+        _node: &GroupCharacterObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_group_character_properties(
+        &mut self,
+        _node: &GroupCharacterProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_grow(&mut self, _node: &Grow, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_bottom_edge(
+        &mut self,
+        _node: &HideBottomEdge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_degree(
+        &mut self,
+        _node: &HideDegree,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_left_edge(
+        &mut self,
+        _node: &HideLeftEdge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_right_edge(
+        &mut self,
+        _node: &HideRightEdge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_hide_top_edge(
+        &mut self,
+        _node: &HideTopEdge,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_integral_limit_locations(
+        &mut self,
+        _node: &IntegralLimitLocations,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_inter_equation_spacing(
+        &mut self,
+        _node: &InterEquationSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_intra_equation_spacing(
+        &mut self,
+        _node: &IntraEquationSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_justification(
+        &mut self,
+        _node: &Justification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_left_margin(
+        &mut self,
+        _node: &LeftMargin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lim_loc(&mut self, _node: &LimLoc, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_limit(&mut self, _node: &Limit, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_literal(&mut self, _node: &Literal, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lower_limit_object(
+        &mut self,
+        _node: &LowerLimitObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_lower_limit_properties(
+        &mut self,
+        _node: &LowerLimitProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_math_font(
+        &mut self,
+        _node: &MathFont,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_math_properties(
+        &mut self,
+        _node: &MathProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_math_properties_content(
+        &mut self,
+        _node: &MathPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_base_justification(
+        &mut self,
+        _node: &MatrixBaseJustification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column(
+        &mut self,
+        _node: &MatrixColumn,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column_count(
+        &mut self,
+        _node: &MatrixColumnCount,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column_gap(
+        &mut self,
+        _node: &MatrixColumnGap,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column_gap_rule(
+        &mut self,
+        _node: &MatrixColumnGapRule,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column_justification(
+        &mut self,
+        _node: &MatrixColumnJustification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_column_properties(
+        &mut self,
+        _node: &MatrixColumnProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_columns(
+        &mut self,
+        _node: &MatrixColumns,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_object(
+        &mut self,
+        _node: &MatrixObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_properties(
+        &mut self,
+        _node: &MatrixProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_matrix_row(
+        &mut self,
+        _node: &MatrixRow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_maximum_distribution(
+        &mut self,
+        _node: &MaximumDistribution,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_minimum_matrix_column_width(
+        &mut self,
+        _node: &MinimumMatrixColumnWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nary(&mut self, _node: &Nary, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nary_lim(
+        &mut self,
+        _node: &NaryLim,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_nary_pr(&mut self, _node: &NaryPr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_no_break(
+        &mut self,
+        _node: &NoBreak,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_normal_text(
+        &mut self,
+        _node: &NormalText,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_numerator(
+        &mut self,
+        _node: &Numerator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_object_distribution(
+        &mut self,
+        _node: &ObjectDistribution,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_math(
+        &mut self,
+        _node: &OfficeMath,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_math_content(
+        &mut self,
+        _node: &OfficeMathContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_math_content_items(
+        &mut self,
+        _node: &OfficeMathContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_math_paragraph(
+        &mut self,
+        _node: &OfficeMathParagraph,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_office_math_paragraph_properties(
+        &mut self,
+        _node: &OfficeMathParagraphProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_operator_emulator(
+        &mut self,
+        _node: &OperatorEmulator,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_object(
+        &mut self,
+        _node: &PhantomObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_properties(
+        &mut self,
+        _node: &PhantomProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_show(
+        &mut self,
+        _node: &PhantomShow,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_zero_ascent(
+        &mut self,
+        _node: &PhantomZeroAscent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_zero_descent(
+        &mut self,
+        _node: &PhantomZeroDescent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_phantom_zero_width(
+        &mut self,
+        _node: &PhantomZeroWidth,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_plc_hide(
+        &mut self,
+        _node: &PlcHide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_position(
+        &mut self,
+        _node: &Position,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_post_paragraph_spacing(
+        &mut self,
+        _node: &PostParagraphSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pre_paragraph_spacing(
+        &mut self,
+        _node: &PreParagraphSpacing,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pre_sub_superscript_object(
+        &mut self,
+        _node: &PreSubSuperscriptObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_pre_sub_superscript_properties(
+        &mut self,
+        _node: &PreSubSuperscriptProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_r_sp(&mut self, _node: &RSp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radical_object(
+        &mut self,
+        _node: &RadicalObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_radical_properties(
+        &mut self,
+        _node: &RadicalProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_right_margin(
+        &mut self,
+        _node: &RightMargin,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_row_spacing_rule(
+        &mut self,
+        _node: &RowSpacingRule,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run(&mut self, _node: &Run, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_content(
+        &mut self,
+        _node: &RunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_content_items(
+        &mut self,
+        _node: &RunContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties(
+        &mut self,
+        _node: &RunProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_run_properties_content_items(
+        &mut self,
+        _node: &RunPropertiesContent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_script(&mut self, _node: &Script, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_shp(&mut self, _node: &Shp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_small_fraction(
+        &mut self,
+        _node: &SmallFraction,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sty(&mut self, _node: &Sty, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sub(&mut self, _node: &Sub, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sub_hide(
+        &mut self,
+        _node: &SubHide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sub_superscript_object(
+        &mut self,
+        _node: &SubSuperscriptObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sub_superscript_properties(
+        &mut self,
+        _node: &SubSuperscriptProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subscript_object(
+        &mut self,
+        _node: &SubscriptObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_subscript_properties(
+        &mut self,
+        _node: &SubscriptProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sup(&mut self, _node: &Sup, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_sup_hide(
+        &mut self,
+        _node: &SupHide,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_superscript_object(
+        &mut self,
+        _node: &SuperscriptObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_superscript_properties(
+        &mut self,
+        _node: &SuperscriptProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_text(&mut self, _node: &Text, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_transp(&mut self, _node: &Transp, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_upper_limit_object(
+        &mut self,
+        _node: &UpperLimitObject,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_upper_limit_properties(
+        &mut self,
+        _node: &UpperLimitProperties,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_use_display_math_defaults(
+        &mut self,
+        _node: &UseDisplayMathDefaults,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_vertical_justification(
+        &mut self,
+        _node: &VerticalJustification,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wrap_indent(
+        &mut self,
+        _node: &WrapIndent,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+
+    /// # Errors
+    ///
+    /// The sink's.
+    fn write_wrap_right(
+        &mut self,
+        _node: &WrapRight,
+        _out: &mut PartWriter<'_>,
+    ) -> io::Result<Written> {
+        Ok(Written::No)
+    }
+}
+
 /// 22.1.2.23 `ctrlPr` (Control Properties): the tag `m:ctrlPr`, schema type `CT_CtrlPr`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
@@ -2835,6 +4869,556 @@ pub struct UseDisplayMathDefaults {
 pub struct VerticalJustification {
     pub unknown: markup::Unknown,
     pub val: Option<TopBottom>,
+}
+
+/// The hooks of a visitor for the `m` namespace (D12).
+///
+/// One per node kind, each answering `Descend::Yes` to walk into the node's children or
+/// `Descend::No` to skip them. A visitor that does not return itself from `markup::Visitor::math`
+/// is never asked.
+pub trait Visitor: markup::Visitor {
+    fn accent(&mut self, _node: &Accent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn accent_properties(&mut self, _node: &AccentProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn align_scripts(&mut self, _node: &AlignScripts) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn alignment(&mut self, _node: &Alignment) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn argument_properties(&mut self, _node: &ArgumentProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn argument_size(&mut self, _node: &ArgumentSize) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn array_object(&mut self, _node: &ArrayObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn array_properties(&mut self, _node: &ArrayProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar(&mut self, _node: &Bar) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn bar_properties(&mut self, _node: &BarProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_object(&mut self, _node: &BorderBoxObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_properties(&mut self, _node: &BorderBoxProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_strikethrough_bottom_left_to_top_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughBottomLeftToTopRight,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_strikethrough_horizontal(
+        &mut self,
+        _node: &BorderBoxStrikethroughHorizontal,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_strikethrough_top_left_to_bottom_right(
+        &mut self,
+        _node: &BorderBoxStrikethroughTopLeftToBottomRight,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn border_box_strikethrough_vertical(
+        &mut self,
+        _node: &BorderBoxStrikethroughVertical,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn box_object(&mut self, _node: &BoxObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn box_properties(&mut self, _node: &BoxProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r#break(&mut self, _node: &Break) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn break_on_binary_operators(&mut self, _node: &BreakOnBinaryOperators) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn break_on_binary_subtraction(&mut self, _node: &BreakOnBinarySubtraction) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn character(&mut self, _node: &Character) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn control_properties(&mut self, _node: &ControlProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn control_properties_content(&mut self, _node: &ControlPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn default_justification(&mut self, _node: &DefaultJustification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn degree(&mut self, _node: &Degree) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delimiter_beginning_character(
+        &mut self,
+        _node: &DelimiterBeginningCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delimiter_ending_character(&mut self, _node: &DelimiterEndingCharacter) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delimiter_object(&mut self, _node: &DelimiterObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delimiter_properties(&mut self, _node: &DelimiterProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn delimiter_separator_character(
+        &mut self,
+        _node: &DelimiterSeparatorCharacter,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn denominator(&mut self, _node: &Denominator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn differential(&mut self, _node: &Differential) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn e(&mut self, _node: &E) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fraction_object(&mut self, _node: &FractionObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fraction_properties(&mut self, _node: &FractionProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn fraction_type(&mut self, _node: &FractionType) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn function_apply_object(&mut self, _node: &FunctionApplyObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn function_name(&mut self, _node: &FunctionName) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn function_properties(&mut self, _node: &FunctionProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_character_object(&mut self, _node: &GroupCharacterObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn group_character_properties(&mut self, _node: &GroupCharacterProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn grow(&mut self, _node: &Grow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_bottom_edge(&mut self, _node: &HideBottomEdge) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_degree(&mut self, _node: &HideDegree) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_left_edge(&mut self, _node: &HideLeftEdge) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_right_edge(&mut self, _node: &HideRightEdge) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn hide_top_edge(&mut self, _node: &HideTopEdge) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn integral_limit_locations(&mut self, _node: &IntegralLimitLocations) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn inter_equation_spacing(&mut self, _node: &InterEquationSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn intra_equation_spacing(&mut self, _node: &IntraEquationSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn justification(&mut self, _node: &Justification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn left_margin(&mut self, _node: &LeftMargin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lim_loc(&mut self, _node: &LimLoc) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn limit(&mut self, _node: &Limit) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn literal(&mut self, _node: &Literal) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lower_limit_object(&mut self, _node: &LowerLimitObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn lower_limit_properties(&mut self, _node: &LowerLimitProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn math_font(&mut self, _node: &MathFont) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn math_properties(&mut self, _node: &MathProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn math_properties_content(&mut self, _node: &MathPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_base_justification(&mut self, _node: &MatrixBaseJustification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column(&mut self, _node: &MatrixColumn) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column_count(&mut self, _node: &MatrixColumnCount) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column_gap(&mut self, _node: &MatrixColumnGap) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column_gap_rule(&mut self, _node: &MatrixColumnGapRule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column_justification(
+        &mut self,
+        _node: &MatrixColumnJustification,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_column_properties(&mut self, _node: &MatrixColumnProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_columns(&mut self, _node: &MatrixColumns) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_object(&mut self, _node: &MatrixObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_properties(&mut self, _node: &MatrixProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn matrix_row(&mut self, _node: &MatrixRow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn maximum_distribution(&mut self, _node: &MaximumDistribution) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn minimum_matrix_column_width(&mut self, _node: &MinimumMatrixColumnWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nary(&mut self, _node: &Nary) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nary_lim(&mut self, _node: &NaryLim) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn nary_pr(&mut self, _node: &NaryPr) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn no_break(&mut self, _node: &NoBreak) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn normal_text(&mut self, _node: &NormalText) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn numerator(&mut self, _node: &Numerator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn object_distribution(&mut self, _node: &ObjectDistribution) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_math(&mut self, _node: &OfficeMath) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_math_content(&mut self, _node: &OfficeMathContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_math_paragraph(&mut self, _node: &OfficeMathParagraph) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn office_math_paragraph_properties(
+        &mut self,
+        _node: &OfficeMathParagraphProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn operator_emulator(&mut self, _node: &OperatorEmulator) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_object(&mut self, _node: &PhantomObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_properties(&mut self, _node: &PhantomProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_show(&mut self, _node: &PhantomShow) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_zero_ascent(&mut self, _node: &PhantomZeroAscent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_zero_descent(&mut self, _node: &PhantomZeroDescent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn phantom_zero_width(&mut self, _node: &PhantomZeroWidth) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn plc_hide(&mut self, _node: &PlcHide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn position(&mut self, _node: &Position) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn post_paragraph_spacing(&mut self, _node: &PostParagraphSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pre_paragraph_spacing(&mut self, _node: &PreParagraphSpacing) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pre_sub_superscript_object(&mut self, _node: &PreSubSuperscriptObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn pre_sub_superscript_properties(
+        &mut self,
+        _node: &PreSubSuperscriptProperties,
+    ) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn r_sp(&mut self, _node: &RSp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radical_object(&mut self, _node: &RadicalObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn radical_properties(&mut self, _node: &RadicalProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn right_margin(&mut self, _node: &RightMargin) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn row_spacing_rule(&mut self, _node: &RowSpacingRule) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run(&mut self, _node: &Run) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_content(&mut self, _node: &RunContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties(&mut self, _node: &RunProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn run_properties_content(&mut self, _node: &RunPropertiesContent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn script(&mut self, _node: &Script) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn shp(&mut self, _node: &Shp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn small_fraction(&mut self, _node: &SmallFraction) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sty(&mut self, _node: &Sty) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sub(&mut self, _node: &Sub) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sub_hide(&mut self, _node: &SubHide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sub_superscript_object(&mut self, _node: &SubSuperscriptObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sub_superscript_properties(&mut self, _node: &SubSuperscriptProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subscript_object(&mut self, _node: &SubscriptObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn subscript_properties(&mut self, _node: &SubscriptProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sup(&mut self, _node: &Sup) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn sup_hide(&mut self, _node: &SupHide) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn superscript_object(&mut self, _node: &SuperscriptObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn superscript_properties(&mut self, _node: &SuperscriptProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn text(&mut self, _node: &Text) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn transp(&mut self, _node: &Transp) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn upper_limit_object(&mut self, _node: &UpperLimitObject) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn upper_limit_properties(&mut self, _node: &UpperLimitProperties) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn use_display_math_defaults(&mut self, _node: &UseDisplayMathDefaults) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn vertical_justification(&mut self, _node: &VerticalJustification) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wrap_indent(&mut self, _node: &WrapIndent) -> markup::Descend {
+        markup::Descend::Yes
+    }
+
+    fn wrap_right(&mut self, _node: &WrapRight) -> markup::Descend {
+        markup::Descend::Yes
+    }
 }
 
 /// 22.1.2.120 `wrapIndent` (Wrap Indent): the tag `m:wrapIndent`, schema type `CT_TwipsMeasure`.
