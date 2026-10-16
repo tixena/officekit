@@ -7,7 +7,6 @@
 mod render;
 
 use alloc::collections::{BTreeMap, BTreeSet};
-use core::fmt::{self, Write as _};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
@@ -1535,16 +1534,14 @@ where
         &transitional,
         &compare::transitional_only(&transitional, &strict),
     );
-    let simple_types = simple_types(
-        &system
-            .read_to_string(simple_types_path)
-            .with_context(|| format!("cannot read {}", simple_types_path.display()))?,
-    )?;
-    let part_roots = part_roots(
-        &system
-            .read_to_string(part_roots_path)
-            .with_context(|| format!("cannot read {}", part_roots_path.display()))?,
-    )?;
+    let simple_types_text = system
+        .read_to_string(simple_types_path)
+        .with_context(|| format!("cannot read {}", simple_types_path.display()))?;
+    let part_roots_text = system
+        .read_to_string(part_roots_path)
+        .with_context(|| format!("cannot read {}", part_roots_path.display()))?;
+    let simple_types = simple_types(&simple_types_text)?;
+    let part_roots = part_roots(&part_roots_text)?;
     let tables = convert(&data, &simple_types, &part_roots, &marks)?;
 
     let mut read: Vec<PathBuf> = inputs.strict_schemas.clone();
@@ -1554,12 +1551,15 @@ where
     read.push(inputs.sdk_data.join("typed").join("namespaces.json"));
     read.extend(json_files(system, &inputs.sdk_data.join("schemas"))?);
     read.extend(json_files(system, &inputs.sdk_data.join("parts"))?);
-    // A committed table has no line in SHA256SUMS: the header names it by its path.
-    let mut header = namespaces::header(inputs.checksums(), "", &read)?;
-    let _: fmt::Result = writeln!(header, "//   {}", part_roots_path.display());
-    for line in inputs.tools().lines() {
-        let _: fmt::Result = writeln!(header, "// {line}");
-    }
+    let header = namespaces::header(
+        inputs.checksums(),
+        inputs.tools(),
+        &read,
+        &[
+            (part_roots_path, part_roots_text.as_bytes()),
+            (simple_types_path, simple_types_text.as_bytes()),
+        ],
+    )?;
     let prefixes: Vec<&str> = namespace_rows
         .iter()
         .map(|row| row.prefix.as_str())

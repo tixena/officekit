@@ -34,3 +34,6 @@ quick-xml.workspace = true
 
 # Reads the hand-maintained tables of simple types and part roots.
 toml = { version = "1", default-features = false, features = ["parse", "serde", "std"] }
+
+# SHA-256 of the committed tables, for the header of every generated file.
+sha2 = "0.10"
