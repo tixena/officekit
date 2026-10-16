@@ -1,5 +1,6 @@
 //! The `.docx` file type, and hand-written operations over the generated `WordprocessingML` types.
 
+mod header_footer;
 pub mod table;
 #[cfg(test)]
 mod tests;
@@ -10,7 +11,7 @@ use os_shim::System;
 
 use crate::error::PackageError;
 use crate::file;
-use crate::markup::wordprocessing::{Document, Header};
+use crate::markup::wordprocessing::{Document, Footer, Header, HeaderOrFooterTypeMember};
 use crate::new_parts;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
@@ -34,6 +35,57 @@ pub struct Docx {
 }
 
 impl Docx {
+    /// Give section `section` a footer of type `kind`, holding `content`: a new footer part,
+    /// referenced from the section's properties. A footer of the same type already there is
+    /// replaced, and its part removed once no section references it. An even-page footer turns on
+    /// `w:evenAndOddHeaders` in the settings. Sections count from 0; the last is the body's own.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] for a footer with no block or a section the document does not have,
+    /// and the errors of the package operations.
+    pub fn add_footer(
+        &mut self,
+        section: usize,
+        kind: HeaderOrFooterTypeMember,
+        content: &Footer,
+    ) -> Result<PartName, PackageError> {
+        header_footer::add(
+            self,
+            section,
+            kind,
+            header_footer::Which::Footer,
+            content,
+            content.content.len(),
+        )
+    }
+
+    /// Give section `section` a header of type `kind`, holding `content`: a new header part,
+    /// referenced from the section's properties. A header of the same type already there is
+    /// replaced, and its part removed once no section references it. A first-page header turns on
+    /// `w:titlePg` in the section, an even-page one `w:evenAndOddHeaders` in the settings.
+    /// Sections count from 0; the last is the body's own.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] for a header with no block or a section the document does not have,
+    /// and the errors of the package operations.
+    pub fn add_header(
+        &mut self,
+        section: usize,
+        kind: HeaderOrFooterTypeMember,
+        content: &Header,
+    ) -> Result<PartName, PackageError> {
+        header_footer::add(
+            self,
+            section,
+            kind,
+            header_footer::Which::Header,
+            content,
+            content.content.len(),
+        )
+    }
+
     /// The class the file was read in, the class every store through it writes.
     #[must_use]
     pub const fn conformance_class(&self) -> ConformanceClass {
@@ -184,6 +236,38 @@ impl Docx {
     /// The package, to change.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
+    }
+
+    /// Remove section `section`'s footer of type `kind`; its part goes once no section references
+    /// it. `w:titlePg` and `w:evenAndOddHeaders` stay as they are. Returns the removed part, if
+    /// one was.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] for a section the document does not have, and the errors of the
+    /// package operations.
+    pub fn remove_footer(
+        &mut self,
+        section: usize,
+        kind: HeaderOrFooterTypeMember,
+    ) -> Result<Option<PartName>, PackageError> {
+        header_footer::remove(self, section, kind, header_footer::Which::Footer)
+    }
+
+    /// Remove section `section`'s header of type `kind`; its part goes once no section references
+    /// it. `w:titlePg` and `w:evenAndOddHeaders` stay as they are. Returns the removed part, if
+    /// one was.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] for a section the document does not have, and the errors of the
+    /// package operations.
+    pub fn remove_header(
+        &mut self,
+        section: usize,
+        kind: HeaderOrFooterTypeMember,
+    ) -> Result<Option<PartName>, PackageError> {
+        header_footer::remove(self, section, kind, header_footer::Which::Header)
     }
 
     /// Write the file to `path` in the Strict class; nothing is written when it fails.
