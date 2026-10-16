@@ -7,7 +7,8 @@
 //! Subcommands:
 //!
 //! - `generate-schema` -- regenerate the generated modules of `officekit-core`
-//!   from the inputs under `inputs/`. Writes the namespace table so far.
+//!   from the inputs under `inputs/`. Writes the namespace table and the
+//!   validation tables so far.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 
@@ -18,7 +19,7 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::namespaces;
+use xtask::generate_schema::emit::{namespaces, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 
@@ -114,14 +115,22 @@ fn main() -> Result<()> {
             let system = RealSystem::new();
             let inputs = Inputs::open(&system, Path::new("inputs"))?;
             let summary = namespaces::emit(&system, &inputs, Path::new(namespaces::TABLE_PATH))?;
+            let mut out = stdout().lock();
             writeln!(
-                stdout().lock(),
+                out,
                 "wrote {}: {} namespaces, {} with a Strict URI, {} dated Office 2010 or later",
                 namespaces::TABLE_PATH,
                 summary.rows,
                 summary.strict_uris,
                 summary.introduced,
             )?;
+            let tables = validation::emit(
+                &system,
+                &inputs,
+                Path::new(validation::SIMPLE_TYPES_PATH),
+                Path::new(validation::GENERATED_PATH),
+            )?;
+            validation_summary(&mut out, &tables)?;
             Ok(())
         }
         Commands::SchemaCounts => schema_counts(&mut stdout().lock()),
@@ -162,6 +171,39 @@ fn schema_counts(out: &mut dyn Write) -> Result<()> {
     }
     transitional_counts(out, &transitional)?;
     comparison(out, &transitional, &strict)
+}
+
+/// What `generate-schema` wrote of the validation tables, and the comparison
+/// items no row of the data carries.
+fn validation_summary(out: &mut dyn Write, summary: &validation::Summary) -> Result<()> {
+    writeln!(
+        out,
+        "wrote {}: {} types, {} attribute rows, {} checks, {} content models, {} patterns; \
+         {} part rules with {} child entries, {} required, {} allowed once",
+        validation::GENERATED_PATH,
+        summary.types,
+        summary.attribute_rows,
+        summary.checks,
+        summary.content_models,
+        summary.patterns,
+        summary.parts,
+        summary.part_children,
+        summary.part_required,
+        summary.part_once,
+    )?;
+    writeln!(
+        out,
+        "  Transitional-only marks: {} children, {} attributes, {} enumeration values; \
+         comparison items no row carries: {}",
+        summary.marked_children,
+        summary.marked_attributes,
+        summary.marked_values,
+        summary.unmatched.len(),
+    )?;
+    for item in &summary.unmatched {
+        writeln!(out, "    {item}")?;
+    }
+    Ok(())
 }
 
 /// What the Transitional set holds: its declarations, tags, wildcards, and two types.

@@ -31,3 +31,6 @@ serde_json.workspace = true
 
 # Reads the XSD files the schema model is built from.
 quick-xml.workspace = true
+
+# Reads the hand-maintained table of simple types.
+toml = { version = "1", default-features = false, features = ["parse", "serde", "std"] }

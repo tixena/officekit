@@ -71,6 +71,8 @@ pub struct DataPart {
     pub relationship_type: Option<String>,
     /// The root element's type, `w:CT_Document`.
     pub root: Option<String>,
+    /// The root element's local name, `document`.
+    pub root_element: Option<String>,
 }
 
 /// A content model: a composite of `items`, an `Any`, or an element when `kind` is `None`.
@@ -95,6 +97,8 @@ pub struct DataParticle {
 #[non_exhaustive]
 pub struct DataType {
     pub attributes: Vec<DataAttribute>,
+    /// The element types of `Children`, the children the SDK declares, `w:CT_TblWidth/w:top`.
+    pub children: Vec<String>,
     pub is_derived: bool,
     pub is_leaf_text: bool,
     pub name: String,
@@ -337,6 +341,10 @@ fn attribute(entry: &Value) -> Result<DataAttribute> {
     })
 }
 
+fn child(entry: &Value) -> Result<String> {
+    required(entry, "Name")
+}
+
 fn child_part(entry: &Value) -> Result<DataChildPart> {
     let kind = match (
         flag(entry, "IsDataPartReference")?,
@@ -374,6 +382,7 @@ fn collect_elements<'data>(
 fn data_type(entry: &Value) -> Result<DataType> {
     Ok(DataType {
         attributes: list(entry, "Attributes", attribute)?,
+        children: list(entry, "Children", child)?,
         is_derived: flag(entry, "IsDerived")?,
         is_leaf_text: flag(entry, "IsLeafText")?,
         name: required(entry, "Name")?,
@@ -529,6 +538,7 @@ fn part(entry: &Value) -> Result<DataPart> {
         name: required(entry, "Name")?,
         relationship_type: text(entry, "RelationshipType")?,
         root: text(entry, "Root")?,
+        root_element: text(entry, "RootElement")?,
     })
 }
 
