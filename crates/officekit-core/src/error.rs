@@ -1,18 +1,65 @@
 //! Failures raised by the packaging layer.
 
+use core::convert::Infallible;
 use std::io;
 
-/// Failure while opening, reading, or writing a package.
+use crate::packaging::part_name::PartName;
+use crate::xml::conformance::ConformanceClass;
+use crate::xml::element::XmlError;
+
+/// Why an image part could not be read. No value exists yet: the image
+/// module gives it its cases.
+#[derive(Debug, thiserror::Error)]
+#[error(transparent)]
+pub struct ImageError(Infallible);
+
+/// Failure while opening, reading, editing, or writing a package.
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum PackageError {
-    /// The container is not a zip archive, or the archive is corrupt.
-    #[error("invalid zip container: {0}")]
-    Container(String),
+    /// The file's conformance class has its Cargo feature off (D21).
+    #[error("the {0:?} conformance class is not enabled in this build")]
+    ClassNotEnabled(ConformanceClass),
 
-    /// An input or output stream failed.
+    /// A part's content type is not the one the operation needs.
+    #[error("the part {part} has the content type {}, not {expected}", or_none(.found.as_deref()))]
+    ContentType {
+        expected: &'static str,
+        found: Option<String>,
+        part: PartName,
+    },
+
+    /// `add_relationship` under an id the source part already uses.
+    #[error("{} already has a relationship with the id {id}", source_label(.part.as_ref()))]
+    DuplicateRelationship {
+        id: String,
+        /// The source part, `None` for the package itself.
+        part: Option<PartName>,
+    },
+
+    /// An image part could not be read.
+    #[error(transparent)]
+    Image(ImageError),
+
+    /// An input or output stream failed, the zip archive included.
     #[error(transparent)]
     Io(#[from] io::Error),
+
+    /// The package has no part of this name.
+    #[error("the package has no part {0}")]
+    MissingPart(PartName),
+
+    /// `remove_relationship` of an id the source part does not have.
+    #[error("{} has no relationship with the id {id}", source_label(.part.as_ref()))]
+    MissingRelationship {
+        id: String,
+        /// The source part, `None` for the package itself.
+        part: Option<PartName>,
+    },
+
+    /// A part's bytes are not a `.docx`, `.xlsx`, or `.pptx` package.
+    #[error("the part {part} does not hold a package: {reason}")]
+    NotAPackage { part: PartName, reason: String },
 
     /// A name breaks the part-name rules of ECMA-376 Part 2.
     #[error("invalid part name '{name}': {reason}")]
@@ -22,4 +69,26 @@ pub enum PackageError {
         /// The rule it breaks.
         reason: &'static str,
     },
+
+    /// A part's tree does not hold what the reader expects of it.
+    #[error("cannot read the part {part}: {reason}")]
+    Read { part: PartName, reason: String },
+
+    /// A part is not well-formed XML, or its markup compatibility could not be
+    /// processed.
+    #[error("the part {part}: {error}")]
+    Xml { error: XmlError, part: PartName },
+}
+
+/// A relationship's source as a message names it.
+fn source_label(part: Option<&PartName>) -> String {
+    part.map_or_else(
+        || "the package".to_owned(),
+        |name| format!("the part {name}"),
+    )
+}
+
+/// An optional content type as a message names it.
+fn or_none(content_type: Option<&str>) -> &str {
+    content_type.unwrap_or("none")
 }

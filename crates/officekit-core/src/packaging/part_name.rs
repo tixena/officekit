@@ -1,6 +1,7 @@
 //! Part names: the `/word/document.xml` style identifiers of OPC parts.
 
 use core::fmt;
+use std::path::Path;
 
 use crate::error::PackageError;
 
@@ -21,6 +22,25 @@ impl PartName {
     #[must_use]
     pub fn as_str(&self) -> &str {
         &self.name
+    }
+
+    /// The folder holding the part: `/word` for `/word/document.xml`, the
+    /// empty string for `/a.xml`.
+    #[must_use]
+    pub fn directory(&self) -> &str {
+        self.name
+            .rsplit_once('/')
+            .map_or("", |(directory, _)| directory)
+    }
+
+    /// The last segment's extension, ASCII-lowercased: `png` for
+    /// `/word/media/image1.PNG`, the empty string when the segment has no `.`.
+    #[must_use]
+    pub fn extension(&self) -> String {
+        self.name
+            .rsplit_once('/')
+            .and_then(|(_, file)| file.rsplit_once('.'))
+            .map_or_else(String::new, |(_, extension)| extension.to_ascii_lowercase())
     }
 
     /// The ASCII-lowercased form: the key a package files this name under.
@@ -55,6 +75,19 @@ impl PartName {
         Ok(Self {
             name: name.to_owned(),
         })
+    }
+
+    /// The part's file in a package's memory filesystem.
+    pub(crate) fn path(&self) -> &Path {
+        Path::new(&self.name)
+    }
+
+    /// The name of this part's relationship part:
+    /// `/word/_rels/document.xml.rels` for `/word/document.xml`.
+    #[must_use]
+    pub fn relationships_part(&self) -> String {
+        let (directory, file) = self.name.rsplit_once('/').unwrap_or(("", &self.name));
+        format!("{directory}/_rels/{file}.rels")
     }
 
     /// The name as a zip entry: the leading `/` dropped.

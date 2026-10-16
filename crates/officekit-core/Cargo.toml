@@ -17,11 +17,9 @@ transitional = []
 strict = []
 
 [dependencies]
-# System abstraction (filesystem, env, temp dirs)
-os-shim.workspace = true
-
-# Zip container underneath every OPC package
-zip.workspace = true
+# System abstraction (filesystem, env, temp dirs); its zip feature moves a
+# package between an archive and an in-memory filesystem
+os-shim = { workspace = true, features = ["zip"] }
 
 # Reads and writes the XML of every part
 quick-xml.workspace = true
@@ -36,5 +34,5 @@ regex = "1"
 # The round-trip example takes its folder from the command line
 clap.workspace = true
 
-# The round-trip example unzips each sample file into a MemorySystem
-os-shim = { workspace = true, features = ["zip"] }
+# Tests build archives whose entries carry data descriptors
+zip.workspace = true

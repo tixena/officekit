@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use super::PartName;
 use crate::error::PackageError;
 
@@ -86,4 +88,49 @@ fn comparisons_are_exact_and_folding_lowercases_ascii() {
     assert_ne!(lower, upper);
     assert_eq!(upper.folded(), "/word/document.xml");
     assert_eq!(lower.folded(), upper.folded());
+}
+
+#[test]
+fn directory_is_the_folder_holding_the_part() {
+    assert_eq!(
+        PartName::new("/word/document.xml").unwrap().directory(),
+        "/word"
+    );
+    assert_eq!(
+        PartName::new("/word/charts/chart1.xml")
+            .unwrap()
+            .directory(),
+        "/word/charts"
+    );
+    assert_eq!(PartName::new("/a.xml").unwrap().directory(), "");
+}
+
+#[test]
+fn extension_is_the_last_segments_lowercased() {
+    assert_eq!(
+        PartName::new("/word/media/image1.PNG").unwrap().extension(),
+        "png"
+    );
+    assert_eq!(PartName::new("/_rels/.rels").unwrap().extension(), "rels");
+    assert_eq!(PartName::new("/folder.d/data").unwrap().extension(), "");
+}
+
+#[test]
+fn relationships_part_sits_in_the_folders_rels_folder() {
+    assert_eq!(
+        PartName::new("/word/document.xml")
+            .unwrap()
+            .relationships_part(),
+        "/word/_rels/document.xml.rels"
+    );
+    assert_eq!(
+        PartName::new("/a.xml").unwrap().relationships_part(),
+        "/_rels/a.xml.rels"
+    );
+}
+
+#[test]
+fn path_is_the_name_as_a_path() {
+    let part = PartName::new("/word/document.xml").unwrap();
+    assert_eq!(part.path(), Path::new("/word/document.xml"));
 }

@@ -20,15 +20,14 @@ fn run(args: &[&str]) -> Output {
 }
 
 fn write_sample(dir: &Path) -> PathBuf {
-    let mut package = Package::default();
-    package.set_part(
-        PartName::new("/[Content_Types].xml").unwrap(),
-        b"<Types/>".to_vec(),
-    );
-    package.set_part(
-        PartName::new("/word/document.xml").unwrap(),
-        b"<w:document/>".to_vec(),
-    );
+    let mut package = Package::new();
+    package
+        .set_part_bytes(
+            &PartName::new("/word/document.xml").unwrap(),
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+            b"<w:document/>",
+        )
+        .unwrap();
     let path = dir.join("sample.docx");
     package.save(&RealSystem::new(), &path).unwrap();
     path

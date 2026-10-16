@@ -24,10 +24,10 @@ serde_json = "1.0"
 # no crate in this workspace calls std::fs or std::env directly.
 os-shim = { git = "https://github.com/eburgos/os-shim.git", rev = "0afaa75" }
 
-# OPC packages are zip archives. Parsed from an in-memory buffer so the
-# central directory is available: Office files in the wild use data
-# descriptors, which a streaming reader cannot handle. Feature selection
-# matches os-shim's so both resolve to one build of the crate.
+# Test-only: builds zip archives whose entries carry data descriptors, as
+# files from streaming exporters do. Packages themselves go through os-shim's
+# zip feature. Feature selection matches os-shim's so both resolve to one
+# build of the crate.
 zip = { version = "8", default-features = false, features = ["deflate-flate2-zlib-rs"] }
 
 # Reads and writes the XML of every part (D29).
