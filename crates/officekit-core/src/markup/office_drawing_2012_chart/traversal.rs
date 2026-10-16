@@ -231,7 +231,7 @@ impl markup::Transform for super::AutoCat {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -303,7 +303,7 @@ impl markup::Transform for super::Bubble3D {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -370,9 +370,11 @@ impl markup::Transform for super::Cat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -440,15 +442,23 @@ impl markup::Transform for super::CategoryFilterException {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sp_pr, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.explosion, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.invert_if_negative, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.bubble3d, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.marker, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.d_lbl, ctx, &mut rebase);
         Self {
-            bubble3d: markup::transform_child(&self.bubble3d, ctx),
-            d_lbl: markup::transform_child(&self.d_lbl, ctx),
-            explosion: markup::transform_child(&self.explosion, ctx),
-            invert_if_negative: markup::transform_child(&self.invert_if_negative, ctx),
-            marker: markup::transform_child(&self.marker, ctx),
-            sp_pr: markup::transform_child(&self.sp_pr, ctx),
-            sqref: markup::transform_child(&self.sqref, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            bubble3d: child_5,
+            d_lbl: child_7,
+            explosion: child_3,
+            invert_if_negative: child_4,
+            marker: child_6,
+            sp_pr: child_2,
+            sqref: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -533,12 +543,11 @@ impl markup::Transform for super::CategoryFilterExceptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.category_filter_exception, ctx, &mut rebase);
         Self {
-            category_filter_exception: markup::transform_child(
-                &self.category_filter_exception,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            category_filter_exception: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -607,11 +616,15 @@ impl markup::Transform for super::DLbl {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_2 = markup::transform_items(&self.content, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            content: markup::transform_items(&self.content, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_3,
+            content: child_2,
+            index: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -683,10 +696,13 @@ impl markup::Transform for super::DatalabelsRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.f, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dlbl_range_cache, ctx, &mut rebase);
         Self {
-            dlbl_range_cache: markup::transform_child(&self.dlbl_range_cache, ctx),
-            f: markup::transform_child(&self.f, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dlbl_range_cache: child_2,
+            f: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -760,11 +776,15 @@ impl markup::Transform for super::DlblFTEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.txfld_guid, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.f, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.dlbl_field_table_cache, ctx, &mut rebase);
         Self {
-            dlbl_field_table_cache: markup::transform_child(&self.dlbl_field_table_cache, ctx),
-            f: markup::transform_child(&self.f, ctx),
-            txfld_guid: markup::transform_child(&self.txfld_guid, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dlbl_field_table_cache: child_3,
+            f: child_2,
+            txfld_guid: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -840,9 +860,11 @@ impl markup::Transform for super::DlblFieldTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dlbl_ft_entry, ctx, &mut rebase);
         Self {
-            dlbl_ft_entry: markup::transform_child(&self.dlbl_ft_entry, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dlbl_ft_entry: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -914,11 +936,15 @@ impl markup::Transform for super::DlblFieldTableCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.string_point, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            point_count: markup::transform_child(&self.point_count, ctx),
-            string_point: markup::transform_child(&self.string_point, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_3,
+            point_count: child_1,
+            string_point: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -995,11 +1021,15 @@ impl markup::Transform for super::DlblRangeCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.string_point, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            point_count: markup::transform_child(&self.point_count, ctx),
-            string_point: markup::transform_child(&self.string_point, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_3,
+            point_count: child_1,
+            string_point: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1076,7 +1106,7 @@ impl markup::Transform for super::Explosion {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -1144,7 +1174,7 @@ impl markup::Transform for super::F {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -1207,9 +1237,11 @@ impl markup::Transform for super::FilteredAreaSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_area_ser, ctx, &mut rebase);
         Self {
-            ser_area_ser: markup::transform_child(&self.ser_area_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_area_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1282,9 +1314,11 @@ impl markup::Transform for super::FilteredBarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_bar_ser, ctx, &mut rebase);
         Self {
-            ser_bar_ser: markup::transform_child(&self.ser_bar_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_bar_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1357,9 +1391,11 @@ impl markup::Transform for super::FilteredBubbleSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_bubble_ser, ctx, &mut rebase);
         Self {
-            ser_bubble_ser: markup::transform_child(&self.ser_bubble_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_bubble_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1432,9 +1468,11 @@ impl markup::Transform for super::FilteredCategoryTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cat, ctx, &mut rebase);
         Self {
-            cat: markup::transform_child(&self.cat, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cat: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1507,9 +1545,11 @@ impl markup::Transform for super::FilteredLineSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_line_ser, ctx, &mut rebase);
         Self {
-            ser_line_ser: markup::transform_child(&self.ser_line_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_line_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1582,9 +1622,11 @@ impl markup::Transform for super::FilteredPieSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_pie_ser, ctx, &mut rebase);
         Self {
-            ser_pie_ser: markup::transform_child(&self.ser_pie_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_pie_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1657,9 +1699,11 @@ impl markup::Transform for super::FilteredRadarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_radar_ser, ctx, &mut rebase);
         Self {
-            ser_radar_ser: markup::transform_child(&self.ser_radar_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_radar_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1732,9 +1776,11 @@ impl markup::Transform for super::FilteredScatterSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_scatter_ser, ctx, &mut rebase);
         Self {
-            ser_scatter_ser: markup::transform_child(&self.ser_scatter_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_scatter_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1807,9 +1853,11 @@ impl markup::Transform for super::FilteredSeriesTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tx, ctx, &mut rebase);
         Self {
-            tx: markup::transform_child(&self.tx, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tx: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1882,9 +1930,11 @@ impl markup::Transform for super::FilteredSurfaceSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ser_surface_ser, ctx, &mut rebase);
         Self {
-            ser_surface_ser: markup::transform_child(&self.ser_surface_ser, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ser_surface_ser: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1957,9 +2007,11 @@ impl markup::Transform for super::FormulaRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
-            sqref: markup::transform_child(&self.sqref, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sqref: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2031,9 +2083,11 @@ impl markup::Transform for super::FullRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
-            sqref: markup::transform_child(&self.sqref, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sqref: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2106,7 +2160,7 @@ impl markup::Transform for super::InvertIfNegative {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -2178,10 +2232,13 @@ impl markup::Transform for super::Layout {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.manual, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            manual: markup::transform_child(&self.manual, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_2,
+            manual: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2255,9 +2312,11 @@ impl markup::Transform for super::LeaderLines {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
         Self {
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            shape_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2329,9 +2388,11 @@ impl markup::Transform for super::LevelRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
-            sqref: markup::transform_child(&self.sqref, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sqref: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2403,12 +2464,17 @@ impl markup::Transform for super::Marker {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.symbol, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.size, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            size: markup::transform_child(&self.size, ctx),
-            symbol: markup::transform_child(&self.symbol, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_4,
+            shape_properties: child_3,
+            size: child_2,
+            symbol: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2489,7 +2555,7 @@ impl markup::Transform for super::NumFmt {
         Self {
             format_code: self.format_code.clone(),
             source_linked: self.source_linked.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2560,11 +2626,15 @@ impl markup::Transform for super::PivotSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_name, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.format_id, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            format_id: markup::transform_child(&self.format_id, ctx),
-            pivot_name: markup::transform_child(&self.pivot_name, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_3,
+            format_id: child_2,
+            pivot_name: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2640,20 +2710,33 @@ impl markup::Transform for super::SerAreaSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.picture_options, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.trendlines, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.error_bars, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            error_bars: markup::transform_child(&self.error_bars, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            picture_options: markup::transform_child(&self.picture_options, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            trendlines: markup::transform_child(&self.trendlines, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_10,
+            chart_extensibility: child_12,
+            data_labels: child_07,
+            data_point: child_06,
+            error_bars: child_09,
+            index: child_01,
+            order: child_02,
+            picture_options: child_05,
+            series_text: child_03,
+            shape_properties: child_04,
+            trendlines: child_08,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_11,
         }
     }
 }
@@ -2747,22 +2830,37 @@ impl markup::Transform for super::SerBarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.invert_if_negative, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.picture_options, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.trendlines, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.error_bars, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.shape, ctx, &mut rebase);
+        let child_14 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            error_bars: markup::transform_child(&self.error_bars, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            invert_if_negative: markup::transform_child(&self.invert_if_negative, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            picture_options: markup::transform_child(&self.picture_options, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape: markup::transform_child(&self.shape, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            trendlines: markup::transform_child(&self.trendlines, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_11,
+            chart_extensibility: child_14,
+            data_labels: child_08,
+            data_point: child_07,
+            error_bars: child_10,
+            index: child_01,
+            invert_if_negative: child_05,
+            order: child_02,
+            picture_options: child_06,
+            series_text: child_03,
+            shape: child_13,
+            shape_properties: child_04,
+            trendlines: child_09,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_12,
         }
     }
 }
@@ -2860,22 +2958,37 @@ impl markup::Transform for super::SerBubbleSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.invert_if_negative, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.trendlines, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.error_bars, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.x_values, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.y_values, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.bubble_size, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.bubble3d, ctx, &mut rebase);
+        let child_14 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            bubble3d: markup::transform_child(&self.bubble3d, ctx),
-            bubble_size: markup::transform_child(&self.bubble_size, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            error_bars: markup::transform_child(&self.error_bars, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            invert_if_negative: markup::transform_child(&self.invert_if_negative, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            trendlines: markup::transform_child(&self.trendlines, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            x_values: markup::transform_child(&self.x_values, ctx),
-            y_values: markup::transform_child(&self.y_values, ctx),
+            bubble3d: child_13,
+            bubble_size: child_12,
+            chart_extensibility: child_14,
+            data_labels: child_07,
+            data_point: child_06,
+            error_bars: child_09,
+            index: child_01,
+            invert_if_negative: child_05,
+            order: child_02,
+            series_text: child_03,
+            shape_properties: child_04,
+            trendlines: child_08,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            x_values: child_10,
+            y_values: child_11,
         }
     }
 }
@@ -2973,21 +3086,35 @@ impl markup::Transform for super::SerLineSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.marker, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.trendlines, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.error_bars, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.smoothing, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            error_bars: markup::transform_child(&self.error_bars, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            marker: markup::transform_child(&self.marker, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            smoothing: markup::transform_child(&self.smoothing, ctx),
-            trendlines: markup::transform_child(&self.trendlines, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_10,
+            chart_extensibility: child_13,
+            data_labels: child_07,
+            data_point: child_06,
+            error_bars: child_09,
+            index: child_01,
+            marker: child_05,
+            order: child_02,
+            series_text: child_03,
+            shape_properties: child_04,
+            smoothing: child_12,
+            trendlines: child_08,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_11,
         }
     }
 }
@@ -3083,18 +3210,29 @@ impl markup::Transform for super::SerPieSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.explosion, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            explosion: markup::transform_child(&self.explosion, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_08,
+            chart_extensibility: child_10,
+            data_labels: child_07,
+            data_point: child_06,
+            explosion: child_05,
+            index: child_01,
+            order: child_02,
+            series_text: child_03,
+            shape_properties: child_04,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_09,
         }
     }
 }
@@ -3184,18 +3322,29 @@ impl markup::Transform for super::SerRadarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.marker, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            marker: markup::transform_child(&self.marker, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_08,
+            chart_extensibility: child_10,
+            data_labels: child_07,
+            data_point: child_06,
+            index: child_01,
+            marker: child_05,
+            order: child_02,
+            series_text: child_03,
+            shape_properties: child_04,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_09,
         }
     }
 }
@@ -3285,21 +3434,35 @@ impl markup::Transform for super::SerScatterSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.marker, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.data_point, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.data_labels, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.trendlines, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.error_bars, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.x_values, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.y_values, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.smoothing, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            data_labels: markup::transform_child(&self.data_labels, ctx),
-            data_point: markup::transform_child(&self.data_point, ctx),
-            error_bars: markup::transform_child(&self.error_bars, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            marker: markup::transform_child(&self.marker, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            smoothing: markup::transform_child(&self.smoothing, ctx),
-            trendlines: markup::transform_child(&self.trendlines, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            x_values: markup::transform_child(&self.x_values, ctx),
-            y_values: markup::transform_child(&self.y_values, ctx),
+            chart_extensibility: child_13,
+            data_labels: child_07,
+            data_point: child_06,
+            error_bars: child_09,
+            index: child_01,
+            marker: child_05,
+            order: child_02,
+            series_text: child_03,
+            shape_properties: child_04,
+            smoothing: child_12,
+            trendlines: child_08,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            x_values: child_10,
+            y_values: child_11,
         }
     }
 }
@@ -3395,15 +3558,23 @@ impl markup::Transform for super::SerSurfaceSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.index, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.order, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.series_text, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.category_axis_data_cat, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.values, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            category_axis_data_cat: markup::transform_child(&self.category_axis_data_cat, ctx),
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            index: markup::transform_child(&self.index, ctx),
-            order: markup::transform_child(&self.order, ctx),
-            series_text: markup::transform_child(&self.series_text, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            values: markup::transform_child(&self.values, ctx),
+            category_axis_data_cat: child_5,
+            chart_extensibility: child_7,
+            index: child_1,
+            order: child_2,
+            series_text: child_3,
+            shape_properties: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            values: child_6,
         }
     }
 }
@@ -3488,7 +3659,7 @@ impl markup::Transform for super::ShowDataLabelsRange {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -3561,7 +3732,7 @@ impl markup::Transform for super::ShowLeaderLines {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -3628,23 +3799,26 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.outline, ctx, &mut rebase);
+        let child_5 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.scene3d, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
+        let child_8 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            apply_3d_shape_properties: markup::transform_child(
-                &self.apply_3d_shape_properties,
-                ctx,
-            ),
+            apply_3d_shape_properties: child_7,
             bw_mode: self.bw_mode.clone(),
-            effect_properties_content: markup::transform_child(
-                &self.effect_properties_content,
-                ctx,
-            ),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            fill_properties_content: markup::transform_child(&self.fill_properties_content, ctx),
-            geometry_content: markup::transform_child(&self.geometry_content, ctx),
-            outline: markup::transform_child(&self.outline, ctx),
-            scene3d: markup::transform_child(&self.scene3d, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm_transform2d: markup::transform_child(&self.xfrm_transform2d, ctx),
+            effect_properties_content: child_5,
+            extension_list: child_8,
+            fill_properties_content: child_3,
+            geometry_content: child_2,
+            outline: child_4,
+            scene3d: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm_transform2d: child_1,
         }
     }
 }
@@ -3724,7 +3898,7 @@ impl markup::Transform for super::Sqref {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -3787,9 +3961,11 @@ impl markup::Transform for super::Tx {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3858,7 +4034,7 @@ impl markup::Transform for super::TxfldGUID {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -3930,7 +4106,7 @@ impl markup::Transform for super::XForSave {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }

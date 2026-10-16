@@ -230,11 +230,13 @@ impl markup::Transform for super::AutoBuNodeInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.bu_pr, ctx, &mut rebase);
         Self {
-            bu_pr: markup::transform_child(&self.bu_pr, ctx),
+            bu_pr: child_1,
             lvl: self.lvl.clone(),
             pt_type: self.pt_type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -308,9 +310,11 @@ impl markup::Transform for super::AutoBuNodeInfoLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.auto_bu_node_info, ctx, &mut rebase);
         Self {
-            auto_bu_node_info: markup::transform_child(&self.auto_bu_node_info, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            auto_bu_node_info: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -383,11 +387,13 @@ impl markup::Transform for super::BuPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             lead_zeros: self.lead_zeros.clone(),
             prefix: self.prefix.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

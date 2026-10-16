@@ -233,7 +233,7 @@ impl markup::Transform for super::AggregationInfo {
         Self {
             aggregation_type: self.aggregation_type.clone(),
             source_field: self.source_field.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -306,7 +306,7 @@ impl markup::Transform for super::FeatureSupportInfo {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             feature_name: self.feature_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -377,12 +377,11 @@ impl markup::Transform for super::PivotAreaReferenceSubtotals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.subtotal_pivot_subtotal_type, ctx, &mut rebase);
         Self {
-            subtotal_pivot_subtotal_type: markup::transform_child(
-                &self.subtotal_pivot_subtotal_type,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            subtotal_pivot_subtotal_type: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -458,9 +457,11 @@ impl markup::Transform for super::PivotFieldSubtotalLineItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.subtotal_line_item, ctx, &mut rebase);
         Self {
-            subtotal_line_item: markup::transform_child(&self.subtotal_line_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            subtotal_line_item: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -536,12 +537,11 @@ impl markup::Transform for super::PivotFieldSubtotals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.subtotal_pivot_item_subtotal, ctx, &mut rebase);
         Self {
-            subtotal_pivot_item_subtotal: markup::transform_child(
-                &self.subtotal_pivot_item_subtotal,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            subtotal_pivot_item_subtotal: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -615,7 +615,7 @@ impl markup::Transform for super::SubtotalLineItem {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -685,7 +685,7 @@ impl markup::Transform for super::SubtotalPivotItemSubtotal {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -760,7 +760,7 @@ impl markup::Transform for super::SubtotalPivotSubtotalType {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             subtotal_type: self.subtotal_type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

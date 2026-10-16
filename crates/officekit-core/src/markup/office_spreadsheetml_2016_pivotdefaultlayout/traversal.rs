@@ -234,7 +234,7 @@ impl markup::Transform for super::PivotTableDefinition16 {
             enabled_subtotals_default: self.enabled_subtotals_default.clone(),
             insert_blank_row_default: self.insert_blank_row_default.clone(),
             subtotals_on_top_default: self.subtotals_on_top_default.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

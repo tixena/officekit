@@ -7,8 +7,9 @@ use std::io;
 use super::super::{
     BlockContent, BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent,
     ContentBlockContent, ContentCellContent, ContentRowContent, Document, DocumentBody,
-    FriendlyName, Paragraph, ParagraphContent, StructuredDocumentTagProperties, Table, TableCell,
-    TableRow, Text, TextRun, TextRunContent, write,
+    FriendlyName, Paragraph, ParagraphContent, ParagraphProperties,
+    StructuredDocumentTagProperties, Table, TableCell, TableRow, Text, TextRun, TextRunContent,
+    read, write,
 };
 use crate::markup::drawing::{AnyElementContent, GraphicObjectData};
 use crate::markup::picture::{self, Picture};
@@ -19,6 +20,7 @@ use crate::stream::transform::{Unchanged, WriteThrough, Written};
 use crate::stream::writer::PartWriter;
 use crate::xml::element::{Element, Node};
 use crate::xml::name::QName;
+use crate::xml::parse::parse;
 use crate::xml::write::Layout;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -26,6 +28,13 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 /// Collects every piece of text under a node, in both namespaces.
 #[derive(Default)]
 struct CollectText(String);
+
+/// Puts copies of each paragraph of a block list in its place, as many as
+/// `copies` gives for it, in the order the list hook is asked about them.
+struct CopyParagraphs {
+    copies: Vec<usize>,
+    next: usize,
+}
 
 /// Counts the content controls a context's hook is shown.
 #[derive(Default)]
@@ -60,6 +69,10 @@ struct Pictures {
     elements: usize,
     pictures: usize,
 }
+
+/// Records the hooks it is asked, in the order it is asked them.
+#[derive(Default)]
+struct Record(Vec<&'static str>);
 
 /// Renames each generic element `x:a` to `x:b`, and writes each `x:c` itself
 /// as `x:written`.
@@ -110,6 +123,23 @@ impl math::Visitor for CollectText {
     fn text(&mut self, node: &math::Text) -> Descend {
         self.0.push_str(&node.value);
         Descend::Yes
+    }
+}
+
+impl markup::Context for CopyParagraphs {
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
+        Some(self)
+    }
+}
+
+impl wordprocessing::Context for CopyParagraphs {
+    fn block_items(&mut self, node: &BlockContent) -> Option<Vec<BlockContent>> {
+        if !matches!(node, BlockContent::Paragraph(_)) {
+            return None;
+        }
+        let copies = *self.copies.get(self.next)?;
+        self.next += 1;
+        Some(vec![node.clone(); copies])
     }
 }
 
@@ -240,6 +270,24 @@ impl picture::Visitor for Pictures {
     fn picture(&mut self, _node: &Picture) -> Descend {
         self.pictures += 1;
         Descend::Yes
+    }
+}
+
+impl markup::Context for Record {
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
+        Some(self)
+    }
+}
+
+impl wordprocessing::Context for Record {
+    fn paragraph_properties(&mut self, _node: &ParagraphProperties) -> Option<ParagraphProperties> {
+        self.0.push("paragraph_properties");
+        None
+    }
+
+    fn text_run(&mut self, _node: &TextRun) -> Option<TextRun> {
+        self.0.push("text_run");
+        None
     }
 }
 
@@ -486,6 +534,15 @@ fn control_of(
     }
 }
 
+/// A context putting `counts[i]` copies of the i-th paragraph asked about in
+/// its place.
+fn copies(counts: &[usize]) -> CopyParagraphs {
+    CopyParagraphs {
+        copies: counts.to_vec(),
+        next: 0,
+    }
+}
+
 /// A document whose body holds `blocks`.
 fn document(blocks: Vec<BlockContent>) -> Document {
     Document {
@@ -549,6 +606,11 @@ fn paragraph_of(value: Text) -> Paragraph {
         content: vec![ParagraphContent::TextRun(run(value))],
         ..Paragraph::default()
     }
+}
+
+/// The root element of an XML text.
+fn parsed(text: &str) -> Element {
+    parse(text.as_bytes()).unwrap().root
 }
 
 /// Text whose spaces are kept.
@@ -641,6 +703,16 @@ where
     let mut collected = CollectText::default();
     node.visit(&mut collected);
     collected.0
+}
+
+/// The XML the tree writer writes for a body.
+fn tree_xml(body: &DocumentBody) -> String {
+    let element = write::document_body(body, &mut Scope::default());
+    let mut bytes = Vec::new();
+    PartWriter::new(&mut bytes, Layout::Compact)
+        .element(&element)
+        .unwrap();
+    String::from_utf8(bytes).unwrap()
 }
 
 fn upper_case_first_paragraph(document: &mut Document) {
@@ -1019,4 +1091,70 @@ fn whitespace_only_text_in_a_preserve_scope_is_written_through() {
     let (through, tree) = both_paths(preserved(" "));
     assert_eq!(through, tree);
     assert!(through.contains("<w:t xml:space=\"preserve\"> </w:t>"));
+}
+
+#[test]
+fn an_extra_after_a_list_a_hook_lengthens_stays_after_its_neighbours() {
+    let as_read = format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/><!--c--></w:body>");
+    let source = read::document_body(&parsed(&as_read));
+    // Two blocks and `w:sectPr` come before the comment.
+    assert_eq!(source.unknown.children[0].after, 3);
+    assert_eq!(tree_xml(&source.transform(&mut Unchanged)), as_read);
+    let transformed = source.transform(&mut copies(&[3, 1]));
+    assert_eq!(
+        tree_xml(&transformed),
+        format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:p/><w:p/><w:sectPr/><!--c--></w:body>")
+    );
+    assert_eq!(
+        tree_xml(&transformed),
+        written(&source, &mut copies(&[3, 1]))
+    );
+}
+
+#[test]
+fn an_extra_after_a_list_a_hook_empties_stays_after_its_neighbours() {
+    let source = read::document_body(&parsed(&format!(
+        "<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/><!--c--></w:body>"
+    )));
+    let transformed = source.transform(&mut copies(&[0, 0]));
+    assert_eq!(
+        tree_xml(&transformed),
+        format!("<w:body xmlns:w=\"{W}\"><w:sectPr/><!--c--></w:body>")
+    );
+    assert_eq!(
+        tree_xml(&transformed),
+        written(&source, &mut copies(&[0, 0]))
+    );
+}
+
+#[test]
+fn a_transform_asks_the_hooks_of_a_nodes_children_in_document_order() {
+    let source = read::paragraph(&parsed(&format!(
+        "<w:p xmlns:w=\"{W}\"><w:pPr/><w:r/></w:p>"
+    )));
+    let mut record = Record::default();
+    let _: Paragraph = source.transform(&mut record);
+    assert_eq!(record.0, ["paragraph_properties", "text_run"]);
+}
+
+#[test]
+fn an_extra_between_list_items_stays_between_their_replacements() {
+    // Read, a comment between two blocks joins the block list; built here,
+    // it is an `Extra` after the first block.
+    let mut source = read::document_body(&parsed(&format!(
+        "<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/></w:body>"
+    )));
+    source.unknown.children.push(Extra {
+        after: 1,
+        node: Node::Comment("c".to_owned()),
+    });
+    let transformed = source.transform(&mut copies(&[3, 2]));
+    assert_eq!(
+        tree_xml(&transformed),
+        format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:p/><!--c--><w:p/><w:p/><w:sectPr/></w:body>")
+    );
+    assert_eq!(
+        tree_xml(&transformed),
+        written(&source, &mut copies(&[3, 2]))
+    );
 }

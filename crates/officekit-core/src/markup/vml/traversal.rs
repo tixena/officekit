@@ -226,6 +226,8 @@ impl markup::Transform for super::ArcSegment {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -244,7 +246,7 @@ impl markup::Transform for super::ArcSegment {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -280,7 +282,7 @@ impl markup::Transform for super::ArcSegment {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -393,6 +395,8 @@ impl markup::Transform for super::BezierCurve {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -411,7 +415,7 @@ impl markup::Transform for super::BezierCurve {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             control1: self.control1.clone(),
             control2: self.control2.clone(),
             coordorigin: self.coordorigin.clone(),
@@ -449,7 +453,7 @@ impl markup::Transform for super::BezierCurve {
             target: self.target.clone(),
             title: self.title.clone(),
             to: self.to.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -564,6 +568,8 @@ impl markup::Transform for super::DocumentBackground {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shape_fill_properties, ctx, &mut rebase);
         Self {
             bwmode: self.bwmode.clone(),
             bwnormal: self.bwnormal.clone(),
@@ -571,9 +577,9 @@ impl markup::Transform for super::DocumentBackground {
             fillcolor: self.fillcolor.clone(),
             filled: self.filled.clone(),
             id: self.id.clone(),
-            shape_fill_properties: markup::transform_child(&self.shape_fill_properties, ctx),
+            shape_fill_properties: child_1,
             targetscreensize: self.targetscreensize.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -666,7 +672,7 @@ impl markup::Transform for super::ImageData {
             relid: self.relid.clone(),
             src: self.src.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -742,6 +748,8 @@ impl markup::Transform for super::ImageFile {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -762,7 +770,7 @@ impl markup::Transform for super::ImageFile {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             cropbottom: self.cropbottom.clone(),
@@ -804,7 +812,7 @@ impl markup::Transform for super::ImageFile {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -925,6 +933,8 @@ impl markup::Transform for super::Line {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -943,7 +953,7 @@ impl markup::Transform for super::Line {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -979,7 +989,7 @@ impl markup::Transform for super::Line {
             target: self.target.clone(),
             title: self.title.clone(),
             to: self.to.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -1092,6 +1102,12 @@ impl markup::Transform for super::LineStrokeSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text_box_left_stroke, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.text_box_top_stroke, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.text_box_right_stroke, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.text_box_bottom_stroke, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.text_box_interior_stroke, ctx, &mut rebase);
         Self {
             althref: self.althref.clone(),
             color: self.color.clone(),
@@ -1120,13 +1136,13 @@ impl markup::Transform for super::LineStrokeSettings {
             startarrow: self.startarrow.clone(),
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
-            text_box_bottom_stroke: markup::transform_child(&self.text_box_bottom_stroke, ctx),
-            text_box_interior_stroke: markup::transform_child(&self.text_box_interior_stroke, ctx),
-            text_box_left_stroke: markup::transform_child(&self.text_box_left_stroke, ctx),
-            text_box_right_stroke: markup::transform_child(&self.text_box_right_stroke, ctx),
-            text_box_top_stroke: markup::transform_child(&self.text_box_top_stroke, ctx),
+            text_box_bottom_stroke: child_4,
+            text_box_interior_stroke: child_5,
+            text_box_left_stroke: child_1,
+            text_box_right_stroke: child_3,
+            text_box_top_stroke: child_2,
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             weight: self.weight.clone(),
         }
     }
@@ -1225,6 +1241,8 @@ impl markup::Transform for super::MultiplePathLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -1243,7 +1261,7 @@ impl markup::Transform for super::MultiplePathLine {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -1278,7 +1296,7 @@ impl markup::Transform for super::MultiplePathLine {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -1560,6 +1578,8 @@ impl markup::Transform for super::Oval {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -1578,7 +1598,7 @@ impl markup::Transform for super::Oval {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -1612,7 +1632,7 @@ impl markup::Transform for super::Oval {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -1723,6 +1743,8 @@ impl markup::Transform for super::Rectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -1741,7 +1763,7 @@ impl markup::Transform for super::Rectangle {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -1775,7 +1797,7 @@ impl markup::Transform for super::Rectangle {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -1886,6 +1908,8 @@ impl markup::Transform for super::RoundedRectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -1905,7 +1929,7 @@ impl markup::Transform for super::RoundedRectangle {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -1939,7 +1963,7 @@ impl markup::Transform for super::RoundedRectangle {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -2056,9 +2080,11 @@ impl markup::Transform for super::SetOfFormulas {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.single_formula, ctx, &mut rebase);
         Self {
-            single_formula: markup::transform_child(&self.single_formula, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            single_formula: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2114,9 +2140,11 @@ impl markup::Transform for super::SetOfHandles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shape_handle, ctx, &mut rebase);
         Self {
-            shape_handle: markup::transform_child(&self.shape_handle, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            shape_handle: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2184,7 +2212,7 @@ impl markup::Transform for super::ShadowEffect {
             opacity: self.opacity.clone(),
             origin: self.origin.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2247,6 +2275,8 @@ impl markup::Transform for super::ShapeDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             adj: self.adj.clone(),
             allowincell: self.allowincell.clone(),
@@ -2266,7 +2296,7 @@ impl markup::Transform for super::ShapeDefinition {
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -2304,7 +2334,7 @@ impl markup::Transform for super::ShapeDefinition {
             target: self.target.clone(),
             title: self.title.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -2741,6 +2771,9 @@ impl markup::Transform for super::ShapeFillProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.shape_fill_extended_properties, ctx, &mut rebase);
         Self {
             alignshape: self.alignshape.clone(),
             althref: self.althref.clone(),
@@ -2765,15 +2798,12 @@ impl markup::Transform for super::ShapeFillProperties {
             recolor: self.recolor.clone(),
             relid: self.relid.clone(),
             rotate: self.rotate.clone(),
-            shape_fill_extended_properties: markup::transform_child(
-                &self.shape_fill_extended_properties,
-                ctx,
-            ),
+            shape_fill_extended_properties: child_1,
             size: self.size.clone(),
             src: self.src.clone(),
             title: self.title.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2861,6 +2891,8 @@ impl markup::Transform for super::ShapeGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
             allowoverlap: self.allowoverlap.clone(),
@@ -2872,7 +2904,7 @@ impl markup::Transform for super::ShapeGroup {
             bullet: self.bullet.clone(),
             button: self.button.clone(),
             class: self.class.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -2899,7 +2931,7 @@ impl markup::Transform for super::ShapeGroup {
             tableproperties: self.tableproperties.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -3193,7 +3225,7 @@ impl markup::Transform for super::ShapeHandle {
             position: self.position.clone(),
             radiusrange: self.radiusrange.clone(),
             switch: self.switch.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             xrange: self.xrange.clone(),
             yrange: self.yrange.clone(),
         }
@@ -3271,7 +3303,7 @@ impl markup::Transform for super::ShapePath {
             strokeok: self.strokeok.clone(),
             textboxrect: self.textboxrect.clone(),
             textpathok: self.textpathok.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -3339,6 +3371,9 @@ impl markup::Transform for super::ShapeTemplate {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.complex, ctx, &mut rebase);
         Self {
             adj: self.adj.clone(),
             allowincell: self.allowincell.clone(),
@@ -3357,9 +3392,9 @@ impl markup::Transform for super::ShapeTemplate {
             class: self.class.clone(),
             clip: self.clip.clone(),
             cliptowrap: self.cliptowrap.clone(),
-            complex: markup::transform_child(&self.complex, ctx),
+            complex: child_2,
             connectortype: self.connectortype.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             coordorigin: self.coordorigin.clone(),
             coordsize: self.coordsize.clone(),
             dgmlayout: self.dgmlayout.clone(),
@@ -3395,7 +3430,7 @@ impl markup::Transform for super::ShapeTemplate {
             style: self.style.clone(),
             target: self.target.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             userdrawn: self.userdrawn.clone(),
             userhidden: self.userhidden.clone(),
             wrapcoords: self.wrapcoords.clone(),
@@ -3514,7 +3549,7 @@ impl markup::Transform for super::SingleFormula {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             eqn: self.eqn.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -3568,14 +3603,16 @@ impl markup::Transform for super::TextBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             id: self.id.clone(),
             inset: self.inset.clone(),
             insetmode: self.insetmode.clone(),
             singleclick: self.singleclick.clone(),
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3711,7 +3748,7 @@ impl markup::Transform for super::TextLayoutPath {
             string: self.string.clone(),
             style: self.style.clone(),
             trim: self.trim.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             xscale: self.xscale.clone(),
         }
     }

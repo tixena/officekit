@@ -230,11 +230,14 @@ impl markup::Transform for super::CNvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cp_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            cp_locks: markup::transform_child(&self.cp_locks, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            cp_locks: child_1,
+            ext_lst: child_2,
             is_comment: self.is_comment.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -310,16 +313,20 @@ impl markup::Transform for super::CNvPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.click_hyperlink, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            click_hyperlink: markup::transform_child(&self.click_hyperlink, ctx),
+            click_hyperlink: child_1,
             descr: self.descr.clone(),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
+            extension_list: child_3,
             hidden: self.hidden.clone(),
-            hyperlink_for_hover: markup::transform_child(&self.hyperlink_for_hover, ctx),
+            hyperlink_for_hover: child_2,
             id: self.id.clone(),
             name: self.name.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -400,14 +407,19 @@ impl markup::Transform for super::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.nv_pr, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.xfrm, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             bw_mode: self.bw_mode.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            ext_lst: child_4,
             id: self.id.clone(),
-            nv_content_part_pr: markup::transform_child(&self.nv_content_part_pr, ctx),
-            nv_pr: markup::transform_child(&self.nv_pr, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm: markup::transform_child(&self.xfrm, ctx),
+            nv_content_part_pr: child_1,
+            nv_pr: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm: child_3,
         }
     }
 }
@@ -487,9 +499,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -561,10 +575,13 @@ impl markup::Transform for super::NvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.c_nv_pr, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.c, ctx, &mut rebase);
         Self {
-            c: markup::transform_child(&self.c, ctx),
-            c_nv_pr: markup::transform_child(&self.c_nv_pr, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            c: child_2,
+            c_nv_pr: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -642,7 +659,7 @@ impl markup::Transform for super::NvPr {
         Self {
             f_published: self.f_published.clone(),
             r#macro: self.r#macro.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -713,13 +730,16 @@ impl markup::Transform for super::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.offset, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extents, ctx, &mut rebase);
         Self {
-            extents: markup::transform_child(&self.extents, ctx),
+            extents: child_2,
             flip_h: self.flip_h.clone(),
             flip_v: self.flip_v.clone(),
-            offset: markup::transform_child(&self.offset, ctx),
+            offset: child_1,
             rot: self.rot.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

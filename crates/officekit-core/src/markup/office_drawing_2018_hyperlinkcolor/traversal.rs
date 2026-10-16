@@ -231,7 +231,7 @@ impl markup::Transform for super::HlinkClr {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }

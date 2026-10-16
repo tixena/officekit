@@ -230,7 +230,7 @@ impl markup::Transform for super::Oembed {
             media_type: self.media_type.clone(),
             o_embed_url: self.o_embed_url.clone(),
             pic_locks_auto_for_o_embed: self.pic_locks_auto_for_o_embed.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

@@ -230,9 +230,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -304,9 +306,11 @@ impl markup::Transform for super::ScriptLink {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             val: self.val.clone(),
         }
     }

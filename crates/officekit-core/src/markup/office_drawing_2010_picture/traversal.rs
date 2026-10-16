@@ -230,9 +230,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -304,12 +306,17 @@ impl markup::Transform for super::Style {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.line_reference, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.fill_reference, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.effect_reference, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.font_reference, ctx, &mut rebase);
         Self {
-            effect_reference: markup::transform_child(&self.effect_reference, ctx),
-            fill_reference: markup::transform_child(&self.fill_reference, ctx),
-            font_reference: markup::transform_child(&self.font_reference, ctx),
-            line_reference: markup::transform_child(&self.line_reference, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            effect_reference: child_3,
+            fill_reference: child_2,
+            font_reference: child_4,
+            line_reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

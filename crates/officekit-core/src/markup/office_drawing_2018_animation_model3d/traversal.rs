@@ -230,16 +230,18 @@ impl markup::Transform for super::AnimPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             auto: self.auto.clone(),
             count: self.count.clone(),
             end: self.end.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            ext_lst: child_1,
             length: self.length.clone(),
             name: self.name.clone(),
             offset: self.offset.clone(),
             st: self.st.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -318,11 +320,14 @@ impl markup::Transform for super::EmbedAnim {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pr, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             anim_id: self.anim_id.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            pr: markup::transform_child(&self.pr, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_2,
+            pr: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -397,9 +402,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -474,7 +481,7 @@ impl markup::Transform for super::PosterFrame {
         Self {
             anim_id: self.anim_id.clone(),
             frame: self.frame.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

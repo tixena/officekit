@@ -230,11 +230,13 @@ impl markup::Transform for super::DynamicArrayProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            ext_lst: child_1,
             f_collapsed: self.f_collapsed.clone(),
             f_dynamic: self.f_dynamic.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -309,9 +311,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

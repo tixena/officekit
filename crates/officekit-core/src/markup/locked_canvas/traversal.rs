@@ -230,18 +230,22 @@ impl markup::Transform for super::LockedCanvasContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(
+            &self.non_visual_properties_for_a_group_shape,
+            ctx,
+            &mut rebase,
+        );
+        let child_2 =
+            markup::transform_child(&self.visual_group_shape_properties, ctx, &mut rebase);
+        let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            non_visual_properties_for_a_group_shape: markup::transform_child(
-                &self.non_visual_properties_for_a_group_shape,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            visual_group_shape_properties: markup::transform_child(
-                &self.visual_group_shape_properties,
-                ctx,
-            ),
+            content: child_3,
+            extension_list: child_4,
+            non_visual_properties_for_a_group_shape: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            visual_group_shape_properties: child_2,
         }
     }
 }

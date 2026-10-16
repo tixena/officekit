@@ -234,7 +234,7 @@ impl markup::Transform for super::RichInfo {
             id: self.id.clone(),
             pivot_cache_guid: self.pivot_cache_guid.clone(),
             pivot_ignore_invalid_cache: self.pivot_ignore_invalid_cache.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

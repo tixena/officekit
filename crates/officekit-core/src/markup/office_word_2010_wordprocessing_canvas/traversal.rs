@@ -230,13 +230,13 @@ impl markup::Transform for super::Bg {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
         Self {
-            effect_properties_content: markup::transform_child(
-                &self.effect_properties_content,
-                ctx,
-            ),
-            fill_properties_content: markup::transform_child(&self.fill_properties_content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            effect_properties_content: child_2,
+            fill_properties_content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -310,9 +310,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -384,13 +386,19 @@ impl markup::Transform for super::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.c_nv_pr, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.c_nv_fr_pr, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.xfrm, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.graphic_object, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            c_nv_fr_pr: markup::transform_child(&self.c_nv_fr_pr, ctx),
-            c_nv_pr: markup::transform_child(&self.c_nv_pr, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            graphic_object: markup::transform_child(&self.graphic_object, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm: markup::transform_child(&self.xfrm, ctx),
+            c_nv_fr_pr: child_2,
+            c_nv_pr: child_1,
+            ext_lst: child_5,
+            graphic_object: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm: child_3,
         }
     }
 }
@@ -470,10 +478,13 @@ impl markup::Transform for super::Whole {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.outline, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            outline: markup::transform_child(&self.outline, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_2,
+            outline: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -662,12 +673,17 @@ impl markup::Transform for super::Wpc {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.bg, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.whole, ctx, &mut rebase);
+        let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            bg: markup::transform_child(&self.bg, ctx),
-            content: markup::transform_items(&self.content, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            whole: markup::transform_child(&self.whole, ctx),
+            bg: child_1,
+            content: child_3,
+            ext_lst: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            whole: child_2,
         }
     }
 }

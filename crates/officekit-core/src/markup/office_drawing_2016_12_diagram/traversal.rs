@@ -230,19 +230,31 @@ impl markup::Transform for super::LstStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.default_paragraph_style, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.list_level_1_text_style, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.list_level_2_text_style, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.list_level_3_text_style, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.list_level_4_text_style, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.list_level_5_text_style, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.list_level_6_text_style, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.list_level_7_text_style, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.list_level_8_text_style, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.list_level_9_text_style, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            default_paragraph_style: markup::transform_child(&self.default_paragraph_style, ctx),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            list_level_1_text_style: markup::transform_child(&self.list_level_1_text_style, ctx),
-            list_level_2_text_style: markup::transform_child(&self.list_level_2_text_style, ctx),
-            list_level_3_text_style: markup::transform_child(&self.list_level_3_text_style, ctx),
-            list_level_4_text_style: markup::transform_child(&self.list_level_4_text_style, ctx),
-            list_level_5_text_style: markup::transform_child(&self.list_level_5_text_style, ctx),
-            list_level_6_text_style: markup::transform_child(&self.list_level_6_text_style, ctx),
-            list_level_7_text_style: markup::transform_child(&self.list_level_7_text_style, ctx),
-            list_level_8_text_style: markup::transform_child(&self.list_level_8_text_style, ctx),
-            list_level_9_text_style: markup::transform_child(&self.list_level_9_text_style, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            default_paragraph_style: child_01,
+            extension_list: child_11,
+            list_level_1_text_style: child_02,
+            list_level_2_text_style: child_03,
+            list_level_3_text_style: child_04,
+            list_level_4_text_style: child_05,
+            list_level_5_text_style: child_06,
+            list_level_6_text_style: child_07,
+            list_level_7_text_style: child_08,
+            list_level_8_text_style: child_09,
+            list_level_9_text_style: child_10,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -334,23 +346,26 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.outline, ctx, &mut rebase);
+        let child_5 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.scene3d, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
+        let child_8 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            apply_3d_shape_properties: markup::transform_child(
-                &self.apply_3d_shape_properties,
-                ctx,
-            ),
+            apply_3d_shape_properties: child_7,
             bw_mode: self.bw_mode.clone(),
-            effect_properties_content: markup::transform_child(
-                &self.effect_properties_content,
-                ctx,
-            ),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            fill_properties_content: markup::transform_child(&self.fill_properties_content, ctx),
-            geometry_content: markup::transform_child(&self.geometry_content, ctx),
-            outline: markup::transform_child(&self.outline, ctx),
-            scene3d: markup::transform_child(&self.scene3d, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm_transform2d: markup::transform_child(&self.xfrm_transform2d, ctx),
+            effect_properties_content: child_5,
+            extension_list: child_8,
+            fill_properties_content: child_3,
+            geometry_content: child_2,
+            outline: child_4,
+            scene3d: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm_transform2d: child_1,
         }
     }
 }

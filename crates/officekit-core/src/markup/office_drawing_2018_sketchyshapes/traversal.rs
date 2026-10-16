@@ -230,9 +230,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -305,7 +307,7 @@ impl markup::Transform for super::LineSketchCurved {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -375,7 +377,7 @@ impl markup::Transform for super::LineSketchFreehand {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -445,7 +447,7 @@ impl markup::Transform for super::LineSketchNone {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -515,7 +517,7 @@ impl markup::Transform for super::LineSketchScribble {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -584,13 +586,18 @@ impl markup::Transform for super::LineSketchStyleProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.r#type, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.seed, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            content: child_1,
+            ext_lst: child_4,
             sd: self.sd.clone(),
-            seed: markup::transform_child(&self.seed, ctx),
-            r#type: markup::transform_child(&self.r#type, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            seed: child_3,
+            r#type: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -762,7 +769,7 @@ impl markup::Transform for super::Seed {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -833,9 +840,11 @@ impl markup::Transform for super::Type {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

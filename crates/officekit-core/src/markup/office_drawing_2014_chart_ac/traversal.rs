@@ -230,11 +230,15 @@ impl markup::Transform for super::MultiLvlStrLit {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.level, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
-            chart_extensibility: markup::transform_child(&self.chart_extensibility, ctx),
-            level: markup::transform_child(&self.level, ctx),
-            point_count: markup::transform_child(&self.point_count, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_extensibility: child_3,
+            level: child_2,
+            point_count: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

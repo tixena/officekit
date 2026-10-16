@@ -236,7 +236,7 @@ impl markup::Transform for super::Track {
             label: self.label.clone(),
             lang: self.lang.clone(),
             link: self.link.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -310,9 +310,11 @@ impl markup::Transform for super::TrackLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.track, ctx, &mut rebase);
         Self {
-            track: markup::transform_child(&self.track, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            track: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -384,10 +386,12 @@ impl markup::Transform for super::TracksInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.track_lst, ctx, &mut rebase);
         Self {
             display_loc: self.display_loc.clone(),
-            track_lst: markup::transform_child(&self.track_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            track_lst: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

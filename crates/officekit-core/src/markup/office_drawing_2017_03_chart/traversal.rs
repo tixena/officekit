@@ -230,9 +230,11 @@ impl markup::Transform for super::DataDisplayOptions16 {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.disp_na_as_blank, ctx, &mut rebase);
         Self {
-            disp_na_as_blank: markup::transform_child(&self.disp_na_as_blank, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            disp_na_as_blank: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -306,7 +308,7 @@ impl markup::Transform for super::DispNaAsBlank {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }

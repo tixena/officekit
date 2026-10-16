@@ -230,11 +230,13 @@ impl markup::Transform for super::Backstage {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             on_hide: self.on_hide.clone(),
             on_show: self.on_show.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -643,9 +645,11 @@ impl markup::Transform for super::BottomItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -713,9 +717,11 @@ impl markup::Transform for super::BoxBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             box_style: self.box_style.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             get_visible: self.get_visible.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
@@ -724,7 +730,7 @@ impl markup::Transform for super::BoxBox {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -962,7 +968,7 @@ impl markup::Transform for super::ButtonBackstageFastCommandButton {
             label: self.label.clone(),
             on_action: self.on_action.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1079,7 +1085,7 @@ impl markup::Transform for super::ButtonBackstageGroupButton {
             style: self.style.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1193,7 +1199,7 @@ impl markup::Transform for super::ButtonBackstageMenuButton {
             label: self.label.clone(),
             on_action: self.on_action.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1305,7 +1311,7 @@ impl markup::Transform for super::ButtonBackstageRegularButton {
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1431,7 +1437,7 @@ impl markup::Transform for super::ButtonButton {
             size: self.size.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1563,7 +1569,7 @@ impl markup::Transform for super::ButtonButtonRegular {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -1664,8 +1670,10 @@ impl markup::Transform for super::ButtonGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             get_visible: self.get_visible.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
@@ -1674,7 +1682,7 @@ impl markup::Transform for super::ButtonGroup {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -1919,7 +1927,7 @@ impl markup::Transform for super::ButtonVisibleButton {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2017,6 +2025,8 @@ impl markup::Transform for super::CategoryTaskFormGroupCategory {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.task_task_form_group_task, ctx, &mut rebase);
         Self {
             get_label: self.get_label.clone(),
             get_visible: self.get_visible.clone(),
@@ -2029,11 +2039,8 @@ impl markup::Transform for super::CategoryTaskFormGroupCategory {
             insert_before_q: self.insert_before_q.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            task_task_form_group_task: markup::transform_child(
-                &self.task_task_form_group_task,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            task_task_form_group_task: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -2122,6 +2129,8 @@ impl markup::Transform for super::CategoryTaskGroupCategory {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.task_task_group_task, ctx, &mut rebase);
         Self {
             get_label: self.get_label.clone(),
             get_visible: self.get_visible.clone(),
@@ -2134,8 +2143,8 @@ impl markup::Transform for super::CategoryTaskGroupCategory {
             insert_before_q: self.insert_before_q.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            task_task_group_task: markup::transform_child(&self.task_task_group_task, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            task_task_group_task: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -2244,7 +2253,7 @@ impl markup::Transform for super::CheckBoxBackstageCheckBox {
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -2353,7 +2362,7 @@ impl markup::Transform for super::CheckBoxBackstageMenuCheckBox {
             label: self.label.clone(),
             on_action: self.on_action.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -2466,7 +2475,7 @@ impl markup::Transform for super::CheckBoxCheckBox {
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -2561,6 +2570,8 @@ impl markup::Transform for super::ComboBoxBackstageComboBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_backstage_item, ctx, &mut rebase);
         Self {
             align_label: self.align_label.clone(),
             enabled: self.enabled.clone(),
@@ -2575,13 +2586,13 @@ impl markup::Transform for super::ComboBoxBackstageComboBox {
             get_visible: self.get_visible.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
-            item_backstage_item: markup::transform_child(&self.item_backstage_item, ctx),
+            item_backstage_item: child_1,
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             on_change: self.on_change.clone(),
             size_string: self.size_string.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -2677,6 +2688,8 @@ impl markup::Transform for super::ComboBoxComboBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_item, ctx, &mut rebase);
         Self {
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
@@ -2705,7 +2718,7 @@ impl markup::Transform for super::ComboBoxComboBox {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
-            item_item: markup::transform_child(&self.item_item, ctx),
+            item_item: child_1,
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             max_length: self.max_length.clone(),
@@ -2717,7 +2730,7 @@ impl markup::Transform for super::ComboBoxComboBox {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -2831,7 +2844,7 @@ impl markup::Transform for super::Command {
             get_enabled: self.get_enabled.clone(),
             id_mso: self.id_mso.clone(),
             on_action: self.on_action.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2900,9 +2913,11 @@ impl markup::Transform for super::Commands {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.command, ctx, &mut rebase);
         Self {
-            command: markup::transform_child(&self.command, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            command: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2974,10 +2989,12 @@ impl markup::Transform for super::ContextMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             id_mso: self.id_mso.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3189,9 +3206,11 @@ impl markup::Transform for super::ContextMenus {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.context_menu, ctx, &mut rebase);
         Self {
-            context_menu: markup::transform_child(&self.context_menu, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            context_menu: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3263,9 +3282,11 @@ impl markup::Transform for super::ContextualTabs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tab_set, ctx, &mut rebase);
         Self {
-            tab_set: markup::transform_child(&self.tab_set, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tab_set: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3367,7 +3388,7 @@ impl markup::Transform for super::ControlControlClone {
             size: self.size.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -3498,7 +3519,7 @@ impl markup::Transform for super::ControlControlCloneQat {
             show_label: self.show_label.clone(),
             size: self.size.clone(),
             supertip: self.supertip.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -3625,7 +3646,7 @@ impl markup::Transform for super::ControlControlCloneRegular {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -3725,14 +3746,19 @@ impl markup::Transform for super::CustomUI {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.commands, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ribbon, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.backstage, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.context_menus, ctx, &mut rebase);
         Self {
-            backstage: markup::transform_child(&self.backstage, ctx),
-            commands: markup::transform_child(&self.commands, ctx),
-            context_menus: markup::transform_child(&self.context_menus, ctx),
+            backstage: child_3,
+            commands: child_1,
+            context_menus: child_4,
             load_image: self.load_image.clone(),
             on_load: self.on_load.clone(),
-            ribbon: markup::transform_child(&self.ribbon, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ribbon: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3812,9 +3838,11 @@ impl markup::Transform for super::DialogBoxLauncher {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.button_button_regular, ctx, &mut rebase);
         Self {
-            button_button_regular: markup::transform_child(&self.button_button_regular, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            button_button_regular: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3887,9 +3915,11 @@ impl markup::Transform for super::DocumentControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3961,6 +3991,8 @@ impl markup::Transform for super::DropDownBackstageDropDown {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_backstage_item, ctx, &mut rebase);
         Self {
             align_label: self.align_label.clone(),
             enabled: self.enabled.clone(),
@@ -3977,7 +4009,7 @@ impl markup::Transform for super::DropDownBackstageDropDown {
             get_visible: self.get_visible.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
-            item_backstage_item: markup::transform_child(&self.item_backstage_item, ctx),
+            item_backstage_item: child_1,
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             on_action: self.on_action.clone(),
@@ -3985,7 +4017,7 @@ impl markup::Transform for super::DropDownBackstageDropDown {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -4085,8 +4117,11 @@ impl markup::Transform for super::DropDownDropDownRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_item, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.button_button_regular, ctx, &mut rebase);
         Self {
-            button_button_regular: markup::transform_child(&self.button_button_regular, ctx),
+            button_button_regular: child_2,
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
             get_image: self.get_image.clone(),
@@ -4114,7 +4149,7 @@ impl markup::Transform for super::DropDownDropDownRegular {
             insert_after_q: self.insert_after_q.clone(),
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
-            item_item: markup::transform_child(&self.item_item, ctx),
+            item_item: child_1,
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             on_action: self.on_action.clone(),
@@ -4126,7 +4161,7 @@ impl markup::Transform for super::DropDownDropDownRegular {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -4277,7 +4312,7 @@ impl markup::Transform for super::DynamicMenuDynamicMenu {
             size: self.size.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -4412,7 +4447,7 @@ impl markup::Transform for super::DynamicMenuDynamicMenuRegular {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -4534,7 +4569,7 @@ impl markup::Transform for super::EditBoxBackstageEditBox {
             on_change: self.on_change.clone(),
             size_string: self.size_string.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -4656,7 +4691,7 @@ impl markup::Transform for super::EditBoxEditBox {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -4757,9 +4792,11 @@ impl markup::Transform for super::FirstColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4831,8 +4868,11 @@ impl markup::Transform for super::GalleryGallery {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_item, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.button_button_regular, ctx, &mut rebase);
         Self {
-            button_button_regular: markup::transform_child(&self.button_button_regular, ctx),
+            button_button_regular: child_2,
             columns: self.columns.clone(),
             description: self.description.clone(),
             enabled: self.enabled.clone(),
@@ -4868,7 +4908,7 @@ impl markup::Transform for super::GalleryGallery {
             insert_before_q: self.insert_before_q.clone(),
             invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
             item_height: self.item_height.clone(),
-            item_item: markup::transform_child(&self.item_item, ctx),
+            item_item: child_1,
             item_width: self.item_width.clone(),
             keytip: self.keytip.clone(),
             label: self.label.clone(),
@@ -4884,7 +4924,7 @@ impl markup::Transform for super::GalleryGallery {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -5010,8 +5050,11 @@ impl markup::Transform for super::GalleryGalleryRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.item_item, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.button_button_regular, ctx, &mut rebase);
         Self {
-            button_button_regular: markup::transform_child(&self.button_button_regular, ctx),
+            button_button_regular: child_2,
             columns: self.columns.clone(),
             description: self.description.clone(),
             enabled: self.enabled.clone(),
@@ -5046,7 +5089,7 @@ impl markup::Transform for super::GalleryGalleryRegular {
             insert_before_q: self.insert_before_q.clone(),
             invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
             item_height: self.item_height.clone(),
-            item_item: markup::transform_child(&self.item_item, ctx),
+            item_item: child_1,
             item_width: self.item_width.clone(),
             keytip: self.keytip.clone(),
             label: self.label.clone(),
@@ -5061,7 +5104,7 @@ impl markup::Transform for super::GalleryGalleryRegular {
             size_string: self.size_string.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -5186,8 +5229,12 @@ impl markup::Transform for super::GroupBackstageGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.primary_item, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.top_items, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.bottom_items, ctx, &mut rebase);
         Self {
-            bottom_items: markup::transform_child(&self.bottom_items, ctx),
+            bottom_items: child_3,
             get_helper_text: self.get_helper_text.clone(),
             get_label: self.get_label.clone(),
             get_show_label: self.get_show_label.clone(),
@@ -5202,12 +5249,12 @@ impl markup::Transform for super::GroupBackstageGroup {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             label: self.label.clone(),
-            primary_item: markup::transform_child(&self.primary_item, ctx),
+            primary_item: child_1,
             show_label: self.show_label.clone(),
             style: self.style.clone(),
             tag: self.tag.clone(),
-            top_items: markup::transform_child(&self.top_items, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            top_items: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -5303,15 +5350,17 @@ impl markup::Transform for super::GroupBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             expand: self.expand.clone(),
             get_label: self.get_label.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5673,11 +5722,14 @@ impl markup::Transform for super::GroupGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dialog_box_launcher, ctx, &mut rebase);
         Self {
             auto_scale: self.auto_scale.clone(),
             center_vertically: self.center_vertically.clone(),
-            content: markup::transform_items(&self.content, ctx),
-            dialog_box_launcher: markup::transform_child(&self.dialog_box_launcher, ctx),
+            content: child_1,
+            dialog_box_launcher: child_2,
             get_image: self.get_image.clone(),
             get_keytip: self.get_keytip.clone(),
             get_label: self.get_label.clone(),
@@ -5698,7 +5750,7 @@ impl markup::Transform for super::GroupGroup {
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -5819,7 +5871,7 @@ impl markup::Transform for super::Hyperlink {
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
             target: self.target.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -5924,7 +5976,7 @@ impl markup::Transform for super::ImageControl {
             image: self.image.clone(),
             image_mso: self.image_mso.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -6007,7 +6059,7 @@ impl markup::Transform for super::ItemBackstageItem {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -6083,7 +6135,7 @@ impl markup::Transform for super::ItemItem {
             label: self.label.clone(),
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -6170,7 +6222,7 @@ impl markup::Transform for super::LabelControlBackstageLabelControl {
             label: self.label.clone(),
             no_wrap: self.no_wrap.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -6276,7 +6328,7 @@ impl markup::Transform for super::LabelControlLabelControl {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -6370,15 +6422,17 @@ impl markup::Transform for super::LayoutContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             align: self.align.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             expand: self.expand.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
             layout_children: self.layout_children.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6456,6 +6510,8 @@ impl markup::Transform for super::MenuBackstagePrimaryMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.group, ctx, &mut rebase);
         Self {
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
@@ -6465,7 +6521,7 @@ impl markup::Transform for super::MenuBackstagePrimaryMenu {
             get_screentip: self.get_screentip.clone(),
             get_supertip: self.get_supertip.clone(),
             get_visible: self.get_visible.clone(),
-            group: markup::transform_child(&self.group, ctx),
+            group: child_1,
             id: self.id.clone(),
             id_q: self.id_q.clone(),
             image: self.image.clone(),
@@ -6475,7 +6531,7 @@ impl markup::Transform for super::MenuBackstagePrimaryMenu {
             screentip: self.screentip.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -6570,6 +6626,8 @@ impl markup::Transform for super::MenuBackstageSubMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.group, ctx, &mut rebase);
         Self {
             description: self.description.clone(),
             enabled: self.enabled.clone(),
@@ -6579,7 +6637,7 @@ impl markup::Transform for super::MenuBackstageSubMenu {
             get_keytip: self.get_keytip.clone(),
             get_label: self.get_label.clone(),
             get_visible: self.get_visible.clone(),
-            group: markup::transform_child(&self.group, ctx),
+            group: child_1,
             id: self.id.clone(),
             id_q: self.id_q.clone(),
             image: self.image.clone(),
@@ -6587,7 +6645,7 @@ impl markup::Transform for super::MenuBackstageSubMenu {
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -6808,15 +6866,17 @@ impl markup::Transform for super::MenuGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             get_label: self.get_label.clone(),
             id: self.id.clone(),
             id_q: self.id_q.clone(),
             item_size: self.item_size.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6894,8 +6954,10 @@ impl markup::Transform for super::MenuMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             description: self.description.clone(),
             enabled: self.enabled.clone(),
             get_description: self.get_description.clone(),
@@ -6927,7 +6989,7 @@ impl markup::Transform for super::MenuMenu {
             size: self.size.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -7032,8 +7094,10 @@ impl markup::Transform for super::MenuMenuRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             description: self.description.clone(),
             enabled: self.enabled.clone(),
             get_description: self.get_description.clone(),
@@ -7063,7 +7127,7 @@ impl markup::Transform for super::MenuMenuRegular {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -7166,12 +7230,14 @@ impl markup::Transform for super::MenuMenuRoot {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             get_title: self.get_title.clone(),
             item_size: self.item_size.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7246,8 +7312,10 @@ impl markup::Transform for super::MenuMenuWithTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
             get_image: self.get_image.clone(),
@@ -7277,7 +7345,7 @@ impl markup::Transform for super::MenuMenuWithTitle {
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -7391,7 +7459,7 @@ impl markup::Transform for super::MenuSeparatorMenuSeparator {
             insert_before_q: self.insert_before_q.clone(),
             tag: self.tag.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -7481,7 +7549,7 @@ impl markup::Transform for super::MenuSeparatorMenuSeparatorNoTitle {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -7700,9 +7768,11 @@ impl markup::Transform for super::PrimaryItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7859,10 +7929,13 @@ impl markup::Transform for super::Qat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shared_controls, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.document_controls, ctx, &mut rebase);
         Self {
-            document_controls: markup::transform_child(&self.document_controls, ctx),
-            shared_controls: markup::transform_child(&self.shared_controls, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            document_controls: child_2,
+            shared_controls: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8038,7 +8111,7 @@ impl markup::Transform for super::RadioButton {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -8107,6 +8180,8 @@ impl markup::Transform for super::RadioGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.radio_button, ctx, &mut rebase);
         Self {
             align_label: self.align_label.clone(),
             enabled: self.enabled.clone(),
@@ -8124,9 +8199,9 @@ impl markup::Transform for super::RadioGroup {
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             on_action: self.on_action.clone(),
-            radio_button: markup::transform_child(&self.radio_button, ctx),
+            radio_button: child_1,
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -8213,10 +8288,12 @@ impl markup::Transform for super::Ribbon {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             start_from_scratch: self.start_from_scratch.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8394,9 +8471,11 @@ impl markup::Transform for super::SecondColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8477,7 +8556,7 @@ impl markup::Transform for super::Separator {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -8556,9 +8635,11 @@ impl markup::Transform for super::SharedControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8823,8 +8904,11 @@ impl markup::Transform for super::SplitButtonSplitButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
             get_keytip: self.get_keytip.clone(),
@@ -8839,11 +8923,11 @@ impl markup::Transform for super::SplitButtonSplitButton {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             keytip: self.keytip.clone(),
-            menu_menu_regular: markup::transform_child(&self.menu_menu_regular, ctx),
+            menu_menu_regular: child_2,
             show_label: self.show_label.clone(),
             size: self.size.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -8937,8 +9021,11 @@ impl markup::Transform for super::SplitButtonSplitButtonRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
             get_keytip: self.get_keytip.clone(),
@@ -8952,10 +9039,10 @@ impl markup::Transform for super::SplitButtonSplitButtonRegular {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             keytip: self.keytip.clone(),
-            menu_menu_regular: markup::transform_child(&self.menu_menu_regular, ctx),
+            menu_menu_regular: child_2,
             show_label: self.show_label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9050,8 +9137,11 @@ impl markup::Transform for super::SplitButtonSplitButtonWithTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.menu_menu_with_title, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             enabled: self.enabled.clone(),
             get_enabled: self.get_enabled.clone(),
             get_keytip: self.get_keytip.clone(),
@@ -9065,10 +9155,10 @@ impl markup::Transform for super::SplitButtonSplitButtonWithTitle {
             insert_before_mso: self.insert_before_mso.clone(),
             insert_before_q: self.insert_before_q.clone(),
             keytip: self.keytip.clone(),
-            menu_menu_with_title: markup::transform_child(&self.menu_menu_with_title, ctx),
+            menu_menu_with_title: child_2,
             show_label: self.show_label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9163,10 +9253,13 @@ impl markup::Transform for super::TabBackstageTab {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.first_column, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.second_column, ctx, &mut rebase);
         Self {
             column_width_percent: self.column_width_percent.clone(),
             enabled: self.enabled.clone(),
-            first_column: markup::transform_child(&self.first_column, ctx),
+            first_column: child_1,
             first_column_max_width: self.first_column_max_width.clone(),
             first_column_min_width: self.first_column_min_width.clone(),
             get_enabled: self.get_enabled.clone(),
@@ -9183,12 +9276,12 @@ impl markup::Transform for super::TabBackstageTab {
             insert_before_q: self.insert_before_q.clone(),
             keytip: self.keytip.clone(),
             label: self.label.clone(),
-            second_column: markup::transform_child(&self.second_column, ctx),
+            second_column: child_2,
             second_column_max_width: self.second_column_max_width.clone(),
             second_column_min_width: self.second_column_min_width.clone(),
             tag: self.tag.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9282,11 +9375,13 @@ impl markup::Transform for super::TabSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tab_tab, ctx, &mut rebase);
         Self {
             get_visible: self.get_visible.clone(),
             id_mso: self.id_mso.clone(),
-            tab_tab: markup::transform_child(&self.tab_tab, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tab_tab: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9354,11 +9449,13 @@ impl markup::Transform for super::TabTab {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.group_group, ctx, &mut rebase);
         Self {
             get_keytip: self.get_keytip.clone(),
             get_label: self.get_label.clone(),
             get_visible: self.get_visible.clone(),
-            group_group: markup::transform_child(&self.group_group, ctx),
+            group_group: child_1,
             id: self.id.clone(),
             id_mso: self.id_mso.clone(),
             id_q: self.id_q.clone(),
@@ -9369,7 +9466,7 @@ impl markup::Transform for super::TabTab {
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9448,9 +9545,11 @@ impl markup::Transform for super::Tabs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tab_tab, ctx, &mut rebase);
         Self {
-            tab_tab: markup::transform_child(&self.tab_tab, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tab_tab: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9518,12 +9617,12 @@ impl markup::Transform for super::TaskFormGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.category_task_form_group_category, ctx, &mut rebase);
         Self {
             allowed_task_sizes: self.allowed_task_sizes.clone(),
-            category_task_form_group_category: markup::transform_child(
-                &self.category_task_form_group_category,
-                ctx,
-            ),
+            category_task_form_group_category: child_1,
             get_helper_text: self.get_helper_text.clone(),
             get_label: self.get_label.clone(),
             get_show_label: self.get_show_label.clone(),
@@ -9535,7 +9634,7 @@ impl markup::Transform for super::TaskFormGroup {
             label: self.label.clone(),
             show_label: self.show_label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9621,12 +9720,11 @@ impl markup::Transform for super::TaskGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.category_task_group_category, ctx, &mut rebase);
         Self {
             allowed_task_sizes: self.allowed_task_sizes.clone(),
-            category_task_group_category: markup::transform_child(
-                &self.category_task_group_category,
-                ctx,
-            ),
+            category_task_group_category: child_1,
             get_helper_text: self.get_helper_text.clone(),
             get_label: self.get_label.clone(),
             get_show_label: self.get_show_label.clone(),
@@ -9642,7 +9740,7 @@ impl markup::Transform for super::TaskGroup {
             label: self.label.clone(),
             show_label: self.show_label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9732,6 +9830,8 @@ impl markup::Transform for super::TaskTaskFormGroupTask {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.group_backstage_group, ctx, &mut rebase);
         Self {
             description: self.description.clone(),
             enabled: self.enabled.clone(),
@@ -9741,7 +9841,7 @@ impl markup::Transform for super::TaskTaskFormGroupTask {
             get_keytip: self.get_keytip.clone(),
             get_label: self.get_label.clone(),
             get_visible: self.get_visible.clone(),
-            group_backstage_group: markup::transform_child(&self.group_backstage_group, ctx),
+            group_backstage_group: child_1,
             id: self.id.clone(),
             id_mso: self.id_mso.clone(),
             id_q: self.id_q.clone(),
@@ -9754,7 +9854,7 @@ impl markup::Transform for super::TaskTaskFormGroupTask {
             keytip: self.keytip.clone(),
             label: self.label.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visible: self.visible.clone(),
         }
     }
@@ -9872,7 +9972,7 @@ impl markup::Transform for super::TaskTaskGroupTask {
             label: self.label.clone(),
             on_action: self.on_action.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -9984,7 +10084,7 @@ impl markup::Transform for super::ToggleButtonBackstageMenuToggleButton {
             label: self.label.clone(),
             on_action: self.on_action.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -10109,7 +10209,7 @@ impl markup::Transform for super::ToggleButtonToggleButton {
             size: self.size.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -10247,7 +10347,7 @@ impl markup::Transform for super::ToggleButtonToggleButtonRegular {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             visible: self.visible.clone(),
         }
     }
@@ -10382,7 +10482,7 @@ impl markup::Transform for super::ToggleButtonVisibleToggleButton {
             show_label: self.show_label.clone(),
             supertip: self.supertip.clone(),
             tag: self.tag.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -10484,9 +10584,11 @@ impl markup::Transform for super::TopItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

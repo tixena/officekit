@@ -233,7 +233,7 @@ impl markup::Transform for super::ExternalCodeService {
         Self {
             auto_show: self.auto_show.clone(),
             timeout: self.timeout.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

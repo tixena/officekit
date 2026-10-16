@@ -230,13 +230,17 @@ impl markup::Transform for super::ColumnFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dxf, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.filter, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             col_id: self.col_id.clone(),
-            dxf: markup::transform_child(&self.dxf, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            filter: markup::transform_child(&self.filter, ctx),
+            dxf: child_1,
+            ext_lst: child_3,
+            filter: child_2,
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -314,18 +318,24 @@ impl markup::Transform for super::Dxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.number_format, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.border, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
-            border: markup::transform_child(&self.border, ctx),
-            fill: markup::transform_child(&self.fill, ctx),
-            font: markup::transform_child(&self.font, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            alignment: child_4,
+            border: child_5,
+            fill: child_3,
+            font: child_1,
+            future_feature_data_storage_area: child_7,
+            number_format: child_2,
+            protection_properties: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -409,9 +419,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -483,12 +495,14 @@ impl markup::Transform for super::Filter {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             col_id: self.col_id.clone(),
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             hidden_button: self.hidden_button.clone(),
             show_button: self.show_button.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -563,12 +577,15 @@ impl markup::Transform for super::NamedSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.nsv_filter, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            ext_lst: child_2,
             id: self.id.clone(),
             name: self.name.clone(),
-            nsv_filter: markup::transform_child(&self.nsv_filter, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            nsv_filter: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -644,10 +661,13 @@ impl markup::Transform for super::NamedSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.named_sheet_view, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            named_sheet_view: markup::transform_child(&self.named_sheet_view, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_2,
+            named_sheet_view: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -721,14 +741,18 @@ impl markup::Transform for super::NsvFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.column_filter, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sort_rules, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            column_filter: markup::transform_child(&self.column_filter, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            column_filter: child_1,
+            ext_lst: child_3,
             filter_id: self.filter_id.clone(),
             r#ref: self.r#ref.clone(),
-            sort_rules: markup::transform_child(&self.sort_rules, ctx),
+            sort_rules: child_2,
             table_id: self.table_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -816,7 +840,7 @@ impl markup::Transform for super::RichSortCondition {
             r#ref: self.r#ref.clone(),
             rich_sort_key: self.rich_sort_key.clone(),
             sort_by: self.sort_by.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -902,7 +926,7 @@ impl markup::Transform for super::SortCondition {
             icon_set: self.icon_set.clone(),
             r#ref: self.r#ref.clone(),
             sort_by: self.sort_by.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -978,12 +1002,15 @@ impl markup::Transform for super::SortRule {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dxf, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             col_id: self.col_id.clone(),
-            content: markup::transform_child(&self.content, ctx),
-            dxf: markup::transform_child(&self.dxf, ctx),
+            content: child_2,
+            dxf: child_1,
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1144,12 +1171,15 @@ impl markup::Transform for super::SortRules {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sort_rule, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             case_sensitive: self.case_sensitive.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
+            ext_lst: child_2,
             sort_method: self.sort_method.clone(),
-            sort_rule: markup::transform_child(&self.sort_rule, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sort_rule: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

@@ -234,7 +234,7 @@ impl markup::Transform for super::RefreshInterval {
             interval: self.interval.clone(),
             resource_id_int: self.resource_id_int.clone(),
             resource_id_str: self.resource_id_str.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -306,9 +306,11 @@ impl markup::Transform for super::RefreshIntervals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.refresh_interval, ctx, &mut rebase);
         Self {
-            refresh_interval: markup::transform_child(&self.refresh_interval, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            refresh_interval: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

@@ -11,7 +11,7 @@ include!("markup/modules.rs");
 
 use alloc::collections::VecDeque;
 use core::num::ParseFloatError;
-use core::{mem, slice};
+use core::{iter, mem, slice};
 use std::io;
 
 use crate::stream::transform::{Place, Unchanged, WriteThrough, Written};
@@ -157,6 +157,13 @@ pub struct Reader<'element> {
     queue: VecDeque<(usize, Field<'element>)>,
     shape: &'static Shape,
     unknown: Unknown,
+}
+
+/// How many declared children each original declared child of a node became
+/// in its transform, in document order (D8, D20).
+#[derive(Debug, Default)]
+pub struct Rebase {
+    counts: Vec<usize>,
 }
 
 /// The namespace declarations in scope while a typed tree is written: an
@@ -772,6 +779,15 @@ impl<'element> Iterator for Reader<'element> {
             let pending = self.placement.end();
             self.pending(pending);
         }
+    }
+}
+
+impl Rebase {
+    /// The place, in the rebuilt node, of an `Extra` placed after the
+    /// `after`-th original declared child.
+    #[must_use]
+    pub fn place(&self, after: usize) -> usize {
+        self.counts.iter().take(after).sum::<usize>() + after.saturating_sub(self.counts.len())
     }
 }
 
@@ -1668,29 +1684,62 @@ where
     hooks.map_or(Descend::Yes, |found| hook(found, node))
 }
 
-/// A declared child field of a struct type, or a single one of an enum type,
-/// rebuilt with each node transformed.
+/// A declared child field of a struct type rebuilt with each node
+/// transformed; each node counts one declared child in `rebase`.
 #[must_use]
-pub fn transform_child<F>(field: &F, ctx: &mut dyn Context) -> F
+pub fn transform_child<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
     F: Nodes,
     F::Node: Transform,
 {
-    field.transform_nodes(ctx)
+    let rebuilt = field.transform_nodes(ctx);
+    rebase.counts.extend(iter::repeat_n(1, field.nodes().len()));
+    rebuilt
+}
+
+/// A single declared child of an enum type rebuilt with its node transformed.
+///
+/// A declared node counts one declared child in `rebase`, or none when its
+/// hook answers an `Other` item; an `Other` node counts nothing.
+#[must_use]
+pub fn transform_choice<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
+where
+    F: Nodes,
+    F::Node: Item + Transform,
+{
+    let rebuilt = field.transform_nodes(ctx);
+    for (node, became) in field.nodes().iter().zip(rebuilt.nodes()) {
+        if node.is_declared() {
+            rebase.counts.push(usize::from(became.is_declared()));
+        }
+    }
+    rebuilt
 }
 
 /// A list of an enum type rebuilt (D20): each item's list hook first, whose
 /// `Some` puts any number of items, none included, in its place, and the
 /// item's `transform` otherwise.
-pub fn transform_items<T>(items: &[T], ctx: &mut dyn Context) -> Vec<T>
+///
+/// A declared item counts in `rebase` the declared items it became; an
+/// `Other` item counts nothing.
+pub fn transform_items<T>(items: &[T], ctx: &mut dyn Context, rebase: &mut Rebase) -> Vec<T>
 where
     T: Item + Transform,
 {
     let mut out = Vec::with_capacity(items.len());
     for item in items {
+        let start = out.len();
         match item.items(ctx) {
             Some(spliced) => out.extend(spliced),
             None => out.push(item.transform(ctx)),
+        }
+        if item.is_declared() {
+            let became = out
+                .iter()
+                .skip(start)
+                .filter(|node| node.is_declared())
+                .count();
+            rebase.counts.push(became);
         }
     }
     out
@@ -1698,14 +1747,17 @@ where
 
 /// A node's unknown content rebuilt: each `Extra`'s node transformed through
 /// the root `element` hook, the attributes and declarations as they are.
-pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context) -> Unknown {
+///
+/// Each `Extra` is placed, by `rebase`, after what the declared children
+/// before it became.
+pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context, rebase: &Rebase) -> Unknown {
     Unknown {
         attributes: unknown.attributes.clone(),
         children: unknown
             .children
             .iter()
             .map(|extra| Extra {
-                after: extra.after,
+                after: rebase.place(extra.after),
                 node: extra.node.transform(ctx),
             })
             .collect(),

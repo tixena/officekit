@@ -230,10 +230,12 @@ impl markup::Transform for super::A {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -426,7 +428,7 @@ impl markup::Transform for super::BBoolFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -500,7 +502,7 @@ impl markup::Transform for super::BBoolean {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -571,13 +573,15 @@ impl markup::Transform for super::Bag {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             att: self.att.clone(),
             bag_ext_id: self.bag_ext_id.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             ext_ref: self.ext_ref.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -653,9 +657,11 @@ impl markup::Transform for super::BagExt {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.lst, ctx, &mut rebase);
         Self {
-            lst: markup::transform_child(&self.lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            lst: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -729,7 +735,7 @@ impl markup::Transform for super::BagIdBagFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -806,7 +812,7 @@ impl markup::Transform for super::BagIdUnsignedInt {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -878,10 +884,13 @@ impl markup::Transform for super::ColumnBodyRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -956,10 +965,13 @@ impl markup::Transform for super::ColumnHeaderRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1034,10 +1046,13 @@ impl markup::Transform for super::ColumnTotalsRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1114,7 +1129,7 @@ impl markup::Transform for super::DDecimalFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -1188,7 +1203,7 @@ impl markup::Transform for super::DDouble {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -1261,7 +1276,7 @@ impl markup::Transform for super::DXFComplement {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             i: self.i.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1331,10 +1346,13 @@ impl markup::Transform for super::DataRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1408,18 +1426,24 @@ impl markup::Transform for super::Dxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.number_format, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.border, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
-            border: markup::transform_child(&self.border, ctx),
-            fill: markup::transform_child(&self.fill, ctx),
-            font: markup::transform_child(&self.font, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            alignment: child_4,
+            border: child_5,
+            fill: child_3,
+            font: child_1,
+            future_feature_data_storage_area: child_7,
+            number_format: child_2,
+            protection_properties: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1503,9 +1527,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1698,12 +1724,16 @@ impl markup::Transform for super::FeaturePropertyBags {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.bag_ext, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.bag, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            bag: markup::transform_child(&self.bag, ctx),
-            bag_ext: markup::transform_child(&self.bag_ext, ctx),
+            bag: child_2,
+            bag_ext: child_1,
             count: self.count.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_3,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1781,11 +1811,15 @@ impl markup::Transform for super::Fpbs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.bag_ext, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.bag, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            bag: markup::transform_child(&self.bag, ctx),
-            bag_ext: markup::transform_child(&self.bag_ext, ctx),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            bag: child_2,
+            bag_ext: child_1,
+            ext_lst: child_3,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1861,10 +1895,13 @@ impl markup::Transform for super::HeaderRowBorderRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1939,10 +1976,13 @@ impl markup::Transform for super::HeaderRowRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2019,7 +2059,7 @@ impl markup::Transform for super::IIntFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2093,7 +2133,7 @@ impl markup::Transform for super::IInteger {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2166,7 +2206,7 @@ impl markup::Transform for super::RelRelFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2240,7 +2280,7 @@ impl markup::Transform for super::RelString {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2311,10 +2351,13 @@ impl markup::Transform for super::Revdxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2389,7 +2432,7 @@ impl markup::Transform for super::SString {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2462,7 +2505,7 @@ impl markup::Transform for super::SStringFeatureProperty {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             k: self.k.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2535,10 +2578,13 @@ impl markup::Transform for super::TableBorderRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2613,10 +2659,13 @@ impl markup::Transform for super::TotalsRowBorderRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2691,10 +2740,13 @@ impl markup::Transform for super::TotalsRowRevDxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fpbs, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.dxf, ctx, &mut rebase);
         Self {
-            dxf: markup::transform_child(&self.dxf, ctx),
-            fpbs: markup::transform_child(&self.fpbs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dxf: child_2,
+            fpbs: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2771,7 +2823,7 @@ impl markup::Transform for super::XfComplement {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             i: self.i.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

@@ -235,7 +235,7 @@ impl markup::Transform for super::BackgroundPr {
             bw_normal: self.bw_normal.clone(),
             bw_pure: self.bw_pure.clone(),
             target_screen_size: self.target_screen_size.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -310,7 +310,7 @@ impl markup::Transform for super::NonVisualGroupProps {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             is_legacy_group: self.is_legacy_group.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -385,7 +385,7 @@ impl markup::Transform for super::ObjectPr {
             is_active_x: self.is_active_x.clone(),
             link_type: self.link_type.clone(),
             object_id: self.object_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -470,7 +470,7 @@ impl markup::Transform for super::SignatureLine {
             suggested_signer: self.suggested_signer.clone(),
             suggested_signer2: self.suggested_signer2.clone(),
             suggested_signer_email: self.suggested_signer_email.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

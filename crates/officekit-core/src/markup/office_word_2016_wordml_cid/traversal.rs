@@ -233,7 +233,7 @@ impl markup::Transform for super::CommentId {
         Self {
             durable_id: self.durable_id.clone(),
             para_id: self.para_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -304,9 +304,11 @@ impl markup::Transform for super::CommentsIds {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.comment_id, ctx, &mut rebase);
         Self {
-            comment_id: markup::transform_child(&self.comment_id, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            comment_id: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

@@ -231,7 +231,7 @@ impl markup::Transform for super::AbsoluteUrl {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -300,12 +300,15 @@ impl markup::Transform for super::AlternateUrls {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.absolute_url, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.relative_url, ctx, &mut rebase);
         Self {
-            absolute_url: markup::transform_child(&self.absolute_url, ctx),
+            absolute_url: child_1,
             drive_id: self.drive_id.clone(),
             item_id: self.item_id.clone(),
-            relative_url: markup::transform_child(&self.relative_url, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            relative_url: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -382,7 +385,7 @@ impl markup::Transform for super::RelativeUrl {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

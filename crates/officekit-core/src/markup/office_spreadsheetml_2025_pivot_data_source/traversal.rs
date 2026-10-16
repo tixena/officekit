@@ -230,10 +230,12 @@ impl markup::Transform for super::PivotCacheDataSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.f, ctx, &mut rebase);
         Self {
-            f: markup::transform_child(&self.f, ctx),
+            f: child_1,
             r#ref: self.r#ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

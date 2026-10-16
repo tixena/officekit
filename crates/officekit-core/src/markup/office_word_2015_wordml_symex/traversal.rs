@@ -233,7 +233,7 @@ impl markup::Transform for super::SymEx {
         Self {
             char: self.char.clone(),
             font: self.font.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

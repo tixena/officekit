@@ -230,9 +230,11 @@ impl markup::Transform for super::SetOfAdditionalCharacteristics {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.single_characteristic, ctx, &mut rebase);
         Self {
-            single_characteristic: markup::transform_child(&self.single_characteristic, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            single_characteristic: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -311,7 +313,7 @@ impl markup::Transform for super::SingleCharacteristic {
         Self {
             name: self.name.clone(),
             relation: self.relation.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
             vocabulary: self.vocabulary.clone(),
         }

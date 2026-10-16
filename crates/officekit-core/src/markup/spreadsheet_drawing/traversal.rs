@@ -230,12 +230,17 @@ impl markup::Transform for super::AbsoluteAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.position, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.shape_extent, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.client_data, ctx, &mut rebase);
         Self {
-            client_data: markup::transform_child(&self.client_data, ctx),
-            content: markup::transform_child(&self.content, ctx),
-            position: markup::transform_child(&self.position, ctx),
-            shape_extent: markup::transform_child(&self.shape_extent, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            client_data: child_4,
+            content: child_3,
+            position: child_1,
+            shape_extent: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -313,7 +318,7 @@ impl markup::Transform for super::ClientData {
         Self {
             f_locks_with_sheet: self.f_locks_with_sheet.clone(),
             f_prints_with_sheet: self.f_prints_with_sheet.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -377,7 +382,7 @@ impl markup::Transform for super::Col {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -441,7 +446,7 @@ impl markup::Transform for super::ColumnOffset {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -512,11 +517,14 @@ impl markup::Transform for super::ConnectionNonVisualShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shape_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            shape_locks: markup::transform_child(&self.shape_locks, ctx),
+            extension_list: child_2,
+            shape_locks: child_1,
             tx_box: self.tx_box.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -595,13 +603,17 @@ impl markup::Transform for super::ConnectionShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.non_visual_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.style, ctx, &mut rebase);
         Self {
             f_published: self.f_published.clone(),
             r#macro: self.r#macro.clone(),
-            non_visual_properties: markup::transform_child(&self.non_visual_properties, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            style: markup::transform_child(&self.style, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_properties: child_1,
+            properties: child_2,
+            style: child_3,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -681,7 +693,7 @@ impl markup::Transform for super::ContentPart {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -751,12 +763,17 @@ impl markup::Transform for super::EndingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.col, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.column_offset, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.row, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.row_offset, ctx, &mut rebase);
         Self {
-            col: markup::transform_child(&self.col, ctx),
-            column_offset: markup::transform_child(&self.column_offset, ctx),
-            row: markup::transform_child(&self.row, ctx),
-            row_offset: markup::transform_child(&self.row_offset, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            col: child_1,
+            column_offset: child_2,
+            row: child_3,
+            row_offset: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -835,13 +852,17 @@ impl markup::Transform for super::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.non_visual_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.xfrm, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.graphic_object, ctx, &mut rebase);
         Self {
             f_published: self.f_published.clone(),
-            graphic_object: markup::transform_child(&self.graphic_object, ctx),
+            graphic_object: child_3,
             r#macro: self.r#macro.clone(),
-            non_visual_properties: markup::transform_child(&self.non_visual_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm: markup::transform_child(&self.xfrm, ctx),
+            non_visual_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm: child_2,
         }
     }
 }
@@ -915,11 +936,15 @@ impl markup::Transform for super::GroupShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.non_visual_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            non_visual_properties: markup::transform_child(&self.non_visual_properties, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_3,
+            non_visual_properties: child_1,
+            properties: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1109,17 +1134,20 @@ impl markup::Transform for super::GroupShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.scene3d, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
             bw_mode: self.bw_mode.clone(),
-            effect_properties_content: markup::transform_child(
-                &self.effect_properties_content,
-                ctx,
-            ),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            fill_properties_content: markup::transform_child(&self.fill_properties_content, ctx),
-            scene3d: markup::transform_child(&self.scene3d, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm_group_transform2d: markup::transform_child(&self.xfrm_group_transform2d, ctx),
+            effect_properties_content: child_3,
+            extension_list: child_5,
+            fill_properties_content: child_2,
+            scene3d: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm_group_transform2d: child_1,
         }
     }
 }
@@ -1201,12 +1229,17 @@ impl markup::Transform for super::NonVisualConnectorShapeDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.connection_start, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.connection_end, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            connection_end: markup::transform_child(&self.connection_end, ctx),
-            connection_shape_locks: markup::transform_child(&self.connection_shape_locks, ctx),
-            connection_start: markup::transform_child(&self.connection_start, ctx),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            connection_end: child_3,
+            connection_shape_locks: child_1,
+            connection_start: child_2,
+            extension_list: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1288,16 +1321,20 @@ impl markup::Transform for super::NonVisualDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.click_hyperlink, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            click_hyperlink: markup::transform_child(&self.click_hyperlink, ctx),
+            click_hyperlink: child_1,
             descr: self.descr.clone(),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
+            extension_list: child_3,
             hidden: self.hidden.clone(),
-            hyperlink_for_hover: markup::transform_child(&self.hyperlink_for_hover, ctx),
+            hyperlink_for_hover: child_2,
             id: self.id.clone(),
             name: self.name.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1382,10 +1419,13 @@ impl markup::Transform for super::NonVisualGraphicFrameDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            graphic_frame_locks: markup::transform_child(&self.graphic_frame_locks, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension_list: child_2,
+            graphic_frame_locks: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1463,10 +1503,13 @@ impl markup::Transform for super::NonVisualGroupShapeDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.group_shape_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            group_shape_locks: markup::transform_child(&self.group_shape_locks, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension_list: child_2,
+            group_shape_locks: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1544,11 +1587,14 @@ impl markup::Transform for super::NonVisualPictureDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.picture_locks, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            picture_locks: markup::transform_child(&self.picture_locks, ctx),
+            extension_list: child_2,
+            picture_locks: child_1,
             prefer_relative_resize: self.prefer_relative_resize.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1627,16 +1673,18 @@ impl markup::Transform for super::NonVisualPropertiesForAConnectionShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(
+            &self.non_visual_connector_shape_drawing_properties,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            non_visual_connector_shape_drawing_properties: markup::transform_child(
-                &self.non_visual_connector_shape_drawing_properties,
-                ctx,
-            ),
-            non_visual_drawing_properties: markup::transform_child(
-                &self.non_visual_drawing_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_connector_shape_drawing_properties: child_2,
+            non_visual_drawing_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1714,16 +1762,18 @@ impl markup::Transform for super::NonVisualPropertiesForAGraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(
+            &self.non_visual_graphic_frame_drawing_properties,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            non_visual_drawing_properties: markup::transform_child(
-                &self.non_visual_drawing_properties,
-                ctx,
-            ),
-            non_visual_graphic_frame_drawing_properties: markup::transform_child(
-                &self.non_visual_graphic_frame_drawing_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_drawing_properties: child_1,
+            non_visual_graphic_frame_drawing_properties: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1801,16 +1851,18 @@ impl markup::Transform for super::NonVisualPropertiesForAGroupShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(
+            &self.non_visual_group_shape_drawing_properties,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            non_visual_drawing_properties: markup::transform_child(
-                &self.non_visual_drawing_properties,
-                ctx,
-            ),
-            non_visual_group_shape_drawing_properties: markup::transform_child(
-                &self.non_visual_group_shape_drawing_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_drawing_properties: child_1,
+            non_visual_group_shape_drawing_properties: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1888,16 +1940,18 @@ impl markup::Transform for super::NonVisualPropertiesForAPicture {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(
+            &self.non_visual_picture_drawing_properties,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            non_visual_drawing_properties: markup::transform_child(
-                &self.non_visual_drawing_properties,
-                ctx,
-            ),
-            non_visual_picture_drawing_properties: markup::transform_child(
-                &self.non_visual_picture_drawing_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_drawing_properties: child_1,
+            non_visual_picture_drawing_properties: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1975,16 +2029,18 @@ impl markup::Transform for super::NonVisualPropertiesForAShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(
+            &self.connection_non_visual_shape_properties,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            connection_non_visual_shape_properties: markup::transform_child(
-                &self.connection_non_visual_shape_properties,
-                ctx,
-            ),
-            non_visual_drawing_properties: markup::transform_child(
-                &self.non_visual_drawing_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            connection_non_visual_shape_properties: child_2,
+            non_visual_drawing_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2147,12 +2203,17 @@ impl markup::Transform for super::OneCellAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.shape_extent, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.client_data, ctx, &mut rebase);
         Self {
-            client_data: markup::transform_child(&self.client_data, ctx),
-            content: markup::transform_child(&self.content, ctx),
-            shape_extent: markup::transform_child(&self.shape_extent, ctx),
-            starting_anchor_point: markup::transform_child(&self.starting_anchor_point, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            client_data: child_4,
+            content: child_3,
+            shape_extent: child_2,
+            starting_anchor_point: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2227,14 +2288,19 @@ impl markup::Transform for super::Picture {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.non_visual_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.shape_style, ctx, &mut rebase);
         Self {
             f_published: self.f_published.clone(),
-            fill: markup::transform_child(&self.fill, ctx),
+            fill: child_2,
             r#macro: self.r#macro.clone(),
-            non_visual_properties: markup::transform_child(&self.non_visual_properties, ctx),
-            shape_properties: markup::transform_child(&self.shape_properties, ctx),
-            shape_style: markup::transform_child(&self.shape_style, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            non_visual_properties: child_1,
+            shape_properties: child_3,
+            shape_style: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2306,13 +2372,17 @@ impl markup::Transform for super::PictureFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.blip, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.source_rectangle, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            blip: markup::transform_child(&self.blip, ctx),
-            content: markup::transform_child(&self.content, ctx),
+            blip: child_1,
+            content: child_3,
             dpi: self.dpi.clone(),
             rot_with_shape: self.rot_with_shape.clone(),
-            source_rectangle: markup::transform_child(&self.source_rectangle, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            source_rectangle: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2387,7 +2457,7 @@ impl markup::Transform for super::Position {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x: self.x.clone(),
             y: self.y.clone(),
         }
@@ -2453,7 +2523,7 @@ impl markup::Transform for super::Row {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2513,7 +2583,7 @@ impl markup::Transform for super::RowOffset {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2576,16 +2646,21 @@ impl markup::Transform for super::Shape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.non_visual_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.style, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.text_body, ctx, &mut rebase);
         Self {
             f_locks_text: self.f_locks_text.clone(),
             f_published: self.f_published.clone(),
             r#macro: self.r#macro.clone(),
-            non_visual_properties: markup::transform_child(&self.non_visual_properties, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            style: markup::transform_child(&self.style, ctx),
-            text_body: markup::transform_child(&self.text_body, ctx),
+            non_visual_properties: child_1,
+            properties: child_2,
+            style: child_3,
+            text_body: child_4,
             textlink: self.textlink.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2662,7 +2737,7 @@ impl markup::Transform for super::ShapeExtent {
         Self {
             cx: self.cx.clone(),
             cy: self.cy.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2733,20 +2808,26 @@ impl markup::Transform for super::ShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
+        let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.outline, ctx, &mut rebase);
+        let child_5 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.scene3d, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.apply_3d, ctx, &mut rebase);
+        let child_8 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
-            apply_3d: markup::transform_child(&self.apply_3d, ctx),
+            apply_3d: child_7,
             bw_mode: self.bw_mode.clone(),
-            effect_properties_content: markup::transform_child(
-                &self.effect_properties_content,
-                ctx,
-            ),
-            extension_list: markup::transform_child(&self.extension_list, ctx),
-            fill_properties_content: markup::transform_child(&self.fill_properties_content, ctx),
-            geometry_content: markup::transform_child(&self.geometry_content, ctx),
-            outline: markup::transform_child(&self.outline, ctx),
-            scene3d: markup::transform_child(&self.scene3d, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xfrm_transform2d: markup::transform_child(&self.xfrm_transform2d, ctx),
+            effect_properties_content: child_5,
+            extension_list: child_8,
+            fill_properties_content: child_3,
+            geometry_content: child_2,
+            outline: child_4,
+            scene3d: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xfrm_transform2d: child_1,
         }
     }
 }
@@ -2829,12 +2910,17 @@ impl markup::Transform for super::ShapeStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.line_reference, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.fill_reference, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.effect_reference, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.font_reference, ctx, &mut rebase);
         Self {
-            effect_reference: markup::transform_child(&self.effect_reference, ctx),
-            fill_reference: markup::transform_child(&self.fill_reference, ctx),
-            font_reference: markup::transform_child(&self.font_reference, ctx),
-            line_reference: markup::transform_child(&self.line_reference, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            effect_reference: child_3,
+            fill_reference: child_2,
+            font_reference: child_4,
+            line_reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2908,11 +2994,15 @@ impl markup::Transform for super::ShapeTextBody {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.text_list_styles, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.text_paragraphs, ctx, &mut rebase);
         Self {
-            properties: markup::transform_child(&self.properties, ctx),
-            text_list_styles: markup::transform_child(&self.text_list_styles, ctx),
-            text_paragraphs: markup::transform_child(&self.text_paragraphs, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            properties: child_1,
+            text_list_styles: child_2,
+            text_paragraphs: child_3,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2988,12 +3078,17 @@ impl markup::Transform for super::StartingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.col, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.column_offset, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.row, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.row_offset, ctx, &mut rebase);
         Self {
-            col: markup::transform_child(&self.col, ctx),
-            column_offset: markup::transform_child(&self.column_offset, ctx),
-            row: markup::transform_child(&self.row, ctx),
-            row_offset: markup::transform_child(&self.row_offset, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            col: child_1,
+            column_offset: child_2,
+            row: child_3,
+            row_offset: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3072,13 +3167,18 @@ impl markup::Transform for super::TwoCellAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ending_anchor_point, ctx, &mut rebase);
+        let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.client_data, ctx, &mut rebase);
         Self {
-            client_data: markup::transform_child(&self.client_data, ctx),
-            content: markup::transform_child(&self.content, ctx),
+            client_data: child_4,
+            content: child_3,
             edit_as: self.edit_as.clone(),
-            ending_anchor_point: markup::transform_child(&self.ending_anchor_point, ctx),
-            starting_anchor_point: markup::transform_child(&self.starting_anchor_point, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ending_anchor_point: child_2,
+            starting_anchor_point: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3158,9 +3258,11 @@ impl markup::Transform for super::WorksheetDrawing {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3337,13 +3439,16 @@ impl markup::Transform for super::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.offset, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.extents, ctx, &mut rebase);
         Self {
-            extents: markup::transform_child(&self.extents, ctx),
+            extents: child_2,
             flip_h: self.flip_h.clone(),
             flip_v: self.flip_v.clone(),
-            offset: markup::transform_child(&self.offset, ctx),
+            offset: child_1,
             rot: self.rot.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

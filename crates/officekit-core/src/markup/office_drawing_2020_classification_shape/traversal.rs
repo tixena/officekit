@@ -232,7 +232,7 @@ impl markup::Transform for super::Classification {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             classification_outcome_type: self.classification_outcome_type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

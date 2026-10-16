@@ -230,10 +230,13 @@ impl markup::Transform for super::CacheVersionInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.required_feature, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.last_refresh_feature, ctx, &mut rebase);
         Self {
-            last_refresh_feature: markup::transform_child(&self.last_refresh_feature, ctx),
-            required_feature: markup::transform_child(&self.required_feature, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            last_refresh_feature: child_2,
+            required_feature: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -309,7 +312,7 @@ impl markup::Transform for super::LastRefreshFeature {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -382,7 +385,7 @@ impl markup::Transform for super::LastUpdateFeature {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -454,10 +457,13 @@ impl markup::Transform for super::PivotVersionInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.required_feature, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.last_update_feature, ctx, &mut rebase);
         Self {
-            last_update_feature: markup::transform_child(&self.last_update_feature, ctx),
-            required_feature: markup::transform_child(&self.required_feature, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            last_update_feature: child_2,
+            required_feature: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -533,7 +539,7 @@ impl markup::Transform for super::RequiredFeature {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }

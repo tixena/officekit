@@ -234,7 +234,7 @@ impl markup::Transform for super::Alignment {
             relative_indent: self.relative_indent.clone(),
             shrink_to_fit: self.shrink_to_fit.clone(),
             text_rotation: self.text_rotation.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             vertical: self.vertical.clone(),
             wrap_text: self.wrap_text.clone(),
         }
@@ -303,7 +303,7 @@ impl markup::Transform for super::Author {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -358,9 +358,11 @@ impl markup::Transform for super::Authors {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.author, ctx, &mut rebase);
         Self {
-            author: markup::transform_child(&self.author, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            author: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -416,12 +418,14 @@ impl markup::Transform for super::AutoFilterColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             col_id: self.col_id.clone(),
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             hidden_button: self.hidden_button.clone(),
             show_button: self.show_button.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -605,15 +609,17 @@ impl markup::Transform for super::AutoFilterSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.autofilter_column, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sort_state, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            autofilter_column: markup::transform_child(&self.autofilter_column, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            autofilter_column: child_1,
+            future_feature_data_storage_area: child_3,
             r#ref: self.r#ref.clone(),
-            sort_state: markup::transform_child(&self.sort_state, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sort_state: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -687,9 +693,11 @@ impl markup::Transform for super::AutoSortScope {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
         Self {
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivot_area: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -755,7 +763,7 @@ impl markup::Transform for super::BackgroundColor {
             rgb: self.rgb.clone(),
             theme: self.theme.clone(),
             tint: self.tint.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -823,7 +831,7 @@ impl markup::Transform for super::BackgroundImage {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -886,7 +894,7 @@ impl markup::Transform for super::Bold {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -940,13 +948,15 @@ impl markup::Transform for super::Boolean {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
             cp: self.cp.clone(),
             f: self.f.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_1,
             u: self.u.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             v: self.v.clone(),
         }
     }
@@ -1008,26 +1018,30 @@ impl markup::Transform for super::Border {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.leading_edge_border_start, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.trailing_edge_border_end, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.leading_edge_border_left, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.trailing_edge_border_right, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.top, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.bottom, ctx, &mut rebase);
+        let child_7 = markup::transform_child(&self.diagonal, ctx, &mut rebase);
+        let child_8 = markup::transform_child(&self.vertical_inner, ctx, &mut rebase);
+        let child_9 = markup::transform_child(&self.horizontal_inner_borders, ctx, &mut rebase);
         Self {
-            bottom: markup::transform_child(&self.bottom, ctx),
-            diagonal: markup::transform_child(&self.diagonal, ctx),
+            bottom: child_6,
+            diagonal: child_7,
             diagonal_down: self.diagonal_down.clone(),
             diagonal_up: self.diagonal_up.clone(),
-            horizontal_inner_borders: markup::transform_child(&self.horizontal_inner_borders, ctx),
-            leading_edge_border_left: markup::transform_child(&self.leading_edge_border_left, ctx),
-            leading_edge_border_start: markup::transform_child(
-                &self.leading_edge_border_start,
-                ctx,
-            ),
+            horizontal_inner_borders: child_9,
+            leading_edge_border_left: child_3,
+            leading_edge_border_start: child_1,
             outline: self.outline.clone(),
-            top: markup::transform_child(&self.top, ctx),
-            trailing_edge_border_end: markup::transform_child(&self.trailing_edge_border_end, ctx),
-            trailing_edge_border_right: markup::transform_child(
-                &self.trailing_edge_border_right,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            vertical_inner: markup::transform_child(&self.vertical_inner, ctx),
+            top: child_5,
+            trailing_edge_border_end: child_2,
+            trailing_edge_border_right: child_4,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            vertical_inner: child_8,
         }
     }
 }
@@ -1102,10 +1116,12 @@ impl markup::Transform for super::Borders {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.border, ctx, &mut rebase);
         Self {
-            border: markup::transform_child(&self.border, ctx),
+            border: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1162,10 +1178,12 @@ impl markup::Transform for super::BottomBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1232,7 +1250,7 @@ impl markup::Transform for super::Break {
             max: self.max.clone(),
             min: self.min.clone(),
             pt: self.pt.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1395,9 +1413,11 @@ impl markup::Transform for super::CachedWorksheetData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.external_sheet_data_set, ctx, &mut rebase);
         Self {
-            external_sheet_data_set: markup::transform_child(&self.external_sheet_data_set, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            external_sheet_data_set: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1472,7 +1492,7 @@ impl markup::Transform for super::CalculatedColumnFormula {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             array: self.array.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -1541,15 +1561,16 @@ impl markup::Transform for super::CalculatedItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             field: self.field.clone(),
             formula: self.formula.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            future_feature_data_storage_area: child_2,
+            pivot_area: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1613,10 +1634,12 @@ impl markup::Transform for super::CalculatedItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.calculated_item, ctx, &mut rebase);
         Self {
-            calculated_item: markup::transform_child(&self.calculated_item, ctx),
+            calculated_item: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1681,11 +1704,11 @@ impl markup::Transform for super::CalculatedMember {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             hierarchy: self.hierarchy.clone(),
             mdx: self.mdx.clone(),
             member_name: self.member_name.clone(),
@@ -1693,7 +1716,7 @@ impl markup::Transform for super::CalculatedMember {
             parent: self.parent.clone(),
             set: self.set.clone(),
             solve_order: self.solve_order.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1764,10 +1787,12 @@ impl markup::Transform for super::CalculatedMembers {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.calculated_member, ctx, &mut rebase);
         Self {
-            calculated_member: markup::transform_child(&self.calculated_member, ctx),
+            calculated_member: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1837,13 +1862,14 @@ impl markup::Transform for super::CalculationChainInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_calc_cell, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell_calc_cell: markup::transform_child(&self.cell_calc_cell, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cell_calc_cell: child_1,
+            future_feature_data_storage_area: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1932,7 +1958,7 @@ impl markup::Transform for super::CalculationProperties {
             iterate_count: self.iterate_count.clone(),
             iterate_delta: self.iterate_delta.clone(),
             ref_mode: self.ref_mode.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2011,20 +2037,23 @@ impl markup::Transform for super::Cell {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formula_f, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.value, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.rich_text_inline, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             cm: self.cm.clone(),
-            formula_f: markup::transform_child(&self.formula_f, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            formula_f: child_1,
+            future_feature_data_storage_area: child_4,
             ph: self.ph.clone(),
             r: self.r.clone(),
-            rich_text_inline: markup::transform_child(&self.rich_text_inline, ctx),
+            rich_text_inline: child_3,
             s: self.s.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            value: markup::transform_child(&self.value, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            value: child_2,
             vm: self.vm.clone(),
         }
     }
@@ -2100,7 +2129,7 @@ impl markup::Transform for super::CellCalcCell {
             r#ref: self.r#ref.clone(),
             s: self.s.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2164,10 +2193,12 @@ impl markup::Transform for super::CellFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            format: markup::transform_child(&self.format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2228,10 +2259,12 @@ impl markup::Transform for super::CellMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.block, ctx, &mut rebase);
         Self {
-            block: markup::transform_child(&self.block, ctx),
+            block: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2292,15 +2325,16 @@ impl markup::Transform for super::CellProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.column_xml_properties, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            column_xml_properties: markup::transform_child(&self.column_xml_properties, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            column_xml_properties: child_1,
+            future_feature_data_storage_area: child_2,
             id: self.id.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2364,14 +2398,13 @@ impl markup::Transform for super::CellSmartTag {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.properties_cell_smart_tag_pr, ctx, &mut rebase);
         Self {
             deleted: self.deleted.clone(),
-            properties_cell_smart_tag_pr: markup::transform_child(
-                &self.properties_cell_smart_tag_pr,
-                ctx,
-            ),
+            properties_cell_smart_tag_pr: child_1,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xml_based: self.xml_based.clone(),
         }
     }
@@ -2435,10 +2468,12 @@ impl markup::Transform for super::CellSmartTags {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_smart_tag, ctx, &mut rebase);
         Self {
-            cell_smart_tag: markup::transform_child(&self.cell_smart_tag, ctx),
+            cell_smart_tag: child_1,
             r: self.r.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2499,17 +2534,17 @@ impl markup::Transform for super::CellStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             builtin_id: self.builtin_id.clone(),
             custom_builtin: self.custom_builtin.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             hidden: self.hidden.clone(),
             i_level: self.i_level.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xf_id: self.xf_id.clone(),
         }
     }
@@ -2576,10 +2611,12 @@ impl markup::Transform for super::CellStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_style, ctx, &mut rebase);
         Self {
-            cell_style: markup::transform_child(&self.cell_style, ctx),
+            cell_style: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2641,7 +2678,7 @@ impl markup::Transform for super::CellValue {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -2702,7 +2739,7 @@ impl markup::Transform for super::CellWatchItem {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r: self.r.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2760,9 +2797,11 @@ impl markup::Transform for super::CellWatchItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_watch_item, ctx, &mut rebase);
         Self {
-            cell_watch_item: markup::transform_child(&self.cell_watch_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cell_watch_item: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2827,7 +2866,7 @@ impl markup::Transform for super::CharacterSet {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -2886,6 +2925,9 @@ impl markup::Transform for super::CharacterValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             b: self.b.clone(),
             bc: self.bc.clone(),
@@ -2895,12 +2937,12 @@ impl markup::Transform for super::CharacterValue {
             fc: self.fc.clone(),
             i: self.i.clone(),
             r#in: self.r#in.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_2,
             st: self.st.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
+            tuples: child_1,
             u: self.u.clone(),
             un: self.un.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             v: self.v.clone(),
         }
     }
@@ -2980,7 +3022,7 @@ impl markup::Transform for super::CharacterValueXStringElement {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -3051,31 +3093,43 @@ impl markup::Transform for super::ChartSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.views, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.protection, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.custom_chart_sheet_views, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.page_margins, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.page_setup, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.header_footer_settings, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.drawing, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.legacy_drawing_reference, ctx, &mut rebase);
+        let child_10 = markup::transform_child(
+            &self.legacy_drawing_reference_in_header_footer,
+            ctx,
+            &mut rebase,
+        );
+        let child_11 =
+            markup::transform_child(&self.drawing_reference_in_header_footer, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.background_image, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.web_publishing_items, ctx, &mut rebase);
+        let child_14 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            background_image: markup::transform_child(&self.background_image, ctx),
-            custom_chart_sheet_views: markup::transform_child(&self.custom_chart_sheet_views, ctx),
-            drawing: markup::transform_child(&self.drawing, ctx),
-            drawing_reference_in_header_footer: markup::transform_child(
-                &self.drawing_reference_in_header_footer,
-                ctx,
-            ),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            header_footer_settings: markup::transform_child(&self.header_footer_settings, ctx),
-            legacy_drawing_reference: markup::transform_child(&self.legacy_drawing_reference, ctx),
-            legacy_drawing_reference_in_header_footer: markup::transform_child(
-                &self.legacy_drawing_reference_in_header_footer,
-                ctx,
-            ),
-            page_margins: markup::transform_child(&self.page_margins, ctx),
-            page_setup: markup::transform_child(&self.page_setup, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            protection: markup::transform_child(&self.protection, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            views: markup::transform_child(&self.views, ctx),
-            web_publishing_items: markup::transform_child(&self.web_publishing_items, ctx),
+            background_image: child_12,
+            custom_chart_sheet_views: child_04,
+            drawing: child_08,
+            drawing_reference_in_header_footer: child_11,
+            future_feature_data_storage_area: child_14,
+            header_footer_settings: child_07,
+            legacy_drawing_reference: child_09,
+            legacy_drawing_reference_in_header_footer: child_10,
+            page_margins: child_05,
+            page_setup: child_06,
+            properties: child_01,
+            protection: child_03,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            views: child_02,
+            web_publishing_items: child_13,
         }
     }
 }
@@ -3176,7 +3230,7 @@ impl markup::Transform for super::ChartSheetPageSetup {
             paper_height: self.paper_height.clone(),
             paper_size: self.paper_size.clone(),
             paper_width: self.paper_width.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             use_first_page_number: self.use_first_page_number.clone(),
             use_printer_defaults: self.use_printer_defaults.clone(),
             vertical_dpi: self.vertical_dpi.clone(),
@@ -3262,11 +3316,13 @@ impl markup::Transform for super::ChartSheetProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_tab_color, ctx, &mut rebase);
         Self {
             code_name: self.code_name.clone(),
             published: self.published.clone(),
-            sheet_tab_color: markup::transform_child(&self.sheet_tab_color, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sheet_tab_color: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3349,7 +3405,7 @@ impl markup::Transform for super::ChartSheetProtection {
             password: self.password.clone(),
             salt_value: self.salt_value.clone(),
             spin_count: self.spin_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -3422,13 +3478,13 @@ impl markup::Transform for super::ChartSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             tab_selected: self.tab_selected.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             workbook_view_id: self.workbook_view_id.clone(),
             zoom_scale: self.zoom_scale.clone(),
             zoom_to_fit: self.zoom_to_fit.clone(),
@@ -3499,13 +3555,14 @@ impl markup::Transform for super::ChartSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.chart_sheet_view, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            chart_sheet_view: markup::transform_child(&self.chart_sheet_view, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            chart_sheet_view: child_1,
+            future_feature_data_storage_area: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3578,7 +3635,7 @@ impl markup::Transform for super::ColorFilterCriteria {
         Self {
             cell_color: self.cell_color.clone(),
             dxf_id: self.dxf_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -3646,9 +3703,11 @@ impl markup::Transform for super::ColorIndexes {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.rgb_color, ctx, &mut rebase);
         Self {
-            rgb_color: markup::transform_child(&self.rgb_color, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            rgb_color: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3708,13 +3767,14 @@ impl markup::Transform for super::ColorScale {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            conditional_format_value_object: markup::transform_child(
-                &self.conditional_format_value_object,
-                ctx,
-            ),
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            conditional_format_value_object: child_1,
+            data_bar_color: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3776,10 +3836,13 @@ impl markup::Transform for super::Colors {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.color_indexes, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.mru, ctx, &mut rebase);
         Self {
-            color_indexes: markup::transform_child(&self.color_indexes, ctx),
-            mru: markup::transform_child(&self.mru, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            color_indexes: child_1,
+            mru: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3837,10 +3900,12 @@ impl markup::Transform for super::ColumnFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            field: markup::transform_child(&self.field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3901,9 +3966,11 @@ impl markup::Transform for super::ColumnInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.column_width_formatting, ctx, &mut rebase);
         Self {
-            column_width_formatting: markup::transform_child(&self.column_width_formatting, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            column_width_formatting: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3968,10 +4035,12 @@ impl markup::Transform for super::ColumnItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.row_items_i, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            row_items_i: markup::transform_child(&self.row_items_i, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            row_items_i: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4038,7 +4107,7 @@ impl markup::Transform for super::ColumnOLAPHierarchies {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             hierarchy_usage: self.hierarchy_usage.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -4109,10 +4178,12 @@ impl markup::Transform for super::ColumnOLAPHierarchyReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.column_olap_hierarchies, ctx, &mut rebase);
         Self {
-            column_olap_hierarchies: markup::transform_child(&self.column_olap_hierarchies, ctx),
+            column_olap_hierarchies: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4199,7 +4270,7 @@ impl markup::Transform for super::ColumnWidthFormatting {
             outline_level: self.outline_level.clone(),
             phonetic: self.phonetic.clone(),
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             width: self.width.clone(),
         }
     }
@@ -4280,13 +4351,13 @@ impl markup::Transform for super::ColumnXMLProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             map_id: self.map_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xml_data_type: self.xml_data_type.clone(),
             xpath: self.xpath.clone(),
         }
@@ -4360,14 +4431,17 @@ impl markup::Transform for super::Comment {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
         Self {
             author_id: self.author_id.clone(),
             guid: self.guid.clone(),
-            properties: markup::transform_child(&self.properties, ctx),
+            properties: child_2,
             r#ref: self.r#ref.clone(),
             shape_id: self.shape_id.clone(),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            text: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4429,6 +4503,8 @@ impl markup::Transform for super::CommentProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         Self {
             alt_text: self.alt_text.clone(),
             auto_fill: self.auto_fill.clone(),
@@ -4439,11 +4515,11 @@ impl markup::Transform for super::CommentProperties {
             just_last_x: self.just_last_x.clone(),
             lock_text: self.lock_text.clone(),
             locked: self.locked.clone(),
-            object_cell_anchor: markup::transform_child(&self.object_cell_anchor, ctx),
+            object_cell_anchor: child_1,
             print: self.print.clone(),
             text_h_align: self.text_h_align.clone(),
             text_v_align: self.text_v_align.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4520,12 +4596,17 @@ impl markup::Transform for super::CommentText {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.rich_text_run, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.phonetic_run, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.phonetic_properties, ctx, &mut rebase);
         Self {
-            phonetic_properties: markup::transform_child(&self.phonetic_properties, ctx),
-            phonetic_run: markup::transform_child(&self.phonetic_run, ctx),
-            rich_text_run: markup::transform_child(&self.rich_text_run, ctx),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            phonetic_properties: child_4,
+            phonetic_run: child_3,
+            rich_text_run: child_2,
+            text: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4591,14 +4672,16 @@ impl markup::Transform for super::Comments {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.authors, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.list, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            authors: markup::transform_child(&self.authors, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            list: markup::transform_child(&self.list, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            authors: child_1,
+            future_feature_data_storage_area: child_3,
+            list: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4659,7 +4742,7 @@ impl markup::Transform for super::Condense {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -4718,14 +4801,14 @@ impl markup::Transform for super::ConditionalFormatValueObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             gte: self.gte.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             val: self.val.clone(),
         }
     }
@@ -4801,13 +4884,16 @@ impl markup::Transform for super::ConditionalFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(
+            &self.conditional_formatting_conditional_format,
+            ctx,
+            &mut rebase,
+        );
         Self {
-            conditional_formatting_conditional_format: markup::transform_child(
-                &self.conditional_formatting_conditional_format,
-                ctx,
-            ),
+            conditional_formatting_conditional_format: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4877,15 +4963,16 @@ impl markup::Transform for super::ConditionalFormatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.rule, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             pivot: self.pivot.clone(),
-            rule: markup::transform_child(&self.rule, ctx),
+            rule: child_1,
             sqref: self.sqref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -4962,16 +5049,17 @@ impl markup::Transform for super::ConditionalFormattingConditionalFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_areas, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pivot_areas: markup::transform_child(&self.pivot_areas, ctx),
+            future_feature_data_storage_area: child_2,
+            pivot_areas: child_1,
             priority: self.priority.clone(),
             scope: self.scope.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5052,19 +5140,23 @@ impl markup::Transform for super::ConditionalFormattingRule {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formula, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.color_scale, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.data_bar, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.icon_set, ctx, &mut rebase);
+        let child_5 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             above_average: self.above_average.clone(),
             bottom: self.bottom.clone(),
-            color_scale: markup::transform_child(&self.color_scale, ctx),
-            data_bar: markup::transform_child(&self.data_bar, ctx),
+            color_scale: child_2,
+            data_bar: child_3,
             dxf_id: self.dxf_id.clone(),
             equal_average: self.equal_average.clone(),
-            formula: markup::transform_child(&self.formula, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            icon_set: markup::transform_child(&self.icon_set, ctx),
+            formula: child_1,
+            future_feature_data_storage_area: child_5,
+            icon_set: child_4,
             operator: self.operator.clone(),
             percent: self.percent.clone(),
             priority: self.priority.clone(),
@@ -5074,7 +5166,7 @@ impl markup::Transform for super::ConditionalFormattingRule {
             text: self.text.clone(),
             time_period: self.time_period.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5167,16 +5259,21 @@ impl markup::Transform for super::Connection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.database_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.olap_properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.web_query_properties, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.text_import_settings, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.query_parameters, ctx, &mut rebase);
+        let child_6 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             background: self.background.clone(),
             credentials: self.credentials.clone(),
-            database_properties: markup::transform_child(&self.database_properties, ctx),
+            database_properties: child_1,
             deleted: self.deleted.clone(),
             description: self.description.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_6,
             id: self.id.clone(),
             interval: self.interval.clone(),
             keep_alive: self.keep_alive.clone(),
@@ -5184,9 +5281,9 @@ impl markup::Transform for super::Connection {
             name: self.name.clone(),
             new: self.new.clone(),
             odc_file: self.odc_file.clone(),
-            olap_properties: markup::transform_child(&self.olap_properties, ctx),
+            olap_properties: child_2,
             only_use_connection_file: self.only_use_connection_file.clone(),
-            query_parameters: markup::transform_child(&self.query_parameters, ctx),
+            query_parameters: child_5,
             reconnection_method: self.reconnection_method.clone(),
             refresh_on_load: self.refresh_on_load.clone(),
             refreshed_version: self.refreshed_version.clone(),
@@ -5194,10 +5291,10 @@ impl markup::Transform for super::Connection {
             save_password: self.save_password.clone(),
             single_sign_on_id: self.single_sign_on_id.clone(),
             source_file: self.source_file.clone(),
-            text_import_settings: markup::transform_child(&self.text_import_settings, ctx),
+            text_import_settings: child_4,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            web_query_properties: markup::transform_child(&self.web_query_properties, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            web_query_properties: child_3,
         }
     }
 }
@@ -5287,9 +5384,11 @@ impl markup::Transform for super::Connections {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.connection, ctx, &mut rebase);
         Self {
-            connection: markup::transform_child(&self.connection, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            connection: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5353,11 +5452,14 @@ impl markup::Transform for super::ConsolidationSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.page_item_values, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.range_sets, ctx, &mut rebase);
         Self {
             auto_page: self.auto_page.clone(),
-            page_item_values: markup::transform_child(&self.page_item_values, ctx),
-            range_sets: markup::transform_child(&self.range_sets, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            page_item_values: child_1,
+            range_sets: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5433,14 +5535,18 @@ impl markup::Transform for super::CustomChartSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.page_margins, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.chart_sheet_page_setup, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.header_footer_settings, ctx, &mut rebase);
         Self {
-            chart_sheet_page_setup: markup::transform_child(&self.chart_sheet_page_setup, ctx),
+            chart_sheet_page_setup: child_2,
             guid: self.guid.clone(),
-            header_footer_settings: markup::transform_child(&self.header_footer_settings, ctx),
-            page_margins: markup::transform_child(&self.page_margins, ctx),
+            header_footer_settings: child_3,
+            page_margins: child_1,
             scale: self.scale.clone(),
             state: self.state.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             zoom_to_fit: self.zoom_to_fit.clone(),
         }
     }
@@ -5522,9 +5628,11 @@ impl markup::Transform for super::CustomChartSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_chart_sheet_view, ctx, &mut rebase);
         Self {
-            custom_chart_sheet_view: markup::transform_child(&self.custom_chart_sheet_view, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_chart_sheet_view: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5599,7 +5707,7 @@ impl markup::Transform for super::CustomFilterCriteria {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             operator: self.operator.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -5668,10 +5776,12 @@ impl markup::Transform for super::CustomFilters {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_filter_criteria, ctx, &mut rebase);
         Self {
             and: self.and.clone(),
-            custom_filter_criteria: markup::transform_child(&self.custom_filter_criteria, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_filter_criteria: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5732,9 +5842,11 @@ impl markup::Transform for super::CustomProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_property, ctx, &mut rebase);
         Self {
-            custom_property: markup::transform_child(&self.custom_property, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_property: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -5801,7 +5913,7 @@ impl markup::Transform for super::CustomProperty {
         Self {
             id: self.id.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -5860,29 +5972,38 @@ impl markup::Transform for super::CustomSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.pane, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.selection, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.row_breaks, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.vertical_page_breaks, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.page_margins, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.print_options, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.page_setup_settings, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.header_footer_settings, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.autofilter_settings, ctx, &mut rebase);
+        let child_10 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            autofilter_settings: markup::transform_child(&self.autofilter_settings, ctx),
+            autofilter_settings: child_09,
             color_id: self.color_id.clone(),
             filter: self.filter.clone(),
             filter_unique: self.filter_unique.clone(),
             fit_to_page: self.fit_to_page.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_10,
             guid: self.guid.clone(),
-            header_footer_settings: markup::transform_child(&self.header_footer_settings, ctx),
+            header_footer_settings: child_08,
             hidden_columns: self.hidden_columns.clone(),
             hidden_rows: self.hidden_rows.clone(),
             outline_symbols: self.outline_symbols.clone(),
-            page_margins: markup::transform_child(&self.page_margins, ctx),
-            page_setup_settings: markup::transform_child(&self.page_setup_settings, ctx),
-            pane: markup::transform_child(&self.pane, ctx),
+            page_margins: child_05,
+            page_setup_settings: child_07,
+            pane: child_01,
             print_area: self.print_area.clone(),
-            print_options: markup::transform_child(&self.print_options, ctx),
-            row_breaks: markup::transform_child(&self.row_breaks, ctx),
+            print_options: child_06,
+            row_breaks: child_03,
             scale: self.scale.clone(),
-            selection: markup::transform_child(&self.selection, ctx),
+            selection: child_02,
             show_auto_filter: self.show_auto_filter.clone(),
             show_formulas: self.show_formulas.clone(),
             show_grid_lines: self.show_grid_lines.clone(),
@@ -5891,8 +6012,8 @@ impl markup::Transform for super::CustomSheetView {
             show_ruler: self.show_ruler.clone(),
             state: self.state.clone(),
             top_left_cell: self.top_left_cell.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            vertical_page_breaks: markup::transform_child(&self.vertical_page_breaks, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            vertical_page_breaks: child_04,
             view: self.view.clone(),
             zero_values: self.zero_values.clone(),
         }
@@ -5996,9 +6117,11 @@ impl markup::Transform for super::CustomSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_sheet_view, ctx, &mut rebase);
         Self {
-            custom_sheet_view: markup::transform_child(&self.custom_sheet_view, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_sheet_view: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6067,14 +6190,14 @@ impl markup::Transform for super::CustomWorkbookView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             active_sheet_id: self.active_sheet_id.clone(),
             auto_update: self.auto_update.clone(),
             changes_saved_win: self.changes_saved_win.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             guid: self.guid.clone(),
             include_hidden_row_col: self.include_hidden_row_col.clone(),
             include_print_settings: self.include_print_settings.clone(),
@@ -6092,7 +6215,7 @@ impl markup::Transform for super::CustomWorkbookView {
             show_statusbar: self.show_statusbar.clone(),
             show_vertical_scroll: self.show_vertical_scroll.clone(),
             tab_ratio: self.tab_ratio.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             window_height: self.window_height.clone(),
             window_width: self.window_width.clone(),
             x_window: self.x_window.clone(),
@@ -6193,9 +6316,11 @@ impl markup::Transform for super::CustomWorkbookViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_workbook_view, ctx, &mut rebase);
         Self {
-            custom_workbook_view: markup::transform_child(&self.custom_workbook_view, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_workbook_view: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6264,11 +6389,13 @@ impl markup::Transform for super::DDEConnection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dde_items_collection, ctx, &mut rebase);
         Self {
-            dde_items_collection: markup::transform_child(&self.dde_items_collection, ctx),
+            dde_items_collection: child_1,
             dde_service: self.dde_service.clone(),
             dde_topic: self.dde_topic.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6330,13 +6457,15 @@ impl markup::Transform for super::DDEItemDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dde_name_values, ctx, &mut rebase);
         Self {
             advise: self.advise.clone(),
-            dde_name_values: markup::transform_child(&self.dde_name_values, ctx),
+            dde_name_values: child_1,
             name: self.name.clone(),
             ole: self.ole.clone(),
             prefer_pic: self.prefer_pic.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6409,9 +6538,11 @@ impl markup::Transform for super::DDEItemsCollection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dde_item_definition, ctx, &mut rebase);
         Self {
-            dde_item_definition: markup::transform_child(&self.dde_item_definition, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            dde_item_definition: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6481,7 +6612,7 @@ impl markup::Transform for super::DDELinkValue {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -6540,11 +6671,13 @@ impl markup::Transform for super::DDENameValues {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.value, ctx, &mut rebase);
         Self {
             cols: self.cols.clone(),
             rows: self.rows.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            value: markup::transform_child(&self.value, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            value: child_1,
         }
     }
 }
@@ -6606,16 +6739,17 @@ impl markup::Transform for super::DataBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.color, ctx, &mut rebase);
         Self {
-            color: markup::transform_child(&self.color, ctx),
-            conditional_format_value_object: markup::transform_child(
-                &self.conditional_format_value_object,
-                ctx,
-            ),
+            color: child_2,
+            conditional_format_value_object: child_1,
             max_length: self.max_length.clone(),
             min_length: self.min_length.clone(),
             show_value: self.show_value.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6682,7 +6816,7 @@ impl markup::Transform for super::DataBarColor {
             rgb: self.rgb.clone(),
             theme: self.theme.clone(),
             tint: self.tint.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -6744,17 +6878,17 @@ impl markup::Transform for super::DataConsolidate {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.data_consolidation_references, ctx, &mut rebase);
         Self {
-            data_consolidation_references: markup::transform_child(
-                &self.data_consolidation_references,
-                ctx,
-            ),
+            data_consolidation_references: child_1,
             function: self.function.clone(),
             left_labels: self.left_labels.clone(),
             link: self.link.clone(),
             start_labels: self.start_labels.clone(),
             top_labels: self.top_labels.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6832,7 +6966,7 @@ impl markup::Transform for super::DataConsolidationReference {
             name: self.name.clone(),
             r#ref: self.r#ref.clone(),
             sheet: self.sheet.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -6909,13 +7043,12 @@ impl markup::Transform for super::DataConsolidationReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_consolidation_reference, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            data_consolidation_reference: markup::transform_child(
-                &self.data_consolidation_reference,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            data_consolidation_reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -6988,19 +7121,19 @@ impl markup::Transform for super::DataFieldItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             base_field: self.base_field.clone(),
             base_item: self.base_item.clone(),
             fld: self.fld.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             name: self.name.clone(),
             num_fmt_id: self.num_fmt_id.clone(),
             show_data_as: self.show_data_as.clone(),
             subtotal: self.subtotal.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7067,10 +7200,12 @@ impl markup::Transform for super::DataFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_field_item, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            data_field_item: markup::transform_child(&self.data_field_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            data_field_item: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7131,15 +7266,19 @@ impl markup::Transform for super::DataValidation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.list, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.formula_1, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.formula_2, ctx, &mut rebase);
         Self {
             allow_blank: self.allow_blank.clone(),
             error: self.error.clone(),
             error_style: self.error_style.clone(),
             error_title: self.error_title.clone(),
-            formula_1: markup::transform_child(&self.formula_1, ctx),
-            formula_2: markup::transform_child(&self.formula_2, ctx),
+            formula_1: child_2,
+            formula_2: child_3,
             ime_mode: self.ime_mode.clone(),
-            list: markup::transform_child(&self.list, ctx),
+            list: child_1,
             operator: self.operator.clone(),
             prompt: self.prompt.clone(),
             prompt_title: self.prompt_title.clone(),
@@ -7148,7 +7287,7 @@ impl markup::Transform for super::DataValidation {
             show_input_message: self.show_input_message.clone(),
             sqref: self.sqref.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7225,11 +7364,13 @@ impl markup::Transform for super::DataValidations {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_validation, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            data_validation: markup::transform_child(&self.data_validation, ctx),
+            data_validation: child_1,
             disable_prompts: self.disable_prompts.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             x_window: self.x_window.clone(),
             y_window: self.y_window.clone(),
         }
@@ -7304,7 +7445,7 @@ impl markup::Transform for super::DatabaseProperties {
             command_type: self.command_type.clone(),
             connection: self.connection.clone(),
             server_command: self.server_command.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -7377,7 +7518,7 @@ impl markup::Transform for super::DateGrouping {
             minute: self.minute.clone(),
             month: self.month.clone(),
             second: self.second.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             year: self.year.clone(),
         }
     }
@@ -7442,13 +7583,15 @@ impl markup::Transform for super::DateTime {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
             cp: self.cp.clone(),
             f: self.f.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_1,
             u: self.u.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             v: self.v.clone(),
         }
     }
@@ -7527,7 +7670,7 @@ impl markup::Transform for super::DefinedName {
             publish_to_server: self.publish_to_server.clone(),
             shortcut_key: self.shortcut_key.clone(),
             status_bar: self.status_bar.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
             vb_procedure: self.vb_procedure.clone(),
             workbook_parameter: self.workbook_parameter.clone(),
@@ -7612,7 +7755,7 @@ impl markup::Transform for super::DefinedNameExternalDefinedName {
             name: self.name.clone(),
             refers_to: self.refers_to.clone(),
             sheet_id: self.sheet_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -7684,9 +7827,11 @@ impl markup::Transform for super::DefinedNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.defined_name, ctx, &mut rebase);
         Self {
-            defined_name: markup::transform_child(&self.defined_name, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            defined_name: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7748,7 +7893,7 @@ impl markup::Transform for super::DeletedField {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -7806,10 +7951,12 @@ impl markup::Transform for super::DeletedFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.deleted_field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            deleted_field: markup::transform_child(&self.deleted_field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            deleted_field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7870,10 +8017,12 @@ impl markup::Transform for super::Diagonal {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -7930,33 +8079,47 @@ impl markup::Transform for super::DialogSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.views, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.format_properties, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.protection_options, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.custom_sheet_views, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.print_options, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.page_margins, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.page_setup_settings, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.header_footer_settings, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.drawing, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.legacy_drawing_reference, ctx, &mut rebase);
+        let child_12 = markup::transform_child(
+            &self.legacy_drawing_reference_in_header_footer,
+            ctx,
+            &mut rebase,
+        );
+        let child_13 =
+            markup::transform_child(&self.drawing_reference_in_header_footer, ctx, &mut rebase);
+        let child_14 = markup::transform_child(&self.embedded_objects, ctx, &mut rebase);
+        let child_15 = markup::transform_child(&self.embedded_controls, ctx, &mut rebase);
+        let child_16 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            custom_sheet_views: markup::transform_child(&self.custom_sheet_views, ctx),
-            drawing: markup::transform_child(&self.drawing, ctx),
-            drawing_reference_in_header_footer: markup::transform_child(
-                &self.drawing_reference_in_header_footer,
-                ctx,
-            ),
-            embedded_controls: markup::transform_child(&self.embedded_controls, ctx),
-            embedded_objects: markup::transform_child(&self.embedded_objects, ctx),
-            format_properties: markup::transform_child(&self.format_properties, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            header_footer_settings: markup::transform_child(&self.header_footer_settings, ctx),
-            legacy_drawing_reference: markup::transform_child(&self.legacy_drawing_reference, ctx),
-            legacy_drawing_reference_in_header_footer: markup::transform_child(
-                &self.legacy_drawing_reference_in_header_footer,
-                ctx,
-            ),
-            page_margins: markup::transform_child(&self.page_margins, ctx),
-            page_setup_settings: markup::transform_child(&self.page_setup_settings, ctx),
-            print_options: markup::transform_child(&self.print_options, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            protection_options: markup::transform_child(&self.protection_options, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            views: markup::transform_child(&self.views, ctx),
+            custom_sheet_views: child_05,
+            drawing: child_10,
+            drawing_reference_in_header_footer: child_13,
+            embedded_controls: child_15,
+            embedded_objects: child_14,
+            format_properties: child_03,
+            future_feature_data_storage_area: child_16,
+            header_footer_settings: child_09,
+            legacy_drawing_reference: child_11,
+            legacy_drawing_reference_in_header_footer: child_12,
+            page_margins: child_07,
+            page_setup_settings: child_08,
+            print_options: child_06,
+            properties: child_01,
+            protection_options: child_04,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            views: child_02,
         }
     }
 }
@@ -8050,10 +8213,12 @@ impl markup::Transform for super::DiscreteGroupingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shared_items_index, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            shared_items_index: markup::transform_child(&self.shared_items_index, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            shared_items_index: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8128,7 +8293,7 @@ impl markup::Transform for super::Drawing {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -8206,7 +8371,7 @@ impl markup::Transform for super::DrawingReferenceInHeaderFooter {
             rhe: self.rhe.clone(),
             rhf: self.rhf.clone(),
             rho: self.rho.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -8298,7 +8463,7 @@ impl markup::Transform for super::DynamicFilter {
             max_val: self.max_val.clone(),
             max_val_iso: self.max_val_iso.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
             val_iso: self.val_iso.clone(),
         }
@@ -8362,12 +8527,14 @@ impl markup::Transform for super::EmbeddedControl {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
         Self {
             id: self.id.clone(),
             name: self.name.clone(),
-            properties: markup::transform_child(&self.properties, ctx),
+            properties: child_1,
             shape_id: self.shape_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8438,6 +8605,8 @@ impl markup::Transform for super::EmbeddedControlProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         Self {
             alt_text: self.alt_text.clone(),
             auto_fill: self.auto_fill.clone(),
@@ -8451,11 +8620,11 @@ impl markup::Transform for super::EmbeddedControlProperties {
             list_fill_range: self.list_fill_range.clone(),
             locked: self.locked.clone(),
             r#macro: self.r#macro.clone(),
-            object_cell_anchor: markup::transform_child(&self.object_cell_anchor, ctx),
+            object_cell_anchor: child_1,
             print: self.print.clone(),
             recalc_always: self.recalc_always.clone(),
             ui_object: self.ui_object.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8542,9 +8711,11 @@ impl markup::Transform for super::EmbeddedControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.embedded_control, ctx, &mut rebase);
         Self {
-            embedded_control: markup::transform_child(&self.embedded_control, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            embedded_control: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8608,6 +8779,8 @@ impl markup::Transform for super::EmbeddedObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
         Self {
             auto_load: self.auto_load.clone(),
             dv_aspect: self.dv_aspect.clone(),
@@ -8615,9 +8788,9 @@ impl markup::Transform for super::EmbeddedObject {
             link: self.link.clone(),
             ole_update: self.ole_update.clone(),
             prog_id: self.prog_id.clone(),
-            properties: markup::transform_child(&self.properties, ctx),
+            properties: child_1,
             shape_id: self.shape_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8688,6 +8861,8 @@ impl markup::Transform for super::EmbeddedObjectProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         Self {
             alt_text: self.alt_text.clone(),
             auto_fill: self.auto_fill.clone(),
@@ -8699,10 +8874,10 @@ impl markup::Transform for super::EmbeddedObjectProperties {
             id: self.id.clone(),
             locked: self.locked.clone(),
             r#macro: self.r#macro.clone(),
-            object_cell_anchor: markup::transform_child(&self.object_cell_anchor, ctx),
+            object_cell_anchor: child_1,
             print: self.print.clone(),
             ui_object: self.ui_object.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8789,7 +8964,7 @@ impl markup::Transform for super::EmbeddedObjectSize {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r#ref: self.r#ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -8856,9 +9031,11 @@ impl markup::Transform for super::EmbeddedObjects {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.embedded_object, ctx, &mut rebase);
         Self {
-            embedded_object: markup::transform_child(&self.embedded_object, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            embedded_object: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -8922,10 +9099,12 @@ impl markup::Transform for super::Entries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9082,6 +9261,9 @@ impl markup::Transform for super::ErrorValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             b: self.b.clone(),
             bc: self.bc.clone(),
@@ -9091,12 +9273,12 @@ impl markup::Transform for super::ErrorValue {
             fc: self.fc.clone(),
             i: self.i.clone(),
             r#in: self.r#in.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_2,
             st: self.st.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
+            tuples: child_1,
             u: self.u.clone(),
             un: self.un.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             v: self.v.clone(),
         }
     }
@@ -9172,7 +9354,7 @@ impl markup::Transform for super::EvenPageFooter {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -9236,7 +9418,7 @@ impl markup::Transform for super::EvenPageHeader {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -9300,7 +9482,7 @@ impl markup::Transform for super::Extend {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -9355,9 +9537,11 @@ impl markup::Transform for super::Extension {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             uri: self.uri.clone(),
         }
     }
@@ -9419,11 +9603,13 @@ impl markup::Transform for super::ExternalCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_value, ctx, &mut rebase);
         Self {
-            cell_value: markup::transform_child(&self.cell_value, ctx),
+            cell_value: child_1,
             r: self.r.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             vm: self.vm.clone(),
         }
     }
@@ -9494,7 +9680,7 @@ impl markup::Transform for super::ExternalReference {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -9651,13 +9837,14 @@ impl markup::Transform for super::ExternalReferenceExternalLink {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            future_feature_data_storage_area: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9731,9 +9918,11 @@ impl markup::Transform for super::ExternalReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.external_reference, ctx, &mut rebase);
         Self {
-            external_reference: markup::transform_child(&self.external_reference, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            external_reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9802,11 +9991,13 @@ impl markup::Transform for super::ExternalSheetDataSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.row_external_row, ctx, &mut rebase);
         Self {
             refresh_error: self.refresh_error.clone(),
-            row_external_row: markup::transform_child(&self.row_external_row, ctx),
+            row_external_row: child_1,
             sheet_id: self.sheet_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9877,16 +10068,19 @@ impl markup::Transform for super::ExternalWorkbook {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.alternate_urls, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.supporting_workbook_sheet_names, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.named_links, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.cached_worksheet_data, ctx, &mut rebase);
         Self {
-            alternate_urls: markup::transform_child(&self.alternate_urls, ctx),
-            cached_worksheet_data: markup::transform_child(&self.cached_worksheet_data, ctx),
+            alternate_urls: child_1,
+            cached_worksheet_data: child_4,
             id: self.id.clone(),
-            named_links: markup::transform_child(&self.named_links, ctx),
-            supporting_workbook_sheet_names: markup::transform_child(
-                &self.supporting_workbook_sheet_names,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            named_links: child_3,
+            supporting_workbook_sheet_names: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -9958,7 +10152,7 @@ impl markup::Transform for super::Field {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x: self.x.clone(),
         }
     }
@@ -10016,19 +10210,17 @@ impl markup::Transform for super::FieldGroupProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.range_grouping_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.discrete_grouping_properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.olap_group_items, ctx, &mut rebase);
         Self {
             base: self.base.clone(),
-            discrete_grouping_properties: markup::transform_child(
-                &self.discrete_grouping_properties,
-                ctx,
-            ),
-            olap_group_items: markup::transform_child(&self.olap_group_items, ctx),
+            discrete_grouping_properties: child_2,
+            olap_group_items: child_3,
             par: self.par.clone(),
-            range_grouping_properties: markup::transform_child(
-                &self.range_grouping_properties,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            range_grouping_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10103,10 +10295,12 @@ impl markup::Transform for super::FieldItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivottable_field_item, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivottable_field_item: markup::transform_child(&self.pivottable_field_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivottable_field_item: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10167,13 +10361,12 @@ impl markup::Transform for super::Fields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text_import_field_settings, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            text_import_field_settings: markup::transform_child(
-                &self.text_import_field_settings,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            text_import_field_settings: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10230,10 +10423,12 @@ impl markup::Transform for super::FieldsUsage {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotcache_field_id, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivotcache_field_id: markup::transform_child(&self.pivotcache_field_id, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivotcache_field_id: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10303,7 +10498,7 @@ impl markup::Transform for super::FileRecoveryProperties {
             crash_save: self.crash_save.clone(),
             data_extract_load: self.data_extract_load.clone(),
             repair_load: self.repair_load.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -10380,7 +10575,7 @@ impl markup::Transform for super::FileSharing {
             reservation_password: self.reservation_password.clone(),
             salt_value: self.salt_value.clone(),
             spin_count: self.spin_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             user_name: self.user_name.clone(),
         }
     }
@@ -10451,7 +10646,7 @@ impl markup::Transform for super::FileVersion {
             last_edited: self.last_edited.clone(),
             lowest_edited: self.lowest_edited.clone(),
             rup_build: self.rup_build.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -10513,9 +10708,11 @@ impl markup::Transform for super::Fill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10643,10 +10840,12 @@ impl markup::Transform for super::Fills {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fill, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            fill: markup::transform_child(&self.fill, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            fill: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10703,7 +10902,7 @@ impl markup::Transform for super::Filter {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -10758,13 +10957,17 @@ impl markup::Transform for super::FilterCriteria {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.x14_filter, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.filter, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.date_grouping, ctx, &mut rebase);
         Self {
             blank: self.blank.clone(),
             calendar_type: self.calendar_type.clone(),
-            date_grouping: markup::transform_child(&self.date_grouping, ctx),
-            filter: markup::transform_child(&self.filter, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            x14_filter: markup::transform_child(&self.x14_filter, ctx),
+            date_grouping: child_3,
+            filter: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            x14_filter: child_1,
         }
     }
 }
@@ -10830,13 +11033,12 @@ impl markup::Transform for super::Filters {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivottable_advanced_filter, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivottable_advanced_filter: markup::transform_child(
-                &self.pivottable_advanced_filter,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivottable_advanced_filter: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -10894,7 +11096,7 @@ impl markup::Transform for super::FirstPageFooter {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -10958,7 +11160,7 @@ impl markup::Transform for super::FirstPageHeader {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -11021,9 +11223,11 @@ impl markup::Transform for super::Font {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -11208,7 +11412,7 @@ impl markup::Transform for super::FontFamily {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -11272,7 +11476,7 @@ impl markup::Transform for super::FontFamilyIntProperty {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -11341,7 +11545,7 @@ impl markup::Transform for super::FontName {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -11401,7 +11605,7 @@ impl markup::Transform for super::FontRFont {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -11461,7 +11665,7 @@ impl markup::Transform for super::FontSize {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -11520,11 +11724,13 @@ impl markup::Transform for super::Fonts {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            font: markup::transform_child(&self.font, ctx),
+            font: child_1,
             known_fonts: self.known_fonts.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -11587,7 +11793,7 @@ impl markup::Transform for super::ForegroundColor {
             rgb: self.rgb.clone(),
             theme: self.theme.clone(),
             tint: self.tint.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -11653,8 +11859,13 @@ impl markup::Transform for super::Format {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
+            alignment: child_1,
             apply_alignment: self.apply_alignment.clone(),
             apply_border: self.apply_border.clone(),
             apply_fill: self.apply_fill.clone(),
@@ -11664,15 +11875,12 @@ impl markup::Transform for super::Format {
             border_id: self.border_id.clone(),
             fill_id: self.fill_id.clone(),
             font_id: self.font_id.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             num_fmt_id: self.num_fmt_id.clone(),
             pivot_button: self.pivot_button.clone(),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
+            protection_properties: child_2,
             quote_prefix: self.quote_prefix.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xf_id: self.xf_id.clone(),
         }
     }
@@ -11746,10 +11954,12 @@ impl markup::Transform for super::Formats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formatting, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            formatting: markup::transform_child(&self.formatting, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            formatting: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -11806,18 +12016,24 @@ impl markup::Transform for super::Formatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.number_format, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.border, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
-            border: markup::transform_child(&self.border, ctx),
-            fill: markup::transform_child(&self.fill, ctx),
-            font: markup::transform_child(&self.font, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            alignment: child_4,
+            border: child_5,
+            fill: child_3,
+            font: child_1,
+            future_feature_data_storage_area: child_7,
+            number_format: child_2,
+            protection_properties: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -11889,10 +12105,12 @@ impl markup::Transform for super::FormattingRecords {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            format: markup::transform_child(&self.format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -11959,7 +12177,7 @@ impl markup::Transform for super::Formula {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -12015,7 +12233,7 @@ impl markup::Transform for super::Formula1 {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -12071,7 +12289,7 @@ impl markup::Transform for super::Formula2 {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -12139,7 +12357,7 @@ impl markup::Transform for super::FormulaF {
             r#ref: self.r#ref.clone(),
             si: self.si.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -12212,7 +12430,7 @@ impl markup::Transform for super::FunctionGroup {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -12270,10 +12488,12 @@ impl markup::Transform for super::FunctionGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.function_group, ctx, &mut rebase);
         Self {
             built_in_group_count: self.built_in_group_count.clone(),
-            function_group: markup::transform_child(&self.function_group, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            function_group: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12338,9 +12558,11 @@ impl markup::Transform for super::FutureFeatureDataStorageArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12412,15 +12634,16 @@ impl markup::Transform for super::FutureMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.block, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            block: markup::transform_child(&self.block, ctx),
+            block: child_1,
             count: self.count.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12488,12 +12711,12 @@ impl markup::Transform for super::FutureMetadataBlock {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            future_feature_data_storage_area: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12566,11 +12789,13 @@ impl markup::Transform for super::GenericObjectLinkConnection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.object_link_items, ctx, &mut rebase);
         Self {
             id: self.id.clone(),
-            object_link_items: markup::transform_child(&self.object_link_items, ctx),
+            object_link_items: child_1,
             prog_id: self.prog_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12644,15 +12869,17 @@ impl markup::Transform for super::Gradient {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.stop, ctx, &mut rebase);
         Self {
             bottom: self.bottom.clone(),
             degree: self.degree.clone(),
             left: self.left.clone(),
             right: self.right.clone(),
-            stop: markup::transform_child(&self.stop, ctx),
+            stop: child_1,
             top: self.top.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12714,10 +12941,12 @@ impl markup::Transform for super::GradientStop {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             position: self.position.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12778,20 +13007,22 @@ impl markup::Transform for super::Header {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_id_map, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.reviewed_list, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             date_time: self.date_time.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             guid: self.guid.clone(),
             id: self.id.clone(),
             max_r_id: self.max_r_id.clone(),
             max_sheet_id: self.max_sheet_id.clone(),
             min_r_id: self.min_r_id.clone(),
-            reviewed_list: markup::transform_child(&self.reviewed_list, ctx),
-            sheet_id_map: markup::transform_child(&self.sheet_id_map, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            reviewed_list: child_2,
+            sheet_id_map: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             user_name: self.user_name.clone(),
         }
     }
@@ -12863,18 +13094,25 @@ impl markup::Transform for super::HeaderFooterSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.odd_header, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.odd_page_footer, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.even_page_header, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.even_page_footer, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.first_page_header, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.first_page_footer, ctx, &mut rebase);
         Self {
             align_with_margins: self.align_with_margins.clone(),
             different_first: self.different_first.clone(),
             different_odd_even: self.different_odd_even.clone(),
-            even_page_footer: markup::transform_child(&self.even_page_footer, ctx),
-            even_page_header: markup::transform_child(&self.even_page_header, ctx),
-            first_page_footer: markup::transform_child(&self.first_page_footer, ctx),
-            first_page_header: markup::transform_child(&self.first_page_header, ctx),
-            odd_header: markup::transform_child(&self.odd_header, ctx),
-            odd_page_footer: markup::transform_child(&self.odd_page_footer, ctx),
+            even_page_footer: child_4,
+            even_page_header: child_3,
+            first_page_footer: child_6,
+            first_page_header: child_5,
+            odd_header: child_1,
+            odd_page_footer: child_2,
             scale_with_doc: self.scale_with_doc.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -12961,10 +13199,12 @@ impl markup::Transform for super::HorizontalInnerBorders {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13040,7 +13280,7 @@ impl markup::Transform for super::Hyperlink {
             location: self.location.clone(),
             r#ref: self.r#ref.clone(),
             tooltip: self.tooltip.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -13102,9 +13342,11 @@ impl markup::Transform for super::Hyperlinks {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.hyperlink, ctx, &mut rebase);
         Self {
-            hyperlink: markup::transform_child(&self.hyperlink, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            hyperlink: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13167,7 +13409,7 @@ impl markup::Transform for super::IconFilter {
         Self {
             icon_id: self.icon_id.clone(),
             icon_set: self.icon_set.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -13226,16 +13468,16 @@ impl markup::Transform for super::IconSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
         Self {
-            conditional_format_value_object: markup::transform_child(
-                &self.conditional_format_value_object,
-                ctx,
-            ),
+            conditional_format_value_object: child_1,
             icon_set: self.icon_set.clone(),
             percent: self.percent.clone(),
             reverse: self.reverse.clone(),
             show_value: self.show_value.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13305,7 +13547,7 @@ impl markup::Transform for super::IgnoredError {
             number_stored_as_text: self.number_stored_as_text.clone(),
             sqref: self.sqref.clone(),
             two_digit_text_year: self.two_digit_text_year.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             unlocked_formula: self.unlocked_formula.clone(),
         }
     }
@@ -13373,13 +13615,14 @@ impl markup::Transform for super::IgnoredErrors {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.ignored_error, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            ignored_error: markup::transform_child(&self.ignored_error, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            future_feature_data_storage_area: child_2,
+            ignored_error: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13446,7 +13689,7 @@ impl markup::Transform for super::InputCells {
             num_fmt_id: self.num_fmt_id.clone(),
             r: self.r.clone(),
             undone: self.undone.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -13510,7 +13753,7 @@ impl markup::Transform for super::Italic {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -13569,7 +13812,7 @@ impl markup::Transform for super::KPIMDXMetadata {
             n: self.n.clone(),
             np: self.np.clone(),
             p: self.p.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -13633,10 +13876,12 @@ impl markup::Transform for super::LeadingEdgeBorderLeft {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13710,10 +13955,12 @@ impl markup::Transform for super::LeadingEdgeBorderStart {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -13789,7 +14036,7 @@ impl markup::Transform for super::LegacyDrawingReference {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -13862,7 +14109,7 @@ impl markup::Transform for super::LegacyDrawingReferenceInHeaderFooter {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -13932,9 +14179,11 @@ impl markup::Transform for super::ListOfComments {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.comment, ctx, &mut rebase);
         Self {
-            comment: markup::transform_child(&self.comment, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            comment: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14002,10 +14251,12 @@ impl markup::Transform for super::MDXMetadataInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.mdx_metadata_record, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            mdx_metadata_record: markup::transform_child(&self.mdx_metadata_record, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            mdx_metadata_record: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14075,11 +14326,13 @@ impl markup::Transform for super::MDXMetadataRecord {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             f: self.f.clone(),
             n: self.n.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14146,9 +14399,11 @@ impl markup::Transform for super::MRUColors {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            data_bar_color: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14208,10 +14463,12 @@ impl markup::Transform for super::Main {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.topic, ctx, &mut rebase);
         Self {
             first: self.first.clone(),
-            topic: markup::transform_child(&self.topic, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            topic: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14269,7 +14526,7 @@ impl markup::Transform for super::Member {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -14328,7 +14585,7 @@ impl markup::Transform for super::MemberPropertiesMap {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -14401,7 +14658,7 @@ impl markup::Transform for super::MemberPropertyIndex {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -14476,7 +14733,7 @@ impl markup::Transform for super::MemberPropertyMDXMetadata {
         Self {
             n: self.n.clone(),
             np: self.np.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -14553,7 +14810,7 @@ impl markup::Transform for super::MemberUniqueNameIndex {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             s: self.s.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x: self.x.clone(),
         }
     }
@@ -14622,11 +14879,13 @@ impl markup::Transform for super::Members {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
             level: self.level.clone(),
-            member: markup::transform_child(&self.member, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            member: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14684,10 +14943,12 @@ impl markup::Transform for super::MergeCells {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.merged_cell, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            merged_cell: markup::transform_child(&self.merged_cell, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            merged_cell: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14750,7 +15011,7 @@ impl markup::Transform for super::MergedCell {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r#ref: self.r#ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -14808,18 +15069,24 @@ impl markup::Transform for super::Metadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.types_collection, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.string_store, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.mdx_metadata_information, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.future, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.cell, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.value, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell: markup::transform_child(&self.cell, ctx),
-            future: markup::transform_child(&self.future, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            mdx_metadata_information: markup::transform_child(&self.mdx_metadata_information, ctx),
-            string_store: markup::transform_child(&self.string_store, ctx),
-            types_collection: markup::transform_child(&self.types_collection, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            value: markup::transform_child(&self.value, ctx),
+            cell: child_5,
+            future: child_4,
+            future_feature_data_storage_area: child_7,
+            mdx_metadata_information: child_3,
+            string_store: child_2,
+            types_collection: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            value: child_6,
         }
     }
 }
@@ -14887,9 +15154,11 @@ impl markup::Transform for super::MetadataBlock {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.metadata_record, ctx, &mut rebase);
         Self {
-            metadata_record: markup::transform_child(&self.metadata_record, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            metadata_record: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -14951,7 +15220,7 @@ impl markup::Transform for super::MetadataRecord {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -15015,13 +15284,13 @@ impl markup::Transform for super::MetadataStringStore {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.character_value_x_string_element, ctx, &mut rebase);
         Self {
-            character_value_x_string_element: markup::transform_child(
-                &self.character_value_x_string_element,
-                ctx,
-            ),
+            character_value_x_string_element: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -15124,7 +15393,7 @@ impl markup::Transform for super::MetadataTypeInformation {
             row_col_shift: self.row_col_shift.clone(),
             split_all: self.split_all.clone(),
             split_first: self.split_first.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -15222,13 +15491,12 @@ impl markup::Transform for super::MetadataTypesCollection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.metadata_type_information, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            metadata_type_information: markup::transform_child(
-                &self.metadata_type_information,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            metadata_type_information: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -15391,12 +15659,12 @@ impl markup::Transform for super::NamedLinks {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.defined_name_external_defined_name, ctx, &mut rebase);
         Self {
-            defined_name_external_defined_name: markup::transform_child(
-                &self.defined_name_external_defined_name,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            defined_name_external_defined_name: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -15553,20 +15821,23 @@ impl markup::Transform for super::NewCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formula_f, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.cell_value, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.rich_text_inline, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell_value: markup::transform_child(&self.cell_value, ctx),
+            cell_value: child_2,
             cm: self.cm.clone(),
-            formula_f: markup::transform_child(&self.formula_f, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            formula_f: child_1,
+            future_feature_data_storage_area: child_4,
             ph: self.ph.clone(),
             r: self.r.clone(),
-            rich_text_inline: markup::transform_child(&self.rich_text_inline, ctx),
+            rich_text_inline: child_3,
             s: self.s.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             vm: self.vm.clone(),
         }
     }
@@ -15643,18 +15914,24 @@ impl markup::Transform for super::NewFormattingInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.number_format, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.border, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
-            border: markup::transform_child(&self.border, ctx),
-            fill: markup::transform_child(&self.fill, ctx),
-            font: markup::transform_child(&self.font, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            alignment: child_4,
+            border: child_5,
+            fill: child_3,
+            font: child_1,
+            future_feature_data_storage_area: child_7,
+            number_format: child_2,
+            protection_properties: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -15735,6 +16012,9 @@ impl markup::Transform for super::NoValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             b: self.b.clone(),
             bc: self.bc.clone(),
@@ -15744,12 +16024,12 @@ impl markup::Transform for super::NoValue {
             fc: self.fc.clone(),
             i: self.i.clone(),
             r#in: self.r#in.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_2,
             st: self.st.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
+            tuples: child_1,
             u: self.u.clone(),
             un: self.un.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -15823,7 +16103,7 @@ impl markup::Transform for super::NoValueTableMissing {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -15892,7 +16172,7 @@ impl markup::Transform for super::NumberFormat {
         Self {
             format_code: self.format_code.clone(),
             num_fmt_id: self.num_fmt_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -15951,10 +16231,12 @@ impl markup::Transform for super::NumberFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.number_format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            number_format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16015,6 +16297,9 @@ impl markup::Transform for super::Numeric {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             b: self.b.clone(),
             bc: self.bc.clone(),
@@ -16024,12 +16309,12 @@ impl markup::Transform for super::Numeric {
             fc: self.fc.clone(),
             i: self.i.clone(),
             r#in: self.r#in.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_2,
             st: self.st.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
+            tuples: child_1,
             u: self.u.clone(),
             un: self.un.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             v: self.v.clone(),
         }
     }
@@ -16105,7 +16390,7 @@ impl markup::Transform for super::OLAPDimension {
             measure: self.measure.clone(),
             name: self.name.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -16166,10 +16451,12 @@ impl markup::Transform for super::OLAPDimensions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_dimension, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_dimension: markup::transform_child(&self.olap_dimension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_dimension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16230,14 +16517,16 @@ impl markup::Transform for super::OLAPGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.members, ctx, &mut rebase);
         Self {
             caption: self.caption.clone(),
             id: self.id.clone(),
-            members: markup::transform_child(&self.members, ctx),
+            members: child_1,
             name: self.name.clone(),
             unique_name: self.unique_name.clone(),
             unique_parent: self.unique_parent.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16302,10 +16591,12 @@ impl markup::Transform for super::OLAPGroupItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16373,7 +16664,7 @@ impl markup::Transform for super::OLAPGroupMember {
         Self {
             group: self.group.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -16436,10 +16727,12 @@ impl markup::Transform for super::OLAPGroupMembers {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_group_member, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_group_member: markup::transform_child(&self.olap_group_member, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_group_member: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16509,16 +16802,17 @@ impl markup::Transform for super::OLAPGroupingLevelsGroupLevel {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_level_groups, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             caption: self.caption.clone(),
             custom_roll_up: self.custom_roll_up.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            olap_level_groups: markup::transform_child(&self.olap_level_groups, ctx),
+            future_feature_data_storage_area: child_2,
+            olap_level_groups: child_1,
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             user: self.user.clone(),
         }
     }
@@ -16601,13 +16895,13 @@ impl markup::Transform for super::OLAPGroupingLevelsGroupLevels {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.olap_grouping_levels_group_level, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_grouping_levels_group_level: markup::transform_child(
-                &self.olap_grouping_levels_group_level,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_grouping_levels_group_level: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16680,6 +16974,11 @@ impl markup::Transform for super::OLAPHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_member_properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.members, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             caption: self.caption.clone(),
             drag_off: self.drag_off.clone(),
@@ -16687,18 +16986,15 @@ impl markup::Transform for super::OLAPHierarchy {
             drag_to_data: self.drag_to_data.clone(),
             drag_to_page: self.drag_to_page.clone(),
             drag_to_row: self.drag_to_row.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             include_new_items_in_filter: self.include_new_items_in_filter.clone(),
-            members: markup::transform_child(&self.members, ctx),
+            members: child_2,
             multiple_item_selection_allowed: self.multiple_item_selection_allowed.clone(),
-            olap_member_properties: markup::transform_child(&self.olap_member_properties, ctx),
+            olap_member_properties: child_1,
             outline: self.outline.clone(),
             show_in_field_list: self.show_in_field_list.clone(),
             subtotal_top: self.subtotal_top.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16783,7 +17079,7 @@ impl markup::Transform for super::OLAPKPI {
             time: self.time.clone(),
             trend: self.trend.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
             weight: self.weight.clone(),
         }
@@ -16849,10 +17145,12 @@ impl markup::Transform for super::OLAPKPIs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_kpi, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_kpi: markup::transform_child(&self.olap_kpi, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_kpi: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16913,10 +17211,12 @@ impl markup::Transform for super::OLAPLevelGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_group, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_group: markup::transform_child(&self.olap_group, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_group: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -16988,7 +17288,7 @@ impl markup::Transform for super::OLAPMeasureGroupMap {
         Self {
             dimension: self.dimension.clone(),
             measure_group: self.measure_group.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -17060,10 +17360,12 @@ impl markup::Transform for super::OLAPMeasureGroupMaps {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_measure_group_map, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_measure_group_map: markup::transform_child(&self.olap_measure_group_map, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_measure_group_map: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17140,7 +17442,7 @@ impl markup::Transform for super::OLAPMeasureGroupMeasureGroup {
         Self {
             caption: self.caption.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -17211,13 +17513,13 @@ impl markup::Transform for super::OLAPMeasureGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.olap_measure_group_measure_group, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_measure_group_measure_group: markup::transform_child(
-                &self.olap_measure_group_measure_group,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_measure_group_measure_group: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17287,10 +17589,12 @@ impl markup::Transform for super::OLAPMemberProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_member_property, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_member_property: markup::transform_child(&self.olap_member_property, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_member_property: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17374,7 +17678,7 @@ impl markup::Transform for super::OLAPMemberProperty {
             show_as_caption: self.show_as_caption.clone(),
             show_cell: self.show_cell.clone(),
             show_tip: self.show_tip.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -17459,7 +17763,7 @@ impl markup::Transform for super::OLAPProperties {
             server_font: self.server_font.clone(),
             server_font_color: self.server_font_color.clone(),
             server_number_format: self.server_number_format.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -17525,10 +17829,12 @@ impl markup::Transform for super::OLAPQueryCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.query, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            query: markup::transform_child(&self.query, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            query: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17593,15 +17899,18 @@ impl markup::Transform for super::OLAPSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sort_by_tuple, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
             max_rank: self.max_rank.clone(),
             query_failed: self.query_failed.clone(),
             set_definition: self.set_definition.clone(),
-            sort_by_tuple: markup::transform_child(&self.sort_by_tuple, ctx),
+            sort_by_tuple: child_2,
             sort_type: self.sort_type.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tuples: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17664,12 +17973,15 @@ impl markup::Transform for super::ObjectCellAnchor {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ending_anchor_point, ctx, &mut rebase);
         Self {
-            ending_anchor_point: markup::transform_child(&self.ending_anchor_point, ctx),
+            ending_anchor_point: child_2,
             move_with_cells: self.move_with_cells.clone(),
             size_with_cells: self.size_with_cells.clone(),
-            starting_anchor_point: markup::transform_child(&self.starting_anchor_point, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            starting_anchor_point: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17743,7 +18055,7 @@ impl markup::Transform for super::ObjectLinkItem {
             icon: self.icon.clone(),
             name: self.name.clone(),
             prefer_pic: self.prefer_pic.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -17808,10 +18120,13 @@ impl markup::Transform for super::ObjectLinkItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.object_link_item, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ole_item, ctx, &mut rebase);
         Self {
-            object_link_item: markup::transform_child(&self.object_link_item, ctx),
-            ole_item: markup::transform_child(&self.ole_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            object_link_item: child_1,
+            ole_item: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -17878,7 +18193,7 @@ impl markup::Transform for super::OddHeader {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -17938,7 +18253,7 @@ impl markup::Transform for super::OddPageFooter {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -17997,20 +18312,23 @@ impl markup::Transform for super::OldCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formula_f, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.cell_value, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.rich_text_inline, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell_value: markup::transform_child(&self.cell_value, ctx),
+            cell_value: child_2,
             cm: self.cm.clone(),
-            formula_f: markup::transform_child(&self.formula_f, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            formula_f: child_1,
+            future_feature_data_storage_area: child_4,
             ph: self.ph.clone(),
             r: self.r.clone(),
-            rich_text_inline: markup::transform_child(&self.rich_text_inline, ctx),
+            rich_text_inline: child_3,
             s: self.s.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             vm: self.vm.clone(),
         }
     }
@@ -18087,18 +18405,24 @@ impl markup::Transform for super::OldFormattingInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.font, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.number_format, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.fill, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.alignment, ctx, &mut rebase);
+        let child_5 = markup::transform_child(&self.border, ctx, &mut rebase);
+        let child_6 = markup::transform_child(&self.protection_properties, ctx, &mut rebase);
+        let child_7 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            alignment: markup::transform_child(&self.alignment, ctx),
-            border: markup::transform_child(&self.border, ctx),
-            fill: markup::transform_child(&self.fill, ctx),
-            font: markup::transform_child(&self.font, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_format: markup::transform_child(&self.number_format, ctx),
-            protection_properties: markup::transform_child(&self.protection_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            alignment: child_4,
+            border: child_5,
+            fill: child_3,
+            font: child_1,
+            future_feature_data_storage_area: child_7,
+            number_format: child_2,
+            protection_properties: child_6,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -18180,7 +18504,7 @@ impl markup::Transform for super::OldFormula {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -18240,7 +18564,7 @@ impl markup::Transform for super::Outline {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -18300,7 +18624,7 @@ impl markup::Transform for super::OutlineProperties {
             show_outline_symbols: self.show_outline_symbols.clone(),
             summary_below: self.summary_below.clone(),
             summary_right: self.summary_right.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -18366,17 +18690,17 @@ impl markup::Transform for super::PageField {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             cap: self.cap.clone(),
             fld: self.fld.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             hier: self.hier.clone(),
             item: self.item.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -18441,10 +18765,12 @@ impl markup::Transform for super::PageFieldItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.page_field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            page_field: markup::transform_child(&self.page_field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            page_field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -18511,7 +18837,7 @@ impl markup::Transform for super::PageItem {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -18569,10 +18895,12 @@ impl markup::Transform for super::PageItemValues {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.page_items, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            page_items: markup::transform_child(&self.page_items, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            page_items: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -18637,10 +18965,12 @@ impl markup::Transform for super::PageItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.page_item, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            page_item: markup::transform_child(&self.page_item, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            page_item: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -18708,7 +19038,7 @@ impl markup::Transform for super::PageMargins {
             left: self.left.clone(),
             right: self.right.clone(),
             top: self.top.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -18778,7 +19108,7 @@ impl markup::Transform for super::PageSetupProperties {
         Self {
             auto_page_breaks: self.auto_page_breaks.clone(),
             fit_to_page: self.fit_to_page.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -18863,7 +19193,7 @@ impl markup::Transform for super::PageSetupSettings {
             paper_size: self.paper_size.clone(),
             paper_width: self.paper_width.clone(),
             scale: self.scale.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             use_first_page_number: self.use_first_page_number.clone(),
             use_printer_defaults: self.use_printer_defaults.clone(),
             vertical_dpi: self.vertical_dpi.clone(),
@@ -18962,7 +19292,7 @@ impl markup::Transform for super::ParameterProperties {
             refresh_on_change: self.refresh_on_change.clone(),
             sql_type: self.sql_type.clone(),
             string: self.string.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -19038,11 +19368,14 @@ impl markup::Transform for super::Pattern {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.foreground_color, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.background_color, ctx, &mut rebase);
         Self {
-            background_color: markup::transform_child(&self.background_color, ctx),
-            foreground_color: markup::transform_child(&self.foreground_color, ctx),
+            background_color: child_2,
+            foreground_color: child_1,
             pattern_type: self.pattern_type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19105,7 +19438,7 @@ impl markup::Transform for super::PhoneticProperties {
             alignment: self.alignment.clone(),
             font_id: self.font_id.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -19170,11 +19503,13 @@ impl markup::Transform for super::PhoneticRun {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text, ctx, &mut rebase);
         Self {
             eb: self.eb.clone(),
             sb: self.sb.clone(),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            text: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19236,6 +19571,10 @@ impl markup::Transform for super::PivotArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.references, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             axis: self.axis.clone(),
             cache_index: self.cache_index.clone(),
@@ -19243,18 +19582,15 @@ impl markup::Transform for super::PivotArea {
             data_only: self.data_only.clone(),
             field: self.field.clone(),
             field_position: self.field_position.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             grand_col: self.grand_col.clone(),
             grand_row: self.grand_row.clone(),
             label_only: self.label_only.clone(),
             offset: self.offset.clone(),
             outline: self.outline.clone(),
-            references: markup::transform_child(&self.references, ctx),
+            references: child_1,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19328,10 +19664,12 @@ impl markup::Transform for super::PivotAreas {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivot_area: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19395,7 +19733,7 @@ impl markup::Transform for super::PivotCache {
         Self {
             cache_id: self.cache_id.clone(),
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -19458,31 +19796,39 @@ impl markup::Transform for super::PivotCacheDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 =
+            markup::transform_child(&self.pivotcache_source_description, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.pivotcache_fields, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.pivotcache_hierarchies, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.olap_kpis, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.tuple_cache, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.calculated_items, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.calculated_members, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.olap_dimensions, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.olap_measure_groups, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.olap_measure_group_maps, ctx, &mut rebase);
+        let child_11 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             background_query: self.background_query.clone(),
-            calculated_items: markup::transform_child(&self.calculated_items, ctx),
-            calculated_members: markup::transform_child(&self.calculated_members, ctx),
+            calculated_items: child_06,
+            calculated_members: child_07,
             created_version: self.created_version.clone(),
             enable_refresh: self.enable_refresh.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_11,
             id: self.id.clone(),
             invalid: self.invalid.clone(),
             min_refreshable_version: self.min_refreshable_version.clone(),
             missing_items_limit: self.missing_items_limit.clone(),
-            olap_dimensions: markup::transform_child(&self.olap_dimensions, ctx),
-            olap_kpis: markup::transform_child(&self.olap_kpis, ctx),
-            olap_measure_group_maps: markup::transform_child(&self.olap_measure_group_maps, ctx),
-            olap_measure_groups: markup::transform_child(&self.olap_measure_groups, ctx),
+            olap_dimensions: child_08,
+            olap_kpis: child_04,
+            olap_measure_group_maps: child_10,
+            olap_measure_groups: child_09,
             optimize_memory: self.optimize_memory.clone(),
-            pivotcache_fields: markup::transform_child(&self.pivotcache_fields, ctx),
-            pivotcache_hierarchies: markup::transform_child(&self.pivotcache_hierarchies, ctx),
-            pivotcache_source_description: markup::transform_child(
-                &self.pivotcache_source_description,
-                ctx,
-            ),
+            pivotcache_fields: child_02,
+            pivotcache_hierarchies: child_03,
+            pivotcache_source_description: child_01,
             record_count: self.record_count.clone(),
             refresh_on_load: self.refresh_on_load.clone(),
             refreshed_by: self.refreshed_by.clone(),
@@ -19492,9 +19838,9 @@ impl markup::Transform for super::PivotCacheDefinition {
             save_data: self.save_data.clone(),
             support_advanced_drill: self.support_advanced_drill.clone(),
             support_subquery: self.support_subquery.clone(),
-            tuple_cache: markup::transform_child(&self.tuple_cache, ctx),
+            tuple_cache: child_05,
             tuple_cache_attribute: self.tuple_cache_attribute.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             upgrade_on_refresh: self.upgrade_on_refresh.clone(),
         }
     }
@@ -19603,28 +19949,31 @@ impl markup::Transform for super::PivotCacheField {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shared_items, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.group_properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.member_properties_map, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             caption: self.caption.clone(),
             database_field: self.database_field.clone(),
             formula: self.formula.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            group_properties: markup::transform_child(&self.group_properties, ctx),
+            future_feature_data_storage_area: child_4,
+            group_properties: child_2,
             hierarchy: self.hierarchy.clone(),
             level: self.level.clone(),
             mapping_count: self.mapping_count.clone(),
-            member_properties_map: markup::transform_child(&self.member_properties_map, ctx),
+            member_properties_map: child_3,
             member_property_field: self.member_property_field.clone(),
             name: self.name.clone(),
             num_fmt_id: self.num_fmt_id.clone(),
             property_name: self.property_name.clone(),
             server_field: self.server_field.clone(),
-            shared_items: markup::transform_child(&self.shared_items, ctx),
+            shared_items: child_1,
             sql_type: self.sql_type.clone(),
             unique_list: self.unique_list.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19712,7 +20061,7 @@ impl markup::Transform for super::PivotCacheFieldId {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x: self.x.clone(),
         }
     }
@@ -19780,10 +20129,12 @@ impl markup::Transform for super::PivotCacheFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotcache_field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivotcache_field: markup::transform_child(&self.pivotcache_field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivotcache_field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19853,10 +20204,12 @@ impl markup::Transform for super::PivotCacheHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotcache_hierarchy, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivotcache_hierarchy: markup::transform_child(&self.pivotcache_hierarchy, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivotcache_hierarchy: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -19930,6 +20283,12 @@ impl markup::Transform for super::PivotCacheHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fields_usage, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.olap_grouping_levels_group_levels, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             all_caption: self.all_caption.clone(),
             all_unique_name: self.all_unique_name.clone(),
@@ -19939,11 +20298,8 @@ impl markup::Transform for super::PivotCacheHierarchy {
             default_member_unique_name: self.default_member_unique_name.clone(),
             dimension_unique_name: self.dimension_unique_name.clone(),
             display_folder: self.display_folder.clone(),
-            fields_usage: markup::transform_child(&self.fields_usage, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            fields_usage: child_1,
+            future_feature_data_storage_area: child_3,
             hidden: self.hidden.clone(),
             icon_set: self.icon_set.clone(),
             key_attribute: self.key_attribute.clone(),
@@ -19951,10 +20307,7 @@ impl markup::Transform for super::PivotCacheHierarchy {
             measure_group: self.measure_group.clone(),
             measures: self.measures.clone(),
             member_value_datatype: self.member_value_datatype.clone(),
-            olap_grouping_levels_group_levels: markup::transform_child(
-                &self.olap_grouping_levels_group_levels,
-                ctx,
-            ),
+            olap_grouping_levels_group_levels: child_2,
             one_field: self.one_field.clone(),
             parent_set: self.parent_set.clone(),
             set: self.set.clone(),
@@ -19962,7 +20315,7 @@ impl markup::Transform for super::PivotCacheHierarchy {
             unbalanced: self.unbalanced.clone(),
             unbalanced_group: self.unbalanced_group.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20057,9 +20410,11 @@ impl markup::Transform for super::PivotCacheRecord {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20245,14 +20600,15 @@ impl markup::Transform for super::PivotCacheRecords {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotcache_record, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pivotcache_record: markup::transform_child(&self.pivotcache_record, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            future_feature_data_storage_area: child_2,
+            pivotcache_record: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20324,11 +20680,13 @@ impl markup::Transform for super::PivotCacheSourceDescription {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             connection_id: self.connection_id.clone(),
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20494,9 +20852,11 @@ impl markup::Transform for super::PivotCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotcache, ctx, &mut rebase);
         Self {
-            pivotcache: markup::transform_child(&self.pivotcache, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivotcache: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20556,12 +20916,14 @@ impl markup::Transform for super::PivotChartFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
         Self {
             chart: self.chart.clone(),
             format: self.format.clone(),
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
+            pivot_area: child_1,
             series: self.series.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20629,10 +20991,12 @@ impl markup::Transform for super::PivotChartFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivotchart_format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivotchart_format: markup::transform_child(&self.pivotchart_format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivotchart_format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20702,15 +21066,16 @@ impl markup::Transform for super::PivotTableAdvancedFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.autofilter_settings, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            autofilter_settings: markup::transform_child(&self.autofilter_settings, ctx),
+            autofilter_settings: child_1,
             description: self.description.clone(),
             eval_order: self.eval_order.clone(),
             fld: self.fld.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             i_measure_fld: self.i_measure_fld.clone(),
             i_measure_hier: self.i_measure_hier.clone(),
             id: self.id.clone(),
@@ -20719,7 +21084,7 @@ impl markup::Transform for super::PivotTableAdvancedFilter {
             string_value1: self.string_value1.clone(),
             string_value2: self.string_value2.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -20809,8 +21174,10 @@ impl markup::Transform for super::PivotTableDefinition {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         let mut node = Self::default();
-        transform_pivot_table_definition_1(self, &mut node, ctx);
-        transform_pivot_table_definition_2(self, &mut node, ctx);
+        let mut rebase = markup::Rebase::default();
+        transform_pivot_table_definition_1(self, &mut node);
+        transform_pivot_table_definition_2(self, &mut node, ctx, &mut rebase);
+        node.unknown = markup::transform_unknown(&self.unknown, ctx, &rebase);
         node
     }
 }
@@ -20979,10 +21346,15 @@ impl markup::Transform for super::PivotTableField {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.items, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.autosort_scope, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             all_drilled: self.all_drilled.clone(),
             auto_show: self.auto_show.clone(),
-            autosort_scope: markup::transform_child(&self.autosort_scope, ctx),
+            autosort_scope: child_2,
             avg_subtotal: self.avg_subtotal.clone(),
             axis: self.axis.clone(),
             compact: self.compact.clone(),
@@ -20997,17 +21369,14 @@ impl markup::Transform for super::PivotTableField {
             drag_to_data: self.drag_to_data.clone(),
             drag_to_page: self.drag_to_page.clone(),
             drag_to_row: self.drag_to_row.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             hidden_level: self.hidden_level.clone(),
             hide_new_items: self.hide_new_items.clone(),
             include_new_items_in_filter: self.include_new_items_in_filter.clone(),
             insert_blank_row: self.insert_blank_row.clone(),
             insert_page_break: self.insert_page_break.clone(),
             item_page_count: self.item_page_count.clone(),
-            items: markup::transform_child(&self.items, ctx),
+            items: child_1,
             max_subtotal: self.max_subtotal.clone(),
             measure_filter: self.measure_filter.clone(),
             min_subtotal: self.min_subtotal.clone(),
@@ -21032,7 +21401,7 @@ impl markup::Transform for super::PivotTableField {
             sum_subtotal: self.sum_subtotal.clone(),
             top_auto_show: self.top_auto_show.clone(),
             unique_member_property: self.unique_member_property.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             var_p_subtotal: self.var_p_subtotal.clone(),
             var_subtotal: self.var_subtotal.clone(),
         }
@@ -21165,7 +21534,7 @@ impl markup::Transform for super::PivotTableFieldItem {
             s: self.s.clone(),
             sd: self.sd.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x: self.x.clone(),
         }
     }
@@ -21243,10 +21612,12 @@ impl markup::Transform for super::PivotTableFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivottable_field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivottable_field: markup::transform_child(&self.pivottable_field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivottable_field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21312,15 +21683,16 @@ impl markup::Transform for super::PivotTableFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             action: self.action.clone(),
             dxf_id: self.dxf_id.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            future_feature_data_storage_area: child_2,
+            pivot_area: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21389,10 +21761,12 @@ impl markup::Transform for super::PivotTableFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivottable_format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            pivottable_format: markup::transform_child(&self.pivottable_format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            pivottable_format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21469,7 +21843,7 @@ impl markup::Transform for super::PivotTableLocation {
             first_header_row: self.first_header_row.clone(),
             r#ref: self.r#ref.clone(),
             row_page_count: self.row_page_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -21545,10 +21919,12 @@ impl markup::Transform for super::PivotTableOLAPHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_hierarchy, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_hierarchy: markup::transform_child(&self.olap_hierarchy, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_hierarchy: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21625,6 +22001,8 @@ impl markup::Transform for super::PivotTableSelection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pivot_area, ctx, &mut rebase);
         Self {
             active_col: self.active_col.clone(),
             active_row: self.active_row.clone(),
@@ -21639,12 +22017,12 @@ impl markup::Transform for super::PivotTableSelection {
             max: self.max.clone(),
             min: self.min.clone(),
             pane: self.pane.clone(),
-            pivot_area: markup::transform_child(&self.pivot_area, ctx),
+            pivot_area: child_1,
             previous_col: self.previous_col.clone(),
             previous_row: self.previous_row.clone(),
             show_header: self.show_header.clone(),
             start: self.start.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21737,7 +22115,7 @@ impl markup::Transform for super::PivotTableStyle {
             show_last_column: self.show_last_column.clone(),
             show_row_headers: self.show_row_headers.clone(),
             show_row_stripes: self.show_row_stripes.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -21809,7 +22187,7 @@ impl markup::Transform for super::PrintOptions {
             grid_lines_set: self.grid_lines_set.clone(),
             headings: self.headings.clone(),
             horizontal_centered: self.horizontal_centered.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             vertical_centered: self.vertical_centered.clone(),
         }
     }
@@ -21872,17 +22250,19 @@ impl markup::Transform for super::ProtectedRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.security_descriptor, ctx, &mut rebase);
         Self {
             algorithm_name: self.algorithm_name.clone(),
             hash_value: self.hash_value.clone(),
             name: self.name.clone(),
             password: self.password.clone(),
             salt_value: self.salt_value.clone(),
-            security_descriptor: markup::transform_child(&self.security_descriptor, ctx),
+            security_descriptor: child_1,
             security_descriptor_attribute: self.security_descriptor_attribute.clone(),
             spin_count: self.spin_count.clone(),
             sqref: self.sqref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -21950,9 +22330,11 @@ impl markup::Transform for super::ProtectedRanges {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.protected_range, ctx, &mut rebase);
         Self {
-            protected_range: markup::transform_child(&self.protected_range, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            protected_range: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22023,7 +22405,7 @@ impl markup::Transform for super::ProtectionProperties {
         Self {
             hidden: self.hidden.clone(),
             locked: self.locked.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -22091,10 +22473,12 @@ impl markup::Transform for super::Query {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuples, ctx, &mut rebase);
         Self {
             mdx: self.mdx.clone(),
-            tuples: markup::transform_child(&self.tuples, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tuples: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22150,10 +22534,12 @@ impl markup::Transform for super::QueryParameters {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.parameter_properties, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            parameter_properties: markup::transform_child(&self.parameter_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            parameter_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22218,6 +22604,11 @@ impl markup::Transform for super::QueryTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.querytable_refresh_information, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             adjust_column_width: self.adjust_column_width.clone(),
             apply_alignment_formats: self.apply_alignment_formats.clone(),
@@ -22233,23 +22624,17 @@ impl markup::Transform for super::QueryTable {
             disable_refresh: self.disable_refresh.clone(),
             fill_formulas: self.fill_formulas.clone(),
             first_background_refresh: self.first_background_refresh.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             grow_shrink_type: self.grow_shrink_type.clone(),
             headers: self.headers.clone(),
             intermediate: self.intermediate.clone(),
             name: self.name.clone(),
             preserve_formatting: self.preserve_formatting.clone(),
-            querytable_refresh_information: markup::transform_child(
-                &self.querytable_refresh_information,
-                ctx,
-            ),
+            querytable_refresh_information: child_1,
             refresh_on_load: self.refresh_on_load.clone(),
             remove_data_on_save: self.remove_data_on_save.clone(),
             row_numbers: self.row_numbers.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22333,19 +22718,19 @@ impl markup::Transform for super::QueryTableField {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             clipped: self.clipped.clone(),
             data_bound: self.data_bound.clone(),
             fill_formulas: self.fill_formulas.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             id: self.id.clone(),
             name: self.name.clone(),
             row_numbers: self.row_numbers.clone(),
             table_column_id: self.table_column_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22416,10 +22801,12 @@ impl markup::Transform for super::QueryTableFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.querytable_field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            querytable_field: markup::transform_child(&self.querytable_field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            querytable_field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22489,22 +22876,25 @@ impl markup::Transform for super::QueryTableRefreshInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.query_table_fields, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.deleted_fields, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.sort_state, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            deleted_fields: markup::transform_child(&self.deleted_fields, ctx),
+            deleted_fields: child_2,
             field_id_wrapped: self.field_id_wrapped.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_4,
             headers_in_last_refresh: self.headers_in_last_refresh.clone(),
             minimum_version: self.minimum_version.clone(),
             next_id: self.next_id.clone(),
             preserve_sort_filter_layout: self.preserve_sort_filter_layout.clone(),
-            query_table_fields: markup::transform_child(&self.query_table_fields, ctx),
-            sort_state: markup::transform_child(&self.sort_state, ctx),
+            query_table_fields: child_1,
+            sort_state: child_3,
             unbound_columns_left: self.unbound_columns_left.clone(),
             unbound_columns_right: self.unbound_columns_right.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22591,7 +22981,7 @@ impl markup::Transform for super::RGBColor {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             rgb: self.rgb.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -22662,7 +23052,7 @@ impl markup::Transform for super::RangeGroupingProperties {
             group_interval: self.group_interval.clone(),
             start_date: self.start_date.clone(),
             start_num: self.start_num.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -22745,7 +23135,7 @@ impl markup::Transform for super::RangeSet {
             name: self.name.clone(),
             r#ref: self.r#ref.clone(),
             sheet: self.sheet.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -22810,10 +23200,12 @@ impl markup::Transform for super::RangeSets {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.range_set, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            range_set: markup::transform_child(&self.range_set, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            range_set: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -22874,6 +23266,10 @@ impl markup::Transform for super::Reference {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shared_items_index, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             avg_subtotal: self.avg_subtotal.clone(),
             by_position: self.by_position.clone(),
@@ -22882,20 +23278,17 @@ impl markup::Transform for super::Reference {
             count_subtotal: self.count_subtotal.clone(),
             default_subtotal: self.default_subtotal.clone(),
             field: self.field.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             max_subtotal: self.max_subtotal.clone(),
             min_subtotal: self.min_subtotal.clone(),
             product_subtotal: self.product_subtotal.clone(),
             relative: self.relative.clone(),
             selected: self.selected.clone(),
-            shared_items_index: markup::transform_child(&self.shared_items_index, ctx),
+            shared_items_index: child_1,
             std_dev_p_subtotal: self.std_dev_p_subtotal.clone(),
             std_dev_subtotal: self.std_dev_subtotal.clone(),
             sum_subtotal: self.sum_subtotal.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             var_p_subtotal: self.var_p_subtotal.clone(),
             var_subtotal: self.var_subtotal.clone(),
         }
@@ -22976,10 +23369,12 @@ impl markup::Transform for super::References {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.reference, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            reference: markup::transform_child(&self.reference, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -23043,7 +23438,7 @@ impl markup::Transform for super::ReferencesTr {
         Self {
             r: self.r.clone(),
             s: self.s.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -23104,7 +23499,7 @@ impl markup::Transform for super::Reviewed {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r_id: self.r_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -23158,10 +23553,12 @@ impl markup::Transform for super::ReviewedList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.reviewed, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            reviewed: markup::transform_child(&self.reviewed, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            reviewed: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -23236,7 +23633,7 @@ impl markup::Transform for super::RevisionAutoFormat {
             auto_format_id: self.auto_format_id.clone(),
             r#ref: self.r#ref.clone(),
             sheet_id: self.sheet_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -23315,25 +23712,23 @@ impl markup::Transform for super::RevisionCellChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.old_cell_data, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.new_cell_data, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.old_formatting_information, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.new_formatting_information, ctx, &mut rebase);
+        let child_5 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             dxf: self.dxf.clone(),
             end_of_list_formula_update: self.end_of_list_formula_update.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            new_cell_data: markup::transform_child(&self.new_cell_data, ctx),
-            new_formatting_information: markup::transform_child(
-                &self.new_formatting_information,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_5,
+            new_cell_data: child_2,
+            new_formatting_information: child_4,
             num_fmt_id: self.num_fmt_id.clone(),
             odxf: self.odxf.clone(),
-            old_cell_data: markup::transform_child(&self.old_cell_data, ctx),
-            old_formatting_information: markup::transform_child(
-                &self.old_formatting_information,
-                ctx,
-            ),
+            old_cell_data: child_1,
+            old_formatting_information: child_3,
             old_ph: self.old_ph.clone(),
             old_quote_prefix: self.old_quote_prefix.clone(),
             ph: self.ph.clone(),
@@ -23343,7 +23738,7 @@ impl markup::Transform for super::RevisionCellChange {
             s: self.s.clone(),
             s_id: self.s_id.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xf_dxf: self.xf_dxf.clone(),
         }
     }
@@ -23451,7 +23846,7 @@ impl markup::Transform for super::RevisionCellComment {
             old: self.old.clone(),
             old_length: self.old_length.clone(),
             sheet_id: self.sheet_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -23528,8 +23923,10 @@ impl markup::Transform for super::RevisionCellMove {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             destination: self.destination.clone(),
             r_id: self.r_id.clone(),
             ra: self.ra.clone(),
@@ -23537,7 +23934,7 @@ impl markup::Transform for super::RevisionCellMove {
             source: self.source.clone(),
             source_sheet_id: self.source_sheet_id.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -23616,7 +24013,7 @@ impl markup::Transform for super::RevisionCustomView {
         Self {
             action: self.action.clone(),
             guid: self.guid.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -23688,18 +24085,20 @@ impl markup::Transform for super::RevisionDefinedName {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formula, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.old_formula, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             comment: self.comment.clone(),
             custom_menu: self.custom_menu.clone(),
             custom_view: self.custom_view.clone(),
             description: self.description.clone(),
-            formula: markup::transform_child(&self.formula, ctx),
+            formula: child_1,
             function: self.function.clone(),
             function_group_id: self.function_group_id.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             help: self.help.clone(),
             hidden: self.hidden.clone(),
             local_sheet_id: self.local_sheet_id.clone(),
@@ -23707,7 +24106,7 @@ impl markup::Transform for super::RevisionDefinedName {
             old_comment: self.old_comment.clone(),
             old_custom_menu: self.old_custom_menu.clone(),
             old_description: self.old_description.clone(),
-            old_formula: markup::transform_child(&self.old_formula, ctx),
+            old_formula: child_2,
             old_function: self.old_function.clone(),
             old_function_group_id: self.old_function_group_id.clone(),
             old_help: self.old_help.clone(),
@@ -23719,7 +24118,7 @@ impl markup::Transform for super::RevisionDefinedName {
             shortcut_key: self.shortcut_key.clone(),
             status_bar: self.status_bar.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -23816,18 +24215,19 @@ impl markup::Transform for super::RevisionFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.formatting, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            formatting: markup::transform_child(&self.formatting, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            formatting: child_1,
+            future_feature_data_storage_area: child_2,
             length: self.length.clone(),
             s: self.s.clone(),
             sheet_id: self.sheet_id.clone(),
             sqref: self.sqref.clone(),
             start: self.start.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xf_dxf: self.xf_dxf.clone(),
         }
     }
@@ -23896,11 +24296,13 @@ impl markup::Transform for super::RevisionHeaders {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.header, ctx, &mut rebase);
         Self {
             disk_revisions: self.disk_revisions.clone(),
             exclusive: self.exclusive.clone(),
             guid: self.guid.clone(),
-            header: markup::transform_child(&self.header, ctx),
+            header: child_1,
             history: self.history.clone(),
             keep_change_history: self.keep_change_history.clone(),
             last_guid: self.last_guid.clone(),
@@ -23909,7 +24311,7 @@ impl markup::Transform for super::RevisionHeaders {
             revision_id: self.revision_id.clone(),
             shared: self.shared.clone(),
             track_revisions: self.track_revisions.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             version: self.version.clone(),
         }
     }
@@ -23997,7 +24399,7 @@ impl markup::Transform for super::RevisionInsertSheet {
             sheet_id: self.sheet_id.clone(),
             sheet_position: self.sheet_position.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -24078,7 +24480,7 @@ impl markup::Transform for super::RevisionMergeConflict {
             ra: self.ra.clone(),
             sheet_id: self.sheet_id.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -24156,7 +24558,7 @@ impl markup::Transform for super::RevisionQueryTable {
             field_id: self.field_id.clone(),
             r#ref: self.r#ref.clone(),
             sheet_id: self.sheet_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -24229,9 +24631,11 @@ impl markup::Transform for super::RevisionRowColumnInsertDelete {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             action: self.action.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             edge: self.edge.clone(),
             eol: self.eol.clone(),
             r_id: self.r_id.clone(),
@@ -24239,7 +24643,7 @@ impl markup::Transform for super::RevisionRowColumnInsertDelete {
             r#ref: self.r#ref.clone(),
             s_id: self.s_id.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24319,18 +24723,18 @@ impl markup::Transform for super::RevisionSheetName {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             new_name: self.new_name.clone(),
             old_name: self.old_name.clone(),
             r_id: self.r_id.clone(),
             ra: self.ra.clone(),
             sheet_id: self.sheet_id.clone(),
             ua: self.ua.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24401,9 +24805,11 @@ impl markup::Transform for super::Revisions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24595,12 +25001,17 @@ impl markup::Transform for super::RichTextInline {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.rich_text_run, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.phonetic_run, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.phonetic_properties, ctx, &mut rebase);
         Self {
-            phonetic_properties: markup::transform_child(&self.phonetic_properties, ctx),
-            phonetic_run: markup::transform_child(&self.phonetic_run, ctx),
-            rich_text_run: markup::transform_child(&self.rich_text_run, ctx),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            phonetic_properties: child_4,
+            phonetic_run: child_3,
+            rich_text_run: child_2,
+            text: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24670,10 +25081,13 @@ impl markup::Transform for super::RichTextRun {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.text, ctx, &mut rebase);
         Self {
-            properties: markup::transform_child(&self.properties, ctx),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            properties: child_1,
+            text: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24735,16 +25149,17 @@ impl markup::Transform for super::Row {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell: markup::transform_child(&self.cell, ctx),
+            cell: child_1,
             collapsed: self.collapsed.clone(),
             custom_format: self.custom_format.clone(),
             custom_height: self.custom_height.clone(),
             dy_descent: self.dy_descent.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             hidden: self.hidden.clone(),
             ht: self.ht.clone(),
             outline_level: self.outline_level.clone(),
@@ -24754,7 +25169,7 @@ impl markup::Transform for super::Row {
             spans: self.spans.clone(),
             thick_bot: self.thick_bot.clone(),
             thick_top: self.thick_top.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24824,11 +25239,13 @@ impl markup::Transform for super::RowBreaks {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.r#break, ctx, &mut rebase);
         Self {
-            r#break: markup::transform_child(&self.r#break, ctx),
+            r#break: child_1,
             count: self.count.clone(),
             manual_break_count: self.manual_break_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24890,10 +25307,12 @@ impl markup::Transform for super::RowExternalRow {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.external_cell_data, ctx, &mut rebase);
         Self {
-            external_cell_data: markup::transform_child(&self.external_cell_data, ctx),
+            external_cell_data: child_1,
             r: self.r.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -24958,10 +25377,12 @@ impl markup::Transform for super::RowFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.field, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            field: markup::transform_child(&self.field, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            field: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25022,10 +25443,12 @@ impl markup::Transform for super::RowItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.i, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            i: markup::transform_child(&self.i, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            i: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25086,12 +25509,14 @@ impl markup::Transform for super::RowItemsI {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member_property_index, ctx, &mut rebase);
         Self {
             i: self.i.clone(),
-            member_property_index: markup::transform_child(&self.member_property_index, ctx),
+            member_property_index: child_1,
             r: self.r.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25160,7 +25585,7 @@ impl markup::Transform for super::RowOLAPHierarchies {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             hierarchy_usage: self.hierarchy_usage.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -25231,10 +25656,12 @@ impl markup::Transform for super::RowOLAPHierarchyReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.row_olap_hierarchies, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            row_olap_hierarchies: markup::transform_child(&self.row_olap_hierarchies, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            row_olap_hierarchies: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25307,9 +25734,11 @@ impl markup::Transform for super::RunProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            content: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25514,14 +25943,16 @@ impl markup::Transform for super::Scenario {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.input_cells, ctx, &mut rebase);
         Self {
             comment: self.comment.clone(),
             count: self.count.clone(),
             hidden: self.hidden.clone(),
-            input_cells: markup::transform_child(&self.input_cells, ctx),
+            input_cells: child_1,
             locked: self.locked.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             user: self.user.clone(),
         }
     }
@@ -25584,12 +26015,14 @@ impl markup::Transform for super::Scenarios {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.scenario, ctx, &mut rebase);
         Self {
             current: self.current.clone(),
-            scenario: markup::transform_child(&self.scenario, ctx),
+            scenario: child_1,
             show: self.show.clone(),
             sqref: self.sqref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25653,7 +26086,7 @@ impl markup::Transform for super::Scheme {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -25709,7 +26142,7 @@ impl markup::Transform for super::SecurityDescriptor {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -25778,7 +26211,7 @@ impl markup::Transform for super::Selection {
             active_cell_id: self.active_cell_id.clone(),
             pane: self.pane.clone(),
             sqref: self.sqref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -25842,7 +26275,7 @@ impl markup::Transform for super::ServerFormat {
         Self {
             culture: self.culture.clone(),
             format: self.format.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -25901,10 +26334,12 @@ impl markup::Transform for super::ServerFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.server_format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            server_format: markup::transform_child(&self.server_format, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            server_format: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -25965,12 +26400,14 @@ impl markup::Transform for super::SetMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member_unique_name_index, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
-            member_unique_name_index: markup::transform_child(&self.member_unique_name_index, ctx),
+            member_unique_name_index: child_1,
             ns: self.ns.clone(),
             o: self.o.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26037,10 +26474,12 @@ impl markup::Transform for super::Sets {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.olap_set, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            olap_set: markup::transform_child(&self.olap_set, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            olap_set: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26097,7 +26536,7 @@ impl markup::Transform for super::Shadow {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -26152,6 +26591,8 @@ impl markup::Transform for super::SharedItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             contains_blank: self.contains_blank.clone(),
             contains_date: self.contains_date.clone(),
@@ -26161,14 +26602,14 @@ impl markup::Transform for super::SharedItems {
             contains_number: self.contains_number.clone(),
             contains_semi_mixed_types: self.contains_semi_mixed_types.clone(),
             contains_string: self.contains_string.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             count: self.count.clone(),
             long_text: self.long_text.clone(),
             max_date: self.max_date.clone(),
             max_value: self.max_value.clone(),
             min_date: self.min_date.clone(),
             min_value: self.min_value.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26243,7 +26684,7 @@ impl markup::Transform for super::SharedItemsIndex {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -26307,15 +26748,16 @@ impl markup::Transform for super::SharedStringTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.string_item, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            string_item: markup::transform_child(&self.string_item, ctx),
+            future_feature_data_storage_area: child_2,
+            string_item: child_1,
             unique_count: self.unique_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26390,7 +26832,7 @@ impl markup::Transform for super::SheetCalculationProperties {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             full_calc_on_load: self.full_calc_on_load.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -26460,9 +26902,11 @@ impl markup::Transform for super::SheetData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.row, ctx, &mut rebase);
         Self {
-            row: markup::transform_child(&self.row, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            row: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26536,7 +26980,7 @@ impl markup::Transform for super::SheetFormatProperties {
             outline_level_row: self.outline_level_row.clone(),
             thick_bottom: self.thick_bottom.clone(),
             thick_top: self.thick_top.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             zero_height: self.zero_height.clone(),
         }
     }
@@ -26614,7 +27058,7 @@ impl markup::Transform for super::SheetId {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -26669,10 +27113,12 @@ impl markup::Transform for super::SheetIdMap {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_id, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            sheet_id: markup::transform_child(&self.sheet_id, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sheet_id: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26738,7 +27184,7 @@ impl markup::Transform for super::SheetInformation {
             name: self.name.clone(),
             sheet_id: self.sheet_id.clone(),
             state: self.state.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -26804,7 +27250,7 @@ impl markup::Transform for super::SheetName {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -26863,20 +27309,24 @@ impl markup::Transform for super::SheetProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_tab_color, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.outline_properties, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.page_setup_properties, ctx, &mut rebase);
         Self {
             code_name: self.code_name.clone(),
             enable_format_conditions_calculation: self.enable_format_conditions_calculation.clone(),
             filter_mode: self.filter_mode.clone(),
-            outline_properties: markup::transform_child(&self.outline_properties, ctx),
-            page_setup_properties: markup::transform_child(&self.page_setup_properties, ctx),
+            outline_properties: child_2,
+            page_setup_properties: child_3,
             published: self.published.clone(),
-            sheet_tab_color: markup::transform_child(&self.sheet_tab_color, ctx),
+            sheet_tab_color: child_1,
             sync_horizontal: self.sync_horizontal.clone(),
             sync_ref: self.sync_ref.clone(),
             sync_vertical: self.sync_vertical.clone(),
             transition_entry: self.transition_entry.clone(),
             transition_evaluation: self.transition_evaluation.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -26979,7 +27429,7 @@ impl markup::Transform for super::SheetProtectionOptions {
             sheet: self.sheet.clone(),
             sort: self.sort.clone(),
             spin_count: self.spin_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -27072,7 +27522,7 @@ impl markup::Transform for super::SheetTabColor {
             rgb: self.rgb.clone(),
             theme: self.theme.clone(),
             tint: self.tint.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -27134,13 +27584,14 @@ impl markup::Transform for super::SheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.worksheet_view, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            worksheet_view: markup::transform_child(&self.worksheet_view, ctx),
+            future_feature_data_storage_area: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            worksheet_view: child_1,
         }
     }
 }
@@ -27202,9 +27653,11 @@ impl markup::Transform for super::Sheets {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_information, ctx, &mut rebase);
         Self {
-            sheet_information: markup::transform_child(&self.sheet_information, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sheet_information: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -27260,9 +27713,11 @@ impl markup::Transform for super::SingleCells {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.table_properties, ctx, &mut rebase);
         Self {
-            table_properties: markup::transform_child(&self.table_properties, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            table_properties: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -27328,7 +27783,7 @@ impl markup::Transform for super::SmartTagPropertiesCellSmartTagPr {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             key: self.key.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -27407,7 +27862,7 @@ impl markup::Transform for super::SmartTagPropertiesSmartTagPr {
         Self {
             embed: self.embed.clone(),
             show: self.show.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -27481,7 +27936,7 @@ impl markup::Transform for super::SmartTagType {
         Self {
             name: self.name.clone(),
             namespace_uri: self.namespace_uri.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             url: self.url.clone(),
         }
     }
@@ -27542,9 +27997,11 @@ impl markup::Transform for super::SmartTagTypes {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.smart_tag_type, ctx, &mut rebase);
         Self {
-            smart_tag_type: markup::transform_child(&self.smart_tag_type, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            smart_tag_type: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -27604,9 +28061,11 @@ impl markup::Transform for super::SmartTags {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell, ctx, &mut rebase);
         Self {
-            cell: markup::transform_child(&self.cell, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cell: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -27666,10 +28125,12 @@ impl markup::Transform for super::SortByTuple {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuple, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
-            tuple: markup::transform_child(&self.tuple, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tuple: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -27738,7 +28199,7 @@ impl markup::Transform for super::SortCondition {
             icon_set: self.icon_set.clone(),
             r#ref: self.r#ref.clone(),
             sort_by: self.sort_by.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -27802,18 +28263,20 @@ impl markup::Transform for super::SortState {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.x14_sort_condition, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sort_condition, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             case_sensitive: self.case_sensitive.clone(),
             column_sort: self.column_sort.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_3,
             r#ref: self.r#ref.clone(),
-            sort_condition: markup::transform_child(&self.sort_condition, ctx),
+            sort_condition: child_2,
             sort_method: self.sort_method.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            x14_sort_condition: markup::transform_child(&self.x14_sort_condition, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            x14_sort_condition: child_1,
         }
     }
 }
@@ -27882,7 +28345,7 @@ impl markup::Transform for super::StrikeThrough {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -27941,12 +28404,17 @@ impl markup::Transform for super::StringItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.text, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.rich_text_run, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.phonetic_run, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.phonetic_properties, ctx, &mut rebase);
         Self {
-            phonetic_properties: markup::transform_child(&self.phonetic_properties, ctx),
-            phonetic_run: markup::transform_child(&self.phonetic_run, ctx),
-            rich_text_run: markup::transform_child(&self.rich_text_run, ctx),
-            text: markup::transform_child(&self.text, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            phonetic_properties: child_4,
+            phonetic_run: child_3,
+            rich_text_run: child_2,
+            text: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28013,7 +28481,7 @@ impl markup::Transform for super::StringsInSubtopic {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -28077,22 +28545,32 @@ impl markup::Transform for super::StyleSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.number_formats, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.fonts, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.fills, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.borders, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.formatting_records, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.cell_formats, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.cell_styles, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.formats, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.table_styles, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.colors, ctx, &mut rebase);
+        let child_11 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            borders: markup::transform_child(&self.borders, ctx),
-            cell_formats: markup::transform_child(&self.cell_formats, ctx),
-            cell_styles: markup::transform_child(&self.cell_styles, ctx),
-            colors: markup::transform_child(&self.colors, ctx),
-            fills: markup::transform_child(&self.fills, ctx),
-            fonts: markup::transform_child(&self.fonts, ctx),
-            formats: markup::transform_child(&self.formats, ctx),
-            formatting_records: markup::transform_child(&self.formatting_records, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            number_formats: markup::transform_child(&self.number_formats, ctx),
-            table_styles: markup::transform_child(&self.table_styles, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            borders: child_04,
+            cell_formats: child_06,
+            cell_styles: child_07,
+            colors: child_10,
+            fills: child_03,
+            fonts: child_02,
+            formats: child_08,
+            formatting_records: child_05,
+            future_feature_data_storage_area: child_11,
+            number_formats: child_01,
+            table_styles: child_09,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28176,9 +28654,11 @@ impl markup::Transform for super::SupportingWorkbookSheetNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sheet_name, ctx, &mut rebase);
         Self {
-            sheet_name: markup::transform_child(&self.sheet_name, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            sheet_name: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28250,18 +28730,22 @@ impl markup::Transform for super::Table {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.autofilter_settings, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sort_state, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.columns, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.style_table_style_info, ctx, &mut rebase);
+        let child_5 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            autofilter_settings: markup::transform_child(&self.autofilter_settings, ctx),
-            columns: markup::transform_child(&self.columns, ctx),
+            autofilter_settings: child_1,
+            columns: child_3,
             comment: self.comment.clone(),
             connection_id: self.connection_id.clone(),
             data_cell_style: self.data_cell_style.clone(),
             data_dxf_id: self.data_dxf_id.clone(),
             display_name: self.display_name.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_5,
             header_row_border_dxf_id: self.header_row_border_dxf_id.clone(),
             header_row_cell_style: self.header_row_cell_style.clone(),
             header_row_count: self.header_row_count.clone(),
@@ -28272,8 +28756,8 @@ impl markup::Transform for super::Table {
             name: self.name.clone(),
             published: self.published.clone(),
             r#ref: self.r#ref.clone(),
-            sort_state: markup::transform_child(&self.sort_state, ctx),
-            style_table_style_info: markup::transform_child(&self.style_table_style_info, ctx),
+            sort_state: child_2,
+            style_table_style_info: child_4,
             table_border_dxf_id: self.table_border_dxf_id.clone(),
             table_type: self.table_type.clone(),
             totals_row_border_dxf_id: self.totals_row_border_dxf_id.clone(),
@@ -28281,7 +28765,7 @@ impl markup::Transform for super::Table {
             totals_row_count: self.totals_row_count.clone(),
             totals_row_dxf_id: self.totals_row_dxf_id.clone(),
             totals_row_shown: self.totals_row_shown.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28366,17 +28850,17 @@ impl markup::Transform for super::TableColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.calculated_column_formula, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.totals_row_formula, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.xml_column_properties, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            calculated_column_formula: markup::transform_child(
-                &self.calculated_column_formula,
-                ctx,
-            ),
+            calculated_column_formula: child_1,
             data_cell_style: self.data_cell_style.clone(),
             data_dxf_id: self.data_dxf_id.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_4,
             header_row_cell_style: self.header_row_cell_style.clone(),
             header_row_dxf_id: self.header_row_dxf_id.clone(),
             id: self.id.clone(),
@@ -28384,12 +28868,12 @@ impl markup::Transform for super::TableColumn {
             query_table_field_id: self.query_table_field_id.clone(),
             totals_row_cell_style: self.totals_row_cell_style.clone(),
             totals_row_dxf_id: self.totals_row_dxf_id.clone(),
-            totals_row_formula: markup::transform_child(&self.totals_row_formula, ctx),
+            totals_row_formula: child_2,
             totals_row_function: self.totals_row_function.clone(),
             totals_row_label: self.totals_row_label.clone(),
             unique_name: self.unique_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xml_column_properties: markup::transform_child(&self.xml_column_properties, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xml_column_properties: child_3,
         }
     }
 }
@@ -28467,10 +28951,12 @@ impl markup::Transform for super::TableColumns {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.table_column, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            table_column: markup::transform_child(&self.table_column, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            table_column: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28533,7 +29019,7 @@ impl markup::Transform for super::TablePart {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -28591,10 +29077,12 @@ impl markup::Transform for super::TableParts {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.table_part, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            table_part: markup::transform_child(&self.table_part, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            table_part: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28655,16 +29143,17 @@ impl markup::Transform for super::TableProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_properties, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            cell_properties: markup::transform_child(&self.cell_properties, ctx),
+            cell_properties: child_1,
             connection_id: self.connection_id.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_2,
             id: self.id.clone(),
             r: self.r.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28733,13 +29222,15 @@ impl markup::Transform for super::TableStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.table_style_element, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
             name: self.name.clone(),
             pivot: self.pivot.clone(),
             table: self.table.clone(),
-            table_style_element: markup::transform_child(&self.table_style_element, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            table_style_element: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -28811,7 +29302,7 @@ impl markup::Transform for super::TableStyleTableStyleElement {
             dxf_id: self.dxf_id.clone(),
             size: self.size.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -28893,7 +29384,7 @@ impl markup::Transform for super::TableStyleTableStyleInfo {
             show_first_column: self.show_first_column.clone(),
             show_last_column: self.show_last_column.clone(),
             show_row_stripes: self.show_row_stripes.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -28967,12 +29458,14 @@ impl markup::Transform for super::TableStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.table_style, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
             default_pivot_style: self.default_pivot_style.clone(),
             default_table_style: self.default_table_style.clone(),
-            table_style: markup::transform_child(&self.table_style, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            table_style: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29035,10 +29528,12 @@ impl markup::Transform for super::Tables {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29195,7 +29690,7 @@ impl markup::Transform for super::Text {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -29256,7 +29751,7 @@ impl markup::Transform for super::TextImportFieldSettings {
         Self {
             position: self.position.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -29328,6 +29823,8 @@ impl markup::Transform for super::TextImportSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fields, ctx, &mut rebase);
         Self {
             character_set: self.character_set.clone(),
             code_page: self.code_page.clone(),
@@ -29336,7 +29833,7 @@ impl markup::Transform for super::TextImportSettings {
             decimal: self.decimal.clone(),
             delimited: self.delimited.clone(),
             delimiter: self.delimiter.clone(),
-            fields: markup::transform_child(&self.fields, ctx),
+            fields: child_1,
             file_type: self.file_type.clone(),
             first_row: self.first_row.clone(),
             prompt: self.prompt.clone(),
@@ -29346,7 +29843,7 @@ impl markup::Transform for super::TextImportSettings {
             space: self.space.clone(),
             tab: self.tab.clone(),
             thousands: self.thousands.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29435,7 +29932,7 @@ impl markup::Transform for super::Top10 {
             filter_val: self.filter_val.clone(),
             percent: self.percent.clone(),
             top: self.top.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -29492,10 +29989,12 @@ impl markup::Transform for super::TopBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29556,12 +30055,16 @@ impl markup::Transform for super::Topic {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cell_value, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.strings_in_subtopic, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.references_tr, ctx, &mut rebase);
         Self {
-            cell_value: markup::transform_child(&self.cell_value, ctx),
-            references_tr: markup::transform_child(&self.references_tr, ctx),
-            strings_in_subtopic: markup::transform_child(&self.strings_in_subtopic, ctx),
+            cell_value: child_1,
+            references_tr: child_3,
+            strings_in_subtopic: child_2,
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29623,7 +30126,7 @@ impl markup::Transform for super::TotalsRowFormula {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             array: self.array.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -29692,10 +30195,12 @@ impl markup::Transform for super::TrailingEdgeBorderEnd {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29769,10 +30274,12 @@ impl markup::Transform for super::TrailingEdgeBorderRight {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29846,7 +30353,7 @@ impl markup::Transform for super::Tuple {
             fld: self.fld.clone(),
             hier: self.hier.clone(),
             item: self.item.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -29901,16 +30408,20 @@ impl markup::Transform for super::TupleCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.entries, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.sets, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.olap_query_cache, ctx, &mut rebase);
+        let child_4 = markup::transform_child(&self.server_formats, ctx, &mut rebase);
+        let child_5 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            entries: markup::transform_child(&self.entries, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            olap_query_cache: markup::transform_child(&self.olap_query_cache, ctx),
-            server_formats: markup::transform_child(&self.server_formats, ctx),
-            sets: markup::transform_child(&self.sets, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            entries: child_1,
+            future_feature_data_storage_area: child_5,
+            olap_query_cache: child_3,
+            server_formats: child_4,
+            sets: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -29978,6 +30489,8 @@ impl markup::Transform for super::TupleMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.member_unique_name_index, ctx, &mut rebase);
         Self {
             b: self.b.clone(),
             bc: self.bc.clone(),
@@ -29986,11 +30499,11 @@ impl markup::Transform for super::TupleMDXMetadata {
             fc: self.fc.clone(),
             fi: self.fi.clone(),
             i: self.i.clone(),
-            member_unique_name_index: markup::transform_child(&self.member_unique_name_index, ctx),
+            member_unique_name_index: child_1,
             si: self.si.clone(),
             st: self.st.clone(),
             u: self.u.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30065,10 +30578,12 @@ impl markup::Transform for super::Tuples {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tuple, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
-            tuple: markup::transform_child(&self.tuple, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            tuple: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30126,7 +30641,7 @@ impl markup::Transform for super::Underline {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -30196,7 +30711,7 @@ impl markup::Transform for super::Undo {
             r: self.r.clone(),
             ref3_d: self.ref3_d.clone(),
             s_id: self.s_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -30260,16 +30775,16 @@ impl markup::Transform for super::UserInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             date_time: self.date_time.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             guid: self.guid.clone(),
             id: self.id.clone(),
             name: self.name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30337,10 +30852,12 @@ impl markup::Transform for super::UserList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.user_information, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            user_information: markup::transform_child(&self.user_information, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            user_information: child_1,
         }
     }
 }
@@ -30401,10 +30918,12 @@ impl markup::Transform for super::Value {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.dde_link, ctx, &mut rebase);
         Self {
-            dde_link: markup::transform_child(&self.dde_link, ctx),
+            dde_link: child_1,
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30460,10 +30979,12 @@ impl markup::Transform for super::ValueMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.block, ctx, &mut rebase);
         Self {
-            block: markup::transform_child(&self.block, ctx),
+            block: child_1,
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30525,7 +31046,7 @@ impl markup::Transform for super::VerticalAlignment {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -30593,10 +31114,12 @@ impl markup::Transform for super::VerticalInnerBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.data_bar_color, ctx, &mut rebase);
         Self {
-            data_bar_color: markup::transform_child(&self.data_bar_color, ctx),
+            data_bar_color: child_1,
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30670,11 +31193,13 @@ impl markup::Transform for super::VerticalPageBreaks {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.r#break, ctx, &mut rebase);
         Self {
-            r#break: markup::transform_child(&self.r#break, ctx),
+            r#break: child_1,
             count: self.count.clone(),
             manual_break_count: self.manual_break_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30749,7 +31274,7 @@ impl markup::Transform for super::ViewPane {
             active_pane: self.active_pane.clone(),
             state: self.state.clone(),
             top_left_cell: self.top_left_cell.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             x_split: self.x_split.clone(),
             y_split: self.y_split.clone(),
         }
@@ -30817,10 +31342,12 @@ impl markup::Transform for super::VolatileDependencyType {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.main, ctx, &mut rebase);
         Self {
-            main: markup::transform_child(&self.main, ctx),
+            main: child_1,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -30894,13 +31421,14 @@ impl markup::Transform for super::VolatileDependencyTypes {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.volatile_dependency_type, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            volatile_dependency_type: markup::transform_child(&self.volatile_dependency_type, ctx),
+            future_feature_data_storage_area: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            volatile_dependency_type: child_1,
         }
     }
 }
@@ -30971,10 +31499,12 @@ impl markup::Transform for super::WebPublishObjects {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.web_publishing_object, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            web_publishing_object: markup::transform_child(&self.web_publishing_object, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            web_publishing_object: child_1,
         }
     }
 }
@@ -31049,7 +31579,7 @@ impl markup::Transform for super::WebPublishingItem {
             source_ref: self.source_ref.clone(),
             source_type: self.source_type.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -31123,10 +31653,12 @@ impl markup::Transform for super::WebPublishingItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.web_publishing_item, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            web_publishing_item: markup::transform_child(&self.web_publishing_item, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            web_publishing_item: child_1,
         }
     }
 }
@@ -31207,7 +31739,7 @@ impl markup::Transform for super::WebPublishingObject {
             id: self.id.clone(),
             source_object: self.source_object.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -31292,7 +31824,7 @@ impl markup::Transform for super::WebPublishingProperties {
             long_file_names: self.long_file_names.clone(),
             target_screen_size: self.target_screen_size.clone(),
             thicket: self.thicket.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             vml: self.vml.clone(),
         }
     }
@@ -31372,6 +31904,8 @@ impl markup::Transform for super::WebQueryProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.tables, ctx, &mut rebase);
         Self {
             consecutive: self.consecutive.clone(),
             edit_page: self.edit_page.clone(),
@@ -31381,9 +31915,9 @@ impl markup::Transform for super::WebQueryProperties {
             parse_pre: self.parse_pre.clone(),
             post: self.post.clone(),
             source_data: self.source_data.clone(),
-            tables: markup::transform_child(&self.tables, ctx),
+            tables: child_1,
             text_dates: self.text_dates.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             url: self.url.clone(),
             xl2000: self.xl2000.clone(),
             xl97: self.xl97.clone(),
@@ -31469,38 +32003,52 @@ impl markup::Transform for super::Workbook {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.file_version, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.file_sharing, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.properties, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.abs_path, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.protection, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.views, ctx, &mut rebase);
+        let child_07 = markup::transform_child(&self.sheets, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.function_groups, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.external_references, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.defined_names, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.calculation_properties, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.embedded_object_size, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.custom_workbook_views, ctx, &mut rebase);
+        let child_14 = markup::transform_child(&self.pivotcaches, ctx, &mut rebase);
+        let child_15 =
+            markup::transform_child(&self.smart_tag_properties_smart_tag_pr, ctx, &mut rebase);
+        let child_16 = markup::transform_child(&self.smart_tag_types, ctx, &mut rebase);
+        let child_17 = markup::transform_child(&self.web_publishing_properties, ctx, &mut rebase);
+        let child_18 = markup::transform_child(&self.file_recovery_properties, ctx, &mut rebase);
+        let child_19 = markup::transform_child(&self.web_publish_objects, ctx, &mut rebase);
+        let child_20 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            abs_path: markup::transform_child(&self.abs_path, ctx),
-            calculation_properties: markup::transform_child(&self.calculation_properties, ctx),
+            abs_path: child_04,
+            calculation_properties: child_11,
             conformance: self.conformance.clone(),
-            custom_workbook_views: markup::transform_child(&self.custom_workbook_views, ctx),
-            defined_names: markup::transform_child(&self.defined_names, ctx),
-            embedded_object_size: markup::transform_child(&self.embedded_object_size, ctx),
-            external_references: markup::transform_child(&self.external_references, ctx),
-            file_recovery_properties: markup::transform_child(&self.file_recovery_properties, ctx),
-            file_sharing: markup::transform_child(&self.file_sharing, ctx),
-            file_version: markup::transform_child(&self.file_version, ctx),
-            function_groups: markup::transform_child(&self.function_groups, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pivotcaches: markup::transform_child(&self.pivotcaches, ctx),
-            properties: markup::transform_child(&self.properties, ctx),
-            protection: markup::transform_child(&self.protection, ctx),
-            sheets: markup::transform_child(&self.sheets, ctx),
-            smart_tag_properties_smart_tag_pr: markup::transform_child(
-                &self.smart_tag_properties_smart_tag_pr,
-                ctx,
-            ),
-            smart_tag_types: markup::transform_child(&self.smart_tag_types, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            views: markup::transform_child(&self.views, ctx),
-            web_publish_objects: markup::transform_child(&self.web_publish_objects, ctx),
-            web_publishing_properties: markup::transform_child(
-                &self.web_publishing_properties,
-                ctx,
-            ),
+            custom_workbook_views: child_13,
+            defined_names: child_10,
+            embedded_object_size: child_12,
+            external_references: child_09,
+            file_recovery_properties: child_18,
+            file_sharing: child_02,
+            file_version: child_01,
+            function_groups: child_08,
+            future_feature_data_storage_area: child_20,
+            pivotcaches: child_14,
+            properties: child_03,
+            protection: child_05,
+            sheets: child_07,
+            smart_tag_properties_smart_tag_pr: child_15,
+            smart_tag_types: child_16,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            views: child_06,
+            web_publish_objects: child_19,
+            web_publishing_properties: child_17,
         }
     }
 }
@@ -31613,7 +32161,7 @@ impl markup::Transform for super::WorkbookProperties {
             show_ink_annotation: self.show_ink_annotation.clone(),
             show_objects: self.show_objects.clone(),
             show_pivot_chart_filter: self.show_pivot_chart_filter.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             update_links: self.update_links.clone(),
         }
     }
@@ -31704,7 +32252,7 @@ impl markup::Transform for super::WorkbookProtection {
             revisions_password_character_set: self.revisions_password_character_set.clone(),
             revisions_salt_value: self.revisions_salt_value.clone(),
             revisions_spin_count: self.revisions_spin_count.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             workbook_algorithm_name: self.workbook_algorithm_name.clone(),
             workbook_hash_value: self.workbook_hash_value.clone(),
             workbook_password: self.workbook_password.clone(),
@@ -31787,20 +32335,20 @@ impl markup::Transform for super::WorkbookView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             active_tab: self.active_tab.clone(),
             auto_filter_date_grouping: self.auto_filter_date_grouping.clone(),
             first_sheet: self.first_sheet.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             minimized: self.minimized.clone(),
             show_horizontal_scroll: self.show_horizontal_scroll.clone(),
             show_sheet_tabs: self.show_sheet_tabs.clone(),
             show_vertical_scroll: self.show_vertical_scroll.clone(),
             tab_ratio: self.tab_ratio.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             visibility: self.visibility.clone(),
             window_height: self.window_height.clone(),
             window_width: self.window_width.clone(),
@@ -31878,9 +32426,11 @@ impl markup::Transform for super::WorkbookViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.workbook_view, ctx, &mut rebase);
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            workbook_view: markup::transform_child(&self.workbook_view, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            workbook_view: child_1,
         }
     }
 }
@@ -31940,59 +32490,94 @@ impl markup::Transform for super::Worksheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_01 = markup::transform_child(&self.sheet_properties, ctx, &mut rebase);
+        let child_02 = markup::transform_child(&self.dimensions, ctx, &mut rebase);
+        let child_03 = markup::transform_child(&self.sheet_views, ctx, &mut rebase);
+        let child_04 = markup::transform_child(&self.sheet_format_properties, ctx, &mut rebase);
+        let child_05 = markup::transform_child(&self.column_information, ctx, &mut rebase);
+        let child_06 = markup::transform_child(&self.sheet_data, ctx, &mut rebase);
+        let child_07 =
+            markup::transform_child(&self.sheet_calculation_properties, ctx, &mut rebase);
+        let child_08 = markup::transform_child(&self.sheet_protection_options, ctx, &mut rebase);
+        let child_09 = markup::transform_child(&self.protected_ranges, ctx, &mut rebase);
+        let child_10 = markup::transform_child(&self.scenarios, ctx, &mut rebase);
+        let child_11 = markup::transform_child(&self.autofilter_settings, ctx, &mut rebase);
+        let child_12 = markup::transform_child(&self.sort_state, ctx, &mut rebase);
+        let child_13 = markup::transform_child(&self.data_consolidate, ctx, &mut rebase);
+        let child_14 = markup::transform_child(&self.custom_sheet_views, ctx, &mut rebase);
+        let child_15 = markup::transform_child(&self.merge_cells, ctx, &mut rebase);
+        let child_16 = markup::transform_child(&self.phonetic_properties, ctx, &mut rebase);
+        let child_17 = markup::transform_child(&self.conditional_formatting, ctx, &mut rebase);
+        let child_18 = markup::transform_child(&self.data_validations, ctx, &mut rebase);
+        let child_19 = markup::transform_child(&self.hyperlinks, ctx, &mut rebase);
+        let child_20 = markup::transform_child(&self.print_options, ctx, &mut rebase);
+        let child_21 = markup::transform_child(&self.page_margins, ctx, &mut rebase);
+        let child_22 = markup::transform_child(&self.page_setup_settings, ctx, &mut rebase);
+        let child_23 = markup::transform_child(&self.header_footer_settings, ctx, &mut rebase);
+        let child_24 = markup::transform_child(&self.row_breaks, ctx, &mut rebase);
+        let child_25 = markup::transform_child(&self.vertical_page_breaks, ctx, &mut rebase);
+        let child_26 = markup::transform_child(&self.custom_properties, ctx, &mut rebase);
+        let child_27 = markup::transform_child(&self.cell_watch_items, ctx, &mut rebase);
+        let child_28 = markup::transform_child(&self.ignored_errors, ctx, &mut rebase);
+        let child_29 = markup::transform_child(&self.smart_tags, ctx, &mut rebase);
+        let child_30 = markup::transform_child(&self.drawing, ctx, &mut rebase);
+        let child_31 = markup::transform_child(&self.legacy_drawing_reference, ctx, &mut rebase);
+        let child_32 = markup::transform_child(
+            &self.legacy_drawing_reference_in_header_footer,
+            ctx,
+            &mut rebase,
+        );
+        let child_33 =
+            markup::transform_child(&self.drawing_reference_in_header_footer, ctx, &mut rebase);
+        let child_34 = markup::transform_child(&self.background_image, ctx, &mut rebase);
+        let child_35 = markup::transform_child(&self.embedded_objects, ctx, &mut rebase);
+        let child_36 = markup::transform_child(&self.embedded_controls, ctx, &mut rebase);
+        let child_37 = markup::transform_child(&self.web_publishing_items, ctx, &mut rebase);
+        let child_38 = markup::transform_child(&self.table_parts, ctx, &mut rebase);
+        let child_39 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
-            autofilter_settings: markup::transform_child(&self.autofilter_settings, ctx),
-            background_image: markup::transform_child(&self.background_image, ctx),
-            cell_watch_items: markup::transform_child(&self.cell_watch_items, ctx),
-            column_information: markup::transform_child(&self.column_information, ctx),
-            conditional_formatting: markup::transform_child(&self.conditional_formatting, ctx),
-            custom_properties: markup::transform_child(&self.custom_properties, ctx),
-            custom_sheet_views: markup::transform_child(&self.custom_sheet_views, ctx),
-            data_consolidate: markup::transform_child(&self.data_consolidate, ctx),
-            data_validations: markup::transform_child(&self.data_validations, ctx),
-            dimensions: markup::transform_child(&self.dimensions, ctx),
-            drawing: markup::transform_child(&self.drawing, ctx),
-            drawing_reference_in_header_footer: markup::transform_child(
-                &self.drawing_reference_in_header_footer,
-                ctx,
-            ),
-            embedded_controls: markup::transform_child(&self.embedded_controls, ctx),
-            embedded_objects: markup::transform_child(&self.embedded_objects, ctx),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            header_footer_settings: markup::transform_child(&self.header_footer_settings, ctx),
-            hyperlinks: markup::transform_child(&self.hyperlinks, ctx),
-            ignored_errors: markup::transform_child(&self.ignored_errors, ctx),
-            legacy_drawing_reference: markup::transform_child(&self.legacy_drawing_reference, ctx),
-            legacy_drawing_reference_in_header_footer: markup::transform_child(
-                &self.legacy_drawing_reference_in_header_footer,
-                ctx,
-            ),
-            merge_cells: markup::transform_child(&self.merge_cells, ctx),
-            page_margins: markup::transform_child(&self.page_margins, ctx),
-            page_setup_settings: markup::transform_child(&self.page_setup_settings, ctx),
-            phonetic_properties: markup::transform_child(&self.phonetic_properties, ctx),
-            print_options: markup::transform_child(&self.print_options, ctx),
-            protected_ranges: markup::transform_child(&self.protected_ranges, ctx),
-            row_breaks: markup::transform_child(&self.row_breaks, ctx),
-            scenarios: markup::transform_child(&self.scenarios, ctx),
-            sheet_calculation_properties: markup::transform_child(
-                &self.sheet_calculation_properties,
-                ctx,
-            ),
-            sheet_data: markup::transform_child(&self.sheet_data, ctx),
-            sheet_format_properties: markup::transform_child(&self.sheet_format_properties, ctx),
-            sheet_properties: markup::transform_child(&self.sheet_properties, ctx),
-            sheet_protection_options: markup::transform_child(&self.sheet_protection_options, ctx),
-            sheet_views: markup::transform_child(&self.sheet_views, ctx),
-            smart_tags: markup::transform_child(&self.smart_tags, ctx),
-            sort_state: markup::transform_child(&self.sort_state, ctx),
-            table_parts: markup::transform_child(&self.table_parts, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            vertical_page_breaks: markup::transform_child(&self.vertical_page_breaks, ctx),
-            web_publishing_items: markup::transform_child(&self.web_publishing_items, ctx),
+            autofilter_settings: child_11,
+            background_image: child_34,
+            cell_watch_items: child_27,
+            column_information: child_05,
+            conditional_formatting: child_17,
+            custom_properties: child_26,
+            custom_sheet_views: child_14,
+            data_consolidate: child_13,
+            data_validations: child_18,
+            dimensions: child_02,
+            drawing: child_30,
+            drawing_reference_in_header_footer: child_33,
+            embedded_controls: child_36,
+            embedded_objects: child_35,
+            future_feature_data_storage_area: child_39,
+            header_footer_settings: child_23,
+            hyperlinks: child_19,
+            ignored_errors: child_28,
+            legacy_drawing_reference: child_31,
+            legacy_drawing_reference_in_header_footer: child_32,
+            merge_cells: child_15,
+            page_margins: child_21,
+            page_setup_settings: child_22,
+            phonetic_properties: child_16,
+            print_options: child_20,
+            protected_ranges: child_09,
+            row_breaks: child_24,
+            scenarios: child_10,
+            sheet_calculation_properties: child_07,
+            sheet_data: child_06,
+            sheet_format_properties: child_04,
+            sheet_properties: child_01,
+            sheet_protection_options: child_08,
+            sheet_views: child_03,
+            smart_tags: child_29,
+            sort_state: child_12,
+            table_parts: child_38,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            vertical_page_breaks: child_25,
+            web_publishing_items: child_37,
         }
     }
 }
@@ -32134,7 +32719,7 @@ impl markup::Transform for super::WorksheetDimensions {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r#ref: self.r#ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -32210,7 +32795,7 @@ impl markup::Transform for super::WorksheetPivotCacheSource {
             name: self.name.clone(),
             r#ref: self.r#ref.clone(),
             sheet: self.sheet.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -32283,17 +32868,20 @@ impl markup::Transform for super::WorksheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.pane, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.selection, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.pivottable_selection, ctx, &mut rebase);
+        let child_4 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             color_id: self.color_id.clone(),
             default_grid_color: self.default_grid_color.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
-            pane: markup::transform_child(&self.pane, ctx),
-            pivottable_selection: markup::transform_child(&self.pivottable_selection, ctx),
+            future_feature_data_storage_area: child_4,
+            pane: child_1,
+            pivottable_selection: child_3,
             right_to_left: self.right_to_left.clone(),
-            selection: markup::transform_child(&self.selection, ctx),
+            selection: child_2,
             show_formulas: self.show_formulas.clone(),
             show_grid_lines: self.show_grid_lines.clone(),
             show_outline_symbols: self.show_outline_symbols.clone(),
@@ -32303,7 +32891,7 @@ impl markup::Transform for super::WorksheetView {
             show_zeros: self.show_zeros.clone(),
             tab_selected: self.tab_selected.clone(),
             top_left_cell: self.top_left_cell.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             view: self.view.clone(),
             window_protection: self.window_protection.clone(),
             workbook_view_id: self.workbook_view_id.clone(),
@@ -32399,14 +32987,14 @@ impl markup::Transform for super::XMLColumnProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         Self {
             denormalized: self.denormalized.clone(),
-            future_feature_data_storage_area: markup::transform_child(
-                &self.future_feature_data_storage_area,
-                ctx,
-            ),
+            future_feature_data_storage_area: child_1,
             map_id: self.map_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             xml_data_type: self.xml_data_type.clone(),
             xpath: self.xpath.clone(),
         }
@@ -32485,14 +33073,16 @@ impl markup::Transform for super::XMLMappingDataBinding {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             connection_id: self.connection_id.clone(),
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             data_binding_load_mode: self.data_binding_load_mode.clone(),
             data_binding_name: self.data_binding_name.clone(),
             file_binding: self.file_binding.clone(),
             file_binding_name: self.file_binding_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -32570,11 +33160,14 @@ impl markup::Transform for super::XMLMappingMapInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xml_schema, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.xml_mapping_properties, ctx, &mut rebase);
         Self {
             selection_namespaces: self.selection_namespaces.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xml_mapping_properties: markup::transform_child(&self.xml_mapping_properties, ctx),
-            xml_schema: markup::transform_child(&self.xml_schema, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xml_mapping_properties: child_2,
+            xml_schema: child_1,
         }
     }
 }
@@ -32650,6 +33243,8 @@ impl markup::Transform for super::XMLMappingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.xml_mapping_data_binding, ctx, &mut rebase);
         Self {
             append: self.append.clone(),
             auto_fit: self.auto_fit.clone(),
@@ -32660,8 +33255,8 @@ impl markup::Transform for super::XMLMappingProperties {
             root_element: self.root_element.clone(),
             schema_id: self.schema_id.clone(),
             show_import_export_validation_errors: self.show_import_export_validation_errors.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            xml_mapping_data_binding: markup::transform_child(&self.xml_mapping_data_binding, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            xml_mapping_data_binding: child_1,
         }
     }
 }
@@ -32739,13 +33334,15 @@ impl markup::Transform for super::XMLSchema {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             id: self.id.clone(),
             namespace: self.namespace.clone(),
             schema_language: self.schema_language.clone(),
             schema_ref: self.schema_ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -32805,124 +33402,123 @@ impl WriteThrough for super::XMLSchema {
 fn transform_pivot_table_definition_1(
     from: &super::PivotTableDefinition,
     node: &mut super::PivotTableDefinition,
-    ctx: &mut dyn markup::Context,
 ) {
+    Clone::clone_from(&mut node.name, &from.name);
+    Clone::clone_from(&mut node.cache_id, &from.cache_id);
+    Clone::clone_from(&mut node.data_on_rows, &from.data_on_rows);
+    Clone::clone_from(&mut node.data_position, &from.data_position);
+    Clone::clone_from(&mut node.auto_format_id, &from.auto_format_id);
+    Clone::clone_from(&mut node.apply_number_formats, &from.apply_number_formats);
+    Clone::clone_from(&mut node.apply_border_formats, &from.apply_border_formats);
+    Clone::clone_from(&mut node.apply_font_formats, &from.apply_font_formats);
+    Clone::clone_from(&mut node.apply_pattern_formats, &from.apply_pattern_formats);
     Clone::clone_from(
         &mut node.apply_alignment_formats,
         &from.apply_alignment_formats,
     );
-    Clone::clone_from(&mut node.apply_border_formats, &from.apply_border_formats);
-    Clone::clone_from(&mut node.apply_font_formats, &from.apply_font_formats);
-    Clone::clone_from(&mut node.apply_number_formats, &from.apply_number_formats);
-    Clone::clone_from(&mut node.apply_pattern_formats, &from.apply_pattern_formats);
     Clone::clone_from(
         &mut node.apply_width_height_formats,
         &from.apply_width_height_formats,
     );
-    Clone::clone_from(&mut node.asterisk_totals, &from.asterisk_totals);
-    Clone::clone_from(&mut node.auto_format_id, &from.auto_format_id);
-    Clone::clone_from(&mut node.cache_id, &from.cache_id);
-    Clone::clone_from(&mut node.chart_format, &from.chart_format);
-    Clone::clone_from(&mut node.col_grand_totals, &from.col_grand_totals);
-    Clone::clone_from(&mut node.col_header_caption, &from.col_header_caption);
-    node.column_fields = markup::transform_child(&from.column_fields, ctx);
-    node.column_items = markup::transform_child(&from.column_items, ctx);
-    node.column_olap_hierarchy_references =
-        markup::transform_child(&from.column_olap_hierarchy_references, ctx);
-    Clone::clone_from(&mut node.compact, &from.compact);
-    Clone::clone_from(&mut node.compact_data, &from.compact_data);
-    node.conditional_formats = markup::transform_child(&from.conditional_formats, ctx);
-    Clone::clone_from(&mut node.created_version, &from.created_version);
-    Clone::clone_from(&mut node.custom_list_sort, &from.custom_list_sort);
     Clone::clone_from(&mut node.data_caption, &from.data_caption);
-    node.data_fields = markup::transform_child(&from.data_fields, ctx);
-    Clone::clone_from(&mut node.data_on_rows, &from.data_on_rows);
-    Clone::clone_from(&mut node.data_position, &from.data_position);
-    Clone::clone_from(&mut node.disable_field_list, &from.disable_field_list);
+    Clone::clone_from(&mut node.grand_total_caption, &from.grand_total_caption);
+    Clone::clone_from(&mut node.error_caption, &from.error_caption);
+    Clone::clone_from(&mut node.show_error, &from.show_error);
+    Clone::clone_from(&mut node.missing_caption, &from.missing_caption);
+    Clone::clone_from(&mut node.show_missing, &from.show_missing);
+    Clone::clone_from(&mut node.page_style, &from.page_style);
+    Clone::clone_from(&mut node.pivot_table_style, &from.pivot_table_style);
+    Clone::clone_from(&mut node.vacated_style, &from.vacated_style);
+    Clone::clone_from(&mut node.tag, &from.tag);
+    Clone::clone_from(&mut node.updated_version, &from.updated_version);
+    Clone::clone_from(
+        &mut node.min_refreshable_version,
+        &from.min_refreshable_version,
+    );
+    Clone::clone_from(&mut node.asterisk_totals, &from.asterisk_totals);
+    Clone::clone_from(&mut node.show_items, &from.show_items);
     Clone::clone_from(&mut node.edit_data, &from.edit_data);
+    Clone::clone_from(&mut node.disable_field_list, &from.disable_field_list);
+    Clone::clone_from(&mut node.show_calc_mbrs, &from.show_calc_mbrs);
+    Clone::clone_from(&mut node.visual_totals, &from.visual_totals);
+    Clone::clone_from(&mut node.show_multiple_label, &from.show_multiple_label);
+    Clone::clone_from(&mut node.show_data_drop_down, &from.show_data_drop_down);
+    Clone::clone_from(&mut node.show_drill, &from.show_drill);
+    Clone::clone_from(&mut node.print_drill, &from.print_drill);
+    Clone::clone_from(
+        &mut node.show_member_property_tips,
+        &from.show_member_property_tips,
+    );
+    Clone::clone_from(&mut node.show_data_tips, &from.show_data_tips);
+    Clone::clone_from(&mut node.enable_wizard, &from.enable_wizard);
     Clone::clone_from(&mut node.enable_drill, &from.enable_drill);
     Clone::clone_from(
         &mut node.enable_field_properties,
         &from.enable_field_properties,
     );
-    Clone::clone_from(&mut node.enable_wizard, &from.enable_wizard);
-    Clone::clone_from(&mut node.error_caption, &from.error_caption);
-    Clone::clone_from(
-        &mut node.field_list_sort_ascending,
-        &from.field_list_sort_ascending,
-    );
+    Clone::clone_from(&mut node.preserve_formatting, &from.preserve_formatting);
+    Clone::clone_from(&mut node.use_auto_formatting, &from.use_auto_formatting);
+    Clone::clone_from(&mut node.page_wrap, &from.page_wrap);
+    Clone::clone_from(&mut node.page_over_then_down, &from.page_over_then_down);
+    Clone::clone_from(&mut node.subtotal_hidden_items, &from.subtotal_hidden_items);
+    Clone::clone_from(&mut node.row_grand_totals, &from.row_grand_totals);
+    Clone::clone_from(&mut node.col_grand_totals, &from.col_grand_totals);
     Clone::clone_from(&mut node.field_print_titles, &from.field_print_titles);
-    node.filters = markup::transform_child(&from.filters, ctx);
-    node.future_feature_data_storage_area =
-        markup::transform_child(&from.future_feature_data_storage_area, ctx);
-    Clone::clone_from(&mut node.grand_total_caption, &from.grand_total_caption);
+    Clone::clone_from(&mut node.item_print_titles, &from.item_print_titles);
+    Clone::clone_from(&mut node.merge_item, &from.merge_item);
+    Clone::clone_from(&mut node.show_drop_zones, &from.show_drop_zones);
+    Clone::clone_from(&mut node.created_version, &from.created_version);
+    Clone::clone_from(&mut node.indent, &from.indent);
+    Clone::clone_from(&mut node.show_empty_row, &from.show_empty_row);
+    Clone::clone_from(&mut node.show_empty_col, &from.show_empty_col);
+    Clone::clone_from(&mut node.show_headers, &from.show_headers);
+    Clone::clone_from(&mut node.compact, &from.compact);
+    Clone::clone_from(&mut node.outline, &from.outline);
+    Clone::clone_from(&mut node.outline_data, &from.outline_data);
+    Clone::clone_from(&mut node.compact_data, &from.compact_data);
+    Clone::clone_from(&mut node.published, &from.published);
     Clone::clone_from(&mut node.grid_drop_zones, &from.grid_drop_zones);
     Clone::clone_from(&mut node.immersive, &from.immersive);
-    Clone::clone_from(&mut node.indent, &from.indent);
-    Clone::clone_from(&mut node.item_print_titles, &from.item_print_titles);
-    Clone::clone_from(&mut node.mdx_subqueries, &from.mdx_subqueries);
-    Clone::clone_from(&mut node.merge_item, &from.merge_item);
-    Clone::clone_from(
-        &mut node.min_refreshable_version,
-        &from.min_refreshable_version,
-    );
-    Clone::clone_from(&mut node.missing_caption, &from.missing_caption);
     Clone::clone_from(
         &mut node.multiple_field_filters,
         &from.multiple_field_filters,
     );
-    Clone::clone_from(&mut node.name, &from.name);
-    Clone::clone_from(&mut node.outline, &from.outline);
-    Clone::clone_from(&mut node.outline_data, &from.outline_data);
-    node.page_field_items = markup::transform_child(&from.page_field_items, ctx);
-    Clone::clone_from(&mut node.page_over_then_down, &from.page_over_then_down);
-    Clone::clone_from(&mut node.page_style, &from.page_style);
-    Clone::clone_from(&mut node.page_wrap, &from.page_wrap);
-    Clone::clone_from(&mut node.pivot_table_style, &from.pivot_table_style);
-    node.pivotchart_formats = markup::transform_child(&from.pivotchart_formats, ctx);
-    node.pivottable_fields = markup::transform_child(&from.pivottable_fields, ctx);
-    node.pivottable_formats = markup::transform_child(&from.pivottable_formats, ctx);
-    node.pivottable_location = markup::transform_child(&from.pivottable_location, ctx);
-    node.pivottable_olap_hierarchies =
-        markup::transform_child(&from.pivottable_olap_hierarchies, ctx);
-    node.pivottable_style = markup::transform_child(&from.pivottable_style, ctx);
-    Clone::clone_from(&mut node.preserve_formatting, &from.preserve_formatting);
-    Clone::clone_from(&mut node.print_drill, &from.print_drill);
-    Clone::clone_from(&mut node.published, &from.published);
-    node.row_fields = markup::transform_child(&from.row_fields, ctx);
-    Clone::clone_from(&mut node.row_grand_totals, &from.row_grand_totals);
+    Clone::clone_from(&mut node.chart_format, &from.chart_format);
     Clone::clone_from(&mut node.row_header_caption, &from.row_header_caption);
-    node.row_items = markup::transform_child(&from.row_items, ctx);
-    node.row_olap_hierarchy_references =
-        markup::transform_child(&from.row_olap_hierarchy_references, ctx);
-    Clone::clone_from(&mut node.show_calc_mbrs, &from.show_calc_mbrs);
+    Clone::clone_from(&mut node.col_header_caption, &from.col_header_caption);
+    Clone::clone_from(
+        &mut node.field_list_sort_ascending,
+        &from.field_list_sort_ascending,
+    );
+    Clone::clone_from(&mut node.mdx_subqueries, &from.mdx_subqueries);
+    Clone::clone_from(&mut node.custom_list_sort, &from.custom_list_sort);
 }
 
 fn transform_pivot_table_definition_2(
     from: &super::PivotTableDefinition,
     node: &mut super::PivotTableDefinition,
     ctx: &mut dyn markup::Context,
+    rebase: &mut markup::Rebase,
 ) {
-    Clone::clone_from(&mut node.show_data_drop_down, &from.show_data_drop_down);
-    Clone::clone_from(&mut node.show_data_tips, &from.show_data_tips);
-    Clone::clone_from(&mut node.show_drill, &from.show_drill);
-    Clone::clone_from(&mut node.show_drop_zones, &from.show_drop_zones);
-    Clone::clone_from(&mut node.show_empty_col, &from.show_empty_col);
-    Clone::clone_from(&mut node.show_empty_row, &from.show_empty_row);
-    Clone::clone_from(&mut node.show_error, &from.show_error);
-    Clone::clone_from(&mut node.show_headers, &from.show_headers);
-    Clone::clone_from(&mut node.show_items, &from.show_items);
-    Clone::clone_from(
-        &mut node.show_member_property_tips,
-        &from.show_member_property_tips,
-    );
-    Clone::clone_from(&mut node.show_missing, &from.show_missing);
-    Clone::clone_from(&mut node.show_multiple_label, &from.show_multiple_label);
-    Clone::clone_from(&mut node.subtotal_hidden_items, &from.subtotal_hidden_items);
-    Clone::clone_from(&mut node.tag, &from.tag);
-    node.unknown = markup::transform_unknown(&from.unknown, ctx);
-    Clone::clone_from(&mut node.updated_version, &from.updated_version);
-    Clone::clone_from(&mut node.use_auto_formatting, &from.use_auto_formatting);
-    Clone::clone_from(&mut node.vacated_style, &from.vacated_style);
-    Clone::clone_from(&mut node.visual_totals, &from.visual_totals);
+    node.pivottable_location = markup::transform_child(&from.pivottable_location, ctx, rebase);
+    node.pivottable_fields = markup::transform_child(&from.pivottable_fields, ctx, rebase);
+    node.row_fields = markup::transform_child(&from.row_fields, ctx, rebase);
+    node.row_items = markup::transform_child(&from.row_items, ctx, rebase);
+    node.column_fields = markup::transform_child(&from.column_fields, ctx, rebase);
+    node.column_items = markup::transform_child(&from.column_items, ctx, rebase);
+    node.page_field_items = markup::transform_child(&from.page_field_items, ctx, rebase);
+    node.data_fields = markup::transform_child(&from.data_fields, ctx, rebase);
+    node.pivottable_formats = markup::transform_child(&from.pivottable_formats, ctx, rebase);
+    node.conditional_formats = markup::transform_child(&from.conditional_formats, ctx, rebase);
+    node.pivotchart_formats = markup::transform_child(&from.pivotchart_formats, ctx, rebase);
+    node.pivottable_olap_hierarchies =
+        markup::transform_child(&from.pivottable_olap_hierarchies, ctx, rebase);
+    node.pivottable_style = markup::transform_child(&from.pivottable_style, ctx, rebase);
+    node.filters = markup::transform_child(&from.filters, ctx, rebase);
+    node.row_olap_hierarchy_references =
+        markup::transform_child(&from.row_olap_hierarchy_references, ctx, rebase);
+    node.column_olap_hierarchy_references =
+        markup::transform_child(&from.column_olap_hierarchy_references, ctx, rebase);
+    node.future_feature_data_storage_area =
+        markup::transform_child(&from.future_feature_data_storage_area, ctx, rebase);
 }

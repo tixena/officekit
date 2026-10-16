@@ -232,7 +232,7 @@ impl markup::Transform for super::DataFieldFutureData {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             source_field: self.source_field.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             version: self.version.clone(),
         }
     }
@@ -306,7 +306,7 @@ impl markup::Transform for super::IgnorableAfterVersion {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             version: self.version.clone(),
         }
     }
@@ -379,7 +379,7 @@ impl markup::Transform for super::ImplicitMeasureSupport {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }

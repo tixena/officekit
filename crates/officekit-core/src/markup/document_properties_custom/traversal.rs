@@ -230,9 +230,11 @@ impl markup::Transform for super::CustomFileProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_file_property, ctx, &mut rebase);
         Self {
-            custom_file_property: markup::transform_child(&self.custom_file_property, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_file_property: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -305,13 +307,15 @@ impl markup::Transform for super::CustomFileProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             fmtid: self.fmtid.clone(),
             link_target: self.link_target.clone(),
             name: self.name.clone(),
             pid: self.pid.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

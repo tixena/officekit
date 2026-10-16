@@ -235,7 +235,7 @@ impl markup::Transform for super::CalculatedTimeColumn {
             column_name: self.column_name.clone(),
             content_type: self.content_type.clone(),
             is_selected: self.is_selected.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -309,12 +309,14 @@ impl markup::Transform for super::ModelTimeGrouping {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.calculated_time_column, ctx, &mut rebase);
         Self {
-            calculated_time_column: markup::transform_child(&self.calculated_time_column, ctx),
+            calculated_time_column: child_1,
             column_id: self.column_id.clone(),
             column_name: self.column_name.clone(),
             table_name: self.table_name.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -390,9 +392,11 @@ impl markup::Transform for super::ModelTimeGroupings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.model_time_grouping, ctx, &mut rebase);
         Self {
-            model_time_grouping: markup::transform_child(&self.model_time_grouping, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            model_time_grouping: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

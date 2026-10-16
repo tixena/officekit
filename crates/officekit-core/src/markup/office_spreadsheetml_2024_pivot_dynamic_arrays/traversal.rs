@@ -232,7 +232,7 @@ impl markup::Transform for super::PivotCacheDynamicArray {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             r#ref: self.r#ref.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

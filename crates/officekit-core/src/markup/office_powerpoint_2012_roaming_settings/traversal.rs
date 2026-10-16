@@ -231,7 +231,7 @@ impl markup::Transform for super::Key {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -302,10 +302,13 @@ impl markup::Transform for super::Props {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.key, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.value, ctx, &mut rebase);
         Self {
-            key: markup::transform_child(&self.key, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            value: markup::transform_child(&self.value, ctx),
+            key: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            value: child_2,
         }
     }
 }
@@ -380,7 +383,7 @@ impl markup::Transform for super::Value {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }

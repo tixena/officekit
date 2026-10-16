@@ -233,7 +233,7 @@ impl markup::Transform for super::ExternalCodeServiceImageAsInput {
         Self {
             max_height: self.max_height.clone(),
             max_width: self.max_width.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

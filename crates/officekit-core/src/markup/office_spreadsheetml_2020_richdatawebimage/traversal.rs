@@ -231,7 +231,7 @@ impl markup::Transform for super::Address {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -301,7 +301,7 @@ impl markup::Transform for super::Blip {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -370,9 +370,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -445,7 +447,7 @@ impl markup::Transform for super::MoreImagesAddress {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -514,11 +516,15 @@ impl markup::Transform for super::WebImageSrd {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.address, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.more_images_address, ctx, &mut rebase);
+        let child_3 = markup::transform_child(&self.blip, ctx, &mut rebase);
         Self {
-            address: markup::transform_child(&self.address, ctx),
-            blip: markup::transform_child(&self.blip, ctx),
-            more_images_address: markup::transform_child(&self.more_images_address, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            address: child_1,
+            blip: child_3,
+            more_images_address: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -594,10 +600,13 @@ impl markup::Transform for super::WebImagesSrd {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.web_image_srd, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            web_image_srd: markup::transform_child(&self.web_image_srd, ctx),
+            ext_lst: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            web_image_srd: child_1,
         }
     }
 }

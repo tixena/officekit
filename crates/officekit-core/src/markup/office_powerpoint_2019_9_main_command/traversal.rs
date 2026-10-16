@@ -232,7 +232,7 @@ impl markup::Transform for super::CmMK {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -302,10 +302,13 @@ impl markup::Transform for super::CmMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.sld_mk_lst, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.cm_mk, ctx, &mut rebase);
         Self {
-            cm_mk: markup::transform_child(&self.cm_mk, ctx),
-            sld_mk_lst: markup::transform_child(&self.sld_mk_lst, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cm_mk: child_2,
+            sld_mk_lst: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -381,7 +384,7 @@ impl markup::Transform for super::CmRplyMk {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             id: self.id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -451,10 +454,13 @@ impl markup::Transform for super::CmRplyMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.cm_mk_lst, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.cm_rply_mk, ctx, &mut rebase);
         Self {
-            cm_mk_lst: markup::transform_child(&self.cm_mk_lst, ctx),
-            cm_rply_mk: markup::transform_child(&self.cm_rply_mk, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            cm_mk_lst: child_1,
+            cm_rply_mk: child_2,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

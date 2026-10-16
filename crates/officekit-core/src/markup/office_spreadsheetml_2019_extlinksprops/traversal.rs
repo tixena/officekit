@@ -232,7 +232,7 @@ impl markup::Transform for super::ExternalLinksPr {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             auto_refresh: self.auto_refresh.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }

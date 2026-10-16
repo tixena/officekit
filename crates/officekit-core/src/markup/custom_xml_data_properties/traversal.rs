@@ -231,7 +231,7 @@ impl markup::Transform for super::AssociatedXMLSchema {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             uri: self.uri.clone(),
         }
     }
@@ -303,13 +303,13 @@ impl markup::Transform for super::CustomXMLDataProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 =
+            markup::transform_child(&self.set_of_associated_xml_schemas, ctx, &mut rebase);
         Self {
             item_id: self.item_id.clone(),
-            set_of_associated_xml_schemas: markup::transform_child(
-                &self.set_of_associated_xml_schemas,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            set_of_associated_xml_schemas: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -383,9 +383,11 @@ impl markup::Transform for super::SetOfAssociatedXMLSchemas {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.associated_xml_schema, ctx, &mut rebase);
         Self {
-            associated_xml_schema: markup::transform_child(&self.associated_xml_schema, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            associated_xml_schema: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

@@ -231,7 +231,7 @@ impl markup::Transform for super::Appearance {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -303,7 +303,7 @@ impl markup::Transform for super::ChartTrackingRefBased {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -376,7 +376,7 @@ impl markup::Transform for super::Collapsed {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -447,7 +447,7 @@ impl markup::Transform for super::Color {
             theme_color: self.theme_color.clone(),
             theme_shade: self.theme_shade.clone(),
             theme_tint: self.theme_tint.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -521,7 +521,7 @@ impl markup::Transform for super::CommentEx {
             done: self.done.clone(),
             para_id: self.para_id.clone(),
             para_id_parent: self.para_id_parent.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -593,9 +593,11 @@ impl markup::Transform for super::CommentsEx {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.comment_ex, ctx, &mut rebase);
         Self {
-            comment_ex: markup::transform_child(&self.comment_ex, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            comment_ex: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -670,7 +672,7 @@ impl markup::Transform for super::DataBinding {
         Self {
             prefix_mappings: self.prefix_mappings.clone(),
             store_item_id: self.store_item_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             xpath: self.xpath.clone(),
         }
     }
@@ -744,7 +746,7 @@ impl markup::Transform for super::DoNotAllowInsertDeleteSection {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -816,7 +818,7 @@ impl markup::Transform for super::DocId {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -884,7 +886,7 @@ impl markup::Transform for super::FootnoteColumns {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -951,9 +953,11 @@ impl markup::Transform for super::People {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.person, ctx, &mut rebase);
         Self {
-            person: markup::transform_child(&self.person, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            person: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1017,10 +1021,12 @@ impl markup::Transform for super::Person {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.presence_info, ctx, &mut rebase);
         Self {
             author: self.author.clone(),
-            presence_info: markup::transform_child(&self.presence_info, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            presence_info: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1091,7 +1097,7 @@ impl markup::Transform for super::PresenceInfo {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             provider_id: self.provider_id.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             user_id: self.user_id.clone(),
         }
     }
@@ -1163,13 +1169,14 @@ impl markup::Transform for super::RepeatingSection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.title, ctx, &mut rebase);
+        let child_2 =
+            markup::transform_child(&self.do_not_allow_insert_delete_section, ctx, &mut rebase);
         Self {
-            do_not_allow_insert_delete_section: markup::transform_child(
-                &self.do_not_allow_insert_delete_section,
-                ctx,
-            ),
-            title: markup::transform_child(&self.title, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            do_not_allow_insert_delete_section: child_2,
+            title: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1244,7 +1251,7 @@ impl markup::Transform for super::RepeatingSectionItem {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1315,7 +1322,7 @@ impl markup::Transform for super::SectionTitle {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -1387,7 +1394,7 @@ impl markup::Transform for super::WebExtensionCreated {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }
@@ -1460,7 +1467,7 @@ impl markup::Transform for super::WebExtensionLinked {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             val: self.val.clone(),
         }
     }

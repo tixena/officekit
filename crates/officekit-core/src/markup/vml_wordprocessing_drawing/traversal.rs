@@ -231,7 +231,7 @@ impl markup::Transform for super::AnchorLocationIsLocked {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -304,7 +304,7 @@ impl markup::Transform for super::BottomBorder {
         Self {
             shadow: self.shadow.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             width: self.width.clone(),
         }
     }
@@ -380,7 +380,7 @@ impl markup::Transform for super::LeftBorder {
         Self {
             shadow: self.shadow.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             width: self.width.clone(),
         }
     }
@@ -456,7 +456,7 @@ impl markup::Transform for super::RightBorder {
         Self {
             shadow: self.shadow.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             width: self.width.clone(),
         }
     }
@@ -534,7 +534,7 @@ impl markup::Transform for super::TextWrapping {
             anchory: self.anchory.clone(),
             side: self.side.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -610,7 +610,7 @@ impl markup::Transform for super::TopBorder {
         Self {
             shadow: self.shadow.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             width: self.width.clone(),
         }
     }

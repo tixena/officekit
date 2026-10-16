@@ -241,7 +241,7 @@ impl markup::Transform for super::Callout {
             on: self.on.clone(),
             textborder: self.textborder.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -314,7 +314,7 @@ impl markup::Transform for super::Complex {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             ext: self.ext.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -381,7 +381,7 @@ impl markup::Transform for super::DiagramRelationship {
             idcntr: self.idcntr.clone(),
             iddest: self.iddest.clone(),
             idsrc: self.idsrc.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -455,10 +455,12 @@ impl markup::Transform for super::DiagramRelationshipTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.diagram_relationship, ctx, &mut rebase);
         Self {
-            diagram_relationship: markup::transform_child(&self.diagram_relationship, ctx),
+            diagram_relationship: child_1,
             ext: self.ext.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -546,7 +548,7 @@ impl markup::Transform for super::DigitalSignatureLine {
             suggestedsigner: self.suggestedsigner.clone(),
             suggestedsigner2: self.suggestedsigner2.clone(),
             suggestedsigneremail: self.suggestedsigneremail.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -629,27 +631,28 @@ impl markup::Transform for super::EmbeddedOLEObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(
+            &self.embedded_object_alternate_image_request,
+            ctx,
+            &mut rebase,
+        );
+        let child_2 =
+            markup::transform_child(&self.embedded_object_cannot_be_refreshed, ctx, &mut rebase);
+        let child_3 =
+            markup::transform_child(&self.wordprocessingml_field_switches, ctx, &mut rebase);
         Self {
             draw_aspect: self.draw_aspect.clone(),
-            embedded_object_alternate_image_request: markup::transform_child(
-                &self.embedded_object_alternate_image_request,
-                ctx,
-            ),
-            embedded_object_cannot_be_refreshed: markup::transform_child(
-                &self.embedded_object_cannot_be_refreshed,
-                ctx,
-            ),
+            embedded_object_alternate_image_request: child_1,
+            embedded_object_cannot_be_refreshed: child_2,
             id: self.id.clone(),
             object_id: self.object_id.clone(),
             prog_id: self.prog_id.clone(),
             shape_id: self.shape_id.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
             update_mode: self.update_mode.clone(),
-            wordprocessingml_field_switches: markup::transform_child(
-                &self.wordprocessingml_field_switches,
-                ctx,
-            ),
+            wordprocessingml_field_switches: child_3,
         }
     }
 }
@@ -734,7 +737,7 @@ impl markup::Transform for super::EmbeddedObjectAlternateImageRequest {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -810,7 +813,7 @@ impl markup::Transform for super::EmbeddedObjectCannotBeRefreshed {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -913,7 +916,7 @@ impl markup::Transform for super::Extrusion {
             skewangle: self.skewangle.clone(),
             specularity: self.specularity.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             viewpoint: self.viewpoint.clone(),
             viewpointorigin: self.viewpointorigin.clone(),
         }
@@ -1013,7 +1016,7 @@ impl markup::Transform for super::Ink {
             annotation: self.annotation.clone(),
             content_type: self.content_type.clone(),
             i: self.i.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1080,7 +1083,7 @@ impl markup::Transform for super::MostRecentlyUsedColors {
         Self {
             colors: self.colors.clone(),
             ext: self.ext.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1152,9 +1155,11 @@ impl markup::Transform for super::NewShapeDefaults {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             ext: self.ext.clone(),
             fill: self.fill.clone(),
             fillcolor: self.fillcolor.clone(),
@@ -1162,7 +1167,7 @@ impl markup::Transform for super::NewShapeDefaults {
             stroke: self.stroke.clone(),
             strokecolor: self.strokecolor.clone(),
             style: self.style.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1376,7 +1381,7 @@ impl markup::Transform for super::RegroupEntry {
         Self {
             new: self.new.clone(),
             old: self.old.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1443,13 +1448,15 @@ impl markup::Transform for super::Rule {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.shape_reference, ctx, &mut rebase);
         Self {
             how: self.how.clone(),
             id: self.id.clone(),
             idref: self.idref.clone(),
-            shape_reference: markup::transform_child(&self.shape_reference, ctx),
+            shape_reference: child_1,
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1513,10 +1520,12 @@ impl markup::Transform for super::RuleSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.rule, ctx, &mut rebase);
         Self {
             ext: self.ext.clone(),
-            rule: markup::transform_child(&self.rule, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            rule: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1582,7 +1591,7 @@ impl markup::Transform for super::ShapeClippingPath {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             v: self.v.clone(),
         }
     }
@@ -1657,7 +1666,7 @@ impl markup::Transform for super::ShapeFillExtendedProperties {
         Self {
             ext: self.ext.clone(),
             r#type: self.r#type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1732,10 +1741,12 @@ impl markup::Transform for super::ShapeGroupingHistory {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.regroup_entry, ctx, &mut rebase);
         Self {
             ext: self.ext.clone(),
-            regroup_entry: markup::transform_child(&self.regroup_entry, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            regroup_entry: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -1808,7 +1819,7 @@ impl markup::Transform for super::ShapeIDMap {
         Self {
             data: self.data.clone(),
             ext: self.ext.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -1875,10 +1886,12 @@ impl markup::Transform for super::ShapeLayoutProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_items(&self.content, ctx),
+            content: child_1,
             ext: self.ext.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2073,7 +2086,7 @@ impl markup::Transform for super::ShapeProtections {
             shapetype: self.shapetype.clone(),
             text: self.text.clone(),
             ungrouping: self.ungrouping.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             verticies: self.verticies.clone(),
         }
     }
@@ -2160,7 +2173,7 @@ impl markup::Transform for super::ShapeReference {
             end: self.end.clone(),
             idref: self.idref.clone(),
             start: self.start.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2240,7 +2253,7 @@ impl markup::Transform for super::SkewTransform {
             offset: self.offset.clone(),
             on: self.on.clone(),
             origin: self.origin.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -2315,10 +2328,12 @@ impl markup::Transform for super::StorageForAlternateMathContent {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
-            content: markup::transform_child(&self.content, ctx),
+            content: child_1,
             content_type: self.content_type.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -2422,7 +2437,7 @@ impl markup::Transform for super::TextBoxBottomStroke {
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             weight: self.weight.clone(),
         }
     }
@@ -2547,7 +2562,7 @@ impl markup::Transform for super::TextBoxInteriorStroke {
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             weight: self.weight.clone(),
         }
     }
@@ -2672,7 +2687,7 @@ impl markup::Transform for super::TextBoxLeftStroke {
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             weight: self.weight.clone(),
         }
     }
@@ -2797,7 +2812,7 @@ impl markup::Transform for super::TextBoxRightStroke {
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             weight: self.weight.clone(),
         }
     }
@@ -2922,7 +2937,7 @@ impl markup::Transform for super::TextBoxTopStroke {
             startarrowlength: self.startarrowlength.clone(),
             startarrowwidth: self.startarrowwidth.clone(),
             title: self.title.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             weight: self.weight.clone(),
         }
     }
@@ -3026,7 +3041,7 @@ impl markup::Transform for super::UIDefaultColors {
             fillcolor: self.fillcolor.clone(),
             shadowcolor: self.shadowcolor.clone(),
             strokecolor: self.strokecolor.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -3096,6 +3111,8 @@ impl markup::Transform for super::VMLDiagram {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.relationship_table, ctx, &mut rebase);
         Self {
             autoformat: self.autoformat.clone(),
             autolayout: self.autolayout.clone(),
@@ -3106,9 +3123,9 @@ impl markup::Transform for super::VMLDiagram {
             dgmscaley: self.dgmscaley.clone(),
             dgmstyle: self.dgmstyle.clone(),
             ext: self.ext.clone(),
-            relationship_table: markup::transform_child(&self.relationship_table, ctx),
+            relationship_table: child_1,
             reverse: self.reverse.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -3187,7 +3204,7 @@ impl markup::Transform for super::WordprocessingMLFieldSwitches {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }

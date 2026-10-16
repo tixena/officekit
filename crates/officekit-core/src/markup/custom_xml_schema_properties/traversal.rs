@@ -234,7 +234,7 @@ impl markup::Transform for super::CustomXMLSchemaReference {
             manifest_location: self.manifest_location.clone(),
             schema_language: self.schema_language.clone(),
             schema_location: self.schema_location.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             uri: self.uri.clone(),
         }
     }
@@ -312,12 +312,11 @@ impl markup::Transform for super::EmbeddedCustomXMLSchemaSupplementaryData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.custom_xml_schema_reference, ctx, &mut rebase);
         Self {
-            custom_xml_schema_reference: markup::transform_child(
-                &self.custom_xml_schema_reference,
-                ctx,
-            ),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            custom_xml_schema_reference: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }

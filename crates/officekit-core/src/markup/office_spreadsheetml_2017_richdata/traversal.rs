@@ -230,9 +230,11 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
-            extension: markup::transform_child(&self.extension, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            extension: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -306,7 +308,7 @@ impl markup::Transform for super::Fb {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
@@ -381,7 +383,7 @@ impl markup::Transform for super::K {
         Self {
             n: self.n.clone(),
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -452,11 +454,14 @@ impl markup::Transform for super::Rv {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.fb, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.v, ctx, &mut rebase);
         Self {
-            fb: markup::transform_child(&self.fb, ctx),
+            fb: child_1,
             s: self.s.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
-            v: markup::transform_child(&self.v, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
+            v: child_2,
         }
     }
 }
@@ -531,11 +536,14 @@ impl markup::Transform for super::RvData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.rv, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            rv: markup::transform_child(&self.rv, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_2,
+            rv: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -610,11 +618,14 @@ impl markup::Transform for super::RvStructures {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.s, ctx, &mut rebase);
+        let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
-            ext_lst: markup::transform_child(&self.ext_lst, ctx),
-            s: markup::transform_child(&self.s, ctx),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            ext_lst: child_2,
+            s: child_1,
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -691,7 +702,7 @@ impl markup::Transform for super::Rvb {
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
             i: self.i.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
         }
     }
 }
@@ -761,10 +772,12 @@ impl markup::Transform for super::S {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
+        let mut rebase = markup::Rebase::default();
+        let child_1 = markup::transform_child(&self.k, ctx, &mut rebase);
         Self {
-            k: markup::transform_child(&self.k, ctx),
+            k: child_1,
             t: self.t.clone(),
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
         }
     }
 }
@@ -838,7 +851,7 @@ impl markup::Transform for super::V {
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
         Self {
-            unknown: markup::transform_unknown(&self.unknown, ctx),
+            unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),
             value: self.value.clone(),
         }
     }
