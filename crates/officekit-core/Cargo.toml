@@ -11,6 +11,10 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[[example]]
+name = "office_checks"
+required-features = ["strict", "transitional"]
+
 [features]
 default = ["transitional"]
 transitional = []
