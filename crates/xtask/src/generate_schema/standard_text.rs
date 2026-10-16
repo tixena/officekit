@@ -290,14 +290,27 @@ pub fn part_definitions(text: &str) -> Vec<PartDefinition> {
             .unwrap_or(after.len());
         let body = after[..next_heading].join(" ");
         part.defined_in_part_2 = body.contains("of ECMA-376-2");
-        part.root_element = body
-            .split("The root element for a part of this content type shall be ")
-            .nth(1)
-            .and_then(|rest| rest.split(|c: char| c == '.' || c.is_whitespace()).next())
-            .map(str::to_owned);
+        part.root_element = root_element(&body);
         parts.push(part);
     }
     parts
+}
+
+/// The root element a definition's text names: the word after "shall be" in
+/// "The root element for a part of this content type shall be document." or
+/// "The root element for a Header part shall be hdr.", within one sentence.
+fn root_element(body: &str) -> Option<String> {
+    let collapsed = body.split_whitespace().collect::<Vec<_>>().join(" ");
+    let (_, rest) = collapsed.split_once("The root element for a")?;
+    let (subject, value) = rest.split_once(" shall be ")?;
+    if subject.contains('.') {
+        return None;
+    }
+    value
+        .split(|c: char| c == '.' || c == ',' || c.is_whitespace())
+        .next()
+        .filter(|word| !word.is_empty())
+        .map(str::to_owned)
 }
 
 /// Every part of Part 4's part summaries, in document order.

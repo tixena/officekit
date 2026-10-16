@@ -7,7 +7,7 @@ use os_shim::mock::MemorySystem;
 use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
 use super::{OpenOptions, Package, PartRoot};
-use crate::error::PackageError;
+use crate::error::{PackageError, WriteError};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target, TargetMode};
 use crate::xml::conformance::ConformanceClass;
@@ -46,14 +46,30 @@ impl PartRoot for Note {
         }
     }
 
-    fn to_tree(&self, _class: ConformanceClass) -> Element {
+    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
         let mut root = Element::new(QName::prefixed("w", "note", WORDPROCESSING));
         root.namespace_declarations.push(NamespaceDeclaration {
             prefix: "w".to_owned(),
             uri: WORDPROCESSING.to_owned(),
         });
         root.children.push(Node::Text(self.text.clone()));
-        root
+        Ok(root)
+    }
+}
+
+/// A typed root for the tests that Strict has no form for: `<w:pict>`.
+#[derive(Debug)]
+struct Picture;
+
+impl PartRoot for Picture {
+    const LOCAL_NAME: &'static str = "pict";
+
+    fn from_tree(_root: &Element) -> Result<Self, String> {
+        Ok(Self)
+    }
+
+    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
+        Err(WriteError::NotInClass { class, tag: "pict" })
     }
 }
 
@@ -683,6 +699,36 @@ fn storing_a_typed_root_keeps_the_parts_prolog() {
         String::from_utf8(package.part_bytes(&part).unwrap()).unwrap(),
         "<?xml version=\"1.0\"?>\n<!-- kept --><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">new</w:note>"
     );
+}
+
+#[test]
+fn a_root_the_class_refuses_is_a_write_error_and_writes_nothing() {
+    let mut package = Package::new();
+    let part = name("/word/pict.xml");
+    let error = package
+        .store(
+            &part,
+            "application/xml",
+            &Picture,
+            ConformanceClass::Strict,
+            WriteOptions::default(),
+        )
+        .unwrap_err();
+    assert!(
+        matches!(
+            &error,
+            PackageError::Write {
+                error: WriteError::NotInClass {
+                    class: ConformanceClass::Strict,
+                    tag: "pict",
+                },
+                part: written,
+            } if written.as_str() == "/word/pict.xml"
+        ),
+        "got {error:?}"
+    );
+    assert!(!package.contains(&part));
+    assert_eq!(package.content_type(&part), None);
 }
 
 #[test]

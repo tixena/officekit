@@ -23,7 +23,7 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::{markup, namespaces, semantic, validation};
+use xtask::generate_schema::emit::{markup, namespaces, parts, semantic, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 use xtask::parity;
@@ -155,8 +155,10 @@ fn main() -> Result<ExitCode> {
                 Path::new(semantic::GENERATED_PATH),
             )?;
             semantic_summary(&mut out, &semantic_table)?;
-            let typed = markup::emit(&system, &inputs, &emitted)?;
-            markup_summary(&mut out, &typed)?;
+            let catalog = markup::emit(&system, &inputs, &emitted)?;
+            markup_summary(&mut out, &catalog.summary())?;
+            let part_modules = parts::emit(&system, &inputs, &emitted, &catalog)?;
+            parts_summary(&mut out, &part_modules)?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {
@@ -240,6 +242,45 @@ fn markup_summary(out: &mut dyn Write, summary: &markup::Summary) -> Result<()> 
         summary.newtypes,
         summary.member_enums,
     )?;
+    Ok(())
+}
+
+/// What `generate-schema` wrote of the part modules: the counts, every
+/// module, and what a source states that the generator did not follow.
+fn parts_summary(out: &mut dyn Write, summary: &parts::Summary) -> Result<()> {
+    let languages: Vec<String> = summary
+        .part_1
+        .iter()
+        .map(|(language, count)| format!("{count} {language}"))
+        .collect();
+    let part_1: usize = summary.part_1.iter().map(|(_, count)| count).sum();
+    let kinds: Vec<String> = summary
+        .kinds
+        .iter()
+        .map(|(file, count)| format!("{count} {file}"))
+        .collect();
+    writeln!(
+        out,
+        "wrote {}: {} modules, {part_1} of Part 1 ({}) and {} of the extensions; {} with a \
+         typed root ({} sharing another module's), {} loading bytes; {} relationship types \
+         in {}; document kinds: {}",
+        parts::PARTS_PATH,
+        part_1 + summary.extensions,
+        languages.join(", "),
+        summary.extensions,
+        summary.typed_roots,
+        summary.shared_roots,
+        summary.no_root,
+        summary.relationship_types,
+        parts::RELATIONSHIP_TYPE_PATH,
+        kinds.join(", "),
+    )?;
+    for line in &summary.list {
+        writeln!(out, "    {line}")?;
+    }
+    for note in &summary.notes {
+        writeln!(out, "  note: {note}")?;
+    }
     Ok(())
 }
 

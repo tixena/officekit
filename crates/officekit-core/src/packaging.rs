@@ -10,3 +10,4 @@ pub mod package;
 mod part_allocation;
 pub mod part_name;
 pub mod relationship;
+mod relationship_type;

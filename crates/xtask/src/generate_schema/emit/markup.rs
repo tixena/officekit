@@ -12,11 +12,11 @@
 //! other's.
 
 mod enums;
-mod names;
+pub(crate) mod names;
 mod readers;
-mod render;
+pub(crate) mod render;
 mod simple_types;
-mod structs;
+pub mod structs;
 mod writers;
 
 use alloc::collections::{BTreeMap, BTreeSet};
@@ -200,14 +200,15 @@ impl<'data> Data<'data> {
     }
 }
 
-/// Read the inputs, build the typed tree, and write its modules.
+/// Read the inputs, build the typed tree, and write its modules; the catalog
+/// comes back for the part modules.
 ///
 /// # Errors
 ///
 /// An input that cannot be read, a name the tables cannot give, a tag set
 /// with no row in `enum_names.toml` or a row with no set, or an output that
 /// cannot be written.
-pub fn emit<S>(system: &S, inputs: &Inputs, emitted: &Emitted) -> Result<Summary>
+pub fn emit<S>(system: &S, inputs: &Inputs, emitted: &Emitted) -> Result<structs::Catalog>
 where
     S: System + ?Sized,
 {
@@ -268,5 +269,5 @@ where
             .write(&path, text.as_bytes())
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
-    Ok(catalog.summary())
+    Ok(catalog)
 }

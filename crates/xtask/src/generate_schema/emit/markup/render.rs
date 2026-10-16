@@ -467,7 +467,12 @@ where
 /// The reader and writer function names of a module's structs and enums:
 /// a struct's name in snake case, an enum's without its trailing `Content`
 /// unless that is a struct's.
-fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
+///
+/// # Errors
+///
+/// A name that is no Rust identifier, or two enums of one module that read
+/// under one name.
+pub fn functions(catalog: &Catalog, module: usize) -> Result<Names<'_>> {
     let mut node_functions = BTreeMap::new();
     let mut used: BTreeSet<String> = BTreeSet::new();
     for (index, node) in catalog.nodes.iter().enumerate() {

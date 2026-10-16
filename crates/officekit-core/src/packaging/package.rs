@@ -10,7 +10,7 @@ use std::path::{Path, PathBuf};
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 
-use crate::error::PackageError;
+use crate::error::{PackageError, WriteError};
 use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::packaging::part_allocation;
 use crate::packaging::part_name::PartName;
@@ -95,7 +95,12 @@ pub trait PartRoot: Sized {
     fn from_tree(root: &Element) -> Result<Self, String>;
 
     /// The part's tree in `class`.
-    fn to_tree(&self, class: ConformanceClass) -> Element;
+    ///
+    /// # Errors
+    ///
+    /// [`WriteError::NotInClass`] naming the first element `class` has no
+    /// form for (D22).
+    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError>;
 }
 
 /// The relationships of one source, as its relationship part holds them.
@@ -730,7 +735,9 @@ impl Package {
     ///
     /// # Errors
     ///
-    /// The errors of [`store_tree`](Self::store_tree).
+    /// [`PackageError::Write`] when the root holds content `class` has no
+    /// form for, and nothing is written; the errors of
+    /// [`store_tree`](Self::store_tree).
     pub fn store<R>(
         &mut self,
         name: &PartName,
@@ -742,7 +749,10 @@ impl Package {
     where
         R: PartRoot,
     {
-        let mut tree = root.to_tree(class);
+        let mut tree = root.to_tree(class).map_err(|error| PackageError::Write {
+            error,
+            part: name.clone(),
+        })?;
         tree.set_class(class);
         let document = match self.tree_at(name) {
             Ok(previous) => Document {

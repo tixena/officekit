@@ -66,6 +66,35 @@ fn a_part_definition_reads_wrapped_labels_across_a_page_break() {
 }
 
 #[test]
+fn a_definition_that_names_its_part_names_the_root_element_too() {
+    let text = concat!(
+        "11.3.9          Header Part\n",
+        "Content Type:     application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml\n",
+        "Root              http://purl.oclc.org/ooxml/wordprocessingml/main\n",
+        "Namespace:\n",
+        "Source            http://purl.oclc.org/ooxml/officeDocument/relationships/header\n",
+        "Relationship:\n\n\n",
+        "An instance of this part type contains the information about a header.\n",
+        "The root element for a Header part shall be hdr.\n",
+        "11.3.11         Numbering Definitions Part\n",
+        "Content Type:     application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml\n",
+        "The root element for a Numbering Definition part shall be numbering, with each numbering\n",
+        "definition being\n",
+        "15.2.1          Additional Characteristics Part\n",
+        "Content Type:     application/xml\n",
+        "A package is permitted to contain zero or one Additional Characteristics parts.\n",
+    );
+    let roots: Vec<Option<String>> = part_definitions(text)
+        .into_iter()
+        .map(|part| part.root_element)
+        .collect();
+    assert_eq!(
+        roots,
+        [Some("hdr".to_owned()), Some("numbering".to_owned()), None]
+    );
+}
+
+#[test]
 fn a_transitional_part_names_its_part_1_section() {
     let text = "9.2.10          Main Document Part (Part 1, \u{a7}11.3.10)\nRoot              http://schemas.openxmlformats.org/wordprocessingml/2006/main\nNamespace:\nSource            http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\nRelationship:\n";
     let parts = transitional_parts(text);

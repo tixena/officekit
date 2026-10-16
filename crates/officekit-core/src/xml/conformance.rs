@@ -3,6 +3,8 @@
 #[cfg(test)]
 mod tests;
 
+use crate::parts::main_document;
+
 /// The two conformance classes (D21).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[non_exhaustive]
@@ -18,6 +20,21 @@ impl ConformanceClass {
         match self {
             Self::Strict => cfg!(feature = "strict"),
             Self::Transitional => cfg!(feature = "transitional"),
+        }
+    }
+
+    /// The class a package declares through the type of its relationship to
+    /// its main part: either spelling of the `officeDocument` type; `None` for
+    /// any other type.
+    #[must_use]
+    pub fn from_office_document_relationship(type_uri: &str) -> Option<Self> {
+        let office_document = main_document::RELATIONSHIP_TYPE;
+        if type_uri == office_document.strict {
+            Some(Self::Strict)
+        } else if type_uri == office_document.transitional {
+            Some(Self::Transitional)
+        } else {
+            None
         }
     }
 }

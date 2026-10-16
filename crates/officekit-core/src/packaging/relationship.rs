@@ -7,28 +7,11 @@ use core::iter;
 use crate::error::PackageError;
 use crate::packaging::package::DECLARATION;
 use crate::packaging::part_name::PartName;
-use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use crate::xml::name::{Namespace, QName};
 
 #[cfg(test)]
 mod tests;
-
-/// A relationship type of the `officeDocument` family in both classes' spelling.
-macro_rules! office_relationship {
-    ($name:literal) => {
-        RelationshipType {
-            strict: concat!(
-                "http://purl.oclc.org/ooxml/officeDocument/relationships/",
-                $name
-            ),
-            transitional: concat!(
-                "http://schemas.openxmlformats.org/officeDocument/2006/relationships/",
-                $name
-            ),
-        }
-    };
-}
 
 /// The namespace of a relationship part.
 const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/relationships";
@@ -59,7 +42,8 @@ pub struct Relationship {
     pub type_uri: String,
 }
 
-/// A relationship type in both classes' spelling (D21).
+/// A relationship type in both classes' spelling (D21); its constants and
+/// methods are generated, in `relationship_type.rs`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct RelationshipType {
@@ -91,34 +75,6 @@ impl Relationship {
             TargetMode::External => Ok(Target::External(self.target.clone())),
             TargetMode::Internal => resolve(source_directory, &self.target).map(Target::Part),
         }
-    }
-}
-
-impl RelationshipType {
-    /// Core file properties: one URI in both classes (Part 2, 11.1).
-    pub const CORE_PROPERTIES: Self = Self {
-        strict: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
-        transitional: "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
-    };
-    pub const CUSTOM_XML: Self = office_relationship!("customXml");
-    pub const CUSTOM_XML_PROPERTIES: Self = office_relationship!("customXmlProps");
-    pub const HEADER: Self = office_relationship!("header");
-    pub const IMAGE: Self = office_relationship!("image");
-    pub const OFFICE_DOCUMENT: Self = office_relationship!("officeDocument");
-
-    /// The spelling `class` writes.
-    #[must_use]
-    pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
-        match class {
-            ConformanceClass::Strict => self.strict,
-            ConformanceClass::Transitional => self.transitional,
-        }
-    }
-
-    /// Whether `type_uri` is this type in either class's spelling.
-    #[must_use]
-    pub fn matches(&self, type_uri: &str) -> bool {
-        type_uri == self.transitional || type_uri == self.strict
     }
 }
 

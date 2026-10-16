@@ -7,6 +7,9 @@
 //!   content types, relationships, and the zip container.
 //! - [`xml`] ports the root `DocumentFormat.OpenXml` namespace: the element
 //!   and attribute model, simple types, and the streaming reader and writer.
+//! - [`parts`] holds one generated module per part type: its content type,
+//!   its relationship type in both classes, and the load and store of its
+//!   root.
 //! - [`validation`] ports `DocumentFormat.OpenXml.Validation`.
 //! - [`docx`], [`spreadsheet`], and [`presentation`] hold the typed
 //!   document classes and the operations over the generated types.
@@ -23,6 +26,7 @@ pub mod error;
 pub mod folder;
 pub mod markup;
 pub mod packaging;
+pub mod parts;
 pub mod presentation;
 pub mod spreadsheet;
 pub mod stream;

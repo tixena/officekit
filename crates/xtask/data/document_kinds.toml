@@ -1,0 +1,95 @@
+# The document kinds of each file type, by the content type of its main part
+# (blueprint section 3.5): `WordprocessingKind`, `SpreadsheetKind`, and
+# `PresentationKind` in `parts/kinds.rs`, one variant per row.
+#
+# Part 1 lists the kinds of the standard with the Main Document (11.3.10),
+# Workbook (12.3.23), and Presentation (13.3.6) parts; the generator stops when
+# one of those has no row here. The macro-enabled kinds and the add-ins are
+# Microsoft's, and SDK 3.5.1's data/ folder lists none of them: their content
+# types are entered by hand from the document types of the Open XML SDK at
+# v3.5.1 (WordprocessingDocument.cs, SpreadsheetDocument.cs, and
+# PresentationDocument.cs in src/DocumentFormat.OpenXml/Packaging), and the
+# main part modules list them after Part 1's own.
+#
+# Each `[[kind]]` row is a file type (`wordprocessing`, `spreadsheet`,
+# `presentation`), the variant's name, and the main part's content type.
+
+[[kind]]
+file = "wordprocessing"
+name = "Document"
+content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"
+
+[[kind]]
+file = "wordprocessing"
+name = "Template"
+content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml"
+
+[[kind]]
+file = "wordprocessing"
+name = "MacroEnabledDocument"
+content_type = "application/vnd.ms-word.document.macroEnabled.main+xml"
+
+[[kind]]
+file = "wordprocessing"
+name = "MacroEnabledTemplate"
+content_type = "application/vnd.ms-word.template.macroEnabledTemplate.main+xml"
+
+[[kind]]
+file = "spreadsheet"
+name = "Workbook"
+content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"
+
+[[kind]]
+file = "spreadsheet"
+name = "Template"
+content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml"
+
+[[kind]]
+file = "spreadsheet"
+name = "MacroEnabledWorkbook"
+content_type = "application/vnd.ms-excel.sheet.macroEnabled.main+xml"
+
+[[kind]]
+file = "spreadsheet"
+name = "MacroEnabledTemplate"
+content_type = "application/vnd.ms-excel.template.macroEnabled.main+xml"
+
+[[kind]]
+file = "spreadsheet"
+name = "AddIn"
+content_type = "application/vnd.ms-excel.addin.macroEnabled.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "Presentation"
+content_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "Slideshow"
+content_type = "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "Template"
+content_type = "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "MacroEnabledPresentation"
+content_type = "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "MacroEnabledSlideshow"
+content_type = "application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "MacroEnabledTemplate"
+content_type = "application/vnd.ms-powerpoint.template.macroEnabled.main+xml"
+
+[[kind]]
+file = "presentation"
+name = "AddIn"
+content_type = "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml"

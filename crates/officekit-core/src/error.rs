@@ -1,4 +1,5 @@
-//! Failures raised by the packaging layer.
+//! Failures raised by the packaging layer, and the refusal of a class's
+//! writer.
 
 use core::convert::Infallible;
 use std::io;
@@ -74,10 +75,27 @@ pub enum PackageError {
     #[error("cannot read the part {part}: {reason}")]
     Read { part: PartName, reason: String },
 
+    /// A typed root holds content the class it is stored in has no form for,
+    /// so nothing is written (D22).
+    #[error("cannot write the part {part}: {error}")]
+    Write { error: WriteError, part: PartName },
+
     /// A part is not well-formed XML, or its markup compatibility could not be
     /// processed.
     #[error("the part {part}: {error}")]
     Xml { error: XmlError, part: PartName },
+}
+
+/// Why a node cannot be written in a conformance class (D22).
+#[derive(Debug, thiserror::Error)]
+#[non_exhaustive]
+pub enum WriteError {
+    /// The element has no form in the class.
+    #[error("{tag} has no form in {class:?}")]
+    NotInClass {
+        class: ConformanceClass,
+        tag: &'static str,
+    },
 }
 
 /// A relationship's source as a message names it.
