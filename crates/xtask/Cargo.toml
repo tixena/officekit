@@ -22,3 +22,6 @@ clap.workspace = true
 
 # Error handling.
 anyhow.workspace = true
+
+# The only route to the OS: inputs are found through `System`.
+os-shim.workspace = true
