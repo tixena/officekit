@@ -356,6 +356,7 @@ const CHECKS_1: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -392,6 +393,7 @@ const CHECKS_3: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -423,6 +425,7 @@ const CHECKS_4: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -860,6 +863,7 @@ const CHECKS_16: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -886,6 +890,7 @@ const CHECKS_17: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -936,6 +941,7 @@ const CHECKS_19: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -955,6 +961,7 @@ const CHECKS_20: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -966,6 +973,7 @@ const CHECKS_20: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -990,6 +998,7 @@ const CHECKS_21: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1009,6 +1018,7 @@ const CHECKS_22: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1020,6 +1030,7 @@ const CHECKS_22: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1153,6 +1164,7 @@ const CHECKS_26: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1164,6 +1176,7 @@ const CHECKS_26: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1326,6 +1339,7 @@ const CHECKS_31: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1362,6 +1376,7 @@ const CHECKS_33: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1397,6 +1412,7 @@ const CHECKS_34: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1411,6 +1427,7 @@ const CHECKS_34: &[ValueCheck] = &[
 const CHECKS_35: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1422,6 +1439,7 @@ const CHECKS_35: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1436,6 +1454,7 @@ const CHECKS_35: &[ValueCheck] = &[
 const CHECKS_36: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1503,6 +1522,7 @@ const CHECKS_39: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1552,6 +1572,7 @@ const CHECKS_40: &[ValueCheck] = &[
 const CHECKS_41: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1578,6 +1599,7 @@ const CHECKS_42: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1598,6 +1620,7 @@ const CHECKS_42: &[ValueCheck] = &[
 
 const CHECKS_43: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -1611,6 +1634,7 @@ const CHECKS_43: &[ValueCheck] = &[ValueCheck {
 const CHECKS_44: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1637,6 +1661,7 @@ const CHECKS_45: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1648,6 +1673,7 @@ const CHECKS_45: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1707,6 +1733,7 @@ const CHECKS_47: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1763,6 +1790,7 @@ const CHECKS_48: &[ValueCheck] = &[
 const CHECKS_49: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1784,6 +1812,7 @@ const CHECKS_49: &[ValueCheck] = &[
 const CHECKS_50: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1810,6 +1839,7 @@ const CHECKS_51: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1876,6 +1906,7 @@ const CHECKS_53: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1887,6 +1918,7 @@ const CHECKS_53: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1941,6 +1973,7 @@ const CHECKS_54: &[ValueCheck] = &[
 const CHECKS_55: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1962,6 +1995,7 @@ const CHECKS_55: &[ValueCheck] = &[
 const CHECKS_56: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -1973,6 +2007,7 @@ const CHECKS_56: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2032,6 +2067,7 @@ const CHECKS_58: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2053,6 +2089,7 @@ const CHECKS_58: &[ValueCheck] = &[
 const CHECKS_59: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2189,6 +2226,7 @@ const CHECKS_63: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2215,6 +2253,7 @@ const CHECKS_64: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2236,6 +2275,7 @@ const CHECKS_64: &[ValueCheck] = &[
 const CHECKS_65: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2257,6 +2297,7 @@ const CHECKS_65: &[ValueCheck] = &[
 const CHECKS_66: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2278,6 +2319,7 @@ const CHECKS_66: &[ValueCheck] = &[
 const CHECKS_67: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2334,6 +2376,7 @@ const CHECKS_68: &[ValueCheck] = &[
 const CHECKS_69: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2355,6 +2398,7 @@ const CHECKS_69: &[ValueCheck] = &[
 const CHECKS_70: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2376,6 +2420,7 @@ const CHECKS_70: &[ValueCheck] = &[
 const CHECKS_71: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2402,6 +2447,7 @@ const CHECKS_72: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2413,6 +2459,7 @@ const CHECKS_72: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2462,6 +2509,7 @@ const CHECKS_73: &[ValueCheck] = &[
 const CHECKS_74: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2483,6 +2531,7 @@ const CHECKS_74: &[ValueCheck] = &[
 const CHECKS_75: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2504,6 +2553,7 @@ const CHECKS_75: &[ValueCheck] = &[
 const CHECKS_76: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2525,6 +2575,7 @@ const CHECKS_76: &[ValueCheck] = &[
 const CHECKS_77: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2562,6 +2613,7 @@ const CHECKS_78: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2573,6 +2625,7 @@ const CHECKS_78: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2603,6 +2656,7 @@ const CHECKS_79: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2614,6 +2668,7 @@ const CHECKS_79: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -2673,6 +2728,7 @@ const CHECKS_81: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2699,6 +2755,7 @@ const CHECKS_82: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2720,6 +2777,7 @@ const CHECKS_82: &[ValueCheck] = &[
 const CHECKS_83: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2746,6 +2804,7 @@ const CHECKS_84: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2772,6 +2831,7 @@ const CHECKS_85: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2833,6 +2893,7 @@ const CHECKS_87: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(3),
             max_length: None,
@@ -2908,6 +2969,7 @@ const CHECKS_89: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2934,6 +2996,7 @@ const CHECKS_90: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -2955,6 +3018,7 @@ const CHECKS_90: &[ValueCheck] = &[
 const CHECKS_91: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(3),
             max_length: None,
@@ -2985,6 +3049,7 @@ const CHECKS_91: &[ValueCheck] = &[
 const CHECKS_92: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3006,6 +3071,7 @@ const CHECKS_92: &[ValueCheck] = &[
 const CHECKS_93: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3027,6 +3093,7 @@ const CHECKS_93: &[ValueCheck] = &[
 const CHECKS_94: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3053,6 +3120,7 @@ const CHECKS_95: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3064,6 +3132,7 @@ const CHECKS_95: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -3078,6 +3147,7 @@ const CHECKS_95: &[ValueCheck] = &[
 const CHECKS_96: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3104,6 +3174,7 @@ const CHECKS_97: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3160,6 +3231,7 @@ const CHECKS_98: &[ValueCheck] = &[
 const CHECKS_99: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3181,6 +3253,7 @@ const CHECKS_99: &[ValueCheck] = &[
 const CHECKS_100: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3352,6 +3425,7 @@ const CHECKS_104: &[ValueCheck] = &[
 const CHECKS_105: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3373,6 +3447,7 @@ const CHECKS_105: &[ValueCheck] = &[
 const CHECKS_106: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3429,6 +3504,7 @@ const CHECKS_107: &[ValueCheck] = &[
 const CHECKS_108: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3485,6 +3561,7 @@ const CHECKS_109: &[ValueCheck] = &[
 const CHECKS_110: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(10),
             max_length: None,
@@ -3707,6 +3784,7 @@ const CHECKS_116: &[ValueCheck] = &[
 const CHECKS_117: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3728,6 +3806,7 @@ const CHECKS_117: &[ValueCheck] = &[
 const CHECKS_118: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3829,6 +3908,7 @@ const CHECKS_120: &[ValueCheck] = &[
 const CHECKS_121: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -3866,6 +3946,7 @@ const CHECKS_122: &[ValueCheck] = &[ValueCheck {
 
 const CHECKS_123: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Token,
         length: None,
         max_length: None,
@@ -3901,6 +3982,7 @@ const CHECKS_125: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -3943,6 +4025,7 @@ const CHECKS_126: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -3996,6 +4079,7 @@ const CHECKS_128: &[ValueCheck] = &[
 const CHECKS_129: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Uri,
             length: None,
             max_length: None,
@@ -4007,6 +4091,7 @@ const CHECKS_129: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -4026,6 +4111,7 @@ const CHECKS_130: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -4057,6 +4143,7 @@ const CHECKS_131: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -4083,6 +4170,7 @@ const CHECKS_132: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -4152,6 +4240,7 @@ const CHECKS_134: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -4163,6 +4252,7 @@ const CHECKS_134: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -4330,6 +4420,7 @@ const CHECKS_139: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -4391,6 +4482,7 @@ const CHECKS_142: &[ValueCheck] = &[
 const CHECKS_143: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(255),
@@ -4402,6 +4494,7 @@ const CHECKS_143: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -4423,6 +4516,7 @@ const CHECKS_144: &[ValueCheck] = &[ValueCheck {
 
 const CHECKS_145: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: Some(255),
@@ -4515,6 +4609,7 @@ const CHECKS_148: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5682,6 +5777,7 @@ const CHECKS_202: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5693,6 +5789,7 @@ const CHECKS_202: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5717,6 +5814,7 @@ const CHECKS_203: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5765,6 +5863,7 @@ const CHECKS_205: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5789,6 +5888,7 @@ const CHECKS_206: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5802,6 +5902,7 @@ const CHECKS_206: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5826,6 +5927,7 @@ const CHECKS_207: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5837,6 +5939,7 @@ const CHECKS_207: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5856,6 +5959,7 @@ const CHECKS_208: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5882,6 +5986,7 @@ const CHECKS_209: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5908,6 +6013,7 @@ const CHECKS_210: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -5970,6 +6076,7 @@ const CHECKS_212: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -5981,6 +6088,7 @@ const CHECKS_212: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6000,6 +6108,7 @@ const CHECKS_213: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6151,6 +6260,7 @@ const CHECKS_217: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6178,6 +6288,7 @@ const CHECKS_218: &[ValueCheck] = &[
     ValueCheck {
         check: Check::List {
             item: &Check::String {
+                class: None,
                 kind: StringKind::Plain,
                 length: None,
                 max_length: None,
@@ -6198,6 +6309,7 @@ const CHECKS_219: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6224,6 +6336,7 @@ const CHECKS_220: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6313,6 +6426,7 @@ const CHECKS_222: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6324,6 +6438,7 @@ const CHECKS_222: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6372,6 +6487,7 @@ const CHECKS_224: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6593,6 +6709,7 @@ const CHECKS_229: &[ValueCheck] = &[
 const CHECKS_230: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1026),
@@ -6604,6 +6721,7 @@ const CHECKS_230: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6623,6 +6741,7 @@ const CHECKS_231: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6688,6 +6807,7 @@ const CHECKS_234: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6699,6 +6819,7 @@ const CHECKS_234: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6734,6 +6855,7 @@ const CHECKS_235: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6745,6 +6867,7 @@ const CHECKS_235: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6809,6 +6932,7 @@ const CHECKS_239: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -6820,6 +6944,7 @@ const CHECKS_239: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -6991,6 +7116,7 @@ const CHECKS_247: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7002,6 +7128,7 @@ const CHECKS_247: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7230,6 +7357,7 @@ const CHECKS_258: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7241,6 +7369,7 @@ const CHECKS_258: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7313,6 +7442,7 @@ const CHECKS_261: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7379,6 +7509,7 @@ const CHECKS_263: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7400,6 +7531,7 @@ const CHECKS_263: &[ValueCheck] = &[
 const CHECKS_264: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7421,6 +7553,7 @@ const CHECKS_264: &[ValueCheck] = &[
 const CHECKS_265: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7447,6 +7580,7 @@ const CHECKS_266: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Uri,
             length: None,
             max_length: None,
@@ -7458,6 +7592,7 @@ const CHECKS_266: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7507,6 +7642,7 @@ const CHECKS_267: &[ValueCheck] = &[
 const CHECKS_268: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7528,6 +7664,7 @@ const CHECKS_268: &[ValueCheck] = &[
 const CHECKS_269: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7554,6 +7691,7 @@ const CHECKS_270: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7575,6 +7713,7 @@ const CHECKS_270: &[ValueCheck] = &[
 const CHECKS_271: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7596,6 +7735,7 @@ const CHECKS_271: &[ValueCheck] = &[
 const CHECKS_272: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7617,6 +7757,7 @@ const CHECKS_272: &[ValueCheck] = &[
 const CHECKS_273: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7638,6 +7779,7 @@ const CHECKS_273: &[ValueCheck] = &[
 const CHECKS_274: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7697,6 +7839,7 @@ const CHECKS_276: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7708,6 +7851,7 @@ const CHECKS_276: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7722,6 +7866,7 @@ const CHECKS_276: &[ValueCheck] = &[
 const CHECKS_277: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7759,6 +7904,7 @@ const CHECKS_278: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7770,6 +7916,7 @@ const CHECKS_278: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -7784,6 +7931,7 @@ const CHECKS_278: &[ValueCheck] = &[
 const CHECKS_279: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7882,6 +8030,7 @@ const CHECKS_284: &[ValueCheck] = &[ValueCheck {
 const CHECKS_285: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7903,6 +8052,7 @@ const CHECKS_285: &[ValueCheck] = &[
 const CHECKS_286: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -7929,6 +8079,7 @@ const CHECKS_287: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -8215,6 +8366,7 @@ const CHECKS_288: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8233,6 +8385,7 @@ const CHECKS_288: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8247,6 +8400,7 @@ const CHECKS_288: &[ValueCheck] = &[
 const CHECKS_289: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -8268,6 +8422,7 @@ const CHECKS_289: &[ValueCheck] = &[
 const CHECKS_290: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -8303,6 +8458,7 @@ const CHECKS_291: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8322,6 +8478,7 @@ const CHECKS_292: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -8350,6 +8507,7 @@ const CHECKS_293: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8369,6 +8527,7 @@ const CHECKS_294: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -8462,6 +8621,7 @@ const CHECKS_295: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8481,6 +8641,7 @@ const CHECKS_296: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Uri,
             length: None,
             max_length: None,
@@ -8492,6 +8653,7 @@ const CHECKS_296: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8532,6 +8694,7 @@ const CHECKS_297: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8543,6 +8706,7 @@ const CHECKS_297: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8711,6 +8875,7 @@ const CHECKS_303: &[ValueCheck] = &[ValueCheck {
 const CHECKS_304: &[ValueCheck] = &[ValueCheck {
     check: Check::List {
         item: &Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8730,6 +8895,7 @@ const CHECKS_305: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Id,
             length: None,
             max_length: None,
@@ -8741,6 +8907,7 @@ const CHECKS_305: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8771,6 +8938,7 @@ const CHECKS_307: &[ValueCheck] = &[ValueCheck {
 const CHECKS_308: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Id,
             length: None,
             max_length: None,
@@ -8782,6 +8950,7 @@ const CHECKS_308: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8917,6 +9086,7 @@ const CHECKS_312: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8928,6 +9098,7 @@ const CHECKS_312: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8954,6 +9125,7 @@ const CHECKS_313: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -8965,6 +9137,7 @@ const CHECKS_313: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9030,6 +9203,7 @@ const CHECKS_314: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9041,6 +9215,7 @@ const CHECKS_314: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9067,6 +9242,7 @@ const CHECKS_315: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9078,6 +9254,7 @@ const CHECKS_315: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9132,6 +9309,7 @@ const CHECKS_317: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9166,6 +9344,7 @@ const CHECKS_319: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9177,6 +9356,7 @@ const CHECKS_319: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9284,11 +9464,6 @@ const CHECKS_328: &[ValueCheck] = &[
         versions: Versions(0b00_0000),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
         check: Check::Enum {
             class: ValueClass::Enum("m:ST_BreakBinSub"),
         },
@@ -9305,6 +9480,7 @@ const CHECKS_329: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1),
@@ -9316,6 +9492,7 @@ const CHECKS_329: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9350,6 +9527,7 @@ const CHECKS_331: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(31),
@@ -9361,6 +9539,7 @@ const CHECKS_331: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9738,6 +9917,7 @@ const CHECKS_348: &[ValueCheck] = &[ValueCheck {
 const CHECKS_349: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9751,6 +9931,7 @@ const CHECKS_349: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9773,6 +9954,7 @@ const CHECKS_350: &[ValueCheck] = &[ValueCheck {
 const CHECKS_351: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9800,6 +9982,7 @@ const CHECKS_351: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9826,6 +10009,7 @@ const CHECKS_352: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9837,6 +10021,7 @@ const CHECKS_352: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9851,6 +10036,7 @@ const CHECKS_352: &[ValueCheck] = &[
 const CHECKS_353: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9863,6 +10049,7 @@ const CHECKS_353: &[ValueCheck] = &[
     ValueCheck {
         check: Check::List {
             item: &Check::String {
+                class: None,
                 kind: StringKind::Plain,
                 length: None,
                 max_length: None,
@@ -9910,6 +10097,7 @@ const CHECKS_354: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9924,6 +10112,7 @@ const CHECKS_354: &[ValueCheck] = &[
 const CHECKS_355: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9935,6 +10124,7 @@ const CHECKS_355: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9972,6 +10162,7 @@ const CHECKS_356: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -9991,6 +10182,7 @@ const CHECKS_357: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1024),
@@ -10002,6 +10194,7 @@ const CHECKS_357: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10036,6 +10229,7 @@ const CHECKS_359: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(4096),
@@ -10047,6 +10241,7 @@ const CHECKS_359: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10066,6 +10261,7 @@ const CHECKS_360: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Id,
             length: None,
             max_length: Some(1024),
@@ -10077,6 +10273,7 @@ const CHECKS_360: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10096,6 +10293,7 @@ const CHECKS_361: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::QName,
             length: None,
             max_length: Some(1024),
@@ -10107,6 +10305,7 @@ const CHECKS_361: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10126,6 +10325,7 @@ const CHECKS_362: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: Some(3),
@@ -10137,6 +10337,7 @@ const CHECKS_362: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10196,6 +10397,7 @@ const CHECKS_364: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::NcName,
             length: None,
             max_length: Some(1024),
@@ -10207,6 +10409,7 @@ const CHECKS_364: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10386,6 +10589,7 @@ const CHECKS_372: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1024),
@@ -10397,6 +10601,7 @@ const CHECKS_372: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10491,6 +10696,7 @@ const CHECKS_376: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::NcName,
             length: None,
             max_length: Some(1024),
@@ -10502,6 +10708,7 @@ const CHECKS_376: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10531,6 +10738,7 @@ const CHECKS_377: &[ValueCheck] = &[
 const CHECKS_378: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Id,
             length: None,
             max_length: Some(1024),
@@ -10542,6 +10750,7 @@ const CHECKS_378: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10556,6 +10765,7 @@ const CHECKS_378: &[ValueCheck] = &[
 const CHECKS_379: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::QName,
             length: None,
             max_length: Some(1024),
@@ -10567,6 +10777,7 @@ const CHECKS_379: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10581,6 +10792,7 @@ const CHECKS_379: &[ValueCheck] = &[
 const CHECKS_380: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1024),
@@ -10592,6 +10804,7 @@ const CHECKS_380: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10606,6 +10819,7 @@ const CHECKS_380: &[ValueCheck] = &[
 const CHECKS_381: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::NcName,
             length: None,
             max_length: Some(1024),
@@ -10617,6 +10831,7 @@ const CHECKS_381: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10647,6 +10862,7 @@ const CHECKS_383: &[ValueCheck] = &[ValueCheck {
 const CHECKS_384: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(4096),
@@ -10658,6 +10874,7 @@ const CHECKS_384: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10672,6 +10889,7 @@ const CHECKS_384: &[ValueCheck] = &[
 const CHECKS_385: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: Some(3),
@@ -10683,6 +10901,7 @@ const CHECKS_385: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10737,6 +10956,7 @@ const CHECKS_387: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(1024),
@@ -10748,6 +10968,7 @@ const CHECKS_387: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -10810,6 +11031,7 @@ const CHECKS_390: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::NcName,
             length: None,
             max_length: Some(1024),
@@ -10821,6 +11043,7 @@ const CHECKS_390: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11076,6 +11299,7 @@ const CHECKS_416: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11107,6 +11331,7 @@ const CHECKS_417: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Uri,
             length: None,
             max_length: None,
@@ -11118,6 +11343,7 @@ const CHECKS_417: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11217,6 +11443,7 @@ const CHECKS_420: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Uri,
             length: None,
             max_length: None,
@@ -11228,6 +11455,7 @@ const CHECKS_420: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11247,6 +11475,7 @@ const CHECKS_421: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11273,6 +11502,7 @@ const CHECKS_422: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11284,6 +11514,7 @@ const CHECKS_422: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11303,6 +11534,7 @@ const CHECKS_423: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11316,6 +11548,7 @@ const CHECKS_423: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11364,6 +11597,7 @@ const CHECKS_425: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11390,6 +11624,7 @@ const CHECKS_426: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11416,6 +11651,7 @@ const CHECKS_427: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11487,6 +11723,7 @@ const CHECKS_429: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11527,6 +11764,7 @@ const CHECKS_430: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11546,6 +11784,7 @@ const CHECKS_431: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11557,6 +11796,7 @@ const CHECKS_431: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11663,6 +11903,7 @@ const CHECKS_434: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11694,6 +11935,7 @@ const CHECKS_435: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11773,6 +12015,7 @@ const CHECKS_438: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11804,6 +12047,7 @@ const CHECKS_439: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11857,6 +12101,7 @@ const CHECKS_441: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11868,6 +12113,7 @@ const CHECKS_441: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -11907,6 +12153,7 @@ const CHECKS_443: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11933,6 +12180,7 @@ const CHECKS_444: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -11989,6 +12237,7 @@ const CHECKS_446: &[ValueCheck] = &[
     ValueCheck {
         check: Check::List {
             item: &Check::String {
+                class: None,
                 kind: StringKind::Plain,
                 length: None,
                 max_length: None,
@@ -12118,6 +12367,7 @@ const CHECKS_450: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12129,6 +12379,7 @@ const CHECKS_450: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -12267,6 +12518,7 @@ const CHECKS_454: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12278,6 +12530,7 @@ const CHECKS_454: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -12474,6 +12727,7 @@ const CHECKS_460: &[ValueCheck] = &[
 const CHECKS_461: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12509,6 +12763,7 @@ const CHECKS_462: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -12523,6 +12778,7 @@ const CHECKS_462: &[ValueCheck] = &[
 const CHECKS_463: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12544,6 +12800,7 @@ const CHECKS_463: &[ValueCheck] = &[
 const CHECKS_464: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12565,6 +12822,7 @@ const CHECKS_464: &[ValueCheck] = &[
 const CHECKS_465: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12590,11 +12848,6 @@ const CHECKS_466: &[ValueCheck] = &[
         versions: Versions(0b00_0000),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
         check: Check::Enum {
             class: ValueClass::Enum("p:ST_CryptProv"),
         },
@@ -12608,11 +12861,6 @@ const CHECKS_467: &[ValueCheck] = &[
         check: Check::Required,
         union: None,
         versions: Versions(0b00_0000),
-    },
-    ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
     },
     ValueCheck {
         check: Check::Enum {
@@ -12630,11 +12878,6 @@ const CHECKS_468: &[ValueCheck] = &[
         versions: Versions(0b00_0000),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
         check: Check::Enum {
             class: ValueClass::Enum("p:ST_AlgType"),
         },
@@ -12648,11 +12891,6 @@ const CHECKS_469: &[ValueCheck] = &[
         check: Check::Required,
         union: None,
         versions: Versions(0b00_0000),
-    },
-    ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
     },
     ValueCheck {
         check: Check::Number {
@@ -12679,11 +12917,6 @@ const CHECKS_470: &[ValueCheck] = &[
         versions: Versions(0b00_0000),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
         check: Check::Number {
             bounds: Bounds {
                 max_exclusive: None,
@@ -12708,12 +12941,8 @@ const CHECKS_471: &[ValueCheck] = &[
         versions: Versions(0b00_0000),
     },
     ValueCheck {
-        check: Check::Required,
-        union: None,
-        versions: Versions(0b11_1111),
-    },
-    ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -12776,6 +13005,7 @@ const CHECKS_473: &[ValueCheck] = &[
 const CHECKS_474: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12797,6 +13027,7 @@ const CHECKS_474: &[ValueCheck] = &[
 const CHECKS_475: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12818,6 +13049,7 @@ const CHECKS_475: &[ValueCheck] = &[
 const CHECKS_476: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12839,6 +13071,7 @@ const CHECKS_476: &[ValueCheck] = &[
 const CHECKS_477: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12860,6 +13093,7 @@ const CHECKS_477: &[ValueCheck] = &[
 const CHECKS_478: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12881,6 +13115,7 @@ const CHECKS_478: &[ValueCheck] = &[
 const CHECKS_479: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12945,6 +13180,7 @@ const CHECKS_481: &[ValueCheck] = &[ValueCheck {
 const CHECKS_482: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12966,6 +13202,7 @@ const CHECKS_482: &[ValueCheck] = &[
 const CHECKS_483: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -12987,6 +13224,7 @@ const CHECKS_483: &[ValueCheck] = &[
 const CHECKS_484: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13048,6 +13286,7 @@ const CHECKS_485: &[ValueCheck] = &[
 const CHECKS_486: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13144,6 +13383,7 @@ const CHECKS_488: &[ValueCheck] = &[
 const CHECKS_489: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13189,6 +13429,7 @@ const CHECKS_490: &[ValueCheck] = &[
 const CHECKS_491: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13226,6 +13467,7 @@ const CHECKS_492: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13237,6 +13479,7 @@ const CHECKS_492: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13248,6 +13491,7 @@ const CHECKS_492: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13310,6 +13554,7 @@ const CHECKS_494: &[ValueCheck] = &[
 const CHECKS_495: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13331,6 +13576,7 @@ const CHECKS_495: &[ValueCheck] = &[
 const CHECKS_496: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13352,6 +13598,7 @@ const CHECKS_496: &[ValueCheck] = &[
 const CHECKS_497: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13373,6 +13620,7 @@ const CHECKS_497: &[ValueCheck] = &[
 const CHECKS_498: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13394,6 +13642,7 @@ const CHECKS_498: &[ValueCheck] = &[
 const CHECKS_499: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13415,6 +13664,7 @@ const CHECKS_499: &[ValueCheck] = &[
 const CHECKS_500: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13436,6 +13686,7 @@ const CHECKS_500: &[ValueCheck] = &[
 const CHECKS_501: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13462,6 +13713,7 @@ const CHECKS_502: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13505,6 +13757,7 @@ const CHECKS_502: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13519,6 +13772,7 @@ const CHECKS_502: &[ValueCheck] = &[
 const CHECKS_503: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13540,6 +13794,7 @@ const CHECKS_503: &[ValueCheck] = &[
 const CHECKS_504: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13584,6 +13839,7 @@ const CHECKS_505: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13602,6 +13858,7 @@ const CHECKS_505: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13616,6 +13873,7 @@ const CHECKS_505: &[ValueCheck] = &[
 const CHECKS_506: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13637,6 +13895,7 @@ const CHECKS_506: &[ValueCheck] = &[
 const CHECKS_507: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13658,6 +13917,7 @@ const CHECKS_507: &[ValueCheck] = &[
 const CHECKS_508: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13679,6 +13939,7 @@ const CHECKS_508: &[ValueCheck] = &[
 const CHECKS_509: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13700,6 +13961,7 @@ const CHECKS_509: &[ValueCheck] = &[
 const CHECKS_510: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13721,6 +13983,7 @@ const CHECKS_510: &[ValueCheck] = &[
 const CHECKS_511: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13742,6 +14005,7 @@ const CHECKS_511: &[ValueCheck] = &[
 const CHECKS_512: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13763,6 +14027,7 @@ const CHECKS_512: &[ValueCheck] = &[
 const CHECKS_513: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13784,6 +14049,7 @@ const CHECKS_513: &[ValueCheck] = &[
 const CHECKS_514: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13805,6 +14071,7 @@ const CHECKS_514: &[ValueCheck] = &[
 const CHECKS_515: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13826,6 +14093,7 @@ const CHECKS_515: &[ValueCheck] = &[
 const CHECKS_516: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13847,6 +14115,7 @@ const CHECKS_516: &[ValueCheck] = &[
 const CHECKS_517: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13896,6 +14165,7 @@ const CHECKS_518: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13914,6 +14184,7 @@ const CHECKS_518: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -13928,6 +14199,7 @@ const CHECKS_518: &[ValueCheck] = &[
 const CHECKS_519: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13954,6 +14226,7 @@ const CHECKS_520: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -13998,6 +14271,7 @@ const CHECKS_521: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -14012,6 +14286,7 @@ const CHECKS_521: &[ValueCheck] = &[
 const CHECKS_522: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14033,6 +14308,7 @@ const CHECKS_522: &[ValueCheck] = &[
 const CHECKS_523: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14054,6 +14330,7 @@ const CHECKS_523: &[ValueCheck] = &[
 const CHECKS_524: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14080,6 +14357,7 @@ const CHECKS_525: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14101,6 +14379,7 @@ const CHECKS_525: &[ValueCheck] = &[
 const CHECKS_526: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14122,6 +14401,7 @@ const CHECKS_526: &[ValueCheck] = &[
 const CHECKS_527: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14143,6 +14423,7 @@ const CHECKS_527: &[ValueCheck] = &[
 const CHECKS_528: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14264,6 +14545,7 @@ const CHECKS_531: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14275,6 +14557,7 @@ const CHECKS_531: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -14393,6 +14676,7 @@ const CHECKS_536: &[ValueCheck] = &[ValueCheck {
 const CHECKS_537: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: Some(255),
@@ -14404,6 +14688,7 @@ const CHECKS_537: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -14530,6 +14815,7 @@ const CHECKS_546: &[ValueCheck] = &[
 
 const CHECKS_547: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -14544,6 +14830,7 @@ const CHECKS_547: &[ValueCheck] = &[ValueCheck {
 
 const CHECKS_548: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -14556,6 +14843,7 @@ const CHECKS_548: &[ValueCheck] = &[ValueCheck {
 
 const CHECKS_549: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -14689,6 +14977,7 @@ const CHECKS_557: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14720,6 +15009,7 @@ const CHECKS_558: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14845,6 +15135,7 @@ const CHECKS_562: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -14876,6 +15167,7 @@ const CHECKS_563: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -15002,6 +15294,7 @@ const CHECKS_567: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15152,6 +15445,7 @@ const CHECKS_573: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -15262,6 +15556,7 @@ const CHECKS_577: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(3),
             max_length: None,
@@ -15317,6 +15612,7 @@ const CHECKS_579: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(2),
             max_length: None,
@@ -15516,6 +15812,7 @@ const CHECKS_586: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15551,6 +15848,7 @@ const CHECKS_587: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15606,6 +15904,7 @@ const CHECKS_589: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -15645,6 +15944,7 @@ const CHECKS_591: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15700,6 +16000,7 @@ const CHECKS_593: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15735,6 +16036,7 @@ const CHECKS_594: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -15770,6 +16072,7 @@ const CHECKS_595: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(255),
@@ -15781,6 +16084,7 @@ const CHECKS_595: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -15802,6 +16106,7 @@ const CHECKS_596: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: Some(ValueClass::HexBinary),
             kind: StringKind::Plain,
             length: Some(3),
             max_length: None,
@@ -15813,6 +16118,7 @@ const CHECKS_596: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -15835,6 +16141,7 @@ const CHECKS_597: &[ValueCheck] = &[ValueCheck {
 const CHECKS_598: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(2),
@@ -15846,6 +16153,7 @@ const CHECKS_598: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -15897,6 +16205,7 @@ const CHECKS_601: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(40),
@@ -15908,6 +16217,7 @@ const CHECKS_601: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -15967,6 +16277,7 @@ const CHECKS_603: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16124,15 +16435,11 @@ const CHECKS_616: &[ValueCheck] = &[
     ValueCheck {
         check: Check::Required,
         union: None,
-        versions: Versions(0b00_0001),
-    },
-    ValueCheck {
-        check: Check::Required,
-        union: None,
         versions: Versions(0b11_1110),
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(12),
             max_length: None,
@@ -16144,6 +16451,7 @@ const CHECKS_616: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16185,6 +16493,7 @@ const CHECKS_618: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: Some(ValueClass::HexBinary),
             kind: StringKind::Plain,
             length: Some(3),
             max_length: None,
@@ -16196,6 +16505,7 @@ const CHECKS_618: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16250,6 +16560,7 @@ const CHECKS_620: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16261,6 +16572,7 @@ const CHECKS_620: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16310,6 +16622,7 @@ const CHECKS_621: &[ValueCheck] = &[
 const CHECKS_622: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(9),
@@ -16321,6 +16634,7 @@ const CHECKS_622: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16350,6 +16664,7 @@ const CHECKS_623: &[ValueCheck] = &[
 const CHECKS_624: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(254),
@@ -16361,6 +16676,7 @@ const CHECKS_624: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16412,6 +16728,7 @@ const CHECKS_625: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16546,6 +16863,7 @@ const CHECKS_634: &[ValueCheck] = &[
 const CHECKS_635: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -16596,6 +16914,7 @@ const CHECKS_637: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(255),
@@ -16607,6 +16926,7 @@ const CHECKS_637: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16626,6 +16946,7 @@ const CHECKS_638: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(0xFF00),
@@ -16637,6 +16958,7 @@ const CHECKS_638: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16705,6 +17027,7 @@ const CHECKS_643: &[ValueCheck] = &[ValueCheck {
 const CHECKS_644: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(255),
@@ -16716,6 +17039,7 @@ const CHECKS_644: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16730,6 +17054,7 @@ const CHECKS_644: &[ValueCheck] = &[
 const CHECKS_645: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(20),
@@ -16741,6 +17066,7 @@ const CHECKS_645: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16755,6 +17081,7 @@ const CHECKS_645: &[ValueCheck] = &[
 const CHECKS_646: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(138),
@@ -16766,6 +17093,7 @@ const CHECKS_646: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(140),
@@ -16777,6 +17105,7 @@ const CHECKS_646: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -16841,6 +17170,7 @@ const CHECKS_650: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -16879,6 +17209,7 @@ const CHECKS_651: &[ValueCheck] = &[ValueCheck {
 const CHECKS_652: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(31),
@@ -16890,6 +17221,7 @@ const CHECKS_652: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17061,6 +17393,7 @@ const CHECKS_661: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17072,6 +17405,7 @@ const CHECKS_661: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17303,6 +17637,7 @@ const CHECKS_673: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17314,6 +17649,7 @@ const CHECKS_673: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17352,6 +17688,7 @@ const CHECKS_674: &[ValueCheck] = &[
 const CHECKS_675: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(260),
@@ -17363,6 +17700,7 @@ const CHECKS_675: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17414,6 +17752,7 @@ const CHECKS_676: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17425,6 +17764,7 @@ const CHECKS_676: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17459,6 +17799,7 @@ const CHECKS_678: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(84),
@@ -17470,6 +17811,7 @@ const CHECKS_678: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17489,6 +17831,7 @@ const CHECKS_679: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(50),
@@ -17500,6 +17843,7 @@ const CHECKS_679: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17519,6 +17863,7 @@ const CHECKS_680: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(100),
@@ -17530,6 +17875,7 @@ const CHECKS_680: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17544,6 +17890,7 @@ const CHECKS_680: &[ValueCheck] = &[
 const CHECKS_681: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(84),
@@ -17555,6 +17902,7 @@ const CHECKS_681: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17725,6 +18073,7 @@ const CHECKS_689: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(33),
@@ -17736,6 +18085,7 @@ const CHECKS_689: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -17955,6 +18305,7 @@ const CHECKS_700: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(4),
             max_length: None,
@@ -18167,6 +18518,7 @@ const CHECKS_714: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(10),
             max_length: None,
@@ -18304,6 +18656,7 @@ const CHECKS_720: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18331,6 +18684,7 @@ const CHECKS_720: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18358,6 +18712,7 @@ const CHECKS_720: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18502,6 +18857,7 @@ const CHECKS_726: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18513,6 +18869,7 @@ const CHECKS_726: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18540,6 +18897,7 @@ const CHECKS_728: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(253),
@@ -18551,6 +18909,7 @@ const CHECKS_728: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18570,6 +18929,7 @@ const CHECKS_729: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(64),
@@ -18581,6 +18941,7 @@ const CHECKS_729: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18603,6 +18964,7 @@ const CHECKS_730: &[ValueCheck] = &[ValueCheck {
 const CHECKS_731: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: Some(253),
@@ -18614,6 +18976,7 @@ const CHECKS_731: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18633,6 +18996,7 @@ const CHECKS_732: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18644,6 +19008,7 @@ const CHECKS_732: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18658,6 +19023,7 @@ const CHECKS_732: &[ValueCheck] = &[
 const CHECKS_733: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(2),
             max_length: None,
@@ -18693,6 +19059,7 @@ const CHECKS_734: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: Some(ValueClass::HexBinary),
             kind: StringKind::Plain,
             length: Some(2),
             max_length: None,
@@ -18711,6 +19078,7 @@ const CHECKS_734: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18832,6 +19200,7 @@ const CHECKS_742: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18859,6 +19228,7 @@ const CHECKS_742: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -18886,6 +19256,7 @@ const CHECKS_742: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -19055,6 +19426,7 @@ const CHECKS_750: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -19066,6 +19438,7 @@ const CHECKS_750: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -19368,6 +19741,7 @@ const CHECKS_762: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::NcName,
             length: None,
             max_length: Some(255),
@@ -19379,6 +19753,7 @@ const CHECKS_762: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -19454,6 +19829,7 @@ const CHECKS_765: &[ValueCheck] = &[
 const CHECKS_766: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: Some(1),
             max_length: None,
@@ -19494,6 +19870,7 @@ const CHECKS_767: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19525,6 +19902,7 @@ const CHECKS_768: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19551,6 +19929,7 @@ const CHECKS_769: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19577,6 +19956,7 @@ const CHECKS_770: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19603,6 +19983,7 @@ const CHECKS_771: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19624,6 +20005,7 @@ const CHECKS_771: &[ValueCheck] = &[
 const CHECKS_772: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19645,6 +20027,7 @@ const CHECKS_772: &[ValueCheck] = &[
 const CHECKS_773: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19844,6 +20227,7 @@ const CHECKS_783: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -19855,6 +20239,7 @@ const CHECKS_783: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -19994,6 +20379,7 @@ const CHECKS_792: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -20020,6 +20406,7 @@ const CHECKS_793: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -20046,6 +20433,7 @@ const CHECKS_794: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -20072,6 +20460,7 @@ const CHECKS_795: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -20128,6 +20517,7 @@ const CHECKS_798: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -20934,6 +21324,7 @@ const CHECKS_856: &[ValueCheck] = &[
     ValueCheck {
         check: Check::List {
             item: &Check::String {
+                class: None,
                 kind: StringKind::Plain,
                 length: None,
                 max_length: None,
@@ -21064,6 +21455,7 @@ const CHECKS_863: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -21075,6 +21467,7 @@ const CHECKS_863: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -21572,6 +21965,7 @@ const CHECKS_912: &[ValueCheck] = &[
 const CHECKS_913: &[ValueCheck] = &[
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -21920,6 +22314,7 @@ const CHECKS_929: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -21931,6 +22326,7 @@ const CHECKS_929: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -22002,6 +22398,7 @@ const CHECKS_932: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -22013,6 +22410,7 @@ const CHECKS_932: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -22147,6 +22545,7 @@ const CHECKS_939: &[ValueCheck] = &[
     ValueCheck {
         check: Check::List {
             item: &Check::String {
+                class: None,
                 kind: StringKind::Plain,
                 length: None,
                 max_length: None,
@@ -22236,6 +22635,7 @@ const CHECKS_943: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Token,
             length: None,
             max_length: None,
@@ -22247,6 +22647,7 @@ const CHECKS_943: &[ValueCheck] = &[
     },
     ValueCheck {
         check: Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -22477,6 +22878,7 @@ const CHECKS_954: &[ValueCheck] = &[
 
 const CHECKS_955: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Uri,
         length: None,
         max_length: None,
@@ -22563,6 +22965,7 @@ const CHECKS_960: &[ValueCheck] = &[ValueCheck {
 
 const CHECKS_961: &[ValueCheck] = &[ValueCheck {
     check: Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: Some(256),

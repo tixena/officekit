@@ -73,8 +73,13 @@ pub enum Check {
     /// The attribute exists only at the check's versions; elsewhere it is undeclared.
     OfficeVersion,
     Required,
-    /// The value's lengths in characters, its lexical kind, and a pattern it matches whole.
+    /// The value's lengths, its lexical kind, and a pattern it matches whole.
     String {
+        /// With `Some(ValueClass::HexBinary)` the value must be hexadecimal
+        /// digits, an even number of them, and `length`, `min_length`, and
+        /// `max_length` count bytes, two digits each; with `None` they count
+        /// characters.
+        class: Option<ValueClass>,
         kind: StringKind,
         length: Option<usize>,
         max_length: Option<usize>,

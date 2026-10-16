@@ -17,11 +17,14 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 const NAMESPACES: &str = r#"[
   {"Prefix": "", "Uri": ""},
+  {"Prefix": "m", "Uri": "http://schemas.openxmlformats.org/officeDocument/2006/math"},
   {"Prefix": "w", "Uri": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 ]"#;
 
-const TYPED_NAMESPACES: &str =
-    r#"[{"Prefix": "w", "Namespace": "DocumentFormat.OpenXml.Wordprocessing"}]"#;
+const TYPED_NAMESPACES: &str = r#"[
+  {"Prefix": "m", "Namespace": "DocumentFormat.OpenXml.Math"},
+  {"Prefix": "w", "Namespace": "DocumentFormat.OpenXml.Wordprocessing"}
+]"#;
 
 /// Excerpts of SDK 3.5.1's data at `v3.5.1`: the table-cell margins of
 /// blueprint section 3.6 and their width types, `w:tblGridChange`, and two
@@ -71,6 +74,28 @@ const WORDPROCESSING: &str = r#"{"TargetNamespace": "http://schemas.openxmlforma
 ], "Enums": [
   {"Type": "w:ST_TblWidth", "Name": "TableWidthUnitValues", "Facets": [{"Value": "nil"}, {"Value": "pct"}, {"Value": "dxa"}, {"Value": "auto"}]},
   {"Type": "w:ST_TblWidthDxaNil", "Name": "TableWidthValues", "Facets": [{"Value": "nil"}, {"Value": "dxa", "Version": "Office2013"}]}
+]}"#;
+
+/// An excerpt of SDK 3.5.1's data at `v3.5.1`: `m:brkBinSub`, whose `m:val`
+/// stops being required at Office 2010.
+const MATH: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/officeDocument/2006/math", "Types": [
+  {"Name": "m:CT_BreakBinSub/m:brkBinSub", "IsLeafElement": true, "Attributes": [{"QName": "m:val", "Type": "EnumValue<DocumentFormat.OpenXml.Math.BreakBinarySubtractionValues>", "Validators": [
+    {"Name": "RequiredValidator", "Version": "Office2007"},
+    {"Arguments": [{"Type": "Boolean", "Name": "IsRequired", "Value": "False"}], "Name": "RequiredValidator", "Version": "Office2010", "IsInitialVersion": true}]}]}
+], "Enums": [
+  {"Type": "m:ST_BreakBinSub", "Name": "BreakBinarySubtractionValues", "Facets": [{"Value": "--"}, {"Value": "-+"}, {"Value": "+-"}]}
+]}"#;
+
+/// An excerpt of SDK 3.5.1's data at `v3.5.1`: `w:shd` cut to `w:fill`, a
+/// union of `auto` and a three-byte `w:ST_HexColorRGB`, and the main part's
+/// root type.
+const SHADING: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org/wordprocessingml/2006/main", "Types": [
+  {"Name": "w:CT_Shd/w:shd", "IsLeafElement": true, "Attributes": [{"QName": "w:fill", "Type": "StringValue", "Validators": [
+    {"Name": "EnumValidator", "Type": "w:ST_HexColorAuto", "UnionId": 0, "IsInitialVersion": true},
+    {"Arguments": [{"Type": "Long", "Name": "Length", "Value": "3"}], "Name": "StringValidator", "Type": "w:ST_HexColorRGB", "UnionId": 0, "IsInitialVersion": true}]}]},
+  {"Name": "w:CT_Document/w:document"}
+], "Enums": [
+  {"Type": "w:ST_HexColorAuto", "Name": "AutomaticColorValues", "Facets": [{"Value": "auto"}]}
 ]}"#;
 
 const MAIN_PART: &str = r#"{"Root": "w:CT_Document", "Name": "MainDocumentPart", "RelationshipType": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "RootElement": "document", "Children": [
@@ -148,13 +173,11 @@ fn attribute<'tables>(row: &'tables TypeRow, name: &str) -> &'tables AttributeRo
         .unwrap()
 }
 
-fn data(schema: &str) -> SdkData {
-    let system = MemorySystem::new()
+fn data(schemas: &[&str]) -> SdkData {
+    let base = MemorySystem::new()
         .with_file("data/namespaces.json", NAMESPACES.as_bytes())
         .unwrap()
         .with_file("data/typed/namespaces.json", TYPED_NAMESPACES.as_bytes())
-        .unwrap()
-        .with_file("data/schemas/w.json", schema.as_bytes())
         .unwrap()
         .with_file("data/parts/ImagePart.json", IMAGE_PART.as_bytes())
         .unwrap()
@@ -162,6 +185,14 @@ fn data(schema: &str) -> SdkData {
         .unwrap()
         .with_file("data/schematrons.json", b"[]")
         .unwrap();
+    let system = schemas
+        .iter()
+        .enumerate()
+        .fold(base, |files, (index, schema)| {
+            files
+                .with_file(format!("data/schemas/{index}.json"), schema.as_bytes())
+                .unwrap()
+        });
     SdkData::read(&system, Path::new("data")).unwrap()
 }
 
@@ -192,12 +223,19 @@ fn number(class: ValueClass, min_inclusive: Option<i64>) -> Check {
     }
 }
 
+/// The tables of `MATH` and `SHADING`, `w:ST_HexColorRGB` read as a `HexBinaryValue`.
+fn regressions() -> Tables {
+    let hex = simple_types(r#""w:ST_HexColorRGB" = "HexBinaryValue""#).unwrap();
+    convert(&data(&[MATH, SHADING]), &hex, &Marks::default()).unwrap()
+}
+
 fn row<'tables>(tables: &'tables Tables, name: &str) -> &'tables TypeRow {
     tables.types.iter().find(|row| row.name == name).unwrap()
 }
 
 fn string(pattern: Option<&str>) -> Check {
     Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -208,7 +246,7 @@ fn string(pattern: Option<&str>) -> Check {
 
 fn tables() -> Tables {
     let decimal = simple_types(r#""w:ST_DecimalNumber" = "Int32Value""#).unwrap();
-    convert(&data(WORDPROCESSING), &decimal, &Marks::default()).unwrap()
+    convert(&data(&[WORDPROCESSING]), &decimal, &Marks::default()).unwrap()
 }
 
 #[test]
@@ -383,6 +421,63 @@ fn a_required_attribute_a_bound_and_an_enumeration_member_are_kept() {
 }
 
 #[test]
+fn a_required_validator_with_is_required_false_emits_no_check() {
+    let tables = regressions();
+    let value = attribute(row(&tables, "m:CT_BreakBinSub/m:brkBinSub"), "val");
+    let class = ValueClass::Enum("m:ST_BreakBinSub".to_owned());
+    assert_eq!(
+        value.checks,
+        [
+            ValueCheck {
+                check: Check::Required,
+                union: None,
+                versions: Versions::NONE,
+            },
+            every_target(Check::Enum { class }),
+        ],
+        "the Office 2007 requirement alone, at no target"
+    );
+}
+
+#[test]
+fn a_hex_binary_string_validator_keeps_its_class() {
+    let tables = regressions();
+    let union = |check: Check| ValueCheck {
+        check,
+        union: Some(0),
+        versions: Versions::ALL,
+    };
+    assert_eq!(
+        attribute(row(&tables, "w:CT_Shd/w:shd"), "fill").checks,
+        [
+            union(Check::Enum {
+                class: ValueClass::Enum("w:ST_HexColorAuto".to_owned()),
+            }),
+            union(Check::String {
+                class: Some(ValueClass::HexBinary),
+                kind: StringKind::Plain,
+                length: Some(3),
+                max_length: None,
+                min_length: None,
+                pattern: None,
+            }),
+            every_target(string(None)),
+        ]
+    );
+}
+
+#[test]
+fn a_string_validator_of_another_class_stops_the_generator() {
+    let decimal = simple_types(r#""w:ST_DecimalNumber" = "Int32Value""#).unwrap();
+    let schema = SHADING.replace("w:ST_HexColorRGB", "w:ST_DecimalNumber");
+    let error = convert(&data(&[&schema]), &decimal, &Marks::default()).unwrap_err();
+    assert!(
+        format!("{error:#}").contains("w:ST_DecimalNumber reads as Int32"),
+        "{error:#}"
+    );
+}
+
+#[test]
 fn a_content_model_is_built_per_target_with_a_later_bound_replacing_an_earlier_one() {
     let tables = tables();
     let grid = |min: u32| Particle::Composite {
@@ -461,6 +556,7 @@ fn each_class_gets_the_check_sdk_3_5_1_adds_and_a_version_its_office_version_che
         })
         .collect();
     let token = |kind: StringKind| Check::String {
+        class: None,
         kind,
         length: None,
         max_length: None,
@@ -559,7 +655,7 @@ fn every_transitional_only_item_of_the_comparison_is_marked() {
     let transitional = SchemaSet::read(&system, &["t/wml.xsd"]).unwrap();
     let strict = SchemaSet::read(&system, &["s/wml.xsd"]).unwrap();
     let marks = Marks::new(&transitional, &transitional_only(&transitional, &strict));
-    let tables = convert(&data(MARKED), &BTreeMap::new(), &marks).unwrap();
+    let tables = convert(&data(&[MARKED]), &BTreeMap::new(), &marks).unwrap();
 
     let children: Vec<(&str, bool)> = row(&tables, "w:CT_TblCellMar/w:tblCellMar")
         .children

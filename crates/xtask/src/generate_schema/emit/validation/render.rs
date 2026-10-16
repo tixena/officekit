@@ -302,6 +302,7 @@ fn check(row: &Check) -> Expr {
         Check::OfficeVersion => Expr::Atom("Check::OfficeVersion".to_owned()),
         Check::Required => Expr::Atom("Check::Required".to_owned()),
         Check::String {
+            class,
             kind,
             length,
             max_length,
@@ -310,6 +311,7 @@ fn check(row: &Check) -> Expr {
         } => Expr::Struct(
             "Check::String",
             vec![
+                ("class", option(class.as_ref().map(value_class))),
                 (
                     "kind",
                     Expr::Atom(format!("StringKind::{}", string_kind(*kind))),

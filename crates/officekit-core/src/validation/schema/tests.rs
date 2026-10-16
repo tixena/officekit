@@ -79,6 +79,7 @@ fn schema_type(name: &str) -> &'static SchemaType {
 
 const fn string(pattern: Option<&'static str>) -> Check {
     Check::String {
+        class: None,
         kind: StringKind::Plain,
         length: None,
         max_length: None,
@@ -228,6 +229,7 @@ fn every_pattern_of_the_tables_compiles_and_matches_whole() {
             .chain(row.text_checks)
         {
             if let Check::String {
+                class: _class,
                 kind: _kind,
                 length: _length,
                 max_length: _max_length,

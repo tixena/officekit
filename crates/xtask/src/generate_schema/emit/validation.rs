@@ -91,6 +91,8 @@ pub enum Check {
     OfficeVersion,
     Required,
     String {
+        /// The class of the validator's `Type`: `HexBinary` or none.
+        class: Option<ValueClass>,
         kind: StringKind,
         length: Option<u64>,
         max_length: Option<u64>,
@@ -351,7 +353,7 @@ impl<'data> Converter<'data> {
         let mut checks = attribute
             .validators
             .iter()
-            .map(|validator| self.check(validator, &class))
+            .filter_map(|validator| self.check(validator, &class).transpose())
             .collect::<Result<Vec<ValueCheck>>>()?;
         if let Some(version) = attribute.version
             && rank(version).is_some()
@@ -387,8 +389,9 @@ impl<'data> Converter<'data> {
         })
     }
 
-    /// One validator as a check.
-    fn check(&self, validator: &Validator, own: &ValueClass) -> Result<ValueCheck> {
+    /// One validator as a check; `None` for a `RequiredValidator` whose
+    /// `IsRequired` is `False`, which requires nothing.
+    fn check(&self, validator: &Validator, own: &ValueClass) -> Result<Option<ValueCheck>> {
         let typed = || {
             validator
                 .type_name
@@ -432,16 +435,29 @@ impl<'data> Converter<'data> {
             "OfficeVersionValidator" => (Check::OfficeVersion, office_version(validator)?),
             "RequiredValidator" => {
                 known_arguments(validator, &["IsRequired"])?;
+                if !flag_default_true(validator, "IsRequired")? {
+                    return Ok(None);
+                }
                 (Check::Required, validator_versions(validator))
             }
-            "StringValidator" => (string_check(validator)?, validator_versions(validator)),
+            "StringValidator" => {
+                let class = validator
+                    .type_name
+                    .as_deref()
+                    .map(|name| self.string_class(name))
+                    .transpose()?;
+                (
+                    string_check(validator, class)?,
+                    validator_versions(validator),
+                )
+            }
             other => bail!("unknown validator {other}"),
         };
-        Ok(ValueCheck {
+        Ok(Some(ValueCheck {
             check,
             union: validator.union_id,
             versions,
-        })
+        }))
     }
 
     /// The child elements of a type: those the data declares and those its
@@ -693,6 +709,19 @@ impl<'data> Converter<'data> {
         )
     }
 
+    /// The class of a string validator's `Type`: only `HexBinary`, whose
+    /// lengths count bytes, has a rule here.
+    fn string_class(&self, simple_type: &str) -> Result<ValueClass> {
+        let class = self.simple_type_class(simple_type)?;
+        if class != ValueClass::HexBinary {
+            bail!(
+                "the string validator's type {simple_type} reads as {class:?}, which has no rule \
+                 on a string validator"
+            );
+        }
+        Ok(class)
+    }
+
     /// One type's row: a derived type takes the attributes of its schema type
     /// (`w:CT_TblWidthDxaNil/`) first, as SDK 3.5.1's classes inherit them.
     fn type_row(&mut self, name: &str, data_type: &DataType) -> Result<TypeRow> {
@@ -716,7 +745,7 @@ impl<'data> Converter<'data> {
         let text_checks = data_type
             .validators
             .iter()
-            .map(|validator| self.check(validator, &ValueClass::String))
+            .filter_map(|validator| self.check(validator, &ValueClass::String).transpose())
             .collect::<Result<Vec<ValueCheck>>>()?;
         let children = self.children(data_type, ecma.as_ref())?;
         Ok(TypeRow {
@@ -801,6 +830,7 @@ impl Tables {
                 .chain(&row.text_checks)
         }) {
             if let Check::String {
+                class: _class,
                 kind: _kind,
                 length: _length,
                 max_length: _max_length,
@@ -1168,6 +1198,7 @@ fn argument<'data>(validator: &'data Validator, name: &str) -> Option<&'data str
 fn class_check(class: &ValueClass) -> Check {
     match class {
         ValueClass::String => Check::String {
+            class: None,
             kind: StringKind::Plain,
             length: None,
             max_length: None,
@@ -1234,7 +1265,8 @@ fn composite_kind(kind: &str) -> Result<CompositeKind> {
 ///
 /// An attribute type with no value class, a validator or argument the
 /// conversion does not know, a simple type neither in `simple_types` nor an
-/// enumeration, or a child, root, or particle that names no type.
+/// enumeration, a string validator whose `Type` is not a `HexBinaryValue`, or
+/// a child, root, or particle that names no type.
 pub fn convert(
     data: &SdkData,
     simple_types: &BTreeMap<String, String>,
@@ -1501,6 +1533,15 @@ fn flag(validator: &Validator, name: &str) -> Result<bool> {
     }
 }
 
+/// A validator's flag, `"True"` or `"False"`; absent is true.
+fn flag_default_true(validator: &Validator, name: &str) -> Result<bool> {
+    match argument(validator, name) {
+        None | Some("True" | "true") => Ok(true),
+        Some("False" | "false") => Ok(false),
+        Some(other) => bail!("the argument {name} of {} is {other}", validator.name),
+    }
+}
+
 fn group_item(group: &Name) -> String {
     format!("group {group}")
 }
@@ -1690,9 +1731,10 @@ where
         .collect()
 }
 
-/// A string validator's check: the most specific kind its flags name (an ID
-/// is an `NCName`, an `NCName` a token), and its facets.
-fn string_check(validator: &Validator) -> Result<Check> {
+/// A string validator's check: the class of its `Type`, the most specific
+/// kind its flags name (an ID is an `NCName`, an `NCName` a token), and its
+/// facets.
+fn string_check(validator: &Validator, class: Option<ValueClass>) -> Result<Check> {
     known_arguments(
         validator,
         &[
@@ -1732,6 +1774,7 @@ fn string_check(validator: &Validator) -> Result<Check> {
             .transpose()
     };
     Ok(Check::String {
+        class,
         kind,
         length: length("Length")?,
         max_length: length("MaxLength")?,
