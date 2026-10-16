@@ -25,6 +25,12 @@ const WORKSHEET: &str = "<worksheet xmlns=\"http://schemas.openxmlformats.org/sp
 #[cfg(feature = "transitional")]
 const SLIDE: &str = "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id=\"1\" name=\"\"/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x=\"0\" y=\"0\"/></a:xfrm></p:grpSpPr></p:spTree></p:cSld></p:sld>";
 
+#[cfg(feature = "transitional")]
+const ADDITIONAL_CHARACTERISTICS: &str = "<ac:additionalCharacteristics xmlns:ac=\"http://schemas.openxmlformats.org/officeDocument/2006/characteristics\"><ac:characteristic name=\"x\" relation=\"eq\" val=\"1\"/></ac:additionalCharacteristics>";
+#[cfg(feature = "transitional")]
+const SOURCES: &str =
+    "<b:Sources xmlns:b=\"http://schemas.openxmlformats.org/officeDocument/2006/bibliography\"/>";
+
 /// A typed root's `load`, and its `store` in one class.
 #[cfg(feature = "transitional")]
 type Load<R> = fn(&Package, &PartName, OpenOptions) -> Result<R, PackageError>;
@@ -93,6 +99,23 @@ fn main_document_header_footer_worksheet_and_slide_store_back_the_same_tree() {
         super::slide::CONTENT_TYPE,
         super::slide::load,
         super::slide::store_transitional,
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn additional_characteristics_and_bibliography_store_back_the_same_tree() {
+    stores_back_the_same_tree(
+        ADDITIONAL_CHARACTERISTICS,
+        super::additional_characteristics::CONTENT_TYPE,
+        super::additional_characteristics::load,
+        super::additional_characteristics::store_transitional,
+    );
+    stores_back_the_same_tree(
+        SOURCES,
+        super::bibliography::CONTENT_TYPE,
+        super::bibliography::load,
+        super::bibliography::store_transitional,
     );
 }
 

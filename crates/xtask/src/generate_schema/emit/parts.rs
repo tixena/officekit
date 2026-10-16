@@ -25,7 +25,7 @@ use crate::generate_schema::inputs::Inputs;
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
 use crate::generate_schema::sdk_data::{DataPart, DataVersion, SdkData};
 use crate::generate_schema::standard_text::{
-    self, PartDefinition, RelationshipSection, TransitionalPart,
+    self, PartDefinition, RelationshipSection, SummaryRow, TransitionalPart,
 };
 
 #[cfg(test)]
@@ -453,6 +453,7 @@ where
     let mut joined = join(
         &standard_text::part_definitions(&part_1_text),
         &standard_text::transitional_parts(&part_4_text),
+        &standard_text::part_summary(&part_1_text),
         &emitted.data,
         &kinds(&kinds_text)?,
         &validation::part_roots(&part_roots_text)?,
@@ -638,6 +639,7 @@ where
 pub fn join(
     definitions: &[PartDefinition],
     restatements: &[TransitionalPart],
+    summary: &[SummaryRow],
     data: &SdkData,
     kinds: &[Kind],
     part_roots: &BTreeMap<String, String>,
@@ -659,7 +661,7 @@ pub fn join(
             claimed.insert(data_part.name.as_str());
             part_2_type(definition, restatement, data_part, part_roots, &mut notes)?
         } else {
-            part_1_type(definition, restatement, kinds)?
+            part_1_type(definition, restatement, summary, kinds, &mut notes)?
         };
         parts.push(part);
     }
@@ -728,7 +730,9 @@ pub fn kinds(text: &str) -> Result<Vec<Kind>> {
 fn part_1_type(
     definition: &PartDefinition,
     restatement: Option<&TransitionalPart>,
+    summary: &[SummaryRow],
     kinds: &[Kind],
+    notes: &mut Vec<String>,
 ) -> Result<PartType> {
     let strict = definition
         .source_relationship
@@ -762,21 +766,35 @@ fn part_1_type(
             }
         }
     }
-    let root_element = definition.root_element.clone().map(|local| {
-        let hints = [
-            definition.root_namespace.as_deref(),
-            restatement.and_then(|restated| restated.root_namespace.as_deref()),
-        ]
-        .into_iter()
-        .flatten()
-        .map(str::to_owned)
-        .collect();
-        (hints, local)
-    });
     let title = definition
         .title
         .strip_suffix(" Part")
         .unwrap_or(&definition.title);
+    let from_summary = summary_root(summary, title);
+    if let (Some(stated), Some(summarized)) = (&definition.root_element, from_summary)
+        && stated != summarized
+    {
+        notes.push(format!(
+            "Part 1, {} {}: the definition names the root element {stated}, the part summary {summarized}; \
+             the definition is kept",
+            definition.section, definition.title
+        ));
+    }
+    let root_element = definition
+        .root_element
+        .clone()
+        .or_else(|| from_summary.map(str::to_owned))
+        .map(|local| {
+            let hints = [
+                definition.root_namespace.as_deref(),
+                restatement.and_then(|restated| restated.root_namespace.as_deref()),
+            ]
+            .into_iter()
+            .flatten()
+            .map(str::to_owned)
+            .collect();
+            (hints, local)
+        });
     Ok(PartType {
         content_types,
         definition: Definition::Part1(Part1Definition {
@@ -791,6 +809,16 @@ fn part_1_type(
         strict,
         transitional,
     })
+}
+
+/// The root element the part summary gives a part: the one root the rows of that part name, when they name one.
+fn summary_root<'rows>(summary: &'rows [SummaryRow], title: &str) -> Option<&'rows str> {
+    let mut roots = summary
+        .iter()
+        .filter(|row| row.part == title)
+        .filter_map(|row| row.root_element.as_deref());
+    let first = roots.next()?;
+    roots.all(|other| other == first).then_some(first)
 }
 
 /// The part SDK 3.5.1's data gives for a part Part 1 leaves to Part 2: the

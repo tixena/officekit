@@ -69,6 +69,34 @@ pub struct RelationshipSection {
     pub title: String,
 }
 
+/// A row of Part 1's part summary (clause 16): a part and its root element.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct SummaryRow {
+    pub part: String,
+    /// `None` where the table says `Not applicable` or that Part 2 defines it.
+    pub root_element: Option<String>,
+}
+
+/// A row of the summary being read: its cells so far and the columns its first line used.
+struct PendingRow {
+    part: String,
+    reference: String,
+    reference_column: usize,
+    root: String,
+    root_column: usize,
+}
+
+impl PendingRow {
+    fn finish(self) -> SummaryRow {
+        let named = self.root != "Not applicable" && !self.reference.starts_with("Defined in");
+        SummaryRow {
+            part: self.part,
+            root_element: named.then_some(self.root),
+        }
+    }
+}
+
 /// The text's lines without page furniture: a line that holds only a page number, and a line starting with a form
 /// feed, which holds the next page's running header.
 #[must_use]
@@ -345,6 +373,101 @@ fn root_element(body: &str) -> Option<String> {
         .next()
         .filter(|word| !word.is_empty())
         .map(str::to_owned)
+}
+
+/// The cells of a table line and the column each starts in: cells are separated by two spaces or more.
+fn cells(line: &str) -> Vec<(usize, &str)> {
+    let mut cells = Vec::new();
+    let mut start: Option<usize> = None;
+    let mut spaces = 0_u8;
+    for (index, ch) in line.char_indices() {
+        if ch == ' ' {
+            spaces = spaces.saturating_add(1);
+            if spaces == 2_u8
+                && let Some(from) = start.take()
+            {
+                cells.push((from, line[from..index - 1].trim_end()));
+            }
+        } else {
+            spaces = 0_u8;
+            start.get_or_insert(index);
+        }
+    }
+    if let Some(from) = start {
+        cells.push((from, line[from..].trim_end()));
+    }
+    cells
+}
+
+/// The rows of Part 1's part summary (16.1 to 16.5), one per part.
+///
+/// A part name wrapped onto the next line is joined with a space, a root element wrapped without one, and a root of
+/// `Not applicable`, or a reference `Defined in ECMA-376-2`, gives no root element.
+#[must_use]
+pub fn part_summary(text: &str) -> Vec<SummaryRow> {
+    let mut rows = Vec::new();
+    let mut pending: Option<PendingRow> = None;
+    let mut in_clause = false;
+    let mut in_table = false;
+    for line in lines(text) {
+        let trimmed = line.trim();
+        if trimmed.starts_with("Part ")
+            && in_clause
+            && trimmed.contains("Root Element")
+            && trimmed.ends_with("Ref.")
+        {
+            rows.extend(pending.take().map(PendingRow::finish));
+            in_table = true;
+            continue;
+        }
+        let heading = trimmed
+            .split_once(char::is_whitespace)
+            .is_some_and(|(number, _)| {
+                number.starts_with("16.") && section_number(number.trim_end_matches('.'), 2, 2)
+            });
+        let ends = trimmed.starts_with("End of informative text");
+        if (heading && !trimmed.contains("....")) || ends {
+            rows.extend(pending.take().map(PendingRow::finish));
+            in_clause = heading;
+            in_table = false;
+            continue;
+        }
+        if !in_table || trimmed.is_empty() {
+            continue;
+        }
+        match cells(line).as_slice() {
+            [
+                (_, part),
+                (root_column, root),
+                (reference_column, reference),
+                ..,
+            ] => {
+                rows.extend(pending.take().map(PendingRow::finish));
+                pending = Some(PendingRow {
+                    part: (*part).to_owned(),
+                    reference: (*reference).to_owned(),
+                    reference_column: *reference_column,
+                    root: (*root).to_owned(),
+                    root_column: *root_column,
+                });
+            }
+            [(column, wrapped)] => {
+                if let Some(row) = pending.as_mut() {
+                    match () {
+                        () if *column < row.root_column => {
+                            row.part.push(' ');
+                            row.part.push_str(wrapped);
+                        }
+                        () if *column < row.reference_column => row.root.push_str(wrapped),
+                        () => {}
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+    rows.extend(pending.take().map(PendingRow::finish));
+    rows
 }
 
 /// Every part of Part 4's part summaries, in document order.

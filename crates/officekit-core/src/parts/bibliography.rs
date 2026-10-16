@@ -341,12 +341,18 @@
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! ECMA-376 Part 1, 15.2.3 "Bibliography Part", and Part 4, 13.2.3.
 //!
-//! The module holds its content type, its relationship type, and the load of its bytes.
+//! The module holds its content type, its relationship type, and the load and store of its root,
+//! `b:Sources`.
 
-use crate::error::PackageError;
-use crate::packaging::package::Package;
+use crate::error::{PackageError, WriteError};
+use crate::markup::{Scope, bibliography};
+use crate::packaging::package::{OpenOptions, Package, PartRoot};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
+use crate::xml::conformance::ConformanceClass;
+use crate::xml::element::Element;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use crate::xml::write::WriteOptions;
 
 /// The content type Part 1 lists.
 pub const CONTENT_TYPE: &str = "application/xml";
@@ -354,11 +360,74 @@ pub const CONTENT_TYPE: &str = "application/xml";
 /// Part 1, 15.2.3, and Part 4, 13.2.3.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::CUSTOM_XML;
 
-/// The part's bytes.
+impl PartRoot for bibliography::Sources {
+    const LOCAL_NAME: &'static str = "Sources";
+
+    fn from_tree(root: &Element) -> Result<Self, String> {
+        super::check_root(root, 21, Self::LOCAL_NAME)?;
+        Ok(bibliography::read::sources(root))
+    }
+
+    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
+        Ok(bibliography::write::sources(self, &mut Scope::default()))
+    }
+}
+
+/// The part's typed root, read from either class.
 ///
 /// # Errors
 ///
-/// The errors of [`Package::part_bytes`].
-pub fn load(package: &Package, name: &PartName) -> Result<Vec<u8>, PackageError> {
-    package.part_bytes(name)
+/// The errors of [`Package::load`].
+pub fn load(
+    package: &Package,
+    name: &PartName,
+    options: OpenOptions,
+) -> Result<bibliography::Sources, PackageError> {
+    package.load(name, options)
+}
+
+/// Store `root` into the part in the Strict class; the part keeps its
+/// content type, or takes this module's.
+///
+/// # Errors
+///
+/// The errors of [`Package::store`].
+#[cfg(feature = "strict")]
+pub fn store_strict(
+    package: &mut Package,
+    name: &PartName,
+    root: &bibliography::Sources,
+    options: WriteOptions,
+) -> Result<(), PackageError> {
+    let content_type = package
+        .content_type(name)
+        .unwrap_or(CONTENT_TYPE)
+        .to_owned();
+    package.store(name, &content_type, root, ConformanceClass::Strict, options)
+}
+
+/// Store `root` into the part in the Transitional class; the part keeps its
+/// content type, or takes this module's.
+///
+/// # Errors
+///
+/// The errors of [`Package::store`].
+#[cfg(feature = "transitional")]
+pub fn store_transitional(
+    package: &mut Package,
+    name: &PartName,
+    root: &bibliography::Sources,
+    options: WriteOptions,
+) -> Result<(), PackageError> {
+    let content_type = package
+        .content_type(name)
+        .unwrap_or(CONTENT_TYPE)
+        .to_owned();
+    package.store(
+        name,
+        &content_type,
+        root,
+        ConformanceClass::Transitional,
+        options,
+    )
 }

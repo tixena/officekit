@@ -1,5 +1,5 @@
 use super::{
-    element_headings, part_definitions, relationship_sections, simple_type_headings,
+    element_headings, part_definitions, part_summary, relationship_sections, simple_type_headings,
     transitional_parts, transitional_relationships,
 };
 
@@ -218,4 +218,52 @@ fn a_uri_split_after_a_slash_is_joined_to_the_next_word_of_its_line() {
         Some("http://schemas.openxmlformats.org/officeDocument/2006/relationships/htmlPubSaveAs")
     );
     assert_eq!(restated[1].part_1_section, "13.5");
+}
+
+#[test]
+fn the_part_summary_joins_wrapped_cells_and_skips_page_furniture() {
+    let text = concat!(
+        "      16.5   Shared Summary ................. 164\n",
+        "      Part      Root Element      Ref.\n",
+        "      Elsewhere      other      \u{a7}1.1\n",
+        "16.5     Shared Summary\n",
+        "                          Part               Root Element             Ref.\n",
+        "       Additional Characteristics        additionalCharacteri   \u{a7}22.7.2.1\n",
+        "                                         stics\n",
+        "       Audio                             Not applicable         n/a\n",
+        "       Bibliography                      Sources                \u{a7}22.6.2.60\n",
+        "       Custom XML Data Storage           datastoreItem          \u{a7}22.5.2.1\n",
+        "       Properties\n",
+        "       Digital Signature XML Signature   Signature              Defined in\n",
+        "                                                                ECMA-376-2\n",
+        "       Printer Settings                  Not applicable         n/a\n",
+        "\n\n                                                                                          165\n",
+        "\u{c}ECMA-376 Part 1\n\n\n",
+        "                           Part       Root Element         Ref.\n",
+        "       Thumbnail                  Not applicable     n/a\n",
+        "        Video                     Not applicable     n/a\n",
+        "End of informative text.\n",
+        "Unrelated                         text                   here\n",
+    );
+    let rows: Vec<(String, Option<String>)> = part_summary(text)
+        .into_iter()
+        .map(|row| (row.part, row.root_element))
+        .collect();
+    let expected = [
+        (
+            "Additional Characteristics",
+            Some("additionalCharacteristics"),
+        ),
+        ("Audio", None),
+        ("Bibliography", Some("Sources")),
+        ("Custom XML Data Storage Properties", Some("datastoreItem")),
+        ("Digital Signature XML Signature", None),
+        ("Printer Settings", None),
+        ("Thumbnail", None),
+        ("Video", None),
+    ];
+    assert_eq!(
+        rows,
+        expected.map(|(part, root)| (part.to_owned(), root.map(str::to_owned)))
+    );
 }

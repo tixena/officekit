@@ -2,7 +2,7 @@ use alloc::collections::BTreeMap;
 
 use super::{Definition, Kind, constant_name, join, kinds};
 use crate::generate_schema::sdk_data::{DataPart, SdkData};
-use crate::generate_schema::standard_text::{PartDefinition, TransitionalPart};
+use crate::generate_schema::standard_text::{PartDefinition, SummaryRow, TransitionalPart};
 
 const STRICT: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships/";
 const TRANSITIONAL: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/";
@@ -221,6 +221,7 @@ fn the_sources_join_into_one_list_of_part_types() {
     let joined = join(
         &definitions(),
         &restatements(),
+        &[],
         &data(),
         &word_kinds(),
         &BTreeMap::new(),
@@ -257,6 +258,7 @@ fn one_type_takes_one_constant_and_the_strict_spelling_of_strict() {
     let joined = join(
         &definitions(),
         &restatements(),
+        &[],
         &data(),
         &word_kinds(),
         &BTreeMap::new(),
@@ -286,9 +288,55 @@ fn a_main_part_content_type_without_a_kind_is_an_error() {
     join(
         &definitions(),
         &restatements(),
+        &[],
         &data(),
         &word_kinds()[1..],
         &BTreeMap::new(),
     )
     .unwrap_err();
+}
+
+fn summary_row(part: &str, root: Option<&str>) -> SummaryRow {
+    SummaryRow {
+        part: part.to_owned(),
+        root_element: root.map(str::to_owned),
+    }
+}
+
+#[test]
+fn the_summary_names_a_root_only_where_the_definition_names_none() {
+    let mut named = definition(
+        "14.2.8",
+        "Theme Override Part",
+        &[],
+        &format!("{STRICT}themeOverride"),
+    );
+    named.root_element = Some("ossOverride".to_owned());
+    let bare = definition(
+        "15.2.3",
+        "Bibliography Part",
+        &[],
+        &format!("{STRICT}bibliography"),
+    );
+    let summary = [
+        summary_row("Theme Override", Some("themeOverride")),
+        summary_row("Bibliography", Some("Sources")),
+    ];
+    let joined = join(
+        &[named, bare],
+        &[],
+        &summary,
+        &data(),
+        &[],
+        &BTreeMap::new(),
+    )
+    .unwrap();
+    let root = |index: usize| joined.parts[index].root_element.clone();
+    assert_eq!(
+        root(0).map(|(_, local)| local),
+        Some("ossOverride".to_owned())
+    );
+    assert_eq!(root(1).map(|(_, local)| local), Some("Sources".to_owned()));
+    assert_eq!(joined.notes.len(), 1, "{:?}", joined.notes);
+    assert!(joined.notes[0].contains("ossOverride") && joined.notes[0].contains("themeOverride"));
 }
