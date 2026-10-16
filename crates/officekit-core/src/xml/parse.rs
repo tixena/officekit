@@ -85,7 +85,7 @@ impl Scope {
     }
 }
 
-fn malformed<E>(error: E) -> XmlError
+pub(crate) fn malformed<E>(error: E) -> XmlError
 where
     E: Display,
 {
@@ -160,7 +160,7 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
 }
 
 /// The character a character or entity reference in text stands for.
-fn resolve(reference: &BytesRef<'_>) -> Result<char, XmlError> {
+pub(crate) fn resolve(reference: &BytesRef<'_>) -> Result<char, XmlError> {
     if let Some(character) = reference.resolve_char_ref().map_err(malformed)? {
         return Ok(character);
     }

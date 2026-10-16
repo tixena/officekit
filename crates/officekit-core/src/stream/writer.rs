@@ -5,6 +5,7 @@ use std::io::{self, Write};
 use quick_xml::Writer;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
+use super::reader::PartEvent;
 use crate::markup::Scope;
 use crate::xml::element::{Element, NamespaceDeclaration, Node};
 use crate::xml::write::{
@@ -23,12 +24,15 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 /// pretty, which puts each tag on a line of its own, indented by two spaces,
 /// unless text comes before it. A start tag waits for the element's first
 /// content, so an element nothing is written into ends as an empty tag. It
-/// keeps the namespace declarations of the elements it has started and not
-/// ended, which a typed node written through it takes its prefixes from, and
-/// their `xml:space` state, so the compact layout drops whitespace-only text
-/// outside a preserve scope as the generic tree's writer does.
+/// keeps the names and namespace declarations of the elements it has started
+/// and not ended, which a typed node written through it takes its prefixes
+/// from, and their `xml:space` state, so the compact layout drops
+/// whitespace-only text outside a preserve scope as the generic tree's writer
+/// does.
 pub struct PartWriter<'sink> {
     layout: Layout,
+    /// The qualified names of the elements started and not ended.
+    names: Vec<String>,
     /// The start tag waiting for its element's first content.
     pending: Option<BytesStart<'static>>,
     /// Whether whitespace is preserved inside each open element.
@@ -38,6 +42,16 @@ pub struct PartWriter<'sink> {
 }
 
 impl<'sink> PartWriter<'sink> {
+    /// End the innermost element, written as `name`.
+    fn close(&mut self, name: &str) -> io::Result<()> {
+        self.scope.end();
+        self.preserve.pop();
+        match self.pending.take() {
+            Some(start) => self.writer.write_event(Event::Empty(start)),
+            None => self.writer.write_event(Event::End(BytesEnd::new(name))),
+        }
+    }
+
     /// `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` and the `\r\n`
     /// Office writes after it.
     ///
@@ -79,12 +93,8 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn end(&mut self, name: &str) -> io::Result<()> {
-        self.scope.end();
-        self.preserve.pop();
-        match self.pending.take() {
-            Some(start) => self.writer.write_event(Event::Empty(start)),
-            None => self.writer.write_event(Event::End(BytesEnd::new(name))),
-        }
+        self.names.pop();
+        self.close(name)
     }
 
     /// Write the start tag waiting for its element's first content.
@@ -103,6 +113,7 @@ impl<'sink> PartWriter<'sink> {
         };
         Self {
             layout,
+            names: Vec::new(),
             pending: None,
             preserve: Vec::new(),
             scope: Scope::default(),
@@ -111,12 +122,15 @@ impl<'sink> PartWriter<'sink> {
     }
 
     /// A node of the generic tree: an element, text, a comment, CDATA, or a
-    /// processing instruction.
+    /// processing instruction. Text goes through [`Self::text`].
     ///
     /// # Errors
     ///
     /// The sink's.
     pub fn node(&mut self, node: &Node) -> io::Result<()> {
+        if let Node::Text(value) = node {
+            return self.text(value);
+        }
         self.flush()?;
         let preserve = self.preserved();
         write_node(&mut self.writer, node, Layout::Compact, 0, preserve)
@@ -134,6 +148,7 @@ impl<'sink> PartWriter<'sink> {
             start_tag(element, &name),
             name.len(),
         ));
+        self.names.push(name);
         Ok(())
     }
 
@@ -178,21 +193,55 @@ impl<'sink> PartWriter<'sink> {
             .map_or_else(|| self.preserved(), |&(_, value)| value == "preserve");
         self.preserve.push(preserve);
         self.pending = Some(tag(name, declarations, attributes));
+        self.names.push(name.to_owned());
         Ok(())
     }
 
-    /// Text, escaped as in the generic tree's writer.
+    /// Text, escaped as in the generic tree's writer. With no element open,
+    /// before or after the root, it is written as it is, as the generic
+    /// tree's writer writes the prolog and the epilog.
     ///
     /// # Errors
     ///
     /// The sink's.
     pub fn text(&mut self, value: &str) -> io::Result<()> {
+        if self.preserve.is_empty() {
+            return self
+                .writer
+                .write_event(Event::Text(BytesText::from_escaped(value)));
+        }
         if self.layout == Layout::Compact && !self.preserved() && is_whitespace(value) {
             return Ok(());
         }
         self.flush()?;
         self.writer
             .write_event(Event::Text(BytesText::from_escaped(escape(value, false))))
+    }
+
+    /// An event of a part read forward, copied as read: a `Start` writes the
+    /// element's start tag with its declarations and attributes, an `End`
+    /// ends the element the last unmatched start began, and a `Node` goes
+    /// through [`Self::node`].
+    ///
+    /// # Errors
+    ///
+    /// The sink's, and [`io::ErrorKind::InvalidInput`] for an `End` with no
+    /// element open.
+    pub fn write_event(&mut self, event: PartEvent) -> io::Result<()> {
+        match event {
+            PartEvent::End => {
+                let name = self.names.pop().ok_or_else(|| {
+                    io::Error::new(io::ErrorKind::InvalidInput, "an end with no element open")
+                })?;
+                self.close(&name)
+            }
+            PartEvent::Node(node) => self.node(&node),
+            PartEvent::Start(element) => {
+                self.flush()?;
+                self.scope.start(&element.namespace_declarations);
+                self.open(&element)
+            }
+        }
     }
 }
 

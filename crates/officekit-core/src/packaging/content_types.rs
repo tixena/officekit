@@ -10,7 +10,7 @@ use crate::xml::name::{Namespace, QName};
 mod tests;
 
 /// The namespace of `[Content_Types].xml`.
-const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/content-types";
+pub(crate) const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/content-types";
 
 /// The content type every `xml` part gets when nothing else names its type.
 pub(crate) const XML_CONTENT_TYPE: &str = "application/xml";

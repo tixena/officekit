@@ -14,7 +14,7 @@ use crate::xml::name::{Namespace, QName};
 mod tests;
 
 /// The namespace of a relationship part.
-const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/relationships";
+pub(crate) const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/relationships";
 
 /// The content type of a relationship part, the `rels` extension's `Default`.
 pub(crate) const RELATIONSHIPS_CONTENT_TYPE: &str =
@@ -68,6 +68,18 @@ pub enum TargetMode {
 }
 
 impl Relationship {
+    /// A relationship of type `type_uri` to `target`, relative to the source's
+    /// folder when internal, with no id yet.
+    #[must_use]
+    pub fn new(type_uri: &str, target: &str, target_mode: TargetMode) -> Self {
+        Self {
+            id: String::new(),
+            target: target.to_owned(),
+            target_mode,
+            type_uri: type_uri.to_owned(),
+        }
+    }
+
     /// Where the relationship points, an internal target resolved against
     /// `source_directory`.
     pub(crate) fn resolved(&self, source_directory: &str) -> Result<Target, PackageError> {
@@ -76,6 +88,18 @@ impl Relationship {
             TargetMode::Internal => resolve(source_directory, &self.target).map(Target::Part),
         }
     }
+}
+
+/// The id a new relationship among `items` takes: `rId` and one more than the
+/// highest `rIdN` they have, so an id removed earlier is not reused while
+/// markup may still name it.
+pub(crate) fn next_id(items: &[Relationship]) -> String {
+    let highest = items
+        .iter()
+        .filter_map(|item| item.id.strip_prefix("rId")?.parse::<u64>().ok())
+        .max()
+        .unwrap_or(0);
+    format!("rId{}", highest + 1)
 }
 
 /// Read the relationships of a parsed relationship part, in order.

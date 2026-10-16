@@ -32,10 +32,10 @@ mod tests;
 pub const DECLARATION: &str = "xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"";
 
 /// The part that maps every part to its content type.
-const CONTENT_TYPES_PART: &str = "/[Content_Types].xml";
+pub(crate) const CONTENT_TYPES_PART: &str = "/[Content_Types].xml";
 
 /// The relationship part of the package itself.
-const PACKAGE_RELATIONSHIPS_PART: &str = "/_rels/.rels";
+pub(crate) const PACKAGE_RELATIONSHIPS_PART: &str = "/_rels/.rels";
 
 /// The namespace of a custom XML part's item properties.
 const CUSTOM_XML_NAMESPACE: &str =
@@ -871,17 +871,9 @@ impl RelationshipSet {
         self.source.as_ref().map_or("", PartName::directory)
     }
 
-    /// The id a new relationship takes: `rId` and one more than the highest
-    /// `rIdN` the set has, so an id removed earlier is not reused while
-    /// markup may still name it.
+    /// The id a new relationship takes.
     fn next_id(&self) -> String {
-        let highest = self
-            .items
-            .iter()
-            .filter_map(|item| item.id.strip_prefix("rId")?.parse::<u64>().ok())
-            .max()
-            .unwrap_or(0);
-        format!("rId{}", highest + 1)
+        relationship::next_id(&self.items)
     }
 }
 

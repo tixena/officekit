@@ -116,3 +116,26 @@ fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
         "<a xml:space=\"preserve\"><b> </b><c xml:space=\"default\"/> </a>"
     );
 }
+
+#[test]
+fn whitespace_only_text_written_as_a_node_is_dropped_in_the_compact_layout() {
+    let part = |out: &mut PartWriter<'_>| {
+        out.start("a", &[], &[]).unwrap();
+        out.node(&Node::Text(" ".to_owned())).unwrap();
+        out.node(&Node::Text("b < c".to_owned())).unwrap();
+        out.end("a").unwrap();
+    };
+    assert_eq!(written(Layout::Compact, part), "<a>b &lt; c</a>");
+    assert_eq!(written(Layout::Pretty, part), "<a> b &lt; c</a>");
+}
+
+#[test]
+fn text_before_and_after_the_root_is_written_as_read() {
+    let part = |out: &mut PartWriter<'_>| {
+        out.node(&Node::Text("\r\n".to_owned())).unwrap();
+        out.empty("a", &[]).unwrap();
+        out.text("\r\n").unwrap();
+    };
+    assert_eq!(written(Layout::Compact, part), "\r\n<a/>\r\n");
+    assert_eq!(written(Layout::Pretty, part), "\r\n<a/>\r\n");
+}
