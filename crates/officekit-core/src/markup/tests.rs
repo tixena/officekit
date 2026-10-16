@@ -1,5 +1,5 @@
 use super::{
-    Children, Context, Descend, Extra, Pending, Placement, Scope, Transform as _, Unknown,
+    Children, Context, Descend, Extra, Pending, Placement, Rebase, Scope, Transform as _, Unknown,
     Visit as _, Visitor,
 };
 use crate::xml::element::{Document, Element, NamespaceDeclaration, Node};
@@ -431,4 +431,14 @@ fn an_attribute_never_takes_the_default_namespace() {
         to_xml(paragraph),
         format!("<p xmlns=\"{W}\" xmlns:w=\"{W}\" w:rsidR=\"1\"/>")
     );
+}
+
+#[test]
+fn a_rebased_place_starts_after_the_leading_items() {
+    let rebase = Rebase {
+        counts: vec![2, 0],
+        leading: 1,
+    };
+    let places: Vec<usize> = (0..4).map(|after| rebase.place(after)).collect();
+    assert_eq!(places, [1, 3, 3, 4]);
 }

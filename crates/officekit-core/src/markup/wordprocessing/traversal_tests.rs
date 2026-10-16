@@ -7,9 +7,9 @@ use std::io;
 use super::super::{
     BlockContent, BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent,
     ContentBlockContent, ContentCellContent, ContentRowContent, Document, DocumentBody,
-    FriendlyName, Paragraph, ParagraphContent, ParagraphProperties,
-    StructuredDocumentTagProperties, Table, TableCell, TableRow, Text, TextRun, TextRunContent,
-    read, write,
+    EmbeddedObject, EmbeddedObjectContent, FriendlyName, Paragraph, ParagraphContent,
+    ParagraphProperties, StructuredDocumentTagProperties, Table, TableCell, TableRow, Text,
+    TextRun, TextRunContent, read, write,
 };
 use crate::markup::drawing::{AnyElementContent, GraphicObjectData};
 use crate::markup::picture::{self, Picture};
@@ -28,6 +28,9 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 /// Collects every piece of text under a node, in both namespaces.
 #[derive(Default)]
 struct CollectText(String);
+
+/// Puts the comment `x` in place of each embedded control.
+struct CommentForControl;
 
 /// Puts copies of each paragraph of a block list in its place, as many as
 /// `copies` gives for it, in the order the list hook is asked about them.
@@ -61,6 +64,9 @@ struct FlattenControls;
 struct NumberParagraphs {
     next: usize,
 }
+
+/// Puts an empty paragraph in place of each `Other` item of a block list.
+struct ParagraphForOther;
 
 /// Counts pictures and generic elements, and renames each generic element
 /// `x:chart` to `x:graph`.
@@ -123,6 +129,22 @@ impl math::Visitor for CollectText {
     fn text(&mut self, node: &math::Text) -> Descend {
         self.0.push_str(&node.value);
         Descend::Yes
+    }
+}
+
+impl markup::Context for CommentForControl {
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
+        Some(self)
+    }
+}
+
+impl wordprocessing::Context for CommentForControl {
+    fn embedded_object_content(
+        &mut self,
+        node: &EmbeddedObjectContent,
+    ) -> Option<EmbeddedObjectContent> {
+        matches!(node, EmbeddedObjectContent::EmbeddedControl(_))
+            .then(|| EmbeddedObjectContent::Other(Node::Comment("x".to_owned())))
     }
 }
 
@@ -232,6 +254,18 @@ impl wordprocessing::Context for NumberParagraphs {
         let mut rebuilt = node.transform_children(self);
         rebuilt.content.insert(0, label);
         Some(rebuilt)
+    }
+}
+
+impl markup::Context for ParagraphForOther {
+    fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
+        Some(self)
+    }
+}
+
+impl wordprocessing::Context for ParagraphForOther {
+    fn block(&mut self, node: &BlockContent) -> Option<BlockContent> {
+        matches!(node, BlockContent::Other(_)).then(|| BlockContent::Paragraph(Paragraph::default()))
     }
 }
 
@@ -534,6 +568,15 @@ fn control_of(
     }
 }
 
+/// The XML of an element, written in the compact layout.
+fn compact(element: &Element) -> String {
+    let mut bytes = Vec::new();
+    PartWriter::new(&mut bytes, Layout::Compact)
+        .element(element)
+        .unwrap();
+    String::from_utf8(bytes).unwrap()
+}
+
 /// A context putting `counts[i]` copies of the i-th paragraph asked about in
 /// its place.
 fn copies(counts: &[usize]) -> CopyParagraphs {
@@ -552,6 +595,11 @@ fn document(blocks: Vec<BlockContent>) -> Document {
         })),
         ..Document::default()
     }
+}
+
+/// The XML the tree writer writes for an embedded object.
+fn object_xml(object: &EmbeddedObject) -> String {
+    compact(&write::embedded_object(object, &mut Scope::default()))
 }
 
 /// The paragraph holding `value` in place of the control with `alias`.
@@ -707,12 +755,7 @@ where
 
 /// The XML the tree writer writes for a body.
 fn tree_xml(body: &DocumentBody) -> String {
-    let element = write::document_body(body, &mut Scope::default());
-    let mut bytes = Vec::new();
-    PartWriter::new(&mut bytes, Layout::Compact)
-        .element(&element)
-        .unwrap();
-    String::from_utf8(bytes).unwrap()
+    compact(&write::document_body(body, &mut Scope::default()))
 }
 
 fn upper_case_first_paragraph(document: &mut Document) {
@@ -1157,4 +1200,66 @@ fn an_extra_between_list_items_stays_between_their_replacements() {
         tree_xml(&transformed),
         written(&source, &mut copies(&[3, 2]))
     );
+}
+
+#[test]
+fn an_extra_after_the_blocks_stays_after_a_paragraph_a_hook_gives_for_an_unknown_item() {
+    let source = read::document_body(&parsed(&format!(
+        "<w:body xmlns:w=\"{W}\"><x:u xmlns:x=\"urn:x\"/><w:p/><w:sectPr/><!--c--></w:body>"
+    )));
+    assert!(matches!(source.content[0], BlockContent::Other(_)));
+    assert_eq!(source.unknown.children[0].after, 2);
+    let through = written(&source, &mut ParagraphForOther);
+    assert_eq!(
+        through,
+        format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/><!--c--></w:body>")
+    );
+    assert_eq!(tree_xml(&source.transform(&mut ParagraphForOther)), through);
+}
+
+#[test]
+fn an_extra_before_a_child_a_hook_turns_unknown_stays_before_it() {
+    let source = read::embedded_object(&parsed(&format!(
+        "<w:object xmlns:w=\"{W}\"><w:drawing/><!--c--><w:control/></w:object>"
+    )));
+    assert_eq!(source.unknown.children[0].after, 1);
+    let through = written(&source, &mut CommentForControl);
+    assert_eq!(
+        through,
+        format!("<w:object xmlns:w=\"{W}\"><w:drawing/><!--c--><!--x--></w:object>")
+    );
+    assert_eq!(object_xml(&source.transform(&mut CommentForControl)), through);
+}
+
+#[test]
+fn an_extra_after_a_child_a_hook_turns_unknown_stays_after_it() {
+    let source = read::embedded_object(&parsed(&format!(
+        "<w:object xmlns:w=\"{W}\"><w:drawing/><w:control/><!--c--></w:object>"
+    )));
+    assert_eq!(source.unknown.children[0].after, 2);
+    let through = written(&source, &mut CommentForControl);
+    assert_eq!(
+        through,
+        format!("<w:object xmlns:w=\"{W}\"><w:drawing/><!--x--><!--c--></w:object>")
+    );
+    assert_eq!(object_xml(&source.transform(&mut CommentForControl)), through);
+}
+
+#[test]
+fn an_extra_after_the_first_block_stays_there_when_an_unknown_item_before_it_becomes_a_paragraph() {
+    // Read, a comment between two blocks joins the block list; built here,
+    // it is an `Extra` after the first block.
+    let mut source = read::document_body(&parsed(&format!(
+        "<w:body xmlns:w=\"{W}\"><x:u xmlns:x=\"urn:x\"/><w:p/><w:p/><w:sectPr/></w:body>"
+    )));
+    source.unknown.children.push(Extra {
+        after: 1,
+        node: Node::Comment("c".to_owned()),
+    });
+    let through = written(&source, &mut ParagraphForOther);
+    assert_eq!(
+        through,
+        format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><!--c--><w:p/><w:sectPr/></w:body>")
+    );
+    assert_eq!(tree_xml(&source.transform(&mut ParagraphForOther)), through);
 }

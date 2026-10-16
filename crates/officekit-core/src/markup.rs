@@ -164,6 +164,8 @@ pub struct Reader<'element> {
 #[derive(Debug, Default)]
 pub struct Rebase {
     counts: Vec<usize>,
+    /// Declared items given in place of `Other` items before the first original declared child.
+    leading: usize,
 }
 
 /// The namespace declarations in scope while a typed tree is written: an
@@ -269,6 +271,9 @@ pub struct Writer<'scope, 'node> {
     element: Element,
     scope: &'scope mut Scope,
     shape: &'static Shape,
+    /// Whether a single field's node is being written: its `Other` node
+    /// takes a declared child's place.
+    single: bool,
     unknown: &'node Unknown,
 }
 
@@ -384,6 +389,20 @@ pub trait Write {
 }
 
 impl<'extra> Children<'extra> {
+    /// A node at the next declared child's place, after the `Extra`s placed
+    /// before it: it counts as a declared child.
+    fn declared(&mut self, node: Node) {
+        let known = self.known;
+        self.out.extend(
+            self.extra
+                .iter()
+                .filter(|extra| extra.after == known)
+                .map(|extra| extra.node.clone()),
+        );
+        self.out.push(node);
+        self.known += 1;
+    }
+
     /// The children written so far, then every `Extra` whose place is past
     /// the last declared child.
     #[must_use]
@@ -400,15 +419,7 @@ impl<'extra> Children<'extra> {
 
     /// The next declared child, after the `Extra`s placed before it.
     pub fn known(&mut self, node: Element) {
-        let known = self.known;
-        self.out.extend(
-            self.extra
-                .iter()
-                .filter(|extra| extra.after == known)
-                .map(|extra| extra.node.clone()),
-        );
-        self.out.push(Node::Element(node));
-        self.known += 1;
+        self.declared(Node::Element(node));
     }
 
     #[must_use]
@@ -476,7 +487,7 @@ where
     }
 
     fn write(&self, writer: &mut Writer<'_, '_>) {
-        self.as_ref().write_into(writer);
+        writer.single(self.as_ref());
     }
 }
 
@@ -492,7 +503,7 @@ where
 
     fn write(&self, writer: &mut Writer<'_, '_>) {
         if let Some(node) = self {
-            node.write_into(writer);
+            writer.single(node.as_ref());
         }
     }
 }
@@ -783,11 +794,23 @@ impl<'element> Iterator for Reader<'element> {
 }
 
 impl Rebase {
+    /// Count the `became` declared children an original child became: its
+    /// own count when it is declared, else added to the count before it.
+    fn count(&mut self, declared: bool, became: usize) {
+        if declared {
+            self.counts.push(became);
+        } else {
+            *self.counts.last_mut().unwrap_or(&mut self.leading) += became;
+        }
+    }
+
     /// The place, in the rebuilt node, of an `Extra` placed after the
     /// `after`-th original declared child.
     #[must_use]
     pub fn place(&self, after: usize) -> usize {
-        self.counts.iter().take(after).sum::<usize>() + after.saturating_sub(self.counts.len())
+        self.leading
+            + self.counts.iter().take(after).sum::<usize>()
+            + after.saturating_sub(self.counts.len())
     }
 }
 
@@ -1003,7 +1026,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     }
 
     /// Write a single declared child of an enum type: written through after
-    /// the `Extra`s placed before it, unless it is an `Other` node.
+    /// the `Extra`s placed before it, an `Other` node as a declared one.
     ///
     /// # Errors
     ///
@@ -1013,14 +1036,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         F: Nodes,
         F::Node: Item + WriteThrough,
     {
-        self.open()?;
-        for node in field.nodes() {
-            if node.is_declared() {
-                self.place.before_known(ctx, self.out)?;
-            }
-            node.write_through(ctx, self.out)?;
-        }
-        Ok(())
+        self.child(field, ctx)
     }
 
     /// Write the `Extra`s placed after the last declared child, and the end
@@ -1209,18 +1225,13 @@ impl<'node> Walk<'node> {
     }
 
     /// Visit a single declared child of an enum type: after the `Extra`s
-    /// placed before it, unless it is an `Other` node.
+    /// placed before it, an `Other` node as a declared one.
     pub fn choice<F>(&mut self, field: &F, visitor: &mut dyn Visitor)
     where
         F: Nodes,
         F::Node: Item + Visit,
     {
-        for node in field.nodes() {
-            if node.is_declared() {
-                self.before_known(visitor);
-            }
-            node.visit(visitor);
-        }
+        self.child(field, visitor);
     }
 
     /// Visit the `Extra`s placed after the last declared child.
@@ -1243,7 +1254,12 @@ impl<'node> Walk<'node> {
         F: Nodes,
         F::Node: Item + Visit,
     {
-        self.choice(field, visitor);
+        for item in field.nodes() {
+            if item.is_declared() {
+                self.before_known(visitor);
+            }
+            item.visit(visitor);
+        }
     }
 
     #[must_use]
@@ -1320,18 +1336,35 @@ impl<'scope, 'node> Writer<'scope, 'node> {
             element,
             scope,
             shape,
+            single: false,
             unknown,
         }
     }
 
-    /// Write a list's `Other` item: it does not count as a declared child.
+    /// Write an enum's `Other` node: a list's does not count as a declared
+    /// child, a single field's takes a declared child's place.
     pub fn other(&mut self, node: Node) {
-        self.children.other(node);
+        if self.single {
+            self.children.declared(node);
+        } else {
+            self.children.other(node);
+        }
     }
 
     /// The scope a child's element is written in.
     pub const fn scope(&mut self) -> &mut Scope {
         self.scope
+    }
+
+    /// Write a single field's node, whose `Other` node takes a declared
+    /// child's place.
+    fn single<T>(&mut self, node: &T)
+    where
+        T: Write,
+    {
+        self.single = true;
+        node.write_into(self);
+        self.single = false;
     }
 
     /// Write simple content's text, before the nodes kept after it.
@@ -1697,23 +1730,16 @@ where
     rebuilt
 }
 
-/// A single declared child of an enum type rebuilt with its node transformed.
-///
-/// A declared node counts one declared child in `rebase`, or none when its
-/// hook answers an `Other` item; an `Other` node counts nothing.
+/// A single declared child of an enum type rebuilt with its node
+/// transformed; the node counts one declared child in `rebase`, an `Other`
+/// node as a declared one.
 #[must_use]
 pub fn transform_choice<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
     F: Nodes,
     F::Node: Item + Transform,
 {
-    let rebuilt = field.transform_nodes(ctx);
-    for (node, became) in field.nodes().iter().zip(rebuilt.nodes()) {
-        if node.is_declared() {
-            rebase.counts.push(usize::from(became.is_declared()));
-        }
-    }
-    rebuilt
+    transform_child(field, ctx, rebase)
 }
 
 /// A list of an enum type rebuilt (D20): each item's list hook first, whose
@@ -1721,7 +1747,7 @@ where
 /// item's `transform` otherwise.
 ///
 /// A declared item counts in `rebase` the declared items it became; an
-/// `Other` item counts nothing.
+/// `Other` item adds the declared items it became to the count before it.
 pub fn transform_items<T>(items: &[T], ctx: &mut dyn Context, rebase: &mut Rebase) -> Vec<T>
 where
     T: Item + Transform,
@@ -1733,14 +1759,12 @@ where
             Some(spliced) => out.extend(spliced),
             None => out.push(item.transform(ctx)),
         }
-        if item.is_declared() {
-            let became = out
-                .iter()
-                .skip(start)
-                .filter(|node| node.is_declared())
-                .count();
-            rebase.counts.push(became);
-        }
+        let became = out
+            .iter()
+            .skip(start)
+            .filter(|node| node.is_declared())
+            .count();
+        rebase.count(item.is_declared(), became);
     }
     out
 }
