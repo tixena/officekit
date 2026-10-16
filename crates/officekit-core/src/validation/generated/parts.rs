@@ -360,6 +360,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/aFChunk",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -371,6 +372,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain",
         ),
         root: Some(3456),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -382,6 +384,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sheetMetadata",
         ),
         root: Some(3690),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -391,6 +394,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/chartColorStyle",
         ),
         root: Some(1214),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[
@@ -427,6 +431,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chartUserShapes",
         ),
         root: Some(1186),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -485,6 +490,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart",
         ),
         root: Some(933),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -494,6 +500,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/chartStyle",
         ),
         root: Some(1213),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[
@@ -538,6 +545,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chartsheet",
         ),
         root: Some(3483),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -549,6 +557,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors",
         ),
         root: Some(2027),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -560,6 +569,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/connections",
         ),
         root: Some(3525),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -569,6 +579,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/ctrlProp",
         ),
         root: Some(3278),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -578,6 +589,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -587,6 +599,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/customData",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -603,6 +616,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/customDataProps",
         ),
         root: Some(3272),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -612,6 +626,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties",
         ),
         root: Some(1894),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -621,6 +636,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customProperty",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -630,6 +646,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/xmlMaps",
         ),
         root: Some(3673),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -646,6 +663,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -655,6 +673,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXmlProps",
         ),
         root: Some(1440),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -671,6 +690,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/keyMapCustomizations",
         ),
         root: Some(3221),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -682,6 +702,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramColors",
         ),
         root: Some(1384),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -718,6 +739,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramData",
         ),
         root: Some(1399),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -736,6 +758,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramLayout",
         ),
         root: Some(1401),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -752,6 +775,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/diagramDrawing",
         ),
         root: Some(1444),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -763,6 +787,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramQuickStyle",
         ),
         root: Some(1434),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -807,6 +832,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/dialogsheet",
         ),
         root: Some(3565),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -823,6 +849,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -851,6 +878,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings",
         ),
         root: Some(3009),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -860,6 +888,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2019/05/relationships/documenttasks",
         ),
         root: Some(2322),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[
@@ -950,6 +979,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing",
         ),
         root: Some(3947),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -959,6 +989,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/activeXControlBinary",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -975,6 +1006,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/control",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -984,6 +1016,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -993,6 +1026,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1117,6 +1151,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes",
         ),
         root: Some(2568),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -1126,6 +1161,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/attachedToolbars",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1182,6 +1218,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "ExtendedChartPart",
         relationship_type: Some("http://schemas.microsoft.com/office/2014/relationships/chartEx"),
         root: Some(1272),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -1191,6 +1228,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
         ),
         root: Some(687),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -1202,6 +1240,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/externalLink",
         ),
         root: Some(3603),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -1211,6 +1250,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2022/11/relationships/FeaturePropertyBag",
         ),
         root: Some(3973),
+        versions: Versions(0b10_0000),
     },
     PartRule {
         children: &[],
@@ -1220,6 +1260,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/font",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -1238,6 +1279,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable",
         ),
         root: Some(2588),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1362,6 +1404,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer",
         ),
         root: Some(2613),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1486,6 +1529,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes",
         ),
         root: Some(2589),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1762,6 +1806,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/glossaryDocument",
         ),
         root: Some(2609),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -1926,6 +1971,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/handoutMaster",
         ),
         root: Some(2101),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -2050,6 +2096,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header",
         ),
         root: Some(2614),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2059,6 +2106,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -2133,6 +2181,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/xlIntlMacrosheet",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2142,6 +2191,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels",
         ),
         root: Some(1204),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[],
@@ -2151,6 +2201,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/legacyDocTextInfo",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2160,6 +2211,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/legacyDiagramText",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -2234,6 +2286,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/xlMacrosheet",
         ),
         root: Some(3671),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2243,6 +2296,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/recipientData",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -2549,6 +2603,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
         ),
         root: Some(2531),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2558,6 +2613,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/model3d",
         ),
         root: None,
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -2567,6 +2623,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2019/04/relationships/namedSheetView",
         ),
         root: Some(4076),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[
@@ -2731,6 +2788,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesMaster",
         ),
         root: Some(2120),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -2903,6 +2961,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesSlide",
         ),
         root: Some(2125),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -2921,6 +2980,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering",
         ),
         root: Some(2699),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -2939,6 +2999,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition",
         ),
         root: Some(3742),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2950,6 +3011,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords",
         ),
         root: Some(3745),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -2968,6 +3030,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotTable",
         ),
         root: Some(3920),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -2977,6 +3040,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2018/10/relationships/authors",
         ),
         root: Some(1956),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[],
@@ -2986,6 +3050,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2018/10/relationships/comments",
         ),
         root: Some(1958),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[
@@ -3082,6 +3147,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "PresentationDocument",
         relationship_type: None,
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -3220,6 +3286,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
         ),
         root: Some(2149),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3231,6 +3298,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps",
         ),
         root: Some(2152),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3242,6 +3310,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/queryTable",
         ),
         root: Some(3771),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3251,6 +3320,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/ui/userCustomization",
         ),
         root: Some(1732),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3260,6 +3330,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdArray",
         ),
         root: Some(4006),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3269,6 +3340,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValue",
         ),
         root: Some(4044),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3278,6 +3350,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueStructure",
         ),
         root: Some(4047),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3287,6 +3360,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdRichValueTypes",
         ),
         root: Some(4030),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3296,6 +3370,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2020/07/relationships/rdRichValueWebImage",
         ),
         root: Some(4054),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[],
@@ -3305,6 +3380,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBag",
         ),
         root: Some(4040),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3314,6 +3390,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/rdSupportingPropertyBagStructure",
         ),
         root: Some(4038),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[ChildPart {
@@ -3330,6 +3407,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/ui/extensibility",
         ),
         root: Some(1671),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -3346,6 +3424,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/ui/extensibility",
         ),
         root: Some(1732),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3355,6 +3434,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/06/relationships/richStyles",
         ),
         root: Some(4022),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -3366,6 +3446,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
         ),
         root: Some(3840),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3377,6 +3458,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableSingleCells",
         ),
         root: Some(3835),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3386,6 +3468,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/slicerCache",
         ),
         root: Some(3312),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3393,6 +3476,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "SlicersPart",
         relationship_type: Some("http://schemas.microsoft.com/office/2007/relationships/slicer"),
         root: Some(3324),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -3404,6 +3488,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
         ),
         root: Some(2030),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -3592,6 +3677,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout",
         ),
         root: Some(2174),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -3780,6 +3866,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster",
         ),
         root: Some(2179),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -4008,6 +4095,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide",
         ),
         root: Some(2169),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4019,6 +4107,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateInfo",
         ),
         root: Some(2189),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -4115,6 +4204,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "SpreadsheetDocument",
         relationship_type: None,
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4126,6 +4216,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4137,6 +4228,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
         ),
         root: Some(3074),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4146,6 +4238,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects",
         ),
         root: Some(3074),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4162,6 +4255,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
         ),
         root: Some(3845),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4173,6 +4267,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles",
         ),
         root: Some(531),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4189,6 +4284,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/themeOverride",
         ),
         root: Some(89),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4205,6 +4301,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
         ),
         root: Some(361),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4214,6 +4311,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4223,6 +4321,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/timelineCache",
         ),
         root: Some(3390),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[],
@@ -4230,6 +4329,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "TimeLinePart",
         relationship_type: Some("http://schemas.microsoft.com/office/2011/relationships/timeline"),
         root: Some(3406),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[],
@@ -4239,6 +4339,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tags",
         ),
         root: Some(2256),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4248,6 +4349,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/wordVbaData",
         ),
         root: Some(3223),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4264,6 +4366,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/vbaProject",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4282,6 +4385,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps",
         ),
         root: Some(2263),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -4308,6 +4412,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4319,6 +4424,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/volatileDependencies",
         ),
         root: Some(3879),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[ChildPart {
@@ -4335,6 +4441,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/webextensiontaskpanes",
         ),
         root: Some(3197),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[ChildPart {
@@ -4351,6 +4458,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/webextension",
         ),
         root: Some(3187),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[],
@@ -4362,6 +4470,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings",
         ),
         root: Some(3182),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4371,6 +4480,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2006/relationships/attachedToolbars",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4382,6 +4492,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
         ),
         root: Some(2433),
+        versions: Versions(0b11_0000),
     },
     PartRule {
         children: &[
@@ -4506,6 +4617,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
         ),
         root: Some(2425),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[
@@ -4630,6 +4742,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
         ),
         root: Some(2435),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[
@@ -4754,6 +4867,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
         ),
         root: Some(2480),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -4850,6 +4964,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "WordprocessingDocument",
         relationship_type: None,
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -4859,6 +4974,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "WordprocessingPeoplePart",
         relationship_type: Some("http://schemas.microsoft.com/office/2011/relationships/people"),
         root: Some(2427),
+        versions: Versions(0b11_1110),
     },
     PartRule {
         children: &[],
@@ -4870,6 +4986,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -5152,6 +5269,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
         ),
         root: Some(3886),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5159,6 +5277,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "WorkbookPersonPart",
         relationship_type: Some("http://schemas.microsoft.com/office/2017/10/relationships/person"),
         root: Some(4062),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[ChildPart {
@@ -5177,6 +5296,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/revisionHeaders",
         ),
         root: Some(3794),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5188,6 +5308,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/revisionLog",
         ),
         root: Some(3800),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5199,6 +5320,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
         ),
         root: Some(3842),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5210,6 +5332,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/usernames",
         ),
         root: Some(3873),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5221,6 +5344,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
         ),
         root: Some(3517),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[
@@ -5401,6 +5525,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
         ),
         root: Some(3891),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5408,6 +5533,7 @@ pub static PART_RULES: &[PartRule] = &[
         name: "WorksheetSortMapPart",
         relationship_type: Some("http://schemas.microsoft.com/office/2006/relationships/wsSortMap"),
         root: Some(4072),
+        versions: Versions(0b11_1111),
     },
     PartRule {
         children: &[],
@@ -5417,6 +5543,7 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.microsoft.com/office/2017/10/relationships/threadedComment",
         ),
         root: Some(4065),
+        versions: Versions(0b11_1000),
     },
     PartRule {
         children: &[],
@@ -5428,5 +5555,6 @@ pub static PART_RULES: &[PartRule] = &[
             "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature",
         ),
         root: None,
+        versions: Versions(0b11_1111),
     },
 ];

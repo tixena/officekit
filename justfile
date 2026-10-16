@@ -49,6 +49,16 @@ docs:
 oracle folder:
     dotnet run --project oracle -c Release -- {{folder}}/*.docx {{folder}}/*.xlsx {{folder}}/*.pptx
 
+# Compare officekit's validation with SDK 3.5.1 on every Office file in DIR (needs .NET 10). Not part of `all`.
+parity DIR kinds="schema,markup-compatibility":
+    rm -rf target/parity && mkdir -p target/parity/officekit
+    cargo build -q -p officekit
+    dotnet run --project oracle -c Release -- {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx > target/parity/oracle.json
+    for f in {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx; do for t in 2010 2013 2016 2019 2021 365; do \
+      target/debug/officekit validate --json --target "$t" "$f" > "target/parity/officekit/$(basename "$f").$t.json" \
+      || [ $? -eq 1 ] || exit 2; done; done
+    cargo xtask parity target/parity/oracle.json target/parity/officekit --kinds {{kinds}}
+
 # Download the generator's inputs into inputs/ (git-ignored, never committed).
 # Files already present are not downloaded again.
 #

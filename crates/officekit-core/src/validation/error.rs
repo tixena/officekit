@@ -56,6 +56,45 @@ macro_rules! codes {
     };
 }
 
+/// The errors a validation has found, up to a cap (D4).
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct Errors {
+    /// `0` means no limit.
+    cap: usize,
+    found: Vec<ValidationError>,
+}
+
+impl Errors {
+    /// Whether the cap is reached, so no further error is kept.
+    #[must_use]
+    pub const fn full(&self) -> bool {
+        self.cap != 0 && self.found.len() >= self.cap
+    }
+
+    #[must_use]
+    pub fn into_vec(self) -> Vec<ValidationError> {
+        self.found
+    }
+
+    /// Keeps up to `cap` errors; `0` means no limit.
+    #[must_use]
+    pub const fn new(cap: usize) -> Self {
+        Self {
+            cap,
+            found: Vec::new(),
+        }
+    }
+
+    /// Keeps `error` unless the cap is already reached; the error that
+    /// reaches it is kept.
+    pub fn push(&mut self, error: ValidationError) {
+        if !self.full() {
+            self.found.push(error);
+        }
+    }
+}
+
 /// Which check produced an error.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 #[non_exhaustive]

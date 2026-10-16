@@ -26,8 +26,11 @@ anyhow.workspace = true
 # The only route to the OS: inputs are found through `System`.
 os-shim.workspace = true
 
-# The SDK's schema data is JSON.
+# The SDK's schema data is JSON, and so are the parity run's records.
 serde_json.workspace = true
+
+# The parity run maps officekit's error codes to SDK 3.5.1's ids.
+officekit-core.workspace = true
 
 # Reads the XSD files the schema model is built from.
 quick-xml.workspace = true

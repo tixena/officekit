@@ -1,7 +1,7 @@
 //! The types of the validation tables: what each schema type, attribute,
 //! value, content model, and part allows, and at which Office versions.
 
-use crate::xml::name::NamespaceId;
+use crate::xml::name::{NamespaceId, OfficeVersion};
 
 /// Index into `PART_RULES`.
 pub type PartRuleId = u8;
@@ -77,8 +77,10 @@ pub enum Check {
     String {
         /// With `Some(ValueClass::HexBinary)` the value must be hexadecimal
         /// digits, an even number of them, and `length`, `min_length`, and
-        /// `max_length` count bytes, two digits each; with `None` they count
-        /// characters.
+        /// `max_length` count bytes, two digits each; with `None` the class of
+        /// the attribute decides, as SDK 3.5.1 reads a value with a validator
+        /// that names no type: bytes for a hexadecimal or base64 attribute,
+        /// characters for any other.
         class: Option<ValueClass>,
         kind: StringKind,
         length: Option<usize>,
@@ -145,6 +147,8 @@ pub struct PartRule {
     pub relationship_type: Option<&'static str>,
     /// The type of the part's root element.
     pub root: Option<TypeId>,
+    /// The targets the part type exists at; at another target its part is not validated.
+    pub versions: Versions,
 }
 
 /// A content model at one target; `max` 0 is unbounded, as in SDK 3.5.1.
@@ -184,6 +188,9 @@ pub struct SchemaType {
     pub particles: &'static [(Versions, Option<Particle>)],
     /// The checks of a leaf element's text.
     pub text_checks: &'static [ValueCheck],
+    /// The targets the element type exists at; at another target an element
+    /// of the type is not validated.
+    pub versions: Versions,
 }
 
 /// The lexical kind a string check requires.
@@ -242,3 +249,11 @@ pub enum ValueClass {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Versions(pub u8);
+
+impl Versions {
+    /// Whether the row applies at `target`.
+    #[must_use]
+    pub const fn contains(self, target: OfficeVersion) -> bool {
+        self.0 & (1 << target.rank()) != 0
+    }
+}

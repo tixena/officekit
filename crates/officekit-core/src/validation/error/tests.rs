@@ -1,6 +1,6 @@
 use serde_json::json;
 
-use super::{ErrorCode, Finding, Step, ValidationError, target_name};
+use super::{ErrorCode, Errors, Finding, Step, ValidationError, target_name};
 use crate::packaging::part_name::PartName;
 use crate::xml::name::OfficeVersion;
 
@@ -196,4 +196,24 @@ fn every_target_has_its_own_name() {
             "Microsoft365"
         ]
     );
+}
+
+#[test]
+fn errors_stop_at_the_cap_and_keep_the_one_that_reaches_it() {
+    let mut errors = Errors::new(2);
+    for _ in 0_u32..3 {
+        errors.push(left_margin("w"));
+    }
+    assert!(errors.full());
+    assert_eq!(errors.into_vec().len(), 2);
+}
+
+#[test]
+fn errors_with_a_cap_of_zero_keep_every_error() {
+    let mut errors = Errors::new(0);
+    for _ in 0_u32..1500 {
+        errors.push(left_margin("w"));
+    }
+    assert!(!errors.full());
+    assert_eq!(errors.into_vec().len(), 1500);
 }

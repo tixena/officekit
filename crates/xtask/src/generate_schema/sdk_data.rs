@@ -75,6 +75,8 @@ pub struct DataPart {
     pub root: Option<String>,
     /// The root element's local name, `document`.
     pub root_element: Option<String>,
+    /// The Office version that introduced the part type; `None` for ECMA's own.
+    pub version: Option<DataVersion>,
 }
 
 /// A content model: a composite of `items`, an `Any`, or an element when `kind` is `None`.
@@ -542,6 +544,7 @@ fn part(entry: &Value) -> Result<DataPart> {
         relationship_type: text(entry, "RelationshipType")?,
         root: text(entry, "Root")?,
         root_element: text(entry, "RootElement")?,
+        version: version(entry, "Version")?,
     })
 }
 

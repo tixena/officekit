@@ -11,9 +11,13 @@
 //!   validation tables so far.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
+//! - `parity` -- print every error of the given kinds that the parity
+//!   oracle's records hold and officekit's records lack; exits 1 when one is
+//!   missing.
 
 use std::io::{Write, stdout};
 use std::path::{Path, PathBuf};
+use std::process::ExitCode;
 
 use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
@@ -22,6 +26,7 @@ use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{namespaces, validation};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
+use xtask::parity;
 
 /// The namespace of `CT_P` and `CT_TblCellMar`, which the counts show.
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -39,6 +44,17 @@ struct Cli {
 enum Commands {
     /// Regenerate the typed element modules from the Open XML SDK schema data.
     GenerateSchema,
+    /// Print every error of the given kinds the oracle reports and officekit's
+    /// records lack, and a count per kind; exit 1 when one is missing.
+    Parity {
+        /// The oracle's JSON array of records.
+        oracle: PathBuf,
+        /// A folder of officekit's `validate --json` results, one JSON array per file and target.
+        officekit: PathBuf,
+        /// The kinds compared, comma-separated: schema, markup-compatibility, package, semantic.
+        #[arg(long, value_delimiter = ',', required = true)]
+        kinds: Vec<String>,
+    },
     /// Print the counts of the schema model over `inputs/` and the comparison of the two classes.
     SchemaCounts,
 }
@@ -108,7 +124,7 @@ fn content(content: &Content) -> String {
     }
 }
 
-fn main() -> Result<()> {
+fn main() -> Result<ExitCode> {
     let cli = Cli::parse();
     match cli.command {
         Commands::GenerateSchema => {
@@ -132,9 +148,29 @@ fn main() -> Result<()> {
                 Path::new(validation::GENERATED_PATH),
             )?;
             validation_summary(&mut out, &tables)?;
-            Ok(())
+            Ok(ExitCode::SUCCESS)
         }
-        Commands::SchemaCounts => schema_counts(&mut stdout().lock()),
+        Commands::Parity {
+            oracle,
+            officekit,
+            kinds,
+        } => {
+            let report = parity::run(&RealSystem::new(), &oracle, &officekit, &kinds)?;
+            let mut out = stdout().lock();
+            for record in &report.missing {
+                writeln!(out, "missing: {record}")?;
+            }
+            writeln!(out, "{}", report.summary())?;
+            Ok(if report.complete() {
+                ExitCode::SUCCESS
+            } else {
+                ExitCode::FAILURE
+            })
+        }
+        Commands::SchemaCounts => {
+            schema_counts(&mut stdout().lock())?;
+            Ok(ExitCode::SUCCESS)
+        }
     }
 }
 

@@ -955,6 +955,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
+ "officekit-core",
  "os-shim",
  "quick-xml",
  "serde_json",

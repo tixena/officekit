@@ -181,6 +181,8 @@ pub struct PartRow {
     pub relationship_type: Option<String>,
     /// The root element's type, `w:CT_Document/w:document`.
     pub root: Option<String>,
+    /// The targets the part type exists at.
+    pub versions: Versions,
 }
 
 /// A content model at one target; `max` 0 is unbounded.
@@ -271,6 +273,8 @@ pub struct TypeRow {
     /// The content model at each target, equal ones merged.
     pub particles: Vec<(Versions, Option<Particle>)>,
     pub text_checks: Vec<ValueCheck>,
+    /// The targets the element type exists at.
+    pub versions: Versions,
 }
 
 /// A check, the targets it runs at, and the union it belongs to.
@@ -701,6 +705,7 @@ impl<'data> Converter<'data> {
             name: part.name.clone(),
             relationship_type: part.relationship_type.clone(),
             root,
+            versions: part.version.map_or(Versions::ALL, Versions::since),
         })
     }
 
@@ -793,6 +798,7 @@ impl<'data> Converter<'data> {
             name: name.to_owned(),
             particles: particles(data_type.particle.as_ref())?,
             text_checks,
+            versions: data_type.version.map_or(Versions::ALL, Versions::since),
         })
     }
 }
