@@ -12,6 +12,7 @@ use std::path::Path;
 
 use os_shim::System;
 
+use crate::compact::{self, Comments};
 use crate::error::PackageError;
 use crate::file;
 use crate::image::Image;
@@ -91,6 +92,16 @@ impl Docx {
             content,
             content.content.len(),
         )
+    }
+
+    /// Merge every stretch of neighbouring runs that render the same, in every part of the file
+    /// and every Office document embedded in it.
+    ///
+    /// # Errors
+    ///
+    /// A part that cannot be read, parsed, or stored.
+    pub fn compact_runs(&mut self, comments: Comments) -> Result<(), PackageError> {
+        compact::compact_package(self.package_mut(), comments).map(|_| ())
     }
 
     /// The class the file was read in, the class every store through it writes.

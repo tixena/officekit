@@ -8,6 +8,7 @@ use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 
 use super::Docx;
+use crate::compact::Comments;
 use crate::error::PackageError;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::error::WriteError;
@@ -455,4 +456,24 @@ fn a_strict_file_saved_transitional_takes_transitional_names_back() {
     let main = text(transitional.package(), transitional.main_document_part());
     assert!(main.contains(&format!("xmlns:w=\"{W}\"")), "{main}");
     assert!(!main.contains("conformance"), "{main}");
+}
+
+#[test]
+fn compact_runs_merges_neighbouring_runs_of_the_main_part_and_keeps_the_text() {
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = name("/word/document.xml");
+    let xml = format!(
+        "<w:document xmlns:w=\"{W}\"><w:body><w:p><w:r><w:t>The </w:t></w:r><w:r><w:t>fox</w:t></w:r></w:p></w:body></w:document>"
+    );
+    docx.package_mut()
+        .set_part_bytes(
+            &main,
+            WordprocessingKind::Document.main_content_type(),
+            xml.as_bytes(),
+        )
+        .unwrap();
+    docx.compact_runs(Comments::Keep).unwrap();
+    let stored = text(docx.package(), &main);
+    assert_eq!(stored.matches("<w:r>").count(), 1, "{stored}");
+    assert!(stored.contains("<w:t>The </w:t><w:t>fox</w:t>"), "{stored}");
 }

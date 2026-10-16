@@ -5,6 +5,7 @@ use std::path::Path;
 use os_shim::mock::MemorySystem;
 
 use super::Pptx;
+use crate::compact::Comments;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::packaging::package::OpenOptions;
 use crate::packaging::package::Package;
@@ -166,4 +167,22 @@ fn a_new_presentation_saved_strict_reopens_strict() {
             "{type_uri}"
         );
     }
+}
+
+#[test]
+fn compact_runs_merges_neighbouring_runs_of_a_slide_and_keeps_the_text() {
+    let mut pptx = Pptx::new(PresentationKind::Slideshow).unwrap();
+    let slide = name("/ppt/slides/slide1.xml");
+    let xml = "<p:sld xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"><p:txBody><a:p><a:r><a:t>The </a:t></a:r><a:r><a:t>fox</a:t></a:r></a:p></p:txBody></p:sld>";
+    pptx.package_mut()
+        .set_part_bytes(
+            &slide,
+            "application/vnd.openxmlformats-officedocument.presentationml.slide+xml",
+            xml.as_bytes(),
+        )
+        .unwrap();
+    pptx.compact_runs(Comments::Keep).unwrap();
+    let stored = text(pptx.package(), &slide);
+    assert_eq!(stored.matches("<a:r>").count(), 1, "{stored}");
+    assert!(stored.contains("<a:t>The fox</a:t>"), "{stored}");
 }
