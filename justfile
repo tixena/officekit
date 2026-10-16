@@ -47,16 +47,27 @@ docs:
 # Validate every Office file in a folder with SDK 3.5.1 and print its errors as
 # JSON. Not part of `all`: it needs .NET 10 and NuGet.
 oracle folder:
-    dotnet run --project oracle -c Release -- {{folder}}/*.docx {{folder}}/*.xlsx {{folder}}/*.pptx
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shopt -s nullglob
+    files=("{{folder}}"/*.docx "{{folder}}"/*.xlsx "{{folder}}"/*.pptx)
+    if [ "${#files[@]}" -eq 0 ]; then echo "no .docx, .xlsx, or .pptx file in {{folder}}" >&2; exit 2; fi
+    dotnet run --project oracle -c Release -- "${files[@]}"
 
 # Compare officekit's validation with SDK 3.5.1 on every Office file in DIR (needs .NET 10). Not part of `all`.
 parity DIR kinds="schema,markup-compatibility":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shopt -s nullglob
+    files=("{{DIR}}"/*.docx "{{DIR}}"/*.xlsx "{{DIR}}"/*.pptx)
+    if [ "${#files[@]}" -eq 0 ]; then echo "no .docx, .xlsx, or .pptx file in {{DIR}}" >&2; exit 2; fi
     rm -rf target/parity && mkdir -p target/parity/officekit
     cargo build -q -p officekit
-    dotnet run --project oracle -c Release -- {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx > target/parity/oracle.json
-    for f in {{DIR}}/*.docx {{DIR}}/*.xlsx {{DIR}}/*.pptx; do for t in 2010 2013 2016 2019 2021 365; do \
+    dotnet run --project oracle -c Release -- "${files[@]}" > target/parity/oracle.json
+    for f in "${files[@]}"; do for t in 2010 2013 2016 2019 2021 365; do
       target/debug/officekit validate --json --max-errors 0 --target "$t" "$f" > "target/parity/officekit/$(basename "$f").$t.json" \
-      || [ $? -eq 1 ] || exit 2; done; done
+      || [ $? -eq 1 ] || exit 2
+    done; done
     cargo xtask parity target/parity/oracle.json target/parity/officekit --kinds {{kinds}}
 
 # Download the generator's inputs into inputs/ (git-ignored, never committed).
