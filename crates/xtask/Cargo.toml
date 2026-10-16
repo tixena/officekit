@@ -28,3 +28,6 @@ os-shim.workspace = true
 
 # The SDK's schema data is JSON.
 serde_json.workspace = true
+
+# Reads the XSD files the schema model is built from.
+quick-xml = "0.42"
