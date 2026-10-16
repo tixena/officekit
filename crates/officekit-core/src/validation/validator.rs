@@ -1,5 +1,6 @@
 //! The validator: the target version, the cap on errors it reports, and the
-//! pipeline that runs the schema pass over every part it reaches.
+//! pipeline that runs the package pass, then the schema pass over every part
+//! it reaches.
 
 use alloc::borrow::Cow;
 use alloc::collections::BTreeSet;
@@ -9,6 +10,7 @@ use std::path::Path;
 
 use super::error::{ErrorCode, Errors, ValidationError};
 use super::generated::PART_RULES;
+use super::package;
 use super::schema::types::{ChildKind, PartRule};
 use super::schema::walk::walk;
 use crate::packaging::package::{OpenOptions, Package};
@@ -93,36 +95,40 @@ impl Validator {
         }
     }
 
-    /// Every error of the schema pass, up to the cap.
+    /// Every error of the package pass, then of the schema pass, up to the
+    /// cap.
     ///
-    /// For each part reachable from the package and known at the target:
-    /// `MissingRootElement` when the part is an empty XML file, else its tree
-    /// walked from the root type its part rule gives. A part that does not
-    /// parse is the package pass's to report.
+    /// The schema pass, for each part reachable from the package and known at
+    /// the target: `MissingRootElement` when the part is an empty XML file,
+    /// else its tree walked from the root type its part rule gives. A part
+    /// that does not parse is the package pass's to report.
     #[must_use]
     pub fn validate(&self, package: &Package) -> Vec<ValidationError> {
         let mut errors = Errors::new(self.max_errors);
-        let strict = package_class(package) == Some(ConformanceClass::Strict);
-        for (part, part_rule) in reachable_parts(package, self.version) {
-            let Ok(bytes) = package.part_bytes(&part) else {
-                continue;
-            };
-            if bytes.is_empty() && xml_part(&part) {
-                errors.push(ValidationError::new(
-                    ErrorCode::MissingRootElement,
-                    Some(part.clone()),
-                    None,
-                    &[("part", part.as_str())],
-                ));
-            } else if let Some(root) = part_rule.root
-                && let Ok(tree) = package.load_tree(&part, OpenOptions::default())
-            {
-                walk(&tree.root, root, self.version, strict, &part, &mut errors);
-            } else {
-                // A part with no root type, or one the package pass reports.
-            }
-            if errors.full() {
-                break;
+        package::check(package, self.version, &mut errors);
+        if !errors.full() {
+            let strict = package_class(package) == Some(ConformanceClass::Strict);
+            for (part, part_rule) in reachable_parts(package, self.version) {
+                let Ok(bytes) = package.part_bytes(&part) else {
+                    continue;
+                };
+                if bytes.is_empty() && xml_part(&part) {
+                    errors.push(ValidationError::new(
+                        ErrorCode::MissingRootElement,
+                        Some(part.clone()),
+                        None,
+                        &[("part", part.as_str())],
+                    ));
+                } else if let Some(root) = part_rule.root
+                    && let Ok(tree) = package.load_tree(&part, OpenOptions::default())
+                {
+                    walk(&tree.root, root, self.version, strict, &part, &mut errors);
+                } else {
+                    // A part with no root type, or one the package pass reports.
+                }
+                if errors.full() {
+                    break;
+                }
             }
         }
         errors.into_vec()
@@ -176,7 +182,7 @@ pub fn document_parts(document: &PartRule) -> Vec<&'static PartRule> {
 
 /// The rule of the document the package holds, by its main part's content
 /// type: a word-processing document, a spreadsheet, or a presentation.
-fn document_rule(package: &Package) -> Option<&'static PartRule> {
+pub(crate) fn document_rule(package: &Package) -> Option<&'static PartRule> {
     let main = package
         .related(None)
         .ok()?
@@ -269,7 +275,7 @@ fn rule(name: &str) -> Option<&'static PartRule> {
 }
 
 /// A relationship type in its Transitional spelling, as the part rules name it.
-fn transitional_type(type_uri: &str) -> Cow<'_, str> {
+pub(crate) fn transitional_type(type_uri: &str) -> Cow<'_, str> {
     if let Some((_, transitional)) = STRICT_RENAMED
         .iter()
         .find(|(strict, _)| *strict == type_uri)
