@@ -16,7 +16,7 @@ const W15: &str = "http://schemas.microsoft.com/office/word/2012/wordml";
 fn started(event: Option<PartEvent>) -> Element {
     match event {
         Some(PartEvent::Start(element)) => Some(element),
-        Some(PartEvent::End | PartEvent::Node(_)) | None => None,
+        Some(PartEvent::Declaration(_) | PartEvent::End | PartEvent::Node(_)) | None => None,
     }
     .unwrap()
 }
@@ -28,6 +28,10 @@ fn a_part_reads_forward_and_loads_the_element_it_is_on() {
          <!--c--><w:sectPr/></w:body></w:document>"
     );
     let mut reader = PartReader::new(xml.as_bytes());
+    assert_eq!(
+        reader.read_event().unwrap(),
+        Some(PartEvent::Declaration("xml version=\"1.0\"".to_owned()))
+    );
     let root = started(reader.read_event().unwrap());
     assert_eq!(
         (
@@ -99,4 +103,26 @@ fn a_part_read_from_its_package_streams_a_root_that_declares_only_the_prefixes_i
              <w:body><w:p w14:paraId=\"00000001\"/></w:body></w:document>"
         )
     );
+}
+
+#[test]
+fn the_declaration_of_a_part_is_an_event_followed_by_its_line_break() {
+    let mut reader = PartReader::new(
+        &b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<a/>"[..],
+    );
+    assert_eq!(
+        reader.read_event().unwrap(),
+        Some(PartEvent::Declaration(
+            "xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"".to_owned()
+        ))
+    );
+    assert_eq!(
+        reader.read_event().unwrap(),
+        Some(PartEvent::Node(Node::Text("\r\n".to_owned())))
+    );
+    assert!(matches!(
+        reader.read_event().unwrap(),
+        Some(PartEvent::Node(Node::Element(element))) if element.name.local == "a"
+    ));
+    assert_eq!(reader.read_event().unwrap(), None);
 }

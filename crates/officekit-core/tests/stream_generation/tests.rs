@@ -81,6 +81,9 @@ fn a_row_repeated_100_000_times_streams_into_a_sink_that_cannot_seek_in_the_peak
     );
     let package = Package::from_bytes(generate(&template, 10, Vec::new()).unwrap()).unwrap();
     let main = PartName::new("/word/document.xml").unwrap();
+    assert!(package.part_bytes(&main).unwrap().starts_with(
+        b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:document"
+    ));
     let hyperlinks: Vec<(String, Target)> = package
         .related_by_type(Some(&main), &RelationshipType::HYPERLINK)
         .unwrap()

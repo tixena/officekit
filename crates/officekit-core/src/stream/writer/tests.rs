@@ -1,4 +1,5 @@
 use super::PartWriter;
+use crate::stream::reader::PartReader;
 use crate::xml::element::{NamespaceDeclaration, Node};
 use crate::xml::parse::parse;
 use crate::xml::write::Layout;
@@ -14,6 +15,18 @@ where
     let mut sink = Vec::new();
     write(&mut PartWriter::new(&mut sink, layout));
     String::from_utf8(sink).unwrap()
+}
+
+#[test]
+fn copying_every_event_of_a_part_gives_its_bytes_with_one_line_break_after_the_declaration() {
+    let xml = format!("{DECLARATION}<a xmlns=\"urn:a\"><b c=\"1\">d</b></a>");
+    let mut reader = PartReader::new(xml.as_bytes());
+    let copied = written(Layout::Compact, |out| {
+        while let Some(event) = reader.read_event().unwrap() {
+            out.write_event(event).unwrap();
+        }
+    });
+    assert_eq!(copied, xml);
 }
 
 #[test]

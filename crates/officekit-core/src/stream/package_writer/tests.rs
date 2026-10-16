@@ -108,7 +108,6 @@ where
     let mut part = out
         .part(&main, main_document::CONTENT_TYPES[0], Layout::Compact)
         .unwrap();
-    part.declaration().unwrap();
     let mut reader = PartReader::from_part(template, &main).unwrap();
     while let Some(event) = reader.read_event().unwrap() {
         match event {
@@ -118,7 +117,10 @@ where
                     .write_through(&mut RepeatRows { count }, &mut part)
                     .unwrap();
             }
-            PartEvent::End | PartEvent::Node(_) | PartEvent::Start(_) => {
+            PartEvent::Declaration(_)
+            | PartEvent::End
+            | PartEvent::Node(_)
+            | PartEvent::Start(_) => {
                 part.write_event(event).unwrap();
             }
         }

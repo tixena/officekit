@@ -218,7 +218,8 @@ impl<'sink> PartWriter<'sink> {
             .write_event(Event::Text(BytesText::from_escaped(escape(value, false))))
     }
 
-    /// An event of a part read forward, copied as read: a `Start` writes the
+    /// An event of a part read forward, copied as read: a `Declaration` writes
+    /// `<?text?>` and nothing after it, a `Start` writes the
     /// element's start tag with its declarations and attributes, an `End`
     /// ends the element the last unmatched start began, and a `Node` goes
     /// through [`Self::node`].
@@ -229,6 +230,12 @@ impl<'sink> PartWriter<'sink> {
     /// element open.
     pub fn write_event(&mut self, event: PartEvent) -> io::Result<()> {
         match event {
+            PartEvent::Declaration(text) => {
+                self.flush()?;
+                self.writer
+                    .get_mut()
+                    .write_all(format!("<?{text}?>").as_bytes())
+            }
             PartEvent::End => {
                 let name = self.names.pop().ok_or_else(|| {
                     io::Error::new(io::ErrorKind::InvalidInput, "an end with no element open")

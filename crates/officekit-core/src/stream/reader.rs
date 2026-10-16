@@ -21,6 +21,9 @@ mod tests;
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PartEvent {
+    /// The XML declaration as it is written, `xml version="1.0"
+    /// encoding="UTF-8" standalone="yes"`.
+    Declaration(String),
     /// The end of the element the last unmatched `Start` began.
     End,
     /// Text, a comment, CDATA, a processing instruction, or an element with
@@ -78,6 +81,7 @@ impl<R: BufRead> PartReader<R> {
         let mut open: Vec<Element> = Vec::new();
         while let Some(event) = self.read_event()? {
             let node = match event {
+                PartEvent::Declaration(_) => continue,
                 PartEvent::End => match open.pop() {
                     Some(done) => Node::Element(done),
                     None => return Ok(element),
@@ -95,8 +99,7 @@ impl<R: BufRead> PartReader<R> {
         ))
     }
 
-    /// The next event; `None` at the end of the part. The XML declaration is
-    /// skipped.
+    /// The next event; `None` at the end of the part.
     ///
     /// # Errors
     ///
@@ -116,7 +119,7 @@ impl<R: BufRead> PartReader<R> {
             {
                 Event::CData(content) => PartEvent::Node(Node::CData((*content).to_owned())),
                 Event::Comment(content) => PartEvent::Node(Node::Comment((*content).to_owned())),
-                Event::Decl(_) => continue,
+                Event::Decl(content) => PartEvent::Declaration((*content).to_owned()),
                 Event::DocType(_) => {
                     return Err(XmlError::Malformed(
                         "a part has no document type declaration".to_owned(),

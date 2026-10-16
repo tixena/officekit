@@ -121,7 +121,6 @@ where
         ),
     );
     let mut part = out.part(&main, main_document::CONTENT_TYPES[0], Layout::Compact)?;
-    part.declaration()?;
     let mut reader = PartReader::from_part(template, &main)?;
     while let Some(event) = reader.read_event()? {
         match event {
@@ -129,7 +128,12 @@ where
                 let table = read::table(&reader.read_element(start)?);
                 table.write_through(&mut RepeatRows { count }, &mut part)?;
             }
-            PartEvent::End | PartEvent::Node(_) | PartEvent::Start(_) => part.write_event(event)?,
+            PartEvent::Declaration(_)
+            | PartEvent::End
+            | PartEvent::Node(_)
+            | PartEvent::Start(_) => {
+                part.write_event(event)?;
+            }
             _ => return Err("an event the generation does not know".into()),
         }
     }
