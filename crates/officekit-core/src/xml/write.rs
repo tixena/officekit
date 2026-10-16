@@ -161,7 +161,7 @@ fn is_removed(prefix: &str, scope: &[Vec<(String, bool)>]) -> bool {
 }
 
 /// Whether a node is text of whitespace only.
-fn is_whitespace_text(node: &Node) -> bool {
+pub(crate) fn is_whitespace_text(node: &Node) -> bool {
     if let Node::Text(text) = node {
         text.chars()
             .all(|character| matches!(character, ' ' | '\t' | '\n' | '\r'))
@@ -203,7 +203,7 @@ fn keep_list(attribute: &mut Attribute, scope: &[Vec<(String, bool)>]) -> bool {
 
 /// Whether whitespace is preserved inside `element`, given whether it is
 /// around it.
-fn preserves_space(element: &Element, around: bool) -> bool {
+pub(crate) fn preserves_space(element: &Element, around: bool) -> bool {
     element
         .attributes
         .iter()
@@ -212,7 +212,7 @@ fn preserves_space(element: &Element, around: bool) -> bool {
 }
 
 /// A name as written: `prefix:local`, or `local` with no prefix.
-fn qualified(name: &QName) -> String {
+pub(crate) fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
         name.local.clone()
     } else {
@@ -361,7 +361,7 @@ where
     writer.write_event(Event::Text(BytesText::from_escaped(line)))
 }
 
-fn write_node<W>(
+pub(crate) fn write_node<W>(
     writer: &mut Writer<W>,
     node: &Node,
     layout: Layout,

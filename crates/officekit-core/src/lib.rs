@@ -18,9 +18,11 @@
 extern crate alloc;
 
 pub mod error;
+pub mod markup;
 pub mod packaging;
 pub mod presentation;
 pub mod spreadsheet;
+pub mod stream;
 pub mod validation;
 pub mod wordprocessing;
 pub mod xml;
