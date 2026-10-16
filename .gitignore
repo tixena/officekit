@@ -1,0 +1,23 @@
+# Rust build artifacts
+/target
+
+# Beads / Dolt files (added by bd init)
+.beads/
+.beads-credential-key
+.beads.gate.lock
+.beads/proxieddb/
+*.gate.lock*
+.dolt/
+*.db
+
+# Notes
+notes/
+
+# Claude Code user settings (local-only)
+.claude/settings.json
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Remargin identity (workspace-local, not shared)
+.remargin.yaml
+.remargin/

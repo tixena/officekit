@@ -1,0 +1,24 @@
+[package]
+name = "xtask"
+description = "Internal developer tooling for the officekit workspace"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "xtask"
+path = "src/main.rs"
+
+[dependencies]
+# Subcommand dispatch.
+clap.workspace = true
+
+# Error handling.
+anyhow.workspace = true

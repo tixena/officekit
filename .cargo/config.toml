@@ -1,0 +1,4 @@
+[alias]
+# Dev-time tooling dispatcher -- see crates/xtask. Never installed on end
+# users: `cargo install officekit` only ships the `officekit` CLI.
+xtask = "run --package xtask --"
