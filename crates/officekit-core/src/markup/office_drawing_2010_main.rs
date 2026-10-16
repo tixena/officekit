@@ -277,7 +277,7 @@ static NV_CONTENT_PART_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A14, "nvContentPartPr"),
     slots: &[
-        markup::Slot::single((NS_A14, "cNvPr")),
+        markup::Slot::required((NS_A14, "cNvPr")),
         markup::Slot::single((NS_A14, "cNvContentPartPr")),
     ],
     text: false,
@@ -303,14 +303,14 @@ static C_NV_CONTENT_PART_PR_SHAPE: markup::Shape = markup::Shape {
 static IMG_PROPS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A14, "imgProps"),
-    slots: &[markup::Slot::single((NS_A14, "imgLayer"))],
+    slots: &[markup::Slot::required((NS_A14, "imgLayer"))],
     text: false,
 };
 
 static IMG_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "visible")],
     name: (NS_A14, "imgEffect"),
-    slots: &[markup::Slot::choice(&PICTURE_EFFECT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&PICTURE_EFFECT_CONTENT_TAGS)],
     text: false,
 };
 
@@ -551,7 +551,7 @@ static USE_LOCAL_DPI_SHAPE: markup::Shape = markup::Shape {
 static HIDDEN_EFFECTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenEffects"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::EFFECT_PROPERTIES_CONTENT_TAGS,
     )],
     text: false,
@@ -560,7 +560,7 @@ static HIDDEN_EFFECTS_SHAPE: markup::Shape = markup::Shape {
 static HIDDEN_FILL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenFill"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::FILL_PROPERTIES_CONTENT_TAGS,
     )],
     text: false,
@@ -608,8 +608,8 @@ static HIDDEN_SCENE3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenScene3d"),
     slots: &[
-        markup::Slot::single((NS_A, "camera")),
-        markup::Slot::single((NS_A, "lightRig")),
+        markup::Slot::required((NS_A, "camera")),
+        markup::Slot::required((NS_A, "lightRig")),
         markup::Slot::single((NS_A, "backdrop")),
         markup::Slot::single((NS_A, "extLst")),
     ],

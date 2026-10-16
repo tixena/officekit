@@ -240,7 +240,7 @@ static ANCHR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P228, "anchr"),
     slots: &[
-        markup::Slot::single((NS_P228, "comment")),
+        markup::Slot::required((NS_P228, "comment")),
         markup::Slot::single((NS_P228, "extLst")),
     ],
     text: false,
@@ -264,7 +264,7 @@ static TASK_DETAILS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "deleted"), (None, "inactive")],
     name: (NS_P228, "taskDetails"),
     slots: &[
-        markup::Slot::single((NS_P228, "history")),
+        markup::Slot::required((NS_P228, "history")),
         markup::Slot::single((NS_P228, "extLst")),
     ],
     text: false,
@@ -281,7 +281,7 @@ static EVENT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "time"), (None, "id")],
     name: (NS_P228, "event"),
     slots: &[
-        markup::Slot::single((NS_P228, "atrbtn")),
+        markup::Slot::required((NS_P228, "atrbtn")),
         markup::Slot::single((NS_P228, "anchr")),
         markup::Slot::choice(&TASK_HISTORY_EVENT_CONTENT_TAGS),
         markup::Slot::single((NS_P228, "extLst")),

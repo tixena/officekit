@@ -194,6 +194,7 @@ fn to_xml(root: Element) -> String {
 
 fn unknown_of(element: &Element) -> Unknown {
     Unknown {
+        absent: Vec::new(),
         attributes: element.attributes.clone(),
         children: Vec::new(),
         namespace_declarations: element.namespace_declarations.clone(),
@@ -438,6 +439,7 @@ fn a_rebased_place_starts_after_the_leading_items() {
     let rebase = Rebase {
         counts: vec![2, 0],
         leading: 1,
+        ..Rebase::default()
     };
     let places: Vec<usize> = (0..4).map(|after| rebase.place(after)).collect();
     assert_eq!(places, [1, 3, 3, 4]);

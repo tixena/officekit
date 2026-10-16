@@ -265,15 +265,15 @@ static ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE: markup::Shape = markup::Shap
     ],
     name: (NS_WP, "anchor"),
     slots: &[
-        markup::Slot::single((NS_WP, "simplePos")),
-        markup::Slot::single((NS_WP, "positionH")),
-        markup::Slot::single((NS_WP, "positionV")),
-        markup::Slot::single((NS_WP, "extent")),
+        markup::Slot::required((NS_WP, "simplePos")),
+        markup::Slot::required((NS_WP, "positionH")),
+        markup::Slot::required((NS_WP, "positionV")),
+        markup::Slot::required((NS_WP, "extent")),
         markup::Slot::single((NS_WP, "effectExtent")),
-        markup::Slot::choice(&ANCHOR_CONTENT_TAGS),
-        markup::Slot::single((NS_WP, "docPr")),
+        markup::Slot::required_choice(&ANCHOR_CONTENT_TAGS),
+        markup::Slot::required((NS_WP, "docPr")),
         markup::Slot::single((NS_WP, "cNvGraphicFramePr")),
-        markup::Slot::single((NS_A, "graphic")),
+        markup::Slot::required((NS_A, "graphic")),
         markup::Slot::single((NS_WP14, "sizeRelH")),
         markup::Slot::single((NS_WP14, "sizeRelV")),
     ],
@@ -455,10 +455,10 @@ static GRAPHICAL_OBJECT_CONTAINER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_WP, "graphicFrame"),
     slots: &[
-        markup::Slot::single((NS_WP, "cNvPr")),
-        markup::Slot::single((NS_WP, "cNvFrPr")),
-        markup::Slot::single((NS_WP, "xfrm")),
-        markup::Slot::single((NS_A, "graphic")),
+        markup::Slot::required((NS_WP, "cNvPr")),
+        markup::Slot::required((NS_WP, "cNvFrPr")),
+        markup::Slot::required((NS_WP, "xfrm")),
+        markup::Slot::required((NS_A, "graphic")),
         markup::Slot::single((NS_WP, "extLst")),
     ],
     text: false,
@@ -469,8 +469,8 @@ static GROUP_SHAPE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_WP, "grpSp"),
     slots: &[
         markup::Slot::single((NS_WP, "cNvPr")),
-        markup::Slot::single((NS_WP, "cNvGrpSpPr")),
-        markup::Slot::single((NS_WP, "grpSpPr")),
+        markup::Slot::required((NS_WP, "cNvGrpSpPr")),
+        markup::Slot::required((NS_WP, "grpSpPr")),
         markup::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_WP, "extLst")),
     ],
@@ -501,11 +501,11 @@ static INLINE_DRAWING_ML_OBJECT_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_WP, "inline"),
     slots: &[
-        markup::Slot::single((NS_WP, "extent")),
+        markup::Slot::required((NS_WP, "extent")),
         markup::Slot::single((NS_WP, "effectExtent")),
-        markup::Slot::single((NS_WP, "docPr")),
+        markup::Slot::required((NS_WP, "docPr")),
         markup::Slot::single((NS_WP, "cNvGraphicFramePr")),
-        markup::Slot::single((NS_A, "graphic")),
+        markup::Slot::required((NS_A, "graphic")),
     ],
     text: false,
 };
@@ -544,14 +544,18 @@ static ABSOLUTE_POSITION_OFFSET_SHAPE: markup::Shape = markup::Shape {
 static HORIZONTAL_POSITIONING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP, "positionH"),
-    slots: &[markup::Slot::choice(&HORIZONTAL_POSITIONING_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &HORIZONTAL_POSITIONING_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static VERTICAL_POSITIONING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP, "positionV"),
-    slots: &[markup::Slot::choice(&VERTICAL_POSITIONING_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &VERTICAL_POSITIONING_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -589,10 +593,10 @@ static SHAPE_STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_WP, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -601,7 +605,7 @@ static TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id")],
     name: (NS_WP, "txbx"),
     slots: &[
-        markup::Slot::single((NS_WP, "txbxContent")),
+        markup::Slot::required((NS_WP, "txbxContent")),
         markup::Slot::single((NS_WP, "extLst")),
     ],
     text: false,
@@ -621,8 +625,8 @@ static WORDPROCESSING_ML_SHAPE_GROUP_SHAPE: markup::Shape = markup::Shape {
     name: (NS_WP, "wgp"),
     slots: &[
         markup::Slot::single((NS_WP, "cNvPr")),
-        markup::Slot::single((NS_WP, "cNvGrpSpPr")),
-        markup::Slot::single((NS_WP, "grpSpPr")),
+        markup::Slot::required((NS_WP, "cNvGrpSpPr")),
+        markup::Slot::required((NS_WP, "grpSpPr")),
         markup::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_WP, "extLst")),
     ],
@@ -662,7 +666,7 @@ static WRAPPING_POLYGON_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "edited")],
     name: (NS_WP, "wrapPolygon"),
     slots: &[
-        markup::Slot::single((NS_WP, "start")),
+        markup::Slot::required((NS_WP, "start")),
         markup::Slot::list((NS_WP, "lineTo")),
     ],
     text: false,
@@ -684,14 +688,14 @@ static SQUARE_WRAPPING_SHAPE: markup::Shape = markup::Shape {
 static THROUGH_WRAPPING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "wrapText"), (None, "distL"), (None, "distR")],
     name: (NS_WP, "wrapThrough"),
-    slots: &[markup::Slot::single((NS_WP, "wrapPolygon"))],
+    slots: &[markup::Slot::required((NS_WP, "wrapPolygon"))],
     text: false,
 };
 
 static TIGHT_WRAPPING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "wrapText"), (None, "distL"), (None, "distR")],
     name: (NS_WP, "wrapTight"),
-    slots: &[markup::Slot::single((NS_WP, "wrapPolygon"))],
+    slots: &[markup::Slot::required((NS_WP, "wrapPolygon"))],
     text: false,
 };
 
@@ -707,12 +711,12 @@ static WORDPROCESSING_ML_SHAPE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_WP, "wsp"),
     slots: &[
         markup::Slot::single((NS_WP, "cNvPr")),
-        markup::Slot::choice(&SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS),
-        markup::Slot::single((NS_WP, "spPr")),
+        markup::Slot::required_choice(&SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS),
+        markup::Slot::required((NS_WP, "spPr")),
         markup::Slot::single((NS_WP, "style")),
         markup::Slot::single((NS_WP, "extLst")),
         markup::Slot::choice(&SHAPE_TEXT_CONTENT_TAGS),
-        markup::Slot::single((NS_WP, "bodyPr")),
+        markup::Slot::required((NS_WP, "bodyPr")),
     ],
     text: false,
 };

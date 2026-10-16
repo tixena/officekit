@@ -240,8 +240,8 @@ static CM_RPLY_MK_LST_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PC2, "cmRplyMkLst"),
     slots: &[
-        markup::Slot::single((NS_PC2, "cmMkLst")),
-        markup::Slot::single((NS_PC2, "cmRplyMk")),
+        markup::Slot::required((NS_PC2, "cmMkLst")),
+        markup::Slot::required((NS_PC2, "cmRplyMk")),
     ],
     text: false,
 };
@@ -257,8 +257,8 @@ static CM_MK_LST_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PC2, "cmMkLst"),
     slots: &[
-        markup::Slot::single((NS_PC, "sldMkLst")),
-        markup::Slot::single((NS_PC2, "cmMK")),
+        markup::Slot::required((NS_PC, "sldMkLst")),
+        markup::Slot::required((NS_PC2, "cmMK")),
     ],
     text: false,
 };

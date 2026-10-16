@@ -455,7 +455,7 @@ impl markup::Transform for super::DiagramRelationshipTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.diagram_relationship, ctx, &mut rebase);
         Self {
             diagram_relationship: child_1,
@@ -631,7 +631,7 @@ impl markup::Transform for super::EmbeddedOLEObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(
             &self.embedded_object_alternate_image_request,
             ctx,
@@ -1155,7 +1155,7 @@ impl markup::Transform for super::NewShapeDefaults {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -1448,7 +1448,7 @@ impl markup::Transform for super::Rule {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.shape_reference, ctx, &mut rebase);
         Self {
             how: self.how.clone(),
@@ -1520,7 +1520,7 @@ impl markup::Transform for super::RuleSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.rule, ctx, &mut rebase);
         Self {
             ext: self.ext.clone(),
@@ -1741,7 +1741,7 @@ impl markup::Transform for super::ShapeGroupingHistory {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.regroup_entry, ctx, &mut rebase);
         Self {
             ext: self.ext.clone(),
@@ -1886,7 +1886,7 @@ impl markup::Transform for super::ShapeLayoutProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -2328,7 +2328,7 @@ impl markup::Transform for super::StorageForAlternateMathContent {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -3111,7 +3111,7 @@ impl markup::Transform for super::VMLDiagram {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.relationship_table, ctx, &mut rebase);
         Self {
             autoformat: self.autoformat.clone(),

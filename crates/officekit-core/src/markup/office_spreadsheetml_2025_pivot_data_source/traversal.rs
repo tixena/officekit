@@ -230,7 +230,7 @@ impl markup::Transform for super::PivotCacheDataSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.f, ctx, &mut rebase);
         Self {
             f: child_1,

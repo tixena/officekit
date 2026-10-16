@@ -302,7 +302,7 @@ impl markup::Transform for super::ApplicationSpecificFileProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -717,7 +717,7 @@ impl markup::Transform for super::DigitalSignature {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.binary_blob, ctx, &mut rebase);
         Self {
             binary_blob: child_1,
@@ -865,7 +865,7 @@ impl markup::Transform for super::HeadingPairs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.vector, ctx, &mut rebase);
         Self {
             unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
@@ -941,7 +941,7 @@ impl markup::Transform for super::HyperlinkList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.vector, ctx, &mut rebase);
         Self {
             unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),
@@ -1676,7 +1676,7 @@ impl markup::Transform for super::PartTitles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.vector, ctx, &mut rebase);
         Self {
             unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),

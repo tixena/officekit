@@ -693,22 +693,15 @@ fn shape_text(
         Body::Children(children) => {
             for child in children {
                 let slot = match (child.target, child.occurs) {
-                    (Target::Node(child_index), Occurs::List) => {
+                    (Target::Node(child_index), occurs) => {
+                        let function = match occurs {
+                            Occurs::List => "markup::Slot::list",
+                            Occurs::Optional => "markup::Slot::single",
+                            Occurs::Required => "markup::Slot::required",
+                        };
                         let found = &catalog.nodes[child_index];
                         Expr::call(
-                            "markup::Slot::list",
-                            vec![tag(
-                                names,
-                                found.namespace,
-                                &found.key.tag.local,
-                                namespaces,
-                            )],
-                        )
-                    }
-                    (Target::Node(child_index), Occurs::Optional | Occurs::Required) => {
-                        let found = &catalog.nodes[child_index];
-                        Expr::call(
-                            "markup::Slot::single",
+                            function,
                             vec![tag(
                                 names,
                                 found.namespace,
@@ -721,7 +714,8 @@ fn shape_text(
                         let function = match (catalog.enums[found].kind, occurs) {
                             (EnumKind::All, _) => "markup::Slot::once",
                             (_, Occurs::List) => "markup::Slot::items",
-                            (_, Occurs::Optional | Occurs::Required) => "markup::Slot::choice",
+                            (_, Occurs::Optional) => "markup::Slot::choice",
+                            (_, Occurs::Required) => "markup::Slot::required_choice",
                         };
                         Expr::call(
                             function,

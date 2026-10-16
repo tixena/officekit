@@ -226,7 +226,7 @@ impl markup::Transform for super::ArcSegment {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -395,7 +395,7 @@ impl markup::Transform for super::BezierCurve {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -568,7 +568,7 @@ impl markup::Transform for super::DocumentBackground {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.shape_fill_properties, ctx, &mut rebase);
         Self {
             bwmode: self.bwmode.clone(),
@@ -748,7 +748,7 @@ impl markup::Transform for super::ImageFile {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -933,7 +933,7 @@ impl markup::Transform for super::Line {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -1102,7 +1102,7 @@ impl markup::Transform for super::LineStrokeSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.text_box_left_stroke, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.text_box_top_stroke, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.text_box_right_stroke, ctx, &mut rebase);
@@ -1241,7 +1241,7 @@ impl markup::Transform for super::MultiplePathLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -1578,7 +1578,7 @@ impl markup::Transform for super::Oval {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -1743,7 +1743,7 @@ impl markup::Transform for super::Rectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -1908,7 +1908,7 @@ impl markup::Transform for super::RoundedRectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -2080,7 +2080,7 @@ impl markup::Transform for super::SetOfFormulas {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.single_formula, ctx, &mut rebase);
         Self {
             single_formula: child_1,
@@ -2140,7 +2140,7 @@ impl markup::Transform for super::SetOfHandles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.shape_handle, ctx, &mut rebase);
         Self {
             shape_handle: child_1,
@@ -2275,7 +2275,7 @@ impl markup::Transform for super::ShapeDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             adj: self.adj.clone(),
@@ -2771,7 +2771,7 @@ impl markup::Transform for super::ShapeFillProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.shape_fill_extended_properties, ctx, &mut rebase);
         Self {
@@ -2891,7 +2891,7 @@ impl markup::Transform for super::ShapeGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             allowincell: self.allowincell.clone(),
@@ -3371,7 +3371,7 @@ impl markup::Transform for super::ShapeTemplate {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.complex, ctx, &mut rebase);
         Self {
@@ -3603,7 +3603,7 @@ impl markup::Transform for super::TextBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,

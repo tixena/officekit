@@ -230,7 +230,7 @@ impl markup::Transform for super::AmbientLight {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.clr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.illuminance, ctx, &mut rebase);
         let child_3 =
@@ -389,7 +389,7 @@ impl markup::Transform for super::Blip {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
@@ -475,7 +475,7 @@ impl markup::Transform for super::Camera {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pos, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.up, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.look_at, ctx, &mut rebase);
@@ -564,7 +564,7 @@ impl markup::Transform for super::Clr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -636,7 +636,7 @@ impl markup::Transform for super::DirLight {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.clr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.illuminance, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.pos, ctx, &mut rebase);
@@ -729,7 +729,7 @@ impl markup::Transform for super::Ext {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -803,7 +803,7 @@ impl markup::Transform for super::ExtLstModel3DExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext, ctx, &mut rebase);
         Self {
             ext: child_1,
@@ -883,7 +883,7 @@ impl markup::Transform for super::ExtLstOfficeArtExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -1638,7 +1638,7 @@ impl markup::Transform for super::Model3d {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sp_pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.camera, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.trans, ctx, &mut rebase);
@@ -1751,7 +1751,7 @@ impl markup::Transform for super::ObjViewport {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
         Self {
@@ -1830,7 +1830,7 @@ impl markup::Transform for super::Orthographic {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sz_positive_ratio, ctx, &mut rebase);
         let child_2 =
             markup::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
@@ -1911,7 +1911,7 @@ impl markup::Transform for super::Perspective {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
         Self {
@@ -2210,7 +2210,7 @@ impl markup::Transform for super::PtLight {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.clr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.intensity, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.pos, ctx, &mut rebase);
@@ -2303,7 +2303,7 @@ impl markup::Transform for super::Raster {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.blip, ctx, &mut rebase);
         Self {
             blip: child_1,
@@ -2451,7 +2451,7 @@ impl markup::Transform for super::Scale {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sx, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.sy, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.sz_ratio, ctx, &mut rebase);
@@ -2535,7 +2535,7 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -2641,7 +2641,7 @@ impl markup::Transform for super::SpotLight {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.clr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.intensity, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.pos, ctx, &mut rebase);
@@ -3016,7 +3016,7 @@ impl markup::Transform for super::Trans {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.meter_per_model_unit, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.pre, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.scale, ctx, &mut rebase);
@@ -3251,7 +3251,7 @@ impl markup::Transform for super::WinViewport {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
         Self {

@@ -231,7 +231,7 @@ const NS_OEL: Option<NamespaceId> = Some(62);
 static EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_OEL, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,

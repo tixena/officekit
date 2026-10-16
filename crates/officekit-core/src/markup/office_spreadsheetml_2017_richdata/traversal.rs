@@ -230,7 +230,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -454,7 +454,7 @@ impl markup::Transform for super::Rv {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.fb, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.v, ctx, &mut rebase);
         Self {
@@ -536,7 +536,7 @@ impl markup::Transform for super::RvData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.rv, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -618,7 +618,7 @@ impl markup::Transform for super::RvStructures {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.s, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -772,7 +772,7 @@ impl markup::Transform for super::S {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.k, ctx, &mut rebase);
         Self {
             k: child_1,

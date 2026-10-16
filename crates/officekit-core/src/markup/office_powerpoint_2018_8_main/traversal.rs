@@ -230,7 +230,7 @@ impl markup::Transform for super::Author {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
         Self {
             ext_lst_extension_list: child_1,
@@ -316,7 +316,7 @@ impl markup::Transform for super::AuthorLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.author, ctx, &mut rebase);
         Self {
             author: child_1,
@@ -392,7 +392,7 @@ impl markup::Transform for super::Cm {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.pos, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.reply_lst, ctx, &mut rebase);
@@ -512,7 +512,7 @@ impl markup::Transform for super::CmLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.cm, ctx, &mut rebase);
         Self {
             cm: child_1,
@@ -790,7 +790,7 @@ impl markup::Transform for super::ExtLstCommentPropertiesExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -870,7 +870,7 @@ impl markup::Transform for super::ExtLstExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -1021,7 +1021,7 @@ impl markup::Transform for super::Reply {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.tx_body, ctx, &mut rebase);
         let child_2 = markup::transform_child(
             &self.ext_lst_comment_properties_extension_list,
@@ -1117,7 +1117,7 @@ impl markup::Transform for super::ReplyLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.reply, ctx, &mut rebase);
         Self {
             reply: child_1,
@@ -1193,7 +1193,7 @@ impl markup::Transform for super::TxBody {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.text_list_styles, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.text_paragraphs, ctx, &mut rebase);

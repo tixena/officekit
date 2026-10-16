@@ -232,7 +232,9 @@ const NS_P15: Option<NamespaceId> = Some(66);
 static CLR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P15, "clr"),
-    slots: &[markup::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &super::drawing::COLOR_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -260,7 +262,7 @@ static GUIDE_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_P15, "guide"),
     slots: &[
-        markup::Slot::single((NS_P15, "clr")),
+        markup::Slot::required((NS_P15, "clr")),
         markup::Slot::single((NS_P15, "extLst")),
     ],
     text: false,

@@ -230,7 +230,7 @@ impl markup::Transform for super::CommentExtensible {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             date_utc: self.date_utc.clone(),
@@ -313,7 +313,7 @@ impl markup::Transform for super::CommentsExtensible {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.comment_extensible, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -394,7 +394,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext, ctx, &mut rebase);
         Self {
             ext: child_1,

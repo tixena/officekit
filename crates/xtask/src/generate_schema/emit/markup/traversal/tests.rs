@@ -87,7 +87,7 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     let (out, helpers) = rebuilt(&sample);
     assert_eq!(
         out,
-        "        let mut rebase = markup::Rebase::default();\n        \
+        "        let mut rebase = markup::Rebase::new(&self.unknown);\n        \
          let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);\n        \
          let child_2 = markup::transform_choice(&self.sup, ctx, &mut rebase);\n        \
          let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);\n        \
@@ -132,7 +132,7 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     assert_eq!(
         out,
         "        let mut node = Self::default();\n        \
-         let mut rebase = markup::Rebase::default();\n        \
+         let mut rebase = markup::Rebase::new(&self.unknown);\n        \
          transform_sample_1(self, &mut node, ctx, &mut rebase);\n        \
          transform_sample_2(self, &mut node, ctx, &mut rebase);\n        \
          node.unknown = markup::transform_unknown(&self.unknown, ctx, &rebase);\n        \

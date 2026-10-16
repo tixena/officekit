@@ -124,12 +124,8 @@ fn the_roots_of_the_main_parts_declare_strict_conformance() {
         "{workbook} declares no conformance"
     );
     assert_eq!(
-        strict::<Presentation>(
-            "<p:presentation xmlns:p=\"{p}\"><p:notesSz cx=\"6858000\" cy=\"9144000\"/></p:presentation>"
-        ),
-        format!(
-            "<p:presentation xmlns:p=\"{P_STRICT}\" conformance=\"strict\"><p:notesSz cx=\"6858000\" cy=\"9144000\"/></p:presentation>"
-        )
+        strict::<Presentation>("<p:presentation xmlns:p=\"{p}\"/>"),
+        format!("<p:presentation xmlns:p=\"{P_STRICT}\" conformance=\"strict\"/>")
     );
 }
 

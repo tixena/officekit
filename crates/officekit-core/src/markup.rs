@@ -135,6 +135,13 @@ pub struct Placement {
     pending: Vec<Node>,
 }
 
+/// Counts a node's declared positions as a traversal reaches them: the
+/// generated code reaches each one once, in schema order (D9).
+#[derive(Debug, Default)]
+struct Positions {
+    next: usize,
+}
+
 /// Reads a typed node's attributes and children in document order.
 ///
 /// Each declared one goes to the generated reader by its index in the node's
@@ -163,9 +170,12 @@ pub struct Reader<'element> {
 /// in its transform, in document order (D8, D20).
 #[derive(Debug, Default)]
 pub struct Rebase {
+    /// The node's `unknown.absent`.
+    absent: Vec<usize>,
     counts: Vec<usize>,
     /// Declared items given in place of `Other` items before the first original declared child.
     leading: usize,
+    reached: Positions,
 }
 
 /// The namespace declarations in scope while a typed tree is written: an
@@ -205,7 +215,9 @@ enum SlotOccurs {
     List,
     /// An `xsd:all` list: like `Items`, and a tag it already holds is unknown.
     Once,
-    /// One child.
+    /// One child the schema requires: the reader records its absence.
+    Required,
+    /// One optional child.
     Single,
 }
 
@@ -224,6 +236,7 @@ pub struct Through<'out, 'sink, 'node> {
     opened: bool,
     out: &'out mut PartWriter<'sink>,
     place: Place<'node>,
+    positions: Positions,
     shape: &'static Shape,
     unknown: &'node Unknown,
 }
@@ -232,6 +245,9 @@ pub struct Through<'out, 'sink, 'node> {
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Unknown {
+    /// The positions, in its shape's `slots`, of the required single children
+    /// the read element did not hold; a node built in code has none (D8, D9).
+    pub absent: Vec<usize>,
     /// Attributes the schemas do not declare, `mc:Ignorable` among them.
     pub attributes: Vec<Attribute>,
     /// Unknown children at positions no list covers.
@@ -245,6 +261,7 @@ pub struct Unknown {
 #[derive(Debug)]
 pub struct Walk<'node> {
     known: usize,
+    positions: Positions,
     unknown: &'node Unknown,
 }
 
@@ -269,6 +286,7 @@ pub enum Wildcard {
 pub struct Writer<'scope, 'node> {
     children: Children<'node>,
     element: Element,
+    positions: Positions,
     scope: &'scope mut Scope,
     shape: &'static Shape,
     /// Whether a single field's node is being written: its `Other` node
@@ -331,6 +349,10 @@ pub trait Item: Sized {
 /// optional one, or a list.
 pub trait Nodes {
     type Node;
+
+    /// Whether the field is one node equal to its type's default: a required
+    /// child the read element did not hold stays so until code sets it (D9).
+    fn is_default(&self) -> bool;
 
     /// The nodes the field holds, in document order.
     fn nodes(&self) -> &[Self::Node];
@@ -527,8 +549,15 @@ where
     }
 }
 
-impl<T> Nodes for Box<T> {
+impl<T> Nodes for Box<T>
+where
+    T: Default + PartialEq,
+{
     type Node = T;
+
+    fn is_default(&self) -> bool {
+        **self == T::default()
+    }
 
     fn nodes(&self) -> &[T] {
         slice::from_ref(self)
@@ -545,6 +574,10 @@ impl<T> Nodes for Box<T> {
 impl<T> Nodes for Option<Box<T>> {
     type Node = T;
 
+    fn is_default(&self) -> bool {
+        false
+    }
+
     fn nodes(&self) -> &[T] {
         self.as_deref().map_or(&[], slice::from_ref)
     }
@@ -559,6 +592,10 @@ impl<T> Nodes for Option<Box<T>> {
 
 impl<T> Nodes for Vec<T> {
     type Node = T;
+
+    fn is_default(&self) -> bool {
+        false
+    }
 
     fn nodes(&self) -> &[T] {
         self.as_slice()
@@ -644,6 +681,25 @@ impl Placement {
     }
 }
 
+impl Positions {
+    /// The next declared position, now reached.
+    const fn advance(&mut self) -> usize {
+        let position = self.next;
+        self.next += 1;
+        position
+    }
+
+    /// Whether a traversal skips `field`, at the next declared position, now
+    /// reached: the read element did not hold its child and the field still
+    /// holds the default node (D9).
+    fn skips<F>(&mut self, absent: &[usize], field: &F) -> bool
+    where
+        F: Nodes,
+    {
+        absent.contains(&self.advance()) && field.is_default()
+    }
+}
+
 impl<'element> Reader<'element> {
     /// The declared child `element` is when one of the positions from the
     /// last one read on takes it: the first that does, a single position only
@@ -664,7 +720,9 @@ impl<'element> Reader<'element> {
                 SlotOccurs::Once => self.once.iter().any(|(position, held)| {
                     *position == index && held.0 == tag.0 && held.1 == tag.1
                 }),
-                SlotOccurs::Single => self.filled.get(index).copied().unwrap_or(false),
+                SlotOccurs::Required | SlotOccurs::Single => {
+                    self.filled.get(index).copied().unwrap_or(false)
+                }
             };
             if taken {
                 continue;
@@ -693,10 +751,20 @@ impl<'element> Reader<'element> {
     }
 
     /// The unknown content: attributes the shape does not declare, children
-    /// at positions no list covers, and the node's own namespace declarations.
+    /// at positions no list covers, the node's own namespace declarations,
+    /// and the required single positions the element left empty.
     #[must_use]
     pub fn finish(mut self) -> Unknown {
         while self.next().is_some() {}
+        self.unknown.absent = self
+            .shape
+            .slots
+            .iter()
+            .zip(&self.filled)
+            .enumerate()
+            .filter(|(_, (slot, filled))| slot.occurs == SlotOccurs::Required && !**filled)
+            .map(|(position, _)| position)
+            .collect();
         self.unknown
     }
 
@@ -716,6 +784,7 @@ impl<'element> Reader<'element> {
             queue: VecDeque::new(),
             shape,
             unknown: Unknown {
+                absent: Vec::new(),
                 attributes: Vec::new(),
                 children: Vec::new(),
                 namespace_declarations: element.namespace_declarations.clone(),
@@ -801,6 +870,15 @@ impl Rebase {
             self.counts.push(became);
         } else {
             *self.counts.last_mut().unwrap_or(&mut self.leading) += became;
+        }
+    }
+
+    /// The rebase of a node whose unknown content is `unknown`.
+    #[must_use]
+    pub fn new(unknown: &Unknown) -> Self {
+        Self {
+            absent: unknown.absent.clone(),
+            ..Self::default()
         }
     }
 
@@ -934,7 +1012,7 @@ impl Slot {
         }
     }
 
-    /// A single position of an enum type.
+    /// An optional single position of an enum type.
     #[must_use]
     pub const fn choice(accept: &'static Accept) -> Self {
         Self {
@@ -970,7 +1048,25 @@ impl Slot {
         }
     }
 
-    /// A single position of one struct type.
+    /// A required single position of one struct type.
+    #[must_use]
+    pub const fn required(tag: Tag) -> Self {
+        Self {
+            accept: Accepted::Tag(tag),
+            occurs: SlotOccurs::Required,
+        }
+    }
+
+    /// A required single position of an enum type.
+    #[must_use]
+    pub const fn required_choice(accept: &'static Accept) -> Self {
+        Self {
+            accept: Accepted::Enum(accept),
+            occurs: SlotOccurs::Required,
+        }
+    }
+
+    /// An optional single position of one struct type.
     #[must_use]
     pub const fn single(tag: Tag) -> Self {
         Self {
@@ -1007,7 +1103,8 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     }
 
     /// Write a declared child field of a struct type: each node written
-    /// through after the `Extra`s placed before it.
+    /// through after the `Extra`s placed before it, none while it holds the
+    /// default node of a child the read element did not hold.
     ///
     /// # Errors
     ///
@@ -1018,6 +1115,9 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         F::Node: WriteThrough,
     {
         self.open()?;
+        if self.positions.skips(&self.unknown.absent, field) {
+            return Ok(());
+        }
         for node in field.nodes() {
             self.place.before_known(ctx, self.out)?;
             node.write_through(ctx, self.out)?;
@@ -1064,6 +1164,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         F::Node: Item + WriteThrough,
     {
         self.open()?;
+        self.positions.advance();
         for item in field.nodes() {
             if item.is_declared() {
                 self.place.before_known(ctx, self.out)?;
@@ -1102,6 +1203,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
             opened: false,
             out,
             place: Place::new(unknown),
+            positions: Positions::default(),
             shape,
             unknown,
         }
@@ -1212,12 +1314,16 @@ impl<'node> Walk<'node> {
     }
 
     /// Visit a declared child field of a struct type: each node after the
-    /// `Extra`s placed before it.
+    /// `Extra`s placed before it, none while it holds the default node of a
+    /// child the read element did not hold.
     pub fn child<F>(&mut self, field: &F, visitor: &mut dyn Visitor)
     where
         F: Nodes,
         F::Node: Visit,
     {
+        if self.positions.skips(&self.unknown.absent, field) {
+            return;
+        }
         for node in field.nodes() {
             self.before_known(visitor);
             node.visit(visitor);
@@ -1254,6 +1360,7 @@ impl<'node> Walk<'node> {
         F: Nodes,
         F::Node: Item + Visit,
     {
+        self.positions.advance();
         for item in field.nodes() {
             if item.is_declared() {
                 self.before_known(visitor);
@@ -1264,7 +1371,11 @@ impl<'node> Walk<'node> {
 
     #[must_use]
     pub const fn new(unknown: &'node Unknown) -> Self {
-        Self { known: 0, unknown }
+        Self {
+            known: 0,
+            positions: Positions { next: 0 },
+            unknown,
+        }
     }
 }
 
@@ -1296,12 +1407,15 @@ impl<'scope, 'node> Writer<'scope, 'node> {
         }
     }
 
-    /// Write a declared child field's nodes.
+    /// Write a declared child field's nodes, none while it holds the default
+    /// node of a child the read element did not hold.
     pub fn child<F>(&mut self, field: &F)
     where
-        F: ChildField,
+        F: ChildField + Nodes,
     {
-        field.write(self);
+        if !self.positions.skips(&self.unknown.absent, field) {
+            field.write(self);
+        }
     }
 
     /// The element: its unknown attributes after the declared ones, and its
@@ -1334,6 +1448,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
         Self {
             children: Children::new(&unknown.children),
             element,
+            positions: Positions::default(),
             scope,
             shape,
             single: false,
@@ -1719,12 +1834,18 @@ where
 
 /// A declared child field of a struct type rebuilt with each node
 /// transformed; each node counts one declared child in `rebase`.
+///
+/// The default node of a child the read element did not hold is copied
+/// without asking any hook, and counts none (D9).
 #[must_use]
 pub fn transform_child<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
-    F: Nodes,
+    F: Clone + Nodes,
     F::Node: Transform,
 {
+    if rebase.reached.skips(&rebase.absent, field) {
+        return field.clone();
+    }
     let rebuilt = field.transform_nodes(ctx);
     rebase.counts.extend(iter::repeat_n(1, field.nodes().len()));
     rebuilt
@@ -1736,7 +1857,7 @@ where
 #[must_use]
 pub fn transform_choice<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
-    F: Nodes,
+    F: Clone + Nodes,
     F::Node: Item + Transform,
 {
     transform_child(field, ctx, rebase)
@@ -1752,6 +1873,7 @@ pub fn transform_items<T>(items: &[T], ctx: &mut dyn Context, rebase: &mut Rebas
 where
     T: Item + Transform,
 {
+    rebase.reached.advance();
     let mut out = Vec::with_capacity(items.len());
     for item in items {
         let start = out.len();
@@ -1770,12 +1892,14 @@ where
 }
 
 /// A node's unknown content rebuilt: each `Extra`'s node transformed through
-/// the root `element` hook, the attributes and declarations as they are.
+/// the root `element` hook, the attributes, declarations, and absent
+/// positions as they are.
 ///
 /// Each `Extra` is placed, by `rebase`, after what the declared children
 /// before it became.
 pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context, rebase: &Rebase) -> Unknown {
     Unknown {
+        absent: unknown.absent.clone(),
         attributes: unknown.attributes.clone(),
         children: unknown
             .children

@@ -306,10 +306,10 @@ static STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -318,7 +318,7 @@ static TX_BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "txBody"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -345,7 +345,7 @@ static DATA_MODEL_EXT_SHAPE: markup::Shape = markup::Shape {
 static DRAWING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "drawing"),
-    slots: &[markup::Slot::single((NS_DSP, "spTree"))],
+    slots: &[markup::Slot::required((NS_DSP, "spTree"))],
     text: false,
 };
 
@@ -353,8 +353,8 @@ static GRP_SP_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "grpSp"),
     slots: &[
-        markup::Slot::single((NS_DSP, "nvGrpSpPr")),
-        markup::Slot::single((NS_DSP, "grpSpPr")),
+        markup::Slot::required((NS_DSP, "nvGrpSpPr")),
+        markup::Slot::required((NS_DSP, "grpSpPr")),
         markup::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_DSP, "extLst")),
     ],
@@ -365,8 +365,8 @@ static SP_TREE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "spTree"),
     slots: &[
-        markup::Slot::single((NS_DSP, "nvGrpSpPr")),
-        markup::Slot::single((NS_DSP, "grpSpPr")),
+        markup::Slot::required((NS_DSP, "nvGrpSpPr")),
+        markup::Slot::required((NS_DSP, "grpSpPr")),
         markup::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_DSP, "extLst")),
     ],
@@ -377,8 +377,8 @@ static NV_GRP_SP_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "nvGrpSpPr"),
     slots: &[
-        markup::Slot::single((NS_DSP, "cNvPr")),
-        markup::Slot::single((NS_DSP, "cNvGrpSpPr")),
+        markup::Slot::required((NS_DSP, "cNvPr")),
+        markup::Slot::required((NS_DSP, "cNvGrpSpPr")),
     ],
     text: false,
 };
@@ -387,8 +387,8 @@ static SP_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "modelId")],
     name: (NS_DSP, "sp"),
     slots: &[
-        markup::Slot::single((NS_DSP, "nvSpPr")),
-        markup::Slot::single((NS_DSP, "spPr")),
+        markup::Slot::required((NS_DSP, "nvSpPr")),
+        markup::Slot::required((NS_DSP, "spPr")),
         markup::Slot::single((NS_DSP, "style")),
         markup::Slot::single((NS_DSP, "txBody")),
         markup::Slot::single((NS_DSP, "txXfrm")),
@@ -401,8 +401,8 @@ static NV_SP_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DSP, "nvSpPr"),
     slots: &[
-        markup::Slot::single((NS_DSP, "cNvPr")),
-        markup::Slot::single((NS_DSP, "cNvSpPr")),
+        markup::Slot::required((NS_DSP, "cNvPr")),
+        markup::Slot::required((NS_DSP, "cNvSpPr")),
     ],
     text: false,
 };

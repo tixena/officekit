@@ -478,7 +478,7 @@ impl markup::Transform for super::CNvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.cp_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -557,7 +557,7 @@ impl markup::Transform for super::CNvPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -711,7 +711,7 @@ impl markup::Transform for super::Checkbox {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.checked, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.checked_state, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.unchecked_state, ctx, &mut rebase);
@@ -1204,7 +1204,7 @@ impl markup::Transform for super::ConflictDelRunTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             author: self.author.clone(),
@@ -1367,7 +1367,7 @@ impl markup::Transform for super::ConflictInsRunTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             author: self.author.clone(),
@@ -1600,7 +1600,7 @@ impl markup::Transform for super::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.xfrm, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -1688,7 +1688,7 @@ impl markup::Transform for super::ContourClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -2349,7 +2349,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -2421,7 +2421,7 @@ impl markup::Transform for super::ExtrusionClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -2659,7 +2659,7 @@ impl markup::Transform for super::Glow {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -2733,7 +2733,7 @@ impl markup::Transform for super::GradFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.gs_lst, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
@@ -2894,7 +2894,7 @@ impl markup::Transform for super::Gs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -2960,7 +2960,7 @@ impl markup::Transform for super::GsLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.gs, ctx, &mut rebase);
         Self {
             gs: child_1,
@@ -3168,7 +3168,7 @@ impl markup::Transform for super::LightRig {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.rot, ctx, &mut rebase);
         Self {
             dir: self.dir.clone(),
@@ -3850,7 +3850,7 @@ impl markup::Transform for super::NvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.c, ctx, &mut rebase);
         Self {
@@ -3927,7 +3927,7 @@ impl markup::Transform for super::Path {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.fill_to_rect, ctx, &mut rebase);
         Self {
             fill_to_rect: child_1,
@@ -3997,7 +3997,7 @@ impl markup::Transform for super::Props3d {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.bevel_t, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.bevel_b, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.extrusion_clr, ctx, &mut rebase);
@@ -4559,7 +4559,7 @@ impl markup::Transform for super::Scene3d {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.camera, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.light_rig, ctx, &mut rebase);
         Self {
@@ -4635,7 +4635,7 @@ impl markup::Transform for super::SchemeClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -4771,7 +4771,7 @@ impl markup::Transform for super::Shadow {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             algn: self.algn.clone(),
@@ -4859,7 +4859,7 @@ impl markup::Transform for super::SolidFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -4935,7 +4935,7 @@ impl markup::Transform for super::SrgbClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -5087,7 +5087,7 @@ impl markup::Transform for super::StylisticSets {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.style_set, ctx, &mut rebase);
         Self {
             style_set: child_1,
@@ -5163,7 +5163,7 @@ impl markup::Transform for super::TextFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -5239,7 +5239,7 @@ impl markup::Transform for super::TextOutline {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.prst_dash, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.line_join_content, ctx, &mut rebase);
@@ -5459,7 +5459,7 @@ impl markup::Transform for super::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.offset, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extents, ctx, &mut rebase);
         Self {

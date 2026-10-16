@@ -1035,7 +1035,7 @@ static CUSTOM_UI_SHAPE: markup::Shape = markup::Shape {
 static DIALOG_BOX_LAUNCHER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_MSO14, "dialogBoxLauncher"),
-    slots: &[markup::Slot::single((NS_MSO14, "button"))],
+    slots: &[markup::Slot::required((NS_MSO14, "button"))],
     text: false,
 };
 
@@ -1657,7 +1657,7 @@ static MENU_MENU_WITH_TITLE_SHAPE: markup::Shape = markup::Shape {
 static PRIMARY_ITEM_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_MSO14, "primaryItem"),
-    slots: &[markup::Slot::choice(&PRIMARY_ITEM_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&PRIMARY_ITEM_CONTENT_TAGS)],
     text: false,
 };
 

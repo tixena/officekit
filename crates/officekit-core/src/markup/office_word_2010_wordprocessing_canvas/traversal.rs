@@ -230,7 +230,7 @@ impl markup::Transform for super::Bg {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
         Self {
@@ -310,7 +310,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -386,7 +386,7 @@ impl markup::Transform for super::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.c_nv_fr_pr, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.xfrm, ctx, &mut rebase);
@@ -478,7 +478,7 @@ impl markup::Transform for super::Whole {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.outline, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
@@ -673,7 +673,7 @@ impl markup::Transform for super::Wpc {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.bg, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.whole, ctx, &mut rebase);
         let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);

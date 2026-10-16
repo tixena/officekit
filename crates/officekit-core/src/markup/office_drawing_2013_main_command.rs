@@ -771,7 +771,7 @@ static GRP_CMD_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "verId"), (None, "preventRegroup"), (None, "grpId")],
     name: (NS_OAC, "grpCmd"),
     slots: &[
-        markup::Slot::single((NS_OAC, "dgMkLst")),
+        markup::Slot::required((NS_OAC, "dgMkLst")),
         markup::Slot::items(&GROUP_COMMAND_CONTENT_TAGS),
         markup::Slot::single((NS_OAC, "grpSpPr")),
         markup::Slot::single((NS_OAC, "cNvPr")),

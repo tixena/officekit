@@ -230,7 +230,7 @@ impl markup::Transform for super::LockedCanvasContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(
             &self.non_visual_properties_for_a_group_shape,
             ctx,

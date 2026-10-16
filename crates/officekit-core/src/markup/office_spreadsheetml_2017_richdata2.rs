@@ -554,7 +554,7 @@ static SUPPORTING_PROPERTY_BAGS_SHAPE: markup::Shape = markup::Shape {
     name: (NS_XLRD2, "supportingPropertyBags"),
     slots: &[
         markup::Slot::single((NS_XLRD2, "spbArrays")),
-        markup::Slot::single((NS_XLRD2, "spbData")),
+        markup::Slot::required((NS_XLRD2, "spbData")),
     ],
     text: false,
 };

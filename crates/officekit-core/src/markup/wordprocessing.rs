@@ -819,8 +819,8 @@ static ENTRY_CATEGORIZATION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "category"),
     slots: &[
-        markup::Slot::single((NS_W, "name")),
-        markup::Slot::single((NS_W, "gallery")),
+        markup::Slot::required((NS_W, "name")),
+        markup::Slot::required((NS_W, "gallery")),
     ],
     text: false,
 };
@@ -871,7 +871,7 @@ static CHECKBOX_FORM_FIELD_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "checkBox"),
     slots: &[
-        markup::Slot::choice(&CHECKBOX_FORM_FIELD_PROPERTIES_CONTENT_TAGS),
+        markup::Slot::required_choice(&CHECKBOX_FORM_FIELD_PROPERTIES_CONTENT_TAGS),
         markup::Slot::single((NS_W, "default")),
         markup::Slot::single((NS_W, "checked")),
     ],
@@ -1417,7 +1417,7 @@ static DELETED_MATH_CONTROL_CHARACTER_SHAPE: markup::Shape = markup::Shape {
 static DEL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W, "del"),
-    slots: &[markup::Slot::single((NS_W, "rPr"))],
+    slots: &[markup::Slot::required((NS_W, "rPr"))],
     text: false,
 };
 
@@ -1511,10 +1511,10 @@ static INFORMATION_ABOUT_SINGLE_HTML_DIV_ELEMENT_SHAPE: markup::Shape = markup::
     slots: &[
         markup::Slot::single((NS_W, "blockQuote")),
         markup::Slot::single((NS_W, "bodyDiv")),
-        markup::Slot::single((NS_W, "marLeft")),
-        markup::Slot::single((NS_W, "marRight")),
-        markup::Slot::single((NS_W, "marTop")),
-        markup::Slot::single((NS_W, "marBottom")),
+        markup::Slot::required((NS_W, "marLeft")),
+        markup::Slot::required((NS_W, "marRight")),
+        markup::Slot::required((NS_W, "marTop")),
+        markup::Slot::required((NS_W, "marBottom")),
         markup::Slot::single((NS_W, "divBdr")),
         markup::Slot::list((NS_W, "divsChild")),
     ],
@@ -3142,9 +3142,9 @@ static MAIL_MERGE_SETTINGS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "mailMerge"),
     slots: &[
-        markup::Slot::single((NS_W, "mainDocumentType")),
+        markup::Slot::required((NS_W, "mainDocumentType")),
         markup::Slot::single((NS_W, "linkToQuery")),
-        markup::Slot::single((NS_W, "dataType")),
+        markup::Slot::required((NS_W, "dataType")),
         markup::Slot::single((NS_W, "connectString")),
         markup::Slot::single((NS_W, "query")),
         markup::Slot::single((NS_W, "dataSource")),
@@ -3504,7 +3504,7 @@ static NUMBERING_DEFINITION_INSTANCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W, "numId")],
     name: (NS_W, "num"),
     slots: &[
-        markup::Slot::single((NS_W, "abstractNumId")),
+        markup::Slot::required((NS_W, "abstractNumId")),
         markup::Slot::list((NS_W, "lvlOverride")),
     ],
     text: false,
@@ -3534,7 +3534,7 @@ static LAST_REVIEWED_ABSTRACT_NUMBERING_DEFINITION_SHAPE: markup::Shape = markup
 static PICTURE_NUMBERING_SYMBOL_DEFINITION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W, "numPicBulletId")],
     name: (NS_W, "numPicBullet"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &PICTURE_NUMBERING_SYMBOL_DEFINITION_CONTENT_TAGS,
     )],
     text: false,
@@ -3856,7 +3856,7 @@ static REVISION_INFORMATION_FOR_PARAGRAPH_PROPERTIES_SHAPE: markup::Shape = mark
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "pPrChange"),
-    slots: &[markup::Slot::single((NS_W, "pPr"))],
+    slots: &[markup::Slot::required((NS_W, "pPr"))],
     text: false,
 };
 
@@ -4025,7 +4025,7 @@ static PIXELS_PER_INCH_FOR_GRAPHICS_IMAGES_SHAPE: markup::Shape = markup::Shape 
 static STRUCTURED_DOCUMENT_TAG_PLACEHOLDER_TEXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "placeholder"),
-    slots: &[markup::Slot::single((NS_W, "docPart"))],
+    slots: &[markup::Slot::required((NS_W, "docPart"))],
     text: false,
 };
 
@@ -4272,7 +4272,7 @@ static PARAGRAPH_MARK_RUN_PROPERTIES_REVISION_SHAPE: markup::Shape = markup::Sha
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "rPrChange"),
-    slots: &[markup::Slot::single((NS_W, "rPr"))],
+    slots: &[markup::Slot::required((NS_W, "rPr"))],
     text: false,
 };
 
@@ -4284,7 +4284,7 @@ static REVISION_INFORMATION_FOR_RUN_PROPERTIES_SHAPE: markup::Shape = markup::Sh
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "rPrChange"),
-    slots: &[markup::Slot::single((NS_W, "rPr"))],
+    slots: &[markup::Slot::required((NS_W, "rPr"))],
     text: false,
 };
 
@@ -4319,8 +4319,8 @@ static DATA_ABOUT_SINGLE_DATA_SOURCE_RECORD_SHAPE: markup::Shape = markup::Shape
     name: (NS_W, "recipientData"),
     slots: &[
         markup::Slot::single((NS_W, "active")),
-        markup::Slot::single((NS_W, "column")),
-        markup::Slot::single((NS_W, "uniqueTag")),
+        markup::Slot::required((NS_W, "column")),
+        markup::Slot::required((NS_W, "uniqueTag")),
     ],
     text: false,
 };
@@ -4478,9 +4478,9 @@ static PHONETIC_GUIDE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "ruby"),
     slots: &[
-        markup::Slot::single((NS_W, "rubyPr")),
-        markup::Slot::single((NS_W, "rt")),
-        markup::Slot::single((NS_W, "rubyBase")),
+        markup::Slot::required((NS_W, "rubyPr")),
+        markup::Slot::required((NS_W, "rt")),
+        markup::Slot::required((NS_W, "rubyBase")),
     ],
     text: false,
 };
@@ -4503,11 +4503,11 @@ static PHONETIC_GUIDE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W, "rubyPr"),
     slots: &[
-        markup::Slot::single((NS_W, "rubyAlign")),
-        markup::Slot::single((NS_W, "hps")),
-        markup::Slot::single((NS_W, "hpsRaise")),
-        markup::Slot::single((NS_W, "hpsBaseText")),
-        markup::Slot::single((NS_W, "lid")),
+        markup::Slot::required((NS_W, "rubyAlign")),
+        markup::Slot::required((NS_W, "hps")),
+        markup::Slot::required((NS_W, "hpsRaise")),
+        markup::Slot::required((NS_W, "hpsBaseText")),
+        markup::Slot::required((NS_W, "lid")),
         markup::Slot::single((NS_W, "dirty")),
     ],
     text: false,
@@ -5459,8 +5459,8 @@ static TABLE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_W, "tbl"),
     slots: &[
         markup::Slot::items(&RANGE_MARKUP_CONTENT_TAGS),
-        markup::Slot::single((NS_W, "tblPr")),
-        markup::Slot::single((NS_W, "tblGrid")),
+        markup::Slot::required((NS_W, "tblPr")),
+        markup::Slot::required((NS_W, "tblGrid")),
         markup::Slot::items(&CONTENT_ROW_CONTENT_TAGS),
     ],
     text: false,
@@ -5537,7 +5537,7 @@ static PREVIOUS_TABLE_GRID_SHAPE: markup::Shape = markup::Shape {
 static TABLE_GRID_COLUMN_REVISION_INFORMATION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W, "id")],
     name: (NS_W, "tblGridChange"),
-    slots: &[markup::Slot::single((NS_W, "tblGrid"))],
+    slots: &[markup::Slot::required((NS_W, "tblGrid"))],
     text: false,
 };
 
@@ -5643,7 +5643,7 @@ static REVISION_INFORMATION_FOR_TABLE_PROPERTIES_SHAPE: markup::Shape = markup::
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "tblPrChange"),
-    slots: &[markup::Slot::single((NS_W, "tblPr"))],
+    slots: &[markup::Slot::required((NS_W, "tblPr"))],
     text: false,
 };
 
@@ -5691,7 +5691,7 @@ static REVISION_INFORMATION_FOR_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE: markup::S
             (NS_W16DU, "dateUtc"),
         ],
         name: (NS_W, "tblPrExChange"),
-        slots: &[markup::Slot::single((NS_W, "tblPrEx"))],
+        slots: &[markup::Slot::required((NS_W, "tblPrEx"))],
         text: false,
     };
 
@@ -5858,7 +5858,7 @@ static REVISION_INFORMATION_FOR_TABLE_CELL_PROPERTIES_SHAPE: markup::Shape = mar
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "tcPrChange"),
-    slots: &[markup::Slot::single((NS_W, "tcPr"))],
+    slots: &[markup::Slot::required((NS_W, "tcPr"))],
     text: false,
 };
 
@@ -6082,7 +6082,7 @@ static REVISION_INFORMATION_FOR_TABLE_ROW_PROPERTIES_SHAPE: markup::Shape = mark
         (NS_W16DU, "dateUtc"),
     ],
     name: (NS_W, "trPrChange"),
-    slots: &[markup::Slot::single((NS_W, "trPr"))],
+    slots: &[markup::Slot::required((NS_W, "trPr"))],
     text: false,
 };
 

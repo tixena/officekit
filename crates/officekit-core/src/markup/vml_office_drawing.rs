@@ -425,7 +425,7 @@ static REGROUP_ENTRY_SHAPE: markup::Shape = markup::Shape {
 static STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "contentType")],
     name: (NS_O, "equationxml"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,

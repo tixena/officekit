@@ -408,8 +408,8 @@ static SLD_MK_LST_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PC, "sldMkLst"),
     slots: &[
-        markup::Slot::single((NS_PC, "docMk")),
-        markup::Slot::single((NS_PC, "sldMk")),
+        markup::Slot::required((NS_PC, "docMk")),
+        markup::Slot::required((NS_PC, "sldMk")),
         markup::Slot::items(&super::drawing::ANY_ELEMENT_CONTENT_TAGS),
     ],
     text: false,

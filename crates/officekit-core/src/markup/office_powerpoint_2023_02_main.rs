@@ -231,14 +231,16 @@ const NS_P232: Option<NamespaceId> = Some(77);
 static TYPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P232, "type"),
-    slots: &[markup::Slot::choice(&PLACEHOLDER_TYPE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &PLACEHOLDER_TYPE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static PH_TYPE_EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P232, "phTypeExt"),
-    slots: &[markup::Slot::single((NS_P232, "type"))],
+    slots: &[markup::Slot::required((NS_P232, "type"))],
     text: false,
 };
 

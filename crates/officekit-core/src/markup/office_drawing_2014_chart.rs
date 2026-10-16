@@ -257,7 +257,7 @@ static CATEGORY_FILTER_EXCEPTION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C16, "categoryFilterException"),
     slots: &[
-        markup::Slot::single((NS_C16, "uniqueId")),
+        markup::Slot::required((NS_C16, "uniqueId")),
         markup::Slot::single((NS_C16, "spPr")),
         markup::Slot::single((NS_C16, "explosion")),
         markup::Slot::single((NS_C16, "invertIfNegative")),
@@ -286,8 +286,8 @@ static PTENTRY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C16, "ptentry"),
     slots: &[
-        markup::Slot::single((NS_C16, "ptidx")),
-        markup::Slot::single((NS_C16, "uniqueID")),
+        markup::Slot::required((NS_C16, "ptidx")),
+        markup::Slot::required((NS_C16, "uniqueID")),
     ],
     text: false,
 };
@@ -317,14 +317,14 @@ static FILTERED_LIT_CACHE_MULTI_LVL_STR_FILTERED_LITERAL_CACHE_SHAPE: markup::Sh
     markup::Shape {
         attributes: &[],
         name: (NS_C16, "filteredLitCache"),
-        slots: &[markup::Slot::single((NS_C16, "multiLvlStrCache"))],
+        slots: &[markup::Slot::required((NS_C16, "multiLvlStrCache"))],
         text: false,
     };
 
 static FILTERED_LIT_CACHE_NUM_FILTERED_LITERAL_CACHE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C16, "filteredLitCache"),
-    slots: &[markup::Slot::single((NS_C16, "numCache"))],
+    slots: &[markup::Slot::required((NS_C16, "numCache"))],
     text: false,
 };
 
@@ -341,7 +341,7 @@ static PIVOT_OPTIONS16_SHAPE: markup::Shape = markup::Shape {
 static FILTERED_LIT_CACHE_STR_FILTERED_LITERAL_CACHE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C16, "filteredLitCache"),
-    slots: &[markup::Slot::single((NS_C16, "strCache"))],
+    slots: &[markup::Slot::required((NS_C16, "strCache"))],
     text: false,
 };
 
@@ -363,7 +363,7 @@ static D_LBL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C16, "dLbl"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::items(&super::chart::DATA_LABEL_CONTENT_TAGS),
         markup::Slot::single((NS_C, "extLst")),
     ],

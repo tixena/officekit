@@ -230,7 +230,7 @@ impl markup::Transform for super::CustomFileProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.custom_file_property, ctx, &mut rebase);
         Self {
             custom_file_property: child_1,
@@ -307,7 +307,7 @@ impl markup::Transform for super::CustomFileProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,

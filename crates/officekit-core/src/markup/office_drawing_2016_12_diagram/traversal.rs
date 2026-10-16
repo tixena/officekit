@@ -230,7 +230,7 @@ impl markup::Transform for super::LstStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.default_paragraph_style, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.list_level_1_text_style, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.list_level_2_text_style, ctx, &mut rebase);
@@ -346,7 +346,7 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);

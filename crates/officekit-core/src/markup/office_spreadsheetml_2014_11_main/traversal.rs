@@ -309,7 +309,7 @@ impl markup::Transform for super::ModelTimeGrouping {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.calculated_time_column, ctx, &mut rebase);
         Self {
             calculated_time_column: child_1,
@@ -392,7 +392,7 @@ impl markup::Transform for super::ModelTimeGroupings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.model_time_grouping, ctx, &mut rebase);
         Self {
             model_time_grouping: child_1,

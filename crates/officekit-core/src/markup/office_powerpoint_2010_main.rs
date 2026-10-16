@@ -246,7 +246,9 @@ static C_NV_CONTENT_PART_PR_SHAPE: markup::Shape = markup::Shape {
 static LASER_CLR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P14, "laserClr"),
-    slots: &[markup::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &super::drawing::COLOR_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -288,9 +290,9 @@ static NV_CONTENT_PART_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P14, "nvContentPartPr"),
     slots: &[
-        markup::Slot::single((NS_P14, "cNvPr")),
+        markup::Slot::required((NS_P14, "cNvPr")),
         markup::Slot::single((NS_P14, "cNvContentPartPr")),
-        markup::Slot::single((NS_P14, "nvPr")),
+        markup::Slot::required((NS_P14, "nvPr")),
     ],
     text: false,
 };
@@ -507,7 +509,7 @@ static SECTION_SECTION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name"), (None, "id")],
     name: (NS_P14, "section"),
     slots: &[
-        markup::Slot::single((NS_P14, "sldIdLst")),
+        markup::Slot::required((NS_P14, "sldIdLst")),
         markup::Slot::single((NS_P14, "extLst")),
     ],
     text: false,

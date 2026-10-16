@@ -274,7 +274,9 @@ static BLIP_SHAPE: markup::Shape = markup::Shape {
 static CLR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AM3D, "clr"),
-    slots: &[markup::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &super::drawing::COLOR_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -361,8 +363,8 @@ static AMBIENT_LIGHT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "enabled")],
     name: (NS_AM3D, "ambientLight"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "clr")),
-        markup::Slot::single((NS_AM3D, "illuminance")),
+        markup::Slot::required((NS_AM3D, "clr")),
+        markup::Slot::required((NS_AM3D, "illuminance")),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,
@@ -372,10 +374,10 @@ static DIR_LIGHT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "enabled"), (None, "angularRad")],
     name: (NS_AM3D, "dirLight"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "clr")),
-        markup::Slot::single((NS_AM3D, "illuminance")),
-        markup::Slot::single((NS_AM3D, "pos")),
-        markup::Slot::single((NS_AM3D, "lookAt")),
+        markup::Slot::required((NS_AM3D, "clr")),
+        markup::Slot::required((NS_AM3D, "illuminance")),
+        markup::Slot::required((NS_AM3D, "pos")),
+        markup::Slot::required((NS_AM3D, "lookAt")),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,
@@ -385,13 +387,13 @@ static MODEL3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link")],
     name: (NS_AM3D, "model3d"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "spPr")),
-        markup::Slot::single((NS_AM3D, "camera")),
-        markup::Slot::single((NS_AM3D, "trans")),
+        markup::Slot::required((NS_AM3D, "spPr")),
+        markup::Slot::required((NS_AM3D, "camera")),
+        markup::Slot::required((NS_AM3D, "trans")),
         markup::Slot::single((NS_AM3D, "attrSrcUrl")),
         markup::Slot::single((NS_AM3D, "raster")),
         markup::Slot::single((NS_AM3D, "extLst")),
-        markup::Slot::choice(&MODEL3D_VIEWPORT_CONTENT_TAGS),
+        markup::Slot::required_choice(&MODEL3D_VIEWPORT_CONTENT_TAGS),
         markup::Slot::single((NS_AM3D, "ambientLight")),
         markup::Slot::items(&MODEL3D_LIGHT_CONTENT_TAGS),
     ],
@@ -402,10 +404,10 @@ static CAMERA_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AM3D, "camera"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "pos")),
-        markup::Slot::single((NS_AM3D, "up")),
-        markup::Slot::single((NS_AM3D, "lookAt")),
-        markup::Slot::choice(&MODEL3D_CAMERA_CONTENT_TAGS),
+        markup::Slot::required((NS_AM3D, "pos")),
+        markup::Slot::required((NS_AM3D, "up")),
+        markup::Slot::required((NS_AM3D, "lookAt")),
+        markup::Slot::required_choice(&MODEL3D_CAMERA_CONTENT_TAGS),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,
@@ -414,7 +416,9 @@ static CAMERA_SHAPE: markup::Shape = markup::Shape {
 static EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_AM3D, "ext"),
-    slots: &[markup::Slot::choice(&MODEL3D_EXTENSION_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &MODEL3D_EXTENSION_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -457,7 +461,7 @@ static ORTHOGRAPHIC_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AM3D, "orthographic"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "sz")),
+        markup::Slot::required((NS_AM3D, "sz")),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,
@@ -474,9 +478,9 @@ static PT_LIGHT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "enabled"), (None, "rad")],
     name: (NS_AM3D, "ptLight"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "clr")),
-        markup::Slot::single((NS_AM3D, "intensity")),
-        markup::Slot::single((NS_AM3D, "pos")),
+        markup::Slot::required((NS_AM3D, "clr")),
+        markup::Slot::required((NS_AM3D, "intensity")),
+        markup::Slot::required((NS_AM3D, "pos")),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,
@@ -521,9 +525,9 @@ static SCALE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AM3D, "scale"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "sx")),
-        markup::Slot::single((NS_AM3D, "sy")),
-        markup::Slot::single((NS_AM3D, "sz")),
+        markup::Slot::required((NS_AM3D, "sx")),
+        markup::Slot::required((NS_AM3D, "sy")),
+        markup::Slot::required((NS_AM3D, "sz")),
     ],
     text: false,
 };
@@ -532,10 +536,10 @@ static SPOT_LIGHT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "enabled"), (None, "rad"), (None, "spotAng")],
     name: (NS_AM3D, "spotLight"),
     slots: &[
-        markup::Slot::single((NS_AM3D, "clr")),
-        markup::Slot::single((NS_AM3D, "intensity")),
-        markup::Slot::single((NS_AM3D, "pos")),
-        markup::Slot::single((NS_AM3D, "lookAt")),
+        markup::Slot::required((NS_AM3D, "clr")),
+        markup::Slot::required((NS_AM3D, "intensity")),
+        markup::Slot::required((NS_AM3D, "pos")),
+        markup::Slot::required((NS_AM3D, "lookAt")),
         markup::Slot::single((NS_AM3D, "extLst")),
     ],
     text: false,

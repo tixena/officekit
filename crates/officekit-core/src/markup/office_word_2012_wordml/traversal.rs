@@ -593,7 +593,7 @@ impl markup::Transform for super::CommentsEx {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.comment_ex, ctx, &mut rebase);
         Self {
             comment_ex: child_1,
@@ -953,7 +953,7 @@ impl markup::Transform for super::People {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.person, ctx, &mut rebase);
         Self {
             person: child_1,
@@ -1021,7 +1021,7 @@ impl markup::Transform for super::Person {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.presence_info, ctx, &mut rebase);
         Self {
             author: self.author.clone(),
@@ -1169,7 +1169,7 @@ impl markup::Transform for super::RepeatingSection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.title, ctx, &mut rebase);
         let child_2 =
             markup::transform_child(&self.do_not_allow_insert_delete_section, ctx, &mut rebase);

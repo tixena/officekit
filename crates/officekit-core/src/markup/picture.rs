@@ -272,8 +272,8 @@ static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PIC, "nvPicPr"),
     slots: &[
-        markup::Slot::single((NS_PIC, "cNvPr")),
-        markup::Slot::single((NS_PIC, "cNvPicPr")),
+        markup::Slot::required((NS_PIC, "cNvPr")),
+        markup::Slot::required((NS_PIC, "cNvPicPr")),
     ],
     text: false,
 };
@@ -282,9 +282,9 @@ static PICTURE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PIC, "pic"),
     slots: &[
-        markup::Slot::single((NS_PIC, "nvPicPr")),
-        markup::Slot::single((NS_PIC, "blipFill")),
-        markup::Slot::single((NS_PIC, "spPr")),
+        markup::Slot::required((NS_PIC, "nvPicPr")),
+        markup::Slot::required((NS_PIC, "blipFill")),
+        markup::Slot::required((NS_PIC, "spPr")),
         markup::Slot::single((NS_PIC14, "style")),
         markup::Slot::single((NS_PIC14, "extLst")),
     ],

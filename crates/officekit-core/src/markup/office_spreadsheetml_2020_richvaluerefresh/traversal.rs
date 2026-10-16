@@ -306,7 +306,7 @@ impl markup::Transform for super::RefreshIntervals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.refresh_interval, ctx, &mut rebase);
         Self {
             refresh_interval: child_1,

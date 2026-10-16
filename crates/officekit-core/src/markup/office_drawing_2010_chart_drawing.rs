@@ -298,7 +298,7 @@ static NV_CONTENT_PART_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR14, "nvContentPartPr"),
     slots: &[
-        markup::Slot::single((NS_CDR14, "cNvPr")),
+        markup::Slot::required((NS_CDR14, "cNvPr")),
         markup::Slot::single((NS_CDR14, "cNvContentPartPr")),
     ],
     text: false,

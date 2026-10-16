@@ -303,7 +303,7 @@ impl markup::Transform for super::CustomXMLDataProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.set_of_associated_xml_schemas, ctx, &mut rebase);
         Self {
@@ -383,7 +383,7 @@ impl markup::Transform for super::SetOfAssociatedXMLSchemas {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.associated_xml_schema, ctx, &mut rebase);
         Self {
             associated_xml_schema: child_1,

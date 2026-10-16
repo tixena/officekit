@@ -245,7 +245,7 @@ static TX_BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P188, "txBody"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],

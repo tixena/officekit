@@ -308,7 +308,7 @@ impl markup::Transform for super::AutoFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.autofilter_column, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.sort_state, ctx, &mut rebase);
         let child_3 =
@@ -465,7 +465,7 @@ impl markup::Transform for super::C {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.v, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.x, ctx, &mut rebase);
         Self {
@@ -696,7 +696,7 @@ impl markup::Transform for super::CachedUniqueNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.cached_unique_name, ctx, &mut rebase);
         Self {
             cached_unique_name: child_1,
@@ -849,7 +849,7 @@ impl markup::Transform for super::Connection {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.text_pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.model_text_pr, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.range_pr, ctx, &mut rebase);
@@ -951,7 +951,7 @@ impl markup::Transform for super::DataFeedPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.db_tables, ctx, &mut rebase);
         Self {
             connection: self.connection.clone(),
@@ -1101,7 +1101,7 @@ impl markup::Transform for super::DataModel {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.tables, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.relationships, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -1416,7 +1416,7 @@ impl markup::Transform for super::DbTables {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.db_table, ctx, &mut rebase);
         Self {
             db_table: child_1,
@@ -1492,7 +1492,7 @@ impl markup::Transform for super::DescriptionPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             ext_lst: child_1,
@@ -1568,7 +1568,7 @@ impl markup::Transform for super::Dxfs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.formatting, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
@@ -1646,7 +1646,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -1801,7 +1801,7 @@ impl markup::Transform for super::ModelRelationships {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.model_relationship, ctx, &mut rebase);
         Self {
             model_relationship: child_1,
@@ -1954,7 +1954,7 @@ impl markup::Transform for super::ModelTables {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.model_table, ctx, &mut rebase);
         Self {
             model_table: child_1,
@@ -2183,7 +2183,7 @@ impl markup::Transform for super::OledbPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             connection: self.connection.clone(),
@@ -2409,7 +2409,7 @@ impl markup::Transform for super::PivotCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivotcache, ctx, &mut rebase);
         Self {
             pivotcache: child_1,
@@ -2557,7 +2557,7 @@ impl markup::Transform for super::PivotRow {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.c, ctx, &mut rebase);
         Self {
             c: child_1,
@@ -2711,7 +2711,7 @@ impl markup::Transform for super::PivotTableData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_row, ctx, &mut rebase);
         Self {
             cache_id: self.cache_id.clone(),
@@ -2866,7 +2866,7 @@ impl markup::Transform for super::PivotTableReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_table_reference, ctx, &mut rebase);
         Self {
             pivot_table_reference: child_1,
@@ -2943,7 +2943,7 @@ impl markup::Transform for super::PivotTableServerFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.server_format, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
@@ -3022,7 +3022,7 @@ impl markup::Transform for super::PivotTableUISettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.active_tab_top_level_entity, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -3107,7 +3107,7 @@ impl markup::Transform for super::PivotTables {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_table, ctx, &mut rebase);
         Self {
             pivot_table: child_1,
@@ -3259,7 +3259,7 @@ impl markup::Transform for super::Question {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -3357,7 +3357,7 @@ impl markup::Transform for super::QuestionPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             ext_lst: child_1,
@@ -3433,7 +3433,7 @@ impl markup::Transform for super::Questions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.question, ctx, &mut rebase);
         Self {
@@ -3513,7 +3513,7 @@ impl markup::Transform for super::QuestionsPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             ext_lst: child_1,
@@ -3805,7 +3805,7 @@ impl markup::Transform for super::SlicerCacheHideItemsWithNoData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.slicer_cache_olap_level_name, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
@@ -3965,7 +3965,7 @@ impl markup::Transform for super::SlicerCachePivotTables {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_table, ctx, &mut rebase);
         Self {
             pivot_table: child_1,
@@ -4042,7 +4042,7 @@ impl markup::Transform for super::SlicerCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.slicer_cache, ctx, &mut rebase);
         Self {
             slicer_cache: child_1,
@@ -4118,7 +4118,7 @@ impl markup::Transform for super::State {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.selection, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.bounds, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.moving_period, ctx, &mut rebase);
@@ -4222,7 +4222,7 @@ impl markup::Transform for super::Survey {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pr, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.title_pr, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.description_pr, ctx, &mut rebase);
@@ -4322,7 +4322,7 @@ impl markup::Transform for super::SurveyPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             ext_lst: child_1,
@@ -4398,7 +4398,7 @@ impl markup::Transform for super::TableSlicerCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             column: self.column.clone(),
@@ -4485,7 +4485,7 @@ impl markup::Transform for super::TextPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.fields, ctx, &mut rebase);
         Self {
             character_set: self.character_set.clone(),
@@ -4593,7 +4593,7 @@ impl markup::Transform for super::Timeline {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             cache: self.cache.clone(),
@@ -4691,7 +4691,7 @@ impl markup::Transform for super::TimelineCacheDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_tables, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.state, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -4780,7 +4780,7 @@ impl markup::Transform for super::TimelineCachePivotCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivotcache, ctx, &mut rebase);
         Self {
             pivotcache: child_1,
@@ -4933,7 +4933,7 @@ impl markup::Transform for super::TimelineCacheRefs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.timeline_cache_ref, ctx, &mut rebase);
         Self {
             timeline_cache_ref: child_1,
@@ -5158,7 +5158,7 @@ impl markup::Transform for super::TimelineRefs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.timeline_ref, ctx, &mut rebase);
         Self {
             timeline_ref: child_1,
@@ -5234,7 +5234,7 @@ impl markup::Transform for super::TimelineStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.elements, ctx, &mut rebase);
         Self {
             elements: child_1,
@@ -5387,7 +5387,7 @@ impl markup::Transform for super::TimelineStyleElements {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.timeline_style_element, ctx, &mut rebase);
         Self {
             timeline_style_element: child_1,
@@ -5464,7 +5464,7 @@ impl markup::Transform for super::TimelineStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.timeline_style, ctx, &mut rebase);
         Self {
             default_timeline_style: self.default_timeline_style.clone(),
@@ -5542,7 +5542,7 @@ impl markup::Transform for super::Timelines {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.timeline, ctx, &mut rebase);
         Self {
             timeline: child_1,
@@ -5618,7 +5618,7 @@ impl markup::Transform for super::TitlePr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
             ext_lst: child_1,
@@ -5766,7 +5766,7 @@ impl markup::Transform for super::WebExtension {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.f, ctx, &mut rebase);
         Self {
             app_ref: self.app_ref.clone(),
@@ -5844,7 +5844,7 @@ impl markup::Transform for super::WebExtensions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.web_extension, ctx, &mut rebase);
         Self {
             unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),

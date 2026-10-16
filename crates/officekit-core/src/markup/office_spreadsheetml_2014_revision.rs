@@ -265,7 +265,7 @@ static SPARKLINE_GROUP_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_X14, "colorHigh")),
         markup::Slot::single((NS_X14, "colorLow")),
         markup::Slot::single((NS_XNE, "f")),
-        markup::Slot::single((NS_X14, "sparklines")),
+        markup::Slot::required((NS_X14, "sparklines")),
     ],
     text: false,
 };
@@ -285,8 +285,8 @@ static COMMENTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XR, "comments"),
     slots: &[
-        markup::Slot::single((NS_X, "authors")),
-        markup::Slot::single((NS_X, "commentList")),
+        markup::Slot::required((NS_X, "authors")),
+        markup::Slot::required((NS_X, "commentList")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -437,7 +437,7 @@ static PIVOT_TABLE_DEFINITION_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_XR, "pivotTableDefinition"),
     slots: &[
-        markup::Slot::single((NS_X, "location")),
+        markup::Slot::required((NS_X, "location")),
         markup::Slot::single((NS_X, "pivotFields")),
         markup::Slot::single((NS_X, "rowFields")),
         markup::Slot::single((NS_X, "rowItems")),
@@ -619,8 +619,8 @@ static XRRCO_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_XR, "xrrco"),
     slots: &[
-        markup::Slot::single((NS_XR, "hdr")),
-        markup::Slot::choice(&REVISION_CHANGE_OBJECT_CONTENT_TAGS),
+        markup::Slot::required((NS_XR, "hdr")),
+        markup::Slot::required_choice(&REVISION_CHANGE_OBJECT_CONTENT_TAGS),
     ],
     text: false,
 };
@@ -661,7 +661,7 @@ static XRRDO_SHAPE: markup::Shape = markup::Shape {
         (None, "ctx"),
     ],
     name: (NS_XR, "xrrdo"),
-    slots: &[markup::Slot::single((NS_XR, "hdr"))],
+    slots: &[markup::Slot::required((NS_XR, "hdr"))],
     text: false,
 };
 
@@ -881,7 +881,7 @@ static REVISION_PTR_SHAPE: markup::Shape = markup::Shape {
 static BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XR, "body"),
-    slots: &[markup::Slot::choice(&REVISION_STATE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&REVISION_STATE_CONTENT_TAGS)],
     text: false,
 };
 
@@ -940,7 +940,9 @@ static HDR_STATE_BASED_HEADER_SHAPE: markup::Shape = markup::Shape {
 static OBJECT_STATE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XR, "objectState"),
-    slots: &[markup::Slot::choice(&STATE_BASED_OBJECT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &STATE_BASED_OBJECT_CONTENT_TAGS,
+    )],
     text: false,
 };
 

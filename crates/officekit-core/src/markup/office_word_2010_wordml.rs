@@ -301,14 +301,14 @@ static CAMERA_SHAPE: markup::Shape = markup::Shape {
 static CONTOUR_CLR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W14, "contourClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static EXTRUSION_CLR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W14, "extrusionClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -329,7 +329,7 @@ static TEXT_FILL_SHAPE: markup::Shape = markup::Shape {
 static GLOW_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W14, "rad")],
     name: (NS_W14, "glow"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -346,7 +346,7 @@ static GRAD_FILL_SHAPE: markup::Shape = markup::Shape {
 static GS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W14, "pos")],
     name: (NS_W14, "gs"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -573,8 +573,8 @@ static SCENE3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_W14, "scene3d"),
     slots: &[
-        markup::Slot::single((NS_W14, "camera")),
-        markup::Slot::single((NS_W14, "lightRig")),
+        markup::Slot::required((NS_W14, "camera")),
+        markup::Slot::required((NS_W14, "lightRig")),
     ],
     text: false,
 };
@@ -623,7 +623,7 @@ static SHADOW_SHAPE: markup::Shape = markup::Shape {
         (NS_W14, "algn"),
     ],
     name: (NS_W14, "shadow"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 

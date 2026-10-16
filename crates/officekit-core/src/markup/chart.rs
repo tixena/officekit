@@ -342,7 +342,7 @@ static BAND_FORMAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "bandFmt"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::single((NS_C, "spPr")),
     ],
     text: false,
@@ -359,7 +359,7 @@ static BAR3D_CHART_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "bar3DChart"),
     slots: &[
-        markup::Slot::single((NS_C, "barDir")),
+        markup::Slot::required((NS_C, "barDir")),
         markup::Slot::single((NS_C, "grouping")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
@@ -377,7 +377,7 @@ static BAR_CHARTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "barChart"),
     slots: &[
-        markup::Slot::single((NS_C, "barDir")),
+        markup::Slot::required((NS_C, "barDir")),
         markup::Slot::single((NS_C, "grouping")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
@@ -439,7 +439,9 @@ static BUBBLE_SCALE_SHAPE: markup::Shape = markup::Shape {
 static BUBBLE_SIZE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "bubbleSize"),
-    slots: &[markup::Slot::choice(&NUMBER_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &NUMBER_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -453,7 +455,9 @@ static BUILT_IN_DISPLAY_UNIT_VALUE_SHAPE: markup::Shape = markup::Shape {
 static CATEGORY_AXIS_DATA_CAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "cat"),
-    slots: &[markup::Slot::choice(&AXIS_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &AXIS_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -461,10 +465,10 @@ static CATEGORY_AXIS_DATA_CAT_AX_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "catAx"),
     slots: &[
-        markup::Slot::single((NS_C, "axId")),
-        markup::Slot::single((NS_C, "scaling")),
+        markup::Slot::required((NS_C, "axId")),
+        markup::Slot::required((NS_C, "scaling")),
         markup::Slot::single((NS_C, "delete")),
-        markup::Slot::single((NS_C, "axPos")),
+        markup::Slot::required((NS_C, "axPos")),
         markup::Slot::single((NS_C, "majorGridlines")),
         markup::Slot::single((NS_C, "minorGridlines")),
         markup::Slot::single((NS_C, "title")),
@@ -474,7 +478,7 @@ static CATEGORY_AXIS_DATA_CAT_AX_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "tickLblPos")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
-        markup::Slot::single((NS_C, "crossAx")),
+        markup::Slot::required((NS_C, "crossAx")),
         markup::Slot::choice(&AXIS_CROSSING_CONTENT_TAGS),
         markup::Slot::single((NS_C, "auto")),
         markup::Slot::single((NS_C, "lblAlgn")),
@@ -498,7 +502,7 @@ static CHART_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "floor")),
         markup::Slot::single((NS_C, "sideWall")),
         markup::Slot::single((NS_C, "backWall")),
-        markup::Slot::single((NS_C, "plotArea")),
+        markup::Slot::required((NS_C, "plotArea")),
         markup::Slot::single((NS_C, "legend")),
         markup::Slot::single((NS_C, "plotVisOnly")),
         markup::Slot::single((NS_C, "dispBlanksAs")),
@@ -534,7 +538,7 @@ static CHART_SPACE_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "clrMapOvr")),
         markup::Slot::single((NS_C, "pivotSource")),
         markup::Slot::single((NS_C, "protection")),
-        markup::Slot::single((NS_C, "chart")),
+        markup::Slot::required((NS_C, "chart")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
         markup::Slot::single((NS_C, "externalData")),
@@ -611,7 +615,7 @@ static DATA_LABEL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "dLbl"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::items(&DATA_LABEL_CONTENT_TAGS),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -640,7 +644,7 @@ static DATA_POINT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "dPt"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::single((NS_C, "invertIfNegative")),
         markup::Slot::single((NS_C, "marker")),
         markup::Slot::single((NS_C, "bubble3D")),
@@ -685,10 +689,10 @@ static DATE_AXIS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "dateAx"),
     slots: &[
-        markup::Slot::single((NS_C, "axId")),
-        markup::Slot::single((NS_C, "scaling")),
+        markup::Slot::required((NS_C, "axId")),
+        markup::Slot::required((NS_C, "scaling")),
         markup::Slot::single((NS_C, "delete")),
-        markup::Slot::single((NS_C, "axPos")),
+        markup::Slot::required((NS_C, "axPos")),
         markup::Slot::single((NS_C, "majorGridlines")),
         markup::Slot::single((NS_C, "minorGridlines")),
         markup::Slot::single((NS_C, "title")),
@@ -698,7 +702,7 @@ static DATE_AXIS_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "tickLblPos")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
-        markup::Slot::single((NS_C, "crossAx")),
+        markup::Slot::required((NS_C, "crossAx")),
         markup::Slot::choice(&AXIS_CROSSING_CONTENT_TAGS),
         markup::Slot::single((NS_C, "auto")),
         markup::Slot::single((NS_C, "lblOffset")),
@@ -751,7 +755,7 @@ static DISPLAY_UNITS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "dispUnits"),
     slots: &[
-        markup::Slot::choice(&DISPLAY_UNITS_CONTENT_TAGS),
+        markup::Slot::required_choice(&DISPLAY_UNITS_CONTENT_TAGS),
         markup::Slot::single((NS_C, "dispUnitsLbl")),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -810,8 +814,8 @@ static ERROR_BARS_SHAPE: markup::Shape = markup::Shape {
     name: (NS_C, "errBars"),
     slots: &[
         markup::Slot::single((NS_C, "errDir")),
-        markup::Slot::single((NS_C, "errBarType")),
-        markup::Slot::single((NS_C, "errValType")),
+        markup::Slot::required((NS_C, "errBarType")),
+        markup::Slot::required((NS_C, "errValType")),
         markup::Slot::single((NS_C, "noEndCap")),
         markup::Slot::single((NS_C, "plus")),
         markup::Slot::single((NS_C, "minus")),
@@ -860,7 +864,7 @@ static EXPLOSION_SHAPE: markup::Shape = markup::Shape {
 static EXTENSION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_C, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,
@@ -1121,7 +1125,7 @@ static LEGEND_ENTRY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "legendEntry"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::choice(&LEGEND_ENTRY_CONTENT_TAGS),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -1139,7 +1143,7 @@ static LINE3D_CHART_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "line3DChart"),
     slots: &[
-        markup::Slot::single((NS_C, "grouping")),
+        markup::Slot::required((NS_C, "grouping")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
         markup::Slot::single((NS_C, "dLbls")),
@@ -1155,7 +1159,7 @@ static LINE_CHARTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "lineChart"),
     slots: &[
-        markup::Slot::single((NS_C, "grouping")),
+        markup::Slot::required((NS_C, "grouping")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
         markup::Slot::single((NS_C, "dLbls")),
@@ -1294,7 +1298,9 @@ static MINOR_UNIT_SHAPE: markup::Shape = markup::Shape {
 static MINUS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "minus"),
-    slots: &[markup::Slot::choice(&NUMBER_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &NUMBER_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -1313,7 +1319,7 @@ static MULTI_LEVEL_STRING_REFERENCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "multiLvlStrRef"),
     slots: &[
-        markup::Slot::single((NS_C, "f")),
+        markup::Slot::required((NS_C, "f")),
         markup::Slot::single((NS_C, "multiLvlStrCache")),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -1383,7 +1389,7 @@ static NUMBER_REFERENCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "numRef"),
     slots: &[
-        markup::Slot::single((NS_C, "f")),
+        markup::Slot::required((NS_C, "f")),
         markup::Slot::single((NS_C, "numCache")),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -1408,7 +1414,7 @@ static PIE_OF_PIE_CHARTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ofPieChart"),
     slots: &[
-        markup::Slot::single((NS_C, "ofPieType")),
+        markup::Slot::required((NS_C, "ofPieType")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
         markup::Slot::single((NS_C, "dLbls")),
@@ -1568,7 +1574,7 @@ static PIVOT_FORMAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "pivotFmt"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -1589,8 +1595,8 @@ static PIVOT_SOURCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "pivotSource"),
     slots: &[
-        markup::Slot::single((NS_C, "name")),
-        markup::Slot::single((NS_C, "fmtId")),
+        markup::Slot::required((NS_C, "name")),
+        markup::Slot::required((NS_C, "fmtId")),
         markup::Slot::list((NS_C, "extLst")),
     ],
     text: false,
@@ -1620,7 +1626,9 @@ static PLOT_VISIBLE_ONLY_SHAPE: markup::Shape = markup::Shape {
 static PLUS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "plus"),
-    slots: &[markup::Slot::choice(&NUMBER_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &NUMBER_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -1652,14 +1660,14 @@ static PROTECTION_SHAPE: markup::Shape = markup::Shape {
 static NUMERIC_POINT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "idx"), (None, "formatCode")],
     name: (NS_C, "pt"),
-    slots: &[markup::Slot::single((NS_C, "v"))],
+    slots: &[markup::Slot::required((NS_C, "v"))],
     text: false,
 };
 
 static STRING_POINT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "idx")],
     name: (NS_C, "pt"),
-    slots: &[markup::Slot::single((NS_C, "v"))],
+    slots: &[markup::Slot::required((NS_C, "v"))],
     text: false,
 };
 
@@ -1681,7 +1689,7 @@ static RADAR_CHARTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "radarChart"),
     slots: &[
-        markup::Slot::single((NS_C, "radarStyle")),
+        markup::Slot::required((NS_C, "radarStyle")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
         markup::Slot::single((NS_C, "dLbls")),
@@ -1702,7 +1710,7 @@ static RICH_TEXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "rich"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -1747,7 +1755,7 @@ static SCATTER_CHARTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "scatterChart"),
     slots: &[
-        markup::Slot::single((NS_C, "scatterStyle")),
+        markup::Slot::required((NS_C, "scatterStyle")),
         markup::Slot::single((NS_C, "varyColors")),
         markup::Slot::list((NS_C, "ser")),
         markup::Slot::single((NS_C, "dLbls")),
@@ -1796,8 +1804,8 @@ static AREA_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "pictureOptions")),
@@ -1816,8 +1824,8 @@ static BAR_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "invertIfNegative")),
@@ -1838,8 +1846,8 @@ static BUBBLE_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "invertIfNegative")),
@@ -1860,8 +1868,8 @@ static LINE_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -1881,8 +1889,8 @@ static PIE_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "explosion")),
@@ -1899,8 +1907,8 @@ static RADAR_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -1917,8 +1925,8 @@ static SCATTER_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -1938,8 +1946,8 @@ static SURFACE_CHART_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "cat")),
@@ -1953,10 +1961,10 @@ static SERIES_AXIS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "serAx"),
     slots: &[
-        markup::Slot::single((NS_C, "axId")),
-        markup::Slot::single((NS_C, "scaling")),
+        markup::Slot::required((NS_C, "axId")),
+        markup::Slot::required((NS_C, "scaling")),
         markup::Slot::single((NS_C, "delete")),
-        markup::Slot::single((NS_C, "axPos")),
+        markup::Slot::required((NS_C, "axPos")),
         markup::Slot::single((NS_C, "majorGridlines")),
         markup::Slot::single((NS_C, "minorGridlines")),
         markup::Slot::single((NS_C, "title")),
@@ -1966,7 +1974,7 @@ static SERIES_AXIS_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "tickLblPos")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
-        markup::Slot::single((NS_C, "crossAx")),
+        markup::Slot::required((NS_C, "crossAx")),
         markup::Slot::choice(&AXIS_CROSSING_CONTENT_TAGS),
         markup::Slot::single((NS_C, "tickLblSkip")),
         markup::Slot::single((NS_C, "tickMarkSkip")),
@@ -2184,7 +2192,7 @@ static STRING_REFERENCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "strRef"),
     slots: &[
-        markup::Slot::single((NS_C, "f")),
+        markup::Slot::required((NS_C, "f")),
         markup::Slot::single((NS_C, "strCache")),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -2279,7 +2287,7 @@ static TRENDLINES_SHAPE: markup::Shape = markup::Shape {
     slots: &[
         markup::Slot::single((NS_C, "name")),
         markup::Slot::single((NS_C, "spPr")),
-        markup::Slot::single((NS_C, "trendlineType")),
+        markup::Slot::required((NS_C, "trendlineType")),
         markup::Slot::single((NS_C, "order")),
         markup::Slot::single((NS_C, "period")),
         markup::Slot::single((NS_C, "forward")),
@@ -2317,14 +2325,14 @@ static TRENDLINE_TYPE_SHAPE: markup::Shape = markup::Shape {
 static SERIES_TEXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "tx"),
-    slots: &[markup::Slot::choice(&SERIES_TEXT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&SERIES_TEXT_CONTENT_TAGS)],
     text: false,
 };
 
 static CHART_TEXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "tx"),
-    slots: &[markup::Slot::choice(&CHART_TEXT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&CHART_TEXT_CONTENT_TAGS)],
     text: false,
 };
 
@@ -2332,7 +2340,7 @@ static TEXT_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "txPr"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -2398,7 +2406,9 @@ static ERROR_BAR_VALUE_SHAPE: markup::Shape = markup::Shape {
 static VALUES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "val"),
-    slots: &[markup::Slot::choice(&NUMBER_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &NUMBER_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -2406,10 +2416,10 @@ static VALUE_AXIS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "valAx"),
     slots: &[
-        markup::Slot::single((NS_C, "axId")),
-        markup::Slot::single((NS_C, "scaling")),
+        markup::Slot::required((NS_C, "axId")),
+        markup::Slot::required((NS_C, "scaling")),
         markup::Slot::single((NS_C, "delete")),
-        markup::Slot::single((NS_C, "axPos")),
+        markup::Slot::required((NS_C, "axPos")),
         markup::Slot::single((NS_C, "majorGridlines")),
         markup::Slot::single((NS_C, "minorGridlines")),
         markup::Slot::single((NS_C, "title")),
@@ -2419,7 +2429,7 @@ static VALUE_AXIS_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_C, "tickLblPos")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "txPr")),
-        markup::Slot::single((NS_C, "crossAx")),
+        markup::Slot::required((NS_C, "crossAx")),
         markup::Slot::choice(&AXIS_CROSSING_CONTENT_TAGS),
         markup::Slot::single((NS_C, "crossBetween")),
         markup::Slot::single((NS_C, "majorUnit")),
@@ -2490,7 +2500,9 @@ static LEFT_MODE_SHAPE: markup::Shape = markup::Shape {
 static X_VALUES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "xVal"),
-    slots: &[markup::Slot::choice(&AXIS_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &AXIS_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -2511,7 +2523,9 @@ static TOP_MODE_SHAPE: markup::Shape = markup::Shape {
 static Y_VALUES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C, "yVal"),
-    slots: &[markup::Slot::choice(&NUMBER_DATA_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &NUMBER_DATA_SOURCE_CONTENT_TAGS,
+    )],
     text: false,
 };
 

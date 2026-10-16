@@ -244,7 +244,9 @@ static CUSTOM_FILE_PROPERTY_SHAPE: markup::Shape = markup::Shape {
         (None, "linkTarget"),
     ],
     name: (NS_OP, "property"),
-    slots: &[markup::Slot::choice(&CUSTOM_FILE_PROPERTY_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &CUSTOM_FILE_PROPERTY_CONTENT_TAGS,
+    )],
     text: false,
 };
 

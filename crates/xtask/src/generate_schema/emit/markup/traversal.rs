@@ -667,7 +667,7 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     let unknown = rebuilt_unknown(rebase);
     let mut body = String::new();
     if counted {
-        body.push_str("        let mut rebase = markup::Rebase::default();\n");
+        body.push_str("        let mut rebase = markup::Rebase::new(&self.unknown);\n");
     }
     let mut literal = vec![("unknown", layout::field(12, "unknown", &unknown))];
     // Numbered, not named after their fields, and with one count of digits:
@@ -719,7 +719,7 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     chunks.push((chunk, chunk_counted));
     out.push_str("        let mut node = Self::default();\n");
     if counted {
-        out.push_str("        let mut rebase = markup::Rebase::default();\n");
+        out.push_str("        let mut rebase = markup::Rebase::new(&self.unknown);\n");
     }
     for (number, (text, counts)) in chunks.iter().enumerate() {
         let helper = format!("transform_{prefix}_{}", number + 1);

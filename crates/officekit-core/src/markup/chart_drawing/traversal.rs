@@ -230,7 +230,7 @@ impl markup::Transform for super::AbsoluteAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.shape_extent, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
@@ -311,7 +311,7 @@ impl markup::Transform for super::ConnectionShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.connector_non_visual_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
@@ -396,7 +396,7 @@ impl markup::Transform for super::ConnectorNonVisualProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(
@@ -488,7 +488,7 @@ impl markup::Transform for super::EndingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.relative_x_coordinate, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.relative_y_coordinate, ctx, &mut rebase);
         Self {
@@ -565,7 +565,7 @@ impl markup::Transform for super::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_graphic_frame_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.transform, ctx, &mut rebase);
@@ -646,7 +646,7 @@ impl markup::Transform for super::GraphicFrameTransform {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.offset, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extents, ctx, &mut rebase);
         Self {
@@ -729,7 +729,7 @@ impl markup::Transform for super::GroupShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_group_shape_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
@@ -806,7 +806,7 @@ impl markup::Transform for super::GroupShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
@@ -901,7 +901,7 @@ impl markup::Transform for super::NonVisualConnectionShapeDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.connection_start, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.connection_end, ctx, &mut rebase);
@@ -993,7 +993,7 @@ impl markup::Transform for super::NonVisualDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -1091,7 +1091,7 @@ impl markup::Transform for super::NonVisualGraphicFrameDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
@@ -1175,7 +1175,7 @@ impl markup::Transform for super::NonVisualGraphicFrameProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(
@@ -1264,7 +1264,7 @@ impl markup::Transform for super::NonVisualGroupShapeDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
@@ -1348,7 +1348,7 @@ impl markup::Transform for super::NonVisualGroupShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(
@@ -1437,7 +1437,7 @@ impl markup::Transform for super::NonVisualPictureDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.picture_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
@@ -1523,7 +1523,7 @@ impl markup::Transform for super::NonVisualPictureProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(
@@ -1612,7 +1612,7 @@ impl markup::Transform for super::NonVisualShapeDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.shape_locks, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.extension_list, ctx, &mut rebase);
         Self {
@@ -1698,7 +1698,7 @@ impl markup::Transform for super::NonVisualShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         let child_2 =
@@ -1878,7 +1878,7 @@ impl markup::Transform for super::Picture {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.non_visual_picture_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.fill, ctx, &mut rebase);
@@ -1959,7 +1959,7 @@ impl markup::Transform for super::PictureFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.blip, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.source_rectangle, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
@@ -2039,7 +2039,7 @@ impl markup::Transform for super::RelativeAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ending_anchor_point, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.content, ctx, &mut rebase);
@@ -2266,7 +2266,7 @@ impl markup::Transform for super::Shape {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.non_visual_shape_properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.properties, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.style, ctx, &mut rebase);
@@ -2408,7 +2408,7 @@ impl markup::Transform for super::ShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -2506,7 +2506,7 @@ impl markup::Transform for super::ShapeStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.line_reference, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.fill_reference, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.effect_reference, ctx, &mut rebase);
@@ -2582,7 +2582,7 @@ impl markup::Transform for super::ShapeTextBody {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.text_list_styles, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.text_paragraphs, ctx, &mut rebase);
@@ -2662,7 +2662,7 @@ impl markup::Transform for super::StartingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.relative_x_coordinate, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.relative_y_coordinate, ctx, &mut rebase);
         Self {

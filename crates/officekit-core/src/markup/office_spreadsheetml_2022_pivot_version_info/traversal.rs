@@ -230,7 +230,7 @@ impl markup::Transform for super::CacheVersionInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.required_feature, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.last_refresh_feature, ctx, &mut rebase);
         Self {
@@ -457,7 +457,7 @@ impl markup::Transform for super::PivotVersionInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.required_feature, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.last_update_feature, ctx, &mut rebase);
         Self {

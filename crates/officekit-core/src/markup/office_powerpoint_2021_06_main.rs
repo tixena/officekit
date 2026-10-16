@@ -240,7 +240,7 @@ static ANCHR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_P216, "anchr"),
     slots: &[
-        markup::Slot::single((NS_P216, "comment")),
+        markup::Slot::required((NS_P216, "comment")),
         markup::Slot::single((NS_P216, "extLst")),
     ],
     text: false,
@@ -278,7 +278,7 @@ static TASK_HISTORY_DETAILS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id")],
     name: (NS_P216, "taskHistoryDetails"),
     slots: &[
-        markup::Slot::single((NS_P216, "history")),
+        markup::Slot::required((NS_P216, "history")),
         markup::Slot::single((NS_P216, "extLst")),
     ],
     text: false,
@@ -288,7 +288,7 @@ static EVENT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "time"), (None, "id")],
     name: (NS_P216, "event"),
     slots: &[
-        markup::Slot::single((NS_P216, "atrbtn")),
+        markup::Slot::required((NS_P216, "atrbtn")),
         markup::Slot::single((NS_P216, "anchr")),
         markup::Slot::choice(&TASK_HISTORY_EVENT_CONTENT_TAGS),
         markup::Slot::single((NS_P216, "extLst")),

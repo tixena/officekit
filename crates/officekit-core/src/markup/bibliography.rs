@@ -246,7 +246,7 @@ static ALBUM_TITLE_SHAPE: markup::Shape = markup::Shape {
 static ARTIST_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Artist"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -267,7 +267,7 @@ static AUTHOR_SHAPE: markup::Shape = markup::Shape {
 static BOOK_AUTHOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "BookAuthor"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -323,21 +323,21 @@ static COMMENTS_SHAPE: markup::Shape = markup::Shape {
 static COMPILER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Compiler"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
 static COMPOSER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Composer"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
 static CONDUCTOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Conductor"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -358,7 +358,7 @@ static CORPORATE_AUTHOR_SHAPE: markup::Shape = markup::Shape {
 static COUNSEL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Counsel"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -400,7 +400,7 @@ static DEPARTMENT_SHAPE: markup::Shape = markup::Shape {
 static DIRECTOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Director"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -421,7 +421,7 @@ static EDITOR_EDITION_SHAPE: markup::Shape = markup::Shape {
 static EDITOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Editor"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -456,21 +456,21 @@ static INTERNET_SITE_TITLE_SHAPE: markup::Shape = markup::Shape {
 static INTERVIEWEE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Interviewee"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
 static INTERVIEWER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Interviewer"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
 static INVENTOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Inventor"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -586,7 +586,7 @@ static PERSON_SHAPE: markup::Shape = markup::Shape {
 static PRODUCER_NAME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "ProducerName"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -712,7 +712,7 @@ static TITLE_SHAPE: markup::Shape = markup::Shape {
 static TRANSLATOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Translator"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
@@ -747,7 +747,7 @@ static VOLUME_SHAPE: markup::Shape = markup::Shape {
 static WRITER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_B, "Writer"),
-    slots: &[markup::Slot::single((NS_B, "NameList"))],
+    slots: &[markup::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 

@@ -230,7 +230,7 @@ impl markup::Transform for super::AArray {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.v_array_value, ctx, &mut rebase);
         Self {
             c: self.c.clone(),
@@ -310,7 +310,7 @@ impl markup::Transform for super::ASupportingPropertyBagArray {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(
             &self.v_supporting_property_bag_array_value,
             ctx,
@@ -396,7 +396,7 @@ impl markup::Transform for super::ArrayData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.a_array, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -554,7 +554,7 @@ impl markup::Transform for super::CustomFilters {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_items(&self.content, ctx, &mut rebase);
         Self {
             and: self.and.clone(),
@@ -824,7 +824,7 @@ impl markup::Transform for super::Dxfs {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.formatting, ctx, &mut rebase);
         Self {
             count: self.count.clone(),
@@ -984,7 +984,7 @@ impl markup::Transform for super::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.extension, ctx, &mut rebase);
         Self {
             extension: child_1,
@@ -1138,7 +1138,7 @@ impl markup::Transform for super::FilterColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -1214,7 +1214,7 @@ impl markup::Transform for super::Filters {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.filter, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.date_group_item, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -1372,7 +1372,7 @@ impl markup::Transform for super::Global {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.key_flags, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -1526,7 +1526,7 @@ impl markup::Transform for super::Key {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.flag, ctx, &mut rebase);
         Self {
             flag: child_1,
@@ -1604,7 +1604,7 @@ impl markup::Transform for super::KeyFlags {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.key, ctx, &mut rebase);
         Self {
             key: child_1,
@@ -1754,7 +1754,7 @@ impl markup::Transform for super::RSty {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.rpv, ctx, &mut rebase);
         Self {
             dxfid: self.dxfid.clone(),
@@ -1926,7 +1926,7 @@ impl markup::Transform for super::RichProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.r_pr, ctx, &mut rebase);
         Self {
             r_pr: child_1,
@@ -2089,7 +2089,7 @@ impl markup::Transform for super::RichStyleSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.dxfs, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.rich_properties, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.rich_styles, ctx, &mut rebase);
@@ -2177,7 +2177,7 @@ impl markup::Transform for super::RichStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.r_sty, ctx, &mut rebase);
         Self {
             r_sty: child_1,
@@ -2327,7 +2327,7 @@ impl markup::Transform for super::RvTypesInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.global, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.types, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -2411,7 +2411,7 @@ impl markup::Transform for super::S {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.k, ctx, &mut rebase);
         Self {
             k: child_1,
@@ -2487,7 +2487,7 @@ impl markup::Transform for super::Spb {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.v_supporting_property_bag_value, ctx, &mut rebase);
         Self {
@@ -2566,7 +2566,7 @@ impl markup::Transform for super::SpbArrays {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.a_supporting_property_bag_array, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -2649,7 +2649,7 @@ impl markup::Transform for super::SpbData {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.spb, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -2731,7 +2731,7 @@ impl markup::Transform for super::SpbStructures {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.s, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -2813,7 +2813,7 @@ impl markup::Transform for super::SupportingPropertyBags {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.spb_arrays, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.spb_data, ctx, &mut rebase);
         Self {
@@ -2974,7 +2974,7 @@ impl markup::Transform for super::Type {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.key_flags, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.ext_lst, ctx, &mut rebase);
         Self {
@@ -3056,7 +3056,7 @@ impl markup::Transform for super::Types {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.r#type, ctx, &mut rebase);
         Self {
             r#type: child_1,

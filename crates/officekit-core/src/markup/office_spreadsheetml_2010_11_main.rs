@@ -301,7 +301,7 @@ static CONNECTION_SHAPE: markup::Shape = markup::Shape {
 static DATA_FEED_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "connection")],
     name: (NS_X15, "dataFeedPr"),
-    slots: &[markup::Slot::single((NS_X15, "dbTables"))],
+    slots: &[markup::Slot::required((NS_X15, "dbTables"))],
     text: false,
 };
 
@@ -407,7 +407,7 @@ static MOVING_PERIOD_STATE_SHAPE: markup::Shape = markup::Shape {
 static OLEDB_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "connection")],
     name: (NS_X15, "oledbPr"),
-    slots: &[markup::Slot::choice(&DATABASE_SOURCE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&DATABASE_SOURCE_CONTENT_TAGS)],
     text: false,
 };
 
@@ -445,7 +445,7 @@ static PIVOT_ROW_SHAPE: markup::Shape = markup::Shape {
 static PIVOT_TABLE_DATA_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "rowCount"), (None, "columnCount"), (None, "cacheId")],
     name: (NS_X15, "pivotTableData"),
-    slots: &[markup::Slot::single((NS_X15, "pivotRow"))],
+    slots: &[markup::Slot::required((NS_X15, "pivotRow"))],
     text: false,
 };
 
@@ -484,7 +484,7 @@ static C_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "i"), (None, "t")],
     name: (NS_X15, "c"),
     slots: &[
-        markup::Slot::single((NS_X15, "v")),
+        markup::Slot::required((NS_X15, "v")),
         markup::Slot::single((NS_X15, "x")),
     ],
     text: false,
@@ -549,7 +549,7 @@ static SURVEY_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_X15, "surveyPr")),
         markup::Slot::single((NS_X15, "titlePr")),
         markup::Slot::single((NS_X15, "descriptionPr")),
-        markup::Slot::single((NS_X15, "questions")),
+        markup::Slot::required((NS_X15, "questions")),
         markup::Slot::single((NS_X15, "extLst")),
     ],
     text: false,
@@ -657,7 +657,7 @@ static TIMELINE_CACHE_DEFINITION_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X15, "timelineCacheDefinition"),
     slots: &[
         markup::Slot::single((NS_X15, "pivotTables")),
-        markup::Slot::single((NS_X15, "state")),
+        markup::Slot::required((NS_X15, "state")),
         markup::Slot::single((NS_X15, "extLst")),
     ],
     text: false,
@@ -740,7 +740,7 @@ static STATE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X15, "state"),
     slots: &[
         markup::Slot::single((NS_X15, "selection")),
-        markup::Slot::single((NS_X15, "bounds")),
+        markup::Slot::required((NS_X15, "bounds")),
         markup::Slot::single((NS_X15, "movingPeriodState")),
         markup::Slot::single((NS_X15, "extLst")),
     ],
@@ -785,7 +785,7 @@ static TIMELINES_SHAPE: markup::Shape = markup::Shape {
 static WEB_EXTENSION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "appRef")],
     name: (NS_X15, "webExtension"),
-    slots: &[markup::Slot::single((NS_XNE, "f"))],
+    slots: &[markup::Slot::required((NS_XNE, "f"))],
     text: false,
 };
 

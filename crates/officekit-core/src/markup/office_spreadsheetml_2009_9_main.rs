@@ -435,7 +435,7 @@ static DATA_VALIDATION_SHAPE: markup::Shape = markup::Shape {
     slots: &[
         markup::Slot::single((NS_X14, "formula1")),
         markup::Slot::single((NS_X14, "formula2")),
-        markup::Slot::single((NS_XNE, "sqref")),
+        markup::Slot::required((NS_XNE, "sqref")),
     ],
     text: false,
 };
@@ -443,14 +443,14 @@ static DATA_VALIDATION_SHAPE: markup::Shape = markup::Shape {
 static FORMULA1_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X14, "formula1"),
-    slots: &[markup::Slot::single((NS_XNE, "f"))],
+    slots: &[markup::Slot::required((NS_XNE, "f"))],
     text: false,
 };
 
 static FORMULA2_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X14, "formula2"),
-    slots: &[markup::Slot::single((NS_XNE, "f"))],
+    slots: &[markup::Slot::required((NS_XNE, "f"))],
     text: false,
 };
 
@@ -586,7 +586,7 @@ static IGNORED_ERROR_SHAPE: markup::Shape = markup::Shape {
         (None, "calculatedColumn"),
     ],
     name: (NS_X14, "ignoredError"),
-    slots: &[markup::Slot::single((NS_XNE, "sqref"))],
+    slots: &[markup::Slot::required((NS_XNE, "sqref"))],
     text: false,
 };
 
@@ -621,8 +621,8 @@ static OLAP_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "pivotCacheId")],
     name: (NS_X14, "olap"),
     slots: &[
-        markup::Slot::single((NS_X14, "levels")),
-        markup::Slot::single((NS_X14, "selections")),
+        markup::Slot::required((NS_X14, "levels")),
+        markup::Slot::required((NS_X14, "selections")),
         markup::Slot::single((NS_X14, "extLst")),
     ],
     text: false,
@@ -719,8 +719,8 @@ static PIVOT_CHANGE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "allocationMethod"), (None, "weightExpression")],
     name: (NS_X14, "pivotChange"),
     slots: &[
-        markup::Slot::single((NS_X14, "editValue")),
-        markup::Slot::single((NS_X14, "tupleItems")),
+        markup::Slot::required((NS_X14, "editValue")),
+        markup::Slot::required((NS_X14, "tupleItems")),
         markup::Slot::single((NS_X14, "extLst")),
     ],
     text: false,
@@ -737,9 +737,9 @@ static PIVOT_EDIT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X14, "pivotEdit"),
     slots: &[
-        markup::Slot::single((NS_X14, "userEdit")),
-        markup::Slot::single((NS_X14, "tupleItems")),
-        markup::Slot::single((NS_X14, "pivotArea")),
+        markup::Slot::required((NS_X14, "userEdit")),
+        markup::Slot::required((NS_X14, "tupleItems")),
+        markup::Slot::required((NS_X14, "pivotArea")),
         markup::Slot::single((NS_X14, "extLst")),
     ],
     text: false,
@@ -798,7 +798,7 @@ static PIVOT_TABLE_DEFINITION_SHAPE: markup::Shape = markup::Shape {
 static USER_EDIT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X14, "userEdit"),
-    slots: &[markup::Slot::choice(&PIVOT_USER_EDIT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&PIVOT_USER_EDIT_CONTENT_TAGS)],
     text: false,
 };
 
@@ -813,7 +813,7 @@ static PROTECTED_RANGE_SHAPE: markup::Shape = markup::Shape {
         (None, "securityDescriptor"),
     ],
     name: (NS_X14, "protectedRange"),
-    slots: &[markup::Slot::single((NS_XNE, "sqref"))],
+    slots: &[markup::Slot::required((NS_XNE, "sqref"))],
     text: false,
 };
 
@@ -866,7 +866,9 @@ static SLICER_CACHE_SHAPE: markup::Shape = markup::Shape {
 static DATA_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X14, "data"),
-    slots: &[markup::Slot::choice(&SLICER_CACHE_DATA_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &SLICER_CACHE_DATA_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -978,7 +980,7 @@ static SPARKLINE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X14, "sparkline"),
     slots: &[
         markup::Slot::single((NS_XNE, "f")),
-        markup::Slot::single((NS_XNE, "sqref")),
+        markup::Slot::required((NS_XNE, "sqref")),
     ],
     text: false,
 };
@@ -1014,7 +1016,7 @@ static SPARKLINE_GROUP_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_X14, "colorHigh")),
         markup::Slot::single((NS_X14, "colorLow")),
         markup::Slot::single((NS_XNE, "f")),
-        markup::Slot::single((NS_X14, "sparklines")),
+        markup::Slot::required((NS_X14, "sparklines")),
     ],
     text: false,
 };
@@ -1050,7 +1052,7 @@ static TABULAR_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X14, "tabular"),
     slots: &[
-        markup::Slot::single((NS_X14, "items")),
+        markup::Slot::required((NS_X14, "items")),
         markup::Slot::single((NS_X14, "extLst")),
     ],
     text: false,
@@ -1081,8 +1083,8 @@ static TUPLE_SET_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "rowCount"), (None, "columnCount")],
     name: (NS_X14, "tupleSet"),
     slots: &[
-        markup::Slot::single((NS_X14, "headers")),
-        markup::Slot::single((NS_X14, "rows")),
+        markup::Slot::required((NS_X14, "headers")),
+        markup::Slot::required((NS_X14, "rows")),
     ],
     text: false,
 };

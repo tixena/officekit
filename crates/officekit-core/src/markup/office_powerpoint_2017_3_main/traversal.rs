@@ -310,7 +310,7 @@ impl markup::Transform for super::TrackLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.track, ctx, &mut rebase);
         Self {
             track: child_1,
@@ -386,7 +386,7 @@ impl markup::Transform for super::TracksInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.track_lst, ctx, &mut rebase);
         Self {
             display_loc: self.display_loc.clone(),

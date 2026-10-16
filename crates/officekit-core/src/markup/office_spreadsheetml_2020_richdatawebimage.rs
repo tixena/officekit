@@ -240,7 +240,7 @@ static WEB_IMAGE_SRD_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "webImageSrd"),
     slots: &[
-        markup::Slot::single((NS_XLRDWI, "address")),
+        markup::Slot::required((NS_XLRDWI, "address")),
         markup::Slot::single((NS_XLRDWI, "moreImagesAddress")),
         markup::Slot::single((NS_XLRDWI, "blip")),
     ],

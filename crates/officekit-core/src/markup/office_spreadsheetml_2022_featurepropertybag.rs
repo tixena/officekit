@@ -345,7 +345,7 @@ static REVDXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "revdxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -362,7 +362,7 @@ static COLUMN_BODY_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnBodyRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -372,7 +372,7 @@ static COLUMN_HEADER_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnHeaderRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -382,7 +382,7 @@ static COLUMN_TOTALS_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnTotalsRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -392,7 +392,7 @@ static DATA_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "dataRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -402,7 +402,7 @@ static HEADER_ROW_BORDER_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "headerRowBorderRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -412,7 +412,7 @@ static HEADER_ROW_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "headerRowRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -422,7 +422,7 @@ static TABLE_BORDER_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "tableBorderRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -432,7 +432,7 @@ static TOTALS_ROW_BORDER_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "totalsRowBorderRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,
@@ -442,7 +442,7 @@ static TOTALS_ROW_REV_DXF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_XFPB, "totalsRowRevDxf"),
     slots: &[
-        markup::Slot::single((NS_XFPB, "fpbs")),
+        markup::Slot::required((NS_XFPB, "fpbs")),
         markup::Slot::single((NS_XFPB, "dxf")),
     ],
     text: false,

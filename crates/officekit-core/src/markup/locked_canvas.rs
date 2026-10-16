@@ -233,8 +233,8 @@ static LOCKED_CANVAS_CONTAINER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_LC, "lockedCanvas"),
     slots: &[
-        markup::Slot::single((NS_A, "nvGrpSpPr")),
-        markup::Slot::single((NS_A, "grpSpPr")),
+        markup::Slot::required((NS_A, "nvGrpSpPr")),
+        markup::Slot::required((NS_A, "grpSpPr")),
         markup::Slot::items(&super::drawing::GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_A, "extLst")),
     ],

@@ -240,10 +240,10 @@ static STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PIC14, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };

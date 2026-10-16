@@ -251,10 +251,10 @@ static WEBEXTENSION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id"), (None, "frozen")],
     name: (NS_WE, "webextension"),
     slots: &[
-        markup::Slot::single((NS_WE, "reference")),
+        markup::Slot::required((NS_WE, "reference")),
         markup::Slot::single((NS_WE, "alternateReferences")),
-        markup::Slot::single((NS_WE, "properties")),
-        markup::Slot::single((NS_WE, "bindings")),
+        markup::Slot::required((NS_WE, "properties")),
+        markup::Slot::required((NS_WE, "bindings")),
         markup::Slot::single((NS_WE, "snapshot")),
         markup::Slot::single((NS_WE, "extLst")),
     ],

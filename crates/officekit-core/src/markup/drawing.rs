@@ -258,42 +258,42 @@ const NS_XVML: Option<NamespaceId> = Some(162);
 static ACCENT1_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent1"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static ACCENT2_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent2"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static ACCENT3_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent3"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static ACCENT4_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent4"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static ACCENT5_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent5"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static ACCENT6_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "accent6"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -314,7 +314,7 @@ static POLAR_ADJUST_HANDLE_SHAPE: markup::Shape = markup::Shape {
         (None, "maxAng"),
     ],
     name: (NS_A, "ahPolar"),
-    slots: &[markup::Slot::single((NS_A, "pos"))],
+    slots: &[markup::Slot::required((NS_A, "pos"))],
     text: false,
 };
 
@@ -328,7 +328,7 @@ static XY_ADJUST_HANDLE_SHAPE: markup::Shape = markup::Shape {
         (None, "maxY"),
     ],
     name: (NS_A, "ahXY"),
-    slots: &[markup::Slot::single((NS_A, "pos"))],
+    slots: &[markup::Slot::required((NS_A, "pos"))],
     text: false,
 };
 
@@ -370,7 +370,7 @@ static ALPHA_INVERSE_EFFECT_SHAPE: markup::Shape = markup::Shape {
 static ALPHA_MODULATE_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "alphaMod"),
-    slots: &[markup::Slot::single((NS_A, "cont"))],
+    slots: &[markup::Slot::required((NS_A, "cont"))],
     text: false,
 };
 
@@ -427,8 +427,8 @@ static AUDIO_FROM_CD_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "audioCd"),
     slots: &[
-        markup::Slot::single((NS_A, "st")),
-        markup::Slot::single((NS_A, "end")),
+        markup::Slot::required((NS_A, "st")),
+        markup::Slot::required((NS_A, "end")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -452,9 +452,9 @@ static BACKDROP_PLANE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "backdrop"),
     slots: &[
-        markup::Slot::single((NS_A, "anchor")),
-        markup::Slot::single((NS_A, "norm")),
-        markup::Slot::single((NS_A, "up")),
+        markup::Slot::required((NS_A, "anchor")),
+        markup::Slot::required((NS_A, "norm")),
+        markup::Slot::required((NS_A, "up")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -531,7 +531,7 @@ static TOP_BEVEL_SHAPE: markup::Shape = markup::Shape {
 static BACKGROUND_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "bgClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -566,7 +566,7 @@ static BUILD_DIAGRAM_SHAPE: markup::Shape = markup::Shape {
 static BLEND_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "blend")],
     name: (NS_A, "blend"),
-    slots: &[markup::Slot::single((NS_A, "cont"))],
+    slots: &[markup::Slot::required((NS_A, "cont"))],
     text: false,
 };
 
@@ -655,7 +655,9 @@ static BODY_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
 static BOTTOM_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "bottom"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -676,7 +678,7 @@ static AUTO_NUMBERED_BULLET_SHAPE: markup::Shape = markup::Shape {
 static PICTURE_BULLET_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "buBlip"),
-    slots: &[markup::Slot::single((NS_A, "blip"))],
+    slots: &[markup::Slot::required((NS_A, "blip"))],
     text: false,
 };
 
@@ -690,7 +692,7 @@ static CHARACTER_BULLET_SHAPE: markup::Shape = markup::Shape {
 static COLOR_SPECIFIED_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "buClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -828,7 +830,7 @@ static CELL3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "prstMaterial")],
     name: (NS_A, "cell3D"),
     slots: &[
-        markup::Slot::single((NS_A, "bevel")),
+        markup::Slot::required((NS_A, "bevel")),
         markup::Slot::single((NS_A, "lightRig")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -871,8 +873,8 @@ static COLOR_CHANGE_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "useA")],
     name: (NS_A, "clrChange"),
     slots: &[
-        markup::Slot::single((NS_A, "clrFrom")),
-        markup::Slot::single((NS_A, "clrTo")),
+        markup::Slot::required((NS_A, "clrFrom")),
+        markup::Slot::required((NS_A, "clrTo")),
     ],
     text: false,
 };
@@ -880,7 +882,7 @@ static COLOR_CHANGE_EFFECT_SHAPE: markup::Shape = markup::Shape {
 static CHANGE_COLOR_FROM_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "clrFrom"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -907,7 +909,7 @@ static COLOR_MAP_SHAPE: markup::Shape = markup::Shape {
 static SOLID_COLOR_REPLACEMENT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "clrRepl"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -915,18 +917,18 @@ static COLOR_SCHEME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "clrScheme"),
     slots: &[
-        markup::Slot::single((NS_A, "dk1")),
-        markup::Slot::single((NS_A, "lt1")),
-        markup::Slot::single((NS_A, "dk2")),
-        markup::Slot::single((NS_A, "lt2")),
-        markup::Slot::single((NS_A, "accent1")),
-        markup::Slot::single((NS_A, "accent2")),
-        markup::Slot::single((NS_A, "accent3")),
-        markup::Slot::single((NS_A, "accent4")),
-        markup::Slot::single((NS_A, "accent5")),
-        markup::Slot::single((NS_A, "accent6")),
-        markup::Slot::single((NS_A, "hlink")),
-        markup::Slot::single((NS_A, "folHlink")),
+        markup::Slot::required((NS_A, "dk1")),
+        markup::Slot::required((NS_A, "lt1")),
+        markup::Slot::required((NS_A, "dk2")),
+        markup::Slot::required((NS_A, "lt2")),
+        markup::Slot::required((NS_A, "accent1")),
+        markup::Slot::required((NS_A, "accent2")),
+        markup::Slot::required((NS_A, "accent3")),
+        markup::Slot::required((NS_A, "accent4")),
+        markup::Slot::required((NS_A, "accent5")),
+        markup::Slot::required((NS_A, "accent6")),
+        markup::Slot::required((NS_A, "hlink")),
+        markup::Slot::required((NS_A, "folHlink")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -935,7 +937,7 @@ static COLOR_SCHEME_SHAPE: markup::Shape = markup::Shape {
 static CHANGE_COLOR_TO_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "clrTo"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -956,7 +958,7 @@ static EFFECT_CONTAINER_CONT_SHAPE: markup::Shape = markup::Shape {
 static CONTOUR_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "contourClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1000,7 +1002,7 @@ static DRAW_CUBIC_BEZIER_CURVE_TO_SHAPE: markup::Shape = markup::Shape {
 static CUSTOM_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "custClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1027,7 +1029,7 @@ static CUSTOM_GEOMETRY_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_A, "ahLst")),
         markup::Slot::single((NS_A, "cxnLst")),
         markup::Slot::single((NS_A, "rect")),
-        markup::Slot::single((NS_A, "pathLst")),
+        markup::Slot::required((NS_A, "pathLst")),
     ],
     text: false,
 };
@@ -1035,7 +1037,7 @@ static CUSTOM_GEOMETRY_SHAPE: markup::Shape = markup::Shape {
 static SHAPE_CONNECTION_SITE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "ang")],
     name: (NS_A, "cxn"),
-    slots: &[markup::Slot::single((NS_A, "pos"))],
+    slots: &[markup::Slot::required((NS_A, "pos"))],
     text: false,
 };
 
@@ -1050,8 +1052,8 @@ static CONNECTION_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "cxnSp"),
     slots: &[
-        markup::Slot::single((NS_A, "nvCxnSpPr")),
-        markup::Slot::single((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "nvCxnSpPr")),
+        markup::Slot::required((NS_A, "spPr")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -1158,14 +1160,14 @@ static DIAGRAM_TO_ANIMATE_SHAPE: markup::Shape = markup::Shape {
 static DARK1_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "dk1"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static DARK2_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "dk2"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1198,7 +1200,9 @@ static EAST_ASIAN_FONT_SHAPE: markup::Shape = markup::Shape {
 static EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "effect"),
-    slots: &[markup::Slot::choice(&EFFECT_PROPERTIES_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &EFFECT_PROPERTIES_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -1243,7 +1247,7 @@ static EFFECT_STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "effectStyle"),
     slots: &[
-        markup::Slot::choice(&EFFECT_PROPERTIES_CONTENT_TAGS),
+        markup::Slot::required_choice(&EFFECT_PROPERTIES_CONTENT_TAGS),
         markup::Slot::single((NS_A, "scene3d")),
         markup::Slot::single((NS_A, "sp3d")),
     ],
@@ -1338,7 +1342,7 @@ static EXTRA_COLOR_SCHEME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "extraClrScheme"),
     slots: &[
-        markup::Slot::single((NS_A, "clrScheme")),
+        markup::Slot::required((NS_A, "clrScheme")),
         markup::Slot::single((NS_A, "clrMap")),
     ],
     text: false,
@@ -1354,35 +1358,35 @@ static EXTRA_COLOR_SCHEME_LIST_SHAPE: markup::Shape = markup::Shape {
 static EXTRUSION_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "extrusionClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static FOREGROUND_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "fgClr"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static FILL_FILL_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "fill"),
-    slots: &[markup::Slot::choice(&FILL_PROPERTIES_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
 static FILL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "fill"),
-    slots: &[markup::Slot::choice(&FILL_PROPERTIES_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
 static FILL_OVERLAY_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "blend")],
     name: (NS_A, "fillOverlay"),
-    slots: &[markup::Slot::choice(&FILL_PROPERTIES_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1456,10 +1460,10 @@ static FORMAT_SCHEME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "fmtScheme"),
     slots: &[
-        markup::Slot::single((NS_A, "fillStyleLst")),
-        markup::Slot::single((NS_A, "lnStyleLst")),
-        markup::Slot::single((NS_A, "effectStyleLst")),
-        markup::Slot::single((NS_A, "bgFillStyleLst")),
+        markup::Slot::required((NS_A, "fillStyleLst")),
+        markup::Slot::required((NS_A, "lnStyleLst")),
+        markup::Slot::required((NS_A, "effectStyleLst")),
+        markup::Slot::required((NS_A, "bgFillStyleLst")),
     ],
     text: false,
 };
@@ -1467,7 +1471,7 @@ static FORMAT_SCHEME_SHAPE: markup::Shape = markup::Shape {
 static FOLLOWED_HYPERLINK_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "folHlink"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1475,9 +1479,9 @@ static FONT_FONT_COLLECTION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "font"),
     slots: &[
-        markup::Slot::single((NS_A, "latin")),
-        markup::Slot::single((NS_A, "ea")),
-        markup::Slot::single((NS_A, "cs")),
+        markup::Slot::required((NS_A, "latin")),
+        markup::Slot::required((NS_A, "ea")),
+        markup::Slot::required((NS_A, "cs")),
         markup::Slot::list((NS_A, "font")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -1502,8 +1506,8 @@ static FONT_SCHEME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "fontScheme"),
     slots: &[
-        markup::Slot::single((NS_A, "majorFont")),
-        markup::Slot::single((NS_A, "minorFont")),
+        markup::Slot::required((NS_A, "majorFont")),
+        markup::Slot::required((NS_A, "minorFont")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -1533,7 +1537,7 @@ static LIST_OF_SHAPE_GUIDES_SHAPE: markup::Shape = markup::Shape {
 static GLOW_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "rad")],
     name: (NS_A, "glow"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1551,7 +1555,7 @@ static GRADIENT_FILL_SHAPE: markup::Shape = markup::Shape {
 static GRAPHIC_OBJECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "graphic"),
-    slots: &[markup::Slot::single((NS_A, "graphicData"))],
+    slots: &[markup::Slot::required((NS_A, "graphicData"))],
     text: false,
 };
 
@@ -1566,9 +1570,9 @@ static GRAPHIC_FRAME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "graphicFrame"),
     slots: &[
-        markup::Slot::single((NS_A, "nvGraphicFramePr")),
-        markup::Slot::single((NS_A, "graphic")),
-        markup::Slot::single((NS_A, "xfrm")),
+        markup::Slot::required((NS_A, "nvGraphicFramePr")),
+        markup::Slot::required((NS_A, "graphic")),
+        markup::Slot::required((NS_A, "xfrm")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -1641,8 +1645,8 @@ static GROUP_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "grpSp"),
     slots: &[
-        markup::Slot::single((NS_A, "nvGrpSpPr")),
-        markup::Slot::single((NS_A, "grpSpPr")),
+        markup::Slot::required((NS_A, "nvGrpSpPr")),
+        markup::Slot::required((NS_A, "grpSpPr")),
         markup::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -1680,7 +1684,7 @@ static VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
 static GRADIENT_STOPS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "pos")],
     name: (NS_A, "gs"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1715,14 +1719,14 @@ static HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE: markup::Shape = markup::Sh
 static HIGHLIGHT_COLOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "highlight"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static HYPERLINK_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "hlink"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1821,21 +1825,25 @@ static HUE_OFFSET_SHAPE: markup::Shape = markup::Shape {
 static INNER_SHADOW_EFFECT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "blurRad"), (None, "dist"), (None, "dir")],
     name: (NS_A, "innerShdw"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static INSIDE_HORIZONTAL_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "insideH"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static INSIDE_VERTICAL_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "insideV"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -1888,7 +1896,9 @@ static LATIN_FONT_SHAPE: markup::Shape = markup::Shape {
 static LEFT_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "left"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -1952,9 +1962,9 @@ static LINE_DEFAULT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "lnDef"),
     slots: &[
-        markup::Slot::single((NS_A, "spPr")),
-        markup::Slot::single((NS_A, "bodyPr")),
-        markup::Slot::single((NS_A, "lstStyle")),
+        markup::Slot::required((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "lstStyle")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -1999,7 +2009,7 @@ static LINE_REFERENCE_SHAPE: markup::Shape = markup::Shape {
 static LINE_SPACING_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "lnSpc"),
-    slots: &[markup::Slot::choice(&TEXT_SPACING_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
@@ -2041,7 +2051,7 @@ static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: markup::Shape = ma
 static DRAW_LINE_TO_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "lnTo"),
-    slots: &[markup::Slot::single((NS_A, "pt"))],
+    slots: &[markup::Slot::required((NS_A, "pt"))],
     text: false,
 };
 
@@ -2067,14 +2077,14 @@ static TEXT_LIST_STYLES_SHAPE: markup::Shape = markup::Shape {
 static LIGHT1_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "lt1"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
 static LIGHT2_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "lt2"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -2380,9 +2390,9 @@ static MAJOR_FONT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "majorFont"),
     slots: &[
-        markup::Slot::single((NS_A, "latin")),
-        markup::Slot::single((NS_A, "ea")),
-        markup::Slot::single((NS_A, "cs")),
+        markup::Slot::required((NS_A, "latin")),
+        markup::Slot::required((NS_A, "ea")),
+        markup::Slot::required((NS_A, "cs")),
         markup::Slot::list((NS_A, "font")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -2400,9 +2410,9 @@ static MINOR_FONTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "minorFont"),
     slots: &[
-        markup::Slot::single((NS_A, "latin")),
-        markup::Slot::single((NS_A, "ea")),
-        markup::Slot::single((NS_A, "cs")),
+        markup::Slot::required((NS_A, "latin")),
+        markup::Slot::required((NS_A, "ea")),
+        markup::Slot::required((NS_A, "cs")),
         markup::Slot::list((NS_A, "font")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -2419,7 +2429,7 @@ static MITER_LINE_JOIN_SHAPE: markup::Shape = markup::Shape {
 static MOVE_PATH_TO_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "moveTo"),
-    slots: &[markup::Slot::single((NS_A, "pt"))],
+    slots: &[markup::Slot::required((NS_A, "pt"))],
     text: false,
 };
 
@@ -2465,8 +2475,8 @@ static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: markup::Shape = marku
     attributes: &[],
     name: (NS_A, "nvCxnSpPr"),
     slots: &[
-        markup::Slot::single((NS_A, "cNvPr")),
-        markup::Slot::single((NS_A, "cNvCxnSpPr")),
+        markup::Slot::required((NS_A, "cNvPr")),
+        markup::Slot::required((NS_A, "cNvCxnSpPr")),
     ],
     text: false,
 };
@@ -2475,8 +2485,8 @@ static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: markup::Shape = markup::
     attributes: &[],
     name: (NS_A, "nvGraphicFramePr"),
     slots: &[
-        markup::Slot::single((NS_A, "cNvPr")),
-        markup::Slot::single((NS_A, "cNvGraphicFramePr")),
+        markup::Slot::required((NS_A, "cNvPr")),
+        markup::Slot::required((NS_A, "cNvGraphicFramePr")),
     ],
     text: false,
 };
@@ -2485,8 +2495,8 @@ static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: markup::Shape = markup::Sh
     attributes: &[],
     name: (NS_A, "nvGrpSpPr"),
     slots: &[
-        markup::Slot::single((NS_A, "cNvPr")),
-        markup::Slot::single((NS_A, "cNvGrpSpPr")),
+        markup::Slot::required((NS_A, "cNvPr")),
+        markup::Slot::required((NS_A, "cNvGrpSpPr")),
     ],
     text: false,
 };
@@ -2495,8 +2505,8 @@ static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: markup::Shape = markup::Shape 
     attributes: &[],
     name: (NS_A, "nvPicPr"),
     slots: &[
-        markup::Slot::single((NS_A, "cNvPr")),
-        markup::Slot::single((NS_A, "cNvPicPr")),
+        markup::Slot::required((NS_A, "cNvPr")),
+        markup::Slot::required((NS_A, "cNvPicPr")),
     ],
     text: false,
 };
@@ -2505,8 +2515,8 @@ static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "nvSpPr"),
     slots: &[
-        markup::Slot::single((NS_A, "cNvPr")),
-        markup::Slot::single((NS_A, "cNvSpPr")),
+        markup::Slot::required((NS_A, "cNvPr")),
+        markup::Slot::required((NS_A, "cNvSpPr")),
     ],
     text: false,
 };
@@ -2553,7 +2563,7 @@ static OUTER_SHADOW_EFFECT_SHAPE: markup::Shape = markup::Shape {
         (None, "rotWithShape"),
     ],
     name: (NS_A, "outerShdw"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -2659,9 +2669,9 @@ static PICTURE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "pic"),
     slots: &[
-        markup::Slot::single((NS_A, "nvPicPr")),
-        markup::Slot::single((NS_A, "blipFill")),
-        markup::Slot::single((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "nvPicPr")),
+        markup::Slot::required((NS_A, "blipFill")),
+        markup::Slot::required((NS_A, "spPr")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -2718,7 +2728,7 @@ static PRESET_GEOMETRY_SHAPE: markup::Shape = markup::Shape {
 static PRESET_SHADOW_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "prst"), (None, "dist"), (None, "dir")],
     name: (NS_A, "prstShdw"),
-    slots: &[markup::Slot::choice(&COLOR_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
@@ -2755,7 +2765,7 @@ static TEXT_RUN_SHAPE: markup::Shape = markup::Shape {
     name: (NS_A, "r"),
     slots: &[
         markup::Slot::single((NS_A, "rPr")),
-        markup::Slot::single((NS_A, "t")),
+        markup::Slot::required((NS_A, "t")),
     ],
     text: false,
 };
@@ -2862,7 +2872,9 @@ static RELATIVE_OFFSET_EFFECT_SHAPE: markup::Shape = markup::Shape {
 static RIGHT_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "right"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -2912,8 +2924,8 @@ static SCENE3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "scene3d"),
     slots: &[
-        markup::Slot::single((NS_A, "camera")),
-        markup::Slot::single((NS_A, "lightRig")),
+        markup::Slot::required((NS_A, "camera")),
+        markup::Slot::required((NS_A, "lightRig")),
         markup::Slot::single((NS_A, "backdrop")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -2976,8 +2988,8 @@ static SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "sp"),
     slots: &[
-        markup::Slot::single((NS_A, "nvSpPr")),
-        markup::Slot::single((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "nvSpPr")),
+        markup::Slot::required((NS_A, "spPr")),
         markup::Slot::single((NS_A, "txSp")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
@@ -3014,9 +3026,9 @@ static SHAPE_DEFAULT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "spDef"),
     slots: &[
-        markup::Slot::single((NS_A, "spPr")),
-        markup::Slot::single((NS_A, "bodyPr")),
-        markup::Slot::single((NS_A, "lstStyle")),
+        markup::Slot::required((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "lstStyle")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -3061,14 +3073,14 @@ static SHAPE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
 static SPACE_AFTER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "spcAft"),
-    slots: &[markup::Slot::choice(&TEXT_SPACING_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
 static SPACE_BEFORE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "spcBef"),
-    slots: &[markup::Slot::choice(&TEXT_SPACING_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
@@ -3125,10 +3137,10 @@ static SHAPE_STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -3239,7 +3251,7 @@ static TABLE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_A, "tbl"),
     slots: &[
         markup::Slot::single((NS_A, "tblPr")),
-        markup::Slot::single((NS_A, "tblGrid")),
+        markup::Slot::required((NS_A, "tblGrid")),
         markup::Slot::list((NS_A, "tr")),
     ],
     text: false,
@@ -3399,7 +3411,7 @@ static THEME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "name"), (NS_THM15, "id")],
     name: (NS_A, "theme"),
     slots: &[
-        markup::Slot::single((NS_A, "themeElements")),
+        markup::Slot::required((NS_A, "themeElements")),
         markup::Slot::single((NS_A, "objectDefaults")),
         markup::Slot::single((NS_A, "extraClrSchemeLst")),
         markup::Slot::single((NS_A, "custClrLst")),
@@ -3412,9 +3424,9 @@ static THEME_ELEMENTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "themeElements"),
     slots: &[
-        markup::Slot::single((NS_A, "clrScheme")),
-        markup::Slot::single((NS_A, "fontScheme")),
-        markup::Slot::single((NS_A, "fmtScheme")),
+        markup::Slot::required((NS_A, "clrScheme")),
+        markup::Slot::required((NS_A, "fontScheme")),
+        markup::Slot::required((NS_A, "fmtScheme")),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -3476,14 +3488,18 @@ static TINT_EFFECT_SHAPE: markup::Shape = markup::Shape {
 static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "tl2br"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static TOP_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "top"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -3500,7 +3516,9 @@ static TABLE_ROW_SHAPE: markup::Shape = markup::Shape {
 static TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "tr2bl"),
-    slots: &[markup::Slot::choice(&THEMEABLE_LINE_STYLE_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &THEMEABLE_LINE_STYLE_CONTENT_TAGS,
+    )],
     text: false,
 };
 
@@ -3508,7 +3526,7 @@ static SHAPE_TEXT_BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "txBody"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -3519,9 +3537,9 @@ static TEXT_DEFAULT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "txDef"),
     slots: &[
-        markup::Slot::single((NS_A, "spPr")),
-        markup::Slot::single((NS_A, "bodyPr")),
-        markup::Slot::single((NS_A, "lstStyle")),
+        markup::Slot::required((NS_A, "spPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "lstStyle")),
         markup::Slot::single((NS_A, "style")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -3532,8 +3550,8 @@ static TEXT_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "txSp"),
     slots: &[
-        markup::Slot::single((NS_A, "txBody")),
-        markup::Slot::choice(&TEXT_SHAPE_CONTENT_TAGS),
+        markup::Slot::required((NS_A, "txBody")),
+        markup::Slot::required_choice(&TEXT_SHAPE_CONTENT_TAGS),
         markup::Slot::single((NS_A, "extLst")),
     ],
     text: false,
@@ -3542,7 +3560,7 @@ static TEXT_SHAPE_SHAPE: markup::Shape = markup::Shape {
 static UNDERLINE_FILL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_A, "uFill"),
-    slots: &[markup::Slot::choice(&FILL_PROPERTIES_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 

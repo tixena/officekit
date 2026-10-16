@@ -234,7 +234,7 @@ static EMBED_ANIM_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "animId")],
     name: (NS_A3DANIM, "embedAnim"),
     slots: &[
-        markup::Slot::single((NS_A3DANIM, "animPr")),
+        markup::Slot::required((NS_A3DANIM, "animPr")),
         markup::Slot::single((NS_A3DANIM, "extLst")),
     ],
     text: false,

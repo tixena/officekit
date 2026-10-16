@@ -370,7 +370,7 @@ impl markup::Transform for super::Cat {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,
@@ -442,7 +442,7 @@ impl markup::Transform for super::CategoryFilterException {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.sp_pr, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.explosion, ctx, &mut rebase);
@@ -543,7 +543,7 @@ impl markup::Transform for super::CategoryFilterExceptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.category_filter_exception, ctx, &mut rebase);
         Self {
             category_filter_exception: child_1,
@@ -616,7 +616,7 @@ impl markup::Transform for super::DLbl {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_2 = markup::transform_items(&self.content, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -696,7 +696,7 @@ impl markup::Transform for super::DatalabelsRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.f, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.dlbl_range_cache, ctx, &mut rebase);
         Self {
@@ -776,7 +776,7 @@ impl markup::Transform for super::DlblFTEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.txfld_guid, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.f, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.dlbl_field_table_cache, ctx, &mut rebase);
@@ -860,7 +860,7 @@ impl markup::Transform for super::DlblFieldTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.dlbl_ft_entry, ctx, &mut rebase);
         Self {
             dlbl_ft_entry: child_1,
@@ -936,7 +936,7 @@ impl markup::Transform for super::DlblFieldTableCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.string_point, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -1021,7 +1021,7 @@ impl markup::Transform for super::DlblRangeCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.string_point, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -1237,7 +1237,7 @@ impl markup::Transform for super::FilteredAreaSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_area_ser, ctx, &mut rebase);
         Self {
             ser_area_ser: child_1,
@@ -1314,7 +1314,7 @@ impl markup::Transform for super::FilteredBarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_bar_ser, ctx, &mut rebase);
         Self {
             ser_bar_ser: child_1,
@@ -1391,7 +1391,7 @@ impl markup::Transform for super::FilteredBubbleSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_bubble_ser, ctx, &mut rebase);
         Self {
             ser_bubble_ser: child_1,
@@ -1468,7 +1468,7 @@ impl markup::Transform for super::FilteredCategoryTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.cat, ctx, &mut rebase);
         Self {
             cat: child_1,
@@ -1545,7 +1545,7 @@ impl markup::Transform for super::FilteredLineSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_line_ser, ctx, &mut rebase);
         Self {
             ser_line_ser: child_1,
@@ -1622,7 +1622,7 @@ impl markup::Transform for super::FilteredPieSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_pie_ser, ctx, &mut rebase);
         Self {
             ser_pie_ser: child_1,
@@ -1699,7 +1699,7 @@ impl markup::Transform for super::FilteredRadarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_radar_ser, ctx, &mut rebase);
         Self {
             ser_radar_ser: child_1,
@@ -1776,7 +1776,7 @@ impl markup::Transform for super::FilteredScatterSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_scatter_ser, ctx, &mut rebase);
         Self {
             ser_scatter_ser: child_1,
@@ -1853,7 +1853,7 @@ impl markup::Transform for super::FilteredSeriesTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.tx, ctx, &mut rebase);
         Self {
             tx: child_1,
@@ -1930,7 +1930,7 @@ impl markup::Transform for super::FilteredSurfaceSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ser_surface_ser, ctx, &mut rebase);
         Self {
             ser_surface_ser: child_1,
@@ -2007,7 +2007,7 @@ impl markup::Transform for super::FormulaRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
             sqref: child_1,
@@ -2083,7 +2083,7 @@ impl markup::Transform for super::FullRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
             sqref: child_1,
@@ -2232,7 +2232,7 @@ impl markup::Transform for super::Layout {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.manual, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
         Self {
@@ -2312,7 +2312,7 @@ impl markup::Transform for super::LeaderLines {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
         Self {
             shape_properties: child_1,
@@ -2388,7 +2388,7 @@ impl markup::Transform for super::LevelRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sqref, ctx, &mut rebase);
         Self {
             sqref: child_1,
@@ -2464,7 +2464,7 @@ impl markup::Transform for super::Marker {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.symbol, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.size, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
@@ -2626,7 +2626,7 @@ impl markup::Transform for super::PivotSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pivot_name, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.format_id, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -2710,7 +2710,7 @@ impl markup::Transform for super::SerAreaSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -2830,7 +2830,7 @@ impl markup::Transform for super::SerBarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -2958,7 +2958,7 @@ impl markup::Transform for super::SerBubbleSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3086,7 +3086,7 @@ impl markup::Transform for super::SerLineSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3210,7 +3210,7 @@ impl markup::Transform for super::SerPieSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3322,7 +3322,7 @@ impl markup::Transform for super::SerRadarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3434,7 +3434,7 @@ impl markup::Transform for super::SerScatterSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_01 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_02 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_03 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3558,7 +3558,7 @@ impl markup::Transform for super::SerSurfaceSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.order, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3799,7 +3799,7 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -3961,7 +3961,7 @@ impl markup::Transform for super::Tx {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,

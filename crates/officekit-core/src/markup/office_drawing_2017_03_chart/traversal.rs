@@ -230,7 +230,7 @@ impl markup::Transform for super::DataDisplayOptions16 {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.disp_na_as_blank, ctx, &mut rebase);
         Self {
             disp_na_as_blank: child_1,

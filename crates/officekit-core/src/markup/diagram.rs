@@ -445,7 +445,7 @@ static DATA_MODEL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DGM, "dataModel"),
     slots: &[
-        markup::Slot::single((NS_DGM, "ptLst")),
+        markup::Slot::required((NS_DGM, "ptLst")),
         markup::Slot::single((NS_DGM, "cxnLst")),
         markup::Slot::single((NS_DGM, "bg")),
         markup::Slot::single((NS_DGM, "whole")),
@@ -562,7 +562,7 @@ static LAYOUT_DEFINITION_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_DGM, "sampData")),
         markup::Slot::single((NS_DGM, "styleData")),
         markup::Slot::single((NS_DGM, "clrData")),
-        markup::Slot::single((NS_DGM, "layoutNode")),
+        markup::Slot::required((NS_DGM, "layoutNode")),
         markup::Slot::single((NS_DGM, "extLst")),
     ],
     text: false,
@@ -761,8 +761,8 @@ static SCENE3D_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DGM, "scene3d"),
     slots: &[
-        markup::Slot::single((NS_A, "camera")),
-        markup::Slot::single((NS_A, "lightRig")),
+        markup::Slot::required((NS_A, "camera")),
+        markup::Slot::required((NS_A, "lightRig")),
         markup::Slot::single((NS_A, "backdrop")),
         markup::Slot::single((NS_A, "extLst")),
     ],
@@ -825,10 +825,10 @@ static SHAPE_STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DGM, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -905,7 +905,7 @@ static TEXT_BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_DGM, "t"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],

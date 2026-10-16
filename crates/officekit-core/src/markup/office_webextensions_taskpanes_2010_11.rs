@@ -254,7 +254,7 @@ static TASKPANE_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_WETP, "taskpane"),
     slots: &[
-        markup::Slot::single((NS_WETP, "webextensionref")),
+        markup::Slot::required((NS_WETP, "webextensionref")),
         markup::Slot::single((NS_WETP, "extLst")),
     ],
     text: false,

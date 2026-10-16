@@ -231,7 +231,7 @@ const NS_CLBL: Option<NamespaceId> = Some(31);
 static EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_CLBL, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,

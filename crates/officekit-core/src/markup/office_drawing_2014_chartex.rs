@@ -292,7 +292,7 @@ static RICH_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "rich"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -303,7 +303,7 @@ static TX_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "txPr"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],
@@ -343,7 +343,7 @@ static AXIS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id"), (None, "hidden")],
     name: (NS_CX, "axis"),
     slots: &[
-        markup::Slot::choice(&AXIS_CONTENT_TAGS),
+        markup::Slot::required_choice(&AXIS_CONTENT_TAGS),
         markup::Slot::single((NS_CX, "title")),
         markup::Slot::single((NS_CX, "units")),
         markup::Slot::single((NS_CX, "majorGridlines")),
@@ -417,7 +417,7 @@ static CHART_CHART_SHAPE: markup::Shape = markup::Shape {
     name: (NS_CX, "chart"),
     slots: &[
         markup::Slot::single((NS_CX, "title")),
-        markup::Slot::single((NS_CX, "plotArea")),
+        markup::Slot::required((NS_CX, "plotArea")),
         markup::Slot::single((NS_CX, "legend")),
         markup::Slot::single((NS_CX, "extLst")),
     ],
@@ -443,8 +443,8 @@ static CHART_SPACE_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_CX, "chartSpace"),
     slots: &[
-        markup::Slot::single((NS_CX, "chartData")),
-        markup::Slot::single((NS_CX, "chart")),
+        markup::Slot::required((NS_CX, "chartData")),
+        markup::Slot::required((NS_CX, "chart")),
         markup::Slot::single((NS_CX, "spPr")),
         markup::Slot::single((NS_CX, "txPr")),
         markup::Slot::single((NS_CX, "clrMapOvr")),
@@ -566,7 +566,7 @@ static DATA_PT_SHAPE: markup::Shape = markup::Shape {
 static EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_CX, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,
@@ -826,7 +826,7 @@ static GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "geoParentEntitiesQueryResult"),
     slots: &[
-        markup::Slot::single((NS_CX, "geoParentEntitiesQuery")),
+        markup::Slot::required((NS_CX, "geoParentEntitiesQuery")),
         markup::Slot::single((NS_CX, "geoEntity")),
         markup::Slot::single((NS_CX, "geoParentEntity")),
     ],
@@ -1015,7 +1015,7 @@ static PLOT_AREA_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "plotArea"),
     slots: &[
-        markup::Slot::single((NS_CX, "plotAreaRegion")),
+        markup::Slot::required((NS_CX, "plotAreaRegion")),
         markup::Slot::list((NS_CX, "axis")),
         markup::Slot::single((NS_CX, "spPr")),
         markup::Slot::single((NS_CX, "extLst")),
@@ -1160,14 +1160,14 @@ static SUBTOTALS_SHAPE: markup::Shape = markup::Shape {
 static TX_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "tx"),
-    slots: &[markup::Slot::choice(&TEXT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&TEXT_CONTENT_TAGS)],
     text: false,
 };
 
 static TX_DATA_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "txData"),
-    slots: &[markup::Slot::choice(&TEXT_DATA_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&TEXT_DATA_CONTENT_TAGS)],
     text: false,
 };
 
@@ -1207,21 +1207,25 @@ static VAL_SCALING_SHAPE: markup::Shape = markup::Shape {
 static MAX_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "max"),
-    slots: &[markup::Slot::choice(&VALUE_COLOR_END_POSITION_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &VALUE_COLOR_END_POSITION_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static MIN_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "min"),
-    slots: &[markup::Slot::choice(&VALUE_COLOR_END_POSITION_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &VALUE_COLOR_END_POSITION_CONTENT_TAGS,
+    )],
     text: false,
 };
 
 static MID_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CX, "mid"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &VALUE_COLOR_MIDDLE_POSITION_CONTENT_TAGS,
     )],
     text: false,

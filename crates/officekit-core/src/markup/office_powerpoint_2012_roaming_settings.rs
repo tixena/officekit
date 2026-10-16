@@ -232,8 +232,8 @@ static PROPS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_PROAM, "props"),
     slots: &[
-        markup::Slot::single((NS_PROAM, "key")),
-        markup::Slot::single((NS_PROAM, "value")),
+        markup::Slot::required((NS_PROAM, "key")),
+        markup::Slot::required((NS_PROAM, "value")),
     ],
     text: false,
 };

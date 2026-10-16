@@ -297,7 +297,7 @@ static SHOW_SKETCH_BTN_SHAPE: markup::Shape = markup::Shape {
 static INVERT_SOLID_FILL_FMT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C14, "invertSolidFillFmt"),
-    slots: &[markup::Slot::single((NS_C14, "spPr"))],
+    slots: &[markup::Slot::required((NS_C14, "spPr"))],
     text: false,
 };
 

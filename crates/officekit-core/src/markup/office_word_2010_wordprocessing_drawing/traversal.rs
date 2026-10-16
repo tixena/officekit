@@ -518,7 +518,7 @@ impl markup::Transform for super::SizeRelH {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pct_width, ctx, &mut rebase);
         Self {
             pct_width: child_1,
@@ -596,7 +596,7 @@ impl markup::Transform for super::SizeRelV {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.pct_height, ctx, &mut rebase);
         Self {
             pct_height: child_1,

@@ -260,14 +260,14 @@ static PCT_WIDTH_SHAPE: markup::Shape = markup::Shape {
 static SIZE_REL_H_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP14, "sizeRelH"),
-    slots: &[markup::Slot::single((NS_WP14, "pctWidth"))],
+    slots: &[markup::Slot::required((NS_WP14, "pctWidth"))],
     text: false,
 };
 
 static SIZE_REL_V_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP14, "sizeRelV"),
-    slots: &[markup::Slot::single((NS_WP14, "pctHeight"))],
+    slots: &[markup::Slot::required((NS_WP14, "pctHeight"))],
     text: false,
 };
 

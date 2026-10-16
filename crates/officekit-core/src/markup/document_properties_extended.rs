@@ -267,7 +267,7 @@ static NAME_OF_COMPANY_SHAPE: markup::Shape = markup::Shape {
 static DIGITAL_SIGNATURE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AP, "DigSig"),
-    slots: &[markup::Slot::single((NS_VT, "blob"))],
+    slots: &[markup::Slot::required((NS_VT, "blob"))],
     text: false,
 };
 
@@ -281,14 +281,14 @@ static DOCUMENT_SECURITY_SHAPE: markup::Shape = markup::Shape {
 static HYPERLINK_LIST_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AP, "HLinks"),
-    slots: &[markup::Slot::single((NS_VT, "vector"))],
+    slots: &[markup::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 
 static HEADING_PAIRS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AP, "HeadingPairs"),
-    slots: &[markup::Slot::single((NS_VT, "vector"))],
+    slots: &[markup::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 
@@ -409,7 +409,7 @@ static NAME_OF_DOCUMENT_TEMPLATE_SHAPE: markup::Shape = markup::Shape {
 static PART_TITLES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_AP, "TitlesOfParts"),
-    slots: &[markup::Slot::single((NS_VT, "vector"))],
+    slots: &[markup::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 

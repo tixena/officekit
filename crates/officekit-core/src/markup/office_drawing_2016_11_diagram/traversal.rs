@@ -230,7 +230,7 @@ impl markup::Transform for super::AutoBuNodeInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.bu_pr, ctx, &mut rebase);
         Self {
             bu_pr: child_1,
@@ -310,7 +310,7 @@ impl markup::Transform for super::AutoBuNodeInfoLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.auto_bu_node_info, ctx, &mut rebase);
         Self {
             auto_bu_node_info: child_1,
@@ -387,7 +387,7 @@ impl markup::Transform for super::BuPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_choice(&self.content, ctx, &mut rebase);
         Self {
             content: child_1,

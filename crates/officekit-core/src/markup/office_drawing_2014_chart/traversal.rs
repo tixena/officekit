@@ -302,7 +302,7 @@ impl markup::Transform for super::CategoryFilterException {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.unique_id, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.sp_pr, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.explosion, ctx, &mut rebase);
@@ -403,7 +403,7 @@ impl markup::Transform for super::CategoryFilterExceptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.category_filter_exception, ctx, &mut rebase);
         Self {
             category_filter_exception: child_1,
@@ -476,7 +476,7 @@ impl markup::Transform for super::DLbl {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.index, ctx, &mut rebase);
         let child_2 = markup::transform_items(&self.content, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -556,7 +556,7 @@ impl markup::Transform for super::Datapointuniqueidmap {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ptentry, ctx, &mut rebase);
         Self {
             ptentry: child_1,
@@ -705,7 +705,7 @@ impl markup::Transform for super::FilteredLitCacheMultiLvlStrFilteredLiteralCach
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.multi_lvl_str_cache, ctx, &mut rebase);
         Self {
             multi_lvl_str_cache: child_1,
@@ -785,7 +785,7 @@ impl markup::Transform for super::FilteredLitCacheNumFilteredLiteralCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.num_cache, ctx, &mut rebase);
         Self {
             num_cache: child_1,
@@ -865,7 +865,7 @@ impl markup::Transform for super::FilteredLitCacheStrFilteredLiteralCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.str_cache, ctx, &mut rebase);
         Self {
             str_cache: child_1,
@@ -1091,7 +1091,7 @@ impl markup::Transform for super::Marker {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.symbol, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.size, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.shape_properties, ctx, &mut rebase);
@@ -1179,7 +1179,7 @@ impl markup::Transform for super::MultiLvlStrCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.level, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);
@@ -1264,7 +1264,7 @@ impl markup::Transform for super::NumCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.format_code, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.point_count, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.numeric_point, ctx, &mut rebase);
@@ -1352,7 +1352,7 @@ impl markup::Transform for super::PivotOptions16 {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 =
             markup::transform_child(&self.show_expand_collapse_field_buttons, ctx, &mut rebase);
         Self {
@@ -1429,7 +1429,7 @@ impl markup::Transform for super::Ptentry {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.ptidx, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.unique_id, ctx, &mut rebase);
         Self {
@@ -1645,7 +1645,7 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -1747,7 +1747,7 @@ impl markup::Transform for super::StrCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.point_count, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.string_point, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.chart_extensibility, ctx, &mut rebase);

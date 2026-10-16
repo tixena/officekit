@@ -237,7 +237,7 @@ static ACCENT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "acc"),
     slots: &[
         markup::Slot::single((NS_M, "accPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -285,7 +285,7 @@ static BAR_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "bar"),
     slots: &[
         markup::Slot::single((NS_M, "barPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -319,7 +319,7 @@ static BORDER_BOX_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "borderBox"),
     slots: &[
         markup::Slot::single((NS_M, "borderBoxPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -346,7 +346,7 @@ static BOX_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "box"),
     slots: &[
         markup::Slot::single((NS_M, "boxPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -549,8 +549,8 @@ static FRACTION_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "f"),
     slots: &[
         markup::Slot::single((NS_M, "fPr")),
-        markup::Slot::single((NS_M, "num")),
-        markup::Slot::single((NS_M, "den")),
+        markup::Slot::required((NS_M, "num")),
+        markup::Slot::required((NS_M, "den")),
     ],
     text: false,
 };
@@ -581,8 +581,8 @@ static FUNCTION_APPLY_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "func"),
     slots: &[
         markup::Slot::single((NS_M, "funcPr")),
-        markup::Slot::single((NS_M, "fName")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "fName")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -599,7 +599,7 @@ static GROUP_CHARACTER_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "groupChr"),
     slots: &[
         markup::Slot::single((NS_M, "groupChrPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -709,8 +709,8 @@ static LOWER_LIMIT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "limLow"),
     slots: &[
         markup::Slot::single((NS_M, "limLowPr")),
-        markup::Slot::single((NS_M, "e")),
-        markup::Slot::single((NS_M, "lim")),
+        markup::Slot::required((NS_M, "e")),
+        markup::Slot::required((NS_M, "lim")),
     ],
     text: false,
 };
@@ -727,8 +727,8 @@ static UPPER_LIMIT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "limUpp"),
     slots: &[
         markup::Slot::single((NS_M, "limUppPr")),
-        markup::Slot::single((NS_M, "e")),
-        markup::Slot::single((NS_M, "lim")),
+        markup::Slot::required((NS_M, "e")),
+        markup::Slot::required((NS_M, "lim")),
     ],
     text: false,
 };
@@ -854,9 +854,9 @@ static NARY_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "nary"),
     slots: &[
         markup::Slot::single((NS_M, "naryPr")),
-        markup::Slot::single((NS_M, "sub")),
-        markup::Slot::single((NS_M, "sup")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "sub")),
+        markup::Slot::required((NS_M, "sup")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -956,7 +956,7 @@ static PHANTOM_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "phant"),
     slots: &[
         markup::Slot::single((NS_M, "phantPr")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -1052,8 +1052,8 @@ static RADICAL_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "rad"),
     slots: &[
         markup::Slot::single((NS_M, "radPr")),
-        markup::Slot::single((NS_M, "deg")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "deg")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -1073,9 +1073,9 @@ static PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "sPre"),
     slots: &[
         markup::Slot::single((NS_M, "sPrePr")),
-        markup::Slot::single((NS_M, "sub")),
-        markup::Slot::single((NS_M, "sup")),
-        markup::Slot::single((NS_M, "e")),
+        markup::Slot::required((NS_M, "sub")),
+        markup::Slot::required((NS_M, "sup")),
+        markup::Slot::required((NS_M, "e")),
     ],
     text: false,
 };
@@ -1092,8 +1092,8 @@ static SUBSCRIPT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "sSub"),
     slots: &[
         markup::Slot::single((NS_M, "sSubPr")),
-        markup::Slot::single((NS_M, "e")),
-        markup::Slot::single((NS_M, "sub")),
+        markup::Slot::required((NS_M, "e")),
+        markup::Slot::required((NS_M, "sub")),
     ],
     text: false,
 };
@@ -1110,9 +1110,9 @@ static SUB_SUPERSCRIPT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "sSubSup"),
     slots: &[
         markup::Slot::single((NS_M, "sSubSupPr")),
-        markup::Slot::single((NS_M, "e")),
-        markup::Slot::single((NS_M, "sub")),
-        markup::Slot::single((NS_M, "sup")),
+        markup::Slot::required((NS_M, "e")),
+        markup::Slot::required((NS_M, "sub")),
+        markup::Slot::required((NS_M, "sup")),
     ],
     text: false,
 };
@@ -1132,8 +1132,8 @@ static SUPERSCRIPT_OBJECT_SHAPE: markup::Shape = markup::Shape {
     name: (NS_M, "sSup"),
     slots: &[
         markup::Slot::single((NS_M, "sSupPr")),
-        markup::Slot::single((NS_M, "e")),
-        markup::Slot::single((NS_M, "sup")),
+        markup::Slot::required((NS_M, "e")),
+        markup::Slot::required((NS_M, "sup")),
     ],
     text: false,
 };

@@ -231,7 +231,7 @@ const NS_W16CUR: Option<NamespaceId> = Some(103);
 static EXT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(NS_W16CUR, "uri")],
     name: (NS_W16CUR, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,

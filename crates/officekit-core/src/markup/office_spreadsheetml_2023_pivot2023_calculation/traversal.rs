@@ -377,7 +377,7 @@ impl markup::Transform for super::PivotAreaReferenceSubtotals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.subtotal_pivot_subtotal_type, ctx, &mut rebase);
         Self {
             subtotal_pivot_subtotal_type: child_1,
@@ -457,7 +457,7 @@ impl markup::Transform for super::PivotFieldSubtotalLineItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.subtotal_line_item, ctx, &mut rebase);
         Self {
             subtotal_line_item: child_1,
@@ -537,7 +537,7 @@ impl markup::Transform for super::PivotFieldSubtotals {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.subtotal_pivot_item_subtotal, ctx, &mut rebase);
         Self {
             subtotal_pivot_item_subtotal: child_1,

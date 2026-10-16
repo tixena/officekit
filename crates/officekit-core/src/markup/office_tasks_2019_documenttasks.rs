@@ -289,7 +289,7 @@ static EVENT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "time"), (None, "id")],
     name: (NS_T, "Event"),
     slots: &[
-        markup::Slot::single((NS_T, "Attribution")),
+        markup::Slot::required((NS_T, "Attribution")),
         markup::Slot::single((NS_T, "Anchor")),
         markup::Slot::choice(&TASK_HISTORY_EVENT_CONTENT_TAGS),
         markup::Slot::single((NS_T, "extLst")),

@@ -66,6 +66,7 @@ fn a_generic_element_is_written_through_unchanged_as_it_is() {
 fn place_writes_each_extra_before_the_declared_child_it_names_and_the_rest_after_the_last() {
     let comment = |text: &str| Node::Comment(text.to_owned());
     let unknown = Unknown {
+        absent: Vec::new(),
         attributes: Vec::new(),
         children: vec![
             Extra {

@@ -449,7 +449,7 @@ static UNSIGNED_INTEGER_SHAPE: markup::Shape = markup::Shape {
 static VARIANT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_VT, "variant"),
-    slots: &[markup::Slot::choice(&VARIANT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(&VARIANT_CONTENT_TAGS)],
     text: false,
 };
 

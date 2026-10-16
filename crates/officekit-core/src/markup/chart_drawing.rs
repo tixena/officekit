@@ -235,9 +235,9 @@ static ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "absSizeAnchor"),
     slots: &[
-        markup::Slot::single((NS_CDR, "from")),
-        markup::Slot::single((NS_CDR, "ext")),
-        markup::Slot::choice(&OBJECT_CONTENT_TAGS),
+        markup::Slot::required((NS_CDR, "from")),
+        markup::Slot::required((NS_CDR, "ext")),
+        markup::Slot::required_choice(&OBJECT_CONTENT_TAGS),
     ],
     text: false,
 };
@@ -326,8 +326,8 @@ static CONNECTION_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "cxnSp"),
     slots: &[
-        markup::Slot::single((NS_CDR, "nvCxnSpPr")),
-        markup::Slot::single((NS_CDR, "spPr")),
+        markup::Slot::required((NS_CDR, "nvCxnSpPr")),
+        markup::Slot::required((NS_CDR, "spPr")),
         markup::Slot::single((NS_CDR, "style")),
     ],
     text: false,
@@ -344,8 +344,8 @@ static STARTING_ANCHOR_POINT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "from"),
     slots: &[
-        markup::Slot::single((NS_CDR, "x")),
-        markup::Slot::single((NS_CDR, "y")),
+        markup::Slot::required((NS_CDR, "x")),
+        markup::Slot::required((NS_CDR, "y")),
     ],
     text: false,
 };
@@ -354,9 +354,9 @@ static GRAPHIC_FRAME_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "graphicFrame"),
     slots: &[
-        markup::Slot::single((NS_CDR, "nvGraphicFramePr")),
-        markup::Slot::single((NS_CDR, "xfrm")),
-        markup::Slot::single((NS_A, "graphic")),
+        markup::Slot::required((NS_CDR, "nvGraphicFramePr")),
+        markup::Slot::required((NS_CDR, "xfrm")),
+        markup::Slot::required((NS_A, "graphic")),
     ],
     text: false,
 };
@@ -365,8 +365,8 @@ static GROUP_SHAPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "grpSp"),
     slots: &[
-        markup::Slot::single((NS_CDR, "nvGrpSpPr")),
-        markup::Slot::single((NS_CDR, "grpSpPr")),
+        markup::Slot::required((NS_CDR, "nvGrpSpPr")),
+        markup::Slot::required((NS_CDR, "grpSpPr")),
         markup::Slot::items(&OBJECT_CONTENT_TAGS),
     ],
     text: false,
@@ -389,8 +389,8 @@ static CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "nvCxnSpPr"),
     slots: &[
-        markup::Slot::single((NS_CDR, "cNvPr")),
-        markup::Slot::single((NS_CDR, "cNvCxnSpPr")),
+        markup::Slot::required((NS_CDR, "cNvPr")),
+        markup::Slot::required((NS_CDR, "cNvCxnSpPr")),
     ],
     text: false,
 };
@@ -399,8 +399,8 @@ static NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE: markup::Shape = markup::Shape 
     attributes: &[],
     name: (NS_CDR, "nvGraphicFramePr"),
     slots: &[
-        markup::Slot::single((NS_CDR, "cNvPr")),
-        markup::Slot::single((NS_CDR, "cNvGraphicFramePr")),
+        markup::Slot::required((NS_CDR, "cNvPr")),
+        markup::Slot::required((NS_CDR, "cNvGraphicFramePr")),
     ],
     text: false,
 };
@@ -409,8 +409,8 @@ static NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "nvGrpSpPr"),
     slots: &[
-        markup::Slot::single((NS_CDR, "cNvPr")),
-        markup::Slot::single((NS_CDR, "cNvGrpSpPr")),
+        markup::Slot::required((NS_CDR, "cNvPr")),
+        markup::Slot::required((NS_CDR, "cNvGrpSpPr")),
     ],
     text: false,
 };
@@ -419,8 +419,8 @@ static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "nvPicPr"),
     slots: &[
-        markup::Slot::single((NS_CDR, "cNvPr")),
-        markup::Slot::single((NS_CDR, "cNvPicPr")),
+        markup::Slot::required((NS_CDR, "cNvPr")),
+        markup::Slot::required((NS_CDR, "cNvPicPr")),
     ],
     text: false,
 };
@@ -429,8 +429,8 @@ static NON_VISUAL_SHAPE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "nvSpPr"),
     slots: &[
-        markup::Slot::single((NS_CDR, "cNvPr")),
-        markup::Slot::single((NS_CDR, "cNvSpPr")),
+        markup::Slot::required((NS_CDR, "cNvPr")),
+        markup::Slot::required((NS_CDR, "cNvSpPr")),
     ],
     text: false,
 };
@@ -439,9 +439,9 @@ static PICTURE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "pic"),
     slots: &[
-        markup::Slot::single((NS_CDR, "nvPicPr")),
-        markup::Slot::single((NS_CDR, "blipFill")),
-        markup::Slot::single((NS_CDR, "spPr")),
+        markup::Slot::required((NS_CDR, "nvPicPr")),
+        markup::Slot::required((NS_CDR, "blipFill")),
+        markup::Slot::required((NS_CDR, "spPr")),
         markup::Slot::single((NS_CDR, "style")),
     ],
     text: false,
@@ -451,9 +451,9 @@ static RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "relSizeAnchor"),
     slots: &[
-        markup::Slot::single((NS_CDR, "from")),
-        markup::Slot::single((NS_CDR, "to")),
-        markup::Slot::choice(&OBJECT_CONTENT_TAGS),
+        markup::Slot::required((NS_CDR, "from")),
+        markup::Slot::required((NS_CDR, "to")),
+        markup::Slot::required_choice(&OBJECT_CONTENT_TAGS),
     ],
     text: false,
 };
@@ -467,8 +467,8 @@ static SHAPE_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_CDR, "sp"),
     slots: &[
-        markup::Slot::single((NS_CDR, "nvSpPr")),
-        markup::Slot::single((NS_CDR, "spPr")),
+        markup::Slot::required((NS_CDR, "nvSpPr")),
+        markup::Slot::required((NS_CDR, "spPr")),
         markup::Slot::single((NS_CDR, "style")),
         markup::Slot::single((NS_CDR, "txBody")),
     ],
@@ -495,10 +495,10 @@ static SHAPE_STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -507,8 +507,8 @@ static ENDING_ANCHOR_POINT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "to"),
     slots: &[
-        markup::Slot::single((NS_CDR, "x")),
-        markup::Slot::single((NS_CDR, "y")),
+        markup::Slot::required((NS_CDR, "x")),
+        markup::Slot::required((NS_CDR, "y")),
     ],
     text: false,
 };
@@ -517,7 +517,7 @@ static SHAPE_TEXT_BODY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_CDR, "txBody"),
     slots: &[
-        markup::Slot::single((NS_A, "bodyPr")),
+        markup::Slot::required((NS_A, "bodyPr")),
         markup::Slot::single((NS_A, "lstStyle")),
         markup::Slot::list((NS_A, "p")),
     ],

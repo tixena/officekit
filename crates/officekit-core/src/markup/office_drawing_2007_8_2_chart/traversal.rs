@@ -650,7 +650,7 @@ impl markup::Transform for super::InvertSolidFillFmt {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sp_pr, ctx, &mut rebase);
         Self {
             sp_pr: child_1,
@@ -727,7 +727,7 @@ impl markup::Transform for super::PivotOptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.drop_zone_filter, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.drop_zone_categories, ctx, &mut rebase);
         let child_3 = markup::transform_child(&self.drop_zone_data, ctx, &mut rebase);
@@ -891,7 +891,7 @@ impl markup::Transform for super::SketchOptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.in_sketch_mode, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.show_sketch_btn, ctx, &mut rebase);
         Self {
@@ -971,7 +971,7 @@ impl markup::Transform for super::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         let child_2 = markup::transform_choice(&self.geometry_content, ctx, &mut rebase);
         let child_3 = markup::transform_choice(&self.fill_properties_content, ctx, &mut rebase);

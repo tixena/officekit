@@ -302,7 +302,7 @@ impl markup::Transform for super::Props {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.key, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.value, ctx, &mut rebase);
         Self {

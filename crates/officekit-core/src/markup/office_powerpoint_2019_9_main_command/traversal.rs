@@ -302,7 +302,7 @@ impl markup::Transform for super::CmMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.sld_mk_lst, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.cm_mk, ctx, &mut rebase);
         Self {
@@ -454,7 +454,7 @@ impl markup::Transform for super::CmRplyMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {
-        let mut rebase = markup::Rebase::default();
+        let mut rebase = markup::Rebase::new(&self.unknown);
         let child_1 = markup::transform_child(&self.cm_mk_lst, ctx, &mut rebase);
         let child_2 = markup::transform_child(&self.cm_rply_mk, ctx, &mut rebase);
         Self {

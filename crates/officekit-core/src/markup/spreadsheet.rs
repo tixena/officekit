@@ -245,7 +245,7 @@ static XML_MAPPING_DATA_BINDING_SHAPE: markup::Shape = markup::Shape {
         (None, "DataBindingLoadMode"),
     ],
     name: (NS_X, "DataBinding"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,
@@ -286,7 +286,7 @@ static XML_SCHEMA_SHAPE: markup::Shape = markup::Shape {
         (None, "SchemaLanguage"),
     ],
     name: (NS_X, "Schema"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,
@@ -313,8 +313,8 @@ static OBJECT_CELL_ANCHOR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "moveWithCells"), (None, "sizeWithCells")],
     name: (NS_X, "anchor"),
     slots: &[
-        markup::Slot::single((NS_XDR, "from")),
-        markup::Slot::single((NS_XDR, "to")),
+        markup::Slot::required((NS_XDR, "from")),
+        markup::Slot::required((NS_XDR, "to")),
     ],
     text: false,
 };
@@ -347,7 +347,7 @@ static AUTO_FILTER_SETTINGS_SHAPE: markup::Shape = markup::Shape {
 static AUTO_SORT_SCOPE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X, "autoSortScope"),
-    slots: &[markup::Slot::single((NS_X, "pivotArea"))],
+    slots: &[markup::Slot::required((NS_X, "pivotArea"))],
     text: false,
 };
 
@@ -612,7 +612,7 @@ static CALCULATED_ITEM_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "field"), (None, "formula")],
     name: (NS_X, "calculatedItem"),
     slots: &[
-        markup::Slot::single((NS_X, "pivotArea")),
+        markup::Slot::required((NS_X, "pivotArea")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -775,7 +775,7 @@ static CHARACTER_SET_SHAPE: markup::Shape = markup::Shape {
 static PIVOT_CHART_FORMAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "chart"), (None, "format"), (None, "series")],
     name: (NS_X, "chartFormat"),
-    slots: &[markup::Slot::single((NS_X, "pivotArea"))],
+    slots: &[markup::Slot::required((NS_X, "pivotArea"))],
     text: false,
 };
 
@@ -791,13 +791,13 @@ static CHART_SHEET_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X, "chartsheet"),
     slots: &[
         markup::Slot::single((NS_X, "sheetPr")),
-        markup::Slot::single((NS_X, "sheetViews")),
+        markup::Slot::required((NS_X, "sheetViews")),
         markup::Slot::single((NS_X, "sheetProtection")),
         markup::Slot::single((NS_X, "customSheetViews")),
         markup::Slot::single((NS_X, "pageMargins")),
         markup::Slot::single((NS_X, "pageSetup")),
         markup::Slot::single((NS_X, "headerFooter")),
-        markup::Slot::single((NS_X, "drawing")),
+        markup::Slot::required((NS_X, "drawing")),
         markup::Slot::single((NS_X, "legacyDrawing")),
         markup::Slot::single((NS_X, "legacyDrawingHF")),
         markup::Slot::single((NS_X, "drawingHF")),
@@ -917,7 +917,7 @@ static COMMENT_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "comment"),
     slots: &[
-        markup::Slot::single((NS_X, "text")),
+        markup::Slot::required((NS_X, "text")),
         markup::Slot::single((NS_X, "commentPr")),
     ],
     text: false,
@@ -946,7 +946,7 @@ static COMMENT_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
         (None, "autoScale"),
     ],
     name: (NS_X, "commentPr"),
-    slots: &[markup::Slot::single((NS_X, "anchor"))],
+    slots: &[markup::Slot::required((NS_X, "anchor"))],
     text: false,
 };
 
@@ -954,8 +954,8 @@ static COMMENTS_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_X, "comments"),
     slots: &[
-        markup::Slot::single((NS_X, "authors")),
-        markup::Slot::single((NS_X, "commentList")),
+        markup::Slot::required((NS_X, "authors")),
+        markup::Slot::required((NS_X, "commentList")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -972,7 +972,7 @@ static CONDITIONAL_FORMATTING_CONDITIONAL_FORMAT_SHAPE: markup::Shape = markup::
     attributes: &[(None, "scope"), (None, "type"), (None, "priority")],
     name: (NS_X, "conditionalFormat"),
     slots: &[
-        markup::Slot::single((NS_X, "pivotAreas")),
+        markup::Slot::required((NS_X, "pivotAreas")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -1042,7 +1042,7 @@ static CONSOLIDATION_SOURCE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X, "consolidation"),
     slots: &[
         markup::Slot::single((NS_X, "pages")),
-        markup::Slot::single((NS_X, "rangeSets")),
+        markup::Slot::required((NS_X, "rangeSets")),
     ],
     text: false,
 };
@@ -1073,7 +1073,7 @@ static EMBEDDED_CONTROL_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
         (NS_R, "id"),
     ],
     name: (NS_X, "controlPr"),
-    slots: &[markup::Slot::single((NS_X, "anchor"))],
+    slots: &[markup::Slot::required((NS_X, "anchor"))],
     text: false,
 };
 
@@ -1242,7 +1242,7 @@ static DATA_BAR_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X, "dataBar"),
     slots: &[
         markup::Slot::list((NS_X, "cfvo")),
-        markup::Slot::single((NS_X, "color")),
+        markup::Slot::required((NS_X, "color")),
     ],
     text: false,
 };
@@ -1624,7 +1624,7 @@ static EVEN_PAGE_HEADER_SHAPE: markup::Shape = markup::Shape {
 static EXTENSION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "uri")],
     name: (NS_X, "ext"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::ANY_ELEMENT_CONTENT_TAGS,
     )],
     text: false,
@@ -1836,7 +1836,7 @@ static PIVOT_TABLE_ADVANCED_FILTER_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "filter"),
     slots: &[
-        markup::Slot::single((NS_X, "autoFilter")),
+        markup::Slot::required((NS_X, "autoFilter")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -1903,7 +1903,7 @@ static PIVOT_TABLE_FORMAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "action"), (None, "dxfId")],
     name: (NS_X, "format"),
     slots: &[
-        markup::Slot::single((NS_X, "pivotArea")),
+        markup::Slot::required((NS_X, "pivotArea")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -1984,7 +1984,7 @@ static OLAP_GROUP_SHAPE: markup::Shape = markup::Shape {
         (None, "id"),
     ],
     name: (NS_X, "group"),
-    slots: &[markup::Slot::single((NS_X, "groupMembers"))],
+    slots: &[markup::Slot::required((NS_X, "groupMembers"))],
     text: false,
 };
 
@@ -2050,7 +2050,7 @@ static HEADER_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "header"),
     slots: &[
-        markup::Slot::single((NS_X, "sheetIdMap")),
+        markup::Slot::required((NS_X, "sheetIdMap")),
         markup::Slot::single((NS_X, "reviewedList")),
         markup::Slot::single((NS_X, "extLst")),
     ],
@@ -2363,7 +2363,7 @@ static OLAP_MEASURE_GROUP_MAPS_SHAPE: markup::Shape = markup::Shape {
 static MDX_METADATA_RECORD_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "n"), (None, "f")],
     name: (NS_X, "mdx"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &MULTIDIMENSIONAL_EXPRESSION_METADATA_CONTENT_TAGS,
     )],
     text: false,
@@ -2629,7 +2629,7 @@ static EMBEDDED_OBJECT_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
         (NS_R, "id"),
     ],
     name: (NS_X, "objectPr"),
-    slots: &[markup::Slot::single((NS_X, "anchor"))],
+    slots: &[markup::Slot::required((NS_X, "anchor"))],
     text: false,
 };
 
@@ -3022,8 +3022,8 @@ static PIVOT_CACHE_DEFINITION_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "pivotCacheDefinition"),
     slots: &[
-        markup::Slot::single((NS_X, "cacheSource")),
-        markup::Slot::single((NS_X, "cacheFields")),
+        markup::Slot::required((NS_X, "cacheSource")),
+        markup::Slot::required((NS_X, "cacheFields")),
         markup::Slot::single((NS_X, "cacheHierarchies")),
         markup::Slot::single((NS_X, "kpis")),
         markup::Slot::single((NS_X, "tupleCache")),
@@ -3172,7 +3172,7 @@ static PIVOT_TABLE_SELECTION_SHAPE: markup::Shape = markup::Shape {
         (NS_R, "id"),
     ],
     name: (NS_X, "pivotSelection"),
-    slots: &[markup::Slot::single((NS_X, "pivotArea"))],
+    slots: &[markup::Slot::required((NS_X, "pivotArea"))],
     text: false,
 };
 
@@ -3249,7 +3249,7 @@ static PIVOT_TABLE_DEFINITION_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "pivotTableDefinition"),
     slots: &[
-        markup::Slot::single((NS_X, "location")),
+        markup::Slot::required((NS_X, "location")),
         markup::Slot::single((NS_X, "pivotFields")),
         markup::Slot::single((NS_X, "rowFields")),
         markup::Slot::single((NS_X, "rowItems")),
@@ -3415,7 +3415,7 @@ static QUERY_TABLE_REFRESH_INFORMATION_SHAPE: markup::Shape = markup::Shape {
     ],
     name: (NS_X, "queryTableRefresh"),
     slots: &[
-        markup::Slot::single((NS_X, "queryTableFields")),
+        markup::Slot::required((NS_X, "queryTableFields")),
         markup::Slot::single((NS_X, "queryTableDeletedFields")),
         markup::Slot::single((NS_X, "sortState")),
         markup::Slot::single((NS_X, "extLst")),
@@ -3428,7 +3428,7 @@ static RICH_TEXT_RUN_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X, "r"),
     slots: &[
         markup::Slot::single((NS_X, "rPr")),
-        markup::Slot::single((NS_X, "t")),
+        markup::Slot::required((NS_X, "t")),
     ],
     text: false,
 };
@@ -3450,7 +3450,7 @@ static FONT_R_FONT_SHAPE: markup::Shape = markup::Shape {
 static PHONETIC_RUN_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "sb"), (None, "eb")],
     name: (NS_X, "rPh"),
-    slots: &[markup::Slot::single((NS_X, "t"))],
+    slots: &[markup::Slot::required((NS_X, "t"))],
     text: false,
 };
 
@@ -3544,7 +3544,7 @@ static REVISION_CELL_CHANGE_SHAPE: markup::Shape = markup::Shape {
     name: (NS_X, "rcc"),
     slots: &[
         markup::Slot::single((NS_X, "oc")),
-        markup::Slot::single((NS_X, "nc")),
+        markup::Slot::required((NS_X, "nc")),
         markup::Slot::single((NS_X, "odxf")),
         markup::Slot::single((NS_X, "ndxf")),
         markup::Slot::single((NS_X, "extLst")),
@@ -4228,7 +4228,7 @@ static TABLE_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id"), (None, "r"), (None, "connectionId")],
     name: (NS_X, "singleXmlCell"),
     slots: &[
-        markup::Slot::single((NS_X, "xmlCellPr")),
+        markup::Slot::required((NS_X, "xmlCellPr")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,
@@ -4327,7 +4327,7 @@ static LEADING_EDGE_BORDER_START_SHAPE: markup::Shape = markup::Shape {
 static GRADIENT_STOP_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "position")],
     name: (NS_X, "stop"),
-    slots: &[markup::Slot::single((NS_X, "color"))],
+    slots: &[markup::Slot::required((NS_X, "color"))],
     text: false,
 };
 
@@ -4438,7 +4438,7 @@ static TABLE_SHAPE: markup::Shape = markup::Shape {
     slots: &[
         markup::Slot::single((NS_X, "autoFilter")),
         markup::Slot::single((NS_X, "sortState")),
-        markup::Slot::single((NS_X, "tableColumns")),
+        markup::Slot::required((NS_X, "tableColumns")),
         markup::Slot::single((NS_X, "tableStyleInfo")),
         markup::Slot::single((NS_X, "extLst")),
     ],
@@ -4621,7 +4621,7 @@ static TOPIC_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "t")],
     name: (NS_X, "tp"),
     slots: &[
-        markup::Slot::single((NS_X, "v")),
+        markup::Slot::required((NS_X, "v")),
         markup::Slot::list((NS_X, "stp")),
         markup::Slot::list((NS_X, "tr")),
     ],
@@ -4724,7 +4724,7 @@ static DDE_LINK_VALUE_SHAPE: markup::Shape = markup::Shape {
 static VALUE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "t")],
     name: (NS_X, "value"),
-    slots: &[markup::Slot::single((NS_X, "val"))],
+    slots: &[markup::Slot::required((NS_X, "val"))],
     text: false,
 };
 
@@ -4865,7 +4865,7 @@ static WORKBOOK_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_X15AC, "absPath")),
         markup::Slot::single((NS_X, "workbookProtection")),
         markup::Slot::single((NS_X, "bookViews")),
-        markup::Slot::single((NS_X, "sheets")),
+        markup::Slot::required((NS_X, "sheets")),
         markup::Slot::single((NS_X, "functionGroups")),
         markup::Slot::single((NS_X, "externalReferences")),
         markup::Slot::single((NS_X, "definedNames")),
@@ -4962,7 +4962,7 @@ static WORKSHEET_SHAPE: markup::Shape = markup::Shape {
         markup::Slot::single((NS_X, "sheetViews")),
         markup::Slot::single((NS_X, "sheetFormatPr")),
         markup::Slot::list((NS_X, "cols")),
-        markup::Slot::single((NS_X, "sheetData")),
+        markup::Slot::required((NS_X, "sheetData")),
         markup::Slot::single((NS_X, "sheetCalcPr")),
         markup::Slot::single((NS_X, "sheetProtection")),
         markup::Slot::single((NS_X, "protectedRanges")),
@@ -5050,7 +5050,7 @@ static CELL_PROPERTIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "id"), (None, "uniqueName")],
     name: (NS_X, "xmlCellPr"),
     slots: &[
-        markup::Slot::single((NS_X, "xmlPr")),
+        markup::Slot::required((NS_X, "xmlPr")),
         markup::Slot::single((NS_X, "extLst")),
     ],
     text: false,

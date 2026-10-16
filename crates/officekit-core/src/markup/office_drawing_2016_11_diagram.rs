@@ -232,7 +232,7 @@ const NS_DGM1611: Option<NamespaceId> = Some(44);
 static BU_PR_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "prefix"), (None, "leadZeros")],
     name: (NS_DGM1611, "buPr"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::drawing::TEXT_BULLET_CONTENT_TAGS,
     )],
     text: false,
@@ -241,7 +241,7 @@ static BU_PR_SHAPE: markup::Shape = markup::Shape {
 static AUTO_BU_NODE_INFO_SHAPE: markup::Shape = markup::Shape {
     attributes: &[(None, "lvl"), (None, "ptType")],
     name: (NS_DGM1611, "autoBuNodeInfo"),
-    slots: &[markup::Slot::single((NS_DGM1611, "buPr"))],
+    slots: &[markup::Slot::required((NS_DGM1611, "buPr"))],
     text: false,
 };
 

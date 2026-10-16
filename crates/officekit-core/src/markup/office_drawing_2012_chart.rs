@@ -250,7 +250,7 @@ static CATEGORY_FILTER_EXCEPTION_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "categoryFilterException"),
     slots: &[
-        markup::Slot::single((NS_C15, "sqref")),
+        markup::Slot::required((NS_C15, "sqref")),
         markup::Slot::single((NS_C15, "spPr")),
         markup::Slot::single((NS_C15, "explosion")),
         markup::Slot::single((NS_C15, "invertIfNegative")),
@@ -279,8 +279,8 @@ static DLBL_FT_ENTRY_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "dlblFTEntry"),
     slots: &[
-        markup::Slot::single((NS_C15, "txfldGUID")),
-        markup::Slot::single((NS_C15, "f")),
+        markup::Slot::required((NS_C15, "txfldGUID")),
+        markup::Slot::required((NS_C15, "f")),
         markup::Slot::single((NS_C15, "dlblFieldTableCache")),
     ],
     text: false,
@@ -289,91 +289,91 @@ static DLBL_FT_ENTRY_SHAPE: markup::Shape = markup::Shape {
 static FILTERED_AREA_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredAreaSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_BAR_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredBarSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_BUBBLE_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredBubbleSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_CATEGORY_TITLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredCategoryTitle"),
-    slots: &[markup::Slot::single((NS_C15, "cat"))],
+    slots: &[markup::Slot::required((NS_C15, "cat"))],
     text: false,
 };
 
 static FILTERED_LINE_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredLineSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_PIE_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredPieSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_RADAR_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredRadarSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_SCATTER_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredScatterSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FILTERED_SERIES_TITLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredSeriesTitle"),
-    slots: &[markup::Slot::single((NS_C15, "tx"))],
+    slots: &[markup::Slot::required((NS_C15, "tx"))],
     text: false,
 };
 
 static FILTERED_SURFACE_SERIES_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "filteredSurfaceSeries"),
-    slots: &[markup::Slot::single((NS_C15, "ser"))],
+    slots: &[markup::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
 static FORMULA_REF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "formulaRef"),
-    slots: &[markup::Slot::single((NS_C15, "sqref"))],
+    slots: &[markup::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
 static FULL_REF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "fullRef"),
-    slots: &[markup::Slot::single((NS_C15, "sqref"))],
+    slots: &[markup::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
 static LEVEL_REF_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "levelRef"),
-    slots: &[markup::Slot::single((NS_C15, "sqref"))],
+    slots: &[markup::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
@@ -381,7 +381,7 @@ static DATALABELS_RANGE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "datalabelsRange"),
     slots: &[
-        markup::Slot::single((NS_C15, "f")),
+        markup::Slot::required((NS_C15, "f")),
         markup::Slot::single((NS_C15, "dlblRangeCache")),
     ],
     text: false,
@@ -391,8 +391,8 @@ static SER_AREA_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "pictureOptions")),
@@ -410,7 +410,7 @@ static SER_AREA_SER_SHAPE: markup::Shape = markup::Shape {
 static CAT_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "cat"),
-    slots: &[markup::Slot::choice(
+    slots: &[markup::Slot::required_choice(
         &super::chart::AXIS_DATA_SOURCE_CONTENT_TAGS,
     )],
     text: false,
@@ -420,8 +420,8 @@ static SER_BAR_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "invertIfNegative")),
@@ -484,8 +484,8 @@ static SER_BUBBLE_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "invertIfNegative")),
@@ -513,7 +513,7 @@ static D_LBL_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "dLbl"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
+        markup::Slot::required((NS_C, "idx")),
         markup::Slot::items(&super::chart::DATA_LABEL_CONTENT_TAGS),
         markup::Slot::single((NS_C, "extLst")),
     ],
@@ -534,8 +534,8 @@ static SER_LINE_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -574,8 +574,8 @@ static SER_PIE_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "explosion")),
@@ -592,8 +592,8 @@ static PIVOT_SOURCE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "pivotSource"),
     slots: &[
-        markup::Slot::single((NS_C, "name")),
-        markup::Slot::single((NS_C, "fmtId")),
+        markup::Slot::required((NS_C, "name")),
+        markup::Slot::required((NS_C, "fmtId")),
         markup::Slot::list((NS_C, "extLst")),
     ],
     text: false,
@@ -603,8 +603,8 @@ static SER_RADAR_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -621,8 +621,8 @@ static SER_SCATTER_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "marker")),
@@ -664,8 +664,8 @@ static SER_SURFACE_SER_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
-        markup::Slot::single((NS_C, "idx")),
-        markup::Slot::single((NS_C, "order")),
+        markup::Slot::required((NS_C, "idx")),
+        markup::Slot::required((NS_C, "order")),
         markup::Slot::single((NS_C, "tx")),
         markup::Slot::single((NS_C, "spPr")),
         markup::Slot::single((NS_C, "cat")),
@@ -678,7 +678,9 @@ static SER_SURFACE_SER_SHAPE: markup::Shape = markup::Shape {
 static TX_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_C15, "tx"),
-    slots: &[markup::Slot::choice(&super::chart::CHART_TEXT_CONTENT_TAGS)],
+    slots: &[markup::Slot::required_choice(
+        &super::chart::CHART_TEXT_CONTENT_TAGS,
+    )],
     text: false,
 };
 

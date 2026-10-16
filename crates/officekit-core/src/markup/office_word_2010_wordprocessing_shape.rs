@@ -296,10 +296,10 @@ static STYLE_SHAPE: markup::Shape = markup::Shape {
     attributes: &[],
     name: (NS_WPS, "style"),
     slots: &[
-        markup::Slot::single((NS_A, "lnRef")),
-        markup::Slot::single((NS_A, "fillRef")),
-        markup::Slot::single((NS_A, "effectRef")),
-        markup::Slot::single((NS_A, "fontRef")),
+        markup::Slot::required((NS_A, "lnRef")),
+        markup::Slot::required((NS_A, "fillRef")),
+        markup::Slot::required((NS_A, "effectRef")),
+        markup::Slot::required((NS_A, "fontRef")),
     ],
     text: false,
 };
@@ -359,12 +359,12 @@ static WSP_SHAPE: markup::Shape = markup::Shape {
     name: (NS_WPS, "wsp"),
     slots: &[
         markup::Slot::single((NS_WPS, "cNvPr")),
-        markup::Slot::choice(&SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS),
-        markup::Slot::single((NS_WPS, "spPr")),
+        markup::Slot::required_choice(&SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS),
+        markup::Slot::required((NS_WPS, "spPr")),
         markup::Slot::single((NS_WPS, "style")),
         markup::Slot::single((NS_WPS, "extLst")),
         markup::Slot::choice(&SHAPE_TEXT_CONTENT_TAGS),
-        markup::Slot::single((NS_WPS, "bodyPr")),
+        markup::Slot::required((NS_WPS, "bodyPr")),
     ],
     text: false,
 };
