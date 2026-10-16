@@ -145,11 +145,15 @@ pub const SDK_KEYS: &[(ErrorCode, &str)] = &[
     ),
     (
         ErrorCode::AlternateContentWithoutChoice,
-        "MC_ShallContainChoice",
+        "Sch_IncompleteContentExpectingComplex",
+    ),
+    (
+        ErrorCode::UnexpectedChildInAlternateContent,
+        "Sch_InvalidElementContentExpectingComplex",
     ),
     (
         ErrorCode::NestedAlternateContent,
-        "MC_ShallNotContainAlternateContent",
+        "Sch_InvalidElementContentExpectingComplex",
     ),
     (
         ErrorCode::DataPartNotAllowed,

@@ -153,7 +153,12 @@ impl<'tree> Walker<'tree, '_> {
                     self.branch_checks(block, child, index, false);
                 }
                 Kind::Choice | Kind::Fallback | Kind::Typed(..) | Kind::Unknown => {
-                    self.error(ErrorCode::AlternateContentWithoutChoice, &[]);
+                    let code = if seen_choice {
+                        ErrorCode::UnexpectedChildInAlternateContent
+                    } else {
+                        ErrorCode::AlternateContentWithoutChoice
+                    };
+                    self.error(code, &[]);
                 }
             }
         }

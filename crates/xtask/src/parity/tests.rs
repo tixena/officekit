@@ -50,12 +50,15 @@ fn ours(error: &ValidationError, target: OfficeVersion) -> Value {
 }
 
 #[test]
-fn every_sdk_id_has_one_code_and_only_the_strict_codes_have_none() {
-    let mut ids: Vec<&str> = SDK_KEYS.iter().map(|(_, id)| *id).collect();
-    ids.sort_unstable();
-    ids.dedup();
-    assert_eq!(ids.len(), 42);
-    assert_eq!(SDK_KEYS.len(), 42);
+fn every_code_has_one_sdk_id_and_only_the_strict_codes_have_none() {
+    assert_eq!(SDK_KEYS.len(), 43);
+    for code in ErrorCode::ALL {
+        let rows = SDK_KEYS.iter().filter(|(known, _)| known == code).count();
+        assert_eq!(rows, usize::from(sdk_key(*code).is_some()), "{code:?}");
+    }
+    assert!(SDK_KEYS.iter().all(
+        |(_, id)| *id != "MC_ShallContainChoice" && *id != "MC_ShallNotContainAlternateContent"
+    ));
     let without: Vec<ErrorCode> = ErrorCode::ALL
         .iter()
         .copied()

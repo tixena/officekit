@@ -46,8 +46,8 @@ fn count(kind: Finding) -> usize {
 }
 
 #[test]
-fn there_are_45_codes_each_found_again_by_its_name() {
-    assert_eq!(ErrorCode::ALL.len(), 45);
+fn there_are_46_codes_each_found_again_by_its_name() {
+    assert_eq!(ErrorCode::ALL.len(), 46);
     for code in ErrorCode::ALL {
         assert_eq!(ErrorCode::parse(code.as_str()), Some(*code));
     }
@@ -58,7 +58,7 @@ fn there_are_45_codes_each_found_again_by_its_name() {
 fn the_codes_split_into_their_kinds() {
     assert_eq!(count(Finding::Schema), 17);
     assert_eq!(count(Finding::Semantic), 11);
-    assert_eq!(count(Finding::MarkupCompatibility), 12);
+    assert_eq!(count(Finding::MarkupCompatibility), 13);
     assert_eq!(count(Finding::Package), 5);
 }
 

@@ -26,6 +26,8 @@ const TARGETS: [OfficeVersion; 6] = [
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
+const BLOCK_PATH: &str =
+    "/word/document.xml /w:document[1]/w:body[1]/w:p[1]/w:r[1]/mc:AlternateContent[1]";
 
 /// A Word document whose main part holds `body`, with the `w` prefix bound
 /// to `namespace`, related by `relationship`, and a styles part when given.
@@ -225,6 +227,103 @@ fn an_alternate_content_needs_a_choice_with_requires() {
             ErrorCode::ChoiceWithoutRequires,
             ErrorCode::AlternateContentWithoutChoice
         ]
+    );
+}
+
+/// The codes a block gives, with the places they are at.
+fn block_findings(block: &str) -> Vec<(ErrorCode, String)> {
+    let body = format!("<w:body><w:p><w:r>{block}</w:r></w:p></w:body>");
+    let package = document(W, OFFICE_DOCUMENT, &body, None);
+    found(&package, OfficeVersion::Office2016)
+        .into_iter()
+        .filter(|(code, _)| {
+            matches!(
+                code,
+                ErrorCode::AlternateContentWithoutChoice
+                    | ErrorCode::UnexpectedChildInAlternateContent
+                    | ErrorCode::NestedAlternateContent
+            )
+        })
+        .collect()
+}
+
+#[test]
+fn an_empty_alternate_content_is_one_block_without_a_choice() {
+    assert_eq!(
+        block_findings("<mc:AlternateContent/>"),
+        [(
+            ErrorCode::AlternateContentWithoutChoice,
+            BLOCK_PATH.to_owned()
+        )]
+    );
+}
+
+#[test]
+fn an_alternate_content_starting_with_a_fallback_is_one_block_without_a_choice() {
+    assert_eq!(
+        block_findings(
+            "<mc:AlternateContent><mc:Fallback><w:t/></mc:Fallback></mc:AlternateContent>"
+        ),
+        [(
+            ErrorCode::AlternateContentWithoutChoice,
+            BLOCK_PATH.to_owned()
+        )]
+    );
+}
+
+#[test]
+fn an_alternate_content_starting_with_a_text_is_one_block_without_a_choice() {
+    assert_eq!(
+        block_findings("<mc:AlternateContent><w:t/></mc:AlternateContent>"),
+        [(
+            ErrorCode::AlternateContentWithoutChoice,
+            BLOCK_PATH.to_owned()
+        )]
+    );
+}
+
+#[test]
+fn a_child_after_the_fallback_is_an_unexpected_child() {
+    assert_eq!(
+        block_findings(
+            "<mc:AlternateContent><mc:Choice Requires=\"wps\"><w:t/></mc:Choice>\
+             <mc:Fallback><w:t/></mc:Fallback><mc:Fallback><w:t/></mc:Fallback>\
+             <mc:Choice Requires=\"wps\"><w:t/></mc:Choice></mc:AlternateContent>"
+        ),
+        [
+            (
+                ErrorCode::UnexpectedChildInAlternateContent,
+                BLOCK_PATH.to_owned()
+            ),
+            (
+                ErrorCode::UnexpectedChildInAlternateContent,
+                BLOCK_PATH.to_owned()
+            )
+        ]
+    );
+}
+
+#[test]
+fn a_child_that_is_neither_choice_nor_fallback_is_an_unexpected_child() {
+    assert_eq!(
+        block_findings(
+            "<mc:AlternateContent><mc:Choice Requires=\"wps\"><w:t/></mc:Choice><w:t/></mc:AlternateContent>"
+        ),
+        [(
+            ErrorCode::UnexpectedChildInAlternateContent,
+            BLOCK_PATH.to_owned()
+        )]
+    );
+}
+
+#[test]
+fn a_nested_alternate_content_is_reported_once_at_the_outer_block() {
+    assert_eq!(
+        block_findings(
+            "<mc:AlternateContent><mc:AlternateContent><mc:Choice Requires=\"wps\"><w:t/></mc:Choice>\
+             </mc:AlternateContent><mc:Choice Requires=\"wps\"><w:t/></mc:Choice></mc:AlternateContent>"
+        ),
+        [(ErrorCode::NestedAlternateContent, BLOCK_PATH.to_owned())]
     );
 }
 

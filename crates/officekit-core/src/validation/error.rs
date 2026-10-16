@@ -182,7 +182,8 @@ codes! {
     XmlAttributeOnCompatibilityElement, MarkupCompatibility, "the element {element} cannot carry xml:lang or xml:space";
     XmlAttributeOnProcessedElement, MarkupCompatibility, "an element that mc:ProcessContent names cannot carry xml:lang or xml:space";
     ChoiceWithoutRequires, MarkupCompatibility, "an mc:Choice has no Requires attribute";
-    AlternateContentWithoutChoice, MarkupCompatibility, "an mc:AlternateContent holds no mc:Choice, or holds something other than mc:Choice and one mc:Fallback after them";
+    AlternateContentWithoutChoice, MarkupCompatibility, "an mc:AlternateContent holds no mc:Choice, or its first child is not an mc:Choice";
+    UnexpectedChildInAlternateContent, MarkupCompatibility, "an mc:AlternateContent holds a child after its mc:Fallback, or one that is neither mc:Choice nor mc:Fallback";
     NestedAlternateContent, MarkupCompatibility, "an mc:AlternateContent sits directly inside another";
     // Package: which parts relate to which.
     DataPartNotAllowed, Package, "the part {part} cannot relate to the data part {target}";
