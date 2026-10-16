@@ -668,6 +668,7 @@ dependencies = [
  "anyhow",
  "clap",
  "os-shim",
+ "serde_json",
 ]
 
 [[package]]

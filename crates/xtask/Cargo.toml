@@ -25,3 +25,6 @@ anyhow.workspace = true
 
 # The only route to the OS: inputs are found through `System`.
 os-shim.workspace = true
+
+# The SDK's schema data is JSON.
+serde_json.workspace = true
