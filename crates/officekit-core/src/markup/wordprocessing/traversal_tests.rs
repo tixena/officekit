@@ -991,3 +991,32 @@ fn a_wildcard_position_reaches_its_typed_items_through_their_namespace() {
         xml(&transformed)
     );
 }
+
+/// A paragraph holding one run of `value`, the XML written through and by the
+/// tree writer in the compact layout.
+fn both_paths(value: Text) -> (String, String) {
+    let source = paragraph_of(value);
+    let element = write::paragraph(&source, &mut Scope::default());
+    let mut bytes = Vec::new();
+    PartWriter::new(&mut bytes, Layout::Compact)
+        .element(&element)
+        .unwrap();
+    (xml(&source), String::from_utf8(bytes).unwrap())
+}
+
+#[test]
+fn whitespace_only_text_written_through_is_dropped_as_the_compact_writer_drops_it() {
+    let (through, tree) = both_paths(Text {
+        value: " ".to_owned(),
+        ..Text::default()
+    });
+    assert_eq!(through, tree);
+    assert!(through.contains("<w:t/>"));
+}
+
+#[test]
+fn whitespace_only_text_in_a_preserve_scope_is_written_through() {
+    let (through, tree) = both_paths(preserved(" "));
+    assert_eq!(through, tree);
+    assert!(through.contains("<w:t xml:space=\"preserve\"> </w:t>"));
+}

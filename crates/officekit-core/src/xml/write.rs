@@ -160,11 +160,16 @@ fn is_removed(prefix: &str, scope: &[Vec<(String, bool)>]) -> bool {
         .unwrap_or(false)
 }
 
+/// Whether a string is of whitespace only: spaces, tabs, and line breaks.
+pub(crate) fn is_whitespace(text: &str) -> bool {
+    text.chars()
+        .all(|character| matches!(character, ' ' | '\t' | '\n' | '\r'))
+}
+
 /// Whether a node is text of whitespace only.
 pub(crate) fn is_whitespace_text(node: &Node) -> bool {
     if let Node::Text(text) = node {
-        text.chars()
-            .all(|character| matches!(character, ' ' | '\t' | '\n' | '\r'))
+        is_whitespace(text)
     } else {
         false
     }

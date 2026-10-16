@@ -75,3 +75,44 @@ fn values_are_escaped_as_the_generic_tree_writer_escapes_them() {
     let document = parse(bytes.as_bytes()).unwrap();
     assert_eq!(document.root.attributes[0].value, "\"\t\n\r<&>'");
 }
+
+#[test]
+fn whitespace_only_text_is_dropped_in_the_compact_layout_outside_a_preserve_scope() {
+    let part = |out: &mut PartWriter<'_>| {
+        out.start("a", &[], &[]).unwrap();
+        out.start("t", &[], &[]).unwrap();
+        out.text(" ").unwrap();
+        out.end("t").unwrap();
+        out.start("t", &[], &[("xml:space", "preserve")]).unwrap();
+        out.text(" ").unwrap();
+        out.end("t").unwrap();
+        out.end("a").unwrap();
+    };
+    assert_eq!(
+        written(Layout::Compact, part),
+        "<a><t/><t xml:space=\"preserve\"> </t></a>"
+    );
+    assert_eq!(
+        written(Layout::Pretty, part),
+        "<a>\n  <t> </t>\n  <t xml:space=\"preserve\"> </t>\n</a>"
+    );
+}
+
+#[test]
+fn a_preserve_scope_reaches_the_descendants_until_an_inner_default_ends_it() {
+    let bytes = written(Layout::Compact, |out| {
+        out.start("a", &[], &[("xml:space", "preserve")]).unwrap();
+        out.start("b", &[], &[]).unwrap();
+        out.text(" ").unwrap();
+        out.end("b").unwrap();
+        out.start("c", &[], &[("xml:space", "default")]).unwrap();
+        out.text(" ").unwrap();
+        out.end("c").unwrap();
+        out.text(" ").unwrap();
+        out.end("a").unwrap();
+    });
+    assert_eq!(
+        bytes,
+        "<a xml:space=\"preserve\"><b> </b><c xml:space=\"default\"/> </a>"
+    );
+}

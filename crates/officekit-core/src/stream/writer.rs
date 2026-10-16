@@ -7,7 +7,9 @@ use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
 use crate::markup::Scope;
 use crate::xml::element::{Element, NamespaceDeclaration, Node};
-use crate::xml::write::{Layout, escape, qualified, start_tag, write_element, write_node};
+use crate::xml::write::{
+    Layout, escape, is_whitespace, preserves_space, qualified, start_tag, write_element, write_node,
+};
 
 #[cfg(test)]
 mod tests;
@@ -22,10 +24,15 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 /// unless text comes before it. A start tag waits for the element's first
 /// content, so an element nothing is written into ends as an empty tag. It
 /// keeps the namespace declarations of the elements it has started and not
-/// ended, which a typed node written through it takes its prefixes from.
+/// ended, which a typed node written through it takes its prefixes from, and
+/// their `xml:space` state, so the compact layout drops whitespace-only text
+/// outside a preserve scope as the generic tree's writer does.
 pub struct PartWriter<'sink> {
+    layout: Layout,
     /// The start tag waiting for its element's first content.
     pending: Option<BytesStart<'static>>,
+    /// Whether whitespace is preserved inside each open element.
+    preserve: Vec<bool>,
     scope: Scope,
     writer: Writer<&'sink mut dyn Write>,
 }
@@ -50,7 +57,8 @@ impl<'sink> PartWriter<'sink> {
     /// The sink's.
     pub fn element(&mut self, element: &Element) -> io::Result<()> {
         self.flush()?;
-        write_element(&mut self.writer, element, Layout::Compact, 0, false)
+        let preserve = self.preserved();
+        write_element(&mut self.writer, element, Layout::Compact, 0, preserve)
     }
 
     /// `<name a="v"/>`, values escaped as in [`Self::start`].
@@ -72,6 +80,7 @@ impl<'sink> PartWriter<'sink> {
     /// The sink's.
     pub fn end(&mut self, name: &str) -> io::Result<()> {
         self.scope.end();
+        self.preserve.pop();
         match self.pending.take() {
             Some(start) => self.writer.write_event(Event::Empty(start)),
             None => self.writer.write_event(Event::End(BytesEnd::new(name))),
@@ -93,7 +102,9 @@ impl<'sink> PartWriter<'sink> {
             Layout::Pretty => Writer::new_with_indent(sink, b' ', 2),
         };
         Self {
+            layout,
             pending: None,
+            preserve: Vec::new(),
             scope: Scope::default(),
             writer,
         }
@@ -107,7 +118,8 @@ impl<'sink> PartWriter<'sink> {
     /// The sink's.
     pub fn node(&mut self, node: &Node) -> io::Result<()> {
         self.flush()?;
-        write_node(&mut self.writer, node, Layout::Compact, 0, false)
+        let preserve = self.preserved();
+        write_node(&mut self.writer, node, Layout::Compact, 0, preserve)
     }
 
     /// The start tag of an element whose declarations the scope already
@@ -115,12 +127,19 @@ impl<'sink> PartWriter<'sink> {
     /// [`Self::start`] writes them.
     pub(crate) fn open(&mut self, element: &Element) -> io::Result<()> {
         self.flush()?;
+        let preserve = preserves_space(element, self.preserved());
+        self.preserve.push(preserve);
         let name = qualified(&element.name);
         self.pending = Some(BytesStart::from_content(
             start_tag(element, &name),
             name.len(),
         ));
         Ok(())
+    }
+
+    /// Whether whitespace is preserved around the next node.
+    fn preserved(&self) -> bool {
+        self.preserve.last().copied().unwrap_or(false)
     }
 
     /// Markup written as it is.
@@ -153,6 +172,11 @@ impl<'sink> PartWriter<'sink> {
     ) -> io::Result<()> {
         self.flush()?;
         self.scope.start(declarations);
+        let preserve = attributes
+            .iter()
+            .find(|&&(attribute, _)| attribute == "xml:space")
+            .map_or_else(|| self.preserved(), |&(_, value)| value == "preserve");
+        self.preserve.push(preserve);
         self.pending = Some(tag(name, declarations, attributes));
         Ok(())
     }
@@ -163,6 +187,9 @@ impl<'sink> PartWriter<'sink> {
     ///
     /// The sink's.
     pub fn text(&mut self, value: &str) -> io::Result<()> {
+        if self.layout == Layout::Compact && !self.preserved() && is_whitespace(value) {
+            return Ok(());
+        }
         self.flush()?;
         self.writer
             .write_event(Event::Text(BytesText::from_escaped(escape(value, false))))
