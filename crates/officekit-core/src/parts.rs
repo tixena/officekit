@@ -344,7 +344,8 @@
 //!
 //! Each holds the part's content type, its relationship type in both classes' spelling, and the
 //! load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each
-//! file type.
+//! file type. `restore_through_module` stores a part again in a class through the module its
+//! content type names.
 
 pub mod additional_characteristics;
 pub mod alternative_format_import;
@@ -480,10 +481,15 @@ pub mod worksheet_threaded_comments;
 #[cfg(test)]
 mod tests;
 
+use crate::error::PackageError;
+use crate::packaging::package::{OpenOptions, Package, PartRoot};
+use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::Element;
 use crate::xml::name::{Namespace, NamespaceId};
+use crate::xml::parse::parse;
+use crate::xml::write::WriteOptions;
 
 /// Every part module: Part 1's definitions in the standard's order, then the parts of Microsoft's
 /// extensions by name.
@@ -1135,6 +1141,425 @@ pub const MODULES: &[PartModule] = &[
     },
 ];
 
+/// Each content type a module with a typed root lists, and the store again of a part of it through
+/// that module; a content type several modules list goes by the part's root element.
+const RESTORES: &[(&str, Restorer)] = &[
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml",
+        |part| part.through(wordprocessing_comments::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+        |part| part.through(document_settings::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml",
+        |part| part.through(endnotes::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+        |part| part.through(font_table::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml",
+        |part| part.through(footer::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml",
+        |part| part.through(footnotes::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.glossary+xml",
+        |part| part.through(glossary_document::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml",
+        |part| part.through(header::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+        |part| part.through(main_document::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml",
+        |part| part.through(main_document::load),
+    ),
+    (
+        "application/vnd.ms-word.document.macroEnabled.main+xml",
+        |part| part.through(main_document::load),
+    ),
+    (
+        "application/vnd.ms-word.template.macroEnabledTemplate.main+xml",
+        |part| part.through(main_document::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
+        |part| part.through(numbering_definitions::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+        |part| part.through(style_definitions::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+        |part| part.through(web_settings::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.calcChain+xml",
+        |part| part.through(calculation_chain::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.chartsheet+xml",
+        |part| part.through(chartsheet::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml",
+        |part| part.through(spreadsheet_comments::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml",
+        |part| part.through(connections::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.dialogsheet+xml",
+        |part| part.through(dialogsheet::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawing+xml",
+        |part| part.through(drawings::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.externalLink+xml",
+        |part| part.through(external_workbook_references::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml",
+        |part| part.through(metadata::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml",
+        |part| part.through(pivot_table::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition+xml",
+        |part| part.through(pivot_table_cache_definition::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheRecords+xml",
+        |part| part.through(pivot_table_cache_records::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.queryTable+xml",
+        |part| part.through(query_table::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
+        |part| part.through(shared_string_table::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.revisionHeaders+xml",
+        |part| part.through(shared_workbook_revision_headers::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.revisionLog+xml",
+        |part| part.through(shared_workbook_revision_log::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.userNames+xml",
+        |part| part.through(shared_workbook_user_data::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.tableSingleCells+xml",
+        |part| part.through(single_cell_table_definitions::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml",
+        |part| part.through(styles::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+        |part| part.through(table_definition::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.volatileDependencies+xml",
+        |part| part.through(volatile_dependencies::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+        |part| part.through(workbook::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml",
+        |part| part.through(workbook::load),
+    ),
+    (
+        "application/vnd.ms-excel.sheet.macroEnabled.main+xml",
+        |part| part.through(workbook::load),
+    ),
+    (
+        "application/vnd.ms-excel.template.macroEnabled.main+xml",
+        |part| part.through(workbook::load),
+    ),
+    (
+        "application/vnd.ms-excel.addin.macroEnabled.main+xml",
+        |part| part.through(workbook::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+        |part| part.through(worksheet::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.commentAuthors+xml",
+        |part| part.through(comment_authors::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.comments+xml",
+        |part| part.through(presentation_comments::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.handoutMaster+xml",
+        |part| part.through(handout_master::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.notesMaster+xml",
+        |part| part.through(notes_master::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml",
+        |part| part.through(notes_slide::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.ms-powerpoint.template.macroEnabled.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml",
+        |part| part.through(presentation::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.presProps+xml",
+        |part| part.through(presentation_properties::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slide+xml",
+        |part| part.through(slide::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml",
+        |part| part.through(slide_layout::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml",
+        |part| part.through(slide_master::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideUpdateInfo+xml",
+        |part| part.through(slide_synchronization_data::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.tags+xml",
+        |part| part.through(user_defined_tags::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml",
+        |part| part.through(view_properties::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.chart+xml",
+        |part| part.through(chart::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.chartshapes+xml",
+        |part| part.through(chart_drawing::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml",
+        |part| part.through(diagram_colors::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml",
+        |part| part.through(diagram_data::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml",
+        |part| part.through(diagram_layout_definition::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml",
+        |part| part.through(diagram_style::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.theme+xml",
+        |part| part.through(theme::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.themeOverride+xml",
+        |part| part.through(theme_override::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml",
+        |part| part.through(table_styles::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.customXmlProperties+xml",
+        |part| part.through(custom_xml_data_storage_properties::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+        |part| part.through(custom_file_properties::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+        |part| part.through(extended_file_properties::load),
+    ),
+    ("application/vnd.ms-office.chartcolorstyle+xml", |part| {
+        part.through(chart_color_style::load)
+    }),
+    ("application/vnd.ms-office.chartstyle+xml", |part| {
+        part.through(chart_style::load)
+    }),
+    ("application/vnd.ms-excel.controlproperties+xml", |part| {
+        part.through(control_properties::load)
+    }),
+    (
+        "application/vnd.ms-excel.customDataProperties+xml",
+        |part| part.through(custom_data_properties::load),
+    ),
+    (
+        "application/vnd.ms-office.drawingml.diagramDrawing+xml",
+        |part| part.through(diagram_persist_layout::load),
+    ),
+    ("application/vnd.ms-office.documenttasks+xml", |part| {
+        part.through(document_tasks::load)
+    }),
+    ("application/vnd.ms-office.chartex+xml", |part| {
+        part.through(extended_chart::load)
+    }),
+    ("application/vnd.ms-excel.featurepropertybag+xml", |part| {
+        part.through(feature_property_bags::load)
+    }),
+    (
+        "application/vnd.ms-office.classificationlabels+xml",
+        |part| part.through(label_info::load),
+    ),
+    ("application/vnd.ms-excel.namedsheetviews+xml", |part| {
+        part.through(named_sheet_views::load)
+    }),
+    ("application/vnd.ms-powerpoint.authors+xml", |part| {
+        part.through(power_point_authors::load)
+    }),
+    ("application/vnd.ms-powerpoint.comments+xml", |part| {
+        part.through(power_point_comment::load)
+    }),
+    ("application/vnd.ms-excel.rdarray+xml", |part| {
+        part.through(rd_array::load)
+    }),
+    ("application/vnd.ms-excel.rdrichvalue+xml", |part| {
+        part.through(rd_rich_value::load)
+    }),
+    (
+        "application/vnd.ms-excel.rdrichvaluestructure+xml",
+        |part| part.through(rd_rich_value_structure::load),
+    ),
+    ("application/vnd.ms-excel.rdrichvaluetypes+xml", |part| {
+        part.through(rd_rich_value_types::load)
+    }),
+    ("application/vnd.ms-excel.rdrichvaluewebimage+xml", |part| {
+        part.through(rd_rich_value_web_image::load)
+    }),
+    (
+        "application/vnd.ms-excel.rdsupportingpropertybag+xml",
+        |part| part.through(rd_supporting_property_bag::load),
+    ),
+    (
+        "application/vnd.ms-excel.rdsupportingpropertybagstructure+xml",
+        |part| part.through(rd_supporting_property_bag_structure::load),
+    ),
+    ("application/vnd.ms-excel.richstyles+xml", |part| {
+        part.through(rich_styles::load)
+    }),
+    ("application/vnd.ms-excel.slicerCache+xml", |part| {
+        part.through(slicer_cache::load)
+    }),
+    ("application/vnd.ms-excel.slicer+xml", |part| {
+        part.through(slicers::load)
+    }),
+    ("application/vnd.ms-word.stylesWithEffects+xml", |part| {
+        part.through(styles_with_effects::load)
+    }),
+    ("application/vnd.ms-excel.timeline+xml", |part| {
+        part.through(time_line::load)
+    }),
+    ("application/vnd.ms-excel.timelineCache+xml", |part| {
+        part.through(time_line_cache::load)
+    }),
+    (
+        "application/vnd.ms-office.webextensiontaskpanes+xml",
+        |part| part.through(web_ex_taskpanes::load),
+    ),
+    ("application/vnd.ms-office.webextension+xml", |part| {
+        part.through(web_extension::load)
+    }),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml",
+        |part| part.through(word_comments_extensible::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml",
+        |part| part.through(wordprocessing_comments_ex::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml",
+        |part| part.through(wordprocessing_comments_ids::load),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.people+xml",
+        |part| part.through(wordprocessing_people::load),
+    ),
+    ("application/vnd.ms-excel.person+xml", |part| {
+        part.through(workbook_person::load)
+    }),
+    ("application/vnd.ms-excel.threadedcomments+xml", |part| {
+        part.through(worksheet_threaded_comments::load)
+    }),
+    ("application/xml", |part| part.by_root()),
+];
+
+/// The root element of each module whose content type another module lists too: its namespace and
+/// local name, and the store again of a part through that module.
+const ROOTS: &[(NamespaceId, &str, Restorer)] = &[
+    (118, "MapInfo", |part| {
+        part.through(custom_xml_mappings::load)
+    }),
+    (7, "additionalCharacteristics", |part| {
+        part.through(additional_characteristics::load)
+    }),
+    (21, "Sources", |part| part.through(bibliography::load)),
+    (58, "customUI", |part| {
+        part.through(ribbon_and_backstage_customizations::load)
+    }),
+];
+
 /// A generated part module, for code that works over every part type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
@@ -1145,6 +1570,49 @@ pub struct PartModule {
     /// The section of ECMA-376 Part 1 that defines the part, `11.3.10`;
     /// `None` for a part of Microsoft's extensions.
     pub section: Option<&'static str>,
+}
+
+/// A part `restore_through_module` stores again: where it is, its content type, and the options
+/// it is read and written with.
+struct Restore<'part> {
+    class: ConformanceClass,
+    content_type: &'part str,
+    name: &'part PartName,
+    open: OpenOptions,
+    package: &'part mut Package,
+    write: WriteOptions,
+}
+
+/// The store again of a part through one module.
+type Restorer = fn(Restore<'_>) -> Result<(), PackageError>;
+
+impl Restore<'_> {
+    /// The part through the module whose root element it holds, when one does.
+    fn by_root(self) -> Result<(), PackageError> {
+        let root = parse(&self.package.part_bytes(self.name)?)
+            .map_err(|error| PackageError::Xml {
+                error,
+                part: self.name.clone(),
+            })?
+            .root;
+        let found = ROOTS.iter().find(|(namespace, local, _)| {
+            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
+        });
+        found.map_or(Ok(()), |(_, _, restorer)| restorer(self))
+    }
+
+    /// Load the part with `load` and store its typed root again in the class.
+    fn through<R>(
+        self,
+        load: fn(&Package, &PartName, OpenOptions) -> Result<R, PackageError>,
+    ) -> Result<(), PackageError>
+    where
+        R: PartRoot,
+    {
+        let root = load(self.package, self.name, self.open)?;
+        self.package
+            .store(self.name, self.content_type, &root, self.class, self.write)
+    }
 }
 
 /// `Ok` when `root` is the element `local` of the namespace `namespace`,
@@ -1160,4 +1628,37 @@ fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(),
         root.name.local,
         expected.uri(ConformanceClass::Transitional),
     ))
+}
+
+/// Store the part `name` again in `class` through the module its content type names.
+///
+/// The module's `load` reads the part with `open`, and [`Package::store`] writes its typed root with
+/// `write`. A content type several modules list goes by the part's root element; a part no module
+/// with a typed root takes is left as it is.
+///
+/// # Errors
+///
+/// The errors of the module's `load` and of [`Package::store`], and [`PackageError::Xml`] for a
+/// part of a content type several modules list that is not well-formed.
+pub fn restore_through_module(
+    package: &mut Package,
+    name: &PartName,
+    class: ConformanceClass,
+    open: OpenOptions,
+    write: WriteOptions,
+) -> Result<(), PackageError> {
+    let Some(content_type) = package.content_type(name).map(str::to_owned) else {
+        return Ok(());
+    };
+    let Some((_, restorer)) = RESTORES.iter().find(|(listed, _)| *listed == content_type) else {
+        return Ok(());
+    };
+    restorer(Restore {
+        class,
+        content_type: &content_type,
+        name,
+        open,
+        package,
+        write,
+    })
 }

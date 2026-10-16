@@ -11,8 +11,9 @@
 //!   its relationship type in both classes, and the load and store of its
 //!   root.
 //! - [`validation`] ports `DocumentFormat.OpenXml.Validation`.
-//! - [`docx`], [`spreadsheet`], and [`presentation`] hold the typed
-//!   document classes and the operations over the generated types.
+//! - [`docx`], [`xlsx`], and [`pptx`] hold the file types: a package with
+//!   its main part, its class, and its kind, the saves in either class, and
+//!   the operations over the generated types.
 //! - `transitional` and `strict`, each behind the feature of its name, read
 //!   and write every node of the typed tree in that conformance class.
 //!
@@ -27,16 +28,18 @@ mod class_rules;
 pub mod compact;
 pub mod docx;
 pub mod error;
+mod file;
 pub mod folder;
 pub mod markup;
+mod new_parts;
 pub mod packaging;
 pub mod parts;
-pub mod presentation;
-pub mod spreadsheet;
+pub mod pptx;
 pub mod stream;
 #[cfg(feature = "strict")]
 pub mod strict;
 #[cfg(feature = "transitional")]
 pub mod transitional;
 pub mod validation;
+pub mod xlsx;
 pub mod xml;
