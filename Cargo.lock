@@ -357,7 +357,7 @@ checksum = "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe"
 [[package]]
 name = "os-shim"
 version = "0.1.0"
-source = "git+https://github.com/eburgos/os-shim.git#e42208e25b7514930dd619cf10b3fd5f307b8ee0"
+source = "git+https://github.com/eburgos/os-shim.git?rev=0afaa75#0afaa75be4a5eb757c22fc9911a8a300e67bb3ab"
 dependencies = [
  "ignore",
  "tempfile",

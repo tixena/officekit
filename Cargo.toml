@@ -22,7 +22,7 @@ serde_json = "1.0"
 
 # System abstraction (filesystem, env, temp dirs). The only route to the OS:
 # no crate in this workspace calls std::fs or std::env directly.
-os-shim = { git = "https://github.com/eburgos/os-shim.git" }
+os-shim = { git = "https://github.com/eburgos/os-shim.git", rev = "0afaa75" }
 
 # OPC packages are zip archives. Parsed from an in-memory buffer so the
 # central directory is available: Office files in the wild use data

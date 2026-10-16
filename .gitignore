@@ -21,3 +21,10 @@ notes/
 # Remargin identity (workspace-local, not shared)
 .remargin.yaml
 .remargin/
+
+# Generator inputs, downloaded by `just inputs` and never committed
+/inputs/
+
+# The parity oracle's build output
+/oracle/bin/
+/oracle/obj/

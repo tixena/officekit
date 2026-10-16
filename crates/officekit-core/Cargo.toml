@@ -11,6 +11,11 @@ repository.workspace = true
 [lints]
 workspace = true
 
+[features]
+default = ["transitional"]
+transitional = []
+strict = []
+
 [dependencies]
 # System abstraction (filesystem, env, temp dirs)
 os-shim.workspace = true

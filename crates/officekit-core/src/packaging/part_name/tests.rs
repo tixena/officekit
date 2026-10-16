@@ -2,7 +2,11 @@ use super::PartName;
 use crate::error::PackageError;
 
 fn reason_for(name: &str) -> Option<&'static str> {
-    let Err(PackageError::PartName { reason, .. }) = PartName::new(name) else {
+    let Err(PackageError::PartName {
+        name: _name,
+        reason,
+    }) = PartName::new(name)
+    else {
         return None;
     };
     Some(reason)
@@ -63,7 +67,16 @@ fn zip_entry_round_trip_drops_and_restores_the_leading_slash() {
 #[test]
 fn zip_entry_with_its_own_leading_slash_is_rejected() {
     let err = PartName::from_zip_entry("/word/document.xml").unwrap_err();
-    assert!(matches!(err, PackageError::PartName { .. }), "got {err:?}");
+    assert!(
+        matches!(
+            &err,
+            PackageError::PartName {
+                name: _name,
+                reason: _reason
+            }
+        ),
+        "got {err:?}"
+    );
 }
 
 #[test]
