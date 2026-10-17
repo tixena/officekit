@@ -1,3 +1,5 @@
+#![cfg(feature = "transitional")]
+
 use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{TextRun, write};
 use officekit_packaging::error::PackageError;

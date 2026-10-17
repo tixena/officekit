@@ -4,11 +4,13 @@ use officekit_packaging::relationship::RelationshipType;
 use officekit_parts::kinds::SpreadsheetKind;
 use officekit_parts::worksheet::CONTENT_TYPE as WORKSHEET;
 
-#[cfg(feature = "strict")]
+#[cfg(feature = "transitional")]
+use super::Embedded;
+use super::open;
+#[cfg(all(feature = "strict", feature = "transitional"))]
 use super::store_strict;
 #[cfg(feature = "transitional")]
 use super::store_transitional;
-use super::{Embedded, open};
 use crate::xlsx::Xlsx;
 
 const WORKBOOK_TYPE: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -20,6 +22,7 @@ fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
 
+#[cfg(feature = "transitional")]
 fn workbook_of(embedded: Embedded) -> Xlsx {
     match embedded {
         Embedded::Xlsx(workbook) => Some(workbook),
@@ -61,6 +64,7 @@ fn document_with_workbook() -> (Package, PartName) {
     (package, embedded)
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn the_workbook_of_a_document_opens_as_xlsx() {
     let (package, part) = document_with_workbook();
@@ -91,7 +95,7 @@ fn a_workbook_edit_writes_back_with_its_edit() {
     );
 }
 
-#[cfg(feature = "strict")]
+#[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_workbook_written_back_strict_reopens_as_xlsx() {
     let (mut package, part) = document_with_workbook();
@@ -138,6 +142,7 @@ fn a_zip_without_a_main_part_is_not_a_package() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_package_of_another_main_part_is_not_a_package() {
     let (mut package, _) = document_with_workbook();
@@ -154,9 +159,8 @@ fn a_package_of_another_main_part_is_not_a_package() {
         .set_part_bytes(&other, WORKBOOK_TYPE, &inner.to_bytes().unwrap())
         .unwrap();
     let error = open(&package, &other, OpenOptions::default()).unwrap_err();
-    assert!(
-        error
-            .to_string()
-            .starts_with("the part /word/embeddings/other.xlsx does not hold a package")
+    assert_eq!(
+        error.to_string(),
+        "the part /word/embeddings/other.xlsx does not hold a package: the main part's content type is Some(\"application/xml\")"
     );
 }

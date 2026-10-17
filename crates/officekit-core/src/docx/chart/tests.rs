@@ -1,18 +1,24 @@
+#[cfg(feature = "transitional")]
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
+use officekit_parts::chart;
 use officekit_parts::kinds::WordprocessingKind;
-use officekit_parts::{chart, shared_string_table, workbook, worksheet};
+#[cfg(feature = "transitional")]
+use officekit_parts::{shared_string_table, workbook, worksheet};
 
 use super::{ChartRanges, Docx};
 
 const C: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 const EMPTY_CACHE: &str =
     "<c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"1\"/></c:numCache>";
+#[cfg(feature = "transitional")]
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+#[cfg(feature = "transitional")]
 const S: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 const SPREADSHEET: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 /// Rows 2 and 3 of the workbook rewritten with inline-string categories and values in column B.
+#[cfg(feature = "transitional")]
 const TWO_ROWS: &str = "<row r=\"2\"><c r=\"A2\" t=\"inlineStr\"><is><t>Week 1</t></is></c><c r=\"B2\"><v>12</v></c></row><row r=\"3\"><c r=\"A3\" t=\"inlineStr\"><is><t>Week 2</t></is></c><c r=\"B3\"><v>18</v></c></row>";
 
 fn name(text: &str) -> PartName {
@@ -21,6 +27,7 @@ fn name(text: &str) -> PartName {
 
 /// The workbook of chart 1 of the monthly threat report: one sheet, "Sheet1", with the series
 /// names as shared strings in row 1, then `rows` as the cells of `sheetData` after row 1.
+#[cfg(feature = "transitional")]
 fn workbook_bytes(rows: &str) -> Vec<u8> {
     let mut package = Package::new();
     let main = name("/xl/workbook.xml");
@@ -106,6 +113,7 @@ fn document(series: &str, workbook: Option<Vec<u8>>) -> Docx {
     docx
 }
 
+#[cfg(feature = "transitional")]
 fn chart_text(docx: &Docx) -> String {
     String::from_utf8(
         docx.package()
@@ -115,6 +123,7 @@ fn chart_text(docx: &Docx) -> String {
     .unwrap()
 }
 
+#[cfg(feature = "transitional")]
 fn refreshed(series: &str, rows: &str, ranges: ChartRanges) -> String {
     let mut docx = document(series, Some(workbook_bytes(rows)));
     docx.refresh_chart_caches(&name("/word/charts/chart1.xml"), ranges)
@@ -140,6 +149,7 @@ fn report_series() -> String {
     )
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn two_rows_written_give_the_ranges_and_caches_of_the_last_row_holding_a_value() {
     let text = refreshed(&report_series(), TWO_ROWS, ChartRanges::ToLastRow);
@@ -149,12 +159,14 @@ fn two_rows_written_give_the_ranges_and_caches_of_the_last_row_holding_a_value()
     assert!(text.contains("<c:f>Sheet1!$C$2:$C$2</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"1\"/></c:numCache>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_series_name_made_of_runs_is_the_runs_text() {
     let text = refreshed(&report_series(), TWO_ROWS, ChartRanges::ToLastRow);
     assert!(text.contains("<c:f>Sheet1!$C$1</c:f><c:strCache><c:ptCount val=\"1\"/><c:pt idx=\"0\"><c:v>Anomalias</c:v></c:pt></c:strCache>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn as_written_reads_the_cells_the_formula_names_and_keeps_it() {
     let series = reference("val", "Sheet1!$B$2:$B$3", EMPTY_CACHE);
@@ -165,6 +177,7 @@ fn as_written_reads_the_cells_the_formula_names_and_keeps_it() {
     assert!(single_text.contains("<c:f>Sheet1!$B$2</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"1\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt>"), "{single_text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_range_never_ends_above_its_first_row() {
     let series = reference("val", "Sheet1!$D$5", EMPTY_CACHE);
@@ -172,6 +185,7 @@ fn a_range_never_ends_above_its_first_row() {
     assert!(text.contains("<c:f>Sheet1!$D$5:$D$5</c:f>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_range_of_several_columns_keeps_its_formula_and_counts_row_by_row() {
     let series = reference("val", "Sheet1!$A$2:$B$3", EMPTY_CACHE);
@@ -179,6 +193,7 @@ fn a_range_of_several_columns_keeps_its_formula_and_counts_row_by_row() {
     assert!(text.contains("<c:f>Sheet1!$A$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>12</c:v></c:pt><c:pt idx=\"2\"><c:v>Week 2</c:v></c:pt><c:pt idx=\"3\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_quoted_sheet_name_finds_its_sheet_and_is_written_back_as_quoted() {
     let series = format!(
@@ -190,6 +205,7 @@ fn a_quoted_sheet_name_finds_its_sheet_and_is_written_back_as_quoted() {
     assert!(text.contains("<c:f>'Q1 data'!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>7</c:v></c:pt><c:pt idx=\"1\"><c:v>Quarter</c:v></c:pt>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_formula_that_is_not_one_area_of_a_sheet_leaves_its_cache() {
     let old = "<c:numCache><c:ptCount val=\"1\"/><c:pt idx=\"0\"><c:v>5</c:v></c:pt></c:numCache>";
@@ -212,6 +228,7 @@ fn a_formula_that_is_not_one_area_of_a_sheet_leaves_its_cache() {
     }
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_missing_cache_is_created_after_the_formula_and_points_go_before_the_extension_list() {
     let series = "<c:val><c:numRef><c:f>Sheet1!$B$2:$B$3</c:f><c:extLst/></c:numRef></c:val><c:cat><c:strRef><c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"9\"/><c:extLst><c:ext/></c:extLst></c:strCache></c:strRef></c:cat>";
@@ -220,6 +237,7 @@ fn a_missing_cache_is_created_after_the_formula_and_points_go_before_the_extensi
     assert!(text.contains("<c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt><c:extLst><c:ext/></c:extLst></c:strCache>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_cell_without_a_value_gets_no_point_but_counts_in_the_area() {
     let series = reference("val", "Sheet1!$B$2:$B$5", EMPTY_CACHE);
@@ -227,6 +245,7 @@ fn a_cell_without_a_value_gets_no_point_but_counts_in_the_area() {
     assert!(text.contains("<c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt><c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn the_workbook_is_not_changed() {
     let bytes = workbook_bytes(TWO_ROWS);
@@ -249,6 +268,7 @@ fn a_chart_without_a_workbook_is_a_read_error() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn an_embedded_document_that_is_not_a_workbook_is_a_read_error() {
     let other = Docx::new(WordprocessingKind::Document)

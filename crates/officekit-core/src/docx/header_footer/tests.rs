@@ -1,18 +1,24 @@
 use officekit_markup::wordprocessing::{
-    BlockContent, DocumentFinalSectionProperties, Footer, Header, HeaderOrFooterTypeMember,
-    Paragraph, SectionPropertiesContent,
+    BlockContent, Footer, Header, HeaderOrFooterTypeMember, Paragraph,
 };
+#[cfg(feature = "transitional")]
+use officekit_markup::wordprocessing::{DocumentFinalSectionProperties, SectionPropertiesContent};
+#[cfg(feature = "transitional")]
 use officekit_packaging::error::PackageError;
+#[cfg(feature = "transitional")]
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::document_settings;
 use officekit_parts::kinds::WordprocessingKind;
-use officekit_parts::{document_settings, footer, header};
-#[cfg(feature = "strict")]
+#[cfg(feature = "transitional")]
+use officekit_parts::{footer, header};
+#[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::conformance::ConformanceClass;
 
 use crate::docx::Docx;
 
+#[cfg(feature = "transitional")]
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 
@@ -42,6 +48,7 @@ fn a_footer() -> Footer {
 
 /// A package whose main part is `body` and whose root declares the relationships namespace under
 /// `prefix`, with one header and one footer part per entry of `parts` as `(part, id)`.
+#[cfg(feature = "transitional")]
 fn package_with(body: &str, prefix: &str, parts: &[(&str, &str)], settings: bool) -> Package {
     let mut package = Package::new();
     let main = name("/word/document.xml");
@@ -95,6 +102,7 @@ fn package_with(body: &str, prefix: &str, parts: &[(&str, &str)], settings: bool
 }
 
 /// One section: a default header, a default footer, and a first-page footer.
+#[cfg(feature = "transitional")]
 fn pagare() -> Docx {
     let section = "<w:sectPr><w:headerReference w:type=\"default\" r:id=\"rId1\"/><w:footerReference w:type=\"default\" r:id=\"rId2\"/><w:footerReference w:type=\"first\" r:id=\"rId3\"/><w:pgSz w:w=\"12240\" w:h=\"15840\"/></w:sectPr>";
     let package = package_with(
@@ -110,6 +118,7 @@ fn pagare() -> Docx {
     Docx::from_package(package, OpenOptions::default()).unwrap()
 }
 
+#[cfg(feature = "transitional")]
 fn body_section(docx: &Docx) -> DocumentFinalSectionProperties {
     let document = docx.main_document().unwrap();
     *document
@@ -120,6 +129,7 @@ fn body_section(docx: &Docx) -> DocumentFinalSectionProperties {
 }
 
 /// The `(element, type, id)` of each reference of the section, in order.
+#[cfg(feature = "transitional")]
 fn references(section: &DocumentFinalSectionProperties) -> Vec<(&'static str, String, String)> {
     section
         .content
@@ -144,6 +154,7 @@ fn references(section: &DocumentFinalSectionProperties) -> Vec<(&'static str, St
         .collect()
 }
 
+#[cfg(feature = "transitional")]
 fn related_ids(docx: &Docx) -> Vec<String> {
     docx.package()
         .related(Some(docx.main_document_part()))
@@ -153,15 +164,18 @@ fn related_ids(docx: &Docx) -> Vec<String> {
         .collect()
 }
 
+#[cfg(feature = "transitional")]
 fn is_read(error: &PackageError) -> bool {
     matches!(error, PackageError::Read { part, reason }
         if part.as_str() == "/word/document.xml" && !reason.is_empty())
 }
 
+#[cfg(feature = "transitional")]
 fn entry(element: &'static str, kind: &str, id: &str) -> (&'static str, String, String) {
     (element, kind.to_owned(), id.to_owned())
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_first_page_header_goes_after_the_references_and_turns_on_title_page() {
     let mut docx = pagare();
@@ -187,6 +201,7 @@ fn a_first_page_header_goes_after_the_references_and_turns_on_title_page() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn the_new_reference_goes_before_the_other_section_properties() {
     let mut docx = pagare();
@@ -198,6 +213,7 @@ fn the_new_reference_goes_before_the_other_section_properties() {
     assert!(xml.find("w:type=\"first\"").unwrap() < reference);
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn replacing_the_default_header_changes_the_id_and_removes_the_old_part() {
     let mut docx = pagare();
@@ -238,6 +254,7 @@ fn an_even_footer_creates_the_settings_part_when_the_document_has_none() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn an_even_header_turns_on_the_flag_in_the_settings_part_the_document_has() {
     let mut docx = pagare();
@@ -267,6 +284,7 @@ fn a_new_document_gets_a_body_section_and_declares_the_relationships_prefix() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn the_documents_own_relationships_prefix_is_used() {
     let package = package_with("<w:p/><w:sectPr/>", "rel", &[], false);
@@ -278,6 +296,7 @@ fn the_documents_own_relationships_prefix_is_used() {
     assert!(!xml.contains("xmlns:r="), "{xml}");
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_section_past_the_last_is_a_read_error_and_nothing_changes() {
     let mut docx = pagare();
@@ -293,6 +312,7 @@ fn a_section_past_the_last_is_a_read_error_and_nothing_changes() {
     assert_eq!(docx.package().to_bytes().unwrap(), before);
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_header_or_footer_with_no_block_is_refused_before_anything_changes() {
     let mut docx = pagare();
@@ -308,6 +328,7 @@ fn a_header_or_footer_with_no_block_is_refused_before_anything_changes() {
     assert_eq!(docx.package().to_bytes().unwrap(), before);
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn removing_a_footer_removes_its_part_and_leaves_the_flags() {
     let mut docx = pagare();
@@ -335,6 +356,7 @@ fn removing_a_footer_removes_its_part_and_leaves_the_flags() {
     );
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn removing_a_reference_the_section_does_not_have_returns_none() {
     let mut docx = pagare();
@@ -347,6 +369,7 @@ fn removing_a_reference_the_section_does_not_have_returns_none() {
     assert_eq!(docx.package().to_bytes().unwrap(), before);
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn removing_a_first_page_header_leaves_title_page_on() {
     let mut docx = pagare();
@@ -357,6 +380,7 @@ fn removing_a_first_page_header_leaves_title_page_on() {
     assert!(text(&docx, "/word/document.xml").contains("<w:titlePg/>"));
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn a_part_two_sections_share_stays_until_the_last_reference_goes() {
     let first = "<w:p><w:pPr><w:sectPr><w:headerReference w:type=\"default\" r:id=\"rId1\"/></w:sectPr></w:pPr></w:p>";
@@ -382,6 +406,7 @@ fn a_part_two_sections_share_stays_until_the_last_reference_goes() {
     assert!(!docx.package().contains(&name("/word/header1.xml")));
 }
 
+#[cfg(feature = "transitional")]
 #[test]
 fn sections_inside_block_level_content_controls_count_in_document_order() {
     let control =
@@ -411,7 +436,7 @@ fn sections_inside_block_level_content_controls_count_in_document_order() {
     assert!(is_read(&error), "{error:?}");
 }
 
-#[cfg(feature = "strict")]
+#[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_strict_file_gets_strict_relationship_types_and_namespace() {
     let bytes = pagare().to_bytes_strict().unwrap();

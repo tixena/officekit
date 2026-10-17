@@ -23,11 +23,13 @@ fmt:
 build:
     cargo build --workspace
 
-# Run the test suite, and officekit-core's and officekit-parts' with every class on.
+# Run the test suite, officekit-core's and officekit-parts' with every class on,
+# and officekit-core's with Strict alone.
 test:
     cargo test --workspace
     cargo test -p officekit-core --all-features
     cargo test -p officekit-parts --all-features
+    cargo test -p officekit-core --no-default-features --features strict
 
 # Generate code coverage report (requires cargo-llvm-cov)
 test-coverage:
