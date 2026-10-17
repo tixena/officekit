@@ -5,7 +5,7 @@
 //!
 //! - [`element`]: the generic element tree.
 //! - [`name`]: qualified names, the namespace table, and the Office versions.
-//! - [`parse`] and [`write`]: a part's bytes into the tree and back, and the namespace declarations
+//! - [`parse`] and [`mod@write`]: a part's bytes into the tree and back, and the namespace declarations
 //!   in scope while a typed tree is written.
 //! - [`values`]: the parsers of simple-type values.
 //! - [`mc`]: markup compatibility.
