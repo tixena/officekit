@@ -3,7 +3,8 @@ default:
     @just --list
 
 # Lint Rust: clippy across the whole workspace, then officekit-core and
-# officekit-parts in every feature combination, then fmt check. `--workspace`
+# officekit-parts in every feature combination, then fmt check, and rustfmt
+# over every test file, which reaches the ones `include!` hides. `--workspace`
 # because `default-members` excludes `crates/xtask`.
 lint:
     cargo clippy --workspace --all-targets -- -D warnings
@@ -14,6 +15,7 @@ lint:
     cargo clippy -p officekit-parts --all-targets --no-default-features -- -D warnings
     cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
     cargo fmt --all --check
+    find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
 
 # Format Rust.
 fmt:
