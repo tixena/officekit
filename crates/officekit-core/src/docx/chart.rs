@@ -13,11 +13,11 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::{chart, shared_string_table, worksheet};
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 
 use crate::embedded::{self, Embedded};
-use crate::parts::{chart, shared_string_table, worksheet};
 use crate::xlsx::Xlsx;
 
 use super::Docx;

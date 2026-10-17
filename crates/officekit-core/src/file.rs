@@ -6,12 +6,11 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::OpenOptions;
 use officekit_packaging::package::{MainPart, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_parts::part_root::{self, PartRoot};
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_parts::restore_through_module;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
-
-use crate::part_root::{self, PartRoot};
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::parts;
 
 #[cfg(test)]
 mod tests;
@@ -92,7 +91,7 @@ where
 ///
 /// # Errors
 ///
-/// The errors of `own`, of [`parts::restore_through_module`] (a [`PackageError::Write`] for the
+/// The errors of `own`, of [`restore_through_module`] (a [`PackageError::Write`] for the
 /// first part holding content `to` has no form for), and of building the archive.
 #[cfg(any(feature = "strict", feature = "transitional"))]
 pub fn to_bytes_in_class(
@@ -109,7 +108,7 @@ pub fn to_bytes_in_class(
     let mut copy = package.duplicate()?;
     for name in copy.part_names()? {
         if !own(&mut copy, &name)? {
-            parts::restore_through_module(&mut copy, &name, to, open, write)?;
+            restore_through_module(&mut copy, &name, to, open, write)?;
         }
     }
     copy.set_relationship_class(to)?;

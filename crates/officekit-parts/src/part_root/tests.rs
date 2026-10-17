@@ -12,7 +12,7 @@ use officekit_xml::write::WriteOptions;
 
 use super::{PartRoot, load, store};
 #[cfg(feature = "transitional")]
-use crate::parts::footer;
+use crate::footer;
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";

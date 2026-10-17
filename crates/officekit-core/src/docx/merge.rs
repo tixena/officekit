@@ -12,14 +12,14 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::{
+    endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
+};
 use officekit_xml::element::{Attribute, Document as Part, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use super::Docx;
-use crate::parts::{
-    endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
-};
 
 /// The `w` elements whose attribute names an entry of an id space.
 const ENTRY_REFERENCES: [(&str, &str, Space); 8] = [

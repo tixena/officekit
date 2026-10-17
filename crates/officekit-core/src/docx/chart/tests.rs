@@ -1,10 +1,10 @@
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
+use officekit_parts::kinds::WordprocessingKind;
+use officekit_parts::{chart, shared_string_table, workbook, worksheet};
 
 use super::{ChartRanges, Docx};
-use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{chart, shared_string_table, workbook, worksheet};
 
 const C: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 const EMPTY_CACHE: &str =

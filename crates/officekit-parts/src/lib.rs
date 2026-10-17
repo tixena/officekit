@@ -413,6 +413,7 @@ pub mod named_sheet_views;
 pub mod notes_master;
 pub mod notes_slide;
 pub mod numbering_definitions;
+pub mod part_root;
 pub mod pivot_table;
 pub mod pivot_table_cache_definition;
 pub mod pivot_table_cache_records;
@@ -481,7 +482,7 @@ pub mod worksheet_threaded_comments;
 #[cfg(test)]
 mod tests;
 
-use crate::part_root::{self, PartRoot};
+use crate::part_root::PartRoot;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;

@@ -9,15 +9,15 @@ use officekit_packaging::part_name::PartName;
 #[cfg(feature = "transitional")]
 use officekit_packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
+use officekit_parts::document_settings;
+#[cfg(feature = "transitional")]
+use officekit_parts::kinds::WordprocessingKind;
+#[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
 
 use super::{hash, legacy_hash};
 #[cfg(feature = "transitional")]
 use crate::docx::Docx;
-#[cfg(feature = "transitional")]
-use crate::parts::document_settings;
-#[cfg(feature = "transitional")]
-use crate::parts::kinds::WordprocessingKind;
 
 const ASPOSE_SALT: &str = "hIqOl99kIr/+N0hyovEq7Q==";
 

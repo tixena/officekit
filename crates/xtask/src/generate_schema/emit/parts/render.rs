@@ -1,4 +1,4 @@
-//! The text of the part modules, of `parts.rs` declaring them, of the
+//! The text of the part modules, of `lib.rs` declaring them, of the
 //! document kinds, and of the relationship types' constants.
 
 use alloc::collections::BTreeSet;
@@ -61,7 +61,7 @@ const TO_TREE_BODY: &str = "        #[cfg(feature = \"strict\")]
 
 ";
 
-/// The helper every typed root's `to_tree` calls, the last item of `parts.rs`.
+/// The helper every typed root's `to_tree` calls, the last item of `lib.rs`.
 const TREE_IN_CLASS: &str = "
 /// The tree of `root` in `class`, from `strict` or `transitional`, the writer of that class.
 ///
@@ -90,7 +90,7 @@ const KIND_ENUMS: [(&str, &str, &str); 3] = [
     ("wordprocessing", "WordprocessingKind", ".docx"),
 ];
 
-/// The struct of `parts.rs`'s `MODULES`.
+/// The struct of `lib.rs`'s `MODULES`.
 const PART_MODULE: &str = "
 /// A generated part module, for code that works over every part type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -182,7 +182,7 @@ const THROUGH: &str =
 }
 ";
 
-/// `restore_through_module`, the last item of `parts.rs`.
+/// `restore_through_module`, the last item of `lib.rs`.
 const RESTORE_THROUGH_MODULE: &str = "
 /// Store the part `name` again in `class` through the module its content type names.
 ///
@@ -308,7 +308,7 @@ pub fn files(
             relationship_types(header, joined),
         ),
         (
-            folder.with_extension("rs"),
+            folder.join("lib.rs"),
             parts_text(header, joined, &root_texts, tests),
         ),
         (folder.join("kinds.rs"), kinds_text(header, &joined.kinds)),
@@ -339,7 +339,7 @@ fn inner_doc(text: &str) -> String {
         })
 }
 
-/// One enum of `parts/kinds.rs` and its `impl`: its variants in alphabetical
+/// One enum of `kinds.rs` and its `impl`: its variants in alphabetical
 /// order, with `ALL` and `main_content_type`.
 fn kind_enum(kinds: &[Kind], file: &str, name: &str, family: &str) -> (String, String) {
     let mut rows: Vec<&Kind> = kinds.iter().filter(|kind| kind.file == file).collect();
@@ -388,7 +388,7 @@ fn kind_enum(kinds: &[Kind], file: &str, name: &str, family: &str) -> (String, S
     (definition, implementation)
 }
 
-/// `parts/kinds.rs`: one enum per file type, then their `impl`s.
+/// `kinds.rs`: one enum per file type, then their `impl`s.
 fn kinds_text(header: &str, kinds: &[Kind]) -> String {
     let mut out = String::from(header);
     out.push_str(&inner_doc(
@@ -616,7 +616,7 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
     out
 }
 
-/// `parts.rs`: the module declarations, `MODULES`, the helpers the modules
+/// `lib.rs`: the module declarations, `MODULES`, the helpers the modules
 /// share, and the dispatch from a part's content type to its module.
 fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: bool) -> String {
     let typed: Vec<(&PartType, &RootText)> = joined
@@ -652,6 +652,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
         .map(|part| part.module.as_str())
         .collect();
     modules.push("kinds");
+    modules.push("part_root");
     modules.sort_unstable();
     for module in modules {
         let _ = writeln!(out, "pub mod {module};");
@@ -666,7 +667,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
     };
     let _ = write!(
         out,
-        "\nuse crate::part_root::{{self, PartRoot}};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
+        "\nuse crate::part_root::PartRoot;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
     );
     out.push_str(&layout::doc(
         0,

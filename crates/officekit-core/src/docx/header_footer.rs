@@ -13,13 +13,13 @@ use officekit_markup::wordprocessing::{
 use officekit_packaging::error::PackageError;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
+use officekit_parts::part_root::{self, PartRoot};
+use officekit_parts::{document_settings, footer, header};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::NamespaceDeclaration;
 use officekit_xml::name::Namespace;
 
 use crate::file;
-use crate::part_root::{self, PartRoot};
-use crate::parts::{document_settings, footer, header};
 
 use super::Docx;
 

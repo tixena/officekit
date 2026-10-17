@@ -6,12 +6,12 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::kinds::WordprocessingKind;
+use officekit_parts::{document_settings, footer, header};
 #[cfg(feature = "strict")]
 use officekit_xml::conformance::ConformanceClass;
 
 use crate::docx::Docx;
-use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{document_settings, footer, header};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";

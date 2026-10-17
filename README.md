@@ -38,6 +38,7 @@ Built and tested:
 crates/officekit-core          library: element trees, file types
 crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
+crates/officekit-parts         library: one module per part type: content type, relationship types, load and store
 crates/officekit-strict        library: the Strict class: read and write of every node
 crates/officekit-transitional  library: the Transitional class: read and write of every node, date-cell conversion
 crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
@@ -53,16 +54,20 @@ crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never i
 
 | Module | Covers | Holds |
 |---|---|---|
-| `parts` | The part types of ECMA-376 Part 1 and of Microsoft's extensions | One generated module per part type: its content type, its relationship type in both classes' spelling, and the load and store of its root |
 | `docx`, `xlsx`, `pptx` | The three file types | A package with its main part, its class, and its kind; the saves in either class; the operations over the typed tree |
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
 
+`officekit-parts` holds one generated module per part type of ECMA-376 Part 1
+and of Microsoft's extensions: its content type, its relationship type in both
+classes' spelling, and the load and store of its root.
+
 ## Features
 
-`officekit-core` has two features, one per conformance class. Each turns on
-its class crate as an optional dependency:
+`officekit-core` and `officekit-parts` have two features each, one per
+conformance class; the features of `officekit-core` turn on those of
+`officekit-parts`. Each turns on its class crate as an optional dependency:
 
 | Feature | Default | Enables |
 |---|---|---|
@@ -73,6 +78,7 @@ its class crate as an optional dependency:
 cargo build -p officekit-core                                             # transitional
 cargo build -p officekit-core --no-default-features --features strict    # strict only
 cargo build -p officekit-core --all-features                              # both
+cargo build -p officekit-parts --no-default-features --features strict   # the part modules, strict only
 ```
 
 ## Design rules
@@ -120,7 +126,7 @@ example); the reason goes to standard error.
 just all      # lint, build, test
 just lint     # clippy (restriction + pedantic + nursery denied) in four feature builds, then fmt check
 just build
-just test     # the workspace, then officekit-core with all features
+just test     # the workspace, then officekit-core and officekit-parts with all features
 just docs     # cargo doc --workspace --no-deps
 just audit    # cargo audit
 ```
@@ -133,8 +139,8 @@ just audit    # cargo audit
 `crates/officekit-markup/src`, its traversals into
 `crates/officekit-traversal/src`, the conformance classes into
 `crates/officekit-transitional/src` and `crates/officekit-strict/src`, the
-part modules (`parts/`) of `officekit-core`, the validation tables of
-`officekit-validation`
+part modules of `officekit-parts` (`crates/officekit-parts/src`), the
+validation tables of `officekit-validation`
 (`crates/officekit-validation/src/generated/`), the name table of
 `officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and the
 relationship types of `officekit-packaging`

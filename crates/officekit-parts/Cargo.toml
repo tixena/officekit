@@ -1,0 +1,24 @@
+[package]
+name = "officekit-parts"
+description = "The part modules of officekit: each part type's content type, relationship type, load and store"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = ["transitional"]
+transitional = ["dep:officekit-transitional"]
+strict = ["dep:officekit-strict"]
+
+[dependencies]
+officekit-markup.workspace = true
+officekit-packaging.workspace = true
+officekit-xml.workspace = true
+officekit-transitional = { workspace = true, optional = true }
+officekit-strict = { workspace = true, optional = true }

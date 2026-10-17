@@ -9,6 +9,8 @@ use officekit_markup::presentation::Presentation;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_parts::kinds::PresentationKind;
+use officekit_parts::presentation;
 #[cfg(feature = "transitional")]
 use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
@@ -18,8 +20,6 @@ use os_shim::System;
 use crate::compact::{self, Comments};
 use crate::file;
 use crate::new_parts;
-use crate::parts::kinds::PresentationKind;
-use crate::parts::presentation;
 
 /// A `.pptx`-family file: its package, its presentation part, and the class and kind they give.
 #[derive(Debug)]
@@ -202,7 +202,7 @@ impl Pptx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](crate::part_root::store).
+    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
     pub fn set_presentation(&mut self, presentation: &Presentation) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

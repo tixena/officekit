@@ -8,6 +8,11 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+#[cfg(feature = "transitional")]
+use officekit_parts::kinds::SpreadsheetKind;
+use officekit_parts::kinds::WordprocessingKind;
+#[cfg(feature = "transitional")]
+use officekit_parts::{document_settings, font_table};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::error::WriteError;
@@ -26,11 +31,6 @@ use os_shim::mock::MemorySystem;
 
 use super::Docx;
 use crate::compact::Comments;
-#[cfg(feature = "transitional")]
-use crate::parts::kinds::SpreadsheetKind;
-use crate::parts::kinds::WordprocessingKind;
-#[cfg(feature = "transitional")]
-use crate::parts::{document_settings, font_table};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 #[cfg(feature = "strict")]

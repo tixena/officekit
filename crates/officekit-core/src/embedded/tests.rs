@@ -1,14 +1,14 @@
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
+use officekit_parts::kinds::SpreadsheetKind;
+use officekit_parts::worksheet::CONTENT_TYPE as WORKSHEET;
 
 #[cfg(feature = "strict")]
 use super::store_strict;
 #[cfg(feature = "transitional")]
 use super::store_transitional;
 use super::{Embedded, open};
-use crate::parts::kinds::SpreadsheetKind;
-use crate::parts::worksheet::CONTENT_TYPE as WORKSHEET;
 use crate::xlsx::Xlsx;
 
 const WORKBOOK_TYPE: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

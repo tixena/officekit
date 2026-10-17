@@ -3,12 +3,12 @@
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 #[cfg(feature = "transitional")]
 use officekit_transitional::dates::SaveWarning;
 
 use crate::docx::Docx;
 use crate::file;
-use crate::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use crate::pptx::Pptx;
 use crate::xlsx::Xlsx;
 

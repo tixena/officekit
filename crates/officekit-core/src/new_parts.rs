@@ -4,13 +4,12 @@
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{DECLARATION, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_parts::{
+    main_document, presentation, slide_layout, slide_master, theme, workbook, worksheet,
+};
 use officekit_xml::element::Document;
 use officekit_xml::parse::parse;
 use officekit_xml::write::WriteOptions;
-
-use crate::parts::{
-    main_document, presentation, slide_layout, slide_master, theme, workbook, worksheet,
-};
 
 /// The namespace declarations of every `PresentationML` part a new presentation holds.
 macro_rules! presentation_namespaces {

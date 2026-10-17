@@ -5,13 +5,13 @@ use officekit_packaging::image::{Image, ImageFormat};
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::kinds::WordprocessingKind;
 use officekit_xml::element::Element;
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use super::PictureFit;
 use crate::docx::Docx;
-use crate::parts::kinds::WordprocessingKind;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";

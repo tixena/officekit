@@ -2,14 +2,17 @@
 default:
     @just --list
 
-# Lint Rust: clippy across the whole workspace, then officekit-core in every
-# feature combination, then fmt check. `--workspace` because `default-members`
-# excludes `crates/xtask`.
+# Lint Rust: clippy across the whole workspace, then officekit-core and
+# officekit-parts in every feature combination, then fmt check. `--workspace`
+# because `default-members` excludes `crates/xtask`.
 lint:
     cargo clippy --workspace --all-targets -- -D warnings
     cargo clippy -p officekit-core --all-targets --all-features -- -D warnings
     cargo clippy -p officekit-core --all-targets --no-default-features -- -D warnings
     cargo clippy -p officekit-core --all-targets --no-default-features --features strict -- -D warnings
+    cargo clippy -p officekit-parts --all-targets --all-features -- -D warnings
+    cargo clippy -p officekit-parts --all-targets --no-default-features -- -D warnings
+    cargo clippy -p officekit-parts --all-targets --no-default-features --features strict -- -D warnings
     cargo fmt --all --check
 
 # Format Rust.
@@ -20,10 +23,11 @@ fmt:
 build:
     cargo build --workspace
 
-# Run the test suite, and officekit-core's with every class on.
+# Run the test suite, and officekit-core's and officekit-parts' with every class on.
 test:
     cargo test --workspace
     cargo test -p officekit-core --all-features
+    cargo test -p officekit-parts --all-features
 
 # Generate code coverage report (requires cargo-llvm-cov)
 test-coverage:

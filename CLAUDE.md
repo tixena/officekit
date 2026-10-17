@@ -10,6 +10,7 @@ in either conformance class, Transitional or Strict.
 crates/officekit-core          library: element trees, file types
 crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
+crates/officekit-parts         library: one module per part type: content type, relationship types, load and store (features `transitional` and `strict`)
 crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit-core)
 crates/officekit-transitional  library: the Transitional class: read and write of every node (feature `transitional` of officekit-core)
 crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
@@ -25,7 +26,6 @@ is:
 
 ```
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
-parts              one module per part type: content type, relationship types, load and store
 embedded           a document stored in a part of another
 ```
 
@@ -40,17 +40,17 @@ embedded           a document stored in a part of another
   handle those. The bytes still arrive through `System::open`.
 - **Quality gate is `just all`** (clippy with `restriction`, `pedantic`, and
   `nursery` denied; `cargo fmt --check`; build; tests). It runs the four
-  feature builds: the workspace, `officekit-core` with all features, with no
-  default features, and with `strict` alone. Nothing is done until it passes.
-  Never add `#[allow]` / `#[expect]` to get past a lint; fix the code or raise
-  it.
+  feature builds: the workspace, then `officekit-core` and `officekit-parts`
+  each with all features, with no default features, and with `strict` alone.
+  Nothing is done until it passes. Never add `#[allow]` / `#[expect]` to get
+  past a lint; fix the code or raise it.
 - **Generated files are never edited by hand**: everything under
   `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`, and the unit
   tests; everything under `crates/officekit-strict/src` but `lib.rs` and the
   unit tests; everything under `crates/officekit-transitional/src` but
   `lib.rs`, `dates.rs`, and the unit tests; everything under
   `crates/officekit-traversal/src` but `lib.rs` and the unit tests; everything
-  under `parts/` of `officekit-core/src`;
+  under `crates/officekit-parts/src` but `part_root.rs` and the unit tests;
   `crates/officekit-validation/src/generated/` (and `generated.rs`);
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-packaging/src/relationship_type.rs`. Change the generator

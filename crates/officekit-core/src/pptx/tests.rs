@@ -6,14 +6,14 @@ use officekit_packaging::package::OpenOptions;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::kinds::PresentationKind;
+use officekit_parts::{slide_layout, slide_master, theme};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
 use super::Pptx;
 use crate::compact::Comments;
-use crate::parts::kinds::PresentationKind;
-use crate::parts::{slide_layout, slide_master, theme};
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()

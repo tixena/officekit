@@ -11,6 +11,14 @@ use officekit_markup::spreadsheet::Workbook;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_parts::kinds::SpreadsheetKind;
+#[cfg(feature = "strict")]
+use officekit_parts::pivot_table_cache_definition;
+use officekit_parts::workbook;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_parts::worksheet;
+#[cfg(feature = "strict")]
+use officekit_parts::{pivot_table, table_definition};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 #[cfg(feature = "transitional")]
@@ -25,14 +33,6 @@ use os_shim::System;
 
 use crate::file;
 use crate::new_parts;
-use crate::parts::kinds::SpreadsheetKind;
-#[cfg(feature = "strict")]
-use crate::parts::pivot_table_cache_definition;
-use crate::parts::workbook;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::parts::worksheet;
-#[cfg(feature = "strict")]
-use crate::parts::{pivot_table, table_definition};
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
 #[derive(Debug)]
@@ -197,7 +197,7 @@ impl Xlsx {
     ///
     /// # Errors
     ///
-    /// The errors of [`part_root::store`](crate::part_root::store).
+    /// The errors of [`part_root::store`](officekit_parts::part_root::store).
     pub fn set_workbook(&mut self, workbook: &Workbook) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

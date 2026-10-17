@@ -5,14 +5,14 @@ use officekit_packaging::error::PackageError;
 use officekit_packaging::package::OpenOptions;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+use officekit_parts::kinds::WordprocessingKind;
+use officekit_parts::{
+    endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
+};
 use officekit_xml::element::Element;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::super::Docx;
-use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{
-    endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
-};
 
 /// The declarations of every fixture root but the source's main document's.
 const ROOT: &str = concat!(
