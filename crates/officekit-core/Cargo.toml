@@ -17,8 +17,8 @@ required-features = ["strict", "transitional"]
 
 [features]
 default = ["transitional"]
-transitional = []
-strict = []
+transitional = ["dep:officekit-transitional"]
+strict = ["dep:officekit-strict"]
 
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
@@ -32,6 +32,12 @@ officekit-packaging.workspace = true
 
 # The validation tables the merge of runs reads
 officekit-validation.workspace = true
+
+# The Transitional class: every node's read and write, and the conversion of date cells
+officekit-transitional = { workspace = true, optional = true }
+
+# The Strict class: every node's read and write
+officekit-strict = { workspace = true, optional = true }
 
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
 # package between an archive and an in-memory filesystem

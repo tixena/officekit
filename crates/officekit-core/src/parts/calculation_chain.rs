@@ -345,15 +345,15 @@
 //! `x:calcChain`.
 
 use crate::part_root::{self, PartRoot};
-#[cfg(feature = "strict")]
-use crate::strict::Strict as _;
-#[cfg(feature = "transitional")]
-use crate::transitional::Transitional as _;
 use officekit_markup::spreadsheet;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
+#[cfg(feature = "strict")]
+use officekit_strict::Strict as _;
+#[cfg(feature = "transitional")]
+use officekit_transitional::Transitional as _;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::error::WriteError;

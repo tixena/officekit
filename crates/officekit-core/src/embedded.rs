@@ -3,13 +3,13 @@
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+#[cfg(feature = "transitional")]
+use officekit_transitional::dates::SaveWarning;
 
 use crate::docx::Docx;
 use crate::file;
 use crate::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use crate::pptx::Pptx;
-#[cfg(feature = "transitional")]
-use crate::transitional::dates::SaveWarning;
 use crate::xlsx::Xlsx;
 
 /// The same file type a file on disk opens as, with its own package, class, and typed trees.

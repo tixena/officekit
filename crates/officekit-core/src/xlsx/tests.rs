@@ -9,6 +9,10 @@ use officekit_packaging::package::OpenOptions;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelationshipType, Target};
+#[cfg(feature = "strict")]
+use officekit_strict::iso_date_time;
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::element::Element;
@@ -26,10 +30,6 @@ use crate::parts::pivot_table_cache_definition;
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
 use crate::parts::{pivot_table, table_definition};
-#[cfg(feature = "strict")]
-use crate::strict::iso_date_time;
-#[cfg(all(feature = "strict", feature = "transitional"))]
-use crate::transitional::dates::SaveWarning;
 
 /// A Transitional worksheet whose filter keeps the dates up to a serial date-time.
 #[cfg(feature = "strict")]

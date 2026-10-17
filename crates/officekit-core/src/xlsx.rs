@@ -11,6 +11,10 @@ use officekit_markup::{Transform as _, spreadsheet};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+#[cfg(feature = "strict")]
+use officekit_strict::iso_date_time;
+#[cfg(feature = "transitional")]
+use officekit_transitional::dates::{SaveWarning, convert_date_cells};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;
@@ -27,10 +31,6 @@ use crate::parts::workbook;
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
 use crate::parts::{pivot_table, table_definition};
-#[cfg(feature = "strict")]
-use crate::strict::iso_date_time;
-#[cfg(feature = "transitional")]
-use crate::transitional::dates::{SaveWarning, convert_date_cells};
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
 #[derive(Debug)]

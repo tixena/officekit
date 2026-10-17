@@ -20,6 +20,8 @@ use officekit_packaging::image::Image;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
+#[cfg(feature = "transitional")]
+use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
@@ -29,8 +31,6 @@ use crate::file;
 use crate::new_parts;
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, header, main_document};
-#[cfg(feature = "transitional")]
-use crate::transitional::dates::SaveWarning;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
 #[derive(Debug)]

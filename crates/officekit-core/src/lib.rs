@@ -1,11 +1,10 @@
 //! `officekit-core` reads, edits, writes, and validates Office Open XML files (`.docx`, `.xlsx`,
-//! `.pptx`) in either conformance class, over the typed tree of `officekit_markup`.
+//! `.pptx`) in either conformance class, over the typed tree of `officekit_markup`. The classes
+//! are `officekit_transitional` and `officekit_strict`, each turned on by the feature of its name.
 //!
 //! - [`parts`]: one module per part type, with its content type, its relationship type in both
 //!   classes' spelling, and the load and store of its root.
 //! - [`part_root`]: a part's typed root, and its load from and store into a package.
-//! - `transitional` and `strict`, each behind the feature of its name: the read and write of
-//!   every node of the typed tree in that conformance class.
 //! - [`docx`], [`xlsx`], and [`pptx`]: the file types. Each opens a package with its main part,
 //!   its class, and its kind, saves it in either class, and holds the operations over the typed
 //!   tree.
@@ -28,8 +27,4 @@ mod new_parts;
 pub mod part_root;
 pub mod parts;
 pub mod pptx;
-#[cfg(feature = "strict")]
-pub mod strict;
-#[cfg(feature = "transitional")]
-pub mod transitional;
 pub mod xlsx;

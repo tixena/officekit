@@ -1,0 +1,16 @@
+[package]
+name = "officekit-strict"
+description = "The Strict conformance class of officekit: the read and write of every node of the typed tree in Strict"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+officekit-markup.workspace = true
+officekit-xml.workspace = true

@@ -126,7 +126,7 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
          //! Each node reads with the reader both classes share and writes with the\n\
          //! shared writer, whose element the Strict write then checks and converts.\n\
          \n\
-         use crate::strict::{self, Strict};\n\
+         use crate::Strict;\n\
          use officekit_markup::class_rules;\n\
          use officekit_markup::wordprocessing::{self, read, write};\n\
          use officekit_xml::element::Element;\n\
@@ -142,7 +142,7 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
              }\n\
          \n    \
              fn to_strict(&self) -> Result<Element, WriteError> {\n        \
-                 strict::write_root(\n            \
+                 crate::write_root(\n            \
                      write::document(self, &mut Scope::default()),\n            \
                      (NS_W, \"conformance\"),\n        \
                  )\n    \
@@ -155,7 +155,7 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
              }\n\
          \n    \
              fn to_strict(&self) -> Result<Element, WriteError> {\n        \
-                 strict::write(write::paragraph(self, &mut Scope::default()))\n    \
+                 crate::write(write::paragraph(self, &mut Scope::default()))\n    \
              }\n\
          }\n"
     );
@@ -170,8 +170,8 @@ fn the_module_list_names_each_module() {
             &["chart".to_owned(), "wordprocessing".to_owned()]
         ),
         "// header\n\
-         // The namespace modules, `transitional::<namespace>`, brought into `transitional` with\n\
-         // `include!` ahead of its imports.\n\
+         // The namespace modules, `officekit_transitional::<namespace>`, brought into the\n\
+         // crate root with `include!` ahead of its imports.\n\
          \n\
          pub mod chart;\n\
          pub mod wordprocessing;\n"

@@ -1,6 +1,6 @@
 //! The conformance classes' files: every node's `Strict` and
-//! `Transitional` impl, one module per namespace under `strict/` and
-//! `transitional/`, and the tables each class's write walks.
+//! `Transitional` impl, one module per namespace in `officekit-strict` and
+//! `officekit-transitional`, and the tables each class's write walks.
 //!
 //! The tables come from the comparison of the two schema sets, which says
 //! what Transitional adds and what only Strict has, and from
@@ -34,10 +34,10 @@ mod tests;
 pub const CORRESPONDENCES_PATH: &str = "crates/xtask/data/strict_correspondences.toml";
 
 /// The folder of the Strict modules, from the workspace root.
-pub const STRICT_PATH: &str = "crates/officekit-core/src/strict";
+pub const STRICT_PATH: &str = "crates/officekit-strict/src";
 
 /// The folder of the Transitional modules, from the workspace root.
-pub const TRANSITIONAL_PATH: &str = "crates/officekit-core/src/transitional";
+pub const TRANSITIONAL_PATH: &str = "crates/officekit-transitional/src";
 
 /// The two classes and the folder of each one's files.
 const CLASSES: [(Class, &str); 2] = [

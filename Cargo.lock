@@ -475,6 +475,8 @@ dependencies = [
  "clap",
  "officekit-markup",
  "officekit-packaging",
+ "officekit-strict",
+ "officekit-transitional",
  "officekit-validation",
  "officekit-xml",
  "os-shim",
@@ -503,6 +505,23 @@ dependencies = [
  "os-shim",
  "thiserror",
  "zip",
+]
+
+[[package]]
+name = "officekit-strict"
+version = "0.1.0"
+dependencies = [
+ "officekit-markup",
+ "officekit-xml",
+]
+
+[[package]]
+name = "officekit-transitional"
+version = "0.1.0"
+dependencies = [
+ "officekit-markup",
+ "officekit-packaging",
+ "officekit-xml",
 ]
 
 [[package]]

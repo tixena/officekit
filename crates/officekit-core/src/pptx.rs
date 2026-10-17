@@ -9,6 +9,8 @@ use officekit_markup::presentation::Presentation;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+#[cfg(feature = "transitional")]
+use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
@@ -18,8 +20,6 @@ use crate::file;
 use crate::new_parts;
 use crate::parts::kinds::PresentationKind;
 use crate::parts::presentation;
-#[cfg(feature = "transitional")]
-use crate::transitional::dates::SaveWarning;
 
 /// A `.pptx`-family file: its package, its presentation part, and the class and kind they give.
 #[derive(Debug)]

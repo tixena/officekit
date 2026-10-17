@@ -969,7 +969,7 @@ fn uses(root: Option<&RootText>) -> String {
             known.module
         ),
         Some(known) => format!(
-            "use crate::part_root::{{self, PartRoot}};\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::part_root::{{self, PartRoot}};\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{STRICT_ONLY}use officekit_strict::Strict as _;\n{TRANSITIONAL_ONLY}use officekit_transitional::Transitional as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

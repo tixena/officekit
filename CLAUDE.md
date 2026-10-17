@@ -7,14 +7,16 @@ in either conformance class, Transitional or Strict.
 ## Layout
 
 ```
-crates/officekit-core        library: element trees, file types
-crates/officekit-markup      library: the typed tree, one module per namespace, with transforms and visitors
-crates/officekit-packaging   library: the package, part names, content types, relationships, images
-crates/officekit-validation  library: the validator and its generated tables
-crates/officekit-xml         library: element tree, names, values, part reader and writer
-crates/officekit             CLI binary
-crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never installed
-crates/xtask/data/           the generator's hand-written inputs
+crates/officekit-core          library: element trees, file types
+crates/officekit-markup        library: the typed tree, one module per namespace, with transforms and visitors
+crates/officekit-packaging     library: the package, part names, content types, relationships, images
+crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit-core)
+crates/officekit-transitional  library: the Transitional class: read and write of every node (feature `transitional` of officekit-core)
+crates/officekit-validation    library: the validator and its generated tables
+crates/officekit-xml           library: element tree, names, values, part reader and writer
+crates/officekit               CLI binary
+crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never installed
+crates/xtask/data/             the generator's hand-written inputs
 ```
 
 Inside `officekit-core`, modules are organized by what each part of a document
@@ -24,8 +26,6 @@ is:
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
 parts              one module per part type: content type, relationship types, load and store
 embedded           a document stored in a part of another
-transitional       the Transitional class: read and write of every node (feature `transitional`)
-strict             the Strict class: read and write of every node (feature `strict`)
 ```
 
 ## Rules
@@ -45,8 +45,10 @@ strict             the Strict class: read and write of every node (feature `stri
   it.
 - **Generated files are never edited by hand**: everything under
   `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`,
-  `write_through.rs`, and the unit tests; everything under `transitional/`,
-  `strict/`, and `parts/` of `officekit-core/src`;
+  `write_through.rs`, and the unit tests; everything under
+  `crates/officekit-strict/src` but `lib.rs` and the unit tests; everything
+  under `crates/officekit-transitional/src` but `lib.rs`, `dates.rs`, and the
+  unit tests; everything under `parts/` of `officekit-core/src`;
   `crates/officekit-validation/src/generated/` (and `generated.rs`);
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-packaging/src/relationship_type.rs`. Change the generator

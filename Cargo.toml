@@ -1,6 +1,6 @@
 [workspace]
-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-packaging", "crates/officekit-validation", "crates/officekit-xml", "crates/xtask"]
-default-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-packaging", "crates/officekit-validation", "crates/officekit-xml"]
+members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-packaging", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-validation", "crates/officekit-xml", "crates/xtask"]
+default-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-markup", "crates/officekit-packaging", "crates/officekit-strict", "crates/officekit-transitional", "crates/officekit-validation", "crates/officekit-xml"]
 resolver = "2"
 
 [workspace.package]
@@ -15,6 +15,8 @@ repository = "https://github.com/eburgos/officekit"
 officekit-core = { path = "crates/officekit-core" }
 officekit-markup = { path = "crates/officekit-markup" }
 officekit-packaging = { path = "crates/officekit-packaging" }
+officekit-strict = { path = "crates/officekit-strict" }
+officekit-transitional = { path = "crates/officekit-transitional" }
 officekit-validation = { path = "crates/officekit-validation" }
 officekit-xml = { path = "crates/officekit-xml" }
 

@@ -39,7 +39,7 @@ impl Class {
     }
 }
 
-/// `strict/<module>.rs` or `transitional/<module>.rs`: every node's impl.
+/// `<module>.rs` of `officekit-strict` or `officekit-transitional`: every node's impl.
 #[must_use]
 pub fn module(
     header: &str,
@@ -48,7 +48,7 @@ pub fn module(
     prefixes: &[String],
     impls: &[Impl],
 ) -> String {
-    let (lower, upper) = class.names();
+    let (_, upper) = class.names();
     let mut out = String::from(header);
     let _ = writeln!(
         out,
@@ -61,7 +61,7 @@ pub fn module(
             "checks"
         }
     );
-    let _ = writeln!(out, "use crate::{lower}::{{self, {upper}}};");
+    let _ = writeln!(out, "use crate::{upper};");
     let _ = writeln!(out, "use officekit_markup::class_rules;");
     let _ = writeln!(
         out,
@@ -97,8 +97,8 @@ pub fn modules(header: &str, class: Class, names: &[String]) -> String {
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "// The namespace modules, `{lower}::<namespace>`, brought into `{lower}` with\n\
-         // `include!` ahead of its imports.\n"
+        "// The namespace modules, `officekit_{lower}::<namespace>`, brought into the\n\
+         // crate root with `include!` ahead of its imports.\n"
     );
     for name in names {
         let _ = writeln!(out, "pub mod {name};");
@@ -106,14 +106,14 @@ pub fn modules(header: &str, class: Class, names: &[String]) -> String {
     out
 }
 
-/// `strict/rules.rs`: the tables of the Strict walk.
+/// `rules.rs` of `officekit-strict`: the tables of the Strict walk.
 #[must_use]
 pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String {
     let mut out = String::from(header);
     out.push_str(
         "// The tables of the Strict walk, generated from the comparison of the two\n\
-         // schema sets and `strict_correspondences.toml`, brought into `strict` with\n\
-         // `include!`.\n",
+         // schema sets and `strict_correspondences.toml`, brought into the crate root\n\
+         // with `include!`.\n",
     );
     let mut namespaces: BTreeSet<u8> = BTreeSet::new();
     for (owner, item) in rules.attributes.keys().chain(rules.children.keys()) {
@@ -135,13 +135,13 @@ pub fn strict_rules(header: &str, prefixes: &[String], rules: &Rules) -> String 
     out
 }
 
-/// `transitional/rules.rs`: the values a Transitional write refuses.
+/// `rules.rs` of `officekit-transitional`: the values a Transitional write refuses.
 #[must_use]
 pub fn transitional_rules(header: &str, prefixes: &[String], rules: &Rules) -> String {
     let mut out = String::from(header);
     out.push_str(
         "// The table of the Transitional check, generated from the comparison of the\n\
-         // two schema sets, brought into `transitional` with `include!`.\n",
+         // two schema sets, brought into the crate root with `include!`.\n",
     );
     let namespaces: BTreeSet<u8> = rules
         .strict_only
@@ -484,10 +484,10 @@ fn impl_text(class: Class, module: &str, prefixes: &[String], found: &Impl) -> S
         vec![Expr::atom("self"), Expr::atom("&mut Scope::default()")],
     );
     let call = found.conformance.as_ref().map_or_else(
-        || Expr::call(&format!("{lower}::write"), vec![written.clone()]),
+        || Expr::call("crate::write", vec![written.clone()]),
         |conformance| {
             Expr::call(
-                &format!("{lower}::write_root"),
+                "crate::write_root",
                 vec![written.clone(), tag(prefixes, conformance)],
             )
         },
