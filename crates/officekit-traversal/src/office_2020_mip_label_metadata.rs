@@ -231,9 +231,8 @@ impl crate::Transform for office_2020_mip_label_metadata::Ext {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.uri, &self.uri);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -312,7 +311,7 @@ impl crate::Transform for office_2020_mip_label_metadata::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ext = crate::transform_child(&self.ext, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -391,16 +390,7 @@ impl crate::Transform for office_2020_mip_label_metadata::Label {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.set_date, &self.set_date);
-        Clone::clone_from(&mut node.method, &self.method);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.site_id, &self.site_id);
-        Clone::clone_from(&mut node.action_id, &self.action_id);
-        Clone::clone_from(&mut node.content_bits, &self.content_bits);
-        Clone::clone_from(&mut node.removed, &self.removed);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -483,7 +473,7 @@ impl crate::Transform for office_2020_mip_label_metadata::LabelList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.label = crate::transform_child(&self.label, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);

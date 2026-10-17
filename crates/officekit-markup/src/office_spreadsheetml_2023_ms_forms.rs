@@ -386,6 +386,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -396,6 +404,20 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MsForm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            is_form_connected: self.is_form_connected.clone(),
+            latest_event_marker: self.latest_event_marker.clone(),
+            max_response_id: self.max_response_id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -412,6 +434,17 @@ impl crate::Write for MsForm {
     }
 }
 
+impl Question {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Question {
     fn read(element: &Element) -> Self {
         read::question(element)
@@ -422,6 +455,17 @@ impl crate::Write for Question {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::question(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SyncedQuestionId {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

@@ -1370,6 +1370,17 @@ pub struct WordCount {
     pub value: String,
 }
 
+impl ApplicationName {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ApplicationName {
     fn read(element: &Element) -> Self {
         read::application_name(element)
@@ -1380,6 +1391,14 @@ impl crate::Write for ApplicationName {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::application_name(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ApplicationSpecificFileProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1474,6 +1493,17 @@ impl crate::Write for ApplicationSpecificFilePropertiesContent {
     }
 }
 
+impl ApplicationVersion {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ApplicationVersion {
     fn read(element: &Element) -> Self {
         read::application_version(element)
@@ -1484,6 +1514,17 @@ impl crate::Write for ApplicationVersion {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::application_version(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CharactersWithSpaces {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1500,6 +1541,14 @@ impl crate::Write for CharactersWithSpaces {
     }
 }
 
+impl DigitalSignature {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DigitalSignature {
     fn read(element: &Element) -> Self {
         read::digital_signature(element)
@@ -1510,6 +1559,17 @@ impl crate::Write for DigitalSignature {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::digital_signature(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DocumentSecurity {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1526,6 +1586,14 @@ impl crate::Write for DocumentSecurity {
     }
 }
 
+impl HeadingPairs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for HeadingPairs {
     fn read(element: &Element) -> Self {
         read::heading_pairs(element)
@@ -1536,6 +1604,14 @@ impl crate::Write for HeadingPairs {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::heading_pairs(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HyperlinkList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1552,6 +1628,17 @@ impl crate::Write for HyperlinkList {
     }
 }
 
+impl HyperlinksChanged {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for HyperlinksChanged {
     fn read(element: &Element) -> Self {
         read::hyperlinks_changed(element)
@@ -1562,6 +1649,17 @@ impl crate::Write for HyperlinksChanged {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::hyperlinks_changed(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl IntendedFormatOfPresentation {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1578,6 +1676,17 @@ impl crate::Write for IntendedFormatOfPresentation {
     }
 }
 
+impl LinksUpToDate {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LinksUpToDate {
     fn read(element: &Element) -> Self {
         read::links_up_to_date(element)
@@ -1588,6 +1697,17 @@ impl crate::Write for LinksUpToDate {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::links_up_to_date(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NameOfCompany {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1604,6 +1724,17 @@ impl crate::Write for NameOfCompany {
     }
 }
 
+impl NameOfDocumentTemplate {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NameOfDocumentTemplate {
     fn read(element: &Element) -> Self {
         read::name_of_document_template(element)
@@ -1614,6 +1745,17 @@ impl crate::Write for NameOfDocumentTemplate {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::name_of_document_template(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NameOfManager {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1630,6 +1772,17 @@ impl crate::Write for NameOfManager {
     }
 }
 
+impl NumberOfHiddenSlides {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NumberOfHiddenSlides {
     fn read(element: &Element) -> Self {
         read::number_of_hidden_slides(element)
@@ -1640,6 +1793,17 @@ impl crate::Write for NumberOfHiddenSlides {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::number_of_hidden_slides(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NumberOfLines {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1656,6 +1820,17 @@ impl crate::Write for NumberOfLines {
     }
 }
 
+impl NumberOfSlidesContainingNotes {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NumberOfSlidesContainingNotes {
     fn read(element: &Element) -> Self {
         read::number_of_slides_containing_notes(element)
@@ -1666,6 +1841,14 @@ impl crate::Write for NumberOfSlidesContainingNotes {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::number_of_slides_containing_notes(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PartTitles {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1682,6 +1865,17 @@ impl crate::Write for PartTitles {
     }
 }
 
+impl RelativeHyperlinkBase {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RelativeHyperlinkBase {
     fn read(element: &Element) -> Self {
         read::relative_hyperlink_base(element)
@@ -1692,6 +1886,17 @@ impl crate::Write for RelativeHyperlinkBase {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::relative_hyperlink_base(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SharedDocument {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1708,6 +1913,17 @@ impl crate::Write for SharedDocument {
     }
 }
 
+impl SlidesMetadataElement {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SlidesMetadataElement {
     fn read(element: &Element) -> Self {
         read::slides_metadata_element(element)
@@ -1718,6 +1934,17 @@ impl crate::Write for SlidesMetadataElement {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::slides_metadata_element(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ThumbnailDisplayMode {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1734,6 +1961,17 @@ impl crate::Write for ThumbnailDisplayMode {
     }
 }
 
+impl TotalEditTimeMetadataElement {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TotalEditTimeMetadataElement {
     fn read(element: &Element) -> Self {
         read::total_edit_time_metadata_element(element)
@@ -1744,6 +1982,17 @@ impl crate::Write for TotalEditTimeMetadataElement {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::total_edit_time_metadata_element(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TotalNumberOfCharacters {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1760,6 +2009,17 @@ impl crate::Write for TotalNumberOfCharacters {
     }
 }
 
+impl TotalNumberOfMultimediaClips {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TotalNumberOfMultimediaClips {
     fn read(element: &Element) -> Self {
         read::total_number_of_multimedia_clips(element)
@@ -1770,6 +2030,17 @@ impl crate::Write for TotalNumberOfMultimediaClips {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::total_number_of_multimedia_clips(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TotalNumberOfPages {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1786,6 +2057,17 @@ impl crate::Write for TotalNumberOfPages {
     }
 }
 
+impl TotalNumberOfParagraphs {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TotalNumberOfParagraphs {
     fn read(element: &Element) -> Self {
         read::total_number_of_paragraphs(element)
@@ -1796,6 +2078,17 @@ impl crate::Write for TotalNumberOfParagraphs {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::total_number_of_paragraphs(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl WordCount {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

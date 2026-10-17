@@ -355,6 +355,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl DataFieldFutureData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            source_field: self.source_field.clone(),
+            version: self.version.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DataFieldFutureData {
     fn read(element: &Element) -> Self {
         read::data_field_future_data(element)
@@ -368,6 +380,17 @@ impl crate::Write for DataFieldFutureData {
     }
 }
 
+impl IgnorableAfterVersion {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            version: self.version.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for IgnorableAfterVersion {
     fn read(element: &Element) -> Self {
         read::ignorable_after_version(element)
@@ -378,6 +401,17 @@ impl crate::Write for IgnorableAfterVersion {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ignorable_after_version(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ImplicitMeasureSupport {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

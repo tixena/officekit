@@ -231,9 +231,8 @@ impl crate::Transform for office_powerpoint_2020_02_main::DesignPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.edt_design_elem, &self.edt_design_elem);
         node.design_tag_lst = crate::transform_child(&self.design_tag_lst, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -315,9 +314,7 @@ impl crate::Transform for office_powerpoint_2020_02_main::DesignTag {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -393,7 +390,7 @@ impl crate::Transform for office_powerpoint_2020_02_main::DesignTagLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.design_tag = crate::transform_child(&self.design_tag, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -472,7 +469,7 @@ impl crate::Transform for office_powerpoint_2020_02_main::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

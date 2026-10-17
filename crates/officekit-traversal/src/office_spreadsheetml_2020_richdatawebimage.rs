@@ -231,7 +231,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::Address {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -305,7 +305,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::Blip {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -379,7 +379,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -458,7 +458,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::MoreImages
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -532,7 +532,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::WebImageSr
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.address = crate::transform_child(&self.address, ctx, &mut rebase);
         node.more_images_address =
@@ -618,7 +618,7 @@ impl crate::Transform for office_spreadsheetml_2020_richdatawebimage::WebImagesS
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.web_image_srd = crate::transform_child(&self.web_image_srd, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);

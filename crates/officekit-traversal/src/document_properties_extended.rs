@@ -231,8 +231,7 @@ impl crate::Transform for document_properties_extended::ApplicationName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,7 +306,7 @@ impl crate::Transform for document_properties_extended::ApplicationSpecificFileP
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -480,8 +479,7 @@ impl crate::Transform for document_properties_extended::ApplicationVersion {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -556,8 +554,7 @@ impl crate::Transform for document_properties_extended::CharactersWithSpaces {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -632,7 +629,7 @@ impl crate::Transform for document_properties_extended::DigitalSignature {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.binary_blob = crate::transform_child(&self.binary_blob, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -711,8 +708,7 @@ impl crate::Transform for document_properties_extended::DocumentSecurity {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -787,7 +783,7 @@ impl crate::Transform for document_properties_extended::HeadingPairs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.vector = crate::transform_child(&self.vector, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -866,7 +862,7 @@ impl crate::Transform for document_properties_extended::HyperlinkList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.vector = crate::transform_child(&self.vector, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -945,8 +941,7 @@ impl crate::Transform for document_properties_extended::HyperlinksChanged {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1021,8 +1016,7 @@ impl crate::Transform for document_properties_extended::IntendedFormatOfPresenta
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1097,8 +1091,7 @@ impl crate::Transform for document_properties_extended::LinksUpToDate {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1173,8 +1166,7 @@ impl crate::Transform for document_properties_extended::NameOfCompany {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1249,8 +1241,7 @@ impl crate::Transform for document_properties_extended::NameOfDocumentTemplate {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1325,8 +1316,7 @@ impl crate::Transform for document_properties_extended::NameOfManager {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1401,8 +1391,7 @@ impl crate::Transform for document_properties_extended::NumberOfHiddenSlides {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1477,8 +1466,7 @@ impl crate::Transform for document_properties_extended::NumberOfLines {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1553,8 +1541,7 @@ impl crate::Transform for document_properties_extended::NumberOfSlidesContaining
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1629,7 +1616,7 @@ impl crate::Transform for document_properties_extended::PartTitles {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.vector = crate::transform_child(&self.vector, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1708,8 +1695,7 @@ impl crate::Transform for document_properties_extended::RelativeHyperlinkBase {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1784,8 +1770,7 @@ impl crate::Transform for document_properties_extended::SharedDocument {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1860,8 +1845,7 @@ impl crate::Transform for document_properties_extended::SlidesMetadataElement {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1936,8 +1920,7 @@ impl crate::Transform for document_properties_extended::ThumbnailDisplayMode {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2012,8 +1995,7 @@ impl crate::Transform for document_properties_extended::TotalEditTimeMetadataEle
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2088,8 +2070,7 @@ impl crate::Transform for document_properties_extended::TotalNumberOfCharacters 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2164,8 +2145,7 @@ impl crate::Transform for document_properties_extended::TotalNumberOfMultimediaC
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2240,8 +2220,7 @@ impl crate::Transform for document_properties_extended::TotalNumberOfPages {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2316,8 +2295,7 @@ impl crate::Transform for document_properties_extended::TotalNumberOfParagraphs 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2392,8 +2370,7 @@ impl crate::Transform for document_properties_extended::WordCount {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

@@ -231,7 +231,7 @@ impl crate::Transform for vml_presentation_drawing::InkAnnotationFlag {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -305,8 +305,7 @@ impl crate::Transform for vml_presentation_drawing::VMLDiagramText {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

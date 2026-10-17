@@ -314,6 +314,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl DataDisplayOptions16 {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DataDisplayOptions16 {
     fn read(element: &Element) -> Self {
         read::data_display_options16(element)
@@ -324,6 +332,17 @@ impl crate::Write for DataDisplayOptions16 {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::data_display_options16(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DispNaAsBlank {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 

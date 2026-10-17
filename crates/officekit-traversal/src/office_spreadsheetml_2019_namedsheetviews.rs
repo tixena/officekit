@@ -231,10 +231,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::ColumnFilte
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.col_id, &self.col_id);
-        Clone::clone_from(&mut node.id, &self.id);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
         node.filter = crate::transform_child(&self.filter, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -320,7 +318,7 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::Dxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -419,7 +417,7 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -498,11 +496,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::Filter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.col_id, &self.col_id);
-        Clone::clone_from(&mut node.hidden_button, &self.hidden_button);
-        Clone::clone_from(&mut node.show_button, &self.show_button);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -583,10 +578,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::NamedSheetV
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.id, &self.id);
         node.nsv_filter = crate::transform_child(&self.nsv_filter, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -669,7 +662,7 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::NamedSheetV
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.named_sheet_view = crate::transform_child(&self.named_sheet_view, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -751,11 +744,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.filter_id, &self.filter_id);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.table_id, &self.table_id);
         node.column_filter = crate::transform_child(&self.column_filter, ctx, &mut rebase);
         node.sort_rules = crate::transform_child(&self.sort_rules, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -842,15 +832,7 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::RichSortCon
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.rich_sort_key, &self.rich_sort_key);
-        Clone::clone_from(&mut node.descending, &self.descending);
-        Clone::clone_from(&mut node.sort_by, &self.sort_by);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.custom_list, &self.custom_list);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -932,14 +914,7 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::SortConditi
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.descending, &self.descending);
-        Clone::clone_from(&mut node.sort_by, &self.sort_by);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.custom_list, &self.custom_list);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1020,10 +995,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::SortRule {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.col_id, &self.col_id);
-        Clone::clone_from(&mut node.id, &self.id);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1203,10 +1176,8 @@ impl crate::Transform for office_spreadsheetml_2019_namedsheetviews::SortRules {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sort_method, &self.sort_method);
-        Clone::clone_from(&mut node.case_sensitive, &self.case_sensitive);
         node.sort_rule = crate::transform_child(&self.sort_rule, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

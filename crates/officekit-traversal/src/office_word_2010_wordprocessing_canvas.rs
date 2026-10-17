@@ -231,7 +231,7 @@ impl crate::Transform for office_word_2010_wordprocessing_canvas::Bg {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fill_properties_content =
             crate::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -315,7 +315,7 @@ impl crate::Transform for office_word_2010_wordprocessing_canvas::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -394,7 +394,7 @@ impl crate::Transform for office_word_2010_wordprocessing_canvas::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.c_nv_pr = crate::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c_nv_fr_pr = crate::transform_child(&self.c_nv_fr_pr, ctx, &mut rebase);
@@ -485,7 +485,7 @@ impl crate::Transform for office_word_2010_wordprocessing_canvas::Whole {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.outline = crate::transform_child(&self.outline, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
@@ -706,7 +706,7 @@ impl crate::Transform for office_word_2010_wordprocessing_canvas::Wpc {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.bg = crate::transform_child(&self.bg, ctx, &mut rebase);
         node.whole = crate::transform_child(&self.whole, ctx, &mut rebase);

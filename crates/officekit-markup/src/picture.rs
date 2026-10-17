@@ -527,6 +527,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl NonVisualDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NonVisualDrawingProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
@@ -537,6 +552,17 @@ impl crate::Write for NonVisualDrawingProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_drawing_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualPictureDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            prefer_relative_resize: self.prefer_relative_resize.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -553,6 +579,14 @@ impl crate::Write for NonVisualPictureDrawingProperties {
     }
 }
 
+impl NonVisualPictureProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NonVisualPictureProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_picture_properties(element)
@@ -563,6 +597,14 @@ impl crate::Write for NonVisualPictureProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_picture_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Picture {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -579,6 +621,18 @@ impl crate::Write for Picture {
     }
 }
 
+impl PictureFill {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            dpi: self.dpi.clone(),
+            rot_with_shape: self.rot_with_shape.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PictureFill {
     fn read(element: &Element) -> Self {
         read::picture_fill(element)
@@ -589,6 +643,17 @@ impl crate::Write for PictureFill {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::picture_fill(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShapeProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
     }
 }
 

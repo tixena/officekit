@@ -278,6 +278,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl PicAttrSrcUrl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PicAttrSrcUrl {
     fn read(element: &Element) -> Self {
         read::pic_attr_src_url(element)

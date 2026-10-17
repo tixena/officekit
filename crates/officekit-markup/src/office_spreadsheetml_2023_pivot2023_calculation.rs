@@ -560,6 +560,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AggregationInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            aggregation_type: self.aggregation_type.clone(),
+            source_field: self.source_field.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AggregationInfo {
     fn read(element: &Element) -> Self {
         read::aggregation_info(element)
@@ -645,6 +657,17 @@ impl AggregationType {
     }
 }
 
+impl FeatureSupportInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            feature_name: self.feature_name.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for FeatureSupportInfo {
     fn read(element: &Element) -> Self {
         read::feature_support_info(element)
@@ -655,6 +678,14 @@ impl crate::Write for FeatureSupportInfo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::feature_support_info(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PivotAreaReferenceSubtotals {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -671,6 +702,14 @@ impl crate::Write for PivotAreaReferenceSubtotals {
     }
 }
 
+impl PivotFieldSubtotalLineItems {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PivotFieldSubtotalLineItems {
     fn read(element: &Element) -> Self {
         read::pivot_field_subtotal_line_items(element)
@@ -681,6 +720,14 @@ impl crate::Write for PivotFieldSubtotalLineItems {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pivot_field_subtotal_line_items(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PivotFieldSubtotals {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -697,6 +744,14 @@ impl crate::Write for PivotFieldSubtotals {
     }
 }
 
+impl SubtotalLineItem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SubtotalLineItem {
     fn read(element: &Element) -> Self {
         read::subtotal_line_item(element)
@@ -710,6 +765,14 @@ impl crate::Write for SubtotalLineItem {
     }
 }
 
+impl SubtotalPivotItemSubtotal {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SubtotalPivotItemSubtotal {
     fn read(element: &Element) -> Self {
         read::subtotal_pivot_item_subtotal(element)
@@ -720,6 +783,17 @@ impl crate::Write for SubtotalPivotItemSubtotal {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::subtotal_pivot_item_subtotal(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SubtotalPivotSubtotalType {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            subtotal_type: self.subtotal_type.clone(),
+            ..Self::default()
+        }
     }
 }
 

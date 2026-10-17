@@ -284,6 +284,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl MultiLvlStrLit {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for MultiLvlStrLit {
     fn read(element: &Element) -> Self {
         read::multi_lvl_str_lit(element)

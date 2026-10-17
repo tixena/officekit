@@ -231,13 +231,8 @@ impl crate::Transform for office_powerpoint_2018_8_main::Author {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.initials, &self.initials);
-        Clone::clone_from(&mut node.user_id, &self.user_id);
-        Clone::clone_from(&mut node.provider_id, &self.provider_id);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -321,7 +316,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::AuthorLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.author = crate::transform_child(&self.author, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -400,20 +395,8 @@ impl crate::Transform for office_powerpoint_2018_8_main::Cm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author_id, &self.author_id);
-        Clone::clone_from(&mut node.status, &self.status);
-        Clone::clone_from(&mut node.created, &self.created);
-        Clone::clone_from(&mut node.tags, &self.tags);
-        Clone::clone_from(&mut node.likes, &self.likes);
-        Clone::clone_from(&mut node.start_date, &self.start_date);
-        Clone::clone_from(&mut node.due_date, &self.due_date);
-        Clone::clone_from(&mut node.assigned_to, &self.assigned_to);
-        Clone::clone_from(&mut node.complete, &self.complete);
-        Clone::clone_from(&mut node.priority, &self.priority);
-        Clone::clone_from(&mut node.title, &self.title);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.pos = crate::transform_child(&self.pos, ctx, &mut rebase);
         node.reply_lst = crate::transform_child(&self.reply_lst, ctx, &mut rebase);
@@ -516,7 +499,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::CmLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cm = crate::transform_child(&self.cm, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -769,8 +752,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::CommentRel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -845,7 +827,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::ExtLstCommentProperties
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -924,7 +906,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::ExtLstExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1003,9 +985,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::Pos {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.y, &self.y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1081,14 +1061,8 @@ impl crate::Transform for office_powerpoint_2018_8_main::Reply {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author_id, &self.author_id);
-        Clone::clone_from(&mut node.status, &self.status);
-        Clone::clone_from(&mut node.created, &self.created);
-        Clone::clone_from(&mut node.tags, &self.tags);
-        Clone::clone_from(&mut node.likes, &self.likes);
         node.tx_body = crate::transform_child(&self.tx_body, ctx, &mut rebase);
         node.ext_lst_comment_properties_extension_list = crate::transform_child(
             &self.ext_lst_comment_properties_extension_list,
@@ -1179,7 +1153,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::ReplyLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.reply = crate::transform_child(&self.reply, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1258,7 +1232,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::TxBody {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.text_list_styles = crate::transform_child(&self.text_list_styles, ctx, &mut rebase);
@@ -1343,7 +1317,7 @@ impl crate::Transform for office_powerpoint_2018_8_main::UnknownAnchor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

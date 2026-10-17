@@ -231,9 +231,8 @@ impl crate::Transform for office_spreadsheetml_2025_pivot_data_source::PivotCach
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

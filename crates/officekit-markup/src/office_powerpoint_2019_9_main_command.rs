@@ -384,6 +384,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CmMK {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CmMK {
     fn read(element: &Element) -> Self {
         read::cm_mk(element)
@@ -394,6 +405,14 @@ impl crate::Write for CmMK {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cm_mk(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CmMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -410,6 +429,17 @@ impl crate::Write for CmMkLst {
     }
 }
 
+impl CmRplyMk {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CmRplyMk {
     fn read(element: &Element) -> Self {
         read::cm_rply_mk(element)
@@ -420,6 +450,14 @@ impl crate::Write for CmRplyMk {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cm_rply_mk(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CmRplyMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

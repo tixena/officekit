@@ -288,6 +288,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl PivotTableDefinition16 {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled_subtotals_default: self.enabled_subtotals_default.clone(),
+            insert_blank_row_default: self.insert_blank_row_default.clone(),
+            subtotals_on_top_default: self.subtotals_on_top_default.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PivotTableDefinition16 {
     fn read(element: &Element) -> Self {
         read::pivot_table_definition16(element)

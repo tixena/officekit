@@ -842,6 +842,24 @@ impl Slot {
     }
 }
 
+impl Unknown {
+    /// Unknown content with these absent positions, attributes, children, and declarations.
+    #[must_use]
+    pub const fn new(
+        absent: Vec<usize>,
+        attributes: Vec<Attribute>,
+        children: Vec<Extra>,
+        namespace_declarations: Vec<NamespaceDeclaration>,
+    ) -> Self {
+        Self {
+            absent,
+            attributes,
+            children,
+            namespace_declarations,
+        }
+    }
+}
+
 impl Wildcard {
     /// Whether an element of `namespace` is allowed.
     fn allows(self, namespace: &Namespace) -> bool {

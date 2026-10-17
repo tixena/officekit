@@ -312,6 +312,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CommentId {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            durable_id: self.durable_id.clone(),
+            para_id: self.para_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CommentId {
     fn read(element: &Element) -> Self {
         read::comment_id(element)
@@ -322,6 +334,14 @@ impl crate::Write for CommentId {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::comment_id(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CommentsIds {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

@@ -422,6 +422,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CacheVersionInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CacheVersionInfo {
     fn read(element: &Element) -> Self {
         read::cache_version_info(element)
@@ -432,6 +440,17 @@ impl crate::Write for CacheVersionInfo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cache_version_info(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LastRefreshFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -448,6 +467,17 @@ impl crate::Write for LastRefreshFeature {
     }
 }
 
+impl LastUpdateFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LastUpdateFeature {
     fn read(element: &Element) -> Self {
         read::last_update_feature(element)
@@ -461,6 +491,14 @@ impl crate::Write for LastUpdateFeature {
     }
 }
 
+impl PivotVersionInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PivotVersionInfo {
     fn read(element: &Element) -> Self {
         read::pivot_version_info(element)
@@ -471,6 +509,17 @@ impl crate::Write for PivotVersionInfo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pivot_version_info(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RequiredFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

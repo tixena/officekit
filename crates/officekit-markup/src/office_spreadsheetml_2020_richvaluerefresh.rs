@@ -319,6 +319,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl RefreshInterval {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            interval: self.interval.clone(),
+            resource_id_int: self.resource_id_int.clone(),
+            resource_id_str: self.resource_id_str.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RefreshInterval {
     fn read(element: &Element) -> Self {
         read::refresh_interval(element)
@@ -329,6 +342,14 @@ impl crate::Write for RefreshInterval {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::refresh_interval(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RefreshIntervals {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

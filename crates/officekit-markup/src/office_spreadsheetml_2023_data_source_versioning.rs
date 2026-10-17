@@ -386,6 +386,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl LastEditFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LastEditFeature {
     fn read(element: &Element) -> Self {
         read::last_edit_feature(element)
@@ -396,6 +407,17 @@ impl crate::Write for LastEditFeature {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::last_edit_feature(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LastRefreshFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -412,6 +434,17 @@ impl crate::Write for LastRefreshFeature {
     }
 }
 
+impl RequiredFeature {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RequiredFeature {
     fn read(element: &Element) -> Self {
         read::required_feature(element)
@@ -422,6 +455,14 @@ impl crate::Write for RequiredFeature {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::required_feature(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl VersionInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

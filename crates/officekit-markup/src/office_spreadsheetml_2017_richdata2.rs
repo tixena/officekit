@@ -1750,6 +1750,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AArray {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            c: self.c.clone(),
+            r: self.r.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AArray {
     fn read(element: &Element) -> Self {
         read::a_array(element)
@@ -1763,6 +1775,17 @@ impl crate::Write for AArray {
     }
 }
 
+impl ASupportingPropertyBagArray {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ASupportingPropertyBagArray {
     fn read(element: &Element) -> Self {
         read::a_supporting_property_bag_array(element)
@@ -1773,6 +1796,17 @@ impl crate::Write for ASupportingPropertyBagArray {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::a_supporting_property_bag_array(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ArrayData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1843,6 +1877,19 @@ impl ArrayValueType {
     }
 }
 
+impl CustomFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            key: self.key.clone(),
+            operator: self.operator.clone(),
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CustomFilter {
     fn read(element: &Element) -> Self {
         read::custom_filter(element)
@@ -1853,6 +1900,17 @@ impl crate::Write for CustomFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::custom_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CustomFilters {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            and: self.and.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1893,6 +1951,24 @@ impl crate::Write for CustomRichFiltersContent {
     }
 }
 
+impl DateGroupItem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            date_time_grouping: self.date_time_grouping.clone(),
+            day: self.day.clone(),
+            hour: self.hour.clone(),
+            key: self.key.clone(),
+            minute: self.minute.clone(),
+            month: self.month.clone(),
+            second: self.second.clone(),
+            year: self.year.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DateGroupItem {
     fn read(element: &Element) -> Self {
         read::date_group_item(element)
@@ -1903,6 +1979,17 @@ impl crate::Write for DateGroupItem {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::date_group_item(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Dxfs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1919,6 +2006,22 @@ impl crate::Write for Dxfs {
     }
 }
 
+impl DynamicFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            key: self.key.clone(),
+            max_val: self.max_val.clone(),
+            max_val_iso: self.max_val_iso.clone(),
+            r#type: self.r#type.clone(),
+            val: self.val.clone(),
+            val_iso: self.val_iso.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DynamicFilter {
     fn read(element: &Element) -> Self {
         read::dynamic_filter(element)
@@ -1929,6 +2032,14 @@ impl crate::Write for DynamicFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::dynamic_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1945,6 +2056,20 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl Filter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            blank: self.blank.clone(),
+            key: self.key.clone(),
+            nodata: self.nodata.clone(),
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Filter {
     fn read(element: &Element) -> Self {
         read::filter(element)
@@ -1955,6 +2080,14 @@ impl crate::Write for Filter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl FilterColumn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1971,6 +2104,14 @@ impl crate::Write for FilterColumn {
     }
 }
 
+impl Filters {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Filters {
     fn read(element: &Element) -> Self {
         read::filters(element)
@@ -1981,6 +2122,18 @@ impl crate::Write for Filters {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::filters(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Flag {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1997,6 +2150,14 @@ impl crate::Write for Flag {
     }
 }
 
+impl Global {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Global {
     fn read(element: &Element) -> Self {
         read::global(element)
@@ -2007,6 +2168,18 @@ impl crate::Write for Global {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::global(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl K {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            n: self.n.clone(),
+            t: self.t.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2023,6 +2196,17 @@ impl crate::Write for K {
     }
 }
 
+impl Key {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Key {
     fn read(element: &Element) -> Self {
         read::key(element)
@@ -2033,6 +2217,14 @@ impl crate::Write for Key {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::key(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl KeyFlags {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -2049,6 +2241,18 @@ impl crate::Write for KeyFlags {
     }
 }
 
+impl RPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            n: self.n.clone(),
+            t: self.t.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RPr {
     fn read(element: &Element) -> Self {
         read::r_pr(element)
@@ -2059,6 +2263,17 @@ impl crate::Write for RPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::r_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RSty {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            dxfid: self.dxfid.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2160,6 +2375,14 @@ impl RichFormatPropertyType {
     }
 }
 
+impl RichProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RichProperties {
     fn read(element: &Element) -> Self {
         read::rich_properties(element)
@@ -2170,6 +2393,24 @@ impl crate::Write for RichProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rich_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RichSortCondition {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            custom_list: self.custom_list.clone(),
+            descending: self.descending.clone(),
+            dxf_id: self.dxf_id.clone(),
+            icon_id: self.icon_id.clone(),
+            icon_set: self.icon_set.clone(),
+            r#ref: self.r#ref.clone(),
+            rich_sort_key: self.rich_sort_key.clone(),
+            sort_by: self.sort_by.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2186,6 +2427,14 @@ impl crate::Write for RichSortCondition {
     }
 }
 
+impl RichStyleSheet {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RichStyleSheet {
     fn read(element: &Element) -> Self {
         read::rich_style_sheet(element)
@@ -2196,6 +2445,14 @@ impl crate::Write for RichStyleSheet {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rich_style_sheet(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RichStyles {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -2212,6 +2469,18 @@ impl crate::Write for RichStyles {
     }
 }
 
+impl Rpv {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            i: self.i.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Rpv {
     fn read(element: &Element) -> Self {
         read::rpv(element)
@@ -2222,6 +2491,14 @@ impl crate::Write for Rpv {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rpv(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RvTypesInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -2238,6 +2515,14 @@ impl crate::Write for RvTypesInfo {
     }
 }
 
+impl S {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for S {
     fn read(element: &Element) -> Self {
         read::s(element)
@@ -2248,6 +2533,17 @@ impl crate::Write for S {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::s(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Spb {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            s: self.s.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2264,6 +2560,17 @@ impl crate::Write for Spb {
     }
 }
 
+impl SpbArrays {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SpbArrays {
     fn read(element: &Element) -> Self {
         read::spb_arrays(element)
@@ -2277,6 +2584,17 @@ impl crate::Write for SpbArrays {
     }
 }
 
+impl SpbData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SpbData {
     fn read(element: &Element) -> Self {
         read::spb_data(element)
@@ -2287,6 +2605,17 @@ impl crate::Write for SpbData {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::spb_data(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SpbStructures {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2416,6 +2745,14 @@ impl SupportingPropertyBagValueType {
     }
 }
 
+impl SupportingPropertyBags {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SupportingPropertyBags {
     fn read(element: &Element) -> Self {
         read::supporting_property_bags(element)
@@ -2426,6 +2763,21 @@ impl crate::Write for SupportingPropertyBags {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::supporting_property_bags(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Top10 {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            filter_val: self.filter_val.clone(),
+            key: self.key.clone(),
+            percent: self.percent.clone(),
+            top: self.top.clone(),
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2442,6 +2794,17 @@ impl crate::Write for Top10 {
     }
 }
 
+impl Type {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Type {
     fn read(element: &Element) -> Self {
         read::r#type(element)
@@ -2452,6 +2815,14 @@ impl crate::Write for Type {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::r#type(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Types {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -2468,6 +2839,18 @@ impl crate::Write for Types {
     }
 }
 
+impl VArrayValue {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            t: self.t.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for VArrayValue {
     fn read(element: &Element) -> Self {
         read::v_array_value(element)
@@ -2481,6 +2864,18 @@ impl crate::Write for VArrayValue {
     }
 }
 
+impl VSupportingPropertyBagArrayValue {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            t: self.t.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for VSupportingPropertyBagArrayValue {
     fn read(element: &Element) -> Self {
         read::v_supporting_property_bag_array_value(element)
@@ -2491,6 +2886,17 @@ impl crate::Write for VSupportingPropertyBagArrayValue {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::v_supporting_property_bag_array_value(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl VSupportingPropertyBagValue {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

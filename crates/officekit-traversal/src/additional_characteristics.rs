@@ -231,7 +231,7 @@ impl crate::Transform for additional_characteristics::SetOfAdditionalCharacteris
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.single_characteristic =
             crate::transform_child(&self.single_characteristic, ctx, &mut rebase);
@@ -311,11 +311,7 @@ impl crate::Transform for additional_characteristics::SingleCharacteristic {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.relation, &self.relation);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.vocabulary, &self.vocabulary);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

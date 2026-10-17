@@ -231,7 +231,7 @@ impl crate::Transform for office_drawing_2010_picture::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -310,7 +310,7 @@ impl crate::Transform for office_drawing_2010_picture::Style {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.line_reference = crate::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = crate::transform_child(&self.fill_reference, ctx, &mut rebase);

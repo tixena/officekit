@@ -231,7 +231,7 @@ impl crate::Transform for locked_canvas::LockedCanvasContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_properties_for_a_group_shape = crate::transform_child(
             &self.non_visual_properties_for_a_group_shape,

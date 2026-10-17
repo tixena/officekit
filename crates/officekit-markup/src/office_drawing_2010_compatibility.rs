@@ -277,6 +277,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CompatSp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            spid: self.spid.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CompatSp {
     fn read(element: &Element) -> Self {
         read::compat_sp(element)

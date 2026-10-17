@@ -231,8 +231,7 @@ impl crate::Transform for office_spreadsheetml_2023_data_source_versioning::Last
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,8 +306,7 @@ impl crate::Transform for office_spreadsheetml_2023_data_source_versioning::Last
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -383,8 +381,7 @@ impl crate::Transform for office_spreadsheetml_2023_data_source_versioning::Requ
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -459,7 +456,7 @@ impl crate::Transform for office_spreadsheetml_2023_data_source_versioning::Vers
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.required_feature = crate::transform_child(&self.required_feature, ctx, &mut rebase);
         node.last_refresh_feature =

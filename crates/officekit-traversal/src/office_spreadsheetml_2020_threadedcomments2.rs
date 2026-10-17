@@ -231,8 +231,7 @@ impl crate::Transform for office_spreadsheetml_2020_threadedcomments2::Checksum 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,7 +306,7 @@ impl crate::Transform for office_spreadsheetml_2020_threadedcomments2::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -386,11 +385,8 @@ impl crate::Transform for office_spreadsheetml_2020_threadedcomments2::Hyperlink
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.start_index, &self.start_index);
-        Clone::clone_from(&mut node.length, &self.length);
-        Clone::clone_from(&mut node.url, &self.url);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

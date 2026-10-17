@@ -282,6 +282,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExternalCodeService {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            auto_show: self.auto_show.clone(),
+            timeout: self.timeout.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ExternalCodeService {
     fn read(element: &Element) -> Self {
         read::external_code_service(element)

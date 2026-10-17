@@ -793,6 +793,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Author {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            initials: self.initials.clone(),
+            name: self.name.clone(),
+            provider_id: self.provider_id.clone(),
+            user_id: self.user_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Author {
     fn read(element: &Element) -> Self {
         read::author(element)
@@ -803,6 +818,14 @@ impl crate::Write for Author {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::author(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl AuthorLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -819,6 +842,28 @@ impl crate::Write for AuthorLst {
     }
 }
 
+impl Cm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            assigned_to: self.assigned_to.clone(),
+            author_id: self.author_id.clone(),
+            complete: self.complete.clone(),
+            created: self.created.clone(),
+            due_date: self.due_date.clone(),
+            id: self.id.clone(),
+            likes: self.likes.clone(),
+            priority: self.priority.clone(),
+            start_date: self.start_date.clone(),
+            status: self.status.clone(),
+            tags: self.tags.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Cm {
     fn read(element: &Element) -> Self {
         read::cm(element)
@@ -829,6 +874,14 @@ impl crate::Write for Cm {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cm(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CmLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -881,6 +934,17 @@ impl crate::Write for CommentContent {
             Self::TxBodyMkLst(arm) => arm.write_into(writer),
             Self::TxMkLst(arm) => arm.write_into(writer),
             Self::UnknownAnchor(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl CommentRel {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
         }
     }
 }
@@ -948,6 +1012,14 @@ impl CommentStatus {
     }
 }
 
+impl ExtLstCommentPropertiesExtensionList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLstCommentPropertiesExtensionList {
     fn read(element: &Element) -> Self {
         read::ext_lst_comment_properties_extension_list(element)
@@ -958,6 +1030,14 @@ impl crate::Write for ExtLstCommentPropertiesExtensionList {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst_comment_properties_extension_list(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLstExtensionList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -974,6 +1054,18 @@ impl crate::Write for ExtLstExtensionList {
     }
 }
 
+impl Pos {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            x: self.x.clone(),
+            y: self.y.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Pos {
     fn read(element: &Element) -> Self {
         read::pos(element)
@@ -984,6 +1076,22 @@ impl crate::Write for Pos {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pos(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Reply {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            author_id: self.author_id.clone(),
+            created: self.created.clone(),
+            id: self.id.clone(),
+            likes: self.likes.clone(),
+            status: self.status.clone(),
+            tags: self.tags.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1000,6 +1108,14 @@ impl crate::Write for Reply {
     }
 }
 
+impl ReplyLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ReplyLst {
     fn read(element: &Element) -> Self {
         read::reply_lst(element)
@@ -1013,6 +1129,14 @@ impl crate::Write for ReplyLst {
     }
 }
 
+impl TxBody {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TxBody {
     fn read(element: &Element) -> Self {
         read::tx_body(element)
@@ -1023,6 +1147,14 @@ impl crate::Write for TxBody {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tx_body(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl UnknownAnchor {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

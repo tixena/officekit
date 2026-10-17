@@ -231,10 +231,7 @@ impl crate::Transform for office_spreadsheetml_2020_richvaluerefresh::RefreshInt
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.resource_id_int, &self.resource_id_int);
-        Clone::clone_from(&mut node.resource_id_str, &self.resource_id_str);
-        Clone::clone_from(&mut node.interval, &self.interval);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -311,7 +308,7 @@ impl crate::Transform for office_spreadsheetml_2020_richvaluerefresh::RefreshInt
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.refresh_interval = crate::transform_child(&self.refresh_interval, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

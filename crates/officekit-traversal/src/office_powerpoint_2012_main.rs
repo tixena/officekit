@@ -231,8 +231,7 @@ impl crate::Transform for office_powerpoint_2012_main::ChartTrackingRefBased {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,7 +306,7 @@ impl crate::Transform for office_powerpoint_2012_main::Clr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -383,7 +382,7 @@ impl crate::Transform for office_powerpoint_2012_main::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -462,13 +461,8 @@ impl crate::Transform for office_powerpoint_2012_main::Guide {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.orient, &self.orient);
-        Clone::clone_from(&mut node.pos, &self.pos);
-        Clone::clone_from(&mut node.user_drawn, &self.user_drawn);
         node.clr = crate::transform_child(&self.clr, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -554,7 +548,7 @@ impl crate::Transform for office_powerpoint_2012_main::NotesGuideLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.guide = crate::transform_child(&self.guide, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -636,9 +630,7 @@ impl crate::Transform for office_powerpoint_2012_main::ParentCm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.author_id, &self.author_id);
-        Clone::clone_from(&mut node.idx, &self.idx);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -714,9 +706,7 @@ impl crate::Transform for office_powerpoint_2012_main::PresenceInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.user_id, &self.user_id);
-        Clone::clone_from(&mut node.provider_id, &self.provider_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -792,10 +782,7 @@ impl crate::Transform for office_powerpoint_2012_main::PrstTrans {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.prst, &self.prst);
-        Clone::clone_from(&mut node.inv_x, &self.inv_x);
-        Clone::clone_from(&mut node.inv_y, &self.inv_y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -872,7 +859,7 @@ impl crate::Transform for office_powerpoint_2012_main::SldGuideLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.guide = crate::transform_child(&self.guide, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -954,9 +941,8 @@ impl crate::Transform for office_powerpoint_2012_main::ThreadingInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.time_zone_bias, &self.time_zone_bias);
         node.parent_cm = crate::transform_child(&self.parent_cm, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

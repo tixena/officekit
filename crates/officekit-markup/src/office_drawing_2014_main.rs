@@ -405,6 +405,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ColId {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ColId {
     fn read(element: &Element) -> Self {
         read::col_id(element)
@@ -415,6 +423,17 @@ impl crate::Write for ColId {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::col_id(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CreationId {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -431,6 +450,18 @@ impl crate::Write for CreationId {
     }
 }
 
+impl CxnDERefs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            end: self.end.clone(),
+            st: self.st.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CxnDERefs {
     fn read(element: &Element) -> Self {
         read::cxn_de_refs(element)
@@ -444,6 +475,17 @@ impl crate::Write for CxnDERefs {
     }
 }
 
+impl PredDERef {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            pred: self.pred.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PredDERef {
     fn read(element: &Element) -> Self {
         read::pred_de_ref(element)
@@ -454,6 +496,14 @@ impl crate::Write for PredDERef {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pred_de_ref(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RowId {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

@@ -2343,6 +2343,30 @@ impl BlackAndWhiteModes {
     }
 }
 
+impl Callout {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            accentbar: self.accentbar.clone(),
+            angle: self.angle.clone(),
+            distance: self.distance.clone(),
+            drop: self.drop.clone(),
+            dropauto: self.dropauto.clone(),
+            ext: self.ext.clone(),
+            gap: self.gap.clone(),
+            length: self.length.clone(),
+            lengthspecified: self.lengthspecified.clone(),
+            minusx: self.minusx.clone(),
+            minusy: self.minusy.clone(),
+            on: self.on.clone(),
+            textborder: self.textborder.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Callout {
     fn read(element: &Element) -> Self {
         read::callout(element)
@@ -2406,6 +2430,17 @@ impl CalloutAngles {
     /// `ValueError` when the text is no value of `ST_Angle`; the text stays stored.
     pub fn value(&self) -> Result<CalloutAnglesMember, ValueError> {
         crate::member(CalloutAnglesMember::MEMBERS, &self.0, "ST_Angle")
+    }
+}
+
+impl Complex {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2551,6 +2586,20 @@ impl DiagramLayoutType {
     }
 }
 
+impl DiagramRelationship {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            idcntr: self.idcntr.clone(),
+            iddest: self.iddest.clone(),
+            idsrc: self.idsrc.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DiagramRelationship {
     fn read(element: &Element) -> Self {
         read::diagram_relationship(element)
@@ -2561,6 +2610,17 @@ impl crate::Write for DiagramRelationship {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::diagram_relationship(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DiagramRelationshipTable {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2577,6 +2637,29 @@ impl crate::Write for DiagramRelationshipTable {
     }
 }
 
+impl DigitalSignatureLine {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            addlxml: self.addlxml.clone(),
+            allowcomments: self.allowcomments.clone(),
+            ext: self.ext.clone(),
+            id: self.id.clone(),
+            issignatureline: self.issignatureline.clone(),
+            provid: self.provid.clone(),
+            showsigndate: self.showsigndate.clone(),
+            signinginstructions: self.signinginstructions.clone(),
+            signinginstructionsset: self.signinginstructionsset.clone(),
+            sigprovurl: self.sigprovurl.clone(),
+            suggestedsigner: self.suggestedsigner.clone(),
+            suggestedsigner2: self.suggestedsigner2.clone(),
+            suggestedsigneremail: self.suggestedsigneremail.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DigitalSignatureLine {
     fn read(element: &Element) -> Self {
         read::digital_signature_line(element)
@@ -2587,6 +2670,23 @@ impl crate::Write for DigitalSignatureLine {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::digital_signature_line(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl EmbeddedOLEObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            draw_aspect: self.draw_aspect.clone(),
+            id: self.id.clone(),
+            object_id: self.object_id.clone(),
+            prog_id: self.prog_id.clone(),
+            shape_id: self.shape_id.clone(),
+            r#type: self.r#type.clone(),
+            update_mode: self.update_mode.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2603,6 +2703,17 @@ impl crate::Write for EmbeddedOLEObject {
     }
 }
 
+impl EmbeddedObjectAlternateImageRequest {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for EmbeddedObjectAlternateImageRequest {
     fn read(element: &Element) -> Self {
         read::embedded_object_alternate_image_request(element)
@@ -2616,6 +2727,17 @@ impl crate::Write for EmbeddedObjectAlternateImageRequest {
     }
 }
 
+impl EmbeddedObjectCannotBeRefreshed {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for EmbeddedObjectCannotBeRefreshed {
     fn read(element: &Element) -> Self {
         read::embedded_object_cannot_be_refreshed(element)
@@ -2626,6 +2748,49 @@ impl crate::Write for EmbeddedObjectCannotBeRefreshed {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::embedded_object_cannot_be_refreshed(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Extrusion {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            autorotationcenter: self.autorotationcenter.clone(),
+            backdepth: self.backdepth.clone(),
+            brightness: self.brightness.clone(),
+            color: self.color.clone(),
+            colormode: self.colormode.clone(),
+            diffusity: self.diffusity.clone(),
+            edge: self.edge.clone(),
+            ext: self.ext.clone(),
+            facet: self.facet.clone(),
+            foredepth: self.foredepth.clone(),
+            lightface: self.lightface.clone(),
+            lightharsh: self.lightharsh.clone(),
+            lightharsh2: self.lightharsh2.clone(),
+            lightlevel: self.lightlevel.clone(),
+            lightlevel2: self.lightlevel2.clone(),
+            lightposition: self.lightposition.clone(),
+            lightposition2: self.lightposition2.clone(),
+            lockrotationcenter: self.lockrotationcenter.clone(),
+            metal: self.metal.clone(),
+            on: self.on.clone(),
+            orientation: self.orientation.clone(),
+            orientationangle: self.orientationangle.clone(),
+            plane: self.plane.clone(),
+            render: self.render.clone(),
+            rotationangle: self.rotationangle.clone(),
+            rotationcenter: self.rotationcenter.clone(),
+            shininess: self.shininess.clone(),
+            skewamt: self.skewamt.clone(),
+            skewangle: self.skewangle.clone(),
+            specularity: self.specularity.clone(),
+            r#type: self.r#type.clone(),
+            viewpoint: self.viewpoint.clone(),
+            viewpointorigin: self.viewpointorigin.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2842,6 +3007,19 @@ impl ExtrusionType {
     }
 }
 
+impl Ink {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            annotation: self.annotation.clone(),
+            content_type: self.content_type.clone(),
+            i: self.i.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Ink {
     fn read(element: &Element) -> Self {
         read::ink(element)
@@ -2902,6 +3080,18 @@ impl InsetMarginType {
     }
 }
 
+impl MostRecentlyUsedColors {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            colors: self.colors.clone(),
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MostRecentlyUsedColors {
     fn read(element: &Element) -> Self {
         read::most_recently_used_colors(element)
@@ -2912,6 +3102,24 @@ impl crate::Write for MostRecentlyUsedColors {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::most_recently_used_colors(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NewShapeDefaults {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            ext: self.ext.clone(),
+            fill: self.fill.clone(),
+            fillcolor: self.fillcolor.clone(),
+            spidmax: self.spidmax.clone(),
+            stroke: self.stroke.clone(),
+            strokecolor: self.strokecolor.clone(),
+            style: self.style.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3111,6 +3319,18 @@ impl OLEUpdateMode {
     }
 }
 
+impl RegroupEntry {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            new: self.new.clone(),
+            old: self.old.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RegroupEntry {
     fn read(element: &Element) -> Self {
         read::regroup_entry(element)
@@ -3124,6 +3344,20 @@ impl crate::Write for RegroupEntry {
     }
 }
 
+impl Rule {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            how: self.how.clone(),
+            id: self.id.clone(),
+            idref: self.idref.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Rule {
     fn read(element: &Element) -> Self {
         read::rule(element)
@@ -3134,6 +3368,17 @@ impl crate::Write for Rule {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rule(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RuleSet {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3254,6 +3499,17 @@ impl ScreenSizesType {
     }
 }
 
+impl ShapeClippingPath {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            v: self.v.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeClippingPath {
     fn read(element: &Element) -> Self {
         read::shape_clipping_path(element)
@@ -3264,6 +3520,18 @@ impl crate::Write for ShapeClippingPath {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_clipping_path(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShapeFillExtendedProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3336,6 +3604,17 @@ impl ShapeFillType {
     }
 }
 
+impl ShapeGroupingHistory {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeGroupingHistory {
     fn read(element: &Element) -> Self {
         read::shape_grouping_history(element)
@@ -3349,6 +3628,18 @@ impl crate::Write for ShapeGroupingHistory {
     }
 }
 
+impl ShapeIDMap {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            data: self.data.clone(),
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeIDMap {
     fn read(element: &Element) -> Self {
         read::shape_id_map(element)
@@ -3359,6 +3650,17 @@ impl crate::Write for ShapeIDMap {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_id_map(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShapeLayoutProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3401,6 +3703,28 @@ impl crate::Write for ShapeLayoutPropertiesContent {
     }
 }
 
+impl ShapeProtections {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            adjusthandles: self.adjusthandles.clone(),
+            aspectratio: self.aspectratio.clone(),
+            cropping: self.cropping.clone(),
+            ext: self.ext.clone(),
+            grouping: self.grouping.clone(),
+            position: self.position.clone(),
+            rotation: self.rotation.clone(),
+            selection: self.selection.clone(),
+            shapetype: self.shapetype.clone(),
+            text: self.text.clone(),
+            ungrouping: self.ungrouping.clone(),
+            verticies: self.verticies.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeProtections {
     fn read(element: &Element) -> Self {
         read::shape_protections(element)
@@ -3414,6 +3738,20 @@ impl crate::Write for ShapeProtections {
     }
 }
 
+impl ShapeReference {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            connectloc: self.connectloc.clone(),
+            end: self.end.clone(),
+            idref: self.idref.clone(),
+            start: self.start.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeReference {
     fn read(element: &Element) -> Self {
         read::shape_reference(element)
@@ -3424,6 +3762,22 @@ impl crate::Write for ShapeReference {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_reference(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SkewTransform {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            id: self.id.clone(),
+            matrix: self.matrix.clone(),
+            offset: self.offset.clone(),
+            on: self.on.clone(),
+            origin: self.origin.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3543,6 +3897,17 @@ impl StHrAlign {
     }
 }
 
+impl StorageForAlternateMathContent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            content_type: self.content_type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for StorageForAlternateMathContent {
     fn read(element: &Element) -> Self {
         read::storage_for_alternate_math_content(element)
@@ -3553,6 +3918,43 @@ impl crate::Write for StorageForAlternateMathContent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::storage_for_alternate_math_content(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TextBoxBottomStroke {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            ext: self.ext.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3569,6 +3971,43 @@ impl crate::Write for TextBoxBottomStroke {
     }
 }
 
+impl TextBoxInteriorStroke {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            ext: self.ext.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TextBoxInteriorStroke {
     fn read(element: &Element) -> Self {
         read::text_box_interior_stroke(element)
@@ -3579,6 +4018,43 @@ impl crate::Write for TextBoxInteriorStroke {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::text_box_interior_stroke(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TextBoxLeftStroke {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            ext: self.ext.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3595,6 +4071,43 @@ impl crate::Write for TextBoxLeftStroke {
     }
 }
 
+impl TextBoxRightStroke {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            ext: self.ext.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TextBoxRightStroke {
     fn read(element: &Element) -> Self {
         read::text_box_right_stroke(element)
@@ -3605,6 +4118,43 @@ impl crate::Write for TextBoxRightStroke {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::text_box_right_stroke(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TextBoxTopStroke {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            ext: self.ext.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3621,6 +4171,21 @@ impl crate::Write for TextBoxTopStroke {
     }
 }
 
+impl UIDefaultColors {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ext: self.ext.clone(),
+            extrusioncolor: self.extrusioncolor.clone(),
+            fillcolor: self.fillcolor.clone(),
+            shadowcolor: self.shadowcolor.clone(),
+            strokecolor: self.strokecolor.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for UIDefaultColors {
     fn read(element: &Element) -> Self {
         read::ui_default_colors(element)
@@ -3634,6 +4199,26 @@ impl crate::Write for UIDefaultColors {
     }
 }
 
+impl VMLDiagram {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            autoformat: self.autoformat.clone(),
+            autolayout: self.autolayout.clone(),
+            constrainbounds: self.constrainbounds.clone(),
+            dgmbasetextscale: self.dgmbasetextscale.clone(),
+            dgmfontsize: self.dgmfontsize.clone(),
+            dgmscalex: self.dgmscalex.clone(),
+            dgmscaley: self.dgmscaley.clone(),
+            dgmstyle: self.dgmstyle.clone(),
+            ext: self.ext.clone(),
+            reverse: self.reverse.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for VMLDiagram {
     fn read(element: &Element) -> Self {
         read::vml_diagram(element)
@@ -3644,6 +4229,17 @@ impl crate::Write for VMLDiagram {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::vml_diagram(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl WordprocessingMLFieldSwitches {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

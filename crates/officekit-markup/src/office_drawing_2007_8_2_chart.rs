@@ -669,6 +669,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl DropZoneCategories {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DropZoneCategories {
     fn read(element: &Element) -> Self {
         read::drop_zone_categories(element)
@@ -679,6 +687,14 @@ impl crate::Write for DropZoneCategories {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::drop_zone_categories(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DropZoneData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -695,6 +711,14 @@ impl crate::Write for DropZoneData {
     }
 }
 
+impl DropZoneFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DropZoneFilter {
     fn read(element: &Element) -> Self {
         read::drop_zone_filter(element)
@@ -705,6 +729,14 @@ impl crate::Write for DropZoneFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::drop_zone_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DropZoneSeries {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -721,6 +753,14 @@ impl crate::Write for DropZoneSeries {
     }
 }
 
+impl DropZonesVisible {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DropZonesVisible {
     fn read(element: &Element) -> Self {
         read::drop_zones_visible(element)
@@ -731,6 +771,14 @@ impl crate::Write for DropZonesVisible {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::drop_zones_visible(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl InSketchMode {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -747,6 +795,14 @@ impl crate::Write for InSketchMode {
     }
 }
 
+impl InvertSolidFillFmt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for InvertSolidFillFmt {
     fn read(element: &Element) -> Self {
         read::invert_solid_fill_fmt(element)
@@ -757,6 +813,14 @@ impl crate::Write for InvertSolidFillFmt {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::invert_solid_fill_fmt(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PivotOptions {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -773,6 +837,17 @@ impl crate::Write for PivotOptions {
     }
 }
 
+impl ShowSketchBtn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShowSketchBtn {
     fn read(element: &Element) -> Self {
         read::show_sketch_btn(element)
@@ -783,6 +858,14 @@ impl crate::Write for ShowSketchBtn {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::show_sketch_btn(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SketchOptions {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -799,6 +882,17 @@ impl crate::Write for SketchOptions {
     }
 }
 
+impl SpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SpPr {
     fn read(element: &Element) -> Self {
         read::sp_pr(element)
@@ -809,6 +903,17 @@ impl crate::Write for SpPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sp_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Style {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 

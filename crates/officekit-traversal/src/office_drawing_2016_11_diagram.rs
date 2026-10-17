@@ -231,10 +231,8 @@ impl crate::Transform for office_drawing_2016_11_diagram::AutoBuNodeInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.lvl, &self.lvl);
-        Clone::clone_from(&mut node.pt_type, &self.pt_type);
         node.bu_pr = crate::transform_child(&self.bu_pr, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -314,7 +312,7 @@ impl crate::Transform for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.auto_bu_node_info = crate::transform_child(&self.auto_bu_node_info, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -393,10 +391,8 @@ impl crate::Transform for office_drawing_2016_11_diagram::BuPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.prefix, &self.prefix);
-        Clone::clone_from(&mut node.lead_zeros, &self.lead_zeros);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

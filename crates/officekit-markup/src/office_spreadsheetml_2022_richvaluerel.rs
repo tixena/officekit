@@ -343,6 +343,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -356,6 +364,17 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl Rel {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Rel {
     fn read(element: &Element) -> Self {
         read::rel(element)
@@ -366,6 +385,14 @@ impl crate::Write for Rel {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rel(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RichValueRels {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

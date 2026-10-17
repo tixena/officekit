@@ -307,6 +307,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CalcFeatures {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CalcFeatures {
     fn read(element: &Element) -> Self {
         read::calc_features(element)
@@ -317,6 +325,17 @@ impl crate::Write for CalcFeatures {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::calc_features(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Feature {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            ..Self::default()
+        }
     }
 }
 

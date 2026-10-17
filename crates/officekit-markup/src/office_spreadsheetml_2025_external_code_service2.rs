@@ -286,6 +286,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExternalCodeServiceImageAsInput {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            max_height: self.max_height.clone(),
+            max_width: self.max_width.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ExternalCodeServiceImageAsInput {
     fn read(element: &Element) -> Self {
         read::external_code_service_image_as_input(element)

@@ -1634,6 +1634,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AbsoluteAnchorShapeSize {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AbsoluteAnchorShapeSize {
     fn read(element: &Element) -> Self {
         read::absolute_anchor_shape_size(element)
@@ -1674,6 +1682,18 @@ impl ChartMarkerCoordinateValue {
     }
 }
 
+impl ConnectionShape {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            f_published: self.f_published.clone(),
+            r#macro: self.r#macro.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ConnectionShape {
     fn read(element: &Element) -> Self {
         read::connection_shape(element)
@@ -1684,6 +1704,14 @@ impl crate::Write for ConnectionShape {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::connection_shape(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ConnectorNonVisualProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1700,6 +1728,14 @@ impl crate::Write for ConnectorNonVisualProperties {
     }
 }
 
+impl EndingAnchorPoint {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for EndingAnchorPoint {
     fn read(element: &Element) -> Self {
         read::ending_anchor_point(element)
@@ -1710,6 +1746,18 @@ impl crate::Write for EndingAnchorPoint {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ending_anchor_point(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GraphicFrame {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            f_published: self.f_published.clone(),
+            r#macro: self.r#macro.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1726,6 +1774,19 @@ impl crate::Write for GraphicFrame {
     }
 }
 
+impl GraphicFrameTransform {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            flip_h: self.flip_h.clone(),
+            flip_v: self.flip_v.clone(),
+            rot: self.rot.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GraphicFrameTransform {
     fn read(element: &Element) -> Self {
         read::graphic_frame_transform(element)
@@ -1736,6 +1797,14 @@ impl crate::Write for GraphicFrameTransform {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::graphic_frame_transform(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GroupShape {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1752,6 +1821,17 @@ impl crate::Write for GroupShape {
     }
 }
 
+impl GroupShapeProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GroupShapeProperties {
     fn read(element: &Element) -> Self {
         read::group_shape_properties(element)
@@ -1762,6 +1842,14 @@ impl crate::Write for GroupShapeProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::group_shape_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualConnectionShapeDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1778,6 +1866,21 @@ impl crate::Write for NonVisualConnectionShapeDrawingProperties {
     }
 }
 
+impl NonVisualDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NonVisualDrawingProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
@@ -1788,6 +1891,14 @@ impl crate::Write for NonVisualDrawingProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_drawing_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualGraphicFrameDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1804,6 +1915,14 @@ impl crate::Write for NonVisualGraphicFrameDrawingProperties {
     }
 }
 
+impl NonVisualGraphicFrameProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NonVisualGraphicFrameProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_graphic_frame_properties(element)
@@ -1814,6 +1933,14 @@ impl crate::Write for NonVisualGraphicFrameProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_graphic_frame_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualGroupShapeDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1830,6 +1957,14 @@ impl crate::Write for NonVisualGroupShapeDrawingProperties {
     }
 }
 
+impl NonVisualGroupShapeProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NonVisualGroupShapeProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_group_shape_properties(element)
@@ -1840,6 +1975,17 @@ impl crate::Write for NonVisualGroupShapeProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_group_shape_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualPictureDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            prefer_relative_resize: self.prefer_relative_resize.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1856,6 +2002,14 @@ impl crate::Write for NonVisualPictureDrawingProperties {
     }
 }
 
+impl NonVisualPictureProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NonVisualPictureProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_picture_properties(element)
@@ -1869,6 +2023,17 @@ impl crate::Write for NonVisualPictureProperties {
     }
 }
 
+impl NonVisualShapeDrawingProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            tx_box: self.tx_box.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NonVisualShapeDrawingProperties {
     fn read(element: &Element) -> Self {
         read::non_visual_shape_drawing_properties(element)
@@ -1879,6 +2044,14 @@ impl crate::Write for NonVisualShapeDrawingProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::non_visual_shape_drawing_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualShapeProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1933,6 +2106,18 @@ impl crate::Write for ObjectContent {
     }
 }
 
+impl Picture {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            f_published: self.f_published.clone(),
+            r#macro: self.r#macro.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Picture {
     fn read(element: &Element) -> Self {
         read::picture(element)
@@ -1943,6 +2128,18 @@ impl crate::Write for Picture {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::picture(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PictureFill {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            dpi: self.dpi.clone(),
+            rot_with_shape: self.rot_with_shape.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1959,6 +2156,14 @@ impl crate::Write for PictureFill {
     }
 }
 
+impl RelativeAnchorShapeSize {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RelativeAnchorShapeSize {
     fn read(element: &Element) -> Self {
         read::relative_anchor_shape_size(element)
@@ -1969,6 +2174,17 @@ impl crate::Write for RelativeAnchorShapeSize {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::relative_anchor_shape_size(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RelativeXCoordinate {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1985,6 +2201,17 @@ impl crate::Write for RelativeXCoordinate {
     }
 }
 
+impl RelativeYCoordinate {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RelativeYCoordinate {
     fn read(element: &Element) -> Self {
         read::relative_y_coordinate(element)
@@ -1995,6 +2222,20 @@ impl crate::Write for RelativeYCoordinate {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::relative_y_coordinate(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Shape {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            f_locks_text: self.f_locks_text.clone(),
+            f_published: self.f_published.clone(),
+            r#macro: self.r#macro.clone(),
+            textlink: self.textlink.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2011,6 +2252,18 @@ impl crate::Write for Shape {
     }
 }
 
+impl ShapeExtent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            cx: self.cx.clone(),
+            cy: self.cy.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeExtent {
     fn read(element: &Element) -> Self {
         read::shape_extent(element)
@@ -2021,6 +2274,17 @@ impl crate::Write for ShapeExtent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_extent(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShapeProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -2037,6 +2301,14 @@ impl crate::Write for ShapeProperties {
     }
 }
 
+impl ShapeStyle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ShapeStyle {
     fn read(element: &Element) -> Self {
         read::shape_style(element)
@@ -2050,6 +2322,14 @@ impl crate::Write for ShapeStyle {
     }
 }
 
+impl ShapeTextBody {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ShapeTextBody {
     fn read(element: &Element) -> Self {
         read::shape_text_body(element)
@@ -2060,6 +2340,14 @@ impl crate::Write for ShapeTextBody {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_text_body(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl StartingAnchorPoint {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

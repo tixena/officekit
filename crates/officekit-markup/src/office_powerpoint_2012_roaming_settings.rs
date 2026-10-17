@@ -337,6 +337,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Key {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Key {
     fn read(element: &Element) -> Self {
         read::key(element)
@@ -350,6 +361,14 @@ impl crate::Write for Key {
     }
 }
 
+impl Props {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Props {
     fn read(element: &Element) -> Self {
         read::props(element)
@@ -360,6 +379,17 @@ impl crate::Write for Props {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::props(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Value {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

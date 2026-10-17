@@ -905,6 +905,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CNvGrpSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CNvGrpSpPr {
     fn read(element: &Element) -> Self {
         read::c_nv_grp_sp_pr(element)
@@ -915,6 +923,21 @@ impl crate::Write for CNvGrpSpPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_grp_sp_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CNvPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -931,6 +954,17 @@ impl crate::Write for CNvPr {
     }
 }
 
+impl CNvSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            tx_box: self.tx_box.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CNvSpPr {
     fn read(element: &Element) -> Self {
         read::c_nv_sp_pr(element)
@@ -941,6 +975,18 @@ impl crate::Write for CNvSpPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_sp_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DataModelExt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            min_ver: self.min_ver.clone(),
+            rel_id: self.rel_id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -957,6 +1003,14 @@ impl crate::Write for DataModelExt {
     }
 }
 
+impl Drawing {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Drawing {
     fn read(element: &Element) -> Self {
         read::drawing(element)
@@ -967,6 +1021,14 @@ impl crate::Write for Drawing {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::drawing(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1007,6 +1069,14 @@ impl crate::Write for GroupShapeContent {
     }
 }
 
+impl GrpSp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for GrpSp {
     fn read(element: &Element) -> Self {
         read::grp_sp(element)
@@ -1017,6 +1087,17 @@ impl crate::Write for GrpSp {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::grp_sp(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GrpSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1033,6 +1114,14 @@ impl crate::Write for GrpSpPr {
     }
 }
 
+impl NvGrpSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NvGrpSpPr {
     fn read(element: &Element) -> Self {
         read::nv_grp_sp_pr(element)
@@ -1043,6 +1132,14 @@ impl crate::Write for NvGrpSpPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::nv_grp_sp_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NvSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1059,6 +1156,17 @@ impl crate::Write for NvSpPr {
     }
 }
 
+impl Sp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            model_id: self.model_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Sp {
     fn read(element: &Element) -> Self {
         read::sp(element)
@@ -1069,6 +1177,17 @@ impl crate::Write for Sp {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sp(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1085,6 +1204,14 @@ impl crate::Write for SpPr {
     }
 }
 
+impl SpTree {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SpTree {
     fn read(element: &Element) -> Self {
         read::sp_tree(element)
@@ -1095,6 +1222,14 @@ impl crate::Write for SpTree {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sp_tree(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Style {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1111,6 +1246,14 @@ impl crate::Write for Style {
     }
 }
 
+impl TxBody {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TxBody {
     fn read(element: &Element) -> Self {
         read::tx_body(element)
@@ -1121,6 +1264,19 @@ impl crate::Write for TxBody {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tx_body(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TxXfrm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            flip_h: self.flip_h.clone(),
+            flip_v: self.flip_v.clone(),
+            rot: self.rot.clone(),
+            ..Self::default()
+        }
     }
 }
 

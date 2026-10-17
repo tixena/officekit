@@ -231,8 +231,7 @@ impl crate::Transform for office_powerpoint_2019_9_main_command::CmMK {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,7 +306,7 @@ impl crate::Transform for office_powerpoint_2019_9_main_command::CmMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sld_mk_lst = crate::transform_child(&self.sld_mk_lst, ctx, &mut rebase);
         node.cm_mk = crate::transform_child(&self.cm_mk, ctx, &mut rebase);
@@ -389,8 +388,7 @@ impl crate::Transform for office_powerpoint_2019_9_main_command::CmRplyMk {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -465,7 +463,7 @@ impl crate::Transform for office_powerpoint_2019_9_main_command::CmRplyMkLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cm_mk_lst = crate::transform_child(&self.cm_mk_lst, ctx, &mut rebase);
         node.cm_rply_mk = crate::transform_child(&self.cm_rply_mk, ctx, &mut rebase);

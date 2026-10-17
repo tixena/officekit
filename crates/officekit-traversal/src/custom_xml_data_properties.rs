@@ -231,8 +231,7 @@ impl crate::Transform for custom_xml_data_properties::AssociatedXMLSchema {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.uri, &self.uri);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,9 +306,8 @@ impl crate::Transform for custom_xml_data_properties::CustomXMLDataProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.item_id, &self.item_id);
         node.set_of_associated_xml_schemas =
             crate::transform_child(&self.set_of_associated_xml_schemas, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -389,7 +387,7 @@ impl crate::Transform for custom_xml_data_properties::SetOfAssociatedXMLSchemas 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.associated_xml_schema =
             crate::transform_child(&self.associated_xml_schema, ctx, &mut rebase);

@@ -231,13 +231,7 @@ impl crate::Transform for office_word_2020_oembed::Oembed {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.o_embed_url, &self.o_embed_url);
-        Clone::clone_from(&mut node.media_type, &self.media_type);
-        Clone::clone_from(
-            &mut node.pic_locks_auto_for_o_embed,
-            &self.pic_locks_auto_for_o_embed,
-        );
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

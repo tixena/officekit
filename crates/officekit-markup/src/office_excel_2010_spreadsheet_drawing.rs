@@ -513,6 +513,17 @@ pub struct Xfrm {
     pub unknown: crate::Unknown,
 }
 
+impl CNvContentPartPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            is_comment: self.is_comment.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CNvContentPartPr {
     fn read(element: &Element) -> Self {
         read::c_nv_content_part_pr(element)
@@ -523,6 +534,21 @@ impl crate::Write for CNvContentPartPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_content_part_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CNvPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -539,6 +565,18 @@ impl crate::Write for CNvPr {
     }
 }
 
+impl ContentPart {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ContentPart {
     fn read(element: &Element) -> Self {
         read::content_part(element)
@@ -549,6 +587,14 @@ impl crate::Write for ContentPart {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::content_part(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -565,6 +611,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl NvContentPartPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NvContentPartPr {
     fn read(element: &Element) -> Self {
         read::nv_content_part_pr(element)
@@ -578,6 +632,18 @@ impl crate::Write for NvContentPartPr {
     }
 }
 
+impl NvPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            f_published: self.f_published.clone(),
+            r#macro: self.r#macro.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NvPr {
     fn read(element: &Element) -> Self {
         read::nv_pr(element)
@@ -588,6 +654,19 @@ impl crate::Write for NvPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::nv_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Xfrm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            flip_h: self.flip_h.clone(),
+            flip_v: self.flip_v.clone(),
+            rot: self.rot.clone(),
+            ..Self::default()
+        }
     }
 }
 

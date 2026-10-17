@@ -231,13 +231,8 @@ impl crate::Transform for picture::NonVisualDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -327,12 +322,8 @@ impl crate::Transform for picture::NonVisualPictureDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.prefer_relative_resize,
-            &self.prefer_relative_resize,
-        );
         node.picture_locks = crate::transform_child(&self.picture_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -414,7 +405,7 @@ impl crate::Transform for picture::NonVisualPictureProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -497,7 +488,7 @@ impl crate::Transform for picture::Picture {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_picture_properties =
             crate::transform_child(&self.non_visual_picture_properties, ctx, &mut rebase);
@@ -568,10 +559,8 @@ impl crate::Transform for picture::PictureFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dpi, &self.dpi);
-        Clone::clone_from(&mut node.rot_with_shape, &self.rot_with_shape);
         node.blip = crate::transform_child(&self.blip, ctx, &mut rebase);
         node.source_rectangle = crate::transform_child(&self.source_rectangle, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
@@ -641,9 +630,8 @@ impl crate::Transform for picture::ShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_transform2d = crate::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = crate::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =

@@ -231,9 +231,8 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::CNvContentPartP
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.is_comment, &self.is_comment);
         node.cp_locks = crate::transform_child(&self.cp_locks, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -315,13 +314,8 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::CNvPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -411,10 +405,8 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.nv_content_part_pr =
             crate::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.nv_pr = crate::transform_child(&self.nv_pr, ctx, &mut rebase);
@@ -504,7 +496,7 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -583,7 +575,7 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::NvContentPartPr
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.c_nv_pr = crate::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = crate::transform_child(&self.c, ctx, &mut rebase);
@@ -665,9 +657,7 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::NvPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.f_published, &self.f_published);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -743,11 +733,8 @@ impl crate::Transform for office_excel_2010_spreadsheet_drawing::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.flip_h, &self.flip_h);
-        Clone::clone_from(&mut node.flip_v, &self.flip_v);
         node.offset = crate::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = crate::transform_child(&self.extents, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

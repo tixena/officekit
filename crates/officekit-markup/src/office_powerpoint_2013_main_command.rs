@@ -1103,6 +1103,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AnimEffectMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AnimEffectMkLst {
     fn read(element: &Element) -> Self {
         read::anim_effect_mk_lst(element)
@@ -1113,6 +1121,14 @@ impl crate::Write for AnimEffectMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::anim_effect_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl AnimEffectParentMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1129,6 +1145,14 @@ impl crate::Write for AnimEffectParentMkLst {
     }
 }
 
+impl CXmlMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CXmlMkLst {
     fn read(element: &Element) -> Self {
         read::c_xml_mk_lst(element)
@@ -1139,6 +1163,14 @@ impl crate::Write for CXmlMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_xml_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CmAuthorMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1155,6 +1187,14 @@ impl crate::Write for CmAuthorMkLst {
     }
 }
 
+impl CmMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CmMkLst {
     fn read(element: &Element) -> Self {
         read::cm_mk_lst(element)
@@ -1165,6 +1205,14 @@ impl crate::Write for CmMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cm_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CustShowMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1181,6 +1229,14 @@ impl crate::Write for CustShowMkLst {
     }
 }
 
+impl DesignTagMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DesignTagMkLst {
     fn read(element: &Element) -> Self {
         read::design_tag_mk_lst(element)
@@ -1191,6 +1247,14 @@ impl crate::Write for DesignTagMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::design_tag_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DocMk {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1207,6 +1271,14 @@ impl crate::Write for DocMk {
     }
 }
 
+impl DocMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DocMkLst {
     fn read(element: &Element) -> Self {
         read::doc_mk_lst(element)
@@ -1217,6 +1289,14 @@ impl crate::Write for DocMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::doc_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HandoutMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1233,6 +1313,14 @@ impl crate::Write for HandoutMkLst {
     }
 }
 
+impl NotesMasterMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NotesMasterMkLst {
     fn read(element: &Element) -> Self {
         read::notes_master_mk_lst(element)
@@ -1243,6 +1331,14 @@ impl crate::Write for NotesMasterMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::notes_master_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NotesMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1259,6 +1355,14 @@ impl crate::Write for NotesMkLst {
     }
 }
 
+impl NotesTxtMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NotesTxtMkLst {
     fn read(element: &Element) -> Self {
         read::notes_txt_mk_lst(element)
@@ -1269,6 +1373,14 @@ impl crate::Write for NotesTxtMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::notes_txt_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SectionLnkObjMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1285,6 +1397,14 @@ impl crate::Write for SectionLnkObjMkLst {
     }
 }
 
+impl SectionMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SectionMkLst {
     fn read(element: &Element) -> Self {
         read::section_mk_lst(element)
@@ -1295,6 +1415,14 @@ impl crate::Write for SectionMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::section_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SldBaseMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1311,6 +1439,14 @@ impl crate::Write for SldBaseMkLst {
     }
 }
 
+impl SldLayoutMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SldLayoutMkLst {
     fn read(element: &Element) -> Self {
         read::sld_layout_mk_lst(element)
@@ -1321,6 +1457,14 @@ impl crate::Write for SldLayoutMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sld_layout_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SldMasterMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1337,6 +1481,18 @@ impl crate::Write for SldMasterMkLst {
     }
 }
 
+impl SldMk {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            c_id: self.c_id.clone(),
+            sld_id: self.sld_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SldMk {
     fn read(element: &Element) -> Self {
         read::sld_mk(element)
@@ -1347,6 +1503,14 @@ impl crate::Write for SldMk {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sld_mk(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SldMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1363,6 +1527,14 @@ impl crate::Write for SldMkLst {
     }
 }
 
+impl SldPosMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SldPosMkLst {
     fn read(element: &Element) -> Self {
         read::sld_pos_mk_lst(element)
@@ -1373,6 +1545,14 @@ impl crate::Write for SldPosMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sld_pos_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TagMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1389,6 +1569,14 @@ impl crate::Write for TagMkLst {
     }
 }
 
+impl TkAppMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TkAppMkLst {
     fn read(element: &Element) -> Self {
         read::tk_app_mk_lst(element)
@@ -1399,6 +1587,14 @@ impl crate::Write for TkAppMkLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tk_app_mk_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TocMkLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

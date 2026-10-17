@@ -613,6 +613,14 @@ pub struct Webextensionref {
     pub unknown: crate::Unknown,
 }
 
+impl AlternateReferences {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AlternateReferences {
     fn read(element: &Element) -> Self {
         read::alternate_references(element)
@@ -623,6 +631,19 @@ impl crate::Write for AlternateReferences {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::alternate_references(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Binding {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            appref: self.appref.clone(),
+            id: self.id.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -639,6 +660,14 @@ impl crate::Write for Binding {
     }
 }
 
+impl Bindings {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Bindings {
     fn read(element: &Element) -> Self {
         read::bindings(element)
@@ -649,6 +678,14 @@ impl crate::Write for Bindings {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bindings(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -665,6 +702,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl Properties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Properties {
     fn read(element: &Element) -> Self {
         read::properties(element)
@@ -675,6 +720,18 @@ impl crate::Write for Properties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Property {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -691,6 +748,20 @@ impl crate::Write for Property {
     }
 }
 
+impl Reference {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            store: self.store.clone(),
+            store_type: self.store_type.clone(),
+            version: self.version.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Reference {
     fn read(element: &Element) -> Self {
         read::reference(element)
@@ -701,6 +772,19 @@ impl crate::Write for Reference {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::reference(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Snapshot {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            cstate: self.cstate.clone(),
+            embed: self.embed.clone(),
+            link: self.link.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -717,6 +801,18 @@ impl crate::Write for Snapshot {
     }
 }
 
+impl Webextension {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            frozen: self.frozen.clone(),
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Webextension {
     fn read(element: &Element) -> Self {
         read::webextension(element)
@@ -727,6 +823,17 @@ impl crate::Write for Webextension {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::webextension(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Webextensionref {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 

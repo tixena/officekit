@@ -319,6 +319,23 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AnimPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            auto: self.auto.clone(),
+            count: self.count.clone(),
+            end: self.end.clone(),
+            length: self.length.clone(),
+            name: self.name.clone(),
+            offset: self.offset.clone(),
+            st: self.st.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AnimPr {
     fn read(element: &Element) -> Self {
         read::anim_pr(element)
@@ -329,6 +346,14 @@ impl crate::Write for AnimPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::anim_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

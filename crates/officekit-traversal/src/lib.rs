@@ -730,16 +730,15 @@ where
 /// Each `Extra` is placed, by `rebase`, after what the declared children
 /// before it became.
 pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context, rebase: &Rebase) -> Unknown {
-    let mut rebuilt = Unknown::default();
-    rebuilt.absent.clone_from(&unknown.absent);
-    rebuilt.attributes.clone_from(&unknown.attributes);
-    rebuilt.children = unknown
+    let children = unknown
         .children
         .iter()
         .map(|extra| Extra::new(rebase.place(extra.after), extra.node.transform(ctx)))
         .collect();
-    rebuilt
-        .namespace_declarations
-        .clone_from(&unknown.namespace_declarations);
-    rebuilt
+    Unknown::new(
+        unknown.absent.clone(),
+        unknown.attributes.clone(),
+        children,
+        unknown.namespace_declarations.clone(),
+    )
 }

@@ -285,6 +285,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl RichInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            pivot_cache_guid: self.pivot_cache_guid.clone(),
+            pivot_ignore_invalid_cache: self.pivot_ignore_invalid_cache.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RichInfo {
     fn read(element: &Element) -> Self {
         read::rich_info(element)

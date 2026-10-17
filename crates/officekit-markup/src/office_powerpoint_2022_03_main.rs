@@ -375,6 +375,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -385,6 +393,18 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Instance {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            author_id: self.author_id.clone(),
+            time: self.time.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -401,6 +421,14 @@ impl crate::Write for Instance {
     }
 }
 
+impl Reactions {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Reactions {
     fn read(element: &Element) -> Self {
         read::reactions(element)
@@ -411,6 +439,17 @@ impl crate::Write for Reactions {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::reactions(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Rxn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 

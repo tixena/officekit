@@ -346,6 +346,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Checksum {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Checksum {
     fn read(element: &Element) -> Self {
         read::checksum(element)
@@ -359,6 +370,14 @@ impl crate::Write for Checksum {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -369,6 +388,19 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Hyperlink {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            length: self.length.clone(),
+            start_index: self.start_index.clone(),
+            url: self.url.clone(),
+            ..Self::default()
+        }
     }
 }
 

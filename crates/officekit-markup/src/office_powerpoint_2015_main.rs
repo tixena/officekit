@@ -277,6 +277,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl DesignElem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DesignElem {
     fn read(element: &Element) -> Self {
         read::design_elem(element)

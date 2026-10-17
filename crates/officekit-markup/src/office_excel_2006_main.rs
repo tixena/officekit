@@ -303,6 +303,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl F {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for F {
     fn read(element: &Element) -> Self {
         read::f(element)
@@ -313,6 +324,17 @@ impl crate::Write for F {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::f(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Sqref {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

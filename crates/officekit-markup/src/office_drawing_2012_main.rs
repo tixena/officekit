@@ -438,6 +438,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl BackgroundPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            bw_normal: self.bw_normal.clone(),
+            bw_pure: self.bw_pure.clone(),
+            target_screen_size: self.target_screen_size.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BackgroundPr {
     fn read(element: &Element) -> Self {
         read::background_pr(element)
@@ -448,6 +462,17 @@ impl crate::Write for BackgroundPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::background_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NonVisualGroupProps {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            is_legacy_group: self.is_legacy_group.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -464,6 +489,19 @@ impl crate::Write for NonVisualGroupProps {
     }
 }
 
+impl ObjectPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            is_active_x: self.is_active_x.clone(),
+            link_type: self.link_type.clone(),
+            object_id: self.object_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ObjectPr {
     fn read(element: &Element) -> Self {
         read::object_pr(element)
@@ -474,6 +512,28 @@ impl crate::Write for ObjectPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::object_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SignatureLine {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            addl_xml: self.addl_xml.clone(),
+            allow_comments: self.allow_comments.clone(),
+            id: self.id.clone(),
+            is_signature_line: self.is_signature_line.clone(),
+            prov_id: self.prov_id.clone(),
+            show_sign_date: self.show_sign_date.clone(),
+            sig_prov_url: self.sig_prov_url.clone(),
+            signing_instructions: self.signing_instructions.clone(),
+            signing_instructions_set: self.signing_instructions_set.clone(),
+            suggested_signer: self.suggested_signer.clone(),
+            suggested_signer2: self.suggested_signer2.clone(),
+            suggested_signer_email: self.suggested_signer_email.clone(),
+            ..Self::default()
+        }
     }
 }
 

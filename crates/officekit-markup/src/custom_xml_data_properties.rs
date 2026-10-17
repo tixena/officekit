@@ -361,6 +361,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AssociatedXMLSchema {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            uri: self.uri.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AssociatedXMLSchema {
     fn read(element: &Element) -> Self {
         read::associated_xml_schema(element)
@@ -374,6 +385,17 @@ impl crate::Write for AssociatedXMLSchema {
     }
 }
 
+impl CustomXMLDataProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            item_id: self.item_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CustomXMLDataProperties {
     fn read(element: &Element) -> Self {
         read::custom_xml_data_properties(element)
@@ -384,6 +406,14 @@ impl crate::Write for CustomXMLDataProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::custom_xml_data_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SetOfAssociatedXMLSchemas {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

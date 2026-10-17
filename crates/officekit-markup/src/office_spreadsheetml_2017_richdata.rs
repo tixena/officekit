@@ -569,6 +569,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -582,6 +590,18 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl Fb {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            t: self.t.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Fb {
     fn read(element: &Element) -> Self {
         read::fb(element)
@@ -592,6 +612,18 @@ impl crate::Write for Fb {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::fb(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl K {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            n: self.n.clone(),
+            t: self.t.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -722,6 +754,17 @@ impl RichValueValueType {
     }
 }
 
+impl Rv {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            s: self.s.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Rv {
     fn read(element: &Element) -> Self {
         read::rv(element)
@@ -732,6 +775,17 @@ impl crate::Write for Rv {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rv(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RvData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -748,6 +802,17 @@ impl crate::Write for RvData {
     }
 }
 
+impl RvStructures {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RvStructures {
     fn read(element: &Element) -> Self {
         read::rv_structures(element)
@@ -758,6 +823,17 @@ impl crate::Write for RvStructures {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rv_structures(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Rvb {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            i: self.i.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -774,6 +850,17 @@ impl crate::Write for Rvb {
     }
 }
 
+impl S {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            t: self.t.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for S {
     fn read(element: &Element) -> Self {
         read::s(element)
@@ -784,6 +871,17 @@ impl crate::Write for S {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::s(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl V {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 

@@ -310,6 +310,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl InkAnnotationFlag {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for InkAnnotationFlag {
     fn read(element: &Element) -> Self {
         read::ink_annotation_flag(element)
@@ -320,6 +328,17 @@ impl crate::Write for InkAnnotationFlag {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ink_annotation_flag(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl VMLDiagramText {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 

@@ -283,6 +283,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl PivotCacheDataSource {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            r#ref: self.r#ref.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PivotCacheDataSource {
     fn read(element: &Element) -> Self {
         read::pivot_cache_data_source(element)

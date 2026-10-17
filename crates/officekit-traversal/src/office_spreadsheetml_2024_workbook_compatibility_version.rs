@@ -233,9 +233,7 @@ impl crate::Transform for office_spreadsheetml_2024_workbook_compatibility_versi
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.warn_below_version, &self.warn_below_version);
-        Clone::clone_from(&mut node.set_version, &self.set_version);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

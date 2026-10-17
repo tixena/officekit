@@ -231,9 +231,8 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::A {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.k, &self.k);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -455,9 +454,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::BBoolFea
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -533,8 +530,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::BBoolean
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -609,12 +605,8 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::Bag {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.ext_ref, &self.ext_ref);
-        Clone::clone_from(&mut node.bag_ext_id, &self.bag_ext_id);
-        Clone::clone_from(&mut node.att, &self.att);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -696,7 +688,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::BagExt {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.lst = crate::transform_child(&self.lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -775,9 +767,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::BagIdBag
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -848,8 +838,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::BagIdUns
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -924,7 +913,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnBo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -1006,7 +995,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnHe
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -1088,7 +1077,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnTo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -1170,9 +1159,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::DDecimal
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1248,8 +1235,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::DDouble 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1324,8 +1310,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::DXFCompl
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.i, &self.i);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1400,7 +1385,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::DataRevD
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -1482,7 +1467,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::Dxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -1581,7 +1566,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1813,9 +1798,8 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::FeatureP
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.bag_ext = crate::transform_child(&self.bag_ext, ctx, &mut rebase);
         node.bag = crate::transform_child(&self.bag, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -1900,7 +1884,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::Fpbs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.bag_ext = crate::transform_child(&self.bag_ext, ctx, &mut rebase);
         node.bag = crate::transform_child(&self.bag, ctx, &mut rebase);
@@ -1985,7 +1969,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::HeaderRo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2067,7 +2051,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::HeaderRo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2149,9 +2133,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::IIntFeat
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2227,8 +2209,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::IInteger
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2303,9 +2284,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::RelRelFe
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2381,8 +2360,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::RelStrin
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2457,7 +2435,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::Revdxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2539,8 +2517,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::SString 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2615,9 +2592,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::SStringF
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.k, &self.k);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2693,7 +2668,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::TableBor
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2775,7 +2750,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::TotalsRo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2857,7 +2832,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::TotalsRo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fpbs = crate::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = crate::transform_child(&self.dxf, ctx, &mut rebase);
@@ -2939,8 +2914,7 @@ impl crate::Transform for office_spreadsheetml_2022_featurepropertybag::XfComple
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.i, &self.i);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

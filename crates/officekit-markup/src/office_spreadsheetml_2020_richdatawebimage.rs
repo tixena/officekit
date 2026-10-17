@@ -447,6 +447,14 @@ pub struct WebImagesSrd {
     pub web_image_srd: Vec<WebImageSrd>,
 }
 
+impl Address {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Address {
     fn read(element: &Element) -> Self {
         read::address(element)
@@ -457,6 +465,14 @@ impl crate::Write for Address {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::address(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Blip {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -473,6 +489,14 @@ impl crate::Write for Blip {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -483,6 +507,14 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MoreImagesAddress {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -499,6 +531,14 @@ impl crate::Write for MoreImagesAddress {
     }
 }
 
+impl WebImageSrd {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for WebImageSrd {
     fn read(element: &Element) -> Self {
         read::web_image_srd(element)
@@ -509,6 +549,14 @@ impl crate::Write for WebImageSrd {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::web_image_srd(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl WebImagesSrd {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

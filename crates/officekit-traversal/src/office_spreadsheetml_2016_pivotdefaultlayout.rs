@@ -231,19 +231,7 @@ impl crate::Transform for office_spreadsheetml_2016_pivotdefaultlayout::PivotTab
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(
-            &mut node.enabled_subtotals_default,
-            &self.enabled_subtotals_default,
-        );
-        Clone::clone_from(
-            &mut node.subtotals_on_top_default,
-            &self.subtotals_on_top_default,
-        );
-        Clone::clone_from(
-            &mut node.insert_blank_row_default,
-            &self.insert_blank_row_default,
-        );
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

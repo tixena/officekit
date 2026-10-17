@@ -277,6 +277,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExternalLinksPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            auto_refresh: self.auto_refresh.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ExternalLinksPr {
     fn read(element: &Element) -> Self {
         read::external_links_pr(element)

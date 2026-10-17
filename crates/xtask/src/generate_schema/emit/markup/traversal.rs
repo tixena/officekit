@@ -73,13 +73,6 @@ const WRITE_PARAMETERS: [&str; 2] = [
     "out: &mut PartWriter<'_>",
 ];
 
-/// How a field's value is rebuilt: a declared child through the runtime
-/// function of its step, or copied.
-enum Rebuilt {
-    Child(Expr),
-    Copied,
-}
-
 /// Which traversal an enum's arm takes its item through.
 #[derive(Clone, Copy)]
 enum Traversal {
@@ -628,33 +621,24 @@ fn node_impls(
     out.push_str("}\n");
 }
 
-/// The fields `transform_children` rebuilds besides `unknown`, in the order
-/// it rebuilds them, `from` the node it reads: the copied ones, then each
-/// declared child in schema order, the order `officekit_markup::Placement`
-/// counts them in, each counting what it became in `rebase`.
-fn rebuilt_fields(node: &Node, from: &str, rebase: &str) -> Vec<(String, Rebuilt)> {
-    let mut fields: Vec<(String, Rebuilt)> = node
-        .attributes
-        .iter()
-        .map(|attribute| (attribute.field.clone(), Rebuilt::Copied))
-        .collect();
-    if let Body::Text(_) = node.body {
-        fields.push(("value".to_owned(), Rebuilt::Copied));
-    }
-    for (field, step) in steps(node) {
-        fields.push((
-            field.to_owned(),
-            Rebuilt::Child(Expr::call(
+/// The declared children `transform_children` rebuilds, `from` the node it
+/// reads, in schema order, the order `officekit_markup::Placement` counts
+/// them in, each counting what it became in `rebase`.
+fn rebuilt_children(node: &Node, from: &str, rebase: &str) -> Vec<(String, Expr)> {
+    steps(node)
+        .into_iter()
+        .map(|(field, step)| {
+            let value = Expr::call(
                 &format!("crate::transform_{}", step.method()),
                 vec![
                     Expr::Atom(format!("&{from}.{field}")),
                     Expr::atom("ctx"),
                     Expr::atom(rebase),
                 ],
-            )),
-        ));
-    }
-    fields
+            );
+            (field.to_owned(), value)
+        })
+        .collect()
 }
 
 /// The node's unknown content rebuilt, each `Extra` placed by `rebase`.
@@ -665,49 +649,31 @@ fn rebuilt_unknown(rebase: Expr) -> Expr {
     )
 }
 
-/// A field set on the node `transform_children` rebuilds, at `indent`: a
-/// copied one cloned `from` the node it reads, a declared child rebuilt.
-fn assigned_field(indent: &str, from: &str, name: &str, value: &Rebuilt, out: &mut String) {
-    match value {
-        Rebuilt::Copied => layout::statement(
-            indent,
-            &Expr::call(
-                "Clone::clone_from",
-                vec![
-                    Expr::Atom(format!("&mut node.{name}")),
-                    Expr::Atom(format!("&{from}.{name}")),
-                ],
-            ),
-            out,
-        ),
-        Rebuilt::Child(expr) => layout::statement(&format!("{indent}node.{name} = "), expr, out),
-    }
+/// A declared child set, at `indent`, on the node `transform_children`
+/// rebuilds.
+fn assigned_field(indent: &str, name: &str, value: &Expr, out: &mut String) {
+    layout::statement(&format!("{indent}node.{name} = "), value, out);
 }
 
-/// The body of a struct's `transform_children`: the type's default node, its
-/// copied fields set, then its declared children rebuilt in schema order, so
-/// their hooks are asked in document order, then its unknown content placed
-/// by what they became; or, for a struct too large for one function, its
-/// fields set by helpers in the same order.
-///
-/// No struct literal: the types are `#[non_exhaustive]` in another crate.
+/// The body of a struct's `transform_children`: the node's own fields copied
+/// by its `without_children`, then its declared children rebuilt in schema
+/// order, so their hooks are asked in document order, then its unknown
+/// content placed by what they became; or, for a struct too large for one
+/// function, its children set by helpers in the same order.
 fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut String) {
-    let fields = rebuilt_fields(node, "self", "&mut rebase");
-    let counted = fields
-        .iter()
-        .any(|(_, value)| matches!(value, Rebuilt::Child(_)));
-    let rebase = if counted {
-        Expr::atom("&rebase")
-    } else {
+    let children = rebuilt_children(node, "self", "&mut rebase");
+    let rebase = if children.is_empty() {
         Expr::reference(Expr::call("crate::Rebase::default", Vec::new()))
+    } else {
+        Expr::atom("&rebase")
     };
     let unknown = rebuilt_unknown(rebase);
-    let mut body = String::from("        let mut node = Self::default();\n");
-    if counted {
+    let mut body = String::from("        let mut node = self.without_children();\n");
+    if !children.is_empty() {
         body.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
     }
-    for (name, value) in &fields {
-        assigned_field("        ", "self", name, value, &mut body);
+    for (name, value) in &children {
+        assigned_field("        ", name, value, &mut body);
     }
     layout::statement("        node.unknown = ", &unknown, &mut body);
     body.push_str("        node\n");
@@ -715,35 +681,34 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
         out.push_str(&body);
         return;
     }
-    let mut chunks: Vec<(String, bool)> = Vec::new();
+    let mut chunks: Vec<String> = Vec::new();
     let mut chunk = String::new();
-    let mut chunk_counted = false;
-    for (name, value) in &rebuilt_fields(node, "from", "rebase") {
+    for (name, value) in &rebuilt_children(node, "from", "rebase") {
         let mut text = String::new();
-        assigned_field("    ", "from", name, value, &mut text);
+        assigned_field("    ", name, value, &mut text);
         if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
-            chunks.push((chunk, chunk_counted));
+            chunks.push(chunk);
             chunk = String::new();
-            chunk_counted = false;
         }
         chunk.push_str(&text);
-        chunk_counted |= matches!(value, Rebuilt::Child(_));
     }
-    chunks.push((chunk, chunk_counted));
-    out.push_str("        let mut node = Self::default();\n");
-    if counted {
-        out.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
-    }
-    for (number, (text, counts)) in chunks.iter().enumerate() {
+    chunks.push(chunk);
+    out.push_str("        let mut node = self.without_children();\n");
+    out.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
+    let parameters = [
+        format!("from: &{target}"),
+        format!("node: &mut {target}"),
+        "ctx: &mut dyn officekit_markup::Context".to_owned(),
+        "rebase: &mut crate::Rebase".to_owned(),
+    ];
+    for (number, text) in chunks.iter().enumerate() {
         let helper = format!("transform_{prefix}_{}", number + 1);
-        let mut parameters = vec![format!("from: &{target}"), format!("node: &mut {target}")];
-        let mut arguments = vec![Expr::atom("self"), Expr::atom("&mut node")];
-        if *counts {
-            parameters.push("ctx: &mut dyn officekit_markup::Context".to_owned());
-            parameters.push("rebase: &mut crate::Rebase".to_owned());
-            arguments.push(Expr::atom("ctx"));
-            arguments.push(Expr::atom("&mut rebase"));
-        }
+        let arguments = vec![
+            Expr::atom("self"),
+            Expr::atom("&mut node"),
+            Expr::atom("ctx"),
+            Expr::atom("&mut rebase"),
+        ];
         layout::statement("        ", &Expr::call(&helper, arguments), out);
         helpers.push('\n');
         helpers.push_str(&layout::signature(

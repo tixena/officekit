@@ -231,15 +231,8 @@ impl crate::Transform for office_drawing_2018_animation::AnimPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.length, &self.length);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.offset, &self.offset);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.end, &self.end);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -324,7 +317,7 @@ impl crate::Transform for office_drawing_2018_animation::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

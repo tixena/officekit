@@ -575,6 +575,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AnchorLocationIsLocked {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AnchorLocationIsLocked {
     fn read(element: &Element) -> Self {
         read::anchor_location_is_locked(element)
@@ -713,6 +721,19 @@ impl BorderType {
     }
 }
 
+impl BottomBorder {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            shadow: self.shadow.clone(),
+            r#type: self.r#type.clone(),
+            width: self.width.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BottomBorder {
     fn read(element: &Element) -> Self {
         read::bottom_border(element)
@@ -781,6 +802,19 @@ impl HorizontalAnchorType {
     }
 }
 
+impl LeftBorder {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            shadow: self.shadow.clone(),
+            r#type: self.r#type.clone(),
+            width: self.width.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LeftBorder {
     fn read(element: &Element) -> Self {
         read::left_border(element)
@@ -794,6 +828,19 @@ impl crate::Write for LeftBorder {
     }
 }
 
+impl RightBorder {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            shadow: self.shadow.clone(),
+            r#type: self.r#type.clone(),
+            width: self.width.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RightBorder {
     fn read(element: &Element) -> Self {
         read::right_border(element)
@@ -804,6 +851,20 @@ impl crate::Write for RightBorder {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::right_border(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TextWrapping {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            anchorx: self.anchorx.clone(),
+            anchory: self.anchory.clone(),
+            side: self.side.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -920,6 +981,19 @@ impl TextWrappingType {
     /// `ValueError` when the text is no value of `ST_WrapType`; the text stays stored.
     pub fn value(&self) -> Result<TextWrappingTypeMember, ValueError> {
         crate::member(TextWrappingTypeMember::MEMBERS, &self.0, "ST_WrapType")
+    }
+}
+
+impl TopBorder {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            shadow: self.shadow.clone(),
+            r#type: self.r#type.clone(),
+            width: self.width.clone(),
+            ..Self::default()
+        }
     }
 }
 

@@ -353,6 +353,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CommentExtensible {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            date_utc: self.date_utc.clone(),
+            durable_id: self.durable_id.clone(),
+            intelligent_placeholder: self.intelligent_placeholder.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CommentExtensible {
     fn read(element: &Element) -> Self {
         read::comment_extensible(element)
@@ -366,6 +379,14 @@ impl crate::Write for CommentExtensible {
     }
 }
 
+impl CommentsExtensible {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CommentsExtensible {
     fn read(element: &Element) -> Self {
         read::comments_extensible(element)
@@ -376,6 +397,14 @@ impl crate::Write for CommentsExtensible {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::comments_extensible(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

@@ -231,11 +231,7 @@ impl crate::Transform for office_drawing_2020_classification_shape::Classificati
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(
-            &mut node.classification_outcome_type,
-            &self.classification_outcome_type,
-        );
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

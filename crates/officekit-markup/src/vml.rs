@@ -3150,6 +3150,71 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ArcSegment {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            end_angle: self.end_angle.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            start_angle: self.start_angle.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ArcSegment {
     fn read(element: &Element) -> Self {
         read::arc_segment(element)
@@ -3163,6 +3228,73 @@ impl crate::Write for ArcSegment {
     }
 }
 
+impl BezierCurve {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            control1: self.control1.clone(),
+            control2: self.control2.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            from: self.from.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            to: self.to.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BezierCurve {
     fn read(element: &Element) -> Self {
         read::bezier_curve(element)
@@ -3173,6 +3305,23 @@ impl crate::Write for BezierCurve {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bezier_curve(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DocumentBackground {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            id: self.id.clone(),
+            targetscreensize: self.targetscreensize.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3245,6 +3394,40 @@ impl GradientFillComputationType {
     }
 }
 
+impl ImageData {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            bilevel: self.bilevel.clone(),
+            blacklevel: self.blacklevel.clone(),
+            chromakey: self.chromakey.clone(),
+            cropbottom: self.cropbottom.clone(),
+            cropleft: self.cropleft.clone(),
+            cropright: self.cropright.clone(),
+            croptop: self.croptop.clone(),
+            detectmouseclick: self.detectmouseclick.clone(),
+            embosscolor: self.embosscolor.clone(),
+            gain: self.gain.clone(),
+            gamma: self.gamma.clone(),
+            grayscale: self.grayscale.clone(),
+            id: self.id.clone(),
+            movie: self.movie.clone(),
+            o_href: self.o_href.clone(),
+            oleid: self.oleid.clone(),
+            pict: self.pict.clone(),
+            r_href: self.r_href.clone(),
+            r_id: self.r_id.clone(),
+            recolortarget: self.recolortarget.clone(),
+            relid: self.relid.clone(),
+            src: self.src.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ImageData {
     fn read(element: &Element) -> Self {
         read::image_data(element)
@@ -3255,6 +3438,79 @@ impl crate::Write for ImageData {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::image_data(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ImageFile {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            bilevel: self.bilevel.clone(),
+            blacklevel: self.blacklevel.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            cropbottom: self.cropbottom.clone(),
+            cropleft: self.cropleft.clone(),
+            cropright: self.cropright.clone(),
+            croptop: self.croptop.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            gain: self.gain.clone(),
+            gamma: self.gamma.clone(),
+            grayscale: self.grayscale.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            src: self.src.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3325,6 +3581,71 @@ impl ImageScalingBehavior {
     }
 }
 
+impl Line {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            from: self.from.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            to: self.to.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Line {
     fn read(element: &Element) -> Self {
         read::line(element)
@@ -3388,6 +3709,45 @@ impl LineJoinType {
     }
 }
 
+impl LineStrokeSettings {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            althref: self.althref.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            dashstyle: self.dashstyle.clone(),
+            endarrow: self.endarrow.clone(),
+            endarrowlength: self.endarrowlength.clone(),
+            endarrowwidth: self.endarrowwidth.clone(),
+            endcap: self.endcap.clone(),
+            filltype: self.filltype.clone(),
+            forcedash: self.forcedash.clone(),
+            href: self.href.clone(),
+            id: self.id.clone(),
+            imagealignshape: self.imagealignshape.clone(),
+            imageaspect: self.imageaspect.clone(),
+            imagesize: self.imagesize.clone(),
+            insetpen: self.insetpen.clone(),
+            joinstyle: self.joinstyle.clone(),
+            linestyle: self.linestyle.clone(),
+            miterlimit: self.miterlimit.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            r_id: self.r_id.clone(),
+            relid: self.relid.clone(),
+            src: self.src.clone(),
+            startarrow: self.startarrow.clone(),
+            startarrowlength: self.startarrowlength.clone(),
+            startarrowwidth: self.startarrowwidth.clone(),
+            title: self.title.clone(),
+            weight: self.weight.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LineStrokeSettings {
     fn read(element: &Element) -> Self {
         read::line_stroke_settings(element)
@@ -3398,6 +3758,70 @@ impl crate::Write for LineStrokeSettings {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::line_stroke_settings(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MultiplePathLine {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            points: self.points.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3551,6 +3975,69 @@ impl TryFrom<MultiplePathLineContent> for ShapeElementContent {
     }
 }
 
+impl Oval {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Oval {
     fn read(element: &Element) -> Self {
         read::oval(element)
@@ -3561,6 +4048,69 @@ impl crate::Write for Oval {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::oval(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Rectangle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3577,6 +4127,70 @@ impl crate::Write for Rectangle {
     }
 }
 
+impl RoundedRectangle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            arcsize: self.arcsize.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RoundedRectangle {
     fn read(element: &Element) -> Self {
         read::rounded_rectangle(element)
@@ -3587,6 +4201,14 @@ impl crate::Write for RoundedRectangle {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rounded_rectangle(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SetOfFormulas {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3603,6 +4225,14 @@ impl crate::Write for SetOfFormulas {
     }
 }
 
+impl SetOfHandles {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SetOfHandles {
     fn read(element: &Element) -> Self {
         read::set_of_handles(element)
@@ -3613,6 +4243,27 @@ impl crate::Write for SetOfHandles {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::set_of_handles(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShadowEffect {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            id: self.id.clone(),
+            matrix: self.matrix.clone(),
+            obscured: self.obscured.clone(),
+            offset: self.offset.clone(),
+            offset2: self.offset2.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            origin: self.origin.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3677,6 +4328,74 @@ impl ShadowType {
     /// `ValueError` when the text is no value of `ST_ShadowType`; the text stays stored.
     pub fn value(&self) -> Result<ShadowTypeMember, ValueError> {
         crate::member(ShadowTypeMember::MEMBERS, &self.0, "ST_ShadowType")
+    }
+}
+
+impl ShapeDefinition {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            adj: self.adj.clone(),
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            equationxml: self.equationxml.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            gfxdata: self.gfxdata.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            path: self.path.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            r#type: self.r#type.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3986,6 +4705,43 @@ impl crate::Write for ShapeElementContent {
     }
 }
 
+impl ShapeFillProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            alignshape: self.alignshape.clone(),
+            althref: self.althref.clone(),
+            angle: self.angle.clone(),
+            aspect: self.aspect.clone(),
+            color: self.color.clone(),
+            color2: self.color2.clone(),
+            colors: self.colors.clone(),
+            detectmouseclick: self.detectmouseclick.clone(),
+            focus: self.focus.clone(),
+            focusposition: self.focusposition.clone(),
+            focussize: self.focussize.clone(),
+            href: self.href.clone(),
+            id: self.id.clone(),
+            method: self.method.clone(),
+            on: self.on.clone(),
+            opacity: self.opacity.clone(),
+            opacity2: self.opacity2.clone(),
+            origin: self.origin.clone(),
+            position: self.position.clone(),
+            r_id: self.r_id.clone(),
+            recolor: self.recolor.clone(),
+            relid: self.relid.clone(),
+            rotate: self.rotate.clone(),
+            size: self.size.clone(),
+            src: self.src.clone(),
+            title: self.title.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeFillProperties {
     fn read(element: &Element) -> Self {
         read::shape_fill_properties(element)
@@ -4049,6 +4805,55 @@ impl ShapeFillType {
     /// `ValueError` when the text is no value of `ST_FillType`; the text stays stored.
     pub fn value(&self) -> Result<ShapeFillTypeMember, ValueError> {
         crate::member(ShapeFillTypeMember::MEMBERS, &self.0, "ST_FillType")
+    }
+}
+
+impl ShapeGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            class: self.class.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            editas: self.editas.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            oned: self.oned.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            style: self.style.clone(),
+            tablelimits: self.tablelimits.clone(),
+            tableproperties: self.tableproperties.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4289,6 +5094,25 @@ impl ShapeGroupingTypes {
     }
 }
 
+impl ShapeHandle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            invx: self.invx.clone(),
+            invy: self.invy.clone(),
+            map: self.map.clone(),
+            polar: self.polar.clone(),
+            position: self.position.clone(),
+            radiusrange: self.radiusrange.clone(),
+            switch: self.switch.clone(),
+            xrange: self.xrange.clone(),
+            yrange: self.yrange.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeHandle {
     fn read(element: &Element) -> Self {
         read::shape_handle(element)
@@ -4299,6 +5123,31 @@ impl crate::Write for ShapeHandle {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_handle(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ShapePath {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            arrowok: self.arrowok.clone(),
+            connectangles: self.connectangles.clone(),
+            connectlocs: self.connectlocs.clone(),
+            connecttype: self.connecttype.clone(),
+            extrusionok: self.extrusionok.clone(),
+            fillok: self.fillok.clone(),
+            gradientshapeok: self.gradientshapeok.clone(),
+            id: self.id.clone(),
+            insetpenok: self.insetpenok.clone(),
+            limo: self.limo.clone(),
+            shadowok: self.shadowok.clone(),
+            strokeok: self.strokeok.clone(),
+            textboxrect: self.textboxrect.clone(),
+            textpathok: self.textpathok.clone(),
+            v: self.v.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4315,6 +5164,72 @@ impl crate::Write for ShapePath {
     }
 }
 
+impl ShapeTemplate {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            adj: self.adj.clone(),
+            allowincell: self.allowincell.clone(),
+            allowoverlap: self.allowoverlap.clone(),
+            alt: self.alt.clone(),
+            borderbottomcolor: self.borderbottomcolor.clone(),
+            borderleftcolor: self.borderleftcolor.clone(),
+            borderrightcolor: self.borderrightcolor.clone(),
+            bordertopcolor: self.bordertopcolor.clone(),
+            bullet: self.bullet.clone(),
+            button: self.button.clone(),
+            bwmode: self.bwmode.clone(),
+            bwnormal: self.bwnormal.clone(),
+            bwpure: self.bwpure.clone(),
+            chromakey: self.chromakey.clone(),
+            class: self.class.clone(),
+            clip: self.clip.clone(),
+            cliptowrap: self.cliptowrap.clone(),
+            connectortype: self.connectortype.clone(),
+            coordorigin: self.coordorigin.clone(),
+            coordsize: self.coordsize.clone(),
+            dgmlayout: self.dgmlayout.clone(),
+            dgmlayoutmru: self.dgmlayoutmru.clone(),
+            dgmnodekind: self.dgmnodekind.clone(),
+            doubleclicknotify: self.doubleclicknotify.clone(),
+            fillcolor: self.fillcolor.clone(),
+            filled: self.filled.clone(),
+            forcedash: self.forcedash.clone(),
+            hr: self.hr.clone(),
+            hralign: self.hralign.clone(),
+            href: self.href.clone(),
+            hrnoshade: self.hrnoshade.clone(),
+            hrpct: self.hrpct.clone(),
+            hrstd: self.hrstd.clone(),
+            id: self.id.clone(),
+            insetmode: self.insetmode.clone(),
+            insetpen: self.insetpen.clone(),
+            master: self.master.clone(),
+            ole: self.ole.clone(),
+            oleicon: self.oleicon.clone(),
+            oned: self.oned.clone(),
+            opacity: self.opacity.clone(),
+            path: self.path.clone(),
+            preferrelative: self.preferrelative.clone(),
+            print: self.print.clone(),
+            regroupid: self.regroupid.clone(),
+            spid: self.spid.clone(),
+            spt: self.spt.clone(),
+            strokecolor: self.strokecolor.clone(),
+            stroked: self.stroked.clone(),
+            strokeweight: self.strokeweight.clone(),
+            style: self.style.clone(),
+            target: self.target.clone(),
+            title: self.title.clone(),
+            userdrawn: self.userdrawn.clone(),
+            userhidden: self.userhidden.clone(),
+            wrapcoords: self.wrapcoords.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShapeTemplate {
     fn read(element: &Element) -> Self {
         read::shape_template(element)
@@ -4325,6 +5240,17 @@ impl crate::Write for ShapeTemplate {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shape_template(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SingleFormula {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            eqn: self.eqn.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4612,6 +5538,21 @@ impl StrokeLineStyle {
     }
 }
 
+impl TextBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            inset: self.inset.clone(),
+            insetmode: self.insetmode.clone(),
+            singleclick: self.singleclick.clone(),
+            style: self.style.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TextBox {
     fn read(element: &Element) -> Self {
         read::text_box(element)
@@ -4643,6 +5584,24 @@ impl crate::Write for TextBoxContent {
         match self {
             Self::Other(node) => writer.other(node.clone()),
             Self::RichTextBoxContentContainer(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl TextLayoutPath {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            fitpath: self.fitpath.clone(),
+            fitshape: self.fitshape.clone(),
+            id: self.id.clone(),
+            on: self.on.clone(),
+            string: self.string.clone(),
+            style: self.style.clone(),
+            trim: self.trim.clone(),
+            xscale: self.xscale.clone(),
+            ..Self::default()
         }
     }
 }

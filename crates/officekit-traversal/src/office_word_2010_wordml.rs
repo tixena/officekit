@@ -231,7 +231,7 @@ impl crate::Transform for office_word_2010_wordml::Alpha {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -302,7 +302,7 @@ impl crate::Transform for office_word_2010_wordml::Bevel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -373,7 +373,7 @@ impl crate::Transform for office_word_2010_wordml::BevelB {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -444,7 +444,7 @@ impl crate::Transform for office_word_2010_wordml::BevelT {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -515,9 +515,8 @@ impl crate::Transform for office_word_2010_wordml::CNvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.is_comment, &self.is_comment);
         node.cp_locks = crate::transform_child(&self.cp_locks, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -599,13 +598,8 @@ impl crate::Transform for office_word_2010_wordml::CNvPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -692,8 +686,7 @@ impl crate::Transform for office_word_2010_wordml::Camera {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.prst, &self.prst);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -765,7 +758,7 @@ impl crate::Transform for office_word_2010_wordml::Checkbox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.checked = crate::transform_child(&self.checked, ctx, &mut rebase);
         node.checked_state = crate::transform_child(&self.checked_state, ctx, &mut rebase);
@@ -847,7 +840,7 @@ impl crate::Transform for office_word_2010_wordml::Checked {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -918,7 +911,7 @@ impl crate::Transform for office_word_2010_wordml::CheckedState {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -992,7 +985,7 @@ impl crate::Transform for office_word_2010_wordml::CntxtAlts {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1337,11 +1330,8 @@ impl crate::Transform for office_word_2010_wordml::ConflictDelRunTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1422,10 +1412,7 @@ impl crate::Transform for office_word_2010_wordml::ConflictDelTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1502,11 +1489,8 @@ impl crate::Transform for office_word_2010_wordml::ConflictInsRunTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1587,10 +1571,7 @@ impl crate::Transform for office_word_2010_wordml::ConflictInsTrackChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1667,7 +1648,7 @@ impl crate::Transform for office_word_2010_wordml::ConflictMode {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1741,10 +1722,8 @@ impl crate::Transform for office_word_2010_wordml::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
-        Clone::clone_from(&mut node.id, &self.id);
         node.nv_content_part_pr =
             crate::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.xfrm = crate::transform_child(&self.xfrm, ctx, &mut rebase);
@@ -1831,7 +1810,7 @@ impl crate::Transform for office_word_2010_wordml::ContourClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1910,8 +1889,7 @@ impl crate::Transform for office_word_2010_wordml::CustomXmlConflictDelRangeEnd 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1986,10 +1964,7 @@ impl crate::Transform for office_word_2010_wordml::CustomXmlConflictDelRangeStar
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2066,8 +2041,7 @@ impl crate::Transform for office_word_2010_wordml::CustomXmlConflictInsRangeEnd 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2142,10 +2116,7 @@ impl crate::Transform for office_word_2010_wordml::CustomXmlConflictInsRangeStar
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.date, &self.date);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2222,8 +2193,7 @@ impl crate::Transform for office_word_2010_wordml::DefaultImageDpi {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2298,7 +2268,7 @@ impl crate::Transform for office_word_2010_wordml::DiscardImageEditingData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2372,8 +2342,7 @@ impl crate::Transform for office_word_2010_wordml::DocId {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2445,7 +2414,7 @@ impl crate::Transform for office_word_2010_wordml::EntityPicker {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2519,7 +2488,7 @@ impl crate::Transform for office_word_2010_wordml::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2595,7 +2564,7 @@ impl crate::Transform for office_word_2010_wordml::ExtrusionClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2778,11 +2747,7 @@ impl crate::Transform for office_word_2010_wordml::FillToRect {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.l, &self.l);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.b, &self.b);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2860,9 +2825,8 @@ impl crate::Transform for office_word_2010_wordml::Glow {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rad, &self.rad);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2938,7 +2902,7 @@ impl crate::Transform for office_word_2010_wordml::GradFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.gs_lst = crate::transform_child(&self.gs_lst, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
@@ -3117,9 +3081,8 @@ impl crate::Transform for office_word_2010_wordml::Gs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pos, &self.pos);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3195,7 +3158,7 @@ impl crate::Transform for office_word_2010_wordml::GsLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.gs = crate::transform_child(&self.gs, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3271,8 +3234,7 @@ impl crate::Transform for office_word_2010_wordml::HueMod {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3344,8 +3306,7 @@ impl crate::Transform for office_word_2010_wordml::Ligatures {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3420,10 +3381,8 @@ impl crate::Transform for office_word_2010_wordml::LightRig {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rig, &self.rig);
-        Clone::clone_from(&mut node.dir, &self.dir);
         node.rot = crate::transform_child(&self.rot, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3503,9 +3462,7 @@ impl crate::Transform for office_word_2010_wordml::Lin {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ang, &self.ang);
-        Clone::clone_from(&mut node.scaled, &self.scaled);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3682,7 +3639,7 @@ impl crate::Transform for office_word_2010_wordml::Lum {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3752,7 +3709,7 @@ impl crate::Transform for office_word_2010_wordml::LumMod {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3823,7 +3780,7 @@ impl crate::Transform for office_word_2010_wordml::LumOff {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3894,8 +3851,7 @@ impl crate::Transform for office_word_2010_wordml::Miter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.lim, &self.lim);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3967,7 +3923,7 @@ impl crate::Transform for office_word_2010_wordml::NoFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4038,8 +3994,7 @@ impl crate::Transform for office_word_2010_wordml::NumForm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4111,8 +4066,7 @@ impl crate::Transform for office_word_2010_wordml::NumSpacing {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4187,7 +4141,7 @@ impl crate::Transform for office_word_2010_wordml::NvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.c_nv_pr = crate::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = crate::transform_child(&self.c, ctx, &mut rebase);
@@ -4269,9 +4223,8 @@ impl crate::Transform for office_word_2010_wordml::Path {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.path, &self.path);
         node.fill_to_rect = crate::transform_child(&self.fill_to_rect, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4347,11 +4300,8 @@ impl crate::Transform for office_word_2010_wordml::Props3d {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.extrusion_h, &self.extrusion_h);
-        Clone::clone_from(&mut node.contour_w, &self.contour_w);
-        Clone::clone_from(&mut node.prst_material, &self.prst_material);
         node.bevel_t = crate::transform_child(&self.bevel_t, ctx, &mut rebase);
         node.bevel_b = crate::transform_child(&self.bevel_b, ctx, &mut rebase);
         node.extrusion_clr = crate::transform_child(&self.extrusion_clr, ctx, &mut rebase);
@@ -4438,8 +4388,7 @@ impl crate::Transform for office_word_2010_wordml::PrstDash {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4514,20 +4463,7 @@ impl crate::Transform for office_word_2010_wordml::Reflection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.blur_rad, &self.blur_rad);
-        Clone::clone_from(&mut node.st_a, &self.st_a);
-        Clone::clone_from(&mut node.st_pos, &self.st_pos);
-        Clone::clone_from(&mut node.end_a, &self.end_a);
-        Clone::clone_from(&mut node.end_pos, &self.end_pos);
-        Clone::clone_from(&mut node.dist, &self.dist);
-        Clone::clone_from(&mut node.dir, &self.dir);
-        Clone::clone_from(&mut node.fade_dir, &self.fade_dir);
-        Clone::clone_from(&mut node.sx, &self.sx);
-        Clone::clone_from(&mut node.sy, &self.sy);
-        Clone::clone_from(&mut node.kx, &self.kx);
-        Clone::clone_from(&mut node.ky, &self.ky);
-        Clone::clone_from(&mut node.algn, &self.algn);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4614,10 +4550,7 @@ impl crate::Transform for office_word_2010_wordml::Rot {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.lat, &self.lat);
-        Clone::clone_from(&mut node.lon, &self.lon);
-        Clone::clone_from(&mut node.rev, &self.rev);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4691,7 +4624,7 @@ impl crate::Transform for office_word_2010_wordml::Round {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4762,7 +4695,7 @@ impl crate::Transform for office_word_2010_wordml::Sat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4832,7 +4765,7 @@ impl crate::Transform for office_word_2010_wordml::SatMod {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4903,7 +4836,7 @@ impl crate::Transform for office_word_2010_wordml::SatOff {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4974,7 +4907,7 @@ impl crate::Transform for office_word_2010_wordml::Scene3d {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.camera = crate::transform_child(&self.camera, ctx, &mut rebase);
         node.light_rig = crate::transform_child(&self.light_rig, ctx, &mut rebase);
@@ -5053,9 +4986,8 @@ impl crate::Transform for office_word_2010_wordml::SchemeClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.val, &self.val);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5134,7 +5066,7 @@ impl crate::Transform for office_word_2010_wordml::Shade {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5205,16 +5137,8 @@ impl crate::Transform for office_word_2010_wordml::Shadow {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.blur_rad, &self.blur_rad);
-        Clone::clone_from(&mut node.dist, &self.dist);
-        Clone::clone_from(&mut node.dir, &self.dir);
-        Clone::clone_from(&mut node.sx, &self.sx);
-        Clone::clone_from(&mut node.sy, &self.sy);
-        Clone::clone_from(&mut node.kx, &self.kx);
-        Clone::clone_from(&mut node.ky, &self.ky);
-        Clone::clone_from(&mut node.algn, &self.algn);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5297,7 +5221,7 @@ impl crate::Transform for office_word_2010_wordml::SolidFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5376,9 +5300,8 @@ impl crate::Transform for office_word_2010_wordml::SrgbClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.val, &self.val);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5454,9 +5377,7 @@ impl crate::Transform for office_word_2010_wordml::StyleSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5532,7 +5453,7 @@ impl crate::Transform for office_word_2010_wordml::StylisticSets {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.style_set = crate::transform_child(&self.style_set, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5611,7 +5532,7 @@ impl crate::Transform for office_word_2010_wordml::TextFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5690,12 +5611,8 @@ impl crate::Transform for office_word_2010_wordml::TextOutline {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.w, &self.w);
-        Clone::clone_from(&mut node.cap, &self.cap);
-        Clone::clone_from(&mut node.cmpd, &self.cmpd);
-        Clone::clone_from(&mut node.algn, &self.algn);
         node.fill_properties_content =
             crate::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         node.prst_dash = crate::transform_child(&self.prst_dash, ctx, &mut rebase);
@@ -5784,7 +5701,7 @@ impl crate::Transform for office_word_2010_wordml::Tint {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5854,7 +5771,7 @@ impl crate::Transform for office_word_2010_wordml::UncheckedState {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5928,11 +5845,8 @@ impl crate::Transform for office_word_2010_wordml::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.flip_h, &self.flip_h);
-        Clone::clone_from(&mut node.flip_v, &self.flip_v);
         node.offset = crate::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = crate::transform_child(&self.extents, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

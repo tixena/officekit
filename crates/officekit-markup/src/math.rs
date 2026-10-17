@@ -5432,6 +5432,14 @@ pub struct WrapRight {
     pub val: Option<super::common_simple_types::OnOffValue>,
 }
 
+impl Accent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Accent {
     fn read(element: &Element) -> Self {
         read::accent(element)
@@ -5442,6 +5450,14 @@ impl crate::Write for Accent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::accent(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl AccentProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5458,6 +5474,17 @@ impl crate::Write for AccentProperties {
     }
 }
 
+impl AlignScripts {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AlignScripts {
     fn read(element: &Element) -> Self {
         read::align_scripts(element)
@@ -5468,6 +5495,17 @@ impl crate::Write for AlignScripts {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::align_scripts(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Alignment {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5484,6 +5522,14 @@ impl crate::Write for Alignment {
     }
 }
 
+impl ArgumentProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ArgumentProperties {
     fn read(element: &Element) -> Self {
         read::argument_properties(element)
@@ -5494,6 +5540,17 @@ impl crate::Write for ArgumentProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::argument_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ArgumentSize {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5510,6 +5567,14 @@ impl crate::Write for ArgumentSize {
     }
 }
 
+impl ArrayObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ArrayObject {
     fn read(element: &Element) -> Self {
         read::array_object(element)
@@ -5520,6 +5585,14 @@ impl crate::Write for ArrayObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::array_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ArrayProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5536,6 +5609,14 @@ impl crate::Write for ArrayProperties {
     }
 }
 
+impl Bar {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Bar {
     fn read(element: &Element) -> Self {
         read::bar(element)
@@ -5546,6 +5627,14 @@ impl crate::Write for Bar {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bar(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BarProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5562,6 +5651,14 @@ impl crate::Write for BarProperties {
     }
 }
 
+impl BorderBoxObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for BorderBoxObject {
     fn read(element: &Element) -> Self {
         read::border_box_object(element)
@@ -5575,6 +5672,14 @@ impl crate::Write for BorderBoxObject {
     }
 }
 
+impl BorderBoxProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for BorderBoxProperties {
     fn read(element: &Element) -> Self {
         read::border_box_properties(element)
@@ -5585,6 +5690,17 @@ impl crate::Write for BorderBoxProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::border_box_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BorderBoxStrikethroughBottomLeftToTopRight {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5602,6 +5718,17 @@ impl crate::Write for BorderBoxStrikethroughBottomLeftToTopRight {
     }
 }
 
+impl BorderBoxStrikethroughHorizontal {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BorderBoxStrikethroughHorizontal {
     fn read(element: &Element) -> Self {
         read::border_box_strikethrough_horizontal(element)
@@ -5612,6 +5739,17 @@ impl crate::Write for BorderBoxStrikethroughHorizontal {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::border_box_strikethrough_horizontal(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BorderBoxStrikethroughTopLeftToBottomRight {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5629,6 +5767,17 @@ impl crate::Write for BorderBoxStrikethroughTopLeftToBottomRight {
     }
 }
 
+impl BorderBoxStrikethroughVertical {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BorderBoxStrikethroughVertical {
     fn read(element: &Element) -> Self {
         read::border_box_strikethrough_vertical(element)
@@ -5639,6 +5788,14 @@ impl crate::Write for BorderBoxStrikethroughVertical {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::border_box_strikethrough_vertical(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BoxObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5655,6 +5812,14 @@ impl crate::Write for BoxObject {
     }
 }
 
+impl BoxProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for BoxProperties {
     fn read(element: &Element) -> Self {
         read::box_properties(element)
@@ -5665,6 +5830,17 @@ impl crate::Write for BoxProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::box_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Break {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            aln_at: self.aln_at.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5731,6 +5907,17 @@ impl BreakBinaryOperators {
     }
 }
 
+impl BreakOnBinaryOperators {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BreakOnBinaryOperators {
     fn read(element: &Element) -> Self {
         read::break_on_binary_operators(element)
@@ -5741,6 +5928,17 @@ impl crate::Write for BreakOnBinaryOperators {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::break_on_binary_operators(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BreakOnBinarySubtraction {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5757,6 +5955,17 @@ impl crate::Write for BreakOnBinarySubtraction {
     }
 }
 
+impl Character {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Character {
     fn read(element: &Element) -> Self {
         read::character(element)
@@ -5767,6 +5976,14 @@ impl crate::Write for Character {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::character(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ControlProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5809,6 +6026,17 @@ impl crate::Write for ControlPropertiesContent {
     }
 }
 
+impl DefaultJustification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DefaultJustification {
     fn read(element: &Element) -> Self {
         read::default_justification(element)
@@ -5819,6 +6047,14 @@ impl crate::Write for DefaultJustification {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::default_justification(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Degree {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5835,6 +6071,17 @@ impl crate::Write for Degree {
     }
 }
 
+impl DelimiterBeginningCharacter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DelimiterBeginningCharacter {
     fn read(element: &Element) -> Self {
         read::delimiter_beginning_character(element)
@@ -5845,6 +6092,17 @@ impl crate::Write for DelimiterBeginningCharacter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::delimiter_beginning_character(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DelimiterEndingCharacter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -5861,6 +6119,14 @@ impl crate::Write for DelimiterEndingCharacter {
     }
 }
 
+impl DelimiterObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DelimiterObject {
     fn read(element: &Element) -> Self {
         read::delimiter_object(element)
@@ -5871,6 +6137,14 @@ impl crate::Write for DelimiterObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::delimiter_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DelimiterProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5887,6 +6161,17 @@ impl crate::Write for DelimiterProperties {
     }
 }
 
+impl DelimiterSeparatorCharacter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DelimiterSeparatorCharacter {
     fn read(element: &Element) -> Self {
         read::delimiter_separator_character(element)
@@ -5897,6 +6182,14 @@ impl crate::Write for DelimiterSeparatorCharacter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::delimiter_separator_character(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Denominator {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5913,6 +6206,17 @@ impl crate::Write for Denominator {
     }
 }
 
+impl Differential {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Differential {
     fn read(element: &Element) -> Self {
         read::differential(element)
@@ -5923,6 +6227,14 @@ impl crate::Write for Differential {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::differential(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl E {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5939,6 +6251,14 @@ impl crate::Write for E {
     }
 }
 
+impl FractionObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for FractionObject {
     fn read(element: &Element) -> Self {
         read::fraction_object(element)
@@ -5949,6 +6269,14 @@ impl crate::Write for FractionObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::fraction_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl FractionProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5965,6 +6293,17 @@ impl crate::Write for FractionProperties {
     }
 }
 
+impl FractionType {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for FractionType {
     fn read(element: &Element) -> Self {
         read::fraction_type(element)
@@ -5975,6 +6314,14 @@ impl crate::Write for FractionType {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::fraction_type(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl FunctionApplyObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -5991,6 +6338,14 @@ impl crate::Write for FunctionApplyObject {
     }
 }
 
+impl FunctionName {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for FunctionName {
     fn read(element: &Element) -> Self {
         read::function_name(element)
@@ -6001,6 +6356,14 @@ impl crate::Write for FunctionName {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::function_name(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl FunctionProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6017,6 +6380,14 @@ impl crate::Write for FunctionProperties {
     }
 }
 
+impl GroupCharacterObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for GroupCharacterObject {
     fn read(element: &Element) -> Self {
         read::group_character_object(element)
@@ -6027,6 +6398,14 @@ impl crate::Write for GroupCharacterObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::group_character_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GroupCharacterProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6043,6 +6422,17 @@ impl crate::Write for GroupCharacterProperties {
     }
 }
 
+impl Grow {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Grow {
     fn read(element: &Element) -> Self {
         read::grow(element)
@@ -6053,6 +6443,17 @@ impl crate::Write for Grow {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::grow(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HideBottomEdge {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6069,6 +6470,17 @@ impl crate::Write for HideBottomEdge {
     }
 }
 
+impl HideDegree {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for HideDegree {
     fn read(element: &Element) -> Self {
         read::hide_degree(element)
@@ -6079,6 +6491,17 @@ impl crate::Write for HideDegree {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::hide_degree(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HideLeftEdge {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6095,6 +6518,17 @@ impl crate::Write for HideLeftEdge {
     }
 }
 
+impl HideRightEdge {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for HideRightEdge {
     fn read(element: &Element) -> Self {
         read::hide_right_edge(element)
@@ -6105,6 +6539,17 @@ impl crate::Write for HideRightEdge {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::hide_right_edge(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HideTopEdge {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6167,6 +6612,17 @@ impl Integer255 {
     }
 }
 
+impl IntegralLimitLocations {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for IntegralLimitLocations {
     fn read(element: &Element) -> Self {
         read::integral_limit_locations(element)
@@ -6177,6 +6633,17 @@ impl crate::Write for IntegralLimitLocations {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::integral_limit_locations(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl InterEquationSpacing {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6193,6 +6660,17 @@ impl crate::Write for InterEquationSpacing {
     }
 }
 
+impl IntraEquationSpacing {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for IntraEquationSpacing {
     fn read(element: &Element) -> Self {
         read::intra_equation_spacing(element)
@@ -6203,6 +6681,17 @@ impl crate::Write for IntraEquationSpacing {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::intra_equation_spacing(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Justification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6219,6 +6708,17 @@ impl crate::Write for Justification {
     }
 }
 
+impl LeftMargin {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LeftMargin {
     fn read(element: &Element) -> Self {
         read::left_margin(element)
@@ -6232,6 +6732,17 @@ impl crate::Write for LeftMargin {
     }
 }
 
+impl LimLoc {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LimLoc {
     fn read(element: &Element) -> Self {
         read::lim_loc(element)
@@ -6242,6 +6753,14 @@ impl crate::Write for LimLoc {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::lim_loc(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Limit {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6307,6 +6826,17 @@ impl LimitLocation {
     }
 }
 
+impl Literal {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Literal {
     fn read(element: &Element) -> Self {
         read::literal(element)
@@ -6317,6 +6847,14 @@ impl crate::Write for Literal {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::literal(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LowerLimitObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6333,6 +6871,14 @@ impl crate::Write for LowerLimitObject {
     }
 }
 
+impl LowerLimitProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for LowerLimitProperties {
     fn read(element: &Element) -> Self {
         read::lower_limit_properties(element)
@@ -6346,6 +6892,17 @@ impl crate::Write for LowerLimitProperties {
     }
 }
 
+impl MathFont {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MathFont {
     fn read(element: &Element) -> Self {
         read::math_font(element)
@@ -6356,6 +6913,14 @@ impl crate::Write for MathFont {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::math_font(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MathProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6396,6 +6961,17 @@ impl crate::Write for MathPropertiesContent {
     }
 }
 
+impl MatrixBaseJustification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MatrixBaseJustification {
     fn read(element: &Element) -> Self {
         read::matrix_base_justification(element)
@@ -6406,6 +6982,14 @@ impl crate::Write for MatrixBaseJustification {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_base_justification(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MatrixColumn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6422,6 +7006,17 @@ impl crate::Write for MatrixColumn {
     }
 }
 
+impl MatrixColumnCount {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MatrixColumnCount {
     fn read(element: &Element) -> Self {
         read::matrix_column_count(element)
@@ -6432,6 +7027,17 @@ impl crate::Write for MatrixColumnCount {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_column_count(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MatrixColumnGap {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6448,6 +7054,17 @@ impl crate::Write for MatrixColumnGap {
     }
 }
 
+impl MatrixColumnGapRule {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MatrixColumnGapRule {
     fn read(element: &Element) -> Self {
         read::matrix_column_gap_rule(element)
@@ -6458,6 +7075,17 @@ impl crate::Write for MatrixColumnGapRule {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_column_gap_rule(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MatrixColumnJustification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6474,6 +7102,14 @@ impl crate::Write for MatrixColumnJustification {
     }
 }
 
+impl MatrixColumnProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for MatrixColumnProperties {
     fn read(element: &Element) -> Self {
         read::matrix_column_properties(element)
@@ -6484,6 +7120,14 @@ impl crate::Write for MatrixColumnProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_column_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MatrixColumns {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6500,6 +7144,14 @@ impl crate::Write for MatrixColumns {
     }
 }
 
+impl MatrixObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for MatrixObject {
     fn read(element: &Element) -> Self {
         read::matrix_object(element)
@@ -6510,6 +7162,14 @@ impl crate::Write for MatrixObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MatrixProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6526,6 +7186,14 @@ impl crate::Write for MatrixProperties {
     }
 }
 
+impl MatrixRow {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for MatrixRow {
     fn read(element: &Element) -> Self {
         read::matrix_row(element)
@@ -6536,6 +7204,17 @@ impl crate::Write for MatrixRow {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::matrix_row(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MaximumDistribution {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6552,6 +7231,17 @@ impl crate::Write for MaximumDistribution {
     }
 }
 
+impl MinimumMatrixColumnWidth {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MinimumMatrixColumnWidth {
     fn read(element: &Element) -> Self {
         read::minimum_matrix_column_width(element)
@@ -6562,6 +7252,14 @@ impl crate::Write for MinimumMatrixColumnWidth {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::minimum_matrix_column_width(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Nary {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6578,6 +7276,17 @@ impl crate::Write for Nary {
     }
 }
 
+impl NaryLim {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NaryLim {
     fn read(element: &Element) -> Self {
         read::nary_lim(element)
@@ -6588,6 +7297,14 @@ impl crate::Write for NaryLim {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::nary_lim(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NaryPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6604,6 +7321,17 @@ impl crate::Write for NaryPr {
     }
 }
 
+impl NoBreak {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NoBreak {
     fn read(element: &Element) -> Self {
         read::no_break(element)
@@ -6614,6 +7342,17 @@ impl crate::Write for NoBreak {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::no_break(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NormalText {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6630,6 +7369,14 @@ impl crate::Write for NormalText {
     }
 }
 
+impl Numerator {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Numerator {
     fn read(element: &Element) -> Self {
         read::numerator(element)
@@ -6643,6 +7390,17 @@ impl crate::Write for Numerator {
     }
 }
 
+impl ObjectDistribution {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ObjectDistribution {
     fn read(element: &Element) -> Self {
         read::object_distribution(element)
@@ -6653,6 +7411,14 @@ impl crate::Write for ObjectDistribution {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::object_distribution(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl OfficeMath {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6909,6 +7675,14 @@ impl TryFrom<OfficeMathContent> for super::wordprocessing::RangeMarkupContent {
     }
 }
 
+impl OfficeMathParagraph {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for OfficeMathParagraph {
     fn read(element: &Element) -> Self {
         read::office_math_paragraph(element)
@@ -6919,6 +7693,14 @@ impl crate::Write for OfficeMathParagraph {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::office_math_paragraph(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl OfficeMathParagraphProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6935,6 +7717,17 @@ impl crate::Write for OfficeMathParagraphProperties {
     }
 }
 
+impl OperatorEmulator {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for OperatorEmulator {
     fn read(element: &Element) -> Self {
         read::operator_emulator(element)
@@ -6945,6 +7738,14 @@ impl crate::Write for OperatorEmulator {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::operator_emulator(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PhantomObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -6961,6 +7762,14 @@ impl crate::Write for PhantomObject {
     }
 }
 
+impl PhantomProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PhantomProperties {
     fn read(element: &Element) -> Self {
         read::phantom_properties(element)
@@ -6971,6 +7780,17 @@ impl crate::Write for PhantomProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::phantom_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PhantomShow {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -6987,6 +7807,17 @@ impl crate::Write for PhantomShow {
     }
 }
 
+impl PhantomZeroAscent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PhantomZeroAscent {
     fn read(element: &Element) -> Self {
         read::phantom_zero_ascent(element)
@@ -6997,6 +7828,17 @@ impl crate::Write for PhantomZeroAscent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::phantom_zero_ascent(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PhantomZeroDescent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7013,6 +7855,17 @@ impl crate::Write for PhantomZeroDescent {
     }
 }
 
+impl PhantomZeroWidth {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PhantomZeroWidth {
     fn read(element: &Element) -> Self {
         read::phantom_zero_width(element)
@@ -7023,6 +7876,17 @@ impl crate::Write for PhantomZeroWidth {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::phantom_zero_width(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PlcHide {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7039,6 +7903,17 @@ impl crate::Write for PlcHide {
     }
 }
 
+impl Position {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Position {
     fn read(element: &Element) -> Self {
         read::position(element)
@@ -7049,6 +7924,17 @@ impl crate::Write for Position {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::position(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PostParagraphSpacing {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7065,6 +7951,17 @@ impl crate::Write for PostParagraphSpacing {
     }
 }
 
+impl PreParagraphSpacing {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PreParagraphSpacing {
     fn read(element: &Element) -> Self {
         read::pre_paragraph_spacing(element)
@@ -7075,6 +7972,14 @@ impl crate::Write for PreParagraphSpacing {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pre_paragraph_spacing(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PreSubSuperscriptObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7091,6 +7996,14 @@ impl crate::Write for PreSubSuperscriptObject {
     }
 }
 
+impl PreSubSuperscriptProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PreSubSuperscriptProperties {
     fn read(element: &Element) -> Self {
         read::pre_sub_superscript_properties(element)
@@ -7101,6 +8014,17 @@ impl crate::Write for PreSubSuperscriptProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pre_sub_superscript_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RSp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7117,6 +8041,14 @@ impl crate::Write for RSp {
     }
 }
 
+impl RadicalObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RadicalObject {
     fn read(element: &Element) -> Self {
         read::radical_object(element)
@@ -7127,6 +8059,14 @@ impl crate::Write for RadicalObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::radical_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RadicalProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7143,6 +8083,17 @@ impl crate::Write for RadicalProperties {
     }
 }
 
+impl RightMargin {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RightMargin {
     fn read(element: &Element) -> Self {
         read::right_margin(element)
@@ -7156,6 +8107,17 @@ impl crate::Write for RightMargin {
     }
 }
 
+impl RowSpacingRule {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RowSpacingRule {
     fn read(element: &Element) -> Self {
         read::row_spacing_rule(element)
@@ -7166,6 +8128,14 @@ impl crate::Write for RowSpacingRule {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::row_spacing_rule(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Run {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7503,6 +8473,14 @@ impl TryFrom<RunContent> for super::wordprocessing::TextRunContent {
     }
 }
 
+impl RunProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RunProperties {
     fn read(element: &Element) -> Self {
         read::run_properties(element)
@@ -7542,6 +8520,17 @@ impl crate::Write for RunPropertiesContent {
     }
 }
 
+impl Script {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Script {
     fn read(element: &Element) -> Self {
         read::script(element)
@@ -7555,6 +8544,17 @@ impl crate::Write for Script {
     }
 }
 
+impl Shp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Shp {
     fn read(element: &Element) -> Self {
         read::shp(element)
@@ -7565,6 +8565,17 @@ impl crate::Write for Shp {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::shp(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SmallFraction {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7881,6 +8892,17 @@ impl StShp {
     }
 }
 
+impl Sty {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Sty {
     fn read(element: &Element) -> Self {
         read::sty(element)
@@ -7945,6 +8967,14 @@ impl Style {
     }
 }
 
+impl Sub {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Sub {
     fn read(element: &Element) -> Self {
         read::sub(element)
@@ -7955,6 +8985,17 @@ impl crate::Write for Sub {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sub(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SubHide {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7971,6 +9012,14 @@ impl crate::Write for SubHide {
     }
 }
 
+impl SubSuperscriptObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SubSuperscriptObject {
     fn read(element: &Element) -> Self {
         read::sub_superscript_object(element)
@@ -7981,6 +9030,14 @@ impl crate::Write for SubSuperscriptObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sub_superscript_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SubSuperscriptProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7997,6 +9054,14 @@ impl crate::Write for SubSuperscriptProperties {
     }
 }
 
+impl SubscriptObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SubscriptObject {
     fn read(element: &Element) -> Self {
         read::subscript_object(element)
@@ -8007,6 +9072,14 @@ impl crate::Write for SubscriptObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::subscript_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SubscriptProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -8023,6 +9096,14 @@ impl crate::Write for SubscriptProperties {
     }
 }
 
+impl Sup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Sup {
     fn read(element: &Element) -> Self {
         read::sup(element)
@@ -8033,6 +9114,17 @@ impl crate::Write for Sup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sup(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SupHide {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8049,6 +9141,14 @@ impl crate::Write for SupHide {
     }
 }
 
+impl SuperscriptObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SuperscriptObject {
     fn read(element: &Element) -> Self {
         read::superscript_object(element)
@@ -8062,6 +9162,14 @@ impl crate::Write for SuperscriptObject {
     }
 }
 
+impl SuperscriptProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SuperscriptProperties {
     fn read(element: &Element) -> Self {
         read::superscript_properties(element)
@@ -8072,6 +9180,18 @@ impl crate::Write for SuperscriptProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::superscript_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Text {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            space: self.space.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8134,6 +9254,17 @@ impl TopBottom {
     }
 }
 
+impl Transp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Transp {
     fn read(element: &Element) -> Self {
         read::transp(element)
@@ -8170,6 +9301,14 @@ impl UnsignedInteger {
     }
 }
 
+impl UpperLimitObject {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for UpperLimitObject {
     fn read(element: &Element) -> Self {
         read::upper_limit_object(element)
@@ -8180,6 +9319,14 @@ impl crate::Write for UpperLimitObject {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::upper_limit_object(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl UpperLimitProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -8196,6 +9343,17 @@ impl crate::Write for UpperLimitProperties {
     }
 }
 
+impl UseDisplayMathDefaults {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for UseDisplayMathDefaults {
     fn read(element: &Element) -> Self {
         read::use_display_math_defaults(element)
@@ -8206,6 +9364,17 @@ impl crate::Write for UseDisplayMathDefaults {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::use_display_math_defaults(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl VerticalJustification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8222,6 +9391,17 @@ impl crate::Write for VerticalJustification {
     }
 }
 
+impl WrapIndent {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for WrapIndent {
     fn read(element: &Element) -> Self {
         read::wrap_indent(element)
@@ -8232,6 +9412,17 @@ impl crate::Write for WrapIndent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::wrap_indent(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl WrapRight {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 

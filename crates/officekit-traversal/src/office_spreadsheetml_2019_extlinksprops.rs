@@ -231,8 +231,7 @@ impl crate::Transform for office_spreadsheetml_2019_extlinksprops::ExternalLinks
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto_refresh, &self.auto_refresh);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

@@ -922,6 +922,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Anchor {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Anchor {
     fn read(element: &Element) -> Self {
         read::anchor(element)
@@ -932,6 +940,14 @@ impl crate::Write for Anchor {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::anchor(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Assign {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -948,6 +964,14 @@ impl crate::Write for Assign {
     }
 }
 
+impl Attribution {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Attribution {
     fn read(element: &Element) -> Self {
         read::attribution(element)
@@ -958,6 +982,17 @@ impl crate::Write for Attribution {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::attribution(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Comment {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -974,6 +1009,14 @@ impl crate::Write for Comment {
     }
 }
 
+impl Create {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Create {
     fn read(element: &Element) -> Self {
         read::create(element)
@@ -984,6 +1027,14 @@ impl crate::Write for Create {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::create(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Delete {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1000,6 +1051,18 @@ impl crate::Write for Delete {
     }
 }
 
+impl Event {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            time: self.time.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Event {
     fn read(element: &Element) -> Self {
         read::event(element)
@@ -1010,6 +1073,14 @@ impl crate::Write for Event {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::event(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1026,6 +1097,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl History {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for History {
     fn read(element: &Element) -> Self {
         read::history(element)
@@ -1036,6 +1115,17 @@ impl crate::Write for History {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::history(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Priority {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1052,6 +1142,17 @@ impl crate::Write for Priority {
     }
 }
 
+impl Progress {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            percent_complete: self.percent_complete.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Progress {
     fn read(element: &Element) -> Self {
         read::progress(element)
@@ -1062,6 +1163,18 @@ impl crate::Write for Progress {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::progress(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Schedule {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            due_date: self.due_date.clone(),
+            start_date: self.start_date.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1078,6 +1191,17 @@ impl crate::Write for Schedule {
     }
 }
 
+impl SetTitle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SetTitle {
     fn read(element: &Element) -> Self {
         read::set_title(element)
@@ -1088,6 +1212,17 @@ impl crate::Write for SetTitle {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::set_title(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Task {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1146,6 +1281,14 @@ impl crate::Write for TaskHistoryEventContent {
     }
 }
 
+impl Tasks {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Tasks {
     fn read(element: &Element) -> Self {
         read::tasks(element)
@@ -1156,6 +1299,14 @@ impl crate::Write for Tasks {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tasks(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Unassign {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1172,6 +1323,14 @@ impl crate::Write for Unassign {
     }
 }
 
+impl UnassignAll {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for UnassignAll {
     fn read(element: &Element) -> Self {
         read::unassign_all(element)
@@ -1185,6 +1344,14 @@ impl crate::Write for UnassignAll {
     }
 }
 
+impl Undelete {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Undelete {
     fn read(element: &Element) -> Self {
         read::undelete(element)
@@ -1195,6 +1362,17 @@ impl crate::Write for Undelete {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::undelete(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Undo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 

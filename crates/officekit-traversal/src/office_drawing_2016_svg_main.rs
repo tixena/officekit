@@ -231,9 +231,7 @@ impl crate::Transform for office_drawing_2016_svg_main::SvgBlip {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.embed, &self.embed);
-        Clone::clone_from(&mut node.link, &self.link);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

@@ -325,6 +325,21 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CNvPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CNvPr {
     fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
@@ -335,6 +350,17 @@ impl crate::Write for CNvPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RecolorImg {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 

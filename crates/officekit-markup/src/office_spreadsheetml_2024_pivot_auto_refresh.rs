@@ -278,6 +278,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AutoRefresh {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AutoRefresh {
     fn read(element: &Element) -> Self {
         read::auto_refresh(element)

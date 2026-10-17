@@ -3145,6 +3145,17 @@ impl AdjustTypeExt {
     }
 }
 
+impl AutoFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            r#ref: self.r#ref.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AutoFilter {
     fn read(element: &Element) -> Self {
         read::auto_filter(element)
@@ -3155,6 +3166,14 @@ impl crate::Write for AutoFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::auto_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Body {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3171,6 +3190,20 @@ impl crate::Write for Body {
     }
 }
 
+impl C {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            nop: self.nop.clone(),
+            rep: self.rep.clone(),
+            t: self.t.clone(),
+            tick: self.tick.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for C {
     fn read(element: &Element) -> Self {
         read::c(element)
@@ -3181,6 +3214,20 @@ impl crate::Write for C {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Ccse {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            r: self.r.clone(),
+            t: self.t.clone(),
+            w: self.w.clone(),
+            x: self.x.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3197,6 +3244,14 @@ impl crate::Write for Ccse {
     }
 }
 
+impl Comments {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Comments {
     fn read(element: &Element) -> Self {
         read::comments(element)
@@ -3210,6 +3265,29 @@ impl crate::Write for Comments {
     }
 }
 
+impl DataValidation {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allow_blank: self.allow_blank.clone(),
+            error: self.error.clone(),
+            error_style: self.error_style.clone(),
+            error_title: self.error_title.clone(),
+            ime_mode: self.ime_mode.clone(),
+            operator: self.operator.clone(),
+            prompt: self.prompt.clone(),
+            prompt_title: self.prompt_title.clone(),
+            show_drop_down: self.show_drop_down.clone(),
+            show_error_message: self.show_error_message.clone(),
+            show_input_message: self.show_input_message.clone(),
+            sqref: self.sqref.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DataValidation {
     fn read(element: &Element) -> Self {
         read::data_validation(element)
@@ -3220,6 +3298,14 @@ impl crate::Write for DataValidation {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::data_validation(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Dxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3280,6 +3366,14 @@ impl ExtFeatureType {
     /// `ValueError` when the text is no value of `ST_ExtFeatureType`; the text stays stored.
     pub fn value(&self) -> Result<ExtFeatureTypeMember, ValueError> {
         crate::member(ExtFeatureTypeMember::MEMBERS, &self.0, "ST_ExtFeatureType")
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3344,6 +3438,17 @@ impl ExtSubFeatureType {
             &self.0,
             "ST_ExtSubFeatureType",
         )
+    }
+}
+
+impl F {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3556,6 +3661,17 @@ impl FillTypeExt {
     }
 }
 
+impl Formula {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Formula {
     fn read(element: &Element) -> Self {
         read::formula(element)
@@ -3566,6 +3682,17 @@ impl crate::Write for Formula {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::formula(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl FreezePanes {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            sheet_view_uid: self.sheet_view_uid.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3582,6 +3709,14 @@ impl crate::Write for FreezePanes {
     }
 }
 
+impl Future {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Future {
     fn read(element: &Element) -> Self {
         read::future(element)
@@ -3592,6 +3727,20 @@ impl crate::Write for Future {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::future(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HdrRevExHeader {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            max_rev: self.max_rev.clone(),
+            min_rev: self.min_rev.clone(),
+            time: self.time.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3608,6 +3757,21 @@ impl crate::Write for HdrRevExHeader {
     }
 }
 
+impl HdrStateBasedHeader {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            eft: self.eft.clone(),
+            eftx: self.eftx.clone(),
+            seft: self.seft.clone(),
+            seftx: self.seftx.clone(),
+            uid: self.uid.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for HdrStateBasedHeader {
     fn read(element: &Element) -> Self {
         read::hdr_state_based_header(element)
@@ -3618,6 +3782,17 @@ impl crate::Write for HdrStateBasedHeader {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::hdr_state_based_header(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HideUnhideSheet {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            hide: self.hide.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3634,6 +3809,21 @@ impl crate::Write for HideUnhideSheet {
     }
 }
 
+impl Hyperlink {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            display: self.display.clone(),
+            id: self.id.clone(),
+            location: self.location.clone(),
+            r#ref: self.r#ref.clone(),
+            tooltip: self.tooltip.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Hyperlink {
     fn read(element: &Element) -> Self {
         read::hyperlink(element)
@@ -3644,6 +3834,14 @@ impl crate::Write for Hyperlink {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::hyperlink(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Is {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3660,6 +3858,17 @@ impl crate::Write for Is {
     }
 }
 
+impl Link {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Link {
     fn read(element: &Element) -> Self {
         read::link(element)
@@ -3670,6 +3879,30 @@ impl crate::Write for Link {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::link(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl OartAnchor {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ajt: self.ajt.clone(),
+            ajtx: self.ajtx.clone(),
+            cx: self.cx.clone(),
+            cy: self.cy.clone(),
+            from_col_off: self.from_col_off.clone(),
+            from_row_off: self.from_row_off.clone(),
+            home_ref: self.home_ref.clone(),
+            n: self.n.clone(),
+            oat: self.oat.clone(),
+            r: self.r.clone(),
+            to_col_off: self.to_col_off.clone(),
+            to_row_off: self.to_row_off.clone(),
+            x: self.x.clone(),
+            y: self.y.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3736,6 +3969,14 @@ impl OartAnchorType {
     }
 }
 
+impl ObjectState {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ObjectState {
     fn read(element: &Element) -> Self {
         read::object_state(element)
@@ -3746,6 +3987,18 @@ impl crate::Write for ObjectState {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::object_state(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Outline {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            is_collapsed: self.is_collapsed.clone(),
+            level: self.level.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3762,6 +4015,17 @@ impl crate::Write for Outline {
     }
 }
 
+impl Outlines {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            is_row: self.is_row.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Outlines {
     fn read(element: &Element) -> Self {
         read::outlines(element)
@@ -3775,6 +4039,84 @@ impl crate::Write for Outlines {
     }
 }
 
+impl PivotTableDefinition {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            apply_alignment_formats: self.apply_alignment_formats.clone(),
+            apply_border_formats: self.apply_border_formats.clone(),
+            apply_font_formats: self.apply_font_formats.clone(),
+            apply_number_formats: self.apply_number_formats.clone(),
+            apply_pattern_formats: self.apply_pattern_formats.clone(),
+            apply_width_height_formats: self.apply_width_height_formats.clone(),
+            asterisk_totals: self.asterisk_totals.clone(),
+            auto_format_id: self.auto_format_id.clone(),
+            cache_id: self.cache_id.clone(),
+            chart_format: self.chart_format.clone(),
+            col_grand_totals: self.col_grand_totals.clone(),
+            col_header_caption: self.col_header_caption.clone(),
+            compact: self.compact.clone(),
+            compact_data: self.compact_data.clone(),
+            created_version: self.created_version.clone(),
+            custom_list_sort: self.custom_list_sort.clone(),
+            data_caption: self.data_caption.clone(),
+            data_on_rows: self.data_on_rows.clone(),
+            data_position: self.data_position.clone(),
+            disable_field_list: self.disable_field_list.clone(),
+            edit_data: self.edit_data.clone(),
+            enable_drill: self.enable_drill.clone(),
+            enable_field_properties: self.enable_field_properties.clone(),
+            enable_wizard: self.enable_wizard.clone(),
+            error_caption: self.error_caption.clone(),
+            field_list_sort_ascending: self.field_list_sort_ascending.clone(),
+            field_print_titles: self.field_print_titles.clone(),
+            grand_total_caption: self.grand_total_caption.clone(),
+            grid_drop_zones: self.grid_drop_zones.clone(),
+            immersive: self.immersive.clone(),
+            indent: self.indent.clone(),
+            item_print_titles: self.item_print_titles.clone(),
+            mdx_subqueries: self.mdx_subqueries.clone(),
+            merge_item: self.merge_item.clone(),
+            min_refreshable_version: self.min_refreshable_version.clone(),
+            missing_caption: self.missing_caption.clone(),
+            multiple_field_filters: self.multiple_field_filters.clone(),
+            name: self.name.clone(),
+            outline: self.outline.clone(),
+            outline_data: self.outline_data.clone(),
+            page_over_then_down: self.page_over_then_down.clone(),
+            page_style: self.page_style.clone(),
+            page_wrap: self.page_wrap.clone(),
+            pivot_table_style: self.pivot_table_style.clone(),
+            preserve_formatting: self.preserve_formatting.clone(),
+            print_drill: self.print_drill.clone(),
+            published: self.published.clone(),
+            row_grand_totals: self.row_grand_totals.clone(),
+            row_header_caption: self.row_header_caption.clone(),
+            show_calc_mbrs: self.show_calc_mbrs.clone(),
+            show_data_drop_down: self.show_data_drop_down.clone(),
+            show_data_tips: self.show_data_tips.clone(),
+            show_drill: self.show_drill.clone(),
+            show_drop_zones: self.show_drop_zones.clone(),
+            show_empty_col: self.show_empty_col.clone(),
+            show_empty_row: self.show_empty_row.clone(),
+            show_error: self.show_error.clone(),
+            show_headers: self.show_headers.clone(),
+            show_items: self.show_items.clone(),
+            show_member_property_tips: self.show_member_property_tips.clone(),
+            show_missing: self.show_missing.clone(),
+            show_multiple_label: self.show_multiple_label.clone(),
+            subtotal_hidden_items: self.subtotal_hidden_items.clone(),
+            tag: self.tag.clone(),
+            updated_version: self.updated_version.clone(),
+            use_auto_formatting: self.use_auto_formatting.clone(),
+            vacated_style: self.vacated_style.clone(),
+            visual_totals: self.visual_totals.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PivotTableDefinition {
     fn read(element: &Element) -> Self {
         read::pivot_table_definition(element)
@@ -3785,6 +4127,23 @@ impl crate::Write for PivotTableDefinition {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pivot_table_definition(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Ref {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ajt: self.ajt.clone(),
+            ajtx: self.ajtx.clone(),
+            home_ref: self.home_ref.clone(),
+            n: self.n.clone(),
+            r: self.r.clone(),
+            uid: self.uid.clone(),
+            uid_last: self.uid_last.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -3831,6 +4190,14 @@ impl crate::Write for ReferenceMapContent {
     }
 }
 
+impl Refmap {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Refmap {
     fn read(element: &Element) -> Self {
         read::refmap(element)
@@ -3844,6 +4211,20 @@ impl crate::Write for Refmap {
     }
 }
 
+impl RevHdrs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            doc_id: self.doc_id.clone(),
+            endpoint_id: self.endpoint_id.clone(),
+            max_rev: self.max_rev.clone(),
+            min_rev: self.min_rev.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RevHdrs {
     fn read(element: &Element) -> Self {
         read::rev_hdrs(element)
@@ -3854,6 +4235,14 @@ impl crate::Write for RevHdrs {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rev_hdrs(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RevStream {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -3997,6 +4386,18 @@ impl crate::Write for RevisionGroupContent {
             Self::Xrrftr(arm) => arm.write_into(writer),
             Self::Xrrm(arm) => arm.write_into(writer),
             Self::Xrrrc(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl RevisionPtr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            document_id: self.document_id.clone(),
+            rev_id_last_save: self.rev_id_last_save.clone(),
+            ..Self::default()
         }
     }
 }
@@ -4196,6 +4597,20 @@ impl RowColVisualOp {
     }
 }
 
+impl RowColVisualOps {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            action: self.action.clone(),
+            is_row: self.is_row.clone(),
+            size: self.size.clone(),
+            user_sized: self.user_sized.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RowColVisualOps {
     fn read(element: &Element) -> Self {
         read::row_col_visual_ops(element)
@@ -4311,6 +4726,21 @@ impl SheetOp {
     }
 }
 
+impl SheetUid {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ajt: self.ajt.clone(),
+            ajtx: self.ajtx.clone(),
+            home_ref: self.home_ref.clone(),
+            n: self.n.clone(),
+            uid: self.uid.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SheetUid {
     fn read(element: &Element) -> Self {
         read::sheet_uid(element)
@@ -4324,6 +4754,18 @@ impl crate::Write for SheetUid {
     }
 }
 
+impl ShowGridlinesHeadings {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            show_grid_lines: self.show_grid_lines.clone(),
+            show_row_col: self.show_row_col.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ShowGridlinesHeadings {
     fn read(element: &Element) -> Self {
         read::show_gridlines_headings(element)
@@ -4334,6 +4776,33 @@ impl crate::Write for ShowGridlinesHeadings {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::show_gridlines_headings(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SparklineGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            date_axis: self.date_axis.clone(),
+            display_empty_cells_as: self.display_empty_cells_as.clone(),
+            display_hidden: self.display_hidden.clone(),
+            display_x_axis: self.display_x_axis.clone(),
+            first: self.first.clone(),
+            high: self.high.clone(),
+            last: self.last.clone(),
+            line_weight: self.line_weight.clone(),
+            low: self.low.clone(),
+            manual_max: self.manual_max.clone(),
+            manual_min: self.manual_min.clone(),
+            markers: self.markers.clone(),
+            max_axis_type: self.max_axis_type.clone(),
+            min_axis_type: self.min_axis_type.clone(),
+            negative: self.negative.clone(),
+            right_to_left: self.right_to_left.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4439,6 +4908,20 @@ impl SubFeatureType {
     }
 }
 
+impl Test {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ajt: self.ajt.clone(),
+            ajtx: self.ajtx.clone(),
+            home_ref: self.home_ref.clone(),
+            n: self.n.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Test {
     fn read(element: &Element) -> Self {
         read::test(element)
@@ -4449,6 +4932,17 @@ impl crate::Write for Test {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::test(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl V {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4465,6 +4959,32 @@ impl crate::Write for V {
     }
 }
 
+impl XrrDefName {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            comment: self.comment.clone(),
+            ctx: self.ctx.clone(),
+            custom_menu: self.custom_menu.clone(),
+            custom_view: self.custom_view.clone(),
+            description: self.description.clone(),
+            function: self.function.clone(),
+            function_group_id: self.function_group_id.clone(),
+            help: self.help.clone(),
+            hidden: self.hidden.clone(),
+            name: self.name.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            shortcut_key: self.shortcut_key.clone(),
+            status_bar: self.status_bar.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for XrrDefName {
     fn read(element: &Element) -> Self {
         read::xrr_def_name(element)
@@ -4475,6 +4995,29 @@ impl crate::Write for XrrDefName {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrr_def_name(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl XrrList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            data: self.data.clone(),
+            fake: self.fake.clone(),
+            formatting: self.formatting.clone(),
+            headers: self.headers.clone(),
+            ins_del_headers: self.ins_del_headers.clone(),
+            r_id: self.r_id.clone(),
+            range_based: self.range_based.clone(),
+            r#ref: self.r#ref.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4491,6 +5034,23 @@ impl crate::Write for XrrList {
     }
 }
 
+impl XrrListExpR {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            list_guid: self.list_guid.clone(),
+            ref_added: self.ref_added.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for XrrListExpR {
     fn read(element: &Element) -> Self {
         read::xrr_list_exp_r(element)
@@ -4501,6 +5061,25 @@ impl crate::Write for XrrListExpR {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrr_list_exp_r(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl XrrSheet {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            id_new: self.id_new.clone(),
+            id_orig: self.id_orig.clone(),
+            name: self.name.clone(),
+            op: self.op.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4517,6 +5096,21 @@ impl crate::Write for XrrSheet {
     }
 }
 
+impl XrrTrim {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for XrrTrim {
     fn read(element: &Element) -> Self {
         read::xrr_trim(element)
@@ -4527,6 +5121,21 @@ impl crate::Write for XrrTrim {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrr_trim(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl XrrUspt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4543,6 +5152,26 @@ impl crate::Write for XrrUspt {
     }
 }
 
+impl Xrrc {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            list_uid: self.list_uid.clone(),
+            r: self.r.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            t: self.t.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            w: self.w.clone(),
+            x: self.x.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Xrrc {
     fn read(element: &Element) -> Self {
         read::xrrc(element)
@@ -4553,6 +5182,21 @@ impl crate::Write for Xrrc {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrrc(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Xrrco {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4569,6 +5213,21 @@ impl crate::Write for Xrrco {
     }
 }
 
+impl Xrrdo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Xrrdo {
     fn read(element: &Element) -> Self {
         read::xrrdo(element)
@@ -4579,6 +5238,35 @@ impl crate::Write for Xrrdo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrrdo(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Xrrf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            apply_alignment: self.apply_alignment.clone(),
+            apply_border: self.apply_border.clone(),
+            apply_fill: self.apply_fill.clone(),
+            apply_font: self.apply_font.clone(),
+            apply_number_format: self.apply_number_format.clone(),
+            apply_protection: self.apply_protection.clone(),
+            ctx: self.ctx.clone(),
+            f_blank_cell: self.f_blank_cell.clone(),
+            length: self.length.clone(),
+            num_fmt_id: self.num_fmt_id.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            sqref: self.sqref.clone(),
+            start: self.start.clone(),
+            style: self.style.clone(),
+            style_uid: self.style_uid.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            xf_dxf: self.xf_dxf.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4595,6 +5283,22 @@ impl crate::Write for Xrrf {
     }
 }
 
+impl Xrrftr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            sti: self.sti.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Xrrftr {
     fn read(element: &Element) -> Self {
         read::xrrftr(element)
@@ -4605,6 +5309,21 @@ impl crate::Write for Xrrftr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrrftr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Xrrg {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -4621,6 +5340,24 @@ impl crate::Write for Xrrg {
     }
 }
 
+impl Xrrm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            ctx: self.ctx.clone(),
+            dst: self.dst.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            src: self.src.clone(),
+            src_sh: self.src_sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Xrrm {
     fn read(element: &Element) -> Self {
         read::xrrm(element)
@@ -4634,6 +5371,24 @@ impl crate::Write for Xrrm {
     }
 }
 
+impl Xrrrc {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            action: self.action.clone(),
+            ctx: self.ctx.clone(),
+            eol: self.eol.clone(),
+            r#ref: self.r#ref.clone(),
+            rev: self.rev.clone(),
+            sh: self.sh.clone(),
+            uid: self.uid.clone(),
+            uidp: self.uidp.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Xrrrc {
     fn read(element: &Element) -> Self {
         read::xrrrc(element)
@@ -4644,6 +5399,14 @@ impl crate::Write for Xrrrc {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::xrrrc(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Xrrtest {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

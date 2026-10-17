@@ -231,11 +231,7 @@ impl crate::Transform for office_spreadsheetml_2014_11_main::CalculatedTimeColum
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.column_name, &self.column_name);
-        Clone::clone_from(&mut node.column_id, &self.column_id);
-        Clone::clone_from(&mut node.content_type, &self.content_type);
-        Clone::clone_from(&mut node.is_selected, &self.is_selected);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -313,11 +309,8 @@ impl crate::Transform for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.table_name, &self.table_name);
-        Clone::clone_from(&mut node.column_name, &self.column_name);
-        Clone::clone_from(&mut node.column_id, &self.column_id);
         node.calculated_time_column =
             crate::transform_child(&self.calculated_time_column, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -399,7 +392,7 @@ impl crate::Transform for office_spreadsheetml_2014_11_main::ModelTimeGroupings 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.model_time_grouping =
             crate::transform_child(&self.model_time_grouping, ctx, &mut rebase);

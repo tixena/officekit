@@ -227,63 +227,8 @@ impl crate::Transform for vml::ArcSegment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.start_angle, &self.start_angle);
-        Clone::clone_from(&mut node.end_angle, &self.end_angle);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -395,65 +340,8 @@ impl crate::Transform for vml::BezierCurve {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.from, &self.from);
-        Clone::clone_from(&mut node.control1, &self.control1);
-        Clone::clone_from(&mut node.control2, &self.control2);
-        Clone::clone_from(&mut node.to, &self.to);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -567,15 +455,8 @@ impl crate::Transform for vml::DocumentBackground {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.targetscreensize, &self.targetscreensize);
         node.shape_fill_properties =
             crate::transform_child(&self.shape_fill_properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -645,31 +526,7 @@ impl crate::Transform for vml::ImageData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.cropleft, &self.cropleft);
-        Clone::clone_from(&mut node.croptop, &self.croptop);
-        Clone::clone_from(&mut node.cropright, &self.cropright);
-        Clone::clone_from(&mut node.cropbottom, &self.cropbottom);
-        Clone::clone_from(&mut node.gain, &self.gain);
-        Clone::clone_from(&mut node.blacklevel, &self.blacklevel);
-        Clone::clone_from(&mut node.gamma, &self.gamma);
-        Clone::clone_from(&mut node.grayscale, &self.grayscale);
-        Clone::clone_from(&mut node.bilevel, &self.bilevel);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.embosscolor, &self.embosscolor);
-        Clone::clone_from(&mut node.recolortarget, &self.recolortarget);
-        Clone::clone_from(&mut node.o_href, &self.o_href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.oleid, &self.oleid);
-        Clone::clone_from(&mut node.detectmouseclick, &self.detectmouseclick);
-        Clone::clone_from(&mut node.movie, &self.movie);
-        Clone::clone_from(&mut node.relid, &self.relid);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.pict, &self.pict);
-        Clone::clone_from(&mut node.r_href, &self.r_href);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -746,71 +603,8 @@ impl crate::Transform for vml::ImageFile {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.cropleft, &self.cropleft);
-        Clone::clone_from(&mut node.croptop, &self.croptop);
-        Clone::clone_from(&mut node.cropright, &self.cropright);
-        Clone::clone_from(&mut node.cropbottom, &self.cropbottom);
-        Clone::clone_from(&mut node.gain, &self.gain);
-        Clone::clone_from(&mut node.blacklevel, &self.blacklevel);
-        Clone::clone_from(&mut node.gamma, &self.gamma);
-        Clone::clone_from(&mut node.grayscale, &self.grayscale);
-        Clone::clone_from(&mut node.bilevel, &self.bilevel);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -930,63 +724,8 @@ impl crate::Transform for vml::Line {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.from, &self.from);
-        Clone::clone_from(&mut node.to, &self.to);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1098,37 +837,8 @@ impl crate::Transform for vml::LineStrokeSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.relid, &self.relid);
         node.text_box_left_stroke =
             crate::transform_child(&self.text_box_left_stroke, ctx, &mut rebase);
         node.text_box_top_stroke =
@@ -1236,62 +946,8 @@ impl crate::Transform for vml::MultiplePathLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.points, &self.points);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1502,61 +1158,8 @@ impl crate::Transform for vml::Oval {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1666,61 +1269,8 @@ impl crate::Transform for vml::Rectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1830,62 +1380,8 @@ impl crate::Transform for vml::RoundedRectangle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.arcsize, &self.arcsize);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1997,7 +1493,7 @@ impl crate::Transform for vml::SetOfFormulas {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.single_formula = crate::transform_child(&self.single_formula, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2055,7 +1551,7 @@ impl crate::Transform for vml::SetOfHandles {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.shape_handle = crate::transform_child(&self.shape_handle, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2113,18 +1609,7 @@ impl crate::Transform for vml::ShadowEffect {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.obscured, &self.obscured);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.offset, &self.offset);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.offset2, &self.offset2);
-        Clone::clone_from(&mut node.origin, &self.origin);
-        Clone::clone_from(&mut node.matrix, &self.matrix);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2188,66 +1673,8 @@ impl crate::Transform for vml::ShapeDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.adj, &self.adj);
-        Clone::clone_from(&mut node.path, &self.path);
-        Clone::clone_from(&mut node.gfxdata, &self.gfxdata);
-        Clone::clone_from(&mut node.equationxml, &self.equationxml);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2543,35 +1970,8 @@ impl crate::Transform for vml::ShapeFillProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.origin, &self.origin);
-        Clone::clone_from(&mut node.position, &self.position);
-        Clone::clone_from(&mut node.aspect, &self.aspect);
-        Clone::clone_from(&mut node.colors, &self.colors);
-        Clone::clone_from(&mut node.angle, &self.angle);
-        Clone::clone_from(&mut node.alignshape, &self.alignshape);
-        Clone::clone_from(&mut node.focus, &self.focus);
-        Clone::clone_from(&mut node.focussize, &self.focussize);
-        Clone::clone_from(&mut node.focusposition, &self.focusposition);
-        Clone::clone_from(&mut node.method, &self.method);
-        Clone::clone_from(&mut node.detectmouseclick, &self.detectmouseclick);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.opacity2, &self.opacity2);
-        Clone::clone_from(&mut node.recolor, &self.recolor);
-        Clone::clone_from(&mut node.rotate, &self.rotate);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.relid, &self.relid);
         node.shape_fill_extended_properties =
             crate::transform_child(&self.shape_fill_extended_properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2662,47 +2062,8 @@ impl crate::Transform for vml::ShapeGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.editas, &self.editas);
-        Clone::clone_from(&mut node.tableproperties, &self.tableproperties);
-        Clone::clone_from(&mut node.tablelimits, &self.tablelimits);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2889,16 +2250,7 @@ impl crate::Transform for vml::ShapeHandle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.position, &self.position);
-        Clone::clone_from(&mut node.polar, &self.polar);
-        Clone::clone_from(&mut node.map, &self.map);
-        Clone::clone_from(&mut node.invx, &self.invx);
-        Clone::clone_from(&mut node.invy, &self.invy);
-        Clone::clone_from(&mut node.switch, &self.switch);
-        Clone::clone_from(&mut node.xrange, &self.xrange);
-        Clone::clone_from(&mut node.yrange, &self.yrange);
-        Clone::clone_from(&mut node.radiusrange, &self.radiusrange);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2960,22 +2312,7 @@ impl crate::Transform for vml::ShapePath {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.limo, &self.limo);
-        Clone::clone_from(&mut node.textboxrect, &self.textboxrect);
-        Clone::clone_from(&mut node.fillok, &self.fillok);
-        Clone::clone_from(&mut node.strokeok, &self.strokeok);
-        Clone::clone_from(&mut node.shadowok, &self.shadowok);
-        Clone::clone_from(&mut node.arrowok, &self.arrowok);
-        Clone::clone_from(&mut node.gradientshapeok, &self.gradientshapeok);
-        Clone::clone_from(&mut node.textpathok, &self.textpathok);
-        Clone::clone_from(&mut node.insetpenok, &self.insetpenok);
-        Clone::clone_from(&mut node.connecttype, &self.connecttype);
-        Clone::clone_from(&mut node.connectlocs, &self.connectlocs);
-        Clone::clone_from(&mut node.connectangles, &self.connectangles);
-        Clone::clone_from(&mut node.extrusionok, &self.extrusionok);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3043,64 +2380,8 @@ impl crate::Transform for vml::ShapeTemplate {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.class, &self.class);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.alt, &self.alt);
-        Clone::clone_from(&mut node.coordsize, &self.coordsize);
-        Clone::clone_from(&mut node.coordorigin, &self.coordorigin);
-        Clone::clone_from(&mut node.wrapcoords, &self.wrapcoords);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.spid, &self.spid);
-        Clone::clone_from(&mut node.oned, &self.oned);
-        Clone::clone_from(&mut node.regroupid, &self.regroupid);
-        Clone::clone_from(&mut node.doubleclicknotify, &self.doubleclicknotify);
-        Clone::clone_from(&mut node.button, &self.button);
-        Clone::clone_from(&mut node.userhidden, &self.userhidden);
-        Clone::clone_from(&mut node.bullet, &self.bullet);
-        Clone::clone_from(&mut node.hr, &self.hr);
-        Clone::clone_from(&mut node.hrstd, &self.hrstd);
-        Clone::clone_from(&mut node.hrnoshade, &self.hrnoshade);
-        Clone::clone_from(&mut node.hrpct, &self.hrpct);
-        Clone::clone_from(&mut node.hralign, &self.hralign);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
-        Clone::clone_from(&mut node.allowoverlap, &self.allowoverlap);
-        Clone::clone_from(&mut node.userdrawn, &self.userdrawn);
-        Clone::clone_from(&mut node.bordertopcolor, &self.bordertopcolor);
-        Clone::clone_from(&mut node.borderleftcolor, &self.borderleftcolor);
-        Clone::clone_from(&mut node.borderbottomcolor, &self.borderbottomcolor);
-        Clone::clone_from(&mut node.borderrightcolor, &self.borderrightcolor);
-        Clone::clone_from(&mut node.dgmlayout, &self.dgmlayout);
-        Clone::clone_from(&mut node.dgmnodekind, &self.dgmnodekind);
-        Clone::clone_from(&mut node.dgmlayoutmru, &self.dgmlayoutmru);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
-        Clone::clone_from(&mut node.chromakey, &self.chromakey);
-        Clone::clone_from(&mut node.filled, &self.filled);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.stroked, &self.stroked);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.strokeweight, &self.strokeweight);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.spt, &self.spt);
-        Clone::clone_from(&mut node.connectortype, &self.connectortype);
-        Clone::clone_from(&mut node.bwmode, &self.bwmode);
-        Clone::clone_from(&mut node.bwpure, &self.bwpure);
-        Clone::clone_from(&mut node.bwnormal, &self.bwnormal);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
-        Clone::clone_from(&mut node.oleicon, &self.oleicon);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.preferrelative, &self.preferrelative);
-        Clone::clone_from(&mut node.cliptowrap, &self.cliptowrap);
-        Clone::clone_from(&mut node.clip, &self.clip);
-        Clone::clone_from(&mut node.adj, &self.adj);
-        Clone::clone_from(&mut node.path, &self.path);
-        Clone::clone_from(&mut node.master, &self.master);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.complex = crate::transform_child(&self.complex, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3216,8 +2497,7 @@ impl crate::Transform for vml::SingleFormula {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.eqn, &self.eqn);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3271,13 +2551,8 @@ impl crate::Transform for vml::TextBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.inset, &self.inset);
-        Clone::clone_from(&mut node.singleclick, &self.singleclick);
-        Clone::clone_from(&mut node.insetmode, &self.insetmode);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3412,15 +2687,7 @@ impl crate::Transform for vml::TextLayoutPath {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.fitshape, &self.fitshape);
-        Clone::clone_from(&mut node.fitpath, &self.fitpath);
-        Clone::clone_from(&mut node.trim, &self.trim);
-        Clone::clone_from(&mut node.xscale, &self.xscale);
-        Clone::clone_from(&mut node.string, &self.string);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

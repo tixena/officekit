@@ -231,13 +231,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_rich_data::RichInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.pivot_cache_guid, &self.pivot_cache_guid);
-        Clone::clone_from(
-            &mut node.pivot_ignore_invalid_cache,
-            &self.pivot_ignore_invalid_cache,
-        );
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

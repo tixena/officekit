@@ -402,6 +402,14 @@ impl CharacteristicRelationshipTypes {
     }
 }
 
+impl SetOfAdditionalCharacteristics {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SetOfAdditionalCharacteristics {
     fn read(element: &Element) -> Self {
         read::set_of_additional_characteristics(element)
@@ -412,6 +420,20 @@ impl crate::Write for SetOfAdditionalCharacteristics {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::set_of_additional_characteristics(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SingleCharacteristic {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            relation: self.relation.clone(),
+            val: self.val.clone(),
+            vocabulary: self.vocabulary.clone(),
+            ..Self::default()
+        }
     }
 }
 

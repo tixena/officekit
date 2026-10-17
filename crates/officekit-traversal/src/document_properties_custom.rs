@@ -231,7 +231,7 @@ impl crate::Transform for document_properties_custom::CustomFileProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_file_property =
             crate::transform_child(&self.custom_file_property, ctx, &mut rebase);
@@ -311,12 +311,8 @@ impl crate::Transform for document_properties_custom::CustomFileProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.fmtid, &self.fmtid);
-        Clone::clone_from(&mut node.pid, &self.pid);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.link_target, &self.link_target);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

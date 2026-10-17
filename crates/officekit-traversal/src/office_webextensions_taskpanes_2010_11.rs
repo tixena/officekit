@@ -231,7 +231,7 @@ impl crate::Transform for office_webextensions_taskpanes_2010_11::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -310,13 +310,8 @@ impl crate::Transform for office_webextensions_taskpanes_2010_11::Taskpane {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dockstate, &self.dockstate);
-        Clone::clone_from(&mut node.visibility, &self.visibility);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.row, &self.row);
-        Clone::clone_from(&mut node.locked, &self.locked);
         node.webextensionref = crate::transform_child(&self.webextensionref, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -402,7 +397,7 @@ impl crate::Transform for office_webextensions_taskpanes_2010_11::Taskpanes {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.taskpane = crate::transform_child(&self.taskpane, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -481,8 +476,7 @@ impl crate::Transform for office_webextensions_taskpanes_2010_11::Webextensionre
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

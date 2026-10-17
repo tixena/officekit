@@ -279,6 +279,19 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Oembed {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            media_type: self.media_type.clone(),
+            o_embed_url: self.o_embed_url.clone(),
+            pic_locks_auto_for_o_embed: self.pic_locks_auto_for_o_embed.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Oembed {
     fn read(element: &Element) -> Self {
         read::oembed(element)

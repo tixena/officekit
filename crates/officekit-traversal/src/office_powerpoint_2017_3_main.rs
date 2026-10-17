@@ -231,12 +231,7 @@ impl crate::Transform for office_powerpoint_2017_3_main::Track {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.lang, &self.lang);
-        Clone::clone_from(&mut node.embed, &self.embed);
-        Clone::clone_from(&mut node.link, &self.link);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -315,7 +310,7 @@ impl crate::Transform for office_powerpoint_2017_3_main::TrackLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.track = crate::transform_child(&self.track, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -394,9 +389,8 @@ impl crate::Transform for office_powerpoint_2017_3_main::TracksInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.display_loc, &self.display_loc);
         node.track_lst = crate::transform_child(&self.track_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node

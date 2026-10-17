@@ -279,6 +279,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl SvgBlip {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            embed: self.embed.clone(),
+            link: self.link.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SvgBlip {
     fn read(element: &Element) -> Self {
         read::svg_blip(element)

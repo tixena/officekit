@@ -669,6 +669,14 @@ pub struct Xfrm {
     pub unknown: crate::Unknown,
 }
 
+impl CNvFrPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CNvFrPr {
     fn read(element: &Element) -> Self {
         read::c_nv_fr_pr(element)
@@ -679,6 +687,14 @@ impl crate::Write for CNvFrPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_fr_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CNvGrpSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -695,6 +711,21 @@ impl crate::Write for CNvGrpSpPr {
     }
 }
 
+impl CNvPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            descr: self.descr.clone(),
+            hidden: self.hidden.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CNvPr {
     fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
@@ -705,6 +736,14 @@ impl crate::Write for CNvPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::c_nv_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -721,6 +760,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl GraphicFrame {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for GraphicFrame {
     fn read(element: &Element) -> Self {
         read::graphic_frame(element)
@@ -731,6 +778,14 @@ impl crate::Write for GraphicFrame {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::graphic_frame(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GrpSp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -747,6 +802,17 @@ impl crate::Write for GrpSp {
     }
 }
 
+impl GrpSpPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            bw_mode: self.bw_mode.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GrpSpPr {
     fn read(element: &Element) -> Self {
         read::grp_sp_pr(element)
@@ -757,6 +823,14 @@ impl crate::Write for GrpSpPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::grp_sp_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Wgp {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -799,6 +873,19 @@ impl crate::Write for WordprocessingGroupContent {
             Self::Other(node) => writer.other(node.clone()),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Wsp(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl Xfrm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            flip_h: self.flip_h.clone(),
+            flip_v: self.flip_v.clone(),
+            rot: self.rot.clone(),
+            ..Self::default()
         }
     }
 }

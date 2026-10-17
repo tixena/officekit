@@ -231,9 +231,7 @@ impl crate::Transform for office_spreadsheetml_2023_pivot2023_calculation::Aggre
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.aggregation_type, &self.aggregation_type);
-        Clone::clone_from(&mut node.source_field, &self.source_field);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -309,8 +307,7 @@ impl crate::Transform for office_spreadsheetml_2023_pivot2023_calculation::Featu
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.feature_name, &self.feature_name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -383,7 +380,7 @@ impl crate::Transform
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.subtotal_pivot_subtotal_type =
             crate::transform_child(&self.subtotal_pivot_subtotal_type, ctx, &mut rebase);
@@ -448,7 +445,7 @@ impl crate::Transform
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.subtotal_line_item =
             crate::transform_child(&self.subtotal_line_item, ctx, &mut rebase);
@@ -515,7 +512,7 @@ impl crate::Transform for office_spreadsheetml_2023_pivot2023_calculation::Pivot
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.subtotal_pivot_item_subtotal =
             crate::transform_child(&self.subtotal_pivot_item_subtotal, ctx, &mut rebase);
@@ -595,7 +592,7 @@ impl crate::Transform for office_spreadsheetml_2023_pivot2023_calculation::Subto
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -671,7 +668,7 @@ impl crate::Transform
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -742,8 +739,7 @@ impl crate::Transform
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.subtotal_type, &self.subtotal_type);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

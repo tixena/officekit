@@ -6774,6 +6774,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Backstage {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            on_hide: self.on_hide.clone(),
+            on_show: self.on_show.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Backstage {
     fn read(element: &Element) -> Self {
         read::backstage(element)
@@ -6896,6 +6908,14 @@ impl crate::Write for BackstageMenuGroupContent {
     }
 }
 
+impl BottomItems {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for BottomItems {
     fn read(element: &Element) -> Self {
         read::bottom_items(element)
@@ -6906,6 +6926,26 @@ impl crate::Write for BottomItems {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bottom_items(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BoxBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            box_style: self.box_style.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7027,6 +7067,37 @@ impl BoxStyle {
     }
 }
 
+impl ButtonBackstageFastCommandButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            is_definitive: self.is_definitive.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ButtonBackstageFastCommandButton {
     fn read(element: &Element) -> Self {
         read::button_backstage_fast_command_button(element)
@@ -7037,6 +7108,38 @@ impl crate::Write for ButtonBackstageFastCommandButton {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::button_backstage_fast_command_button(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ButtonBackstageGroupButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            is_definitive: self.is_definitive.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            style: self.style.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7053,6 +7156,34 @@ impl crate::Write for ButtonBackstageGroupButton {
     }
 }
 
+impl ButtonBackstageMenuButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            is_definitive: self.is_definitive.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ButtonBackstageMenuButton {
     fn read(element: &Element) -> Self {
         read::button_backstage_menu_button(element)
@@ -7063,6 +7194,36 @@ impl crate::Write for ButtonBackstageMenuButton {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::button_backstage_menu_button(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ButtonBackstageRegularButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            is_definitive: self.is_definitive.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7079,6 +7240,48 @@ impl crate::Write for ButtonBackstageRegularButton {
     }
 }
 
+impl ButtonButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ButtonButton {
     fn read(element: &Element) -> Self {
         read::button_button(element)
@@ -7092,6 +7295,46 @@ impl crate::Write for ButtonButton {
     }
 }
 
+impl ButtonButtonRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ButtonButtonRegular {
     fn read(element: &Element) -> Self {
         read::button_button_regular(element)
@@ -7102,6 +7345,25 @@ impl crate::Write for ButtonButtonRegular {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::button_button_regular(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ButtonGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7162,6 +7424,44 @@ impl crate::Write for ButtonGroupContent {
     }
 }
 
+impl ButtonVisibleButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ButtonVisibleButton {
     fn read(element: &Element) -> Self {
         read::button_visible_button(element)
@@ -7172,6 +7472,28 @@ impl crate::Write for ButtonVisibleButton {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::button_visible_button(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CategoryTaskFormGroupCategory {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7188,6 +7510,28 @@ impl crate::Write for CategoryTaskFormGroupCategory {
     }
 }
 
+impl CategoryTaskGroupCategory {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CategoryTaskGroupCategory {
     fn read(element: &Element) -> Self {
         read::category_task_group_category(element)
@@ -7198,6 +7542,36 @@ impl crate::Write for CategoryTaskGroupCategory {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::category_task_group_category(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CheckBoxBackstageCheckBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7214,6 +7588,31 @@ impl crate::Write for CheckBoxBackstageCheckBox {
     }
 }
 
+impl CheckBoxBackstageMenuCheckBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CheckBoxBackstageMenuCheckBox {
     fn read(element: &Element) -> Self {
         read::check_box_backstage_menu_check_box(element)
@@ -7224,6 +7623,40 @@ impl crate::Write for CheckBoxBackstageMenuCheckBox {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::check_box_backstage_menu_check_box(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CheckBoxCheckBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7240,6 +7673,35 @@ impl crate::Write for CheckBoxCheckBox {
     }
 }
 
+impl ComboBoxBackstageComboBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_text: self.get_text.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_change: self.on_change.clone(),
+            size_string: self.size_string.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ComboBoxBackstageComboBox {
     fn read(element: &Element) -> Self {
         read::combo_box_backstage_combo_box(element)
@@ -7250,6 +7712,55 @@ impl crate::Write for ComboBoxBackstageComboBox {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::combo_box_backstage_combo_box(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ComboBoxComboBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_image: self.get_item_image.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_item_screentip: self.get_item_screentip.clone(),
+            get_item_supertip: self.get_item_supertip.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_text: self.get_text.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            max_length: self.max_length.clone(),
+            on_change: self.on_change.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_item_image: self.show_item_image.clone(),
+            show_label: self.show_label.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7266,6 +7777,20 @@ impl crate::Write for ComboBoxComboBox {
     }
 }
 
+impl Command {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            id_mso: self.id_mso.clone(),
+            on_action: self.on_action.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Command {
     fn read(element: &Element) -> Self {
         read::command(element)
@@ -7279,6 +7804,14 @@ impl crate::Write for Command {
     }
 }
 
+impl Commands {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Commands {
     fn read(element: &Element) -> Self {
         read::commands(element)
@@ -7289,6 +7822,17 @@ impl crate::Write for Commands {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::commands(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ContextMenu {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id_mso: self.id_mso.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7353,6 +7897,14 @@ impl crate::Write for ContextMenuContent {
     }
 }
 
+impl ContextMenus {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ContextMenus {
     fn read(element: &Element) -> Self {
         read::context_menus(element)
@@ -7363,6 +7915,14 @@ impl crate::Write for ContextMenus {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::context_menus(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ContextualTabs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7379,6 +7939,46 @@ impl crate::Write for ContextualTabs {
     }
 }
 
+impl ControlControlClone {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ControlControlClone {
     fn read(element: &Element) -> Self {
         read::control_control_clone(element)
@@ -7389,6 +7989,46 @@ impl crate::Write for ControlControlClone {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::control_control_clone(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ControlControlCloneQat {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7405,6 +8045,42 @@ impl crate::Write for ControlControlCloneQat {
     }
 }
 
+impl ControlControlCloneRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ControlControlCloneRegular {
     fn read(element: &Element) -> Self {
         read::control_control_clone_regular(element)
@@ -7415,6 +8091,18 @@ impl crate::Write for ControlControlCloneRegular {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::control_control_clone_regular(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CustomUI {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            load_image: self.load_image.clone(),
+            on_load: self.on_load.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7431,6 +8119,14 @@ impl crate::Write for CustomUI {
     }
 }
 
+impl DialogBoxLauncher {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DialogBoxLauncher {
     fn read(element: &Element) -> Self {
         read::dialog_box_launcher(element)
@@ -7441,6 +8137,14 @@ impl crate::Write for DialogBoxLauncher {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::dialog_box_launcher(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DocumentControls {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -7457,6 +8161,39 @@ impl crate::Write for DocumentControls {
     }
 }
 
+impl DropDownBackstageDropDown {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_selected_item_index: self.get_selected_item_index.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DropDownBackstageDropDown {
     fn read(element: &Element) -> Self {
         read::drop_down_backstage_drop_down(element)
@@ -7467,6 +8204,55 @@ impl crate::Write for DropDownBackstageDropDown {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::drop_down_backstage_drop_down(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DropDownDropDownRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_image: self.get_item_image.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_item_screentip: self.get_item_screentip.clone(),
+            get_item_supertip: self.get_item_supertip.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_selected_item_id: self.get_selected_item_id.clone(),
+            get_selected_item_index: self.get_selected_item_index.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_item_image: self.show_item_image.clone(),
+            show_item_label: self.show_item_label.clone(),
+            show_label: self.show_label.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7483,6 +8269,49 @@ impl crate::Write for DropDownDropDownRegular {
     }
 }
 
+impl DynamicMenuDynamicMenu {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_content: self.get_content.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DynamicMenuDynamicMenu {
     fn read(element: &Element) -> Self {
         read::dynamic_menu_dynamic_menu(element)
@@ -7493,6 +8322,47 @@ impl crate::Write for DynamicMenuDynamicMenu {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::dynamic_menu_dynamic_menu(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DynamicMenuDynamicMenuRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_content: self.get_content.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7509,6 +8379,33 @@ impl crate::Write for DynamicMenuDynamicMenuRegular {
     }
 }
 
+impl EditBoxBackstageEditBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_text: self.get_text.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            max_length: self.max_length.clone(),
+            on_change: self.on_change.clone(),
+            size_string: self.size_string.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for EditBoxBackstageEditBox {
     fn read(element: &Element) -> Self {
         read::edit_box_backstage_edit_box(element)
@@ -7519,6 +8416,47 @@ impl crate::Write for EditBoxBackstageEditBox {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::edit_box_backstage_edit_box(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl EditBoxEditBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_text: self.get_text.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            max_length: self.max_length.clone(),
+            on_change: self.on_change.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7599,6 +8537,14 @@ impl Expand {
     }
 }
 
+impl FirstColumn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for FirstColumn {
     fn read(element: &Element) -> Self {
         read::first_column(element)
@@ -7612,6 +8558,67 @@ impl crate::Write for FirstColumn {
     }
 }
 
+impl GalleryGallery {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            columns: self.columns.clone(),
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_height: self.get_item_height.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_image: self.get_item_image.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_item_screentip: self.get_item_screentip.clone(),
+            get_item_supertip: self.get_item_supertip.clone(),
+            get_item_width: self.get_item_width.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_selected_item_id: self.get_selected_item_id.clone(),
+            get_selected_item_index: self.get_selected_item_index.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
+            item_height: self.item_height.clone(),
+            item_width: self.item_width.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            rows: self.rows.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_in_ribbon: self.show_in_ribbon.clone(),
+            show_item_image: self.show_item_image.clone(),
+            show_item_label: self.show_item_label.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GalleryGallery {
     fn read(element: &Element) -> Self {
         read::gallery_gallery(element)
@@ -7622,6 +8629,65 @@ impl crate::Write for GalleryGallery {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::gallery_gallery(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GalleryGalleryRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            columns: self.columns.clone(),
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_height: self.get_item_height.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_image: self.get_item_image.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_item_screentip: self.get_item_screentip.clone(),
+            get_item_supertip: self.get_item_supertip.clone(),
+            get_item_width: self.get_item_width.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_selected_item_id: self.get_selected_item_id.clone(),
+            get_selected_item_index: self.get_selected_item_index.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            invalidate_content_on_drop: self.invalidate_content_on_drop.clone(),
+            item_height: self.item_height.clone(),
+            item_width: self.item_width.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            rows: self.rows.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_in_ribbon: self.show_in_ribbon.clone(),
+            show_item_image: self.show_item_image.clone(),
+            show_item_label: self.show_item_label.clone(),
+            show_label: self.show_label.clone(),
+            size_string: self.size_string.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7691,6 +8757,34 @@ impl GalleryShowInRibbon {
     }
 }
 
+impl GroupBackstageGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_helper_text: self.get_helper_text.clone(),
+            get_label: self.get_label.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_style: self.get_style.clone(),
+            get_visible: self.get_visible.clone(),
+            helper_text: self.helper_text.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            label: self.label.clone(),
+            show_label: self.show_label.clone(),
+            style: self.style.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GroupBackstageGroup {
     fn read(element: &Element) -> Self {
         read::group_backstage_group(element)
@@ -7701,6 +8795,22 @@ impl crate::Write for GroupBackstageGroup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::group_backstage_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl GroupBox {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            expand: self.expand.clone(),
+            get_label: self.get_label.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7862,6 +8972,39 @@ impl crate::Write for GroupControlsContent {
     }
 }
 
+impl GroupGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            auto_scale: self.auto_scale.clone(),
+            center_vertically: self.center_vertically.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for GroupGroup {
     fn read(element: &Element) -> Self {
         read::group_group(element)
@@ -7872,6 +9015,39 @@ impl crate::Write for GroupGroup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::group_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Hyperlink {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_target: self.get_target.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            target: self.target.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7888,6 +9064,28 @@ impl crate::Write for Hyperlink {
     }
 }
 
+impl ImageControl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            alt_text: self.alt_text.clone(),
+            enabled: self.enabled.clone(),
+            get_alt_text: self.get_alt_text.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ImageControl {
     fn read(element: &Element) -> Self {
         read::image_control(element)
@@ -7901,6 +9099,14 @@ impl crate::Write for ImageControl {
     }
 }
 
+impl ItemBackstageItem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ItemBackstageItem {
     fn read(element: &Element) -> Self {
         read::item_backstage_item(element)
@@ -7911,6 +9117,22 @@ impl crate::Write for ItemBackstageItem {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::item_backstage_item(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ItemItem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -7976,6 +9198,28 @@ impl ItemSize {
     }
 }
 
+impl LabelControlBackstageLabelControl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            label: self.label.clone(),
+            no_wrap: self.no_wrap.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LabelControlBackstageLabelControl {
     fn read(element: &Element) -> Self {
         read::label_control_backstage_label_control(element)
@@ -7986,6 +9230,36 @@ impl crate::Write for LabelControlBackstageLabelControl {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::label_control_backstage_label_control(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LabelControlLabelControl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8055,6 +9329,22 @@ impl LayoutChildren {
     }
 }
 
+impl LayoutContainer {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align: self.align.clone(),
+            expand: self.expand.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            layout_children: self.layout_children.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for LayoutContainer {
     fn read(element: &Element) -> Self {
         read::layout_container(element)
@@ -8068,6 +9358,34 @@ impl crate::Write for LayoutContainer {
     }
 }
 
+impl MenuBackstagePrimaryMenu {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MenuBackstagePrimaryMenu {
     fn read(element: &Element) -> Self {
         read::menu_backstage_primary_menu(element)
@@ -8078,6 +9396,32 @@ impl crate::Write for MenuBackstagePrimaryMenu {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::menu_backstage_primary_menu(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MenuBackstageSubMenu {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8142,6 +9486,22 @@ impl crate::Write for MenuContent {
     }
 }
 
+impl MenuGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_label: self.get_label.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            item_size: self.item_size.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MenuGroup {
     fn read(element: &Element) -> Self {
         read::menu_group(element)
@@ -8152,6 +9512,48 @@ impl crate::Write for MenuGroup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::menu_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MenuMenu {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            item_size: self.item_size.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8168,6 +9570,46 @@ impl crate::Write for MenuMenu {
     }
 }
 
+impl MenuMenuRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            item_size: self.item_size.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MenuMenuRegular {
     fn read(element: &Element) -> Self {
         read::menu_menu_regular(element)
@@ -8178,6 +9620,19 @@ impl crate::Write for MenuMenuRegular {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::menu_menu_regular(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MenuMenuRoot {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_title: self.get_title.clone(),
+            item_size: self.item_size.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8194,6 +9649,46 @@ impl crate::Write for MenuMenuRoot {
     }
 }
 
+impl MenuMenuWithTitle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_title: self.get_title.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            item_size: self.item_size.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            title: self.title.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MenuMenuWithTitle {
     fn read(element: &Element) -> Self {
         read::menu_menu_with_title(element)
@@ -8207,6 +9702,25 @@ impl crate::Write for MenuMenuWithTitle {
     }
 }
 
+impl MenuSeparatorMenuSeparator {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_title: self.get_title.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            tag: self.tag.clone(),
+            title: self.title.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for MenuSeparatorMenuSeparator {
     fn read(element: &Element) -> Self {
         read::menu_separator_menu_separator(element)
@@ -8217,6 +9731,23 @@ impl crate::Write for MenuSeparatorMenuSeparator {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::menu_separator_menu_separator(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl MenuSeparatorMenuSeparatorNoTitle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8281,6 +9812,14 @@ impl crate::Write for MenuWithTitleContent {
     }
 }
 
+impl PrimaryItem {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PrimaryItem {
     fn read(element: &Element) -> Self {
         read::primary_item(element)
@@ -8324,6 +9863,14 @@ impl crate::Write for PrimaryItemContent {
     }
 }
 
+impl Qat {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Qat {
     fn read(element: &Element) -> Self {
         read::qat(element)
@@ -8363,6 +9910,14 @@ impl crate::Write for QuickAccessToolbarItemsContent {
     }
 }
 
+impl RadioButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for RadioButton {
     fn read(element: &Element) -> Self {
         read::radio_button(element)
@@ -8376,6 +9931,34 @@ impl crate::Write for RadioButton {
     }
 }
 
+impl RadioGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            align_label: self.align_label.clone(),
+            enabled: self.enabled.clone(),
+            expand: self.expand.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_item_count: self.get_item_count.clone(),
+            get_item_id: self.get_item_id.clone(),
+            get_item_label: self.get_item_label.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_selected_item_index: self.get_selected_item_index.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RadioGroup {
     fn read(element: &Element) -> Self {
         read::radio_group(element)
@@ -8386,6 +9969,17 @@ impl crate::Write for RadioGroup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::radio_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Ribbon {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            start_from_scratch: self.start_from_scratch.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8428,6 +10022,14 @@ impl crate::Write for RibbonContent {
     }
 }
 
+impl SecondColumn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SecondColumn {
     fn read(element: &Element) -> Self {
         read::second_column(element)
@@ -8441,6 +10043,25 @@ impl crate::Write for SecondColumn {
     }
 }
 
+impl Separator {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Separator {
     fn read(element: &Element) -> Self {
         read::separator(element)
@@ -8451,6 +10072,14 @@ impl crate::Write for Separator {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::separator(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SharedControls {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -8566,6 +10195,34 @@ impl crate::Write for SplitButtonContent {
     }
 }
 
+impl SplitButtonSplitButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SplitButtonSplitButton {
     fn read(element: &Element) -> Self {
         read::split_button_split_button(element)
@@ -8579,6 +10236,32 @@ impl crate::Write for SplitButtonSplitButton {
     }
 }
 
+impl SplitButtonSplitButtonRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            show_label: self.show_label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SplitButtonSplitButtonRegular {
     fn read(element: &Element) -> Self {
         read::split_button_split_button_regular(element)
@@ -8589,6 +10272,32 @@ impl crate::Write for SplitButtonSplitButtonRegular {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::split_button_split_button_regular(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SplitButtonSplitButtonWithTitle {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            enabled: self.enabled.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            show_label: self.show_label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8709,6 +10418,39 @@ impl Style2 {
     }
 }
 
+impl TabBackstageTab {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            column_width_percent: self.column_width_percent.clone(),
+            enabled: self.enabled.clone(),
+            first_column_max_width: self.first_column_max_width.clone(),
+            first_column_min_width: self.first_column_min_width.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_title: self.get_title.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            second_column_max_width: self.second_column_max_width.clone(),
+            second_column_min_width: self.second_column_min_width.clone(),
+            tag: self.tag.clone(),
+            title: self.title.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TabBackstageTab {
     fn read(element: &Element) -> Self {
         read::tab_backstage_tab(element)
@@ -8719,6 +10461,19 @@ impl crate::Write for TabBackstageTab {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tab_backstage_tab(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TabSet {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_visible: self.get_visible.clone(),
+            id_mso: self.id_mso.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8735,6 +10490,30 @@ impl crate::Write for TabSet {
     }
 }
 
+impl TabTab {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TabTab {
     fn read(element: &Element) -> Self {
         read::tab_tab(element)
@@ -8745,6 +10524,14 @@ impl crate::Write for TabTab {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::tab_tab(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Tabs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -8761,6 +10548,29 @@ impl crate::Write for Tabs {
     }
 }
 
+impl TaskFormGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowed_task_sizes: self.allowed_task_sizes.clone(),
+            get_helper_text: self.get_helper_text.clone(),
+            get_label: self.get_label.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_visible: self.get_visible.clone(),
+            helper_text: self.helper_text.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            label: self.label.clone(),
+            show_label: self.show_label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TaskFormGroup {
     fn read(element: &Element) -> Self {
         read::task_form_group(element)
@@ -8771,6 +10581,33 @@ impl crate::Write for TaskFormGroup {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::task_form_group(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TaskGroup {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            allowed_task_sizes: self.allowed_task_sizes.clone(),
+            get_helper_text: self.get_helper_text.clone(),
+            get_label: self.get_label.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_visible: self.get_visible.clone(),
+            helper_text: self.helper_text.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            label: self.label.clone(),
+            show_label: self.show_label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8852,6 +10689,37 @@ impl TaskSizes {
     }
 }
 
+impl TaskTaskFormGroupTask {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for TaskTaskFormGroupTask {
     fn read(element: &Element) -> Self {
         read::task_task_form_group_task(element)
@@ -8862,6 +10730,39 @@ impl crate::Write for TaskTaskFormGroupTask {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::task_task_form_group_task(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TaskTaskGroupTask {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            is_definitive: self.is_definitive.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8878,6 +10779,34 @@ impl crate::Write for TaskTaskGroupTask {
     }
 }
 
+impl ToggleButtonBackstageMenuToggleButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ToggleButtonBackstageMenuToggleButton {
     fn read(element: &Element) -> Self {
         read::toggle_button_backstage_menu_toggle_button(element)
@@ -8888,6 +10817,49 @@ impl crate::Write for ToggleButtonBackstageMenuToggleButton {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::toggle_button_backstage_menu_toggle_button(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ToggleButtonToggleButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_size: self.get_size.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            size: self.size.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -8904,6 +10876,47 @@ impl crate::Write for ToggleButtonToggleButton {
     }
 }
 
+impl ToggleButtonToggleButtonRegular {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            get_visible: self.get_visible.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            visible: self.visible.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ToggleButtonToggleButtonRegular {
     fn read(element: &Element) -> Self {
         read::toggle_button_toggle_button_regular(element)
@@ -8917,6 +10930,45 @@ impl crate::Write for ToggleButtonToggleButtonRegular {
     }
 }
 
+impl ToggleButtonVisibleToggleButton {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            description: self.description.clone(),
+            enabled: self.enabled.clone(),
+            get_description: self.get_description.clone(),
+            get_enabled: self.get_enabled.clone(),
+            get_image: self.get_image.clone(),
+            get_keytip: self.get_keytip.clone(),
+            get_label: self.get_label.clone(),
+            get_pressed: self.get_pressed.clone(),
+            get_screentip: self.get_screentip.clone(),
+            get_show_image: self.get_show_image.clone(),
+            get_show_label: self.get_show_label.clone(),
+            get_supertip: self.get_supertip.clone(),
+            id: self.id.clone(),
+            id_mso: self.id_mso.clone(),
+            id_q: self.id_q.clone(),
+            image: self.image.clone(),
+            image_mso: self.image_mso.clone(),
+            insert_after_mso: self.insert_after_mso.clone(),
+            insert_after_q: self.insert_after_q.clone(),
+            insert_before_mso: self.insert_before_mso.clone(),
+            insert_before_q: self.insert_before_q.clone(),
+            keytip: self.keytip.clone(),
+            label: self.label.clone(),
+            on_action: self.on_action.clone(),
+            screentip: self.screentip.clone(),
+            show_image: self.show_image.clone(),
+            show_label: self.show_label.clone(),
+            supertip: self.supertip.clone(),
+            tag: self.tag.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ToggleButtonVisibleToggleButton {
     fn read(element: &Element) -> Self {
         read::toggle_button_visible_toggle_button(element)
@@ -8927,6 +10979,14 @@ impl crate::Write for ToggleButtonVisibleToggleButton {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::toggle_button_visible_toggle_button(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TopItems {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

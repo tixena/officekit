@@ -231,10 +231,7 @@ impl crate::Transform for office_word_2012_wordprocessing_drawing::WebVideoPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.embedded_html, &self.embedded_html);
-        Clone::clone_from(&mut node.h, &self.h);
-        Clone::clone_from(&mut node.w, &self.w);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

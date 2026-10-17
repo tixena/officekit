@@ -231,21 +231,7 @@ impl crate::Transform for vml_office_drawing::Callout {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.gap, &self.gap);
-        Clone::clone_from(&mut node.angle, &self.angle);
-        Clone::clone_from(&mut node.dropauto, &self.dropauto);
-        Clone::clone_from(&mut node.drop, &self.drop);
-        Clone::clone_from(&mut node.distance, &self.distance);
-        Clone::clone_from(&mut node.lengthspecified, &self.lengthspecified);
-        Clone::clone_from(&mut node.length, &self.length);
-        Clone::clone_from(&mut node.accentbar, &self.accentbar);
-        Clone::clone_from(&mut node.textborder, &self.textborder);
-        Clone::clone_from(&mut node.minusx, &self.minusx);
-        Clone::clone_from(&mut node.minusy, &self.minusy);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -330,8 +316,7 @@ impl crate::Transform for vml_office_drawing::Complex {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -403,11 +388,7 @@ impl crate::Transform for vml_office_drawing::DiagramRelationship {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.idsrc, &self.idsrc);
-        Clone::clone_from(&mut node.iddest, &self.iddest);
-        Clone::clone_from(&mut node.idcntr, &self.idcntr);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -485,9 +466,8 @@ impl crate::Transform for vml_office_drawing::DiagramRelationshipTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
         node.diagram_relationship =
             crate::transform_child(&self.diagram_relationship, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -567,23 +547,7 @@ impl crate::Transform for vml_office_drawing::DigitalSignatureLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.issignatureline, &self.issignatureline);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.provid, &self.provid);
-        Clone::clone_from(
-            &mut node.signinginstructionsset,
-            &self.signinginstructionsset,
-        );
-        Clone::clone_from(&mut node.allowcomments, &self.allowcomments);
-        Clone::clone_from(&mut node.showsigndate, &self.showsigndate);
-        Clone::clone_from(&mut node.suggestedsigner, &self.suggestedsigner);
-        Clone::clone_from(&mut node.suggestedsigner2, &self.suggestedsigner2);
-        Clone::clone_from(&mut node.suggestedsigneremail, &self.suggestedsigneremail);
-        Clone::clone_from(&mut node.signinginstructions, &self.signinginstructions);
-        Clone::clone_from(&mut node.addlxml, &self.addlxml);
-        Clone::clone_from(&mut node.sigprovurl, &self.sigprovurl);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -670,15 +634,8 @@ impl crate::Transform for vml_office_drawing::EmbeddedOLEObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.prog_id, &self.prog_id);
-        Clone::clone_from(&mut node.shape_id, &self.shape_id);
-        Clone::clone_from(&mut node.draw_aspect, &self.draw_aspect);
-        Clone::clone_from(&mut node.object_id, &self.object_id);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.update_mode, &self.update_mode);
         node.embedded_object_alternate_image_request = crate::transform_child(
             &self.embedded_object_alternate_image_request,
             ctx,
@@ -775,8 +732,7 @@ impl crate::Transform for vml_office_drawing::EmbeddedObjectAlternateImageReques
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -851,8 +807,7 @@ impl crate::Transform for vml_office_drawing::EmbeddedObjectCannotBeRefreshed {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -927,40 +882,7 @@ impl crate::Transform for vml_office_drawing::Extrusion {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.render, &self.render);
-        Clone::clone_from(&mut node.viewpointorigin, &self.viewpointorigin);
-        Clone::clone_from(&mut node.viewpoint, &self.viewpoint);
-        Clone::clone_from(&mut node.plane, &self.plane);
-        Clone::clone_from(&mut node.skewangle, &self.skewangle);
-        Clone::clone_from(&mut node.skewamt, &self.skewamt);
-        Clone::clone_from(&mut node.foredepth, &self.foredepth);
-        Clone::clone_from(&mut node.backdepth, &self.backdepth);
-        Clone::clone_from(&mut node.orientation, &self.orientation);
-        Clone::clone_from(&mut node.orientationangle, &self.orientationangle);
-        Clone::clone_from(&mut node.lockrotationcenter, &self.lockrotationcenter);
-        Clone::clone_from(&mut node.autorotationcenter, &self.autorotationcenter);
-        Clone::clone_from(&mut node.rotationcenter, &self.rotationcenter);
-        Clone::clone_from(&mut node.rotationangle, &self.rotationangle);
-        Clone::clone_from(&mut node.colormode, &self.colormode);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.shininess, &self.shininess);
-        Clone::clone_from(&mut node.specularity, &self.specularity);
-        Clone::clone_from(&mut node.diffusity, &self.diffusity);
-        Clone::clone_from(&mut node.metal, &self.metal);
-        Clone::clone_from(&mut node.edge, &self.edge);
-        Clone::clone_from(&mut node.facet, &self.facet);
-        Clone::clone_from(&mut node.lightface, &self.lightface);
-        Clone::clone_from(&mut node.brightness, &self.brightness);
-        Clone::clone_from(&mut node.lightposition, &self.lightposition);
-        Clone::clone_from(&mut node.lightlevel, &self.lightlevel);
-        Clone::clone_from(&mut node.lightharsh, &self.lightharsh);
-        Clone::clone_from(&mut node.lightposition2, &self.lightposition2);
-        Clone::clone_from(&mut node.lightlevel2, &self.lightlevel2);
-        Clone::clone_from(&mut node.lightharsh2, &self.lightharsh2);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1064,10 +986,7 @@ impl crate::Transform for vml_office_drawing::Ink {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.annotation, &self.annotation);
-        Clone::clone_from(&mut node.content_type, &self.content_type);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1140,9 +1059,7 @@ impl crate::Transform for vml_office_drawing::MostRecentlyUsedColors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.colors, &self.colors);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1218,16 +1135,8 @@ impl crate::Transform for vml_office_drawing::NewShapeDefaults {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.spidmax, &self.spidmax);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.fill, &self.fill);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.stroke, &self.stroke);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.allowincell, &self.allowincell);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1487,9 +1396,7 @@ impl crate::Transform for vml_office_drawing::RegroupEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.new, &self.new);
-        Clone::clone_from(&mut node.old, &self.old);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1562,12 +1469,8 @@ impl crate::Transform for vml_office_drawing::Rule {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.how, &self.how);
-        Clone::clone_from(&mut node.idref, &self.idref);
         node.shape_reference = crate::transform_child(&self.shape_reference, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1645,9 +1548,8 @@ impl crate::Transform for vml_office_drawing::RuleSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
         node.rule = crate::transform_child(&self.rule, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1723,8 +1625,7 @@ impl crate::Transform for vml_office_drawing::ShapeClippingPath {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1799,9 +1700,7 @@ impl crate::Transform for vml_office_drawing::ShapeFillExtendedProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1877,9 +1776,8 @@ impl crate::Transform for vml_office_drawing::ShapeGroupingHistory {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
         node.regroup_entry = crate::transform_child(&self.regroup_entry, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1958,9 +1856,7 @@ impl crate::Transform for vml_office_drawing::ShapeIDMap {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.data, &self.data);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2033,9 +1929,8 @@ impl crate::Transform for vml_office_drawing::ShapeLayoutProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2239,19 +2134,7 @@ impl crate::Transform for vml_office_drawing::ShapeProtections {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.position, &self.position);
-        Clone::clone_from(&mut node.selection, &self.selection);
-        Clone::clone_from(&mut node.grouping, &self.grouping);
-        Clone::clone_from(&mut node.ungrouping, &self.ungrouping);
-        Clone::clone_from(&mut node.rotation, &self.rotation);
-        Clone::clone_from(&mut node.cropping, &self.cropping);
-        Clone::clone_from(&mut node.verticies, &self.verticies);
-        Clone::clone_from(&mut node.adjusthandles, &self.adjusthandles);
-        Clone::clone_from(&mut node.text, &self.text);
-        Clone::clone_from(&mut node.aspectratio, &self.aspectratio);
-        Clone::clone_from(&mut node.shapetype, &self.shapetype);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2337,11 +2220,7 @@ impl crate::Transform for vml_office_drawing::ShapeReference {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.start, &self.start);
-        Clone::clone_from(&mut node.end, &self.end);
-        Clone::clone_from(&mut node.idref, &self.idref);
-        Clone::clone_from(&mut node.connectloc, &self.connectloc);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2419,13 +2298,7 @@ impl crate::Transform for vml_office_drawing::SkewTransform {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.offset, &self.offset);
-        Clone::clone_from(&mut node.origin, &self.origin);
-        Clone::clone_from(&mut node.matrix, &self.matrix);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2505,9 +2378,8 @@ impl crate::Transform for vml_office_drawing::StorageForAlternateMathContent {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.content_type, &self.content_type);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2586,34 +2458,7 @@ impl crate::Transform for vml_office_drawing::TextBoxBottomStroke {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2714,34 +2559,7 @@ impl crate::Transform for vml_office_drawing::TextBoxInteriorStroke {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2842,34 +2660,7 @@ impl crate::Transform for vml_office_drawing::TextBoxLeftStroke {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2970,34 +2761,7 @@ impl crate::Transform for vml_office_drawing::TextBoxRightStroke {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3098,34 +2862,7 @@ impl crate::Transform for vml_office_drawing::TextBoxTopStroke {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.on, &self.on);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.color, &self.color);
-        Clone::clone_from(&mut node.color2, &self.color2);
-        Clone::clone_from(&mut node.opacity, &self.opacity);
-        Clone::clone_from(&mut node.linestyle, &self.linestyle);
-        Clone::clone_from(&mut node.miterlimit, &self.miterlimit);
-        Clone::clone_from(&mut node.joinstyle, &self.joinstyle);
-        Clone::clone_from(&mut node.endcap, &self.endcap);
-        Clone::clone_from(&mut node.dashstyle, &self.dashstyle);
-        Clone::clone_from(&mut node.insetpen, &self.insetpen);
-        Clone::clone_from(&mut node.filltype, &self.filltype);
-        Clone::clone_from(&mut node.src, &self.src);
-        Clone::clone_from(&mut node.imageaspect, &self.imageaspect);
-        Clone::clone_from(&mut node.imagesize, &self.imagesize);
-        Clone::clone_from(&mut node.imagealignshape, &self.imagealignshape);
-        Clone::clone_from(&mut node.startarrow, &self.startarrow);
-        Clone::clone_from(&mut node.startarrowwidth, &self.startarrowwidth);
-        Clone::clone_from(&mut node.startarrowlength, &self.startarrowlength);
-        Clone::clone_from(&mut node.endarrow, &self.endarrow);
-        Clone::clone_from(&mut node.endarrowwidth, &self.endarrowwidth);
-        Clone::clone_from(&mut node.endarrowlength, &self.endarrowlength);
-        Clone::clone_from(&mut node.href, &self.href);
-        Clone::clone_from(&mut node.althref, &self.althref);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.forcedash, &self.forcedash);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3226,12 +2963,7 @@ impl crate::Transform for vml_office_drawing::UIDefaultColors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.strokecolor, &self.strokecolor);
-        Clone::clone_from(&mut node.fillcolor, &self.fillcolor);
-        Clone::clone_from(&mut node.shadowcolor, &self.shadowcolor);
-        Clone::clone_from(&mut node.extrusioncolor, &self.extrusioncolor);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3310,18 +3042,8 @@ impl crate::Transform for vml_office_drawing::VMLDiagram {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ext, &self.ext);
-        Clone::clone_from(&mut node.dgmstyle, &self.dgmstyle);
-        Clone::clone_from(&mut node.autoformat, &self.autoformat);
-        Clone::clone_from(&mut node.reverse, &self.reverse);
-        Clone::clone_from(&mut node.autolayout, &self.autolayout);
-        Clone::clone_from(&mut node.dgmscalex, &self.dgmscalex);
-        Clone::clone_from(&mut node.dgmscaley, &self.dgmscaley);
-        Clone::clone_from(&mut node.dgmfontsize, &self.dgmfontsize);
-        Clone::clone_from(&mut node.constrainbounds, &self.constrainbounds);
-        Clone::clone_from(&mut node.dgmbasetextscale, &self.dgmbasetextscale);
         node.relationship_table =
             crate::transform_child(&self.relationship_table, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3407,8 +3129,7 @@ impl crate::Transform for vml_office_drawing::WordprocessingMLFieldSwitches {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

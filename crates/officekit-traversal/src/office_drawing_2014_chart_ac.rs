@@ -231,7 +231,7 @@ impl crate::Transform for office_drawing_2014_chart_ac::MultiLvlStrLit {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.point_count = crate::transform_child(&self.point_count, ctx, &mut rebase);
         node.level = crate::transform_child(&self.level, ctx, &mut rebase);

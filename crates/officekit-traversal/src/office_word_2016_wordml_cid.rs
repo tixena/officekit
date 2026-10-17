@@ -231,9 +231,7 @@ impl crate::Transform for office_word_2016_wordml_cid::CommentId {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.para_id, &self.para_id);
-        Clone::clone_from(&mut node.durable_id, &self.durable_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -309,7 +307,7 @@ impl crate::Transform for office_word_2016_wordml_cid::CommentsIds {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.comment_id = crate::transform_child(&self.comment_id, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

@@ -231,8 +231,7 @@ impl crate::Transform for office_drawing_2012_chart::AutoCat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,8 +306,7 @@ impl crate::Transform for office_drawing_2012_chart::Bubble3D {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -383,7 +381,7 @@ impl crate::Transform for office_drawing_2012_chart::Cat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -459,7 +457,7 @@ impl crate::Transform for office_drawing_2012_chart::CategoryFilterException {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.sp_pr = crate::transform_child(&self.sp_pr, ctx, &mut rebase);
@@ -557,7 +555,7 @@ impl crate::Transform for office_drawing_2012_chart::CategoryFilterExceptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.category_filter_exception =
             crate::transform_child(&self.category_filter_exception, ctx, &mut rebase);
@@ -637,7 +635,7 @@ impl crate::Transform for office_drawing_2012_chart::DLbl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
@@ -720,7 +718,7 @@ impl crate::Transform for office_drawing_2012_chart::DatalabelsRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.dlbl_range_cache = crate::transform_child(&self.dlbl_range_cache, ctx, &mut rebase);
@@ -802,7 +800,7 @@ impl crate::Transform for office_drawing_2012_chart::DlblFTEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.txfld_guid = crate::transform_child(&self.txfld_guid, ctx, &mut rebase);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
@@ -888,7 +886,7 @@ impl crate::Transform for office_drawing_2012_chart::DlblFieldTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.dlbl_ft_entry = crate::transform_child(&self.dlbl_ft_entry, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -967,7 +965,7 @@ impl crate::Transform for office_drawing_2012_chart::DlblFieldTableCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.point_count = crate::transform_child(&self.point_count, ctx, &mut rebase);
         node.string_point = crate::transform_child(&self.string_point, ctx, &mut rebase);
@@ -1053,7 +1051,7 @@ impl crate::Transform for office_drawing_2012_chart::DlblRangeCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.point_count = crate::transform_child(&self.point_count, ctx, &mut rebase);
         node.string_point = crate::transform_child(&self.string_point, ctx, &mut rebase);
@@ -1139,8 +1137,7 @@ impl crate::Transform for office_drawing_2012_chart::Explosion {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1215,8 +1212,7 @@ impl crate::Transform for office_drawing_2012_chart::F {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1288,7 +1284,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredAreaSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_area_ser = crate::transform_child(&self.ser_area_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1367,7 +1363,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredBarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_bar_ser = crate::transform_child(&self.ser_bar_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1446,7 +1442,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredBubbleSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_bubble_ser = crate::transform_child(&self.ser_bubble_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1525,7 +1521,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredCategoryTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cat = crate::transform_child(&self.cat, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1604,7 +1600,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredLineSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_line_ser = crate::transform_child(&self.ser_line_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1683,7 +1679,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredPieSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_pie_ser = crate::transform_child(&self.ser_pie_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1762,7 +1758,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredRadarSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_radar_ser = crate::transform_child(&self.ser_radar_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1841,7 +1837,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredScatterSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_scatter_ser = crate::transform_child(&self.ser_scatter_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1920,7 +1916,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredSeriesTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.tx = crate::transform_child(&self.tx, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1999,7 +1995,7 @@ impl crate::Transform for office_drawing_2012_chart::FilteredSurfaceSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ser_surface_ser = crate::transform_child(&self.ser_surface_ser, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2078,7 +2074,7 @@ impl crate::Transform for office_drawing_2012_chart::FormulaRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2157,7 +2153,7 @@ impl crate::Transform for office_drawing_2012_chart::FullRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2236,8 +2232,7 @@ impl crate::Transform for office_drawing_2012_chart::InvertIfNegative {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2312,7 +2307,7 @@ impl crate::Transform for office_drawing_2012_chart::Layout {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.manual = crate::transform_child(&self.manual, ctx, &mut rebase);
         node.chart_extensibility =
@@ -2392,7 +2387,7 @@ impl crate::Transform for office_drawing_2012_chart::LeaderLines {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.shape_properties = crate::transform_child(&self.shape_properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2471,7 +2466,7 @@ impl crate::Transform for office_drawing_2012_chart::LevelRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2550,7 +2545,7 @@ impl crate::Transform for office_drawing_2012_chart::Marker {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.symbol = crate::transform_child(&self.symbol, ctx, &mut rebase);
         node.size = crate::transform_child(&self.size, ctx, &mut rebase);
@@ -2636,9 +2631,7 @@ impl crate::Transform for office_drawing_2012_chart::NumFmt {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.format_code, &self.format_code);
-        Clone::clone_from(&mut node.source_linked, &self.source_linked);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2714,7 +2707,7 @@ impl crate::Transform for office_drawing_2012_chart::PivotSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivot_name = crate::transform_child(&self.pivot_name, ctx, &mut rebase);
         node.format_id = crate::transform_child(&self.format_id, ctx, &mut rebase);
@@ -2800,7 +2793,7 @@ impl crate::Transform for office_drawing_2012_chart::SerAreaSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -2914,7 +2907,7 @@ impl crate::Transform for office_drawing_2012_chart::SerBarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3035,7 +3028,7 @@ impl crate::Transform for office_drawing_2012_chart::SerBubbleSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3155,7 +3148,7 @@ impl crate::Transform for office_drawing_2012_chart::SerLineSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3272,7 +3265,7 @@ impl crate::Transform for office_drawing_2012_chart::SerPieSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3380,7 +3373,7 @@ impl crate::Transform for office_drawing_2012_chart::SerRadarSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3488,7 +3481,7 @@ impl crate::Transform for office_drawing_2012_chart::SerScatterSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3604,7 +3597,7 @@ impl crate::Transform for office_drawing_2012_chart::SerSurfaceSer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.index = crate::transform_child(&self.index, ctx, &mut rebase);
         node.order = crate::transform_child(&self.order, ctx, &mut rebase);
@@ -3703,8 +3696,7 @@ impl crate::Transform for office_drawing_2012_chart::ShowDataLabelsRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3779,8 +3771,7 @@ impl crate::Transform for office_drawing_2012_chart::ShowLeaderLines {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3855,9 +3846,8 @@ impl crate::Transform for office_drawing_2012_chart::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_transform2d = crate::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = crate::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -3957,8 +3947,7 @@ impl crate::Transform for office_drawing_2012_chart::Sqref {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4030,7 +4019,7 @@ impl crate::Transform for office_drawing_2012_chart::Tx {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4106,8 +4095,7 @@ impl crate::Transform for office_drawing_2012_chart::TxfldGUID {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4182,8 +4170,7 @@ impl crate::Transform for office_drawing_2012_chart::XForSave {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

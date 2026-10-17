@@ -231,7 +231,7 @@ impl crate::Transform for spreadsheet_drawing::AbsoluteAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.position = crate::transform_child(&self.position, ctx, &mut rebase);
         node.shape_extent = crate::transform_child(&self.shape_extent, ctx, &mut rebase);
@@ -319,9 +319,7 @@ impl crate::Transform for spreadsheet_drawing::ClientData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.f_locks_with_sheet, &self.f_locks_with_sheet);
-        Clone::clone_from(&mut node.f_prints_with_sheet, &self.f_prints_with_sheet);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -394,8 +392,7 @@ impl crate::Transform for spreadsheet_drawing::Col {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -466,8 +463,7 @@ impl crate::Transform for spreadsheet_drawing::ColumnOffset {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -542,9 +538,8 @@ impl crate::Transform for spreadsheet_drawing::ConnectionNonVisualShapePropertie
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.tx_box, &self.tx_box);
         node.shape_locks = crate::transform_child(&self.shape_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -626,10 +621,8 @@ impl crate::Transform for spreadsheet_drawing::ConnectionShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.f_published, &self.f_published);
         node.non_visual_properties =
             crate::transform_child(&self.non_visual_properties, ctx, &mut rebase);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
@@ -716,8 +709,7 @@ impl crate::Transform for spreadsheet_drawing::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -789,7 +781,7 @@ impl crate::Transform for spreadsheet_drawing::EndingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.col = crate::transform_child(&self.col, ctx, &mut rebase);
         node.column_offset = crate::transform_child(&self.column_offset, ctx, &mut rebase);
@@ -877,10 +869,8 @@ impl crate::Transform for spreadsheet_drawing::GraphicFrame {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.f_published, &self.f_published);
         node.non_visual_properties =
             crate::transform_child(&self.non_visual_properties, ctx, &mut rebase);
         node.xfrm = crate::transform_child(&self.xfrm, ctx, &mut rebase);
@@ -967,7 +957,7 @@ impl crate::Transform for spreadsheet_drawing::GroupShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_properties =
             crate::transform_child(&self.non_visual_properties, ctx, &mut rebase);
@@ -1196,9 +1186,8 @@ impl crate::Transform for spreadsheet_drawing::GroupShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_group_transform2d =
             crate::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         node.fill_properties_content =
@@ -1292,7 +1281,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualConnectorShapeDrawingPro
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.connection_shape_locks =
             crate::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
@@ -1381,13 +1370,8 @@ impl crate::Transform for spreadsheet_drawing::NonVisualDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -1477,7 +1461,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualGraphicFrameDrawingPrope
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.graphic_frame_locks =
             crate::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
@@ -1560,7 +1544,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualGroupShapeDrawingPropert
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.group_shape_locks = crate::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -1642,12 +1626,8 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPictureDrawingProperties
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.prefer_relative_resize,
-            &self.prefer_relative_resize,
-        );
         node.picture_locks = crate::transform_child(&self.picture_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1729,7 +1709,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPropertiesForAConnection
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -1816,7 +1796,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPropertiesForAGraphicFra
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -1903,7 +1883,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPropertiesForAGroupShape
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -1990,7 +1970,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPropertiesForAPicture {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -2077,7 +2057,7 @@ impl crate::Transform for spreadsheet_drawing::NonVisualPropertiesForAShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -2289,7 +2269,7 @@ impl crate::Transform for spreadsheet_drawing::OneCellAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.starting_anchor_point =
             crate::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
@@ -2378,10 +2358,8 @@ impl crate::Transform for spreadsheet_drawing::Picture {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.f_published, &self.f_published);
         node.non_visual_properties =
             crate::transform_child(&self.non_visual_properties, ctx, &mut rebase);
         node.fill = crate::transform_child(&self.fill, ctx, &mut rebase);
@@ -2468,10 +2446,8 @@ impl crate::Transform for spreadsheet_drawing::PictureFill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dpi, &self.dpi);
-        Clone::clone_from(&mut node.rot_with_shape, &self.rot_with_shape);
         node.blip = crate::transform_child(&self.blip, ctx, &mut rebase);
         node.source_rectangle = crate::transform_child(&self.source_rectangle, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
@@ -2554,9 +2530,7 @@ impl crate::Transform for spreadsheet_drawing::Position {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.y, &self.y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2629,8 +2603,7 @@ impl crate::Transform for spreadsheet_drawing::Row {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2701,8 +2674,7 @@ impl crate::Transform for spreadsheet_drawing::RowOffset {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2774,12 +2746,8 @@ impl crate::Transform for spreadsheet_drawing::Shape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.textlink, &self.textlink);
-        Clone::clone_from(&mut node.f_locks_text, &self.f_locks_text);
-        Clone::clone_from(&mut node.f_published, &self.f_published);
         node.non_visual_properties =
             crate::transform_child(&self.non_visual_properties, ctx, &mut rebase);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
@@ -2868,9 +2836,7 @@ impl crate::Transform for spreadsheet_drawing::ShapeExtent {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.cx, &self.cx);
-        Clone::clone_from(&mut node.cy, &self.cy);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2943,9 +2909,8 @@ impl crate::Transform for spreadsheet_drawing::ShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_transform2d = crate::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = crate::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -3047,7 +3012,7 @@ impl crate::Transform for spreadsheet_drawing::ShapeStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.line_reference = crate::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = crate::transform_child(&self.fill_reference, ctx, &mut rebase);
@@ -3132,7 +3097,7 @@ impl crate::Transform for spreadsheet_drawing::ShapeTextBody {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.text_list_styles = crate::transform_child(&self.text_list_styles, ctx, &mut rebase);
@@ -3217,7 +3182,7 @@ impl crate::Transform for spreadsheet_drawing::StartingAnchorPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.col = crate::transform_child(&self.col, ctx, &mut rebase);
         node.column_offset = crate::transform_child(&self.column_offset, ctx, &mut rebase);
@@ -3305,9 +3270,8 @@ impl crate::Transform for spreadsheet_drawing::TwoCellAnchorShapeSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.edit_as, &self.edit_as);
         node.starting_anchor_point =
             crate::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         node.ending_anchor_point =
@@ -3397,7 +3361,7 @@ impl crate::Transform for spreadsheet_drawing::WorksheetDrawing {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3601,11 +3565,8 @@ impl crate::Transform for spreadsheet_drawing::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.flip_h, &self.flip_h);
-        Clone::clone_from(&mut node.flip_v, &self.flip_v);
         node.offset = crate::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = crate::transform_child(&self.extents, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

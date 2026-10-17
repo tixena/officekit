@@ -349,6 +349,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AbsoluteUrl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AbsoluteUrl {
     fn read(element: &Element) -> Self {
         read::absolute_url(element)
@@ -362,6 +370,18 @@ impl crate::Write for AbsoluteUrl {
     }
 }
 
+impl AlternateUrls {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            drive_id: self.drive_id.clone(),
+            item_id: self.item_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AlternateUrls {
     fn read(element: &Element) -> Self {
         read::alternate_urls(element)
@@ -372,6 +392,14 @@ impl crate::Write for AlternateUrls {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::alternate_urls(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RelativeUrl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

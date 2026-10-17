@@ -340,6 +340,9 @@ impl ModuleItems {
             parts.statics.push_str(&shape);
             parts
                 .impls
+                .push((node.name.clone(), without_children_text(node)));
+            parts
+                .impls
                 .push((node.name.clone(), node_impls(names, index, node)));
         }
         for (index, found) in catalog.enums.iter().enumerate() {
@@ -654,6 +657,51 @@ fn struct_text(names: &Names<'_>, index: usize, node: &Node) -> String {
         }
     }
     out.push_str("}\n");
+    out
+}
+
+/// A struct's `without_children`: a struct literal of its attributes and its
+/// text value copied, each declared child and `unknown` at their default.
+fn without_children_text(node: &Node) -> String {
+    let mut copied: Vec<&str> = node
+        .attributes
+        .iter()
+        .map(|attribute| attribute.field.as_str())
+        .collect();
+    let summary = match node.body {
+        Body::Text(_) => {
+            copied.push("value");
+            "This node's attributes and value, copied, with no unknown content."
+        }
+        Body::Children(_) => {
+            "This node's attributes, copied, with no declared child and no unknown content."
+        }
+    };
+    copied.sort_by(|left, right| bare(left).cmp(bare(right)));
+    let mut out = format!(
+        "\nimpl {} {{\n    /// {summary}\n    #[must_use]\n    \
+         pub fn without_children(&self) -> Self {{\n",
+        node.name
+    );
+    if copied.is_empty() {
+        out.push_str("        Self::default()\n");
+    } else {
+        out.push_str("        Self {\n");
+        for field in copied {
+            let flat = format!("            {field}: self.{field}.clone(),\n");
+            if flat.len() - 1 <= MAX_WIDTH {
+                out.push_str(&flat);
+            } else {
+                // rustfmt breaks the chain a field this long reads.
+                let _ = write!(
+                    out,
+                    "            {field}: self\n                .{field}\n                .clone(),\n"
+                );
+            }
+        }
+        out.push_str("            ..Self::default()\n        }\n");
+    }
+    out.push_str("    }\n}\n");
     out
 }
 
@@ -1193,3 +1241,6 @@ fn steps_helpers(
     }
     functions
 }
+
+#[cfg(test)]
+mod tests;

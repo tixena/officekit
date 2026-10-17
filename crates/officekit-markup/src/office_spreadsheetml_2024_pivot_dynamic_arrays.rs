@@ -282,6 +282,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl PivotCacheDynamicArray {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            r#ref: self.r#ref.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PivotCacheDynamicArray {
     fn read(element: &Element) -> Self {
         read::pivot_cache_dynamic_array(element)

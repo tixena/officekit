@@ -231,7 +231,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_version_info::CacheVer
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.required_feature = crate::transform_child(&self.required_feature, ctx, &mut rebase);
         node.last_refresh_feature =
@@ -314,8 +314,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_version_info::LastRefr
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -390,8 +389,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_version_info::LastUpda
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -466,7 +464,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_version_info::PivotVer
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.required_feature = crate::transform_child(&self.required_feature, ctx, &mut rebase);
         node.last_update_feature =
@@ -549,8 +547,7 @@ impl crate::Transform for office_spreadsheetml_2022_pivot_version_info::Required
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

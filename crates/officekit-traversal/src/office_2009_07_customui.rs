@@ -231,10 +231,8 @@ impl crate::Transform for office_2009_07_customui::Backstage {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.on_show, &self.on_show);
-        Clone::clone_from(&mut node.on_hide, &self.on_hide);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -689,7 +687,7 @@ impl crate::Transform for office_2009_07_customui::BottomItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -768,18 +766,8 @@ impl crate::Transform for office_2009_07_customui::BoxBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.box_style, &self.box_style);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1066,28 +1054,7 @@ impl crate::Transform for office_2009_07_customui::ButtonBackstageFastCommandBut
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.is_definitive, &self.is_definitive);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1182,29 +1149,7 @@ impl crate::Transform for office_2009_07_customui::ButtonBackstageGroupButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.is_definitive, &self.is_definitive);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1300,25 +1245,7 @@ impl crate::Transform for office_2009_07_customui::ButtonBackstageMenuButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.is_definitive, &self.is_definitive);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1410,27 +1337,7 @@ impl crate::Transform for office_2009_07_customui::ButtonBackstageRegularButton 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.is_definitive, &self.is_definitive);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1524,39 +1431,7 @@ impl crate::Transform for office_2009_07_customui::ButtonButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1662,37 +1537,7 @@ impl crate::Transform for office_2009_07_customui::ButtonButtonRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1796,17 +1641,8 @@ impl crate::Transform for office_2009_07_customui::ButtonGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2053,35 +1889,7 @@ impl crate::Transform for office_2009_07_customui::ButtonVisibleButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2183,20 +1991,8 @@ impl crate::Transform for office_2009_07_customui::CategoryTaskFormGroupCategory
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
         node.task_task_form_group_task =
             crate::transform_child(&self.task_task_form_group_task, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2287,20 +2083,8 @@ impl crate::Transform for office_2009_07_customui::CategoryTaskGroupCategory {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
         node.task_task_group_task =
             crate::transform_child(&self.task_task_group_task, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2391,27 +2175,7 @@ impl crate::Transform for office_2009_07_customui::CheckBoxBackstageCheckBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2505,22 +2269,7 @@ impl crate::Transform for office_2009_07_customui::CheckBoxBackstageMenuCheckBox
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2609,31 +2358,7 @@ impl crate::Transform for office_2009_07_customui::CheckBoxCheckBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2731,27 +2456,8 @@ impl crate::Transform for office_2009_07_customui::ComboBoxBackstageComboBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.get_text, &self.get_text);
-        Clone::clone_from(&mut node.on_change, &self.on_change);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
         node.item_backstage_item =
             crate::transform_child(&self.item_backstage_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2849,50 +2555,8 @@ impl crate::Transform for office_2009_07_customui::ComboBoxComboBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.show_item_image, &self.show_item_image);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_screentip, &self.get_item_screentip);
-        Clone::clone_from(&mut node.get_item_supertip, &self.get_item_supertip);
-        Clone::clone_from(&mut node.get_item_image, &self.get_item_image);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(
-            &mut node.invalidate_content_on_drop,
-            &self.invalidate_content_on_drop,
-        );
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.max_length, &self.max_length);
-        Clone::clone_from(&mut node.get_text, &self.get_text);
-        Clone::clone_from(&mut node.on_change, &self.on_change);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.item_item = crate::transform_child(&self.item_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3009,11 +2673,7 @@ impl crate::Transform for office_2009_07_customui::Command {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3088,7 +2748,7 @@ impl crate::Transform for office_2009_07_customui::Commands {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.command = crate::transform_child(&self.command, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3164,9 +2824,8 @@ impl crate::Transform for office_2009_07_customui::ContextMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3412,7 +3071,7 @@ impl crate::Transform for office_2009_07_customui::ContextMenus {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.context_menu = crate::transform_child(&self.context_menu, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3491,7 +3150,7 @@ impl crate::Transform for office_2009_07_customui::ContextualTabs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.tab_set = crate::transform_child(&self.tab_set, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3570,37 +3229,7 @@ impl crate::Transform for office_2009_07_customui::ControlControlClone {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3704,37 +3333,7 @@ impl crate::Transform for office_2009_07_customui::ControlControlCloneQat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3838,33 +3437,7 @@ impl crate::Transform for office_2009_07_customui::ControlControlCloneRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3964,10 +3537,8 @@ impl crate::Transform for office_2009_07_customui::CustomUI {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.on_load, &self.on_load);
-        Clone::clone_from(&mut node.load_image, &self.load_image);
         node.commands = crate::transform_child(&self.commands, ctx, &mut rebase);
         node.ribbon = crate::transform_child(&self.ribbon, ctx, &mut rebase);
         node.backstage = crate::transform_child(&self.backstage, ctx, &mut rebase);
@@ -4056,7 +3627,7 @@ impl crate::Transform for office_2009_07_customui::DialogBoxLauncher {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.button_button_regular =
             crate::transform_child(&self.button_button_regular, ctx, &mut rebase);
@@ -4136,7 +3707,7 @@ impl crate::Transform for office_2009_07_customui::DocumentControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4215,34 +3786,8 @@ impl crate::Transform for office_2009_07_customui::DropDownBackstageDropDown {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(
-            &mut node.get_selected_item_index,
-            &self.get_selected_item_index,
-        );
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
         node.item_backstage_item =
             crate::transform_child(&self.item_backstage_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4344,50 +3889,8 @@ impl crate::Transform for office_2009_07_customui::DropDownDropDownRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.show_item_image, &self.show_item_image);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_screentip, &self.get_item_screentip);
-        Clone::clone_from(&mut node.get_item_supertip, &self.get_item_supertip);
-        Clone::clone_from(&mut node.get_item_image, &self.get_item_image);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.get_selected_item_id, &self.get_selected_item_id);
-        Clone::clone_from(
-            &mut node.get_selected_item_index,
-            &self.get_selected_item_index,
-        );
-        Clone::clone_from(&mut node.show_item_label, &self.show_item_label);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.item_item = crate::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             crate::transform_child(&self.button_button_regular, ctx, &mut rebase);
@@ -4508,43 +4011,7 @@ impl crate::Transform for office_2009_07_customui::DynamicMenuDynamicMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.get_content, &self.get_content);
-        Clone::clone_from(
-            &mut node.invalidate_content_on_drop,
-            &self.invalidate_content_on_drop,
-        );
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4651,41 +4118,7 @@ impl crate::Transform for office_2009_07_customui::DynamicMenuDynamicMenuRegular
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.get_content, &self.get_content);
-        Clone::clone_from(
-            &mut node.invalidate_content_on_drop,
-            &self.invalidate_content_on_drop,
-        );
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4790,24 +4223,7 @@ impl crate::Transform for office_2009_07_customui::EditBoxBackstageEditBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.get_text, &self.get_text);
-        Clone::clone_from(&mut node.on_change, &self.on_change);
-        Clone::clone_from(&mut node.max_length, &self.max_length);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4898,38 +4314,7 @@ impl crate::Transform for office_2009_07_customui::EditBoxEditBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.max_length, &self.max_length);
-        Clone::clone_from(&mut node.get_text, &self.get_text);
-        Clone::clone_from(&mut node.on_change, &self.on_change);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5034,7 +4419,7 @@ impl crate::Transform for office_2009_07_customui::FirstColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5113,65 +4498,8 @@ impl crate::Transform for office_2009_07_customui::GalleryGallery {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(
-            &mut node.invalidate_content_on_drop,
-            &self.invalidate_content_on_drop,
-        );
-        Clone::clone_from(&mut node.columns, &self.columns);
-        Clone::clone_from(&mut node.rows, &self.rows);
-        Clone::clone_from(&mut node.item_width, &self.item_width);
-        Clone::clone_from(&mut node.item_height, &self.item_height);
-        Clone::clone_from(&mut node.get_item_width, &self.get_item_width);
-        Clone::clone_from(&mut node.get_item_height, &self.get_item_height);
-        Clone::clone_from(&mut node.show_item_label, &self.show_item_label);
-        Clone::clone_from(&mut node.show_in_ribbon, &self.show_in_ribbon);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.show_item_image, &self.show_item_image);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_screentip, &self.get_item_screentip);
-        Clone::clone_from(&mut node.get_item_supertip, &self.get_item_supertip);
-        Clone::clone_from(&mut node.get_item_image, &self.get_item_image);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.get_selected_item_id, &self.get_selected_item_id);
-        Clone::clone_from(
-            &mut node.get_selected_item_index,
-            &self.get_selected_item_index,
-        );
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.item_item = crate::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             crate::transform_child(&self.button_button_regular, ctx, &mut rebase);
@@ -5304,63 +4632,8 @@ impl crate::Transform for office_2009_07_customui::GalleryGalleryRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(
-            &mut node.invalidate_content_on_drop,
-            &self.invalidate_content_on_drop,
-        );
-        Clone::clone_from(&mut node.columns, &self.columns);
-        Clone::clone_from(&mut node.rows, &self.rows);
-        Clone::clone_from(&mut node.item_width, &self.item_width);
-        Clone::clone_from(&mut node.item_height, &self.item_height);
-        Clone::clone_from(&mut node.get_item_width, &self.get_item_width);
-        Clone::clone_from(&mut node.get_item_height, &self.get_item_height);
-        Clone::clone_from(&mut node.show_item_label, &self.show_item_label);
-        Clone::clone_from(&mut node.show_in_ribbon, &self.show_in_ribbon);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.show_item_image, &self.show_item_image);
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_screentip, &self.get_item_screentip);
-        Clone::clone_from(&mut node.get_item_supertip, &self.get_item_supertip);
-        Clone::clone_from(&mut node.get_item_image, &self.get_item_image);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
-        Clone::clone_from(&mut node.size_string, &self.size_string);
-        Clone::clone_from(&mut node.get_selected_item_id, &self.get_selected_item_id);
-        Clone::clone_from(
-            &mut node.get_selected_item_index,
-            &self.get_selected_item_index,
-        );
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.item_item = crate::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             crate::transform_child(&self.button_button_regular, ctx, &mut rebase);
@@ -5491,26 +4764,8 @@ impl crate::Transform for office_2009_07_customui::GroupBackstageGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.get_style, &self.get_style);
-        Clone::clone_from(&mut node.helper_text, &self.helper_text);
-        Clone::clone_from(&mut node.get_helper_text, &self.get_helper_text);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
         node.primary_item = crate::transform_child(&self.primary_item, ctx, &mut rebase);
         node.top_items = crate::transform_child(&self.top_items, ctx, &mut rebase);
         node.bottom_items = crate::transform_child(&self.bottom_items, ctx, &mut rebase);
@@ -5612,14 +4867,8 @@ impl crate::Transform for office_2009_07_customui::GroupBox {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -6093,31 +5342,8 @@ impl crate::Transform for office_2009_07_customui::GroupGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.auto_scale, &self.auto_scale);
-        Clone::clone_from(&mut node.center_vertically, &self.center_vertically);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.dialog_box_launcher =
             crate::transform_child(&self.dialog_box_launcher, ctx, &mut rebase);
@@ -6222,30 +5448,7 @@ impl crate::Transform for office_2009_07_customui::Hyperlink {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.target, &self.target);
-        Clone::clone_from(&mut node.get_target, &self.get_target);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6342,19 +5545,7 @@ impl crate::Transform for office_2009_07_customui::ImageControl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.get_alt_text, &self.get_alt_text);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6440,7 +5631,7 @@ impl crate::Transform for office_2009_07_customui::ItemBackstageItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6514,13 +5705,7 @@ impl crate::Transform for office_2009_07_customui::ItemItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6600,19 +5785,7 @@ impl crate::Transform for office_2009_07_customui::LabelControlBackstageLabelCon
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.no_wrap, &self.no_wrap);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6698,27 +5871,7 @@ impl crate::Transform for office_2009_07_customui::LabelControlLabelControl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6812,14 +5965,8 @@ impl crate::Transform for office_2009_07_customui::LayoutContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align, &self.align);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.layout_children, &self.layout_children);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -6903,26 +6050,8 @@ impl crate::Transform for office_2009_07_customui::MenuBackstagePrimaryMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
         node.group = crate::transform_child(&self.group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7018,24 +6147,8 @@ impl crate::Transform for office_2009_07_customui::MenuBackstageSubMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
         node.group = crate::transform_child(&self.group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7296,14 +6409,8 @@ impl crate::Transform for office_2009_07_customui::MenuGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.item_size, &self.item_size);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7387,40 +6494,8 @@ impl crate::Transform for office_2009_07_customui::MenuMenu {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.item_size, &self.item_size);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7530,38 +6605,8 @@ impl crate::Transform for office_2009_07_customui::MenuMenuRegular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.item_size, &self.item_size);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7669,11 +6714,8 @@ impl crate::Transform for office_2009_07_customui::MenuMenuRoot {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.get_title, &self.get_title);
-        Clone::clone_from(&mut node.item_size, &self.item_size);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7754,38 +6796,8 @@ impl crate::Transform for office_2009_07_customui::MenuMenuWithTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.item_size, &self.item_size);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.get_title, &self.get_title);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7893,16 +6905,7 @@ impl crate::Transform for office_2009_07_customui::MenuSeparatorMenuSeparator {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.get_title, &self.get_title);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7985,14 +6988,7 @@ impl crate::Transform for office_2009_07_customui::MenuSeparatorMenuSeparatorNoT
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8240,7 +7236,7 @@ impl crate::Transform for office_2009_07_customui::PrimaryItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8416,7 +7412,7 @@ impl crate::Transform for office_2009_07_customui::Qat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.shared_controls = crate::transform_child(&self.shared_controls, ctx, &mut rebase);
         node.document_controls = crate::transform_child(&self.document_controls, ctx, &mut rebase);
@@ -8620,7 +7616,7 @@ impl crate::Transform for office_2009_07_customui::RadioButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8694,29 +7690,8 @@ impl crate::Transform for office_2009_07_customui::RadioGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.align_label, &self.align_label);
-        Clone::clone_from(&mut node.expand, &self.expand);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(
-            &mut node.get_selected_item_index,
-            &self.get_selected_item_index,
-        );
-        Clone::clone_from(&mut node.get_item_count, &self.get_item_count);
-        Clone::clone_from(&mut node.get_item_label, &self.get_item_label);
-        Clone::clone_from(&mut node.get_item_id, &self.get_item_id);
         node.radio_button = crate::transform_child(&self.radio_button, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -8812,9 +7787,8 @@ impl crate::Transform for office_2009_07_customui::Ribbon {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.start_from_scratch, &self.start_from_scratch);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -9015,7 +7989,7 @@ impl crate::Transform for office_2009_07_customui::SecondColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9094,16 +8068,7 @@ impl crate::Transform for office_2009_07_customui::Separator {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9186,7 +8151,7 @@ impl crate::Transform for office_2009_07_customui::SharedControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9480,26 +8445,8 @@ impl crate::Transform for office_2009_07_customui::SplitButtonSplitButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_regular = crate::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9598,24 +8545,8 @@ impl crate::Transform for office_2009_07_customui::SplitButtonSplitButtonRegular
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_regular = crate::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9712,24 +8643,8 @@ impl crate::Transform for office_2009_07_customui::SplitButtonSplitButtonWithTit
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_with_title =
             crate::transform_child(&self.menu_menu_with_title, ctx, &mut rebase);
@@ -9827,43 +8742,8 @@ impl crate::Transform for office_2009_07_customui::TabBackstageTab {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.get_title, &self.get_title);
-        Clone::clone_from(&mut node.column_width_percent, &self.column_width_percent);
-        Clone::clone_from(
-            &mut node.first_column_min_width,
-            &self.first_column_min_width,
-        );
-        Clone::clone_from(
-            &mut node.first_column_max_width,
-            &self.first_column_max_width,
-        );
-        Clone::clone_from(
-            &mut node.second_column_min_width,
-            &self.second_column_min_width,
-        );
-        Clone::clone_from(
-            &mut node.second_column_max_width,
-            &self.second_column_max_width,
-        );
         node.first_column = crate::transform_child(&self.first_column, ctx, &mut rebase);
         node.second_column = crate::transform_child(&self.second_column, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9967,11 +8847,8 @@ impl crate::Transform for office_2009_07_customui::TabSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
         node.tab_tab = crate::transform_child(&self.tab_tab, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -10049,22 +8926,8 @@ impl crate::Transform for office_2009_07_customui::TabTab {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
         node.group_group = crate::transform_child(&self.group_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -10153,7 +9016,7 @@ impl crate::Transform for office_2009_07_customui::Tabs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.tab_tab = crate::transform_child(&self.tab_tab, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -10229,21 +9092,8 @@ impl crate::Transform for office_2009_07_customui::TaskFormGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.helper_text, &self.helper_text);
-        Clone::clone_from(&mut node.get_helper_text, &self.get_helper_text);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.allowed_task_sizes, &self.allowed_task_sizes);
         node.category_task_form_group_category =
             crate::transform_child(&self.category_task_form_group_category, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -10335,25 +9185,8 @@ impl crate::Transform for office_2009_07_customui::TaskGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.helper_text, &self.helper_text);
-        Clone::clone_from(&mut node.get_helper_text, &self.get_helper_text);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.allowed_task_sizes, &self.allowed_task_sizes);
         node.category_task_group_category =
             crate::transform_child(&self.category_task_group_category, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -10449,29 +9282,8 @@ impl crate::Transform for office_2009_07_customui::TaskTaskFormGroupTask {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
         node.group_backstage_group =
             crate::transform_child(&self.group_backstage_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -10571,30 +9383,7 @@ impl crate::Transform for office_2009_07_customui::TaskTaskGroupTask {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.is_definitive, &self.is_definitive);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10691,25 +9480,7 @@ impl crate::Transform for office_2009_07_customui::ToggleButtonBackstageMenuTogg
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10801,40 +9572,7 @@ impl crate::Transform for office_2009_07_customui::ToggleButtonToggleButton {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.get_size, &self.get_size);
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10941,38 +9679,7 @@ impl crate::Transform for office_2009_07_customui::ToggleButtonToggleButtonRegul
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.get_visible, &self.get_visible);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11077,36 +9784,7 @@ impl crate::Transform for office_2009_07_customui::ToggleButtonVisibleToggleButt
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.get_pressed, &self.get_pressed);
-        Clone::clone_from(&mut node.on_action, &self.on_action);
-        Clone::clone_from(&mut node.enabled, &self.enabled);
-        Clone::clone_from(&mut node.get_enabled, &self.get_enabled);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.get_description, &self.get_description);
-        Clone::clone_from(&mut node.image, &self.image);
-        Clone::clone_from(&mut node.image_mso, &self.image_mso);
-        Clone::clone_from(&mut node.get_image, &self.get_image);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.id_q, &self.id_q);
-        Clone::clone_from(&mut node.tag, &self.tag);
-        Clone::clone_from(&mut node.id_mso, &self.id_mso);
-        Clone::clone_from(&mut node.screentip, &self.screentip);
-        Clone::clone_from(&mut node.get_screentip, &self.get_screentip);
-        Clone::clone_from(&mut node.supertip, &self.supertip);
-        Clone::clone_from(&mut node.get_supertip, &self.get_supertip);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.get_label, &self.get_label);
-        Clone::clone_from(&mut node.insert_after_mso, &self.insert_after_mso);
-        Clone::clone_from(&mut node.insert_before_mso, &self.insert_before_mso);
-        Clone::clone_from(&mut node.insert_after_q, &self.insert_after_q);
-        Clone::clone_from(&mut node.insert_before_q, &self.insert_before_q);
-        Clone::clone_from(&mut node.keytip, &self.keytip);
-        Clone::clone_from(&mut node.get_keytip, &self.get_keytip);
-        Clone::clone_from(&mut node.show_label, &self.show_label);
-        Clone::clone_from(&mut node.get_show_label, &self.get_show_label);
-        Clone::clone_from(&mut node.show_image, &self.show_image);
-        Clone::clone_from(&mut node.get_show_image, &self.get_show_image);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11209,7 +9887,7 @@ impl crate::Transform for office_2009_07_customui::TopItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

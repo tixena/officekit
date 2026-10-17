@@ -275,6 +275,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Version {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            set_version: self.set_version.clone(),
+            warn_below_version: self.warn_below_version.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Version {
     fn read(element: &Element) -> Self {
         read::version(element)

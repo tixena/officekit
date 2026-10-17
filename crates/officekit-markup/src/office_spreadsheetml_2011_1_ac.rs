@@ -273,6 +273,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl List {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for List {
     fn read(element: &Element) -> Self {
         read::list(element)

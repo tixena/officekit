@@ -231,8 +231,7 @@ impl crate::Transform for office_powerpoint_2012_roaming_settings::Key {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -307,7 +306,7 @@ impl crate::Transform for office_powerpoint_2012_roaming_settings::Props {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.key = crate::transform_child(&self.key, ctx, &mut rebase);
         node.value = crate::transform_child(&self.value, ctx, &mut rebase);
@@ -389,8 +388,7 @@ impl crate::Transform for office_powerpoint_2012_roaming_settings::Value {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

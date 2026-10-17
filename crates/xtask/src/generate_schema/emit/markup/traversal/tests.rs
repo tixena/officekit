@@ -3,7 +3,7 @@ use core::fmt::Write as _;
 use super::super::render::layout::Expr;
 use super::super::structs::{Attribute, Body, Child, Node, Occurs, Target, Value};
 use super::super::{NodeKey, Source};
-use super::{Rebuilt, assigned_field, hook_name, rebuild};
+use super::{assigned_field, hook_name, rebuild};
 use crate::generate_schema::model::Name;
 
 /// A struct with the attribute `val` and `children`, in schema order.
@@ -69,9 +69,8 @@ fn an_assigned_field_too_long_for_its_line_breaks_its_call() {
     let mut out = String::new();
     assigned_field(
         "        ",
-        "self",
         "table_style_conditional_formatting_settings_exception_xyz",
-        &Rebuilt::Child(value),
+        &value,
         &mut out,
     );
     assert_eq!(
@@ -93,9 +92,8 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     let (out, helpers) = rebuilt(&sample);
     assert_eq!(
         out,
-        "        let mut node = Self::default();\n        \
+        "        let mut node = self.without_children();\n        \
          let mut rebase = crate::Rebase::new(&self.unknown);\n        \
-         Clone::clone_from(&mut node.val, &self.val);\n        \
          node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);\n        \
          node.sup = crate::transform_choice(&self.sup, ctx, &mut rebase);\n        \
          node.content = crate::transform_items(&self.content, ctx, &mut rebase);\n        \
@@ -111,8 +109,7 @@ fn a_struct_without_children_places_its_unknown_content_as_read() {
     let (out, _) = rebuilt(&node(Vec::new()));
     assert_eq!(
         out,
-        "        let mut node = Self::default();\n        \
-         Clone::clone_from(&mut node.val, &self.val);\n        \
+        "        let mut node = self.without_children();\n        \
          node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());\n        \
          node\n"
     );
@@ -133,7 +130,7 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     let (out, helpers) = rebuilt(&node(children));
     assert_eq!(
         out,
-        "        let mut node = Self::default();\n        \
+        "        let mut node = self.without_children();\n        \
          let mut rebase = crate::Rebase::new(&self.unknown);\n        \
          transform_sample_1(self, &mut node, ctx, &mut rebase);\n        \
          transform_sample_2(self, &mut node, ctx, &mut rebase);\n        \
@@ -142,8 +139,7 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     );
     let mut first = String::from(
         "\nfn transform_sample_1(\n    from: &x::Sample,\n    node: &mut x::Sample,\n    \
-         ctx: &mut dyn officekit_markup::Context,\n    rebase: &mut crate::Rebase,\n) {\n    \
-         Clone::clone_from(&mut node.val, &from.val);\n",
+         ctx: &mut dyn officekit_markup::Context,\n    rebase: &mut crate::Rebase,\n) {\n",
     );
     // Schema order: the children were given from `item_099` down.
     for index in (0..100_usize).rev().take(3) {

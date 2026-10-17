@@ -545,6 +545,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -555,6 +563,20 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Mention {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            length: self.length.clone(),
+            mention_id: self.mention_id.clone(),
+            mentionperson_id: self.mentionperson_id.clone(),
+            start_index: self.start_index.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -571,6 +593,14 @@ impl crate::Write for Mention {
     }
 }
 
+impl Mentions {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Mentions {
     fn read(element: &Element) -> Self {
         read::mentions(element)
@@ -581,6 +611,20 @@ impl crate::Write for Mentions {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::mentions(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Person {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            display_name: self.display_name.clone(),
+            id: self.id.clone(),
+            provider_id: self.provider_id.clone(),
+            user_id: self.user_id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -597,6 +641,14 @@ impl crate::Write for Person {
     }
 }
 
+impl PersonList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for PersonList {
     fn read(element: &Element) -> Self {
         read::person_list(element)
@@ -607,6 +659,17 @@ impl crate::Write for PersonList {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::person_list(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Text {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -623,6 +686,22 @@ impl crate::Write for Text {
     }
 }
 
+impl ThreadedComment {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            d_t: self.d_t.clone(),
+            done: self.done.clone(),
+            id: self.id.clone(),
+            parent_id: self.parent_id.clone(),
+            person_id: self.person_id.clone(),
+            r#ref: self.r#ref.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ThreadedComment {
     fn read(element: &Element) -> Self {
         read::threaded_comment(element)
@@ -633,6 +712,14 @@ impl crate::Write for ThreadedComment {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::threaded_comment(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ThreadedComments {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

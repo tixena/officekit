@@ -605,6 +605,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ChartTrackingRefBased {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ChartTrackingRefBased {
     fn read(element: &Element) -> Self {
         read::chart_tracking_ref_based(element)
@@ -615,6 +626,14 @@ impl crate::Write for ChartTrackingRefBased {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::chart_tracking_ref_based(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Clr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -631,6 +650,14 @@ impl crate::Write for Clr {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -641,6 +668,21 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Guide {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            name: self.name.clone(),
+            orient: self.orient.clone(),
+            pos: self.pos.clone(),
+            user_drawn: self.user_drawn.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -657,6 +699,14 @@ impl crate::Write for Guide {
     }
 }
 
+impl NotesGuideLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for NotesGuideLst {
     fn read(element: &Element) -> Self {
         read::notes_guide_lst(element)
@@ -667,6 +717,18 @@ impl crate::Write for NotesGuideLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::notes_guide_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ParentCm {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            author_id: self.author_id.clone(),
+            idx: self.idx.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -683,6 +745,18 @@ impl crate::Write for ParentCm {
     }
 }
 
+impl PresenceInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            provider_id: self.provider_id.clone(),
+            user_id: self.user_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PresenceInfo {
     fn read(element: &Element) -> Self {
         read::presence_info(element)
@@ -693,6 +767,19 @@ impl crate::Write for PresenceInfo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::presence_info(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PrstTrans {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            inv_x: self.inv_x.clone(),
+            inv_y: self.inv_y.clone(),
+            prst: self.prst.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -709,6 +796,14 @@ impl crate::Write for PrstTrans {
     }
 }
 
+impl SldGuideLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for SldGuideLst {
     fn read(element: &Element) -> Self {
         read::sld_guide_lst(element)
@@ -719,6 +814,17 @@ impl crate::Write for SldGuideLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sld_guide_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ThreadingInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            time_zone_bias: self.time_zone_bias.clone(),
+            ..Self::default()
+        }
     }
 }
 

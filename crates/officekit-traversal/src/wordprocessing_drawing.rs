@@ -231,8 +231,7 @@ impl crate::Transform for wordprocessing_drawing::AbsolutePositionOffset {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -425,21 +424,8 @@ impl crate::Transform for wordprocessing_drawing::AnchorForFloatingDrawingMLObje
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dist_t, &self.dist_t);
-        Clone::clone_from(&mut node.dist_b, &self.dist_b);
-        Clone::clone_from(&mut node.dist_l, &self.dist_l);
-        Clone::clone_from(&mut node.dist_r, &self.dist_r);
-        Clone::clone_from(&mut node.simple_pos, &self.simple_pos);
-        Clone::clone_from(&mut node.relative_height, &self.relative_height);
-        Clone::clone_from(&mut node.behind_doc, &self.behind_doc);
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.layout_in_cell, &self.layout_in_cell);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.allow_overlap, &self.allow_overlap);
-        Clone::clone_from(&mut node.edit_id, &self.edit_id);
-        Clone::clone_from(&mut node.anchor_id, &self.anchor_id);
         node.simple_positioning_coordinates =
             crate::transform_child(&self.simple_positioning_coordinates, ctx, &mut rebase);
         node.horizontal_positioning =
@@ -570,7 +556,7 @@ impl crate::Transform for wordprocessing_drawing::BackgroundFormatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.fill_properties_content =
             crate::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -654,27 +640,8 @@ impl crate::Transform for wordprocessing_drawing::BodyProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.spc_first_last_para, &self.spc_first_last_para);
-        Clone::clone_from(&mut node.vert_overflow, &self.vert_overflow);
-        Clone::clone_from(&mut node.horz_overflow, &self.horz_overflow);
-        Clone::clone_from(&mut node.vert, &self.vert);
-        Clone::clone_from(&mut node.wrap, &self.wrap);
-        Clone::clone_from(&mut node.l_ins, &self.l_ins);
-        Clone::clone_from(&mut node.t_ins, &self.t_ins);
-        Clone::clone_from(&mut node.r_ins, &self.r_ins);
-        Clone::clone_from(&mut node.b_ins, &self.b_ins);
-        Clone::clone_from(&mut node.num_col, &self.num_col);
-        Clone::clone_from(&mut node.spc_col, &self.spc_col);
-        Clone::clone_from(&mut node.rtl_col, &self.rtl_col);
-        Clone::clone_from(&mut node.from_word_art, &self.from_word_art);
-        Clone::clone_from(&mut node.anchor, &self.anchor);
-        Clone::clone_from(&mut node.anchor_ctr, &self.anchor_ctr);
-        Clone::clone_from(&mut node.force_aa, &self.force_aa);
-        Clone::clone_from(&mut node.upright, &self.upright);
-        Clone::clone_from(&mut node.compat_ln_spc, &self.compat_ln_spc);
         node.preset_text_warp = crate::transform_child(&self.preset_text_warp, ctx, &mut rebase);
         node.text_autofit_content =
             crate::transform_choice(&self.text_autofit_content, ctx, &mut rebase);
@@ -784,7 +751,7 @@ impl crate::Transform for wordprocessing_drawing::CommonDrawingMLNonVisualProper
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.graphic_frame_locks =
             crate::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
@@ -867,10 +834,8 @@ impl crate::Transform for wordprocessing_drawing::ContentPart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
-        Clone::clone_from(&mut node.id, &self.id);
         node.nv_content_part_pr =
             crate::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.xfrm = crate::transform_child(&self.xfrm, ctx, &mut rebase);
@@ -1096,13 +1061,8 @@ impl crate::Transform for wordprocessing_drawing::DrawingObjectNonVisualProperti
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -1192,9 +1152,7 @@ impl crate::Transform for wordprocessing_drawing::DrawingObjectSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.cx, &self.cx);
-        Clone::clone_from(&mut node.cy, &self.cy);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1270,7 +1228,7 @@ impl crate::Transform for wordprocessing_drawing::ExtensionList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1349,7 +1307,7 @@ impl crate::Transform for wordprocessing_drawing::GraphicalObjectContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -1445,7 +1403,7 @@ impl crate::Transform for wordprocessing_drawing::GroupShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -1680,9 +1638,8 @@ impl crate::Transform for wordprocessing_drawing::GroupShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_group_transform2d =
             crate::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         node.fill_properties_content =
@@ -1776,9 +1733,8 @@ impl crate::Transform for wordprocessing_drawing::HorizontalPositioning {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.relative_from, &self.relative_from);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1961,14 +1917,8 @@ impl crate::Transform for wordprocessing_drawing::InlineDrawingMLObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dist_t, &self.dist_t);
-        Clone::clone_from(&mut node.dist_b, &self.dist_b);
-        Clone::clone_from(&mut node.dist_l, &self.dist_l);
-        Clone::clone_from(&mut node.dist_r, &self.dist_r);
-        Clone::clone_from(&mut node.anchor_id, &self.anchor_id);
-        Clone::clone_from(&mut node.edit_id, &self.edit_id);
         node.drawing_object_size =
             crate::transform_child(&self.drawing_object_size, ctx, &mut rebase);
         node.extents_including_effects =
@@ -2071,7 +2021,7 @@ impl crate::Transform for wordprocessing_drawing::NoTextWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2145,7 +2095,7 @@ impl crate::Transform for wordprocessing_drawing::NonVisualConnectorShapeDrawing
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.connection_shape_locks =
             crate::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
@@ -2234,9 +2184,8 @@ impl crate::Transform for wordprocessing_drawing::NonVisualContentPartDrawingPro
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.is_comment, &self.is_comment);
         node.content_part_locks =
             crate::transform_child(&self.content_part_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -2319,13 +2268,8 @@ impl crate::Transform for wordprocessing_drawing::NonVisualDrawingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.descr, &self.descr);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.title, &self.title);
         node.click_hyperlink = crate::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             crate::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
@@ -2415,9 +2359,8 @@ impl crate::Transform for wordprocessing_drawing::NonVisualDrawingPropertiesForA
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.tx_box, &self.tx_box);
         node.locks = crate::transform_child(&self.locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2499,7 +2442,7 @@ impl crate::Transform for wordprocessing_drawing::NonVisualGraphicFrameDrawingPr
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.graphic_frame_locks =
             crate::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
@@ -2582,7 +2525,7 @@ impl crate::Transform for wordprocessing_drawing::NonVisualGroupShapeDrawingProp
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.group_shape_locks = crate::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -2664,7 +2607,7 @@ impl crate::Transform for wordprocessing_drawing::NvContentPartPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -2751,11 +2694,7 @@ impl crate::Transform for wordprocessing_drawing::ObjectExtentsIncludingEffects 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.l, &self.l);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.b, &self.b);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2833,8 +2772,7 @@ impl crate::Transform for wordprocessing_drawing::RelativeHorizontalAlignment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2909,8 +2847,7 @@ impl crate::Transform for wordprocessing_drawing::RelativeVerticalAlignment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2985,7 +2922,7 @@ impl crate::Transform for wordprocessing_drawing::RichTextBoxContentContainer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3161,9 +3098,8 @@ impl crate::Transform for wordprocessing_drawing::ShapeProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_transform2d = crate::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = crate::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -3265,7 +3201,7 @@ impl crate::Transform for wordprocessing_drawing::ShapeStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.line_reference = crate::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = crate::transform_child(&self.fill_reference, ctx, &mut rebase);
@@ -3450,9 +3386,7 @@ impl crate::Transform for wordprocessing_drawing::SimplePositioningCoordinates {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.y, &self.y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3528,13 +3462,8 @@ impl crate::Transform for wordprocessing_drawing::SquareWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.wrap_text, &self.wrap_text);
-        Clone::clone_from(&mut node.dist_t, &self.dist_t);
-        Clone::clone_from(&mut node.dist_b, &self.dist_b);
-        Clone::clone_from(&mut node.dist_l, &self.dist_l);
-        Clone::clone_from(&mut node.dist_r, &self.dist_r);
         node.object_extents_including_effects =
             crate::transform_child(&self.object_extents_including_effects, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3618,10 +3547,8 @@ impl crate::Transform for wordprocessing_drawing::TextualContentsOfShapeLinkedTx
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.seq, &self.seq);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3701,9 +3628,8 @@ impl crate::Transform for wordprocessing_drawing::TextualContentsOfShapeTxbx {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
         node.rich_text_box_content_container =
             crate::transform_child(&self.rich_text_box_content_container, ctx, &mut rebase);
         node.extension_list = crate::transform_child(&self.extension_list, ctx, &mut rebase);
@@ -3786,11 +3712,8 @@ impl crate::Transform for wordprocessing_drawing::ThroughWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.wrap_text, &self.wrap_text);
-        Clone::clone_from(&mut node.dist_l, &self.dist_l);
-        Clone::clone_from(&mut node.dist_r, &self.dist_r);
         node.polygon = crate::transform_child(&self.polygon, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3871,11 +3794,8 @@ impl crate::Transform for wordprocessing_drawing::TightWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.wrap_text, &self.wrap_text);
-        Clone::clone_from(&mut node.dist_l, &self.dist_l);
-        Clone::clone_from(&mut node.dist_r, &self.dist_r);
         node.polygon = crate::transform_child(&self.polygon, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3956,10 +3876,8 @@ impl crate::Transform for wordprocessing_drawing::TopAndBottomWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dist_t, &self.dist_t);
-        Clone::clone_from(&mut node.dist_b, &self.dist_b);
         node.object_extents_including_effects =
             crate::transform_child(&self.object_extents_including_effects, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4040,9 +3958,8 @@ impl crate::Transform for wordprocessing_drawing::VerticalPositioning {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.relative_from, &self.relative_from);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4225,7 +4142,7 @@ impl crate::Transform for wordprocessing_drawing::WholeE2OFormatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.outline = crate::transform_child(&self.outline, ctx, &mut rebase);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
@@ -4307,7 +4224,7 @@ impl crate::Transform for wordprocessing_drawing::WordprocessingMLDrawingCanvas 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.background_formatting =
             crate::transform_child(&self.background_formatting, ctx, &mut rebase);
@@ -4397,12 +4314,8 @@ impl crate::Transform for wordprocessing_drawing::WordprocessingMLShape {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.normal_east_asian_flow,
-            &self.normal_east_asian_flow,
-        );
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_properties_content =
@@ -4501,7 +4414,7 @@ impl crate::Transform for wordprocessing_drawing::WordprocessingMLShapeGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.non_visual_drawing_properties =
             crate::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
@@ -4597,9 +4510,8 @@ impl crate::Transform for wordprocessing_drawing::WrappingPolygon {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.edited, &self.edited);
         node.start = crate::transform_child(&self.start, ctx, &mut rebase);
         node.line_end_position = crate::transform_child(&self.line_end_position, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4681,9 +4593,7 @@ impl crate::Transform for wordprocessing_drawing::WrappingPolygonLineEndPosition
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.y, &self.y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4759,9 +4669,7 @@ impl crate::Transform for wordprocessing_drawing::WrappingPolygonStart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.y, &self.y);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4837,11 +4745,8 @@ impl crate::Transform for wordprocessing_drawing::Xfrm {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.flip_h, &self.flip_h);
-        Clone::clone_from(&mut node.flip_v, &self.flip_v);
         node.offset = crate::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = crate::transform_child(&self.extents, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

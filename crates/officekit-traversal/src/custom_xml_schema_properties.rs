@@ -231,11 +231,7 @@ impl crate::Transform for custom_xml_schema_properties::CustomXMLSchemaReference
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.uri, &self.uri);
-        Clone::clone_from(&mut node.manifest_location, &self.manifest_location);
-        Clone::clone_from(&mut node.schema_location, &self.schema_location);
-        Clone::clone_from(&mut node.schema_language, &self.schema_language);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -313,7 +309,7 @@ impl crate::Transform for custom_xml_schema_properties::EmbeddedCustomXMLSchemaS
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_xml_schema_reference =
             crate::transform_child(&self.custom_xml_schema_reference, ctx, &mut rebase);

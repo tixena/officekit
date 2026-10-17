@@ -773,6 +773,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Add {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Add {
     fn read(element: &Element) -> Self {
         read::add(element)
@@ -783,6 +791,14 @@ impl crate::Write for Add {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::add(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Anchr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -799,6 +815,14 @@ impl crate::Write for Anchr {
     }
 }
 
+impl Asgn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Asgn {
     fn read(element: &Element) -> Self {
         read::asgn(element)
@@ -809,6 +833,14 @@ impl crate::Write for Asgn {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::asgn(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Atrbtn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -825,6 +857,17 @@ impl crate::Write for Atrbtn {
     }
 }
 
+impl Comment {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Comment {
     fn read(element: &Element) -> Self {
         read::comment(element)
@@ -835,6 +878,18 @@ impl crate::Write for Comment {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::comment(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Date {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            end_dt: self.end_dt.clone(),
+            st_dt: self.st_dt.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -851,6 +906,18 @@ impl crate::Write for Date {
     }
 }
 
+impl Event {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            time: self.time.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Event {
     fn read(element: &Element) -> Self {
         read::event(element)
@@ -861,6 +928,14 @@ impl crate::Write for Event {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::event(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -877,6 +952,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl History {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for History {
     fn read(element: &Element) -> Self {
         read::history(element)
@@ -890,6 +973,17 @@ impl crate::Write for History {
     }
 }
 
+impl PcntCmplt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PcntCmplt {
     fn read(element: &Element) -> Self {
         read::pcnt_cmplt(element)
@@ -900,6 +994,18 @@ impl crate::Write for PcntCmplt {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pcnt_cmplt(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TaskDetails {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            deleted: self.deleted.clone(),
+            inactive: self.inactive.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -952,6 +1058,17 @@ impl crate::Write for TaskHistoryEventContent {
     }
 }
 
+impl Title {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Title {
     fn read(element: &Element) -> Self {
         read::title(element)
@@ -962,6 +1079,14 @@ impl crate::Write for Title {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::title(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl UnasgnAll {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -978,6 +1103,17 @@ impl crate::Write for UnasgnAll {
     }
 }
 
+impl Undo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Undo {
     fn read(element: &Element) -> Self {
         read::undo(element)
@@ -988,6 +1124,14 @@ impl crate::Write for Undo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::undo(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Unknown {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

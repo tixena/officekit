@@ -231,9 +231,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ArgumentDescription 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.index, &self.index);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -309,9 +307,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ArgumentDescriptions
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.argument_description =
             crate::transform_child(&self.argument_description, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -391,12 +388,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::AxisColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -475,12 +467,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::BorderColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -559,8 +546,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CacheField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ignore, &self.ignore);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -635,12 +621,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CacheHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.flatten_hierarchies, &self.flatten_hierarchies);
-        Clone::clone_from(&mut node.measures_set, &self.measures_set);
-        Clone::clone_from(&mut node.hierarchize_distinct, &self.hierarchize_distinct);
-        Clone::clone_from(&mut node.ignore, &self.ignore);
         node.set_levels = crate::transform_child(&self.set_levels, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -722,13 +704,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CalculatedMember {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.display_folder, &self.display_folder);
-        Clone::clone_from(&mut node.flatten_hierarchies, &self.flatten_hierarchies);
-        Clone::clone_from(&mut node.dynamic_set, &self.dynamic_set);
-        Clone::clone_from(&mut node.hierarchize_distinct, &self.hierarchize_distinct);
-        Clone::clone_from(&mut node.mdx_long, &self.mdx_long);
         node.tuple_set = crate::transform_child(&self.tuple_set, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -811,9 +788,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CalculatedMembers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.calculated_member = crate::transform_child(&self.calculated_member, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -892,9 +868,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CfIcon {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -970,22 +944,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CfRule {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.priority, &self.priority);
-        Clone::clone_from(&mut node.stop_if_true, &self.stop_if_true);
-        Clone::clone_from(&mut node.above_average, &self.above_average);
-        Clone::clone_from(&mut node.percent, &self.percent);
-        Clone::clone_from(&mut node.bottom, &self.bottom);
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.text, &self.text);
-        Clone::clone_from(&mut node.time_period, &self.time_period);
-        Clone::clone_from(&mut node.rank, &self.rank);
-        Clone::clone_from(&mut node.std_dev, &self.std_dev);
-        Clone::clone_from(&mut node.equal_average, &self.equal_average);
-        Clone::clone_from(&mut node.active_present, &self.active_present);
-        Clone::clone_from(&mut node.id, &self.id);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.color_scale = crate::transform_child(&self.color_scale, ctx, &mut rebase);
         node.data_bar = crate::transform_child(&self.data_bar, ctx, &mut rebase);
@@ -1093,10 +1053,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Cfvo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.gte, &self.gte);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
@@ -1180,12 +1138,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Color {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1264,12 +1217,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorAxis {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1348,12 +1296,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorFirst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1432,12 +1375,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorHigh {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1516,12 +1454,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorLast {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1600,12 +1533,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorLow {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1684,12 +1612,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorMarkers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1768,12 +1691,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorNegative {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1852,7 +1770,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorScale {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cfvo = crate::transform_child(&self.cfvo, ctx, &mut rebase);
         node.color = crate::transform_child(&self.color, ctx, &mut rebase);
@@ -1934,12 +1852,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ColorSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2018,12 +1931,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ConditionalFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.scope, &self.scope);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.priority, &self.priority);
-        Clone::clone_from(&mut node.id, &self.id);
         node.pivot_areas = crate::transform_child(&self.pivot_areas, ctx, &mut rebase);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
@@ -2109,9 +2018,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ConditionalFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.conditional_format =
             crate::transform_child(&self.conditional_format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2191,9 +2099,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ConditionalFormattin
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pivot, &self.pivot);
         node.cf_rule = crate::transform_child(&self.cf_rule, ctx, &mut rebase);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.ext_lst_extension_list =
@@ -2279,7 +2186,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ConditionalFormattin
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.conditional_formatting =
             crate::transform_child(&self.conditional_formatting, ctx, &mut rebase);
@@ -2359,10 +2266,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Connection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.culture, &self.culture);
-        Clone::clone_from(&mut node.embedded_data_id, &self.embedded_data_id);
         node.calculated_members =
             crate::transform_child(&self.calculated_members, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2443,9 +2348,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CustomFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2521,9 +2424,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::CustomFilters {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.and, &self.and);
         node.custom_filter = crate::transform_child(&self.custom_filter, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2602,7 +2504,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Data {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2681,23 +2583,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DataBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.min_length, &self.min_length);
-        Clone::clone_from(&mut node.max_length, &self.max_length);
-        Clone::clone_from(&mut node.show_value, &self.show_value);
-        Clone::clone_from(&mut node.border, &self.border);
-        Clone::clone_from(&mut node.gradient, &self.gradient);
-        Clone::clone_from(&mut node.direction, &self.direction);
-        Clone::clone_from(
-            &mut node.negative_bar_color_same_as_positive,
-            &self.negative_bar_color_same_as_positive,
-        );
-        Clone::clone_from(
-            &mut node.negative_bar_border_color_same_as_positive,
-            &self.negative_bar_border_color_same_as_positive,
-        );
-        Clone::clone_from(&mut node.axis_position, &self.axis_position);
         node.cfvo = crate::transform_child(&self.cfvo, ctx, &mut rebase);
         node.fill_color = crate::transform_child(&self.fill_color, ctx, &mut rebase);
         node.border_color = crate::transform_child(&self.border_color, ctx, &mut rebase);
@@ -2801,10 +2688,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DataField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.pivot_show_as, &self.pivot_show_as);
-        Clone::clone_from(&mut node.source_field, &self.source_field);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2881,20 +2765,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DataValidation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.error_style, &self.error_style);
-        Clone::clone_from(&mut node.ime_mode, &self.ime_mode);
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.allow_blank, &self.allow_blank);
-        Clone::clone_from(&mut node.show_drop_down, &self.show_drop_down);
-        Clone::clone_from(&mut node.show_input_message, &self.show_input_message);
-        Clone::clone_from(&mut node.show_error_message, &self.show_error_message);
-        Clone::clone_from(&mut node.error_title, &self.error_title);
-        Clone::clone_from(&mut node.error, &self.error);
-        Clone::clone_from(&mut node.prompt_title, &self.prompt_title);
-        Clone::clone_from(&mut node.prompt, &self.prompt);
         node.formula1 = crate::transform_child(&self.formula1, ctx, &mut rebase);
         node.formula2 = crate::transform_child(&self.formula2, ctx, &mut rebase);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
@@ -2990,12 +2862,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DataValidations {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.disable_prompts, &self.disable_prompts);
-        Clone::clone_from(&mut node.x_window, &self.x_window);
-        Clone::clone_from(&mut node.y_window, &self.y_window);
-        Clone::clone_from(&mut node.count, &self.count);
         node.data_validation = crate::transform_child(&self.data_validation, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3077,9 +2945,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DatastoreItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3159,9 +3026,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DefinedName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
         node.argument_descriptions =
             crate::transform_child(&self.argument_descriptions, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3241,7 +3107,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::DefinedNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.defined_name = crate::transform_child(&self.defined_name, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3320,7 +3186,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Dxf {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -3419,9 +3285,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Dxfs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.formatting = crate::transform_child(&self.formatting, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3500,9 +3365,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::EditValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value_type, &self.value_type);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3578,7 +3441,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ExtLstExtensionList 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3655,7 +3518,7 @@ impl crate::Transform
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3721,12 +3584,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::FillColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3805,8 +3663,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Filter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3881,39 +3738,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::FormControlPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.object_type, &self.object_type);
-        Clone::clone_from(&mut node.checked, &self.checked);
-        Clone::clone_from(&mut node.colored, &self.colored);
-        Clone::clone_from(&mut node.drop_lines, &self.drop_lines);
-        Clone::clone_from(&mut node.drop_style, &self.drop_style);
-        Clone::clone_from(&mut node.dx, &self.dx);
-        Clone::clone_from(&mut node.first_button, &self.first_button);
-        Clone::clone_from(&mut node.fmla_group, &self.fmla_group);
-        Clone::clone_from(&mut node.fmla_link, &self.fmla_link);
-        Clone::clone_from(&mut node.fmla_range, &self.fmla_range);
-        Clone::clone_from(&mut node.fmla_txbx, &self.fmla_txbx);
-        Clone::clone_from(&mut node.horiz, &self.horiz);
-        Clone::clone_from(&mut node.inc, &self.inc);
-        Clone::clone_from(&mut node.just_last_x, &self.just_last_x);
-        Clone::clone_from(&mut node.lock_text, &self.lock_text);
-        Clone::clone_from(&mut node.max, &self.max);
-        Clone::clone_from(&mut node.min, &self.min);
-        Clone::clone_from(&mut node.multi_sel, &self.multi_sel);
-        Clone::clone_from(&mut node.no_three_d, &self.no_three_d);
-        Clone::clone_from(&mut node.no_three_d2, &self.no_three_d2);
-        Clone::clone_from(&mut node.page, &self.page);
-        Clone::clone_from(&mut node.sel, &self.sel);
-        Clone::clone_from(&mut node.seltype, &self.seltype);
-        Clone::clone_from(&mut node.text_h_align, &self.text_h_align);
-        Clone::clone_from(&mut node.text_v_align, &self.text_v_align);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.width_min, &self.width_min);
-        Clone::clone_from(&mut node.edit_val, &self.edit_val);
-        Clone::clone_from(&mut node.multi_line, &self.multi_line);
-        Clone::clone_from(&mut node.vertical_bar, &self.vertical_bar);
-        Clone::clone_from(&mut node.password_edit, &self.password_edit);
         node.item_lst = crate::transform_child(&self.item_lst, ctx, &mut rebase);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
@@ -4026,7 +3852,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Formula1 {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4105,7 +3931,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Formula2 {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4184,9 +4010,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Header {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.hierarchy_name, &self.hierarchy_name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4262,7 +4086,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Headers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.header = crate::transform_child(&self.header, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4341,11 +4165,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::IOlapSlicerCacheItem
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.n, &self.n);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.nd, &self.nd);
         node.p = crate::transform_child(&self.p, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4426,10 +4247,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ITabularSlicerCacheI
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.nd, &self.nd);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4506,9 +4324,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::IconFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4584,13 +4400,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::IconSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.show_value, &self.show_value);
-        Clone::clone_from(&mut node.percent, &self.percent);
-        Clone::clone_from(&mut node.reverse, &self.reverse);
-        Clone::clone_from(&mut node.custom, &self.custom);
         node.cfvo = crate::transform_child(&self.cfvo, ctx, &mut rebase);
         node.cf_icon = crate::transform_child(&self.cf_icon, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4676,8 +4487,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Id {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4752,17 +4562,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::IgnoredError {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.eval_error, &self.eval_error);
-        Clone::clone_from(&mut node.two_digit_text_year, &self.two_digit_text_year);
-        Clone::clone_from(&mut node.number_stored_as_text, &self.number_stored_as_text);
-        Clone::clone_from(&mut node.formula, &self.formula);
-        Clone::clone_from(&mut node.formula_range, &self.formula_range);
-        Clone::clone_from(&mut node.unlocked_formula, &self.unlocked_formula);
-        Clone::clone_from(&mut node.empty_cell_reference, &self.empty_cell_reference);
-        Clone::clone_from(&mut node.list_data_validation, &self.list_data_validation);
-        Clone::clone_from(&mut node.calculated_column, &self.calculated_column);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4849,7 +4650,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::IgnoredErrors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ignored_error = crate::transform_child(&self.ignored_error, ctx, &mut rebase);
         node.ext_lst_extension_list =
@@ -4932,8 +4733,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Item {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5008,7 +4808,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ItemLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.item = crate::transform_child(&self.item, ctx, &mut rebase);
         node.ext_lst_extension_list =
@@ -5091,9 +4891,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Items {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.i_tabular_slicer_cache_item =
             crate::transform_child(&self.i_tabular_slicer_cache_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5173,13 +4972,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Level {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.source_caption, &self.source_caption);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.sort_order, &self.sort_order);
-        Clone::clone_from(&mut node.cross_filter, &self.cross_filter);
         node.ranges = crate::transform_child(&self.ranges, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5262,9 +5056,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Levels {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.level = crate::transform_child(&self.level, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5343,12 +5136,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::NegativeBorderColor 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5427,12 +5215,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::NegativeFillColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5511,9 +5294,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Olap {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pivot_cache_id, &self.pivot_cache_id);
         node.levels = crate::transform_child(&self.levels, ctx, &mut rebase);
         node.selections = crate::transform_child(&self.selections, ctx, &mut rebase);
         node.ext_lst_extension_list =
@@ -5599,12 +5381,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::OleItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.icon, &self.icon);
-        Clone::clone_from(&mut node.advise, &self.advise);
-        Clone::clone_from(&mut node.prefer_pic, &self.prefer_pic);
         node.values = crate::transform_child(&self.values, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5686,8 +5464,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::P {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.n, &self.n);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5762,23 +5539,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.field, &self.field);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.data_only, &self.data_only);
-        Clone::clone_from(&mut node.label_only, &self.label_only);
-        Clone::clone_from(&mut node.grand_row, &self.grand_row);
-        Clone::clone_from(&mut node.grand_col, &self.grand_col);
-        Clone::clone_from(&mut node.cache_index, &self.cache_index);
-        Clone::clone_from(&mut node.outline, &self.outline);
-        Clone::clone_from(&mut node.offset, &self.offset);
-        Clone::clone_from(
-            &mut node.collapsed_levels_are_subtotals,
-            &self.collapsed_levels_are_subtotals,
-        );
-        Clone::clone_from(&mut node.axis, &self.axis);
-        Clone::clone_from(&mut node.field_position, &self.field_position);
         node.references = crate::transform_child(&self.references, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -5872,9 +5634,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotAreas {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -5953,18 +5714,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotCacheDefinition
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.slicer_data, &self.slicer_data);
-        Clone::clone_from(&mut node.pivot_cache_id, &self.pivot_cache_id);
-        Clone::clone_from(
-            &mut node.support_subquery_non_visual,
-            &self.support_subquery_non_visual,
-        );
-        Clone::clone_from(
-            &mut node.support_subquery_calc_mem,
-            &self.support_subquery_calc_mem,
-        );
-        Clone::clone_from(&mut node.support_add_calc_mems, &self.support_add_calc_mems);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6043,7 +5793,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivotcache = crate::transform_child(&self.pivotcache, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6122,10 +5872,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.allocation_method, &self.allocation_method);
-        Clone::clone_from(&mut node.weight_expression, &self.weight_expression);
         node.edit_value = crate::transform_child(&self.edit_value, ctx, &mut rebase);
         node.tuple_items = crate::transform_child(&self.tuple_items, ctx, &mut rebase);
         node.ext_lst_extension_list =
@@ -6212,7 +5960,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotChanges {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivot_change = crate::transform_child(&self.pivot_change, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6291,7 +6039,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotEdit {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.user_edit = crate::transform_child(&self.user_edit, ctx, &mut rebase);
         node.tuple_items = crate::transform_child(&self.tuple_items, ctx, &mut rebase);
@@ -6380,7 +6128,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotEdits {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivot_edit = crate::transform_child(&self.pivot_edit, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6459,9 +6207,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.fill_down_labels, &self.fill_down_labels);
-        Clone::clone_from(&mut node.ignore, &self.ignore);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6537,8 +6283,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.ignore, &self.ignore);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6613,9 +6358,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.tab_id, &self.tab_id);
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6691,27 +6434,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotTableDefinition
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.fill_down_labels_default,
-            &self.fill_down_labels_default,
-        );
-        Clone::clone_from(
-            &mut node.visual_totals_for_sets,
-            &self.visual_totals_for_sets,
-        );
-        Clone::clone_from(
-            &mut node.calculated_members_in_filters,
-            &self.calculated_members_in_filters,
-        );
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.alt_text_summary, &self.alt_text_summary);
-        Clone::clone_from(&mut node.enable_edit, &self.enable_edit);
-        Clone::clone_from(&mut node.auto_apply, &self.auto_apply);
-        Clone::clone_from(&mut node.allocation_method, &self.allocation_method);
-        Clone::clone_from(&mut node.weight_expression, &self.weight_expression);
-        Clone::clone_from(&mut node.hide_values_row, &self.hide_values_row);
         node.pivot_edits = crate::transform_child(&self.pivot_edits, ctx, &mut rebase);
         node.pivot_changes = crate::transform_child(&self.pivot_changes, ctx, &mut rebase);
         node.conditional_formats =
@@ -6806,7 +6530,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::PivotTables {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivot_table = crate::transform_child(&self.pivot_table, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6982,15 +6706,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ProtectedRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.password, &self.password);
-        Clone::clone_from(&mut node.algorithm_name, &self.algorithm_name);
-        Clone::clone_from(&mut node.hash_value, &self.hash_value);
-        Clone::clone_from(&mut node.salt_value, &self.salt_value);
-        Clone::clone_from(&mut node.spin_count, &self.spin_count);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.security_descriptor, &self.security_descriptor);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7075,7 +6792,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::ProtectedRanges {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.protected_range = crate::transform_child(&self.protected_range, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7154,9 +6871,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Range {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.start_item, &self.start_item);
         node.i_olap_slicer_cache_item =
             crate::transform_child(&self.i_olap_slicer_cache_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7236,7 +6952,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Ranges {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.range = crate::transform_child(&self.range, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7315,7 +7031,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Row {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.item = crate::transform_child(&self.item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7394,9 +7110,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::RowItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.d, &self.d);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7472,7 +7186,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Rows {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.row = crate::transform_child(&self.row, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7551,9 +7265,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Selection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.n, &self.n);
         node.p = crate::transform_child(&self.p, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7632,9 +7345,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Selections {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.selection = crate::transform_child(&self.selection, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7713,8 +7425,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SetLevel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.hierarchy, &self.hierarchy);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7789,9 +7500,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SetLevels {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.set_level = crate::transform_child(&self.set_level, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7870,8 +7580,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8043,10 +7752,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerCacheDefinitio
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.source_name, &self.source_name);
         node.pivot_tables = crate::transform_child(&self.pivot_tables, ctx, &mut rebase);
         node.data = crate::transform_child(&self.data, ctx, &mut rebase);
         node.ext_lst_slicer_cache_definition_extension_list = crate::transform_child(
@@ -8139,7 +7846,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.slicer_cache = crate::transform_child(&self.slicer_cache, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8218,7 +7925,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.slicer_slicer_ref = crate::transform_child(&self.slicer_slicer_ref, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8297,18 +8004,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerSlicer {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.cache, &self.cache);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.start_item, &self.start_item);
-        Clone::clone_from(&mut node.column_count, &self.column_count);
-        Clone::clone_from(&mut node.show_caption, &self.show_caption);
-        Clone::clone_from(&mut node.level, &self.level);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.locked_position, &self.locked_position);
-        Clone::clone_from(&mut node.row_height, &self.row_height);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8397,8 +8094,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerSlicerRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8473,9 +8169,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
         node.elements = crate::transform_child(&self.elements, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -8554,9 +8249,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerStyleElement {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8632,7 +8325,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerStyleElements 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.slicer_style_element =
             crate::transform_child(&self.slicer_style_element, ctx, &mut rebase);
@@ -8712,9 +8405,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SlicerStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.default_slicer_style, &self.default_slicer_style);
         node.slicer_style = crate::transform_child(&self.slicer_style, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -8793,7 +8485,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Slicers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.slicer_slicer = crate::transform_child(&self.slicer_slicer, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8872,14 +8564,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SortCondition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.descending, &self.descending);
-        Clone::clone_from(&mut node.sort_by, &self.sort_by);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.custom_list, &self.custom_list);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8960,8 +8645,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SourceConnection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9036,7 +8720,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Sparkline {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.f = crate::transform_child(&self.f, ctx, &mut rebase);
         node.sqref = crate::transform_child(&self.sqref, ctx, &mut rebase);
@@ -9118,28 +8802,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SparklineGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.manual_max, &self.manual_max);
-        Clone::clone_from(&mut node.manual_min, &self.manual_min);
-        Clone::clone_from(&mut node.line_weight, &self.line_weight);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.date_axis, &self.date_axis);
-        Clone::clone_from(
-            &mut node.display_empty_cells_as,
-            &self.display_empty_cells_as,
-        );
-        Clone::clone_from(&mut node.markers, &self.markers);
-        Clone::clone_from(&mut node.high, &self.high);
-        Clone::clone_from(&mut node.low, &self.low);
-        Clone::clone_from(&mut node.first, &self.first);
-        Clone::clone_from(&mut node.last, &self.last);
-        Clone::clone_from(&mut node.negative, &self.negative);
-        Clone::clone_from(&mut node.display_x_axis, &self.display_x_axis);
-        Clone::clone_from(&mut node.display_hidden, &self.display_hidden);
-        Clone::clone_from(&mut node.min_axis_type, &self.min_axis_type);
-        Clone::clone_from(&mut node.max_axis_type, &self.max_axis_type);
-        Clone::clone_from(&mut node.right_to_left, &self.right_to_left);
         node.color_series = crate::transform_child(&self.color_series, ctx, &mut rebase);
         node.color_negative = crate::transform_child(&self.color_negative, ctx, &mut rebase);
         node.color_axis = crate::transform_child(&self.color_axis, ctx, &mut rebase);
@@ -9261,7 +8925,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::SparklineGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sparkline_group = crate::transform_child(&self.sparkline_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9340,7 +9004,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Sparklines {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sparkline = crate::transform_child(&self.sparkline, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9419,9 +9083,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Table {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.alt_text_summary, &self.alt_text_summary);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9497,13 +9159,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Tabular {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pivot_cache_id, &self.pivot_cache_id);
-        Clone::clone_from(&mut node.sort_order, &self.sort_order);
-        Clone::clone_from(&mut node.custom_list_sort, &self.custom_list_sort);
-        Clone::clone_from(&mut node.show_missing, &self.show_missing);
-        Clone::clone_from(&mut node.cross_filter, &self.cross_filter);
         node.items = crate::transform_child(&self.items, ctx, &mut rebase);
         node.ext_lst_extension_list =
             crate::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
@@ -9590,8 +9247,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::TupleItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9666,7 +9322,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::TupleItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.tuple_item = crate::transform_child(&self.tuple_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9745,10 +9401,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::TupleSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.row_count, &self.row_count);
-        Clone::clone_from(&mut node.column_count, &self.column_count);
         node.headers = crate::transform_child(&self.headers, ctx, &mut rebase);
         node.rows = crate::transform_child(&self.rows, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9831,7 +9485,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::UserEdit {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9910,10 +9564,8 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::Values {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rows, &self.rows);
-        Clone::clone_from(&mut node.cols, &self.cols);
         node.value = crate::transform_child(&self.value, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -9993,13 +9645,7 @@ impl crate::Transform for office_spreadsheetml_2009_9_main::WorkbookPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.default_image_dpi, &self.default_image_dpi);
-        Clone::clone_from(
-            &mut node.discard_image_edit_data,
-            &self.discard_image_edit_data,
-        );
-        Clone::clone_from(&mut node.accuracy_version, &self.accuracy_version);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

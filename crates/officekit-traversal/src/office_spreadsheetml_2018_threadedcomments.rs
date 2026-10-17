@@ -231,7 +231,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -310,11 +310,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::Mention {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.mentionperson_id, &self.mentionperson_id);
-        Clone::clone_from(&mut node.mention_id, &self.mention_id);
-        Clone::clone_from(&mut node.start_index, &self.start_index);
-        Clone::clone_from(&mut node.length, &self.length);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -392,7 +388,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::Mentions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.mention = crate::transform_child(&self.mention, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -471,12 +467,8 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::Person {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.display_name, &self.display_name);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.user_id, &self.user_id);
-        Clone::clone_from(&mut node.provider_id, &self.provider_id);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -558,7 +550,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::PersonList
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.person = crate::transform_child(&self.person, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -640,8 +632,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::Text {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -716,14 +707,8 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::ThreadedCo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.d_t, &self.d_t);
-        Clone::clone_from(&mut node.person_id, &self.person_id);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.parent_id, &self.parent_id);
-        Clone::clone_from(&mut node.done, &self.done);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.mentions = crate::transform_child(&self.mentions, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -813,7 +798,7 @@ impl crate::Transform for office_spreadsheetml_2018_threadedcomments::ThreadedCo
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.threaded_comment = crate::transform_child(&self.threaded_comment, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);

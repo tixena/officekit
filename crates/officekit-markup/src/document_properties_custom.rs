@@ -431,6 +431,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CustomFileProperties {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for CustomFileProperties {
     fn read(element: &Element) -> Self {
         read::custom_file_properties(element)
@@ -441,6 +449,20 @@ impl crate::Write for CustomFileProperties {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::custom_file_properties(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl CustomFileProperty {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            fmtid: self.fmtid.clone(),
+            link_target: self.link_target.clone(),
+            name: self.name.clone(),
+            pid: self.pid.clone(),
+            ..Self::default()
+        }
     }
 }
 

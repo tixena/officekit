@@ -231,7 +231,7 @@ impl crate::Transform for vml_wordprocessing_drawing::AnchorLocationIsLocked {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -305,10 +305,7 @@ impl crate::Transform for vml_wordprocessing_drawing::BottomBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.shadow, &self.shadow);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -385,10 +382,7 @@ impl crate::Transform for vml_wordprocessing_drawing::LeftBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.shadow, &self.shadow);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -465,10 +459,7 @@ impl crate::Transform for vml_wordprocessing_drawing::RightBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.shadow, &self.shadow);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -545,11 +536,7 @@ impl crate::Transform for vml_wordprocessing_drawing::TextWrapping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.side, &self.side);
-        Clone::clone_from(&mut node.anchorx, &self.anchorx);
-        Clone::clone_from(&mut node.anchory, &self.anchory);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -627,10 +614,7 @@ impl crate::Transform for vml_wordprocessing_drawing::TopBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.shadow, &self.shadow);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

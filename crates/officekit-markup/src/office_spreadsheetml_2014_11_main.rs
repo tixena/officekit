@@ -383,6 +383,20 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl CalculatedTimeColumn {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            column_id: self.column_id.clone(),
+            column_name: self.column_name.clone(),
+            content_type: self.content_type.clone(),
+            is_selected: self.is_selected.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for CalculatedTimeColumn {
     fn read(element: &Element) -> Self {
         read::calculated_time_column(element)
@@ -393,6 +407,19 @@ impl crate::Write for CalculatedTimeColumn {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::calculated_time_column(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ModelTimeGrouping {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            column_id: self.column_id.clone(),
+            column_name: self.column_name.clone(),
+            table_name: self.table_name.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -474,6 +501,14 @@ impl ModelTimeGroupingContentType {
             &self.0,
             "ST_ModelTimeGroupingContentType",
         )
+    }
+}
+
+impl ModelTimeGroupings {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

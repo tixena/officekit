@@ -482,6 +482,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl PctHeight {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PctHeight {
     fn read(element: &Element) -> Self {
         read::pct_height(element)
@@ -492,6 +503,17 @@ impl crate::Write for PctHeight {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pct_height(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PctPosHOffset {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -508,6 +530,17 @@ impl crate::Write for PctPosHOffset {
     }
 }
 
+impl PctPosVOffset {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for PctPosVOffset {
     fn read(element: &Element) -> Self {
         read::pct_pos_v_offset(element)
@@ -518,6 +551,17 @@ impl crate::Write for PctPosVOffset {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::pct_pos_v_offset(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PctWidth {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -672,6 +716,17 @@ impl SizeRelFromV {
     }
 }
 
+impl SizeRelH {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            relative_from: self.relative_from.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SizeRelH {
     fn read(element: &Element) -> Self {
         read::size_rel_h(element)
@@ -682,6 +737,17 @@ impl crate::Write for SizeRelH {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::size_rel_h(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SizeRelV {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            relative_from: self.relative_from.clone(),
+            ..Self::default()
+        }
     }
 }
 

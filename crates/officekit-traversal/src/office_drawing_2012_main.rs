@@ -231,11 +231,7 @@ impl crate::Transform for office_drawing_2012_main::BackgroundPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
-        Clone::clone_from(&mut node.bw_pure, &self.bw_pure);
-        Clone::clone_from(&mut node.bw_normal, &self.bw_normal);
-        Clone::clone_from(&mut node.target_screen_size, &self.target_screen_size);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -313,8 +309,7 @@ impl crate::Transform for office_drawing_2012_main::NonVisualGroupProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.is_legacy_group, &self.is_legacy_group);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -389,10 +384,7 @@ impl crate::Transform for office_drawing_2012_main::ObjectPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.object_id, &self.object_id);
-        Clone::clone_from(&mut node.is_active_x, &self.is_active_x);
-        Clone::clone_from(&mut node.link_type, &self.link_type);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -469,25 +461,7 @@ impl crate::Transform for office_drawing_2012_main::SignatureLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.is_signature_line, &self.is_signature_line);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.prov_id, &self.prov_id);
-        Clone::clone_from(
-            &mut node.signing_instructions_set,
-            &self.signing_instructions_set,
-        );
-        Clone::clone_from(&mut node.allow_comments, &self.allow_comments);
-        Clone::clone_from(&mut node.show_sign_date, &self.show_sign_date);
-        Clone::clone_from(&mut node.suggested_signer, &self.suggested_signer);
-        Clone::clone_from(&mut node.suggested_signer2, &self.suggested_signer2);
-        Clone::clone_from(
-            &mut node.suggested_signer_email,
-            &self.suggested_signer_email,
-        );
-        Clone::clone_from(&mut node.signing_instructions, &self.signing_instructions);
-        Clone::clone_from(&mut node.addl_xml, &self.addl_xml);
-        Clone::clone_from(&mut node.sig_prov_url, &self.sig_prov_url);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

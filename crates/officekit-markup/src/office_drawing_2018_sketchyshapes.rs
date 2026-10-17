@@ -561,6 +561,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -571,6 +579,14 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LineSketchCurved {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -587,6 +603,14 @@ impl crate::Write for LineSketchCurved {
     }
 }
 
+impl LineSketchFreehand {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for LineSketchFreehand {
     fn read(element: &Element) -> Self {
         read::line_sketch_freehand(element)
@@ -597,6 +621,14 @@ impl crate::Write for LineSketchFreehand {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::line_sketch_freehand(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LineSketchNone {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -613,6 +645,14 @@ impl crate::Write for LineSketchNone {
     }
 }
 
+impl LineSketchScribble {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for LineSketchScribble {
     fn read(element: &Element) -> Self {
         read::line_sketch_scribble(element)
@@ -623,6 +663,17 @@ impl crate::Write for LineSketchScribble {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::line_sketch_scribble(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LineSketchStyleProps {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            sd: self.sd.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -667,6 +718,17 @@ impl crate::Write for LineSketchTypePropertiesContent {
     }
 }
 
+impl Seed {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Seed {
     fn read(element: &Element) -> Self {
         read::seed(element)
@@ -677,6 +739,14 @@ impl crate::Write for Seed {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::seed(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Type {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

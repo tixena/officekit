@@ -1514,6 +1514,17 @@ pub struct XfComplement {
     pub unknown: crate::Unknown,
 }
 
+impl A {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for A {
     fn read(element: &Element) -> Self {
         read::a(element)
@@ -1559,6 +1570,18 @@ impl crate::Write for ArrayFeaturePropertyContent {
     }
 }
 
+impl BBoolFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BBoolFeatureProperty {
     fn read(element: &Element) -> Self {
         read::b_bool_feature_property(element)
@@ -1569,6 +1592,17 @@ impl crate::Write for BBoolFeatureProperty {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::b_bool_feature_property(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BBoolean {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1585,6 +1619,20 @@ impl crate::Write for BBoolean {
     }
 }
 
+impl Bag {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            att: self.att.clone(),
+            bag_ext_id: self.bag_ext_id.clone(),
+            ext_ref: self.ext_ref.clone(),
+            r#type: self.r#type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Bag {
     fn read(element: &Element) -> Self {
         read::bag(element)
@@ -1595,6 +1643,14 @@ impl crate::Write for Bag {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bag(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BagExt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1611,6 +1667,18 @@ impl crate::Write for BagExt {
     }
 }
 
+impl BagIdBagFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for BagIdBagFeatureProperty {
     fn read(element: &Element) -> Self {
         read::bag_id_bag_feature_property(element)
@@ -1621,6 +1689,17 @@ impl crate::Write for BagIdBagFeatureProperty {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bag_id_bag_feature_property(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BagIdUnsignedInt {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1637,6 +1716,14 @@ impl crate::Write for BagIdUnsignedInt {
     }
 }
 
+impl ColumnBodyRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ColumnBodyRevDxf {
     fn read(element: &Element) -> Self {
         read::column_body_rev_dxf(element)
@@ -1647,6 +1734,14 @@ impl crate::Write for ColumnBodyRevDxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::column_body_rev_dxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ColumnHeaderRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1663,6 +1758,14 @@ impl crate::Write for ColumnHeaderRevDxf {
     }
 }
 
+impl ColumnTotalsRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ColumnTotalsRevDxf {
     fn read(element: &Element) -> Self {
         read::column_totals_rev_dxf(element)
@@ -1673,6 +1776,18 @@ impl crate::Write for ColumnTotalsRevDxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::column_totals_rev_dxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DDecimalFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1689,6 +1804,17 @@ impl crate::Write for DDecimalFeatureProperty {
     }
 }
 
+impl DDouble {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DDouble {
     fn read(element: &Element) -> Self {
         read::d_double(element)
@@ -1699,6 +1825,17 @@ impl crate::Write for DDouble {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::d_double(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DXFComplement {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            i: self.i.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1715,6 +1852,14 @@ impl crate::Write for DXFComplement {
     }
 }
 
+impl DataRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DataRevDxf {
     fn read(element: &Element) -> Self {
         read::data_rev_dxf(element)
@@ -1728,6 +1873,14 @@ impl crate::Write for DataRevDxf {
     }
 }
 
+impl Dxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Dxf {
     fn read(element: &Element) -> Self {
         read::dxf(element)
@@ -1738,6 +1891,14 @@ impl crate::Write for Dxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::dxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1788,6 +1949,17 @@ impl crate::Write for FeaturePropertyBagContent {
     }
 }
 
+impl FeaturePropertyBags {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            count: self.count.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for FeaturePropertyBags {
     fn read(element: &Element) -> Self {
         read::feature_property_bags(element)
@@ -1798,6 +1970,14 @@ impl crate::Write for FeaturePropertyBags {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::feature_property_bags(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Fpbs {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1814,6 +1994,14 @@ impl crate::Write for Fpbs {
     }
 }
 
+impl HeaderRowBorderRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for HeaderRowBorderRevDxf {
     fn read(element: &Element) -> Self {
         read::header_row_border_rev_dxf(element)
@@ -1824,6 +2012,14 @@ impl crate::Write for HeaderRowBorderRevDxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::header_row_border_rev_dxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl HeaderRowRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1840,6 +2036,18 @@ impl crate::Write for HeaderRowRevDxf {
     }
 }
 
+impl IIntFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for IIntFeatureProperty {
     fn read(element: &Element) -> Self {
         read::i_int_feature_property(element)
@@ -1850,6 +2058,17 @@ impl crate::Write for IIntFeatureProperty {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::i_int_feature_property(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl IInteger {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1866,6 +2085,18 @@ impl crate::Write for IInteger {
     }
 }
 
+impl RelRelFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for RelRelFeatureProperty {
     fn read(element: &Element) -> Self {
         read::rel_rel_feature_property(element)
@@ -1876,6 +2107,17 @@ impl crate::Write for RelRelFeatureProperty {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::rel_rel_feature_property(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RelString {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1892,6 +2134,14 @@ impl crate::Write for RelString {
     }
 }
 
+impl Revdxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Revdxf {
     fn read(element: &Element) -> Self {
         read::revdxf(element)
@@ -1902,6 +2152,17 @@ impl crate::Write for Revdxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::revdxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SString {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            value: self.value.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -1918,6 +2179,18 @@ impl crate::Write for SString {
     }
 }
 
+impl SStringFeatureProperty {
+    /// This node's attributes and value, copied, with no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            k: self.k.clone(),
+            value: self.value.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SStringFeatureProperty {
     fn read(element: &Element) -> Self {
         read::s_string_feature_property(element)
@@ -1928,6 +2201,14 @@ impl crate::Write for SStringFeatureProperty {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::s_string_feature_property(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TableBorderRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -1944,6 +2225,14 @@ impl crate::Write for TableBorderRevDxf {
     }
 }
 
+impl TotalsRowBorderRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TotalsRowBorderRevDxf {
     fn read(element: &Element) -> Self {
         read::totals_row_border_rev_dxf(element)
@@ -1957,6 +2246,14 @@ impl crate::Write for TotalsRowBorderRevDxf {
     }
 }
 
+impl TotalsRowRevDxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TotalsRowRevDxf {
     fn read(element: &Element) -> Self {
         read::totals_row_rev_dxf(element)
@@ -1967,6 +2264,17 @@ impl crate::Write for TotalsRowRevDxf {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::totals_row_rev_dxf(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl XfComplement {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            i: self.i.clone(),
+            ..Self::default()
+        }
     }
 }
 

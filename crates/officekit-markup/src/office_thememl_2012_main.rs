@@ -391,6 +391,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -401,6 +409,19 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ThemeFamily {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            name: self.name.clone(),
+            vid: self.vid.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -417,6 +438,21 @@ impl crate::Write for ThemeFamily {
     }
 }
 
+impl ThemeVariant {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            cx: self.cx.clone(),
+            cy: self.cy.clone(),
+            id: self.id.clone(),
+            name: self.name.clone(),
+            vid: self.vid.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ThemeVariant {
     fn read(element: &Element) -> Self {
         read::theme_variant(element)
@@ -427,6 +463,14 @@ impl crate::Write for ThemeVariant {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::theme_variant(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ThemeVariantLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

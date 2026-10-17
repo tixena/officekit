@@ -231,14 +231,8 @@ impl crate::Transform for office_word_2018_wordml_cex::CommentExtensible {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.durable_id, &self.durable_id);
-        Clone::clone_from(&mut node.date_utc, &self.date_utc);
-        Clone::clone_from(
-            &mut node.intelligent_placeholder,
-            &self.intelligent_placeholder,
-        );
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -319,7 +313,7 @@ impl crate::Transform for office_word_2018_wordml_cex::CommentsExtensible {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.comment_extensible =
             crate::transform_child(&self.comment_extensible, ctx, &mut rebase);
@@ -402,7 +396,7 @@ impl crate::Transform for office_word_2018_wordml_cex::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ext = crate::transform_child(&self.ext, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

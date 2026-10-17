@@ -274,6 +274,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl SymEx {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            char: self.char.clone(),
+            font: self.font.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SymEx {
     fn read(element: &Element) -> Self {
         read::sym_ex(element)

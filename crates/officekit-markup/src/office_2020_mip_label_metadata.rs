@@ -392,6 +392,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Ext {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            uri: self.uri.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Ext {
     fn read(element: &Element) -> Self {
         read::ext(element)
@@ -402,6 +413,14 @@ impl crate::Write for Ext {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -418,6 +437,25 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl Label {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            action_id: self.action_id.clone(),
+            content_bits: self.content_bits.clone(),
+            enabled: self.enabled.clone(),
+            id: self.id.clone(),
+            method: self.method.clone(),
+            name: self.name.clone(),
+            removed: self.removed.clone(),
+            set_date: self.set_date.clone(),
+            site_id: self.site_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Label {
     fn read(element: &Element) -> Self {
         read::label(element)
@@ -428,6 +466,14 @@ impl crate::Write for Label {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::label(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl LabelList {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

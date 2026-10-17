@@ -360,6 +360,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl AutoBuNodeInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            lvl: self.lvl.clone(),
+            pt_type: self.pt_type.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for AutoBuNodeInfo {
     fn read(element: &Element) -> Self {
         read::auto_bu_node_info(element)
@@ -373,6 +385,14 @@ impl crate::Write for AutoBuNodeInfo {
     }
 }
 
+impl AutoBuNodeInfoLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for AutoBuNodeInfoLst {
     fn read(element: &Element) -> Self {
         read::auto_bu_node_info_lst(element)
@@ -383,6 +403,18 @@ impl crate::Write for AutoBuNodeInfoLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::auto_bu_node_info_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl BuPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            lead_zeros: self.lead_zeros.clone(),
+            prefix: self.prefix.clone(),
+            ..Self::default()
+        }
     }
 }
 

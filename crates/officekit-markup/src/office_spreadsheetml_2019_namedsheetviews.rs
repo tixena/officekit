@@ -733,6 +733,18 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl ColumnFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            col_id: self.col_id.clone(),
+            id: self.id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for ColumnFilter {
     fn read(element: &Element) -> Self {
         read::column_filter(element)
@@ -743,6 +755,14 @@ impl crate::Write for ColumnFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::column_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Dxf {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -759,6 +779,14 @@ impl crate::Write for Dxf {
     }
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -769,6 +797,19 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Filter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            col_id: self.col_id.clone(),
+            hidden_button: self.hidden_button.clone(),
+            show_button: self.show_button.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -785,6 +826,18 @@ impl crate::Write for Filter {
     }
 }
 
+impl NamedSheetView {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            name: self.name.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NamedSheetView {
     fn read(element: &Element) -> Self {
         read::named_sheet_view(element)
@@ -795,6 +848,14 @@ impl crate::Write for NamedSheetView {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::named_sheet_view(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl NamedSheetViews {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -811,6 +872,19 @@ impl crate::Write for NamedSheetViews {
     }
 }
 
+impl NsvFilter {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            filter_id: self.filter_id.clone(),
+            r#ref: self.r#ref.clone(),
+            table_id: self.table_id.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for NsvFilter {
     fn read(element: &Element) -> Self {
         read::nsv_filter(element)
@@ -821,6 +895,24 @@ impl crate::Write for NsvFilter {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::nsv_filter(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl RichSortCondition {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            custom_list: self.custom_list.clone(),
+            descending: self.descending.clone(),
+            dxf_id: self.dxf_id.clone(),
+            icon_id: self.icon_id.clone(),
+            icon_set: self.icon_set.clone(),
+            r#ref: self.r#ref.clone(),
+            rich_sort_key: self.rich_sort_key.clone(),
+            sort_by: self.sort_by.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -837,6 +929,23 @@ impl crate::Write for RichSortCondition {
     }
 }
 
+impl SortCondition {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            custom_list: self.custom_list.clone(),
+            descending: self.descending.clone(),
+            dxf_id: self.dxf_id.clone(),
+            icon_id: self.icon_id.clone(),
+            icon_set: self.icon_set.clone(),
+            r#ref: self.r#ref.clone(),
+            sort_by: self.sort_by.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for SortCondition {
     fn read(element: &Element) -> Self {
         read::sort_condition(element)
@@ -847,6 +956,18 @@ impl crate::Write for SortCondition {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::sort_condition(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl SortRule {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            col_id: self.col_id.clone(),
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -883,6 +1004,18 @@ impl crate::Write for SortRuleContent {
             Self::Other(node) => writer.other(node.clone()),
             Self::RichSortCondition(arm) => arm.write_into(writer),
             Self::SortCondition(arm) => arm.write_into(writer),
+        }
+    }
+}
+
+impl SortRules {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            case_sensitive: self.case_sensitive.clone(),
+            sort_method: self.sort_method.clone(),
+            ..Self::default()
         }
     }
 }

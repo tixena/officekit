@@ -231,7 +231,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -310,7 +310,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::LineSketchCurved {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -384,7 +384,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::LineSketchFreehand 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -458,7 +458,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::LineSketchNone {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -532,7 +532,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::LineSketchScribble 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -606,9 +606,8 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::LineSketchStyleProp
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sd, &self.sd);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.r#type = crate::transform_child(&self.r#type, ctx, &mut rebase);
         node.seed = crate::transform_child(&self.seed, ctx, &mut rebase);
@@ -807,8 +806,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::Seed {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -883,7 +881,7 @@ impl crate::Transform for office_drawing_2018_sketchyshapes::Type {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);

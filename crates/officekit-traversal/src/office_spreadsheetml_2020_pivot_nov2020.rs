@@ -231,9 +231,7 @@ impl crate::Transform for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutu
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.version, &self.version);
-        Clone::clone_from(&mut node.source_field, &self.source_field);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -309,8 +307,7 @@ impl crate::Transform for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfte
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.version, &self.version);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -385,8 +382,7 @@ impl crate::Transform for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasu
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

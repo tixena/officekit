@@ -279,6 +279,19 @@ pub struct WebVideoPr {
     pub w: Option<String>,
 }
 
+impl WebVideoPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            embedded_html: self.embedded_html.clone(),
+            h: self.h.clone(),
+            w: self.w.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for WebVideoPr {
     fn read(element: &Element) -> Self {
         read::web_video_pr(element)

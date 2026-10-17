@@ -491,6 +491,14 @@ pub struct Wpc {
     pub whole: Option<Box<Whole>>,
 }
 
+impl Bg {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Bg {
     fn read(element: &Element) -> Self {
         read::bg(element)
@@ -501,6 +509,14 @@ impl crate::Write for Bg {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::bg(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -517,6 +533,14 @@ impl crate::Write for ExtLst {
     }
 }
 
+impl GraphicFrame {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for GraphicFrame {
     fn read(element: &Element) -> Self {
         read::graphic_frame(element)
@@ -527,6 +551,14 @@ impl crate::Write for GraphicFrame {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::graphic_frame(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Whole {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -570,6 +602,14 @@ impl crate::Write for WordprocessingCanvasContent {
             Self::Wgp(arm) => arm.write_into(writer),
             Self::Wsp(arm) => arm.write_into(writer),
         }
+    }
+}
+
+impl Wpc {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

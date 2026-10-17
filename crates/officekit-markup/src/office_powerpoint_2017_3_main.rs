@@ -419,6 +419,21 @@ impl DisplayLocation {
     }
 }
 
+impl Track {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            embed: self.embed.clone(),
+            id: self.id.clone(),
+            label: self.label.clone(),
+            lang: self.lang.clone(),
+            link: self.link.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Track {
     fn read(element: &Element) -> Self {
         read::track(element)
@@ -432,6 +447,14 @@ impl crate::Write for Track {
     }
 }
 
+impl TrackLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for TrackLst {
     fn read(element: &Element) -> Self {
         read::track_lst(element)
@@ -442,6 +465,17 @@ impl crate::Write for TrackLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::track_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl TracksInfo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            display_loc: self.display_loc.clone(),
+            ..Self::default()
+        }
     }
 }
 

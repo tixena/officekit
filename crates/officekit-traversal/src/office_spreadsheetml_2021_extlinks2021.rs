@@ -231,7 +231,7 @@ impl crate::Transform for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -305,10 +305,8 @@ impl crate::Transform for office_spreadsheetml_2021_extlinks2021::AlternateUrls 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.drive_id, &self.drive_id);
-        Clone::clone_from(&mut node.item_id, &self.item_id);
         node.absolute_url = crate::transform_child(&self.absolute_url, ctx, &mut rebase);
         node.relative_url = crate::transform_child(&self.relative_url, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -391,7 +389,7 @@ impl crate::Transform for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

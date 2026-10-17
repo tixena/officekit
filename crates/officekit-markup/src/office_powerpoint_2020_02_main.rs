@@ -382,6 +382,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl DesignPr {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            edt_design_elem: self.edt_design_elem.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for DesignPr {
     fn read(element: &Element) -> Self {
         read::design_pr(element)
@@ -392,6 +403,18 @@ impl crate::Write for DesignPr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::design_pr(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl DesignTag {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            name: self.name.clone(),
+            val: self.val.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -408,6 +431,14 @@ impl crate::Write for DesignTag {
     }
 }
 
+impl DesignTagLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for DesignTagLst {
     fn read(element: &Element) -> Self {
         read::design_tag_lst(element)
@@ -418,6 +449,14 @@ impl crate::Write for DesignTagLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::design_tag_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

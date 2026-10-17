@@ -227,16 +227,7 @@ impl crate::Transform for spreadsheet::Alignment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.horizontal, &self.horizontal);
-        Clone::clone_from(&mut node.vertical, &self.vertical);
-        Clone::clone_from(&mut node.text_rotation, &self.text_rotation);
-        Clone::clone_from(&mut node.wrap_text, &self.wrap_text);
-        Clone::clone_from(&mut node.indent, &self.indent);
-        Clone::clone_from(&mut node.relative_indent, &self.relative_indent);
-        Clone::clone_from(&mut node.justify_last_line, &self.justify_last_line);
-        Clone::clone_from(&mut node.shrink_to_fit, &self.shrink_to_fit);
-        Clone::clone_from(&mut node.reading_order, &self.reading_order);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -303,8 +294,7 @@ impl crate::Transform for spreadsheet::Author {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -363,7 +353,7 @@ impl crate::Transform for spreadsheet::Authors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.author = crate::transform_child(&self.author, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -430,11 +420,8 @@ impl crate::Transform for spreadsheet::AutoFilterColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.col_id, &self.col_id);
-        Clone::clone_from(&mut node.hidden_button, &self.hidden_button);
-        Clone::clone_from(&mut node.show_button, &self.show_button);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -658,9 +645,8 @@ impl crate::Transform for spreadsheet::AutoFilterSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
         node.autofilter_column = crate::transform_child(&self.autofilter_column, ctx, &mut rebase);
         node.sort_state = crate::transform_child(&self.sort_state, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -743,7 +729,7 @@ impl crate::Transform for spreadsheet::AutoSortScope {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -819,12 +805,7 @@ impl crate::Transform for spreadsheet::BackgroundColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -900,8 +881,7 @@ impl crate::Transform for spreadsheet::BackgroundImage {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -969,8 +949,7 @@ impl crate::Transform for spreadsheet::Bold {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1029,13 +1008,8 @@ impl crate::Transform for spreadsheet::Boolean {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1103,11 +1077,8 @@ impl crate::Transform for spreadsheet::Border {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.diagonal_up, &self.diagonal_up);
-        Clone::clone_from(&mut node.diagonal_down, &self.diagonal_down);
-        Clone::clone_from(&mut node.outline, &self.outline);
         node.leading_edge_border_start =
             crate::transform_child(&self.leading_edge_border_start, ctx, &mut rebase);
         node.trailing_edge_border_end =
@@ -1201,9 +1172,8 @@ impl crate::Transform for spreadsheet::Borders {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.border = crate::transform_child(&self.border, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1266,9 +1236,8 @@ impl crate::Transform for spreadsheet::BottomBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1336,12 +1305,7 @@ impl crate::Transform for spreadsheet::Break {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.min, &self.min);
-        Clone::clone_from(&mut node.max, &self.max);
-        Clone::clone_from(&mut node.man, &self.man);
-        Clone::clone_from(&mut node.pt, &self.pt);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1546,7 +1510,7 @@ impl crate::Transform for spreadsheet::CachedWorksheetData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.external_sheet_data_set =
             crate::transform_child(&self.external_sheet_data_set, ctx, &mut rebase);
@@ -1626,9 +1590,7 @@ impl crate::Transform for spreadsheet::CalculatedColumnFormula {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.array, &self.array);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1704,10 +1666,8 @@ impl crate::Transform for spreadsheet::CalculatedItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.field, &self.field);
-        Clone::clone_from(&mut node.formula, &self.formula);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -1788,9 +1748,8 @@ impl crate::Transform for spreadsheet::CalculatedItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.calculated_item = crate::transform_child(&self.calculated_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -1866,15 +1825,8 @@ impl crate::Transform for spreadsheet::CalculatedMember {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.mdx, &self.mdx);
-        Clone::clone_from(&mut node.member_name, &self.member_name);
-        Clone::clone_from(&mut node.hierarchy, &self.hierarchy);
-        Clone::clone_from(&mut node.parent, &self.parent);
-        Clone::clone_from(&mut node.solve_order, &self.solve_order);
-        Clone::clone_from(&mut node.set, &self.set);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -1957,9 +1909,8 @@ impl crate::Transform for spreadsheet::CalculatedMembers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.calculated_member = crate::transform_child(&self.calculated_member, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2035,7 +1986,7 @@ impl crate::Transform for spreadsheet::CalculationChainInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cell_calc_cell = crate::transform_child(&self.cell_calc_cell, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -2118,23 +2069,7 @@ impl crate::Transform for spreadsheet::CalculationProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.calc_id, &self.calc_id);
-        Clone::clone_from(&mut node.calc_mode, &self.calc_mode);
-        Clone::clone_from(&mut node.full_calc_on_load, &self.full_calc_on_load);
-        Clone::clone_from(&mut node.ref_mode, &self.ref_mode);
-        Clone::clone_from(&mut node.iterate, &self.iterate);
-        Clone::clone_from(&mut node.iterate_count, &self.iterate_count);
-        Clone::clone_from(&mut node.iterate_delta, &self.iterate_delta);
-        Clone::clone_from(&mut node.full_precision, &self.full_precision);
-        Clone::clone_from(&mut node.calc_completed, &self.calc_completed);
-        Clone::clone_from(&mut node.calc_on_save, &self.calc_on_save);
-        Clone::clone_from(&mut node.concurrent_calc, &self.concurrent_calc);
-        Clone::clone_from(
-            &mut node.concurrent_manual_count,
-            &self.concurrent_manual_count,
-        );
-        Clone::clone_from(&mut node.force_full_calc, &self.force_full_calc);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2217,14 +2152,8 @@ impl crate::Transform for spreadsheet::Cell {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.cm, &self.cm);
-        Clone::clone_from(&mut node.vm, &self.vm);
-        Clone::clone_from(&mut node.ph, &self.ph);
         node.formula_f = crate::transform_child(&self.formula_f, ctx, &mut rebase);
         node.value = crate::transform_child(&self.value, ctx, &mut rebase);
         node.rich_text_inline = crate::transform_child(&self.rich_text_inline, ctx, &mut rebase);
@@ -2306,14 +2235,7 @@ impl crate::Transform for spreadsheet::CellCalcCell {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.l, &self.l);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.a, &self.a);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2387,9 +2309,8 @@ impl crate::Transform for spreadsheet::CellFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.format = crate::transform_child(&self.format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2456,9 +2377,8 @@ impl crate::Transform for spreadsheet::CellMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.block = crate::transform_child(&self.block, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2530,10 +2450,8 @@ impl crate::Transform for spreadsheet::CellProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
         node.column_xml_properties =
             crate::transform_child(&self.column_xml_properties, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -2615,11 +2533,8 @@ impl crate::Transform for spreadsheet::CellSmartTag {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.deleted, &self.deleted);
-        Clone::clone_from(&mut node.xml_based, &self.xml_based);
         node.properties_cell_smart_tag_pr =
             crate::transform_child(&self.properties_cell_smart_tag_pr, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2698,9 +2613,8 @@ impl crate::Transform for spreadsheet::CellSmartTags {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
         node.cell_smart_tag = crate::transform_child(&self.cell_smart_tag, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2772,14 +2686,8 @@ impl crate::Transform for spreadsheet::CellStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.xf_id, &self.xf_id);
-        Clone::clone_from(&mut node.builtin_id, &self.builtin_id);
-        Clone::clone_from(&mut node.i_level, &self.i_level);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.custom_builtin, &self.custom_builtin);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2852,9 +2760,8 @@ impl crate::Transform for spreadsheet::CellStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.cell_style = crate::transform_child(&self.cell_style, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -2921,8 +2828,7 @@ impl crate::Transform for spreadsheet::CellValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2989,8 +2895,7 @@ impl crate::Transform for spreadsheet::CellWatchItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r, &self.r);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3062,7 +2967,7 @@ impl crate::Transform for spreadsheet::CellWatchItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cell_watch_item = crate::transform_child(&self.cell_watch_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3134,8 +3039,7 @@ impl crate::Transform for spreadsheet::CharacterSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3203,20 +3107,8 @@ impl crate::Transform for spreadsheet::CharacterValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
-        Clone::clone_from(&mut node.r#in, &self.r#in);
-        Clone::clone_from(&mut node.bc, &self.bc);
-        Clone::clone_from(&mut node.fc, &self.fc);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.un, &self.un);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.b, &self.b);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
@@ -3307,8 +3199,7 @@ impl crate::Transform for spreadsheet::CharacterValueXStringElement {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3379,7 +3270,7 @@ impl crate::Transform for spreadsheet::ChartSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.views = crate::transform_child(&self.views, ctx, &mut rebase);
@@ -3499,20 +3390,7 @@ impl crate::Transform for spreadsheet::ChartSheetPageSetup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.paper_size, &self.paper_size);
-        Clone::clone_from(&mut node.paper_height, &self.paper_height);
-        Clone::clone_from(&mut node.paper_width, &self.paper_width);
-        Clone::clone_from(&mut node.first_page_number, &self.first_page_number);
-        Clone::clone_from(&mut node.orientation, &self.orientation);
-        Clone::clone_from(&mut node.use_printer_defaults, &self.use_printer_defaults);
-        Clone::clone_from(&mut node.black_and_white, &self.black_and_white);
-        Clone::clone_from(&mut node.draft, &self.draft);
-        Clone::clone_from(&mut node.use_first_page_number, &self.use_first_page_number);
-        Clone::clone_from(&mut node.horizontal_dpi, &self.horizontal_dpi);
-        Clone::clone_from(&mut node.vertical_dpi, &self.vertical_dpi);
-        Clone::clone_from(&mut node.copies, &self.copies);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3599,10 +3477,8 @@ impl crate::Transform for spreadsheet::ChartSheetProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.published, &self.published);
-        Clone::clone_from(&mut node.code_name, &self.code_name);
         node.sheet_tab_color = crate::transform_child(&self.sheet_tab_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -3682,14 +3558,7 @@ impl crate::Transform for spreadsheet::ChartSheetProtection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.password, &self.password);
-        Clone::clone_from(&mut node.algorithm_name, &self.algorithm_name);
-        Clone::clone_from(&mut node.hash_value, &self.hash_value);
-        Clone::clone_from(&mut node.salt_value, &self.salt_value);
-        Clone::clone_from(&mut node.spin_count, &self.spin_count);
-        Clone::clone_from(&mut node.content, &self.content);
-        Clone::clone_from(&mut node.objects, &self.objects);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3770,12 +3639,8 @@ impl crate::Transform for spreadsheet::ChartSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.tab_selected, &self.tab_selected);
-        Clone::clone_from(&mut node.zoom_scale, &self.zoom_scale);
-        Clone::clone_from(&mut node.workbook_view_id, &self.workbook_view_id);
-        Clone::clone_from(&mut node.zoom_to_fit, &self.zoom_to_fit);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3855,7 +3720,7 @@ impl crate::Transform for spreadsheet::ChartSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.chart_sheet_view = crate::transform_child(&self.chart_sheet_view, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -3935,9 +3800,7 @@ impl crate::Transform for spreadsheet::ColorFilterCriteria {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.cell_color, &self.cell_color);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4009,7 +3872,7 @@ impl crate::Transform for spreadsheet::ColorIndexes {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.rgb_color = crate::transform_child(&self.rgb_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4077,7 +3940,7 @@ impl crate::Transform for spreadsheet::ColorScale {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.conditional_format_value_object =
             crate::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
@@ -4148,7 +4011,7 @@ impl crate::Transform for spreadsheet::Colors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.color_indexes = crate::transform_child(&self.color_indexes, ctx, &mut rebase);
         node.mru = crate::transform_child(&self.mru, ctx, &mut rebase);
@@ -4214,9 +4077,8 @@ impl crate::Transform for spreadsheet::ColumnFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.field = crate::transform_child(&self.field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4288,7 +4150,7 @@ impl crate::Transform for spreadsheet::ColumnInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.column_width_formatting =
             crate::transform_child(&self.column_width_formatting, ctx, &mut rebase);
@@ -4361,9 +4223,8 @@ impl crate::Transform for spreadsheet::ColumnItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.row_items_i = crate::transform_child(&self.row_items_i, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4434,8 +4295,7 @@ impl crate::Transform for spreadsheet::ColumnOLAPHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.hierarchy_usage, &self.hierarchy_usage);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4510,9 +4370,8 @@ impl crate::Transform for spreadsheet::ColumnOLAPHierarchyReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.column_olap_hierarchies =
             crate::transform_child(&self.column_olap_hierarchies, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4592,17 +4451,7 @@ impl crate::Transform for spreadsheet::ColumnWidthFormatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.min, &self.min);
-        Clone::clone_from(&mut node.max, &self.max);
-        Clone::clone_from(&mut node.width, &self.width);
-        Clone::clone_from(&mut node.style, &self.style);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.best_fit, &self.best_fit);
-        Clone::clone_from(&mut node.custom_width, &self.custom_width);
-        Clone::clone_from(&mut node.phonetic, &self.phonetic);
-        Clone::clone_from(&mut node.outline_level, &self.outline_level);
-        Clone::clone_from(&mut node.collapsed, &self.collapsed);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4686,11 +4535,8 @@ impl crate::Transform for spreadsheet::ColumnXMLProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.map_id, &self.map_id);
-        Clone::clone_from(&mut node.xpath, &self.xpath);
-        Clone::clone_from(&mut node.xml_data_type, &self.xml_data_type);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4768,12 +4614,8 @@ impl crate::Transform for spreadsheet::Comment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.author_id, &self.author_id);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.shape_id, &self.shape_id);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4846,20 +4688,8 @@ impl crate::Transform for spreadsheet::CommentProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.default_size, &self.default_size);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.disabled, &self.disabled);
-        Clone::clone_from(&mut node.auto_fill, &self.auto_fill);
-        Clone::clone_from(&mut node.auto_line, &self.auto_line);
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.text_h_align, &self.text_h_align);
-        Clone::clone_from(&mut node.text_v_align, &self.text_v_align);
-        Clone::clone_from(&mut node.lock_text, &self.lock_text);
-        Clone::clone_from(&mut node.just_last_x, &self.just_last_x);
-        Clone::clone_from(&mut node.auto_scale, &self.auto_scale);
         node.object_cell_anchor =
             crate::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -4943,7 +4773,7 @@ impl crate::Transform for spreadsheet::CommentText {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.rich_text_run = crate::transform_child(&self.rich_text_run, ctx, &mut rebase);
@@ -5020,7 +4850,7 @@ impl crate::Transform for spreadsheet::Comments {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.authors = crate::transform_child(&self.authors, ctx, &mut rebase);
         node.list = crate::transform_child(&self.list, ctx, &mut rebase);
@@ -5090,8 +4920,7 @@ impl crate::Transform for spreadsheet::Condense {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5154,11 +4983,8 @@ impl crate::Transform for spreadsheet::ConditionalFormatValueObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.gte, &self.gte);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5240,9 +5066,8 @@ impl crate::Transform for spreadsheet::ConditionalFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.conditional_formatting_conditional_format = crate::transform_child(
             &self.conditional_formatting_conditional_format,
             ctx,
@@ -5322,10 +5147,8 @@ impl crate::Transform for spreadsheet::ConditionalFormatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pivot, &self.pivot);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
         node.rule = crate::transform_child(&self.rule, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -5409,11 +5232,8 @@ impl crate::Transform for spreadsheet::ConditionalFormattingConditionalFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.scope, &self.scope);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.priority, &self.priority);
         node.pivot_areas = crate::transform_child(&self.pivot_areas, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -5498,21 +5318,8 @@ impl crate::Transform for spreadsheet::ConditionalFormattingRule {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.priority, &self.priority);
-        Clone::clone_from(&mut node.stop_if_true, &self.stop_if_true);
-        Clone::clone_from(&mut node.above_average, &self.above_average);
-        Clone::clone_from(&mut node.percent, &self.percent);
-        Clone::clone_from(&mut node.bottom, &self.bottom);
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.text, &self.text);
-        Clone::clone_from(&mut node.time_period, &self.time_period);
-        Clone::clone_from(&mut node.rank, &self.rank);
-        Clone::clone_from(&mut node.std_dev, &self.std_dev);
-        Clone::clone_from(&mut node.equal_average, &self.equal_average);
         node.formula = crate::transform_child(&self.formula, ctx, &mut rebase);
         node.color_scale = crate::transform_child(&self.color_scale, ctx, &mut rebase);
         node.data_bar = crate::transform_child(&self.data_bar, ctx, &mut rebase);
@@ -5612,34 +5419,8 @@ impl crate::Transform for spreadsheet::Connection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.source_file, &self.source_file);
-        Clone::clone_from(&mut node.odc_file, &self.odc_file);
-        Clone::clone_from(&mut node.keep_alive, &self.keep_alive);
-        Clone::clone_from(&mut node.interval, &self.interval);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.reconnection_method, &self.reconnection_method);
-        Clone::clone_from(&mut node.refreshed_version, &self.refreshed_version);
-        Clone::clone_from(
-            &mut node.min_refreshable_version,
-            &self.min_refreshable_version,
-        );
-        Clone::clone_from(&mut node.save_password, &self.save_password);
-        Clone::clone_from(&mut node.new, &self.new);
-        Clone::clone_from(&mut node.deleted, &self.deleted);
-        Clone::clone_from(
-            &mut node.only_use_connection_file,
-            &self.only_use_connection_file,
-        );
-        Clone::clone_from(&mut node.background, &self.background);
-        Clone::clone_from(&mut node.refresh_on_load, &self.refresh_on_load);
-        Clone::clone_from(&mut node.save_data, &self.save_data);
-        Clone::clone_from(&mut node.credentials, &self.credentials);
-        Clone::clone_from(&mut node.single_sign_on_id, &self.single_sign_on_id);
         node.database_properties =
             crate::transform_child(&self.database_properties, ctx, &mut rebase);
         node.olap_properties = crate::transform_child(&self.olap_properties, ctx, &mut rebase);
@@ -5744,7 +5525,7 @@ impl crate::Transform for spreadsheet::Connections {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.connection = crate::transform_child(&self.connection, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5815,9 +5596,8 @@ impl crate::Transform for spreadsheet::ConsolidationSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.auto_page, &self.auto_page);
         node.page_item_values = crate::transform_child(&self.page_item_values, ctx, &mut rebase);
         node.range_sets = crate::transform_child(&self.range_sets, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5896,12 +5676,8 @@ impl crate::Transform for spreadsheet::CustomChartSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.scale, &self.scale);
-        Clone::clone_from(&mut node.state, &self.state);
-        Clone::clone_from(&mut node.zoom_to_fit, &self.zoom_to_fit);
         node.page_margins = crate::transform_child(&self.page_margins, ctx, &mut rebase);
         node.chart_sheet_page_setup =
             crate::transform_child(&self.chart_sheet_page_setup, ctx, &mut rebase);
@@ -5991,7 +5767,7 @@ impl crate::Transform for spreadsheet::CustomChartSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_chart_sheet_view =
             crate::transform_child(&self.custom_chart_sheet_view, ctx, &mut rebase);
@@ -6071,9 +5847,7 @@ impl crate::Transform for spreadsheet::CustomFilterCriteria {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6149,9 +5923,8 @@ impl crate::Transform for spreadsheet::CustomFilters {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.and, &self.and);
         node.custom_filter_criteria =
             crate::transform_child(&self.custom_filter_criteria, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6228,7 +6001,7 @@ impl crate::Transform for spreadsheet::CustomProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_property = crate::transform_child(&self.custom_property, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6304,9 +6077,7 @@ impl crate::Transform for spreadsheet::CustomProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -6379,28 +6150,8 @@ impl crate::Transform for spreadsheet::CustomSheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.scale, &self.scale);
-        Clone::clone_from(&mut node.color_id, &self.color_id);
-        Clone::clone_from(&mut node.show_page_breaks, &self.show_page_breaks);
-        Clone::clone_from(&mut node.show_formulas, &self.show_formulas);
-        Clone::clone_from(&mut node.show_grid_lines, &self.show_grid_lines);
-        Clone::clone_from(&mut node.show_row_col, &self.show_row_col);
-        Clone::clone_from(&mut node.outline_symbols, &self.outline_symbols);
-        Clone::clone_from(&mut node.zero_values, &self.zero_values);
-        Clone::clone_from(&mut node.fit_to_page, &self.fit_to_page);
-        Clone::clone_from(&mut node.print_area, &self.print_area);
-        Clone::clone_from(&mut node.filter, &self.filter);
-        Clone::clone_from(&mut node.show_auto_filter, &self.show_auto_filter);
-        Clone::clone_from(&mut node.hidden_rows, &self.hidden_rows);
-        Clone::clone_from(&mut node.hidden_columns, &self.hidden_columns);
-        Clone::clone_from(&mut node.state, &self.state);
-        Clone::clone_from(&mut node.filter_unique, &self.filter_unique);
-        Clone::clone_from(&mut node.view, &self.view);
-        Clone::clone_from(&mut node.show_ruler, &self.show_ruler);
-        Clone::clone_from(&mut node.top_left_cell, &self.top_left_cell);
         node.pane = crate::transform_child(&self.pane, ctx, &mut rebase);
         node.selection = crate::transform_child(&self.selection, ctx, &mut rebase);
         node.row_breaks = crate::transform_child(&self.row_breaks, ctx, &mut rebase);
@@ -6527,7 +6278,7 @@ impl crate::Transform for spreadsheet::CustomSheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_sheet_view = crate::transform_child(&self.custom_sheet_view, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6603,41 +6354,8 @@ impl crate::Transform for spreadsheet::CustomWorkbookView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.auto_update, &self.auto_update);
-        Clone::clone_from(&mut node.merge_interval, &self.merge_interval);
-        Clone::clone_from(&mut node.changes_saved_win, &self.changes_saved_win);
-        Clone::clone_from(&mut node.only_sync, &self.only_sync);
-        Clone::clone_from(&mut node.personal_view, &self.personal_view);
-        Clone::clone_from(
-            &mut node.include_print_settings,
-            &self.include_print_settings,
-        );
-        Clone::clone_from(
-            &mut node.include_hidden_row_col,
-            &self.include_hidden_row_col,
-        );
-        Clone::clone_from(&mut node.maximized, &self.maximized);
-        Clone::clone_from(&mut node.minimized, &self.minimized);
-        Clone::clone_from(
-            &mut node.show_horizontal_scroll,
-            &self.show_horizontal_scroll,
-        );
-        Clone::clone_from(&mut node.show_vertical_scroll, &self.show_vertical_scroll);
-        Clone::clone_from(&mut node.show_sheet_tabs, &self.show_sheet_tabs);
-        Clone::clone_from(&mut node.x_window, &self.x_window);
-        Clone::clone_from(&mut node.y_window, &self.y_window);
-        Clone::clone_from(&mut node.window_width, &self.window_width);
-        Clone::clone_from(&mut node.window_height, &self.window_height);
-        Clone::clone_from(&mut node.tab_ratio, &self.tab_ratio);
-        Clone::clone_from(&mut node.active_sheet_id, &self.active_sheet_id);
-        Clone::clone_from(&mut node.show_formula_bar, &self.show_formula_bar);
-        Clone::clone_from(&mut node.show_statusbar, &self.show_statusbar);
-        Clone::clone_from(&mut node.show_comments, &self.show_comments);
-        Clone::clone_from(&mut node.show_objects, &self.show_objects);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6737,7 +6455,7 @@ impl crate::Transform for spreadsheet::CustomWorkbookViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.custom_workbook_view =
             crate::transform_child(&self.custom_workbook_view, ctx, &mut rebase);
@@ -6817,10 +6535,8 @@ impl crate::Transform for spreadsheet::DDEConnection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.dde_service, &self.dde_service);
-        Clone::clone_from(&mut node.dde_topic, &self.dde_topic);
         node.dde_items_collection =
             crate::transform_child(&self.dde_items_collection, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -6898,12 +6614,8 @@ impl crate::Transform for spreadsheet::DDEItemDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.ole, &self.ole);
-        Clone::clone_from(&mut node.advise, &self.advise);
-        Clone::clone_from(&mut node.prefer_pic, &self.prefer_pic);
         node.dde_name_values = crate::transform_child(&self.dde_name_values, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -6982,7 +6694,7 @@ impl crate::Transform for spreadsheet::DDEItemsCollection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.dde_item_definition =
             crate::transform_child(&self.dde_item_definition, ctx, &mut rebase);
@@ -7059,8 +6771,7 @@ impl crate::Transform for spreadsheet::DDELinkValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7132,10 +6843,8 @@ impl crate::Transform for spreadsheet::DDENameValues {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rows, &self.rows);
-        Clone::clone_from(&mut node.cols, &self.cols);
         node.value = crate::transform_child(&self.value, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7208,11 +6917,8 @@ impl crate::Transform for spreadsheet::DataBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.min_length, &self.min_length);
-        Clone::clone_from(&mut node.max_length, &self.max_length);
-        Clone::clone_from(&mut node.show_value, &self.show_value);
         node.conditional_format_value_object =
             crate::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
         node.color = crate::transform_child(&self.color, ctx, &mut rebase);
@@ -7285,12 +6991,7 @@ impl crate::Transform for spreadsheet::DataBarColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7366,13 +7067,8 @@ impl crate::Transform for spreadsheet::DataConsolidate {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.function, &self.function);
-        Clone::clone_from(&mut node.start_labels, &self.start_labels);
-        Clone::clone_from(&mut node.left_labels, &self.left_labels);
-        Clone::clone_from(&mut node.top_labels, &self.top_labels);
-        Clone::clone_from(&mut node.link, &self.link);
         node.data_consolidation_references =
             crate::transform_child(&self.data_consolidation_references, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7453,11 +7149,7 @@ impl crate::Transform for spreadsheet::DataConsolidationReference {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sheet, &self.sheet);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -7535,9 +7227,8 @@ impl crate::Transform for spreadsheet::DataConsolidationReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.data_consolidation_reference =
             crate::transform_child(&self.data_consolidation_reference, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7617,15 +7308,8 @@ impl crate::Transform for spreadsheet::DataFieldItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.fld, &self.fld);
-        Clone::clone_from(&mut node.subtotal, &self.subtotal);
-        Clone::clone_from(&mut node.show_data_as, &self.show_data_as);
-        Clone::clone_from(&mut node.base_field, &self.base_field);
-        Clone::clone_from(&mut node.base_item, &self.base_item);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -7704,9 +7388,8 @@ impl crate::Transform for spreadsheet::DataFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.data_field_item = crate::transform_child(&self.data_field_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7777,21 +7460,8 @@ impl crate::Transform for spreadsheet::DataValidation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.error_style, &self.error_style);
-        Clone::clone_from(&mut node.ime_mode, &self.ime_mode);
-        Clone::clone_from(&mut node.operator, &self.operator);
-        Clone::clone_from(&mut node.allow_blank, &self.allow_blank);
-        Clone::clone_from(&mut node.show_drop_down, &self.show_drop_down);
-        Clone::clone_from(&mut node.show_input_message, &self.show_input_message);
-        Clone::clone_from(&mut node.show_error_message, &self.show_error_message);
-        Clone::clone_from(&mut node.error_title, &self.error_title);
-        Clone::clone_from(&mut node.error, &self.error);
-        Clone::clone_from(&mut node.prompt_title, &self.prompt_title);
-        Clone::clone_from(&mut node.prompt, &self.prompt);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
         node.list = crate::transform_child(&self.list, ctx, &mut rebase);
         node.formula_1 = crate::transform_child(&self.formula_1, ctx, &mut rebase);
         node.formula_2 = crate::transform_child(&self.formula_2, ctx, &mut rebase);
@@ -7885,12 +7555,8 @@ impl crate::Transform for spreadsheet::DataValidations {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.disable_prompts, &self.disable_prompts);
-        Clone::clone_from(&mut node.x_window, &self.x_window);
-        Clone::clone_from(&mut node.y_window, &self.y_window);
-        Clone::clone_from(&mut node.count, &self.count);
         node.data_validation = crate::transform_child(&self.data_validation, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -7969,11 +7635,7 @@ impl crate::Transform for spreadsheet::DatabaseProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.connection, &self.connection);
-        Clone::clone_from(&mut node.command, &self.command);
-        Clone::clone_from(&mut node.server_command, &self.server_command);
-        Clone::clone_from(&mut node.command_type, &self.command_type);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8044,14 +7706,7 @@ impl crate::Transform for spreadsheet::DateGrouping {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.year, &self.year);
-        Clone::clone_from(&mut node.month, &self.month);
-        Clone::clone_from(&mut node.day, &self.day);
-        Clone::clone_from(&mut node.hour, &self.hour);
-        Clone::clone_from(&mut node.minute, &self.minute);
-        Clone::clone_from(&mut node.second, &self.second);
-        Clone::clone_from(&mut node.date_time_grouping, &self.date_time_grouping);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8121,13 +7776,8 @@ impl crate::Transform for spreadsheet::DateTime {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8195,23 +7845,7 @@ impl crate::Transform for spreadsheet::DefinedName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.comment, &self.comment);
-        Clone::clone_from(&mut node.custom_menu, &self.custom_menu);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.help, &self.help);
-        Clone::clone_from(&mut node.status_bar, &self.status_bar);
-        Clone::clone_from(&mut node.local_sheet_id, &self.local_sheet_id);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.function, &self.function);
-        Clone::clone_from(&mut node.vb_procedure, &self.vb_procedure);
-        Clone::clone_from(&mut node.xlm, &self.xlm);
-        Clone::clone_from(&mut node.function_group_id, &self.function_group_id);
-        Clone::clone_from(&mut node.shortcut_key, &self.shortcut_key);
-        Clone::clone_from(&mut node.publish_to_server, &self.publish_to_server);
-        Clone::clone_from(&mut node.workbook_parameter, &self.workbook_parameter);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8293,10 +7927,7 @@ impl crate::Transform for spreadsheet::DefinedNameExternalDefinedName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.refers_to, &self.refers_to);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8369,7 +8000,7 @@ impl crate::Transform for spreadsheet::DefinedNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.defined_name = crate::transform_child(&self.defined_name, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8437,8 +8068,7 @@ impl crate::Transform for spreadsheet::DeletedField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8506,9 +8136,8 @@ impl crate::Transform for spreadsheet::DeletedFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.deleted_field = crate::transform_child(&self.deleted_field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -8580,9 +8209,8 @@ impl crate::Transform for spreadsheet::Diagonal {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -8645,7 +8273,7 @@ impl crate::Transform for spreadsheet::DialogSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.views = crate::transform_child(&self.views, ctx, &mut rebase);
@@ -8772,9 +8400,8 @@ impl crate::Transform for spreadsheet::DiscreteGroupingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.shared_items_index =
             crate::transform_child(&self.shared_items_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -8850,8 +8477,7 @@ impl crate::Transform for spreadsheet::Drawing {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -8914,26 +8540,7 @@ impl crate::Transform for spreadsheet::DrawingReferenceInHeaderFooter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.lho, &self.lho);
-        Clone::clone_from(&mut node.lhe, &self.lhe);
-        Clone::clone_from(&mut node.lhf, &self.lhf);
-        Clone::clone_from(&mut node.cho, &self.cho);
-        Clone::clone_from(&mut node.che, &self.che);
-        Clone::clone_from(&mut node.chf, &self.chf);
-        Clone::clone_from(&mut node.rho, &self.rho);
-        Clone::clone_from(&mut node.rhe, &self.rhe);
-        Clone::clone_from(&mut node.rhf, &self.rhf);
-        Clone::clone_from(&mut node.lfo, &self.lfo);
-        Clone::clone_from(&mut node.lfe, &self.lfe);
-        Clone::clone_from(&mut node.lff, &self.lff);
-        Clone::clone_from(&mut node.cfo, &self.cfo);
-        Clone::clone_from(&mut node.cfe, &self.cfe);
-        Clone::clone_from(&mut node.cff, &self.cff);
-        Clone::clone_from(&mut node.rfo, &self.rfo);
-        Clone::clone_from(&mut node.rfe, &self.rfe);
-        Clone::clone_from(&mut node.rff, &self.rff);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9026,12 +8633,7 @@ impl crate::Transform for spreadsheet::DynamicFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.val_iso, &self.val_iso);
-        Clone::clone_from(&mut node.max_val, &self.max_val);
-        Clone::clone_from(&mut node.max_val_iso, &self.max_val_iso);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9107,11 +8709,8 @@ impl crate::Transform for spreadsheet::EmbeddedControl {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.shape_id, &self.shape_id);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -9189,23 +8788,8 @@ impl crate::Transform for spreadsheet::EmbeddedControlProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.default_size, &self.default_size);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.disabled, &self.disabled);
-        Clone::clone_from(&mut node.recalc_always, &self.recalc_always);
-        Clone::clone_from(&mut node.ui_object, &self.ui_object);
-        Clone::clone_from(&mut node.auto_fill, &self.auto_fill);
-        Clone::clone_from(&mut node.auto_line, &self.auto_line);
-        Clone::clone_from(&mut node.auto_pict, &self.auto_pict);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.linked_cell, &self.linked_cell);
-        Clone::clone_from(&mut node.list_fill_range, &self.list_fill_range);
-        Clone::clone_from(&mut node.cf, &self.cf);
-        Clone::clone_from(&mut node.id, &self.id);
         node.object_cell_anchor =
             crate::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9299,7 +8883,7 @@ impl crate::Transform for spreadsheet::EmbeddedControls {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.embedded_control = crate::transform_child(&self.embedded_control, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9375,15 +8959,8 @@ impl crate::Transform for spreadsheet::EmbeddedObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.prog_id, &self.prog_id);
-        Clone::clone_from(&mut node.dv_aspect, &self.dv_aspect);
-        Clone::clone_from(&mut node.link, &self.link);
-        Clone::clone_from(&mut node.ole_update, &self.ole_update);
-        Clone::clone_from(&mut node.auto_load, &self.auto_load);
-        Clone::clone_from(&mut node.shape_id, &self.shape_id);
-        Clone::clone_from(&mut node.id, &self.id);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -9465,20 +9042,8 @@ impl crate::Transform for spreadsheet::EmbeddedObjectProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.default_size, &self.default_size);
-        Clone::clone_from(&mut node.print, &self.print);
-        Clone::clone_from(&mut node.disabled, &self.disabled);
-        Clone::clone_from(&mut node.ui_object, &self.ui_object);
-        Clone::clone_from(&mut node.auto_fill, &self.auto_fill);
-        Clone::clone_from(&mut node.auto_line, &self.auto_line);
-        Clone::clone_from(&mut node.auto_pict, &self.auto_pict);
-        Clone::clone_from(&mut node.r#macro, &self.r#macro);
-        Clone::clone_from(&mut node.alt_text, &self.alt_text);
-        Clone::clone_from(&mut node.dde, &self.dde);
-        Clone::clone_from(&mut node.id, &self.id);
         node.object_cell_anchor =
             crate::transform_child(&self.object_cell_anchor, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9569,8 +9134,7 @@ impl crate::Transform for spreadsheet::EmbeddedObjectSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -9642,7 +9206,7 @@ impl crate::Transform for spreadsheet::EmbeddedObjects {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.embedded_object = crate::transform_child(&self.embedded_object, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -9714,9 +9278,8 @@ impl crate::Transform for spreadsheet::Entries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -9911,20 +9474,8 @@ impl crate::Transform for spreadsheet::ErrorValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
-        Clone::clone_from(&mut node.r#in, &self.r#in);
-        Clone::clone_from(&mut node.bc, &self.bc);
-        Clone::clone_from(&mut node.fc, &self.fc);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.un, &self.un);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.b, &self.b);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
@@ -10010,8 +9561,7 @@ impl crate::Transform for spreadsheet::EvenPageFooter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10083,8 +9633,7 @@ impl crate::Transform for spreadsheet::EvenPageHeader {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10152,8 +9701,7 @@ impl crate::Transform for spreadsheet::Extend {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10212,9 +9760,8 @@ impl crate::Transform for spreadsheet::Extension {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.uri, &self.uri);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -10281,11 +9828,8 @@ impl crate::Transform for spreadsheet::ExternalCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.vm, &self.vm);
         node.cell_value = crate::transform_child(&self.cell_value, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -10363,8 +9907,7 @@ impl crate::Transform for spreadsheet::ExternalReference {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10540,7 +10083,7 @@ impl crate::Transform for spreadsheet::ExternalReferenceExternalLink {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -10623,7 +10166,7 @@ impl crate::Transform for spreadsheet::ExternalReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.external_reference =
             crate::transform_child(&self.external_reference, ctx, &mut rebase);
@@ -10700,10 +10243,8 @@ impl crate::Transform for spreadsheet::ExternalSheetDataSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.refresh_error, &self.refresh_error);
         node.row_external_row = crate::transform_child(&self.row_external_row, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -10783,9 +10324,8 @@ impl crate::Transform for spreadsheet::ExternalWorkbook {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
         node.alternate_urls = crate::transform_child(&self.alternate_urls, ctx, &mut rebase);
         node.supporting_workbook_sheet_names =
             crate::transform_child(&self.supporting_workbook_sheet_names, ctx, &mut rebase);
@@ -10868,8 +10408,7 @@ impl crate::Transform for spreadsheet::Field {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -10932,10 +10471,8 @@ impl crate::Transform for spreadsheet::FieldGroupProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.par, &self.par);
-        Clone::clone_from(&mut node.base, &self.base);
         node.range_grouping_properties =
             crate::transform_child(&self.range_grouping_properties, ctx, &mut rebase);
         node.discrete_grouping_properties =
@@ -11019,9 +10556,8 @@ impl crate::Transform for spreadsheet::FieldItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivottable_field_item =
             crate::transform_child(&self.pivottable_field_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -11089,9 +10625,8 @@ impl crate::Transform for spreadsheet::Fields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.text_import_field_settings =
             crate::transform_child(&self.text_import_field_settings, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -11155,9 +10690,8 @@ impl crate::Transform for spreadsheet::FieldsUsage {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivotcache_field_id =
             crate::transform_child(&self.pivotcache_field_id, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -11229,11 +10763,7 @@ impl crate::Transform for spreadsheet::FileRecoveryProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto_recover, &self.auto_recover);
-        Clone::clone_from(&mut node.crash_save, &self.crash_save);
-        Clone::clone_from(&mut node.data_extract_load, &self.data_extract_load);
-        Clone::clone_from(&mut node.repair_load, &self.repair_load);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11307,14 +10837,7 @@ impl crate::Transform for spreadsheet::FileSharing {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.read_only_recommended, &self.read_only_recommended);
-        Clone::clone_from(&mut node.user_name, &self.user_name);
-        Clone::clone_from(&mut node.reservation_password, &self.reservation_password);
-        Clone::clone_from(&mut node.algorithm_name, &self.algorithm_name);
-        Clone::clone_from(&mut node.hash_value, &self.hash_value);
-        Clone::clone_from(&mut node.salt_value, &self.salt_value);
-        Clone::clone_from(&mut node.spin_count, &self.spin_count);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11383,12 +10906,7 @@ impl crate::Transform for spreadsheet::FileVersion {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.app_name, &self.app_name);
-        Clone::clone_from(&mut node.last_edited, &self.last_edited);
-        Clone::clone_from(&mut node.lowest_edited, &self.lowest_edited);
-        Clone::clone_from(&mut node.rup_build, &self.rup_build);
-        Clone::clone_from(&mut node.code_name, &self.code_name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11455,7 +10973,7 @@ impl crate::Transform for spreadsheet::Fill {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -11607,9 +11125,8 @@ impl crate::Transform for spreadsheet::Fills {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.fill = crate::transform_child(&self.fill, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -11672,8 +11189,7 @@ impl crate::Transform for spreadsheet::Filter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11736,10 +11252,8 @@ impl crate::Transform for spreadsheet::FilterCriteria {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.blank, &self.blank);
-        Clone::clone_from(&mut node.calendar_type, &self.calendar_type);
         node.x14_filter = crate::transform_child(&self.x14_filter, ctx, &mut rebase);
         node.filter = crate::transform_child(&self.filter, ctx, &mut rebase);
         node.date_grouping = crate::transform_child(&self.date_grouping, ctx, &mut rebase);
@@ -11818,9 +11332,8 @@ impl crate::Transform for spreadsheet::Filters {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivottable_advanced_filter =
             crate::transform_child(&self.pivottable_advanced_filter, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -11888,8 +11401,7 @@ impl crate::Transform for spreadsheet::FirstPageFooter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -11961,8 +11473,7 @@ impl crate::Transform for spreadsheet::FirstPageHeader {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12030,7 +11541,7 @@ impl crate::Transform for spreadsheet::Font {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -12294,8 +11805,7 @@ impl crate::Transform for spreadsheet::FontFamily {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12362,8 +11872,7 @@ impl crate::Transform for spreadsheet::FontFamilyIntProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12434,8 +11943,7 @@ impl crate::Transform for spreadsheet::FontName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12494,8 +12002,7 @@ impl crate::Transform for spreadsheet::FontRFont {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12558,8 +12065,7 @@ impl crate::Transform for spreadsheet::FontSize {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12618,10 +12124,8 @@ impl crate::Transform for spreadsheet::Fonts {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.known_fonts, &self.known_fonts);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -12689,12 +12193,7 @@ impl crate::Transform for spreadsheet::ForegroundColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -12766,21 +12265,8 @@ impl crate::Transform for spreadsheet::Format {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
-        Clone::clone_from(&mut node.font_id, &self.font_id);
-        Clone::clone_from(&mut node.fill_id, &self.fill_id);
-        Clone::clone_from(&mut node.border_id, &self.border_id);
-        Clone::clone_from(&mut node.xf_id, &self.xf_id);
-        Clone::clone_from(&mut node.quote_prefix, &self.quote_prefix);
-        Clone::clone_from(&mut node.pivot_button, &self.pivot_button);
-        Clone::clone_from(&mut node.apply_number_format, &self.apply_number_format);
-        Clone::clone_from(&mut node.apply_font, &self.apply_font);
-        Clone::clone_from(&mut node.apply_fill, &self.apply_fill);
-        Clone::clone_from(&mut node.apply_border, &self.apply_border);
-        Clone::clone_from(&mut node.apply_alignment, &self.apply_alignment);
-        Clone::clone_from(&mut node.apply_protection, &self.apply_protection);
         node.alignment = crate::transform_child(&self.alignment, ctx, &mut rebase);
         node.protection_properties =
             crate::transform_child(&self.protection_properties, ctx, &mut rebase);
@@ -12863,9 +12349,8 @@ impl crate::Transform for spreadsheet::Formats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.formatting = crate::transform_child(&self.formatting, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -12928,7 +12413,7 @@ impl crate::Transform for spreadsheet::Formatting {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -13019,9 +12504,8 @@ impl crate::Transform for spreadsheet::FormattingRecords {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.format = crate::transform_child(&self.format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -13093,8 +12577,7 @@ impl crate::Transform for spreadsheet::Formula {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -13153,8 +12636,7 @@ impl crate::Transform for spreadsheet::Formula1 {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -13213,8 +12695,7 @@ impl crate::Transform for spreadsheet::Formula2 {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -13273,20 +12754,7 @@ impl crate::Transform for spreadsheet::FormulaF {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.aca, &self.aca);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.dt2_d, &self.dt2_d);
-        Clone::clone_from(&mut node.dtr, &self.dtr);
-        Clone::clone_from(&mut node.del1, &self.del1);
-        Clone::clone_from(&mut node.del2, &self.del2);
-        Clone::clone_from(&mut node.r1, &self.r1);
-        Clone::clone_from(&mut node.r2, &self.r2);
-        Clone::clone_from(&mut node.ca, &self.ca);
-        Clone::clone_from(&mut node.si, &self.si);
-        Clone::clone_from(&mut node.bx, &self.bx);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -13361,8 +12829,7 @@ impl crate::Transform for spreadsheet::FunctionGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -13434,9 +12901,8 @@ impl crate::Transform for spreadsheet::FunctionGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.built_in_group_count, &self.built_in_group_count);
         node.function_group = crate::transform_child(&self.function_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -13512,7 +12978,7 @@ impl crate::Transform for spreadsheet::FutureFeatureDataStorageArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -13591,10 +13057,8 @@ impl crate::Transform for spreadsheet::FutureMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.count, &self.count);
         node.block = crate::transform_child(&self.block, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -13675,7 +13139,7 @@ impl crate::Transform for spreadsheet::FutureMetadataBlock {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -13755,10 +13219,8 @@ impl crate::Transform for spreadsheet::GenericObjectLinkConnection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.prog_id, &self.prog_id);
         node.object_link_items = crate::transform_child(&self.object_link_items, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -13834,14 +13296,8 @@ impl crate::Transform for spreadsheet::Gradient {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.degree, &self.degree);
-        Clone::clone_from(&mut node.left, &self.left);
-        Clone::clone_from(&mut node.right, &self.right);
-        Clone::clone_from(&mut node.top, &self.top);
-        Clone::clone_from(&mut node.bottom, &self.bottom);
         node.stop = crate::transform_child(&self.stop, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -13909,9 +13365,8 @@ impl crate::Transform for spreadsheet::GradientStop {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.position, &self.position);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -13979,15 +13434,8 @@ impl crate::Transform for spreadsheet::Header {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.date_time, &self.date_time);
-        Clone::clone_from(&mut node.max_sheet_id, &self.max_sheet_id);
-        Clone::clone_from(&mut node.user_name, &self.user_name);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.min_r_id, &self.min_r_id);
-        Clone::clone_from(&mut node.max_r_id, &self.max_r_id);
         node.sheet_id_map = crate::transform_child(&self.sheet_id_map, ctx, &mut rebase);
         node.reviewed_list = crate::transform_child(&self.reviewed_list, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -14067,12 +13515,8 @@ impl crate::Transform for spreadsheet::HeaderFooterSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.different_odd_even, &self.different_odd_even);
-        Clone::clone_from(&mut node.different_first, &self.different_first);
-        Clone::clone_from(&mut node.scale_with_doc, &self.scale_with_doc);
-        Clone::clone_from(&mut node.align_with_margins, &self.align_with_margins);
         node.odd_header = crate::transform_child(&self.odd_header, ctx, &mut rebase);
         node.odd_page_footer = crate::transform_child(&self.odd_page_footer, ctx, &mut rebase);
         node.even_page_header = crate::transform_child(&self.even_page_header, ctx, &mut rebase);
@@ -14169,9 +13613,8 @@ impl crate::Transform for spreadsheet::HorizontalInnerBorders {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -14246,12 +13689,7 @@ impl crate::Transform for spreadsheet::Hyperlink {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.location, &self.location);
-        Clone::clone_from(&mut node.tooltip, &self.tooltip);
-        Clone::clone_from(&mut node.display, &self.display);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14314,7 +13752,7 @@ impl crate::Transform for spreadsheet::Hyperlinks {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.hyperlink = crate::transform_child(&self.hyperlink, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -14381,9 +13819,7 @@ impl crate::Transform for spreadsheet::IconFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14447,12 +13883,8 @@ impl crate::Transform for spreadsheet::IconSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.show_value, &self.show_value);
-        Clone::clone_from(&mut node.percent, &self.percent);
-        Clone::clone_from(&mut node.reverse, &self.reverse);
         node.conditional_format_value_object =
             crate::transform_child(&self.conditional_format_value_object, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -14519,17 +13951,7 @@ impl crate::Transform for spreadsheet::IgnoredError {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.sqref, &self.sqref);
-        Clone::clone_from(&mut node.eval_error, &self.eval_error);
-        Clone::clone_from(&mut node.two_digit_text_year, &self.two_digit_text_year);
-        Clone::clone_from(&mut node.number_stored_as_text, &self.number_stored_as_text);
-        Clone::clone_from(&mut node.formula, &self.formula);
-        Clone::clone_from(&mut node.formula_range, &self.formula_range);
-        Clone::clone_from(&mut node.unlocked_formula, &self.unlocked_formula);
-        Clone::clone_from(&mut node.empty_cell_reference, &self.empty_cell_reference);
-        Clone::clone_from(&mut node.list_data_validation, &self.list_data_validation);
-        Clone::clone_from(&mut node.calculated_column, &self.calculated_column);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14606,7 +14028,7 @@ impl crate::Transform for spreadsheet::IgnoredErrors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ignored_error = crate::transform_child(&self.ignored_error, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -14682,12 +14104,7 @@ impl crate::Transform for spreadsheet::InputCells {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.deleted, &self.deleted);
-        Clone::clone_from(&mut node.undone, &self.undone);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14754,8 +14171,7 @@ impl crate::Transform for spreadsheet::Italic {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14818,10 +14234,7 @@ impl crate::Transform for spreadsheet::KPIMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.n, &self.n);
-        Clone::clone_from(&mut node.np, &self.np);
-        Clone::clone_from(&mut node.p, &self.p);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -14895,9 +14308,8 @@ impl crate::Transform for spreadsheet::LeadingEdgeBorderLeft {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -14976,9 +14388,8 @@ impl crate::Transform for spreadsheet::LeadingEdgeBorderStart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -15057,8 +14468,7 @@ impl crate::Transform for spreadsheet::LegacyDrawingReference {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15133,8 +14543,7 @@ impl crate::Transform for spreadsheet::LegacyDrawingReferenceInHeaderFooter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15209,7 +14618,7 @@ impl crate::Transform for spreadsheet::ListOfComments {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.comment = crate::transform_child(&self.comment, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -15285,9 +14694,8 @@ impl crate::Transform for spreadsheet::MDXMetadataInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.mdx_metadata_record =
             crate::transform_child(&self.mdx_metadata_record, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -15367,10 +14775,8 @@ impl crate::Transform for spreadsheet::MDXMetadataRecord {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.n, &self.n);
-        Clone::clone_from(&mut node.f, &self.f);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -15443,7 +14849,7 @@ impl crate::Transform for spreadsheet::MRUColors {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -15510,9 +14916,8 @@ impl crate::Transform for spreadsheet::Main {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.first, &self.first);
         node.topic = crate::transform_child(&self.topic, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -15575,8 +14980,7 @@ impl crate::Transform for spreadsheet::Member {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15639,8 +15043,7 @@ impl crate::Transform for spreadsheet::MemberPropertiesMap {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15715,8 +15118,7 @@ impl crate::Transform for spreadsheet::MemberPropertyIndex {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15791,9 +15193,7 @@ impl crate::Transform for spreadsheet::MemberPropertyMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.n, &self.n);
-        Clone::clone_from(&mut node.np, &self.np);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15869,9 +15269,7 @@ impl crate::Transform for spreadsheet::MemberUniqueNameIndex {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.s, &self.s);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -15943,10 +15341,8 @@ impl crate::Transform for spreadsheet::Members {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.level, &self.level);
         node.member = crate::transform_child(&self.member, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -16010,9 +15406,8 @@ impl crate::Transform for spreadsheet::MergeCells {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.merged_cell = crate::transform_child(&self.merged_cell, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -16079,8 +15474,7 @@ impl crate::Transform for spreadsheet::MergedCell {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -16143,7 +15537,7 @@ impl crate::Transform for spreadsheet::Metadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.types_collection = crate::transform_child(&self.types_collection, ctx, &mut rebase);
         node.string_store = crate::transform_child(&self.string_store, ctx, &mut rebase);
@@ -16230,7 +15624,7 @@ impl crate::Transform for spreadsheet::MetadataBlock {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.metadata_record = crate::transform_child(&self.metadata_record, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -16306,9 +15700,7 @@ impl crate::Transform for spreadsheet::MetadataRecord {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -16381,9 +15773,8 @@ impl crate::Transform for spreadsheet::MetadataStringStore {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.character_value_x_string_element =
             crate::transform_child(&self.character_value_x_string_element, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -16463,35 +15854,7 @@ impl crate::Transform for spreadsheet::MetadataTypeInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.min_supported_version, &self.min_supported_version);
-        Clone::clone_from(&mut node.ghost_row, &self.ghost_row);
-        Clone::clone_from(&mut node.ghost_col, &self.ghost_col);
-        Clone::clone_from(&mut node.edit, &self.edit);
-        Clone::clone_from(&mut node.delete, &self.delete);
-        Clone::clone_from(&mut node.copy, &self.copy);
-        Clone::clone_from(&mut node.paste_all, &self.paste_all);
-        Clone::clone_from(&mut node.paste_formulas, &self.paste_formulas);
-        Clone::clone_from(&mut node.paste_values, &self.paste_values);
-        Clone::clone_from(&mut node.paste_formats, &self.paste_formats);
-        Clone::clone_from(&mut node.paste_comments, &self.paste_comments);
-        Clone::clone_from(&mut node.paste_data_validation, &self.paste_data_validation);
-        Clone::clone_from(&mut node.paste_borders, &self.paste_borders);
-        Clone::clone_from(&mut node.paste_col_widths, &self.paste_col_widths);
-        Clone::clone_from(&mut node.paste_number_formats, &self.paste_number_formats);
-        Clone::clone_from(&mut node.merge, &self.merge);
-        Clone::clone_from(&mut node.split_first, &self.split_first);
-        Clone::clone_from(&mut node.split_all, &self.split_all);
-        Clone::clone_from(&mut node.row_col_shift, &self.row_col_shift);
-        Clone::clone_from(&mut node.clear_all, &self.clear_all);
-        Clone::clone_from(&mut node.clear_formats, &self.clear_formats);
-        Clone::clone_from(&mut node.clear_contents, &self.clear_contents);
-        Clone::clone_from(&mut node.clear_comments, &self.clear_comments);
-        Clone::clone_from(&mut node.assign, &self.assign);
-        Clone::clone_from(&mut node.coerce, &self.coerce);
-        Clone::clone_from(&mut node.adjust, &self.adjust);
-        Clone::clone_from(&mut node.cell_meta, &self.cell_meta);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -16593,9 +15956,8 @@ impl crate::Transform for spreadsheet::MetadataTypesCollection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.metadata_type_information =
             crate::transform_child(&self.metadata_type_information, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -16782,7 +16144,7 @@ impl crate::Transform for spreadsheet::NamedLinks {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.defined_name_external_defined_name =
             crate::transform_child(&self.defined_name_external_defined_name, ctx, &mut rebase);
@@ -16975,14 +16337,8 @@ impl crate::Transform for spreadsheet::NewCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.cm, &self.cm);
-        Clone::clone_from(&mut node.vm, &self.vm);
-        Clone::clone_from(&mut node.ph, &self.ph);
         node.formula_f = crate::transform_child(&self.formula_f, ctx, &mut rebase);
         node.cell_value = crate::transform_child(&self.cell_value, ctx, &mut rebase);
         node.rich_text_inline = crate::transform_child(&self.rich_text_inline, ctx, &mut rebase);
@@ -17069,7 +16425,7 @@ impl crate::Transform for spreadsheet::NewFormattingInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -17164,19 +16520,8 @@ impl crate::Transform for spreadsheet::NoValue {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
-        Clone::clone_from(&mut node.r#in, &self.r#in);
-        Clone::clone_from(&mut node.bc, &self.bc);
-        Clone::clone_from(&mut node.fc, &self.fc);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.un, &self.un);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.b, &self.b);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
@@ -17257,7 +16602,7 @@ impl crate::Transform for spreadsheet::NoValueTableMissing {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -17327,9 +16672,7 @@ impl crate::Transform for spreadsheet::NumberFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
-        Clone::clone_from(&mut node.format_code, &self.format_code);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -17398,9 +16741,8 @@ impl crate::Transform for spreadsheet::NumberFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -17472,20 +16814,8 @@ impl crate::Transform for spreadsheet::Numeric {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.cp, &self.cp);
-        Clone::clone_from(&mut node.r#in, &self.r#in);
-        Clone::clone_from(&mut node.bc, &self.bc);
-        Clone::clone_from(&mut node.fc, &self.fc);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.un, &self.un);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.b, &self.b);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
@@ -17567,11 +16897,7 @@ impl crate::Transform for spreadsheet::OLAPDimension {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.measure, &self.measure);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.caption, &self.caption);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -17646,9 +16972,8 @@ impl crate::Transform for spreadsheet::OLAPDimensions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_dimension = crate::transform_child(&self.olap_dimension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -17720,13 +17045,8 @@ impl crate::Transform for spreadsheet::OLAPGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.unique_parent, &self.unique_parent);
-        Clone::clone_from(&mut node.id, &self.id);
         node.members = crate::transform_child(&self.members, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -17801,9 +17121,8 @@ impl crate::Transform for spreadsheet::OLAPGroupItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -17879,9 +17198,7 @@ impl crate::Transform for spreadsheet::OLAPGroupMember {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.group, &self.group);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -17954,9 +17271,8 @@ impl crate::Transform for spreadsheet::OLAPGroupMembers {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_group_member = crate::transform_child(&self.olap_group_member, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -18032,12 +17348,8 @@ impl crate::Transform for spreadsheet::OLAPGroupingLevelsGroupLevel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.user, &self.user);
-        Clone::clone_from(&mut node.custom_roll_up, &self.custom_roll_up);
         node.olap_level_groups = crate::transform_child(&self.olap_level_groups, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -18123,9 +17435,8 @@ impl crate::Transform for spreadsheet::OLAPGroupingLevelsGroupLevels {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_grouping_levels_group_level =
             crate::transform_child(&self.olap_grouping_levels_group_level, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -18205,25 +17516,8 @@ impl crate::Transform for spreadsheet::OLAPHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.outline, &self.outline);
-        Clone::clone_from(
-            &mut node.multiple_item_selection_allowed,
-            &self.multiple_item_selection_allowed,
-        );
-        Clone::clone_from(&mut node.subtotal_top, &self.subtotal_top);
-        Clone::clone_from(&mut node.show_in_field_list, &self.show_in_field_list);
-        Clone::clone_from(&mut node.drag_to_row, &self.drag_to_row);
-        Clone::clone_from(&mut node.drag_to_col, &self.drag_to_col);
-        Clone::clone_from(&mut node.drag_to_page, &self.drag_to_page);
-        Clone::clone_from(&mut node.drag_to_data, &self.drag_to_data);
-        Clone::clone_from(&mut node.drag_off, &self.drag_off);
-        Clone::clone_from(
-            &mut node.include_new_items_in_filter,
-            &self.include_new_items_in_filter,
-        );
-        Clone::clone_from(&mut node.caption, &self.caption);
         node.olap_member_properties =
             crate::transform_child(&self.olap_member_properties, ctx, &mut rebase);
         node.members = crate::transform_child(&self.members, ctx, &mut rebase);
@@ -18313,18 +17607,7 @@ impl crate::Transform for spreadsheet::OLAPKPI {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.display_folder, &self.display_folder);
-        Clone::clone_from(&mut node.measure_group, &self.measure_group);
-        Clone::clone_from(&mut node.parent, &self.parent);
-        Clone::clone_from(&mut node.value, &self.value);
-        Clone::clone_from(&mut node.goal, &self.goal);
-        Clone::clone_from(&mut node.status, &self.status);
-        Clone::clone_from(&mut node.trend, &self.trend);
-        Clone::clone_from(&mut node.weight, &self.weight);
-        Clone::clone_from(&mut node.time, &self.time);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -18393,9 +17676,8 @@ impl crate::Transform for spreadsheet::OLAPKPIs {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_kpi = crate::transform_child(&self.olap_kpi, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -18462,9 +17744,8 @@ impl crate::Transform for spreadsheet::OLAPLevelGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_group = crate::transform_child(&self.olap_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -18540,9 +17821,7 @@ impl crate::Transform for spreadsheet::OLAPMeasureGroupMap {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.measure_group, &self.measure_group);
-        Clone::clone_from(&mut node.dimension, &self.dimension);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -18618,9 +17897,8 @@ impl crate::Transform for spreadsheet::OLAPMeasureGroupMaps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_measure_group_map =
             crate::transform_child(&self.olap_measure_group_map, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -18700,9 +17978,7 @@ impl crate::Transform for spreadsheet::OLAPMeasureGroupMeasureGroup {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.caption, &self.caption);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -18778,9 +18054,8 @@ impl crate::Transform for spreadsheet::OLAPMeasureGroups {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_measure_group_measure_group =
             crate::transform_child(&self.olap_measure_group_measure_group, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -18857,9 +18132,8 @@ impl crate::Transform for spreadsheet::OLAPMemberProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_member_property =
             crate::transform_child(&self.olap_member_property, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -18939,16 +18213,7 @@ impl crate::Transform for spreadsheet::OLAPMemberProperty {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.show_cell, &self.show_cell);
-        Clone::clone_from(&mut node.show_tip, &self.show_tip);
-        Clone::clone_from(&mut node.show_as_caption, &self.show_as_caption);
-        Clone::clone_from(&mut node.name_len, &self.name_len);
-        Clone::clone_from(&mut node.p_pos, &self.p_pos);
-        Clone::clone_from(&mut node.p_len, &self.p_len);
-        Clone::clone_from(&mut node.level, &self.level);
-        Clone::clone_from(&mut node.field, &self.field);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19028,16 +18293,7 @@ impl crate::Transform for spreadsheet::OLAPProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.local, &self.local);
-        Clone::clone_from(&mut node.local_connection, &self.local_connection);
-        Clone::clone_from(&mut node.local_refresh, &self.local_refresh);
-        Clone::clone_from(&mut node.send_locale, &self.send_locale);
-        Clone::clone_from(&mut node.row_drill_count, &self.row_drill_count);
-        Clone::clone_from(&mut node.server_fill, &self.server_fill);
-        Clone::clone_from(&mut node.server_number_format, &self.server_number_format);
-        Clone::clone_from(&mut node.server_font, &self.server_font);
-        Clone::clone_from(&mut node.server_font_color, &self.server_font_color);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19117,9 +18373,8 @@ impl crate::Transform for spreadsheet::OLAPQueryCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.query = crate::transform_child(&self.query, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -19191,13 +18446,8 @@ impl crate::Transform for spreadsheet::OLAPSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.max_rank, &self.max_rank);
-        Clone::clone_from(&mut node.set_definition, &self.set_definition);
-        Clone::clone_from(&mut node.sort_type, &self.sort_type);
-        Clone::clone_from(&mut node.query_failed, &self.query_failed);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.sort_by_tuple = crate::transform_child(&self.sort_by_tuple, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -19271,10 +18521,8 @@ impl crate::Transform for spreadsheet::ObjectCellAnchor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.move_with_cells, &self.move_with_cells);
-        Clone::clone_from(&mut node.size_with_cells, &self.size_with_cells);
         node.starting_anchor_point =
             crate::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         node.ending_anchor_point =
@@ -19356,11 +18604,7 @@ impl crate::Transform for spreadsheet::ObjectLinkItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.icon, &self.icon);
-        Clone::clone_from(&mut node.advise, &self.advise);
-        Clone::clone_from(&mut node.prefer_pic, &self.prefer_pic);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19435,7 +18679,7 @@ impl crate::Transform for spreadsheet::ObjectLinkItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.object_link_item = crate::transform_child(&self.object_link_item, ctx, &mut rebase);
         node.ole_item = crate::transform_child(&self.ole_item, ctx, &mut rebase);
@@ -19510,8 +18754,7 @@ impl crate::Transform for spreadsheet::OddHeader {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19578,8 +18821,7 @@ impl crate::Transform for spreadsheet::OddPageFooter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19647,14 +18889,8 @@ impl crate::Transform for spreadsheet::OldCellData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.cm, &self.cm);
-        Clone::clone_from(&mut node.vm, &self.vm);
-        Clone::clone_from(&mut node.ph, &self.ph);
         node.formula_f = crate::transform_child(&self.formula_f, ctx, &mut rebase);
         node.cell_value = crate::transform_child(&self.cell_value, ctx, &mut rebase);
         node.rich_text_inline = crate::transform_child(&self.rich_text_inline, ctx, &mut rebase);
@@ -19741,7 +18977,7 @@ impl crate::Transform for spreadsheet::OldFormattingInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.font = crate::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = crate::transform_child(&self.number_format, ctx, &mut rebase);
@@ -19836,8 +19072,7 @@ impl crate::Transform for spreadsheet::OldFormula {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19900,8 +19135,7 @@ impl crate::Transform for spreadsheet::Outline {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -19964,11 +19198,7 @@ impl crate::Transform for spreadsheet::OutlineProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.apply_styles, &self.apply_styles);
-        Clone::clone_from(&mut node.summary_below, &self.summary_below);
-        Clone::clone_from(&mut node.summary_right, &self.summary_right);
-        Clone::clone_from(&mut node.show_outline_symbols, &self.show_outline_symbols);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20039,13 +19269,8 @@ impl crate::Transform for spreadsheet::PageField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.fld, &self.fld);
-        Clone::clone_from(&mut node.item, &self.item);
-        Clone::clone_from(&mut node.hier, &self.hier);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.cap, &self.cap);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -20121,9 +19346,8 @@ impl crate::Transform for spreadsheet::PageFieldItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.page_field = crate::transform_child(&self.page_field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -20195,8 +19419,7 @@ impl crate::Transform for spreadsheet::PageItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20259,9 +19482,8 @@ impl crate::Transform for spreadsheet::PageItemValues {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.page_items = crate::transform_child(&self.page_items, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -20333,9 +19555,8 @@ impl crate::Transform for spreadsheet::PageItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.page_item = crate::transform_child(&self.page_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -20402,13 +19623,7 @@ impl crate::Transform for spreadsheet::PageMargins {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.left, &self.left);
-        Clone::clone_from(&mut node.right, &self.right);
-        Clone::clone_from(&mut node.top, &self.top);
-        Clone::clone_from(&mut node.bottom, &self.bottom);
-        Clone::clone_from(&mut node.header, &self.header);
-        Clone::clone_from(&mut node.footer, &self.footer);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20480,9 +19695,7 @@ impl crate::Transform for spreadsheet::PageSetupProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto_page_breaks, &self.auto_page_breaks);
-        Clone::clone_from(&mut node.fit_to_page, &self.fit_to_page);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20558,26 +19771,7 @@ impl crate::Transform for spreadsheet::PageSetupSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.paper_size, &self.paper_size);
-        Clone::clone_from(&mut node.paper_height, &self.paper_height);
-        Clone::clone_from(&mut node.paper_width, &self.paper_width);
-        Clone::clone_from(&mut node.scale, &self.scale);
-        Clone::clone_from(&mut node.first_page_number, &self.first_page_number);
-        Clone::clone_from(&mut node.fit_to_width, &self.fit_to_width);
-        Clone::clone_from(&mut node.fit_to_height, &self.fit_to_height);
-        Clone::clone_from(&mut node.page_order, &self.page_order);
-        Clone::clone_from(&mut node.orientation, &self.orientation);
-        Clone::clone_from(&mut node.use_printer_defaults, &self.use_printer_defaults);
-        Clone::clone_from(&mut node.black_and_white, &self.black_and_white);
-        Clone::clone_from(&mut node.draft, &self.draft);
-        Clone::clone_from(&mut node.cell_comments, &self.cell_comments);
-        Clone::clone_from(&mut node.use_first_page_number, &self.use_first_page_number);
-        Clone::clone_from(&mut node.errors, &self.errors);
-        Clone::clone_from(&mut node.horizontal_dpi, &self.horizontal_dpi);
-        Clone::clone_from(&mut node.vertical_dpi, &self.vertical_dpi);
-        Clone::clone_from(&mut node.copies, &self.copies);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20667,17 +19861,7 @@ impl crate::Transform for spreadsheet::ParameterProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sql_type, &self.sql_type);
-        Clone::clone_from(&mut node.parameter_type, &self.parameter_type);
-        Clone::clone_from(&mut node.refresh_on_change, &self.refresh_on_change);
-        Clone::clone_from(&mut node.prompt, &self.prompt);
-        Clone::clone_from(&mut node.boolean, &self.boolean);
-        Clone::clone_from(&mut node.double, &self.double);
-        Clone::clone_from(&mut node.integer, &self.integer);
-        Clone::clone_from(&mut node.string, &self.string);
-        Clone::clone_from(&mut node.cell, &self.cell);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20754,9 +19938,8 @@ impl crate::Transform for spreadsheet::Pattern {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pattern_type, &self.pattern_type);
         node.foreground_color = crate::transform_child(&self.foreground_color, ctx, &mut rebase);
         node.background_color = crate::transform_child(&self.background_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -20826,10 +20009,7 @@ impl crate::Transform for spreadsheet::PhoneticProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.font_id, &self.font_id);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.alignment, &self.alignment);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -20899,10 +20079,8 @@ impl crate::Transform for spreadsheet::PhoneticRun {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sb, &self.sb);
-        Clone::clone_from(&mut node.eb, &self.eb);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -20970,23 +20148,8 @@ impl crate::Transform for spreadsheet::PivotArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.field, &self.field);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.data_only, &self.data_only);
-        Clone::clone_from(&mut node.label_only, &self.label_only);
-        Clone::clone_from(&mut node.grand_row, &self.grand_row);
-        Clone::clone_from(&mut node.grand_col, &self.grand_col);
-        Clone::clone_from(&mut node.cache_index, &self.cache_index);
-        Clone::clone_from(&mut node.outline, &self.outline);
-        Clone::clone_from(&mut node.offset, &self.offset);
-        Clone::clone_from(
-            &mut node.collapsed_levels_are_subtotals,
-            &self.collapsed_levels_are_subtotals,
-        );
-        Clone::clone_from(&mut node.axis, &self.axis);
-        Clone::clone_from(&mut node.field_position, &self.field_position);
         node.references = crate::transform_child(&self.references, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -21068,9 +20231,8 @@ impl crate::Transform for spreadsheet::PivotAreas {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -21137,9 +20299,7 @@ impl crate::Transform for spreadsheet::PivotCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.cache_id, &self.cache_id);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -21207,33 +20367,8 @@ impl crate::Transform for spreadsheet::PivotCacheDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.invalid, &self.invalid);
-        Clone::clone_from(&mut node.save_data, &self.save_data);
-        Clone::clone_from(&mut node.refresh_on_load, &self.refresh_on_load);
-        Clone::clone_from(&mut node.optimize_memory, &self.optimize_memory);
-        Clone::clone_from(&mut node.enable_refresh, &self.enable_refresh);
-        Clone::clone_from(&mut node.refreshed_by, &self.refreshed_by);
-        Clone::clone_from(&mut node.refreshed_date, &self.refreshed_date);
-        Clone::clone_from(&mut node.refreshed_date_iso, &self.refreshed_date_iso);
-        Clone::clone_from(&mut node.background_query, &self.background_query);
-        Clone::clone_from(&mut node.missing_items_limit, &self.missing_items_limit);
-        Clone::clone_from(&mut node.created_version, &self.created_version);
-        Clone::clone_from(&mut node.refreshed_version, &self.refreshed_version);
-        Clone::clone_from(
-            &mut node.min_refreshable_version,
-            &self.min_refreshable_version,
-        );
-        Clone::clone_from(&mut node.record_count, &self.record_count);
-        Clone::clone_from(&mut node.upgrade_on_refresh, &self.upgrade_on_refresh);
-        Clone::clone_from(&mut node.tuple_cache_attribute, &self.tuple_cache_attribute);
-        Clone::clone_from(&mut node.support_subquery, &self.support_subquery);
-        Clone::clone_from(
-            &mut node.support_advanced_drill,
-            &self.support_advanced_drill,
-        );
         node.pivotcache_source_description =
             crate::transform_child(&self.pivotcache_source_description, ctx, &mut rebase);
         node.pivotcache_fields = crate::transform_child(&self.pivotcache_fields, ctx, &mut rebase);
@@ -21366,21 +20501,8 @@ impl crate::Transform for spreadsheet::PivotCacheField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.property_name, &self.property_name);
-        Clone::clone_from(&mut node.server_field, &self.server_field);
-        Clone::clone_from(&mut node.unique_list, &self.unique_list);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
-        Clone::clone_from(&mut node.formula, &self.formula);
-        Clone::clone_from(&mut node.sql_type, &self.sql_type);
-        Clone::clone_from(&mut node.hierarchy, &self.hierarchy);
-        Clone::clone_from(&mut node.level, &self.level);
-        Clone::clone_from(&mut node.database_field, &self.database_field);
-        Clone::clone_from(&mut node.mapping_count, &self.mapping_count);
-        Clone::clone_from(&mut node.member_property_field, &self.member_property_field);
         node.shared_items = crate::transform_child(&self.shared_items, ctx, &mut rebase);
         node.group_properties = crate::transform_child(&self.group_properties, ctx, &mut rebase);
         node.member_properties_map =
@@ -21479,8 +20601,7 @@ impl crate::Transform for spreadsheet::PivotCacheFieldId {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x, &self.x);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -21552,9 +20673,8 @@ impl crate::Transform for spreadsheet::PivotCacheFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivotcache_field = crate::transform_child(&self.pivotcache_field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -21630,9 +20750,8 @@ impl crate::Transform for spreadsheet::PivotCacheHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivotcache_hierarchy =
             crate::transform_child(&self.pivotcache_hierarchy, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -21712,33 +20831,8 @@ impl crate::Transform for spreadsheet::PivotCacheHierarchy {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.caption, &self.caption);
-        Clone::clone_from(&mut node.measure, &self.measure);
-        Clone::clone_from(&mut node.set, &self.set);
-        Clone::clone_from(&mut node.parent_set, &self.parent_set);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.attribute, &self.attribute);
-        Clone::clone_from(&mut node.time, &self.time);
-        Clone::clone_from(&mut node.key_attribute, &self.key_attribute);
-        Clone::clone_from(
-            &mut node.default_member_unique_name,
-            &self.default_member_unique_name,
-        );
-        Clone::clone_from(&mut node.all_unique_name, &self.all_unique_name);
-        Clone::clone_from(&mut node.all_caption, &self.all_caption);
-        Clone::clone_from(&mut node.dimension_unique_name, &self.dimension_unique_name);
-        Clone::clone_from(&mut node.display_folder, &self.display_folder);
-        Clone::clone_from(&mut node.measure_group, &self.measure_group);
-        Clone::clone_from(&mut node.measures, &self.measures);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.one_field, &self.one_field);
-        Clone::clone_from(&mut node.member_value_datatype, &self.member_value_datatype);
-        Clone::clone_from(&mut node.unbalanced, &self.unbalanced);
-        Clone::clone_from(&mut node.unbalanced_group, &self.unbalanced_group);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
         node.fields_usage = crate::transform_child(&self.fields_usage, ctx, &mut rebase);
         node.olap_grouping_levels_group_levels =
             crate::transform_child(&self.olap_grouping_levels_group_levels, ctx, &mut rebase);
@@ -21846,7 +20940,7 @@ impl crate::Transform for spreadsheet::PivotCacheRecord {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -22075,9 +21169,8 @@ impl crate::Transform for spreadsheet::PivotCacheRecords {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivotcache_record = crate::transform_child(&self.pivotcache_record, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -22157,10 +21250,8 @@ impl crate::Transform for spreadsheet::PivotCacheSourceDescription {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.connection_id, &self.connection_id);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -22340,7 +21431,7 @@ impl crate::Transform for spreadsheet::PivotCaches {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.pivotcache = crate::transform_child(&self.pivotcache, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -22411,11 +21502,8 @@ impl crate::Transform for spreadsheet::PivotChartFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.chart, &self.chart);
-        Clone::clone_from(&mut node.format, &self.format);
-        Clone::clone_from(&mut node.series, &self.series);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -22493,9 +21581,8 @@ impl crate::Transform for spreadsheet::PivotChartFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivotchart_format = crate::transform_child(&self.pivotchart_format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -22571,19 +21658,8 @@ impl crate::Transform for spreadsheet::PivotTableAdvancedFilter {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.fld, &self.fld);
-        Clone::clone_from(&mut node.mp_fld, &self.mp_fld);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.eval_order, &self.eval_order);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.i_measure_hier, &self.i_measure_hier);
-        Clone::clone_from(&mut node.i_measure_fld, &self.i_measure_fld);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.string_value1, &self.string_value1);
-        Clone::clone_from(&mut node.string_value2, &self.string_value2);
         node.autofilter_settings =
             crate::transform_child(&self.autofilter_settings, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -22677,10 +21753,33 @@ impl crate::Transform for spreadsheet::PivotTableDefinition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        transform_pivot_table_definition_1(self, &mut node);
-        transform_pivot_table_definition_2(self, &mut node, ctx, &mut rebase);
+        node.pivottable_location =
+            crate::transform_child(&self.pivottable_location, ctx, &mut rebase);
+        node.pivottable_fields = crate::transform_child(&self.pivottable_fields, ctx, &mut rebase);
+        node.row_fields = crate::transform_child(&self.row_fields, ctx, &mut rebase);
+        node.row_items = crate::transform_child(&self.row_items, ctx, &mut rebase);
+        node.column_fields = crate::transform_child(&self.column_fields, ctx, &mut rebase);
+        node.column_items = crate::transform_child(&self.column_items, ctx, &mut rebase);
+        node.page_field_items = crate::transform_child(&self.page_field_items, ctx, &mut rebase);
+        node.data_fields = crate::transform_child(&self.data_fields, ctx, &mut rebase);
+        node.pivottable_formats =
+            crate::transform_child(&self.pivottable_formats, ctx, &mut rebase);
+        node.conditional_formats =
+            crate::transform_child(&self.conditional_formats, ctx, &mut rebase);
+        node.pivotchart_formats =
+            crate::transform_child(&self.pivotchart_formats, ctx, &mut rebase);
+        node.pivottable_olap_hierarchies =
+            crate::transform_child(&self.pivottable_olap_hierarchies, ctx, &mut rebase);
+        node.pivottable_style = crate::transform_child(&self.pivottable_style, ctx, &mut rebase);
+        node.filters = crate::transform_child(&self.filters, ctx, &mut rebase);
+        node.row_olap_hierarchy_references =
+            crate::transform_child(&self.row_olap_hierarchy_references, ctx, &mut rebase);
+        node.column_olap_hierarchy_references =
+            crate::transform_child(&self.column_olap_hierarchy_references, ctx, &mut rebase);
+        node.future_feature_data_storage_area =
+            crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
     }
@@ -22857,68 +21956,8 @@ impl crate::Transform for spreadsheet::PivotTableField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.axis, &self.axis);
-        Clone::clone_from(&mut node.data_field, &self.data_field);
-        Clone::clone_from(&mut node.subtotal_caption, &self.subtotal_caption);
-        Clone::clone_from(&mut node.show_drop_downs, &self.show_drop_downs);
-        Clone::clone_from(&mut node.hidden_level, &self.hidden_level);
-        Clone::clone_from(
-            &mut node.unique_member_property,
-            &self.unique_member_property,
-        );
-        Clone::clone_from(&mut node.compact, &self.compact);
-        Clone::clone_from(&mut node.all_drilled, &self.all_drilled);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
-        Clone::clone_from(&mut node.outline, &self.outline);
-        Clone::clone_from(&mut node.subtotal_top, &self.subtotal_top);
-        Clone::clone_from(&mut node.drag_to_row, &self.drag_to_row);
-        Clone::clone_from(&mut node.drag_to_col, &self.drag_to_col);
-        Clone::clone_from(
-            &mut node.multiple_item_selection_allowed,
-            &self.multiple_item_selection_allowed,
-        );
-        Clone::clone_from(&mut node.drag_to_page, &self.drag_to_page);
-        Clone::clone_from(&mut node.drag_to_data, &self.drag_to_data);
-        Clone::clone_from(&mut node.drag_off, &self.drag_off);
-        Clone::clone_from(&mut node.show_all, &self.show_all);
-        Clone::clone_from(&mut node.insert_blank_row, &self.insert_blank_row);
-        Clone::clone_from(&mut node.server_field, &self.server_field);
-        Clone::clone_from(&mut node.insert_page_break, &self.insert_page_break);
-        Clone::clone_from(&mut node.auto_show, &self.auto_show);
-        Clone::clone_from(&mut node.top_auto_show, &self.top_auto_show);
-        Clone::clone_from(&mut node.hide_new_items, &self.hide_new_items);
-        Clone::clone_from(&mut node.measure_filter, &self.measure_filter);
-        Clone::clone_from(
-            &mut node.include_new_items_in_filter,
-            &self.include_new_items_in_filter,
-        );
-        Clone::clone_from(&mut node.item_page_count, &self.item_page_count);
-        Clone::clone_from(&mut node.sort_type, &self.sort_type);
-        Clone::clone_from(&mut node.data_source_sort, &self.data_source_sort);
-        Clone::clone_from(&mut node.non_auto_sort_default, &self.non_auto_sort_default);
-        Clone::clone_from(&mut node.rank_by, &self.rank_by);
-        Clone::clone_from(&mut node.default_subtotal, &self.default_subtotal);
-        Clone::clone_from(&mut node.sum_subtotal, &self.sum_subtotal);
-        Clone::clone_from(&mut node.count_a_subtotal, &self.count_a_subtotal);
-        Clone::clone_from(&mut node.avg_subtotal, &self.avg_subtotal);
-        Clone::clone_from(&mut node.max_subtotal, &self.max_subtotal);
-        Clone::clone_from(&mut node.min_subtotal, &self.min_subtotal);
-        Clone::clone_from(&mut node.product_subtotal, &self.product_subtotal);
-        Clone::clone_from(&mut node.count_subtotal, &self.count_subtotal);
-        Clone::clone_from(&mut node.std_dev_subtotal, &self.std_dev_subtotal);
-        Clone::clone_from(&mut node.std_dev_p_subtotal, &self.std_dev_p_subtotal);
-        Clone::clone_from(&mut node.var_subtotal, &self.var_subtotal);
-        Clone::clone_from(&mut node.var_p_subtotal, &self.var_p_subtotal);
-        Clone::clone_from(&mut node.show_prop_cell, &self.show_prop_cell);
-        Clone::clone_from(&mut node.show_prop_tip, &self.show_prop_tip);
-        Clone::clone_from(&mut node.show_prop_as_caption, &self.show_prop_as_caption);
-        Clone::clone_from(
-            &mut node.default_attribute_drill_state,
-            &self.default_attribute_drill_state,
-        );
         node.items = crate::transform_child(&self.items, ctx, &mut rebase);
         node.autosort_scope = crate::transform_child(&self.autosort_scope, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -23048,18 +22087,7 @@ impl crate::Transform for spreadsheet::PivotTableFieldItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.n, &self.n);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.h, &self.h);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.sd, &self.sd);
-        Clone::clone_from(&mut node.f, &self.f);
-        Clone::clone_from(&mut node.m, &self.m);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.x, &self.x);
-        Clone::clone_from(&mut node.d, &self.d);
-        Clone::clone_from(&mut node.e, &self.e);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -23144,9 +22172,8 @@ impl crate::Transform for spreadsheet::PivotTableFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivottable_field = crate::transform_child(&self.pivottable_field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -23222,10 +22249,8 @@ impl crate::Transform for spreadsheet::PivotTableFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.action, &self.action);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -23306,9 +22331,8 @@ impl crate::Transform for spreadsheet::PivotTableFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.pivottable_format = crate::transform_child(&self.pivottable_format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -23384,13 +22408,7 @@ impl crate::Transform for spreadsheet::PivotTableLocation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.first_header_row, &self.first_header_row);
-        Clone::clone_from(&mut node.first_data_row, &self.first_data_row);
-        Clone::clone_from(&mut node.first_data_col, &self.first_data_col);
-        Clone::clone_from(&mut node.row_page_count, &self.row_page_count);
-        Clone::clone_from(&mut node.col_page_count, &self.col_page_count);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -23467,9 +22485,8 @@ impl crate::Transform for spreadsheet::PivotTableOLAPHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_hierarchy = crate::transform_child(&self.olap_hierarchy, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -23548,25 +22565,8 @@ impl crate::Transform for spreadsheet::PivotTableSelection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.pane, &self.pane);
-        Clone::clone_from(&mut node.show_header, &self.show_header);
-        Clone::clone_from(&mut node.label, &self.label);
-        Clone::clone_from(&mut node.data, &self.data);
-        Clone::clone_from(&mut node.extendable, &self.extendable);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.axis, &self.axis);
-        Clone::clone_from(&mut node.dimension, &self.dimension);
-        Clone::clone_from(&mut node.start, &self.start);
-        Clone::clone_from(&mut node.min, &self.min);
-        Clone::clone_from(&mut node.max, &self.max);
-        Clone::clone_from(&mut node.active_row, &self.active_row);
-        Clone::clone_from(&mut node.active_col, &self.active_col);
-        Clone::clone_from(&mut node.previous_row, &self.previous_row);
-        Clone::clone_from(&mut node.previous_col, &self.previous_col);
-        Clone::clone_from(&mut node.click, &self.click);
-        Clone::clone_from(&mut node.id, &self.id);
         node.pivot_area = crate::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -23661,13 +22661,7 @@ impl crate::Transform for spreadsheet::PivotTableStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.show_row_headers, &self.show_row_headers);
-        Clone::clone_from(&mut node.show_col_headers, &self.show_col_headers);
-        Clone::clone_from(&mut node.show_row_stripes, &self.show_row_stripes);
-        Clone::clone_from(&mut node.show_col_stripes, &self.show_col_stripes);
-        Clone::clone_from(&mut node.show_last_column, &self.show_last_column);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -23740,12 +22734,7 @@ impl crate::Transform for spreadsheet::PrintOptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.horizontal_centered, &self.horizontal_centered);
-        Clone::clone_from(&mut node.vertical_centered, &self.vertical_centered);
-        Clone::clone_from(&mut node.headings, &self.headings);
-        Clone::clone_from(&mut node.grid_lines, &self.grid_lines);
-        Clone::clone_from(&mut node.grid_lines_set, &self.grid_lines_set);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -23817,19 +22806,8 @@ impl crate::Transform for spreadsheet::ProtectedRange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.password, &self.password);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(
-            &mut node.security_descriptor_attribute,
-            &self.security_descriptor_attribute,
-        );
-        Clone::clone_from(&mut node.algorithm_name, &self.algorithm_name);
-        Clone::clone_from(&mut node.hash_value, &self.hash_value);
-        Clone::clone_from(&mut node.salt_value, &self.salt_value);
-        Clone::clone_from(&mut node.spin_count, &self.spin_count);
         node.security_descriptor =
             crate::transform_child(&self.security_descriptor, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -23913,7 +22891,7 @@ impl crate::Transform for spreadsheet::ProtectedRanges {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.protected_range = crate::transform_child(&self.protected_range, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -23989,9 +22967,7 @@ impl crate::Transform for spreadsheet::ProtectionProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -24063,9 +23039,8 @@ impl crate::Transform for spreadsheet::Query {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.mdx, &self.mdx);
         node.tuples = crate::transform_child(&self.tuples, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -24132,9 +23107,8 @@ impl crate::Transform for spreadsheet::QueryParameters {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.parameter_properties =
             crate::transform_child(&self.parameter_properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -24207,39 +23181,8 @@ impl crate::Transform for spreadsheet::QueryTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.headers, &self.headers);
-        Clone::clone_from(&mut node.row_numbers, &self.row_numbers);
-        Clone::clone_from(&mut node.disable_refresh, &self.disable_refresh);
-        Clone::clone_from(&mut node.background_refresh, &self.background_refresh);
-        Clone::clone_from(
-            &mut node.first_background_refresh,
-            &self.first_background_refresh,
-        );
-        Clone::clone_from(&mut node.refresh_on_load, &self.refresh_on_load);
-        Clone::clone_from(&mut node.grow_shrink_type, &self.grow_shrink_type);
-        Clone::clone_from(&mut node.fill_formulas, &self.fill_formulas);
-        Clone::clone_from(&mut node.remove_data_on_save, &self.remove_data_on_save);
-        Clone::clone_from(&mut node.disable_edit, &self.disable_edit);
-        Clone::clone_from(&mut node.preserve_formatting, &self.preserve_formatting);
-        Clone::clone_from(&mut node.adjust_column_width, &self.adjust_column_width);
-        Clone::clone_from(&mut node.intermediate, &self.intermediate);
-        Clone::clone_from(&mut node.connection_id, &self.connection_id);
-        Clone::clone_from(&mut node.auto_format_id, &self.auto_format_id);
-        Clone::clone_from(&mut node.apply_number_formats, &self.apply_number_formats);
-        Clone::clone_from(&mut node.apply_border_formats, &self.apply_border_formats);
-        Clone::clone_from(&mut node.apply_font_formats, &self.apply_font_formats);
-        Clone::clone_from(&mut node.apply_pattern_formats, &self.apply_pattern_formats);
-        Clone::clone_from(
-            &mut node.apply_alignment_formats,
-            &self.apply_alignment_formats,
-        );
-        Clone::clone_from(
-            &mut node.apply_width_height_formats,
-            &self.apply_width_height_formats,
-        );
         node.querytable_refresh_information =
             crate::transform_child(&self.querytable_refresh_information, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -24336,15 +23279,8 @@ impl crate::Transform for spreadsheet::QueryTableField {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.data_bound, &self.data_bound);
-        Clone::clone_from(&mut node.row_numbers, &self.row_numbers);
-        Clone::clone_from(&mut node.fill_formulas, &self.fill_formulas);
-        Clone::clone_from(&mut node.clipped, &self.clipped);
-        Clone::clone_from(&mut node.table_column_id, &self.table_column_id);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -24427,9 +23363,8 @@ impl crate::Transform for spreadsheet::QueryTableFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.querytable_field = crate::transform_child(&self.querytable_field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -24505,21 +23440,8 @@ impl crate::Transform for spreadsheet::QueryTableRefreshInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.preserve_sort_filter_layout,
-            &self.preserve_sort_filter_layout,
-        );
-        Clone::clone_from(&mut node.field_id_wrapped, &self.field_id_wrapped);
-        Clone::clone_from(
-            &mut node.headers_in_last_refresh,
-            &self.headers_in_last_refresh,
-        );
-        Clone::clone_from(&mut node.minimum_version, &self.minimum_version);
-        Clone::clone_from(&mut node.next_id, &self.next_id);
-        Clone::clone_from(&mut node.unbound_columns_left, &self.unbound_columns_left);
-        Clone::clone_from(&mut node.unbound_columns_right, &self.unbound_columns_right);
         node.query_table_fields =
             crate::transform_child(&self.query_table_fields, ctx, &mut rebase);
         node.deleted_fields = crate::transform_child(&self.deleted_fields, ctx, &mut rebase);
@@ -24611,8 +23533,7 @@ impl crate::Transform for spreadsheet::RGBColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.rgb, &self.rgb);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -24675,15 +23596,7 @@ impl crate::Transform for spreadsheet::RangeGroupingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto_start, &self.auto_start);
-        Clone::clone_from(&mut node.auto_end, &self.auto_end);
-        Clone::clone_from(&mut node.group_by, &self.group_by);
-        Clone::clone_from(&mut node.start_num, &self.start_num);
-        Clone::clone_from(&mut node.end_num, &self.end_num);
-        Clone::clone_from(&mut node.start_date, &self.start_date);
-        Clone::clone_from(&mut node.end_date, &self.end_date);
-        Clone::clone_from(&mut node.group_interval, &self.group_interval);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -24761,15 +23674,7 @@ impl crate::Transform for spreadsheet::RangeSet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.i1, &self.i1);
-        Clone::clone_from(&mut node.i2, &self.i2);
-        Clone::clone_from(&mut node.i3, &self.i3);
-        Clone::clone_from(&mut node.i4, &self.i4);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sheet, &self.sheet);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -24835,9 +23740,8 @@ impl crate::Transform for spreadsheet::RangeSets {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.range_set = crate::transform_child(&self.range_set, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -24904,25 +23808,8 @@ impl crate::Transform for spreadsheet::Reference {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.field, &self.field);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.selected, &self.selected);
-        Clone::clone_from(&mut node.by_position, &self.by_position);
-        Clone::clone_from(&mut node.relative, &self.relative);
-        Clone::clone_from(&mut node.default_subtotal, &self.default_subtotal);
-        Clone::clone_from(&mut node.sum_subtotal, &self.sum_subtotal);
-        Clone::clone_from(&mut node.count_a_subtotal, &self.count_a_subtotal);
-        Clone::clone_from(&mut node.avg_subtotal, &self.avg_subtotal);
-        Clone::clone_from(&mut node.max_subtotal, &self.max_subtotal);
-        Clone::clone_from(&mut node.min_subtotal, &self.min_subtotal);
-        Clone::clone_from(&mut node.product_subtotal, &self.product_subtotal);
-        Clone::clone_from(&mut node.count_subtotal, &self.count_subtotal);
-        Clone::clone_from(&mut node.std_dev_subtotal, &self.std_dev_subtotal);
-        Clone::clone_from(&mut node.std_dev_p_subtotal, &self.std_dev_p_subtotal);
-        Clone::clone_from(&mut node.var_subtotal, &self.var_subtotal);
-        Clone::clone_from(&mut node.var_p_subtotal, &self.var_p_subtotal);
         node.shared_items_index =
             crate::transform_child(&self.shared_items_index, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -25006,9 +23893,8 @@ impl crate::Transform for spreadsheet::References {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.reference = crate::transform_child(&self.reference, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -25075,9 +23961,7 @@ impl crate::Transform for spreadsheet::ReferencesTr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.s, &self.s);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -25142,8 +24026,7 @@ impl crate::Transform for spreadsheet::Reviewed {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r_id, &self.r_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -25202,9 +24085,8 @@ impl crate::Transform for spreadsheet::ReviewedList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.reviewed = crate::transform_child(&self.reviewed, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -25276,22 +24158,7 @@ impl crate::Transform for spreadsheet::RevisionAutoFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.auto_format_id, &self.auto_format_id);
-        Clone::clone_from(&mut node.apply_number_formats, &self.apply_number_formats);
-        Clone::clone_from(&mut node.apply_border_formats, &self.apply_border_formats);
-        Clone::clone_from(&mut node.apply_font_formats, &self.apply_font_formats);
-        Clone::clone_from(&mut node.apply_pattern_formats, &self.apply_pattern_formats);
-        Clone::clone_from(
-            &mut node.apply_alignment_formats,
-            &self.apply_alignment_formats,
-        );
-        Clone::clone_from(
-            &mut node.apply_width_height_formats,
-            &self.apply_width_height_formats,
-        );
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -25371,25 +24238,8 @@ impl crate::Transform for spreadsheet::RevisionCellChange {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.s_id, &self.s_id);
-        Clone::clone_from(&mut node.odxf, &self.odxf);
-        Clone::clone_from(&mut node.xf_dxf, &self.xf_dxf);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.dxf, &self.dxf);
-        Clone::clone_from(&mut node.num_fmt_id, &self.num_fmt_id);
-        Clone::clone_from(&mut node.quote_prefix, &self.quote_prefix);
-        Clone::clone_from(&mut node.old_quote_prefix, &self.old_quote_prefix);
-        Clone::clone_from(&mut node.ph, &self.ph);
-        Clone::clone_from(&mut node.old_ph, &self.old_ph);
-        Clone::clone_from(
-            &mut node.end_of_list_formula_update,
-            &self.end_of_list_formula_update,
-        );
         node.old_cell_data = crate::transform_child(&self.old_cell_data, ctx, &mut rebase);
         node.new_cell_data = crate::transform_child(&self.new_cell_data, ctx, &mut rebase);
         node.old_formatting_information =
@@ -25493,18 +24343,7 @@ impl crate::Transform for spreadsheet::RevisionCellComment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.cell, &self.cell);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.action, &self.action);
-        Clone::clone_from(&mut node.always_show, &self.always_show);
-        Clone::clone_from(&mut node.old, &self.old);
-        Clone::clone_from(&mut node.hidden_row, &self.hidden_row);
-        Clone::clone_from(&mut node.hidden_column, &self.hidden_column);
-        Clone::clone_from(&mut node.author, &self.author);
-        Clone::clone_from(&mut node.old_length, &self.old_length);
-        Clone::clone_from(&mut node.new_length, &self.new_length);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -25589,15 +24428,8 @@ impl crate::Transform for spreadsheet::RevisionCellMove {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.source, &self.source);
-        Clone::clone_from(&mut node.destination, &self.destination);
-        Clone::clone_from(&mut node.source_sheet_id, &self.source_sheet_id);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -25679,9 +24511,7 @@ impl crate::Transform for spreadsheet::RevisionCustomView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.action, &self.action);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -25754,32 +24584,8 @@ impl crate::Transform for spreadsheet::RevisionDefinedName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.local_sheet_id, &self.local_sheet_id);
-        Clone::clone_from(&mut node.custom_view, &self.custom_view);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.function, &self.function);
-        Clone::clone_from(&mut node.old_function, &self.old_function);
-        Clone::clone_from(&mut node.function_group_id, &self.function_group_id);
-        Clone::clone_from(&mut node.old_function_group_id, &self.old_function_group_id);
-        Clone::clone_from(&mut node.shortcut_key, &self.shortcut_key);
-        Clone::clone_from(&mut node.old_shortcut_key, &self.old_shortcut_key);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.old_hidden, &self.old_hidden);
-        Clone::clone_from(&mut node.custom_menu, &self.custom_menu);
-        Clone::clone_from(&mut node.old_custom_menu, &self.old_custom_menu);
-        Clone::clone_from(&mut node.description, &self.description);
-        Clone::clone_from(&mut node.old_description, &self.old_description);
-        Clone::clone_from(&mut node.help, &self.help);
-        Clone::clone_from(&mut node.old_help, &self.old_help);
-        Clone::clone_from(&mut node.status_bar, &self.status_bar);
-        Clone::clone_from(&mut node.old_status_bar, &self.old_status_bar);
-        Clone::clone_from(&mut node.comment, &self.comment);
-        Clone::clone_from(&mut node.old_comment, &self.old_comment);
         node.formula = crate::transform_child(&self.formula, ctx, &mut rebase);
         node.old_formula = crate::transform_child(&self.old_formula, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -25888,14 +24694,8 @@ impl crate::Transform for spreadsheet::RevisionFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.xf_dxf, &self.xf_dxf);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
-        Clone::clone_from(&mut node.start, &self.start);
-        Clone::clone_from(&mut node.length, &self.length);
         node.formatting = crate::transform_child(&self.formatting, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -25980,20 +24780,8 @@ impl crate::Transform for spreadsheet::RevisionHeaders {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.last_guid, &self.last_guid);
-        Clone::clone_from(&mut node.shared, &self.shared);
-        Clone::clone_from(&mut node.disk_revisions, &self.disk_revisions);
-        Clone::clone_from(&mut node.history, &self.history);
-        Clone::clone_from(&mut node.track_revisions, &self.track_revisions);
-        Clone::clone_from(&mut node.exclusive, &self.exclusive);
-        Clone::clone_from(&mut node.revision_id, &self.revision_id);
-        Clone::clone_from(&mut node.version, &self.version);
-        Clone::clone_from(&mut node.keep_change_history, &self.keep_change_history);
-        Clone::clone_from(&mut node.protected, &self.protected);
-        Clone::clone_from(&mut node.preserve_history, &self.preserve_history);
         node.header = crate::transform_child(&self.header, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -26080,13 +24868,7 @@ impl crate::Transform for spreadsheet::RevisionInsertSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sheet_position, &self.sheet_position);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -26166,11 +24948,7 @@ impl crate::Transform for spreadsheet::RevisionMergeConflict {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -26248,10 +25026,7 @@ impl crate::Transform for spreadsheet::RevisionQueryTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.field_id, &self.field_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -26325,16 +25100,8 @@ impl crate::Transform for spreadsheet::RevisionRowColumnInsertDelete {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.s_id, &self.s_id);
-        Clone::clone_from(&mut node.eol, &self.eol);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.action, &self.action);
-        Clone::clone_from(&mut node.edge, &self.edge);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -26420,14 +25187,8 @@ impl crate::Transform for spreadsheet::RevisionSheetName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r_id, &self.r_id);
-        Clone::clone_from(&mut node.ua, &self.ua);
-        Clone::clone_from(&mut node.ra, &self.ra);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.old_name, &self.old_name);
-        Clone::clone_from(&mut node.new_name, &self.new_name);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -26505,7 +25266,7 @@ impl crate::Transform for spreadsheet::Revisions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -26760,7 +25521,7 @@ impl crate::Transform for spreadsheet::RichTextInline {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.rich_text_run = crate::transform_child(&self.rich_text_run, ctx, &mut rebase);
@@ -26842,7 +25603,7 @@ impl crate::Transform for spreadsheet::RichTextRun {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
@@ -26913,21 +25674,8 @@ impl crate::Transform for spreadsheet::Row {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.spans, &self.spans);
-        Clone::clone_from(&mut node.s, &self.s);
-        Clone::clone_from(&mut node.custom_format, &self.custom_format);
-        Clone::clone_from(&mut node.ht, &self.ht);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.custom_height, &self.custom_height);
-        Clone::clone_from(&mut node.outline_level, &self.outline_level);
-        Clone::clone_from(&mut node.collapsed, &self.collapsed);
-        Clone::clone_from(&mut node.thick_top, &self.thick_top);
-        Clone::clone_from(&mut node.thick_bot, &self.thick_bot);
-        Clone::clone_from(&mut node.ph, &self.ph);
-        Clone::clone_from(&mut node.dy_descent, &self.dy_descent);
         node.cell = crate::transform_child(&self.cell, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -27006,10 +25754,8 @@ impl crate::Transform for spreadsheet::RowBreaks {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.manual_break_count, &self.manual_break_count);
         node.r#break = crate::transform_child(&self.r#break, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -27081,9 +25827,8 @@ impl crate::Transform for spreadsheet::RowExternalRow {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r, &self.r);
         node.external_cell_data =
             crate::transform_child(&self.external_cell_data, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -27156,9 +25901,8 @@ impl crate::Transform for spreadsheet::RowFields {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.field = crate::transform_child(&self.field, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -27225,9 +25969,8 @@ impl crate::Transform for spreadsheet::RowItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.i = crate::transform_child(&self.i, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -27290,11 +26033,8 @@ impl crate::Transform for spreadsheet::RowItemsI {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.t, &self.t);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.i, &self.i);
         node.member_property_index =
             crate::transform_child(&self.member_property_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -27368,8 +26108,7 @@ impl crate::Transform for spreadsheet::RowOLAPHierarchies {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.hierarchy_usage, &self.hierarchy_usage);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -27441,9 +26180,8 @@ impl crate::Transform for spreadsheet::RowOLAPHierarchyReferences {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.row_olap_hierarchies =
             crate::transform_child(&self.row_olap_hierarchies, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -27523,7 +26261,7 @@ impl crate::Transform for spreadsheet::RunProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -27804,14 +26542,8 @@ impl crate::Transform for spreadsheet::Scenario {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.locked, &self.locked);
-        Clone::clone_from(&mut node.hidden, &self.hidden);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.user, &self.user);
-        Clone::clone_from(&mut node.comment, &self.comment);
         node.input_cells = crate::transform_child(&self.input_cells, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -27879,11 +26611,8 @@ impl crate::Transform for spreadsheet::Scenarios {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.current, &self.current);
-        Clone::clone_from(&mut node.show, &self.show);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
         node.scenario = crate::transform_child(&self.scenario, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -27948,8 +26677,7 @@ impl crate::Transform for spreadsheet::Scheme {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28012,8 +26740,7 @@ impl crate::Transform for spreadsheet::SecurityDescriptor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28081,11 +26808,7 @@ impl crate::Transform for spreadsheet::Selection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.pane, &self.pane);
-        Clone::clone_from(&mut node.active_cell, &self.active_cell);
-        Clone::clone_from(&mut node.active_cell_id, &self.active_cell_id);
-        Clone::clone_from(&mut node.sqref, &self.sqref);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28147,9 +26870,7 @@ impl crate::Transform for spreadsheet::ServerFormat {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.culture, &self.culture);
-        Clone::clone_from(&mut node.format, &self.format);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28218,9 +26939,8 @@ impl crate::Transform for spreadsheet::ServerFormats {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.server_format = crate::transform_child(&self.server_format, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -28296,11 +27016,8 @@ impl crate::Transform for spreadsheet::SetMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.ns, &self.ns);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.o, &self.o);
         node.member_unique_name_index =
             crate::transform_child(&self.member_unique_name_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -28375,9 +27092,8 @@ impl crate::Transform for spreadsheet::Sets {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.olap_set = crate::transform_child(&self.olap_set, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -28440,8 +27156,7 @@ impl crate::Transform for spreadsheet::Shadow {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28500,25 +27215,8 @@ impl crate::Transform for spreadsheet::SharedItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(
-            &mut node.contains_semi_mixed_types,
-            &self.contains_semi_mixed_types,
-        );
-        Clone::clone_from(&mut node.contains_non_date, &self.contains_non_date);
-        Clone::clone_from(&mut node.contains_date, &self.contains_date);
-        Clone::clone_from(&mut node.contains_string, &self.contains_string);
-        Clone::clone_from(&mut node.contains_blank, &self.contains_blank);
-        Clone::clone_from(&mut node.contains_mixed_types, &self.contains_mixed_types);
-        Clone::clone_from(&mut node.contains_number, &self.contains_number);
-        Clone::clone_from(&mut node.contains_integer, &self.contains_integer);
-        Clone::clone_from(&mut node.min_value, &self.min_value);
-        Clone::clone_from(&mut node.max_value, &self.max_value);
-        Clone::clone_from(&mut node.min_date, &self.min_date);
-        Clone::clone_from(&mut node.max_date, &self.max_date);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.long_text, &self.long_text);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -28602,8 +27300,7 @@ impl crate::Transform for spreadsheet::SharedItemsIndex {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.v, &self.v);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28675,10 +27372,8 @@ impl crate::Transform for spreadsheet::SharedStringTable {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.unique_count, &self.unique_count);
         node.string_item = crate::transform_child(&self.string_item, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -28759,8 +27454,7 @@ impl crate::Transform for spreadsheet::SheetCalculationProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.full_calc_on_load, &self.full_calc_on_load);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28831,7 +27525,7 @@ impl crate::Transform for spreadsheet::SheetData {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.row = crate::transform_child(&self.row, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -28902,17 +27596,7 @@ impl crate::Transform for spreadsheet::SheetFormatProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.base_col_width, &self.base_col_width);
-        Clone::clone_from(&mut node.default_col_width, &self.default_col_width);
-        Clone::clone_from(&mut node.default_row_height, &self.default_row_height);
-        Clone::clone_from(&mut node.custom_height, &self.custom_height);
-        Clone::clone_from(&mut node.zero_height, &self.zero_height);
-        Clone::clone_from(&mut node.thick_top, &self.thick_top);
-        Clone::clone_from(&mut node.thick_bottom, &self.thick_bottom);
-        Clone::clone_from(&mut node.outline_level_row, &self.outline_level_row);
-        Clone::clone_from(&mut node.outline_level_col, &self.outline_level_col);
-        Clone::clone_from(&mut node.dy_descent, &self.dy_descent);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -28992,8 +27676,7 @@ impl crate::Transform for spreadsheet::SheetId {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29052,9 +27735,8 @@ impl crate::Transform for spreadsheet::SheetIdMap {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.sheet_id = crate::transform_child(&self.sheet_id, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -29125,11 +27807,7 @@ impl crate::Transform for spreadsheet::SheetInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sheet_id, &self.sheet_id);
-        Clone::clone_from(&mut node.state, &self.state);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29200,8 +27878,7 @@ impl crate::Transform for spreadsheet::SheetName {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29268,20 +27945,8 @@ impl crate::Transform for spreadsheet::SheetProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.sync_horizontal, &self.sync_horizontal);
-        Clone::clone_from(&mut node.sync_vertical, &self.sync_vertical);
-        Clone::clone_from(&mut node.sync_ref, &self.sync_ref);
-        Clone::clone_from(&mut node.transition_evaluation, &self.transition_evaluation);
-        Clone::clone_from(&mut node.transition_entry, &self.transition_entry);
-        Clone::clone_from(&mut node.published, &self.published);
-        Clone::clone_from(&mut node.code_name, &self.code_name);
-        Clone::clone_from(&mut node.filter_mode, &self.filter_mode);
-        Clone::clone_from(
-            &mut node.enable_format_conditions_calculation,
-            &self.enable_format_conditions_calculation,
-        );
         node.sheet_tab_color = crate::transform_child(&self.sheet_tab_color, ctx, &mut rebase);
         node.outline_properties =
             crate::transform_child(&self.outline_properties, ctx, &mut rebase);
@@ -29373,28 +28038,7 @@ impl crate::Transform for spreadsheet::SheetProtectionOptions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.password, &self.password);
-        Clone::clone_from(&mut node.algorithm_name, &self.algorithm_name);
-        Clone::clone_from(&mut node.hash_value, &self.hash_value);
-        Clone::clone_from(&mut node.salt_value, &self.salt_value);
-        Clone::clone_from(&mut node.spin_count, &self.spin_count);
-        Clone::clone_from(&mut node.sheet, &self.sheet);
-        Clone::clone_from(&mut node.objects, &self.objects);
-        Clone::clone_from(&mut node.scenarios, &self.scenarios);
-        Clone::clone_from(&mut node.format_cells, &self.format_cells);
-        Clone::clone_from(&mut node.format_columns, &self.format_columns);
-        Clone::clone_from(&mut node.format_rows, &self.format_rows);
-        Clone::clone_from(&mut node.insert_columns, &self.insert_columns);
-        Clone::clone_from(&mut node.insert_rows, &self.insert_rows);
-        Clone::clone_from(&mut node.insert_hyperlinks, &self.insert_hyperlinks);
-        Clone::clone_from(&mut node.delete_columns, &self.delete_columns);
-        Clone::clone_from(&mut node.delete_rows, &self.delete_rows);
-        Clone::clone_from(&mut node.select_locked_cells, &self.select_locked_cells);
-        Clone::clone_from(&mut node.sort, &self.sort);
-        Clone::clone_from(&mut node.auto_filter, &self.auto_filter);
-        Clone::clone_from(&mut node.pivot_tables, &self.pivot_tables);
-        Clone::clone_from(&mut node.select_unlocked_cells, &self.select_unlocked_cells);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29489,12 +28133,7 @@ impl crate::Transform for spreadsheet::SheetTabColor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto, &self.auto);
-        Clone::clone_from(&mut node.indexed, &self.indexed);
-        Clone::clone_from(&mut node.rgb, &self.rgb);
-        Clone::clone_from(&mut node.theme, &self.theme);
-        Clone::clone_from(&mut node.tint, &self.tint);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29566,7 +28205,7 @@ impl crate::Transform for spreadsheet::SheetViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.worksheet_view = crate::transform_child(&self.worksheet_view, ctx, &mut rebase);
         node.future_feature_data_storage_area =
@@ -29637,7 +28276,7 @@ impl crate::Transform for spreadsheet::Sheets {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sheet_information = crate::transform_child(&self.sheet_information, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -29700,7 +28339,7 @@ impl crate::Transform for spreadsheet::SingleCells {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.table_properties = crate::transform_child(&self.table_properties, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -29771,9 +28410,7 @@ impl crate::Transform for spreadsheet::SmartTagPropertiesCellSmartTagPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.key, &self.key);
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29849,9 +28486,7 @@ impl crate::Transform for spreadsheet::SmartTagPropertiesSmartTagPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.embed, &self.embed);
-        Clone::clone_from(&mut node.show, &self.show);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -29927,10 +28562,7 @@ impl crate::Transform for spreadsheet::SmartTagType {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.namespace_uri, &self.namespace_uri);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.url, &self.url);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -30004,7 +28636,7 @@ impl crate::Transform for spreadsheet::SmartTagTypes {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.smart_tag_type = crate::transform_child(&self.smart_tag_type, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -30076,7 +28708,7 @@ impl crate::Transform for spreadsheet::SmartTags {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.cell = crate::transform_child(&self.cell, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -30143,9 +28775,8 @@ impl crate::Transform for spreadsheet::SortByTuple {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.c, &self.c);
         node.tuple = crate::transform_child(&self.tuple, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -30217,14 +28848,7 @@ impl crate::Transform for spreadsheet::SortCondition {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.descending, &self.descending);
-        Clone::clone_from(&mut node.sort_by, &self.sort_by);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.custom_list, &self.custom_list);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
-        Clone::clone_from(&mut node.icon_set, &self.icon_set);
-        Clone::clone_from(&mut node.icon_id, &self.icon_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -30298,12 +28922,8 @@ impl crate::Transform for spreadsheet::SortState {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.column_sort, &self.column_sort);
-        Clone::clone_from(&mut node.case_sensitive, &self.case_sensitive);
-        Clone::clone_from(&mut node.sort_method, &self.sort_method);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
         node.x14_sort_condition =
             crate::transform_child(&self.x14_sort_condition, ctx, &mut rebase);
         node.sort_condition = crate::transform_child(&self.sort_condition, ctx, &mut rebase);
@@ -30385,8 +29005,7 @@ impl crate::Transform for spreadsheet::StrikeThrough {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -30454,7 +29073,7 @@ impl crate::Transform for spreadsheet::StringItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.text = crate::transform_child(&self.text, ctx, &mut rebase);
         node.rich_text_run = crate::transform_child(&self.rich_text_run, ctx, &mut rebase);
@@ -30535,8 +29154,7 @@ impl crate::Transform for spreadsheet::StringsInSubtopic {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -30604,7 +29222,7 @@ impl crate::Transform for spreadsheet::StyleSheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.number_formats = crate::transform_child(&self.number_formats, ctx, &mut rebase);
         node.fonts = crate::transform_child(&self.fonts, ctx, &mut rebase);
@@ -30707,7 +29325,7 @@ impl crate::Transform for spreadsheet::SupportingWorkbookSheetNames {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sheet_name = crate::transform_child(&self.sheet_name, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -30782,36 +29400,8 @@ impl crate::Transform for spreadsheet::Table {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.display_name, &self.display_name);
-        Clone::clone_from(&mut node.comment, &self.comment);
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.table_type, &self.table_type);
-        Clone::clone_from(&mut node.header_row_count, &self.header_row_count);
-        Clone::clone_from(&mut node.insert_row, &self.insert_row);
-        Clone::clone_from(&mut node.insert_row_shift, &self.insert_row_shift);
-        Clone::clone_from(&mut node.totals_row_count, &self.totals_row_count);
-        Clone::clone_from(&mut node.totals_row_shown, &self.totals_row_shown);
-        Clone::clone_from(&mut node.published, &self.published);
-        Clone::clone_from(&mut node.header_row_dxf_id, &self.header_row_dxf_id);
-        Clone::clone_from(&mut node.data_dxf_id, &self.data_dxf_id);
-        Clone::clone_from(&mut node.totals_row_dxf_id, &self.totals_row_dxf_id);
-        Clone::clone_from(
-            &mut node.header_row_border_dxf_id,
-            &self.header_row_border_dxf_id,
-        );
-        Clone::clone_from(&mut node.table_border_dxf_id, &self.table_border_dxf_id);
-        Clone::clone_from(
-            &mut node.totals_row_border_dxf_id,
-            &self.totals_row_border_dxf_id,
-        );
-        Clone::clone_from(&mut node.header_row_cell_style, &self.header_row_cell_style);
-        Clone::clone_from(&mut node.data_cell_style, &self.data_cell_style);
-        Clone::clone_from(&mut node.totals_row_cell_style, &self.totals_row_cell_style);
-        Clone::clone_from(&mut node.connection_id, &self.connection_id);
         node.autofilter_settings =
             crate::transform_child(&self.autofilter_settings, ctx, &mut rebase);
         node.sort_state = crate::transform_child(&self.sort_state, ctx, &mut rebase);
@@ -30910,20 +29500,8 @@ impl crate::Transform for spreadsheet::TableColumn {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.unique_name, &self.unique_name);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.totals_row_function, &self.totals_row_function);
-        Clone::clone_from(&mut node.totals_row_label, &self.totals_row_label);
-        Clone::clone_from(&mut node.query_table_field_id, &self.query_table_field_id);
-        Clone::clone_from(&mut node.header_row_dxf_id, &self.header_row_dxf_id);
-        Clone::clone_from(&mut node.data_dxf_id, &self.data_dxf_id);
-        Clone::clone_from(&mut node.totals_row_dxf_id, &self.totals_row_dxf_id);
-        Clone::clone_from(&mut node.header_row_cell_style, &self.header_row_cell_style);
-        Clone::clone_from(&mut node.data_cell_style, &self.data_cell_style);
-        Clone::clone_from(&mut node.totals_row_cell_style, &self.totals_row_cell_style);
         node.calculated_column_formula =
             crate::transform_child(&self.calculated_column_formula, ctx, &mut rebase);
         node.totals_row_formula =
@@ -31014,9 +29592,8 @@ impl crate::Transform for spreadsheet::TableColumns {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.table_column = crate::transform_child(&self.table_column, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -31084,8 +29661,7 @@ impl crate::Transform for spreadsheet::TablePart {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -31148,9 +29724,8 @@ impl crate::Transform for spreadsheet::TableParts {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.table_part = crate::transform_child(&self.table_part, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -31221,11 +29796,8 @@ impl crate::Transform for spreadsheet::TableProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.connection_id, &self.connection_id);
         node.cell_properties = crate::transform_child(&self.cell_properties, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
@@ -31303,12 +29875,8 @@ impl crate::Transform for spreadsheet::TableStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.pivot, &self.pivot);
-        Clone::clone_from(&mut node.table, &self.table);
-        Clone::clone_from(&mut node.count, &self.count);
         node.table_style_element =
             crate::transform_child(&self.table_style_element, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -31383,10 +29951,7 @@ impl crate::Transform for spreadsheet::TableStyleTableStyleElement {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.size, &self.size);
-        Clone::clone_from(&mut node.dxf_id, &self.dxf_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -31463,12 +30028,7 @@ impl crate::Transform for spreadsheet::TableStyleTableStyleInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.show_first_column, &self.show_first_column);
-        Clone::clone_from(&mut node.show_last_column, &self.show_last_column);
-        Clone::clone_from(&mut node.show_row_stripes, &self.show_row_stripes);
-        Clone::clone_from(&mut node.show_column_stripes, &self.show_column_stripes);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -31543,11 +30103,8 @@ impl crate::Transform for spreadsheet::TableStyles {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.default_table_style, &self.default_table_style);
-        Clone::clone_from(&mut node.default_pivot_style, &self.default_pivot_style);
         node.table_style = crate::transform_child(&self.table_style, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -31616,9 +30173,8 @@ impl crate::Transform for spreadsheet::Tables {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -31806,8 +30362,7 @@ impl crate::Transform for spreadsheet::Text {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -31870,9 +30425,7 @@ impl crate::Transform for spreadsheet::TextImportFieldSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#type, &self.r#type);
-        Clone::clone_from(&mut node.position, &self.position);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -31948,24 +30501,8 @@ impl crate::Transform for spreadsheet::TextImportSettings {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.prompt, &self.prompt);
-        Clone::clone_from(&mut node.file_type, &self.file_type);
-        Clone::clone_from(&mut node.code_page, &self.code_page);
-        Clone::clone_from(&mut node.character_set, &self.character_set);
-        Clone::clone_from(&mut node.first_row, &self.first_row);
-        Clone::clone_from(&mut node.source_file, &self.source_file);
-        Clone::clone_from(&mut node.delimited, &self.delimited);
-        Clone::clone_from(&mut node.decimal, &self.decimal);
-        Clone::clone_from(&mut node.thousands, &self.thousands);
-        Clone::clone_from(&mut node.tab, &self.tab);
-        Clone::clone_from(&mut node.space, &self.space);
-        Clone::clone_from(&mut node.comma, &self.comma);
-        Clone::clone_from(&mut node.semicolon, &self.semicolon);
-        Clone::clone_from(&mut node.consecutive, &self.consecutive);
-        Clone::clone_from(&mut node.qualifier, &self.qualifier);
-        Clone::clone_from(&mut node.delimiter, &self.delimiter);
         node.fields = crate::transform_child(&self.fields, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -32052,11 +30589,7 @@ impl crate::Transform for spreadsheet::Top10 {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.top, &self.top);
-        Clone::clone_from(&mut node.percent, &self.percent);
-        Clone::clone_from(&mut node.val, &self.val);
-        Clone::clone_from(&mut node.filter_val, &self.filter_val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -32118,9 +30651,8 @@ impl crate::Transform for spreadsheet::TopBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -32187,9 +30719,8 @@ impl crate::Transform for spreadsheet::Topic {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.t, &self.t);
         node.cell_value = crate::transform_child(&self.cell_value, ctx, &mut rebase);
         node.strings_in_subtopic =
             crate::transform_child(&self.strings_in_subtopic, ctx, &mut rebase);
@@ -32263,9 +30794,7 @@ impl crate::Transform for spreadsheet::TotalsRowFormula {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.array, &self.array);
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -32338,9 +30867,8 @@ impl crate::Transform for spreadsheet::TrailingEdgeBorderEnd {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -32419,9 +30947,8 @@ impl crate::Transform for spreadsheet::TrailingEdgeBorderRight {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -32496,10 +31023,7 @@ impl crate::Transform for spreadsheet::Tuple {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.fld, &self.fld);
-        Clone::clone_from(&mut node.hier, &self.hier);
-        Clone::clone_from(&mut node.item, &self.item);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -32560,7 +31084,7 @@ impl crate::Transform for spreadsheet::TupleCache {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.entries = crate::transform_child(&self.entries, ctx, &mut rebase);
         node.sets = crate::transform_child(&self.sets, ctx, &mut rebase);
@@ -32644,18 +31168,8 @@ impl crate::Transform for spreadsheet::TupleMDXMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.c, &self.c);
-        Clone::clone_from(&mut node.ct, &self.ct);
-        Clone::clone_from(&mut node.si, &self.si);
-        Clone::clone_from(&mut node.fi, &self.fi);
-        Clone::clone_from(&mut node.bc, &self.bc);
-        Clone::clone_from(&mut node.fc, &self.fc);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.st, &self.st);
-        Clone::clone_from(&mut node.b, &self.b);
         node.member_unique_name_index =
             crate::transform_child(&self.member_unique_name_index, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -32737,9 +31251,8 @@ impl crate::Transform for spreadsheet::Tuples {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.c, &self.c);
         node.tuple = crate::transform_child(&self.tuple, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -32802,8 +31315,7 @@ impl crate::Transform for spreadsheet::Underline {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -32862,18 +31374,7 @@ impl crate::Transform for spreadsheet::Undo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.index, &self.index);
-        Clone::clone_from(&mut node.exp, &self.exp);
-        Clone::clone_from(&mut node.ref3_d, &self.ref3_d);
-        Clone::clone_from(&mut node.array, &self.array);
-        Clone::clone_from(&mut node.v, &self.v);
-        Clone::clone_from(&mut node.nf, &self.nf);
-        Clone::clone_from(&mut node.cs, &self.cs);
-        Clone::clone_from(&mut node.dr, &self.dr);
-        Clone::clone_from(&mut node.dn, &self.dn);
-        Clone::clone_from(&mut node.r, &self.r);
-        Clone::clone_from(&mut node.s_id, &self.s_id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -32946,12 +31447,8 @@ impl crate::Transform for spreadsheet::UserInformation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.guid, &self.guid);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.date_time, &self.date_time);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -33027,9 +31524,8 @@ impl crate::Transform for spreadsheet::UserList {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.user_information = crate::transform_child(&self.user_information, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33092,9 +31588,8 @@ impl crate::Transform for spreadsheet::Value {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.t, &self.t);
         node.dde_link = crate::transform_child(&self.dde_link, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33161,9 +31656,8 @@ impl crate::Transform for spreadsheet::ValueMetadata {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.block = crate::transform_child(&self.block, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33239,8 +31733,7 @@ impl crate::Transform for spreadsheet::VerticalAlignment {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.val, &self.val);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -33312,9 +31805,8 @@ impl crate::Transform for spreadsheet::VerticalInnerBorder {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.style, &self.style);
         node.data_bar_color = crate::transform_child(&self.data_bar_color, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33393,10 +31885,8 @@ impl crate::Transform for spreadsheet::VerticalPageBreaks {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
-        Clone::clone_from(&mut node.manual_break_count, &self.manual_break_count);
         node.r#break = crate::transform_child(&self.r#break, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33469,12 +31959,7 @@ impl crate::Transform for spreadsheet::ViewPane {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.x_split, &self.x_split);
-        Clone::clone_from(&mut node.y_split, &self.y_split);
-        Clone::clone_from(&mut node.top_left_cell, &self.top_left_cell);
-        Clone::clone_from(&mut node.active_pane, &self.active_pane);
-        Clone::clone_from(&mut node.state, &self.state);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -33541,9 +32026,8 @@ impl crate::Transform for spreadsheet::VolatileDependencyType {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.r#type, &self.r#type);
         node.main = crate::transform_child(&self.main, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -33622,7 +32106,7 @@ impl crate::Transform for spreadsheet::VolatileDependencyTypes {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.volatile_dependency_type =
             crate::transform_child(&self.volatile_dependency_type, ctx, &mut rebase);
@@ -33706,9 +32190,8 @@ impl crate::Transform for spreadsheet::WebPublishObjects {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.web_publishing_object =
             crate::transform_child(&self.web_publishing_object, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -33785,15 +32268,7 @@ impl crate::Transform for spreadsheet::WebPublishingItem {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.div_id, &self.div_id);
-        Clone::clone_from(&mut node.source_type, &self.source_type);
-        Clone::clone_from(&mut node.source_ref, &self.source_ref);
-        Clone::clone_from(&mut node.source_object, &self.source_object);
-        Clone::clone_from(&mut node.destination_file, &self.destination_file);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.auto_republish, &self.auto_republish);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -33872,9 +32347,8 @@ impl crate::Transform for spreadsheet::WebPublishingItems {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.count, &self.count);
         node.web_publishing_item =
             crate::transform_child(&self.web_publishing_item, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -33951,13 +32425,7 @@ impl crate::Transform for spreadsheet::WebPublishingObject {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.div_id, &self.div_id);
-        Clone::clone_from(&mut node.source_object, &self.source_object);
-        Clone::clone_from(&mut node.destination_file, &self.destination_file);
-        Clone::clone_from(&mut node.title, &self.title);
-        Clone::clone_from(&mut node.auto_republish, &self.auto_republish);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -34037,16 +32505,7 @@ impl crate::Transform for spreadsheet::WebPublishingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.css, &self.css);
-        Clone::clone_from(&mut node.thicket, &self.thicket);
-        Clone::clone_from(&mut node.long_file_names, &self.long_file_names);
-        Clone::clone_from(&mut node.vml, &self.vml);
-        Clone::clone_from(&mut node.allow_png, &self.allow_png);
-        Clone::clone_from(&mut node.target_screen_size, &self.target_screen_size);
-        Clone::clone_from(&mut node.dpi, &self.dpi);
-        Clone::clone_from(&mut node.code_page, &self.code_page);
-        Clone::clone_from(&mut node.character_set, &self.character_set);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -34129,21 +32588,8 @@ impl crate::Transform for spreadsheet::WebQueryProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.xml, &self.xml);
-        Clone::clone_from(&mut node.source_data, &self.source_data);
-        Clone::clone_from(&mut node.parse_pre, &self.parse_pre);
-        Clone::clone_from(&mut node.consecutive, &self.consecutive);
-        Clone::clone_from(&mut node.first_row, &self.first_row);
-        Clone::clone_from(&mut node.xl97, &self.xl97);
-        Clone::clone_from(&mut node.text_dates, &self.text_dates);
-        Clone::clone_from(&mut node.xl2000, &self.xl2000);
-        Clone::clone_from(&mut node.url, &self.url);
-        Clone::clone_from(&mut node.post, &self.post);
-        Clone::clone_from(&mut node.html_tables, &self.html_tables);
-        Clone::clone_from(&mut node.html_format, &self.html_format);
-        Clone::clone_from(&mut node.edit_page, &self.edit_page);
         node.tables = crate::transform_child(&self.tables, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -34227,9 +32673,8 @@ impl crate::Transform for spreadsheet::Workbook {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.conformance, &self.conformance);
         node.file_version = crate::transform_child(&self.file_version, ctx, &mut rebase);
         node.file_sharing = crate::transform_child(&self.file_sharing, ctx, &mut rebase);
         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);
@@ -34362,40 +32807,7 @@ impl crate::Transform for spreadsheet::WorkbookProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.date1904, &self.date1904);
-        Clone::clone_from(&mut node.show_objects, &self.show_objects);
-        Clone::clone_from(
-            &mut node.show_border_unselected_tables,
-            &self.show_border_unselected_tables,
-        );
-        Clone::clone_from(&mut node.filter_privacy, &self.filter_privacy);
-        Clone::clone_from(&mut node.prompted_solutions, &self.prompted_solutions);
-        Clone::clone_from(&mut node.show_ink_annotation, &self.show_ink_annotation);
-        Clone::clone_from(&mut node.backup_file, &self.backup_file);
-        Clone::clone_from(
-            &mut node.save_external_link_values,
-            &self.save_external_link_values,
-        );
-        Clone::clone_from(&mut node.update_links, &self.update_links);
-        Clone::clone_from(&mut node.code_name, &self.code_name);
-        Clone::clone_from(&mut node.hide_pivot_field_list, &self.hide_pivot_field_list);
-        Clone::clone_from(
-            &mut node.show_pivot_chart_filter,
-            &self.show_pivot_chart_filter,
-        );
-        Clone::clone_from(&mut node.allow_refresh_query, &self.allow_refresh_query);
-        Clone::clone_from(&mut node.publish_items, &self.publish_items);
-        Clone::clone_from(&mut node.check_compatibility, &self.check_compatibility);
-        Clone::clone_from(
-            &mut node.auto_compress_pictures,
-            &self.auto_compress_pictures,
-        );
-        Clone::clone_from(
-            &mut node.refresh_all_connections,
-            &self.refresh_all_connections,
-        );
-        Clone::clone_from(&mut node.default_theme_version, &self.default_theme_version);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -34484,34 +32896,7 @@ impl crate::Transform for spreadsheet::WorkbookProtection {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.workbook_password, &self.workbook_password);
-        Clone::clone_from(
-            &mut node.workbook_password_character_set,
-            &self.workbook_password_character_set,
-        );
-        Clone::clone_from(&mut node.revisions_password, &self.revisions_password);
-        Clone::clone_from(
-            &mut node.revisions_password_character_set,
-            &self.revisions_password_character_set,
-        );
-        Clone::clone_from(&mut node.lock_structure, &self.lock_structure);
-        Clone::clone_from(&mut node.lock_windows, &self.lock_windows);
-        Clone::clone_from(&mut node.lock_revision, &self.lock_revision);
-        Clone::clone_from(
-            &mut node.revisions_algorithm_name,
-            &self.revisions_algorithm_name,
-        );
-        Clone::clone_from(&mut node.revisions_hash_value, &self.revisions_hash_value);
-        Clone::clone_from(&mut node.revisions_salt_value, &self.revisions_salt_value);
-        Clone::clone_from(&mut node.revisions_spin_count, &self.revisions_spin_count);
-        Clone::clone_from(
-            &mut node.workbook_algorithm_name,
-            &self.workbook_algorithm_name,
-        );
-        Clone::clone_from(&mut node.workbook_hash_value, &self.workbook_hash_value);
-        Clone::clone_from(&mut node.workbook_salt_value, &self.workbook_salt_value);
-        Clone::clone_from(&mut node.workbook_spin_count, &self.workbook_spin_count);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -34593,27 +32978,8 @@ impl crate::Transform for spreadsheet::WorkbookView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.visibility, &self.visibility);
-        Clone::clone_from(&mut node.minimized, &self.minimized);
-        Clone::clone_from(
-            &mut node.show_horizontal_scroll,
-            &self.show_horizontal_scroll,
-        );
-        Clone::clone_from(&mut node.show_vertical_scroll, &self.show_vertical_scroll);
-        Clone::clone_from(&mut node.show_sheet_tabs, &self.show_sheet_tabs);
-        Clone::clone_from(&mut node.x_window, &self.x_window);
-        Clone::clone_from(&mut node.y_window, &self.y_window);
-        Clone::clone_from(&mut node.window_width, &self.window_width);
-        Clone::clone_from(&mut node.window_height, &self.window_height);
-        Clone::clone_from(&mut node.tab_ratio, &self.tab_ratio);
-        Clone::clone_from(&mut node.first_sheet, &self.first_sheet);
-        Clone::clone_from(&mut node.active_tab, &self.active_tab);
-        Clone::clone_from(
-            &mut node.auto_filter_date_grouping,
-            &self.auto_filter_date_grouping,
-        );
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -34698,7 +33064,7 @@ impl crate::Transform for spreadsheet::WorkbookViews {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.workbook_view = crate::transform_child(&self.workbook_view, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -34770,7 +33136,7 @@ impl crate::Transform for spreadsheet::Worksheet {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.sheet_properties = crate::transform_child(&self.sheet_properties, ctx, &mut rebase);
         node.dimensions = crate::transform_child(&self.dimensions, ctx, &mut rebase);
@@ -34970,8 +33336,7 @@ impl crate::Transform for spreadsheet::WorksheetDimensions {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -35043,11 +33408,7 @@ impl crate::Transform for spreadsheet::WorksheetPivotCacheSource {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.r#ref, &self.r#ref);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.sheet, &self.sheet);
-        Clone::clone_from(&mut node.id, &self.id);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -35125,33 +33486,8 @@ impl crate::Transform for spreadsheet::WorksheetView {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.window_protection, &self.window_protection);
-        Clone::clone_from(&mut node.show_formulas, &self.show_formulas);
-        Clone::clone_from(&mut node.show_grid_lines, &self.show_grid_lines);
-        Clone::clone_from(&mut node.show_row_col_headers, &self.show_row_col_headers);
-        Clone::clone_from(&mut node.show_zeros, &self.show_zeros);
-        Clone::clone_from(&mut node.right_to_left, &self.right_to_left);
-        Clone::clone_from(&mut node.tab_selected, &self.tab_selected);
-        Clone::clone_from(&mut node.show_ruler, &self.show_ruler);
-        Clone::clone_from(&mut node.show_outline_symbols, &self.show_outline_symbols);
-        Clone::clone_from(&mut node.default_grid_color, &self.default_grid_color);
-        Clone::clone_from(&mut node.show_white_space, &self.show_white_space);
-        Clone::clone_from(&mut node.view, &self.view);
-        Clone::clone_from(&mut node.top_left_cell, &self.top_left_cell);
-        Clone::clone_from(&mut node.color_id, &self.color_id);
-        Clone::clone_from(&mut node.zoom_scale, &self.zoom_scale);
-        Clone::clone_from(&mut node.zoom_scale_normal, &self.zoom_scale_normal);
-        Clone::clone_from(
-            &mut node.zoom_scale_sheet_layout_view,
-            &self.zoom_scale_sheet_layout_view,
-        );
-        Clone::clone_from(
-            &mut node.zoom_scale_page_layout_view,
-            &self.zoom_scale_page_layout_view,
-        );
-        Clone::clone_from(&mut node.workbook_view_id, &self.workbook_view_id);
         node.pane = crate::transform_child(&self.pane, ctx, &mut rebase);
         node.selection = crate::transform_child(&self.selection, ctx, &mut rebase);
         node.pivottable_selection =
@@ -35256,12 +33592,8 @@ impl crate::Transform for spreadsheet::XMLColumnProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.map_id, &self.map_id);
-        Clone::clone_from(&mut node.xpath, &self.xpath);
-        Clone::clone_from(&mut node.denormalized, &self.denormalized);
-        Clone::clone_from(&mut node.xml_data_type, &self.xml_data_type);
         node.future_feature_data_storage_area =
             crate::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -35344,16 +33676,8 @@ impl crate::Transform for spreadsheet::XMLMappingDataBinding {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.data_binding_name, &self.data_binding_name);
-        Clone::clone_from(&mut node.file_binding, &self.file_binding);
-        Clone::clone_from(&mut node.connection_id, &self.connection_id);
-        Clone::clone_from(&mut node.file_binding_name, &self.file_binding_name);
-        Clone::clone_from(
-            &mut node.data_binding_load_mode,
-            &self.data_binding_load_mode,
-        );
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -35436,9 +33760,8 @@ impl crate::Transform for spreadsheet::XMLMappingMapInfo {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.selection_namespaces, &self.selection_namespaces);
         node.xml_schema = crate::transform_child(&self.xml_schema, ctx, &mut rebase);
         node.xml_mapping_properties =
             crate::transform_child(&self.xml_mapping_properties, ctx, &mut rebase);
@@ -35518,23 +33841,8 @@ impl crate::Transform for spreadsheet::XMLMappingProperties {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.name, &self.name);
-        Clone::clone_from(&mut node.root_element, &self.root_element);
-        Clone::clone_from(&mut node.schema_id, &self.schema_id);
-        Clone::clone_from(
-            &mut node.show_import_export_validation_errors,
-            &self.show_import_export_validation_errors,
-        );
-        Clone::clone_from(&mut node.auto_fit, &self.auto_fit);
-        Clone::clone_from(&mut node.append, &self.append);
-        Clone::clone_from(
-            &mut node.preserve_sort_af_layout,
-            &self.preserve_sort_af_layout,
-        );
-        Clone::clone_from(&mut node.preserve_format, &self.preserve_format);
         node.xml_mapping_data_binding =
             crate::transform_child(&self.xml_mapping_data_binding, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -35618,12 +33926,8 @@ impl crate::Transform for spreadsheet::XMLSchema {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
-        Clone::clone_from(&mut node.schema_ref, &self.schema_ref);
-        Clone::clone_from(&mut node.namespace, &self.namespace);
-        Clone::clone_from(&mut node.schema_language, &self.schema_language);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -35684,128 +33988,4 @@ impl WriteThrough for spreadsheet::XMLSchema {
         }
         self.write_children_through(ctx, out)
     }
-}
-
-fn transform_pivot_table_definition_1(
-    from: &spreadsheet::PivotTableDefinition,
-    node: &mut spreadsheet::PivotTableDefinition,
-) {
-    Clone::clone_from(&mut node.name, &from.name);
-    Clone::clone_from(&mut node.cache_id, &from.cache_id);
-    Clone::clone_from(&mut node.data_on_rows, &from.data_on_rows);
-    Clone::clone_from(&mut node.data_position, &from.data_position);
-    Clone::clone_from(&mut node.auto_format_id, &from.auto_format_id);
-    Clone::clone_from(&mut node.apply_number_formats, &from.apply_number_formats);
-    Clone::clone_from(&mut node.apply_border_formats, &from.apply_border_formats);
-    Clone::clone_from(&mut node.apply_font_formats, &from.apply_font_formats);
-    Clone::clone_from(&mut node.apply_pattern_formats, &from.apply_pattern_formats);
-    Clone::clone_from(
-        &mut node.apply_alignment_formats,
-        &from.apply_alignment_formats,
-    );
-    Clone::clone_from(
-        &mut node.apply_width_height_formats,
-        &from.apply_width_height_formats,
-    );
-    Clone::clone_from(&mut node.data_caption, &from.data_caption);
-    Clone::clone_from(&mut node.grand_total_caption, &from.grand_total_caption);
-    Clone::clone_from(&mut node.error_caption, &from.error_caption);
-    Clone::clone_from(&mut node.show_error, &from.show_error);
-    Clone::clone_from(&mut node.missing_caption, &from.missing_caption);
-    Clone::clone_from(&mut node.show_missing, &from.show_missing);
-    Clone::clone_from(&mut node.page_style, &from.page_style);
-    Clone::clone_from(&mut node.pivot_table_style, &from.pivot_table_style);
-    Clone::clone_from(&mut node.vacated_style, &from.vacated_style);
-    Clone::clone_from(&mut node.tag, &from.tag);
-    Clone::clone_from(&mut node.updated_version, &from.updated_version);
-    Clone::clone_from(
-        &mut node.min_refreshable_version,
-        &from.min_refreshable_version,
-    );
-    Clone::clone_from(&mut node.asterisk_totals, &from.asterisk_totals);
-    Clone::clone_from(&mut node.show_items, &from.show_items);
-    Clone::clone_from(&mut node.edit_data, &from.edit_data);
-    Clone::clone_from(&mut node.disable_field_list, &from.disable_field_list);
-    Clone::clone_from(&mut node.show_calc_mbrs, &from.show_calc_mbrs);
-    Clone::clone_from(&mut node.visual_totals, &from.visual_totals);
-    Clone::clone_from(&mut node.show_multiple_label, &from.show_multiple_label);
-    Clone::clone_from(&mut node.show_data_drop_down, &from.show_data_drop_down);
-    Clone::clone_from(&mut node.show_drill, &from.show_drill);
-    Clone::clone_from(&mut node.print_drill, &from.print_drill);
-    Clone::clone_from(
-        &mut node.show_member_property_tips,
-        &from.show_member_property_tips,
-    );
-    Clone::clone_from(&mut node.show_data_tips, &from.show_data_tips);
-    Clone::clone_from(&mut node.enable_wizard, &from.enable_wizard);
-    Clone::clone_from(&mut node.enable_drill, &from.enable_drill);
-    Clone::clone_from(
-        &mut node.enable_field_properties,
-        &from.enable_field_properties,
-    );
-    Clone::clone_from(&mut node.preserve_formatting, &from.preserve_formatting);
-    Clone::clone_from(&mut node.use_auto_formatting, &from.use_auto_formatting);
-    Clone::clone_from(&mut node.page_wrap, &from.page_wrap);
-    Clone::clone_from(&mut node.page_over_then_down, &from.page_over_then_down);
-    Clone::clone_from(&mut node.subtotal_hidden_items, &from.subtotal_hidden_items);
-    Clone::clone_from(&mut node.row_grand_totals, &from.row_grand_totals);
-    Clone::clone_from(&mut node.col_grand_totals, &from.col_grand_totals);
-    Clone::clone_from(&mut node.field_print_titles, &from.field_print_titles);
-    Clone::clone_from(&mut node.item_print_titles, &from.item_print_titles);
-    Clone::clone_from(&mut node.merge_item, &from.merge_item);
-    Clone::clone_from(&mut node.show_drop_zones, &from.show_drop_zones);
-    Clone::clone_from(&mut node.created_version, &from.created_version);
-    Clone::clone_from(&mut node.indent, &from.indent);
-    Clone::clone_from(&mut node.show_empty_row, &from.show_empty_row);
-    Clone::clone_from(&mut node.show_empty_col, &from.show_empty_col);
-    Clone::clone_from(&mut node.show_headers, &from.show_headers);
-    Clone::clone_from(&mut node.compact, &from.compact);
-    Clone::clone_from(&mut node.outline, &from.outline);
-    Clone::clone_from(&mut node.outline_data, &from.outline_data);
-    Clone::clone_from(&mut node.compact_data, &from.compact_data);
-    Clone::clone_from(&mut node.published, &from.published);
-    Clone::clone_from(&mut node.grid_drop_zones, &from.grid_drop_zones);
-    Clone::clone_from(&mut node.immersive, &from.immersive);
-    Clone::clone_from(
-        &mut node.multiple_field_filters,
-        &from.multiple_field_filters,
-    );
-    Clone::clone_from(&mut node.chart_format, &from.chart_format);
-    Clone::clone_from(&mut node.row_header_caption, &from.row_header_caption);
-    Clone::clone_from(&mut node.col_header_caption, &from.col_header_caption);
-    Clone::clone_from(
-        &mut node.field_list_sort_ascending,
-        &from.field_list_sort_ascending,
-    );
-    Clone::clone_from(&mut node.mdx_subqueries, &from.mdx_subqueries);
-    Clone::clone_from(&mut node.custom_list_sort, &from.custom_list_sort);
-}
-
-fn transform_pivot_table_definition_2(
-    from: &spreadsheet::PivotTableDefinition,
-    node: &mut spreadsheet::PivotTableDefinition,
-    ctx: &mut dyn officekit_markup::Context,
-    rebase: &mut crate::Rebase,
-) {
-    node.pivottable_location = crate::transform_child(&from.pivottable_location, ctx, rebase);
-    node.pivottable_fields = crate::transform_child(&from.pivottable_fields, ctx, rebase);
-    node.row_fields = crate::transform_child(&from.row_fields, ctx, rebase);
-    node.row_items = crate::transform_child(&from.row_items, ctx, rebase);
-    node.column_fields = crate::transform_child(&from.column_fields, ctx, rebase);
-    node.column_items = crate::transform_child(&from.column_items, ctx, rebase);
-    node.page_field_items = crate::transform_child(&from.page_field_items, ctx, rebase);
-    node.data_fields = crate::transform_child(&from.data_fields, ctx, rebase);
-    node.pivottable_formats = crate::transform_child(&from.pivottable_formats, ctx, rebase);
-    node.conditional_formats = crate::transform_child(&from.conditional_formats, ctx, rebase);
-    node.pivotchart_formats = crate::transform_child(&from.pivotchart_formats, ctx, rebase);
-    node.pivottable_olap_hierarchies =
-        crate::transform_child(&from.pivottable_olap_hierarchies, ctx, rebase);
-    node.pivottable_style = crate::transform_child(&from.pivottable_style, ctx, rebase);
-    node.filters = crate::transform_child(&from.filters, ctx, rebase);
-    node.row_olap_hierarchy_references =
-        crate::transform_child(&from.row_olap_hierarchy_references, ctx, rebase);
-    node.column_olap_hierarchy_references =
-        crate::transform_child(&from.column_olap_hierarchy_references, ctx, rebase);
-    node.future_feature_data_storage_area =
-        crate::transform_child(&from.future_feature_data_storage_area, ctx, rebase);
 }

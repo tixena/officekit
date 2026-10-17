@@ -231,9 +231,7 @@ impl crate::Transform for office_spreadsheetml_2023_external_code_service::Exter
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.auto_show, &self.auto_show);
-        Clone::clone_from(&mut node.timeout, &self.timeout);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }

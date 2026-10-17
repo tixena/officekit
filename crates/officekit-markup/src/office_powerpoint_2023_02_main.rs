@@ -401,6 +401,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Cameo {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Cameo {
     fn read(element: &Element) -> Self {
         read::cameo(element)
@@ -411,6 +419,14 @@ impl crate::Write for Cameo {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::cameo(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl PhTypeExt {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -457,6 +473,14 @@ impl crate::Write for PlaceholderTypeContent {
     }
 }
 
+impl Type {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Type {
     fn read(element: &Element) -> Self {
         read::r#type(element)
@@ -467,6 +491,14 @@ impl crate::Write for Type {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::r#type(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Unknown {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

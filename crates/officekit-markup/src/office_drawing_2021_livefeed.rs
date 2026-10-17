@@ -517,6 +517,14 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl BackgroundProps {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for BackgroundProps {
     fn read(element: &Element) -> Self {
         read::background_props(element)
@@ -527,6 +535,14 @@ impl crate::Write for BackgroundProps {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::background_props(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Blur {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -543,6 +559,14 @@ impl crate::Write for Blur {
     }
 }
 
+impl Custom {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Custom {
     fn read(element: &Element) -> Self {
         read::custom(element)
@@ -553,6 +577,14 @@ impl crate::Write for Custom {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::custom(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 
@@ -597,6 +629,14 @@ impl crate::Write for LiveFeedBackgroundPropertiesContent {
     }
 }
 
+impl LiveFeedProps {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for LiveFeedProps {
     fn read(element: &Element) -> Self {
         read::live_feed_props(element)
@@ -610,6 +650,14 @@ impl crate::Write for LiveFeedProps {
     }
 }
 
+impl Normal {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Normal {
     fn read(element: &Element) -> Self {
         read::normal(element)
@@ -620,6 +668,14 @@ impl crate::Write for Normal {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::normal(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Removed {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
     }
 }
 

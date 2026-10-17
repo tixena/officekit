@@ -231,7 +231,7 @@ impl crate::Transform for office_drawing_2012_chart_style::AxisTitle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -334,27 +334,8 @@ impl crate::Transform for office_drawing_2012_chart_style::BodyPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.rot, &self.rot);
-        Clone::clone_from(&mut node.spc_first_last_para, &self.spc_first_last_para);
-        Clone::clone_from(&mut node.vert_overflow, &self.vert_overflow);
-        Clone::clone_from(&mut node.horz_overflow, &self.horz_overflow);
-        Clone::clone_from(&mut node.vert, &self.vert);
-        Clone::clone_from(&mut node.wrap, &self.wrap);
-        Clone::clone_from(&mut node.l_ins, &self.l_ins);
-        Clone::clone_from(&mut node.t_ins, &self.t_ins);
-        Clone::clone_from(&mut node.r_ins, &self.r_ins);
-        Clone::clone_from(&mut node.b_ins, &self.b_ins);
-        Clone::clone_from(&mut node.num_col, &self.num_col);
-        Clone::clone_from(&mut node.spc_col, &self.spc_col);
-        Clone::clone_from(&mut node.rtl_col, &self.rtl_col);
-        Clone::clone_from(&mut node.from_word_art, &self.from_word_art);
-        Clone::clone_from(&mut node.anchor, &self.anchor);
-        Clone::clone_from(&mut node.anchor_ctr, &self.anchor_ctr);
-        Clone::clone_from(&mut node.force_aa, &self.force_aa);
-        Clone::clone_from(&mut node.upright, &self.upright);
-        Clone::clone_from(&mut node.compat_ln_spc, &self.compat_ln_spc);
         node.preset_text_warp = crate::transform_child(&self.preset_text_warp, ctx, &mut rebase);
         node.text_autofit_content =
             crate::transform_choice(&self.text_autofit_content, ctx, &mut rebase);
@@ -464,7 +445,7 @@ impl crate::Transform for office_drawing_2012_chart_style::CategoryAxisAxisProps
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -538,7 +519,7 @@ impl crate::Transform for office_drawing_2012_chart_style::CategoryAxisStyleEntr
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -641,7 +622,7 @@ impl crate::Transform for office_drawing_2012_chart_style::ChartArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -744,9 +725,8 @@ impl crate::Transform for office_drawing_2012_chart_style::ChartStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.id, &self.id);
         node.axis_title = crate::transform_child(&self.axis_title, ctx, &mut rebase);
         node.category_axis_style_entry =
             crate::transform_child(&self.category_axis_style_entry, ctx, &mut rebase);
@@ -927,10 +907,8 @@ impl crate::Transform for office_drawing_2012_chart_style::ColorStyle {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.meth, &self.meth);
-        Clone::clone_from(&mut node.id, &self.id);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.variation = crate::transform_child(&self.variation, ctx, &mut rebase);
         node.ext_lst = crate::transform_child(&self.ext_lst, ctx, &mut rebase);
@@ -1016,7 +994,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataLabel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1119,7 +1097,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataLabelCallout {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1222,13 +1200,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataLabels {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.position, &self.position);
-        Clone::clone_from(&mut node.value, &self.value);
-        Clone::clone_from(&mut node.series_name, &self.series_name);
-        Clone::clone_from(&mut node.category_name, &self.category_name);
-        Clone::clone_from(&mut node.legend_key, &self.legend_key);
-        Clone::clone_from(&mut node.percentage, &self.percentage);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1308,7 +1280,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPoint {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1411,7 +1383,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPoint3D {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1514,7 +1486,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPointLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.width_scale = crate::transform_child(&self.width_scale, ctx, &mut rebase);
@@ -1617,7 +1589,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPointMarker {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1720,9 +1692,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPointMarkerLayout
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.symbol, &self.symbol);
-        Clone::clone_from(&mut node.size, &self.size);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1798,7 +1768,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataPointWireframe {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -1901,15 +1871,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataSeries {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.overlap, &self.overlap);
-        Clone::clone_from(&mut node.gap_width, &self.gap_width);
-        Clone::clone_from(&mut node.gap_depth, &self.gap_depth);
-        Clone::clone_from(&mut node.doughnut_hole_size, &self.doughnut_hole_size);
-        Clone::clone_from(&mut node.marker_visible, &self.marker_visible);
-        Clone::clone_from(&mut node.hilo_lines, &self.hilo_lines);
-        Clone::clone_from(&mut node.drop_lines, &self.drop_lines);
-        Clone::clone_from(&mut node.series_lines, &self.series_lines);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -1991,11 +1953,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataTableDataTablePro
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.legend_keys, &self.legend_keys);
-        Clone::clone_from(&mut node.horizontal_border, &self.horizontal_border);
-        Clone::clone_from(&mut node.vertical_border, &self.vertical_border);
-        Clone::clone_from(&mut node.outline_border, &self.outline_border);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -2073,7 +2031,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DataTableStyleEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -2176,27 +2134,8 @@ impl crate::Transform for office_drawing_2012_chart_style::DefRPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.kumimoji, &self.kumimoji);
-        Clone::clone_from(&mut node.lang, &self.lang);
-        Clone::clone_from(&mut node.alt_lang, &self.alt_lang);
-        Clone::clone_from(&mut node.sz, &self.sz);
-        Clone::clone_from(&mut node.b, &self.b);
-        Clone::clone_from(&mut node.i, &self.i);
-        Clone::clone_from(&mut node.u, &self.u);
-        Clone::clone_from(&mut node.strike, &self.strike);
-        Clone::clone_from(&mut node.kern, &self.kern);
-        Clone::clone_from(&mut node.cap, &self.cap);
-        Clone::clone_from(&mut node.spc, &self.spc);
-        Clone::clone_from(&mut node.normalize_h, &self.normalize_h);
-        Clone::clone_from(&mut node.baseline, &self.baseline);
-        Clone::clone_from(&mut node.no_proof, &self.no_proof);
-        Clone::clone_from(&mut node.dirty, &self.dirty);
-        Clone::clone_from(&mut node.err, &self.err);
-        Clone::clone_from(&mut node.smt_clean, &self.smt_clean);
-        Clone::clone_from(&mut node.smt_id, &self.smt_id);
-        Clone::clone_from(&mut node.bmk, &self.bmk);
         node.outline = crate::transform_child(&self.outline, ctx, &mut rebase);
         node.fill_properties_content =
             crate::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
@@ -2338,7 +2277,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DownBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -2441,7 +2380,7 @@ impl crate::Transform for office_drawing_2012_chart_style::DropLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.width_scale = crate::transform_child(&self.width_scale, ctx, &mut rebase);
@@ -2544,7 +2483,7 @@ impl crate::Transform for office_drawing_2012_chart_style::EffectRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.style_clr = crate::transform_child(&self.style_clr, ctx, &mut rebase);
@@ -2626,7 +2565,7 @@ impl crate::Transform for office_drawing_2012_chart_style::ErrorBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -2729,7 +2668,7 @@ impl crate::Transform for office_drawing_2012_chart_style::ExtLst {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.extension = crate::transform_child(&self.extension, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -2808,7 +2747,7 @@ impl crate::Transform for office_drawing_2012_chart_style::FillRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.style_clr = crate::transform_child(&self.style_clr, ctx, &mut rebase);
@@ -2890,7 +2829,7 @@ impl crate::Transform for office_drawing_2012_chart_style::Floor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -2993,10 +2932,8 @@ impl crate::Transform for office_drawing_2012_chart_style::FontRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.idx, &self.idx);
-        Clone::clone_from(&mut node.mods, &self.mods);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.style_clr = crate::transform_child(&self.style_clr, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -3079,7 +3016,7 @@ impl crate::Transform for office_drawing_2012_chart_style::GridlineMajor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -3182,7 +3119,7 @@ impl crate::Transform for office_drawing_2012_chart_style::GridlineMinor {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -3285,7 +3222,7 @@ impl crate::Transform for office_drawing_2012_chart_style::HiLoLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.width_scale = crate::transform_child(&self.width_scale, ctx, &mut rebase);
@@ -3388,7 +3325,7 @@ impl crate::Transform for office_drawing_2012_chart_style::LeaderLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.width_scale = crate::transform_child(&self.width_scale, ctx, &mut rebase);
@@ -3491,10 +3428,7 @@ impl crate::Transform for office_drawing_2012_chart_style::LegendLegendProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.visible, &self.visible);
-        Clone::clone_from(&mut node.include_in_layout, &self.include_in_layout);
-        Clone::clone_from(&mut node.position, &self.position);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3571,7 +3505,7 @@ impl crate::Transform for office_drawing_2012_chart_style::LegendStyleEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -3674,8 +3608,7 @@ impl crate::Transform for office_drawing_2012_chart_style::LineWidthScale {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.value, &self.value);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -3750,7 +3683,7 @@ impl crate::Transform for office_drawing_2012_chart_style::LnRef {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_choice(&self.content, ctx, &mut rebase);
         node.style_clr = crate::transform_child(&self.style_clr, ctx, &mut rebase);
@@ -3832,7 +3765,7 @@ impl crate::Transform for office_drawing_2012_chart_style::PlotArea {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -3935,7 +3868,7 @@ impl crate::Transform for office_drawing_2012_chart_style::PlotArea3D {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -4038,7 +3971,7 @@ impl crate::Transform for office_drawing_2012_chart_style::SeriesAxisAxisProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4112,7 +4045,7 @@ impl crate::Transform for office_drawing_2012_chart_style::SeriesAxisStyleEntry 
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -4215,7 +4148,7 @@ impl crate::Transform for office_drawing_2012_chart_style::SeriesLine {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.width_scale = crate::transform_child(&self.width_scale, ctx, &mut rebase);
@@ -4318,9 +4251,8 @@ impl crate::Transform for office_drawing_2012_chart_style::SpPr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.bw_mode, &self.bw_mode);
         node.xfrm_transform2d = crate::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = crate::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -4423,9 +4355,8 @@ impl crate::Transform for office_drawing_2012_chart_style::StyleClr {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
-        Clone::clone_from(&mut node.val, &self.val);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
         node
@@ -4504,7 +4435,7 @@ impl crate::Transform for office_drawing_2012_chart_style::TitleStyleEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -4607,8 +4538,7 @@ impl crate::Transform for office_drawing_2012_chart_style::TitleTitleProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.position, &self.position);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4683,7 +4613,7 @@ impl crate::Transform for office_drawing_2012_chart_style::TrendlineLabel {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -4786,7 +4716,7 @@ impl crate::Transform for office_drawing_2012_chart_style::TrendlineStyleEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -4889,10 +4819,7 @@ impl crate::Transform for office_drawing_2012_chart_style::TrendlineTrendlinePro
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.add, &self.add);
-        Clone::clone_from(&mut node.equation, &self.equation);
-        Clone::clone_from(&mut node.rsquared, &self.rsquared);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -4969,7 +4896,7 @@ impl crate::Transform for office_drawing_2012_chart_style::UpBar {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -5072,7 +4999,7 @@ impl crate::Transform for office_drawing_2012_chart_style::ValueAxisAxisProps {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5146,7 +5073,7 @@ impl crate::Transform for office_drawing_2012_chart_style::ValueAxisStyleEntry {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);
@@ -5249,7 +5176,7 @@ impl crate::Transform for office_drawing_2012_chart_style::Variation {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.content = crate::transform_items(&self.content, ctx, &mut rebase);
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);
@@ -5328,13 +5255,7 @@ impl crate::Transform for office_drawing_2012_chart_style::View3D {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
-        Clone::clone_from(&mut node.rot_x, &self.rot_x);
-        Clone::clone_from(&mut node.rot_y, &self.rot_y);
-        Clone::clone_from(&mut node.r_ang_ax, &self.r_ang_ax);
-        Clone::clone_from(&mut node.perspective, &self.perspective);
-        Clone::clone_from(&mut node.height_percent, &self.height_percent);
-        Clone::clone_from(&mut node.depth_percent, &self.depth_percent);
+        let mut node = self.without_children();
         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
         node
     }
@@ -5414,7 +5335,7 @@ impl crate::Transform for office_drawing_2012_chart_style::Wall {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = Self::default();
+        let mut node = self.without_children();
         let mut rebase = crate::Rebase::new(&self.unknown);
         node.ln_ref = crate::transform_child(&self.ln_ref, ctx, &mut rebase);
         node.line_width_scale = crate::transform_child(&self.line_width_scale, ctx, &mut rebase);

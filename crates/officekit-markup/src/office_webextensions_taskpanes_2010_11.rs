@@ -392,6 +392,14 @@ pub struct Webextensionref {
     pub unknown: crate::Unknown,
 }
 
+impl ExtLst {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for ExtLst {
     fn read(element: &Element) -> Self {
         read::ext_lst(element)
@@ -402,6 +410,21 @@ impl crate::Write for ExtLst {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::ext_lst(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Taskpane {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            dockstate: self.dockstate.clone(),
+            locked: self.locked.clone(),
+            row: self.row.clone(),
+            visibility: self.visibility.clone(),
+            width: self.width.clone(),
+            ..Self::default()
+        }
     }
 }
 
@@ -418,6 +441,14 @@ impl crate::Write for Taskpane {
     }
 }
 
+impl Taskpanes {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self::default()
+    }
+}
+
 impl crate::Read for Taskpanes {
     fn read(element: &Element) -> Self {
         read::taskpanes(element)
@@ -428,6 +459,17 @@ impl crate::Write for Taskpanes {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::taskpanes(self, writer.scope());
         writer.known(element);
+    }
+}
+
+impl Webextensionref {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            id: self.id.clone(),
+            ..Self::default()
+        }
     }
 }
 

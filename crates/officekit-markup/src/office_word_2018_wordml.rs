@@ -276,6 +276,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Ext {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            uri: self.uri.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Ext {
     fn read(element: &Element) -> Self {
         read::ext(element)

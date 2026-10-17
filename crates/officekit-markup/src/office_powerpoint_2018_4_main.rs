@@ -292,6 +292,17 @@ pub trait Visitor: crate::Visitor {
     }
 }
 
+impl Classification {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            val: self.val.clone(),
+            ..Self::default()
+        }
+    }
+}
+
 impl crate::Read for Classification {
     fn read(element: &Element) -> Self {
         read::classification(element)
