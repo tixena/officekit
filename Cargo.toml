@@ -28,7 +28,7 @@ os-shim = { git = "https://github.com/tixena/os-shim.git" }
 # files from streaming exporters do. Packages themselves go through os-shim's
 # zip feature. Feature selection matches os-shim's so both resolve to one
 # build of the crate.
-zip = { version = "8", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+zip = { version = "9.0.4", default-features = false, features = ["deflate-flate2-zlib-rs"] }
 
 # Reads and writes the XML of every part (D29).
 quick-xml = "0.42"

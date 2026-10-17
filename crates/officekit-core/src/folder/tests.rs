@@ -72,7 +72,7 @@ fn entries(bytes: Vec<u8>) -> Vec<(String, Vec<u8>)> {
         }
         let mut contents = Vec::new();
         entry.read_to_end(&mut contents).unwrap();
-        found.push((entry.name().to_owned(), contents));
+        found.push((entry.name().unwrap().into_owned(), contents));
     }
     found.sort();
     found
