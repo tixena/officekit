@@ -213,13 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `oac:blipFill` into a `BlipFillBlipFillProperties`.
 #[must_use]
-pub fn blip_fill_blip_fill_properties(
-    element: &xml::element::Element,
-) -> super::BlipFillBlipFillProperties {
+pub fn blip_fill_blip_fill_properties(element: &Element) -> super::BlipFillBlipFillProperties {
     let mut node = super::BlipFillBlipFillProperties::default();
     let mut reader = markup::Reader::new(element, &super::BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -239,7 +237,7 @@ pub fn blip_fill_blip_fill_properties(
 /// Read `oac:blipFill` into a `BlipFillResetBlipFillProperties`.
 #[must_use]
 pub fn blip_fill_reset_blip_fill_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BlipFillResetBlipFillProperties {
     let mut node = super::BlipFillResetBlipFillProperties::default();
     let mut reader =
@@ -259,7 +257,7 @@ pub fn blip_fill_reset_blip_fill_properties(
 
 /// Read `oac:bodyPr` into a `BodyPr`.
 #[must_use]
-pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
+pub fn body_pr(element: &Element) -> super::BodyPr {
     let mut node = super::BodyPr::default();
     let mut reader = markup::Reader::new(element, &super::BODY_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -297,7 +295,7 @@ pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
 
 /// Read `oac:bounds` into a `Bounds`.
 #[must_use]
-pub fn bounds(element: &xml::element::Element) -> super::Bounds {
+pub fn bounds(element: &Element) -> super::Bounds {
     let mut node = super::Bounds::default();
     let mut reader = markup::Reader::new(element, &super::BOUNDS_SHAPE);
     for (index, field) in &mut reader {
@@ -315,7 +313,7 @@ pub fn bounds(element: &xml::element::Element) -> super::Bounds {
 
 /// Read `oac:bwMode` into a `BwMode`.
 #[must_use]
-pub fn bw_mode(element: &xml::element::Element) -> super::BwMode {
+pub fn bw_mode(element: &Element) -> super::BwMode {
     let reader = markup::Reader::new(element, &super::BW_MODE_SHAPE);
     super::BwMode {
         unknown: reader.finish(),
@@ -325,7 +323,7 @@ pub fn bw_mode(element: &xml::element::Element) -> super::BwMode {
 /// Read `oac:cNvCxnSpPr` into a `CNvCxnSpPrModifyNonVisualConnectorProps`.
 #[must_use]
 pub fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvCxnSpPrModifyNonVisualConnectorProps {
     let mut node = super::CNvCxnSpPrModifyNonVisualConnectorProps::default();
     let mut reader = markup::Reader::new(
@@ -356,7 +354,7 @@ pub fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
 /// Read `oac:cNvCxnSpPr` into a `CNvCxnSpPrResetNonVisualConnectorProps`.
 #[must_use]
 pub fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvCxnSpPrResetNonVisualConnectorProps {
     let mut node = super::CNvCxnSpPrResetNonVisualConnectorProps::default();
     let mut reader = markup::Reader::new(
@@ -386,7 +384,7 @@ pub fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
 
 /// Read `oac:cNvGraphicFramePr` into a `CNvGraphicFramePr`.
 #[must_use]
-pub fn c_nv_graphic_frame_pr(element: &xml::element::Element) -> super::CNvGraphicFramePr {
+pub fn c_nv_graphic_frame_pr(element: &Element) -> super::CNvGraphicFramePr {
     let mut node = super::CNvGraphicFramePr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_GRAPHIC_FRAME_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -407,7 +405,7 @@ pub fn c_nv_graphic_frame_pr(element: &xml::element::Element) -> super::CNvGraph
 /// Read `oac:cNvGrpSpPr` into a `CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps`.
 #[must_use]
 pub fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
     let mut node = super::CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps::default();
     let mut reader = markup::Reader::new(
@@ -433,7 +431,7 @@ pub fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
 /// Read `oac:cNvGrpSpPr` into a `CNvGrpSpPrNonVisualGroupDrawingShapeProps`.
 #[must_use]
 pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvGrpSpPrNonVisualGroupDrawingShapeProps {
     let mut node = super::CNvGrpSpPrNonVisualGroupDrawingShapeProps::default();
     let mut reader = markup::Reader::new(
@@ -453,7 +451,7 @@ pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
 
 /// Read `oac:cNvInkPr` into a `CNvInkPr`.
 #[must_use]
-pub fn c_nv_ink_pr(element: &xml::element::Element) -> super::CNvInkPr {
+pub fn c_nv_ink_pr(element: &Element) -> super::CNvInkPr {
     let mut node = super::CNvInkPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_INK_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -479,7 +477,7 @@ pub fn c_nv_ink_pr(element: &xml::element::Element) -> super::CNvInkPr {
 /// Read `oac:cNvPicPr` into a `CNvPicPrModifyNonVisualPictureProps`.
 #[must_use]
 pub fn c_nv_pic_pr_modify_non_visual_picture_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvPicPrModifyNonVisualPictureProps {
     let mut node = super::CNvPicPrModifyNonVisualPictureProps::default();
     let mut reader = markup::Reader::new(
@@ -510,7 +508,7 @@ pub fn c_nv_pic_pr_modify_non_visual_picture_props(
 /// Read `oac:cNvPicPr` into a `CNvPicPrResetNonVisualPictureProps`.
 #[must_use]
 pub fn c_nv_pic_pr_reset_non_visual_picture_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvPicPrResetNonVisualPictureProps {
     let mut node = super::CNvPicPrResetNonVisualPictureProps::default();
     let mut reader = markup::Reader::new(
@@ -529,7 +527,7 @@ pub fn c_nv_pic_pr_reset_non_visual_picture_props(
 /// Read `oac:cNvPr` into a `CNvPrModifyNonVisualDrawingProps`.
 #[must_use]
 pub fn c_nv_pr_modify_non_visual_drawing_props(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CNvPrModifyNonVisualDrawingProps {
     let mut node = super::CNvPrModifyNonVisualDrawingProps::default();
     let mut reader = markup::Reader::new(
@@ -553,9 +551,7 @@ pub fn c_nv_pr_modify_non_visual_drawing_props(
 
 /// Read `oac:cNvPr` into a `CNvPrNonVisualDrawingProps`.
 #[must_use]
-pub fn c_nv_pr_non_visual_drawing_props(
-    element: &xml::element::Element,
-) -> super::CNvPrNonVisualDrawingProps {
+pub fn c_nv_pr_non_visual_drawing_props(element: &Element) -> super::CNvPrNonVisualDrawingProps {
     let mut node = super::CNvPrNonVisualDrawingProps::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -577,7 +573,7 @@ pub fn c_nv_pr_non_visual_drawing_props(
 
 /// Read `oac:cNvSpPr` into a `CNvSpPr`.
 #[must_use]
-pub fn c_nv_sp_pr(element: &xml::element::Element) -> super::CNvSpPr {
+pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -603,7 +599,7 @@ pub fn c_nv_sp_pr(element: &xml::element::Element) -> super::CNvSpPr {
 
 /// Read `oac:compressPicPr` into a `CompressPicPr`.
 #[must_use]
-pub fn compress_pic_pr(element: &xml::element::Element) -> super::CompressPicPr {
+pub fn compress_pic_pr(element: &Element) -> super::CompressPicPr {
     let mut node = super::CompressPicPr::default();
     let mut reader = markup::Reader::new(element, &super::COMPRESS_PIC_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -620,9 +616,7 @@ pub fn compress_pic_pr(element: &xml::element::Element) -> super::CompressPicPr 
 
 /// Read `oac:context` into a `ContextTextCharRangeContext`.
 #[must_use]
-pub fn context_text_char_range_context(
-    element: &xml::element::Element,
-) -> super::ContextTextCharRangeContext {
+pub fn context_text_char_range_context(element: &Element) -> super::ContextTextCharRangeContext {
     let mut node = super::ContextTextCharRangeContext::default();
     let mut reader = markup::Reader::new(element, &super::CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -638,7 +632,7 @@ pub fn context_text_char_range_context(
 
 /// Read `oac:cxnSpMk` into a `CxnSpMk`.
 #[must_use]
-pub fn cxn_sp_mk(element: &xml::element::Element) -> super::CxnSpMk {
+pub fn cxn_sp_mk(element: &Element) -> super::CxnSpMk {
     let mut node = super::CxnSpMk::default();
     let mut reader = markup::Reader::new(element, &super::CXN_SP_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -654,7 +648,7 @@ pub fn cxn_sp_mk(element: &xml::element::Element) -> super::CxnSpMk {
 
 /// Read `oac:cxnSpMkLst` into a `CxnSpMkLst`.
 #[must_use]
-pub fn cxn_sp_mk_lst(element: &xml::element::Element) -> super::CxnSpMkLst {
+pub fn cxn_sp_mk_lst(element: &Element) -> super::CxnSpMkLst {
     let mut node = super::CxnSpMkLst::default();
     let mut reader = markup::Reader::new(element, &super::CXN_SP_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -668,7 +662,7 @@ pub fn cxn_sp_mk_lst(element: &xml::element::Element) -> super::CxnSpMkLst {
 
 /// Read `oac:dcMkLst` into a `DcMkLst`.
 #[must_use]
-pub fn dc_mk_lst(element: &xml::element::Element) -> super::DcMkLst {
+pub fn dc_mk_lst(element: &Element) -> super::DcMkLst {
     let mut node = super::DcMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -682,7 +676,7 @@ pub fn dc_mk_lst(element: &xml::element::Element) -> super::DcMkLst {
 
 /// Read `oac:deMasterMkLst` into a `DeMasterMkLst`.
 #[must_use]
-pub fn de_master_mk_lst(element: &xml::element::Element) -> super::DeMasterMkLst {
+pub fn de_master_mk_lst(element: &Element) -> super::DeMasterMkLst {
     let mut node = super::DeMasterMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DE_MASTER_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -696,7 +690,7 @@ pub fn de_master_mk_lst(element: &xml::element::Element) -> super::DeMasterMkLst
 
 /// Read `oac:deMkLst` into a `DeMkLst`.
 #[must_use]
-pub fn de_mk_lst(element: &xml::element::Element) -> super::DeMkLst {
+pub fn de_mk_lst(element: &Element) -> super::DeMkLst {
     let mut node = super::DeMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DE_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -710,7 +704,7 @@ pub fn de_mk_lst(element: &xml::element::Element) -> super::DeMkLst {
 
 /// Read `oac:dePkg` into a `DePkg`.
 #[must_use]
-pub fn de_pkg(element: &xml::element::Element) -> super::DePkg {
+pub fn de_pkg(element: &Element) -> super::DePkg {
     let reader = markup::Reader::new(element, &super::DE_PKG_SHAPE);
     super::DePkg {
         unknown: reader.finish(),
@@ -719,7 +713,7 @@ pub fn de_pkg(element: &xml::element::Element) -> super::DePkg {
 
 /// Read `oac:deSrcMkLst` into a `DeSrcMkLst`.
 #[must_use]
-pub fn de_src_mk_lst(element: &xml::element::Element) -> super::DeSrcMkLst {
+pub fn de_src_mk_lst(element: &Element) -> super::DeSrcMkLst {
     let mut node = super::DeSrcMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DE_SRC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -733,7 +727,7 @@ pub fn de_src_mk_lst(element: &xml::element::Element) -> super::DeSrcMkLst {
 
 /// Read `oac:deTgtMkLst` into a `DeTgtMkLst`.
 #[must_use]
-pub fn de_tgt_mk_lst(element: &xml::element::Element) -> super::DeTgtMkLst {
+pub fn de_tgt_mk_lst(element: &Element) -> super::DeTgtMkLst {
     let mut node = super::DeTgtMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DE_TGT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -747,7 +741,7 @@ pub fn de_tgt_mk_lst(element: &xml::element::Element) -> super::DeTgtMkLst {
 
 /// Read `oac:dgMkLst` into a `DgMkLst`.
 #[must_use]
-pub fn dg_mk_lst(element: &xml::element::Element) -> super::DgMkLst {
+pub fn dg_mk_lst(element: &Element) -> super::DgMkLst {
     let mut node = super::DgMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DG_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -761,7 +755,7 @@ pub fn dg_mk_lst(element: &xml::element::Element) -> super::DgMkLst {
 
 /// Read `oac:dpi` into a `Dpi`.
 #[must_use]
-pub fn dpi(element: &xml::element::Element) -> super::Dpi {
+pub fn dpi(element: &Element) -> super::Dpi {
     let reader = markup::Reader::new(element, &super::DPI_SHAPE);
     super::Dpi {
         unknown: reader.finish(),
@@ -770,7 +764,7 @@ pub fn dpi(element: &xml::element::Element) -> super::Dpi {
 
 /// Read `oac:drSelLst` into a `DrSelLst`.
 #[must_use]
-pub fn dr_sel_lst(element: &xml::element::Element) -> super::DrSelLst {
+pub fn dr_sel_lst(element: &Element) -> super::DrSelLst {
     let mut node = super::DrSelLst::default();
     let mut reader = markup::Reader::new(element, &super::DR_SEL_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -784,7 +778,7 @@ pub fn dr_sel_lst(element: &xml::element::Element) -> super::DrSelLst {
 
 /// Read `oac:editorSelLst` into a `EditorSelLst`.
 #[must_use]
-pub fn editor_sel_lst(element: &xml::element::Element) -> super::EditorSelLst {
+pub fn editor_sel_lst(element: &Element) -> super::EditorSelLst {
     let mut node = super::EditorSelLst::default();
     let mut reader = markup::Reader::new(element, &super::EDITOR_SEL_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -798,7 +792,7 @@ pub fn editor_sel_lst(element: &xml::element::Element) -> super::EditorSelLst {
 
 /// Read `oac:effect` into a `Effect`.
 #[must_use]
-pub fn effect(element: &xml::element::Element) -> super::Effect {
+pub fn effect(element: &Element) -> super::Effect {
     let reader = markup::Reader::new(element, &super::EFFECT_SHAPE);
     super::Effect {
         unknown: reader.finish(),
@@ -807,7 +801,7 @@ pub fn effect(element: &xml::element::Element) -> super::Effect {
 
 /// Read `oac:effectRef` into a `EffectRef`.
 #[must_use]
-pub fn effect_ref(element: &xml::element::Element) -> super::EffectRef {
+pub fn effect_ref(element: &Element) -> super::EffectRef {
     let mut node = super::EffectRef::default();
     let mut reader = markup::Reader::new(element, &super::EFFECT_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -823,7 +817,7 @@ pub fn effect_ref(element: &xml::element::Element) -> super::EffectRef {
 
 /// Read `oac:endCxn` into a `EndCxnConnection`.
 #[must_use]
-pub fn end_cxn_connection(element: &xml::element::Element) -> super::EndCxnConnection {
+pub fn end_cxn_connection(element: &Element) -> super::EndCxnConnection {
     let mut node = super::EndCxnConnection::default();
     let mut reader = markup::Reader::new(element, &super::END_CXN_CONNECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -839,7 +833,7 @@ pub fn end_cxn_connection(element: &xml::element::Element) -> super::EndCxnConne
 
 /// Read `oac:endCxn` into a `EndCxnEmpty`.
 #[must_use]
-pub fn end_cxn_empty(element: &xml::element::Element) -> super::EndCxnEmpty {
+pub fn end_cxn_empty(element: &Element) -> super::EndCxnEmpty {
     let reader = markup::Reader::new(element, &super::END_CXN_EMPTY_SHAPE);
     super::EndCxnEmpty {
         unknown: reader.finish(),
@@ -848,7 +842,7 @@ pub fn end_cxn_empty(element: &xml::element::Element) -> super::EndCxnEmpty {
 
 /// Read `oac:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     super::ExtLst {
         unknown: reader.finish(),
@@ -857,7 +851,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `oac:fill` into a `Fill`.
 #[must_use]
-pub fn fill(element: &xml::element::Element) -> super::Fill {
+pub fn fill(element: &Element) -> super::Fill {
     let reader = markup::Reader::new(element, &super::FILL_SHAPE);
     super::Fill {
         unknown: reader.finish(),
@@ -866,7 +860,7 @@ pub fn fill(element: &xml::element::Element) -> super::Fill {
 
 /// Read `oac:fillMode` into a `FillMode`.
 #[must_use]
-pub fn fill_mode(element: &xml::element::Element) -> super::FillMode {
+pub fn fill_mode(element: &Element) -> super::FillMode {
     let reader = markup::Reader::new(element, &super::FILL_MODE_SHAPE);
     super::FillMode {
         unknown: reader.finish(),
@@ -875,7 +869,7 @@ pub fn fill_mode(element: &xml::element::Element) -> super::FillMode {
 
 /// Read `oac:fillRect` into a `FillRect`.
 #[must_use]
-pub fn fill_rect(element: &xml::element::Element) -> super::FillRect {
+pub fn fill_rect(element: &Element) -> super::FillRect {
     let reader = markup::Reader::new(element, &super::FILL_RECT_SHAPE);
     super::FillRect {
         unknown: reader.finish(),
@@ -884,7 +878,7 @@ pub fn fill_rect(element: &xml::element::Element) -> super::FillRect {
 
 /// Read `oac:fillRef` into a `FillRef`.
 #[must_use]
-pub fn fill_ref(element: &xml::element::Element) -> super::FillRef {
+pub fn fill_ref(element: &Element) -> super::FillRef {
     let mut node = super::FillRef::default();
     let mut reader = markup::Reader::new(element, &super::FILL_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -900,7 +894,7 @@ pub fn fill_ref(element: &xml::element::Element) -> super::FillRef {
 
 /// Read `oac:fontRef` into a `FontRef`.
 #[must_use]
-pub fn font_ref(element: &xml::element::Element) -> super::FontRef {
+pub fn font_ref(element: &Element) -> super::FontRef {
     let mut node = super::FontRef::default();
     let mut reader = markup::Reader::new(element, &super::FONT_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -916,7 +910,7 @@ pub fn font_ref(element: &xml::element::Element) -> super::FontRef {
 
 /// Read `oac:geom` into a `Geom`.
 #[must_use]
-pub fn geom(element: &xml::element::Element) -> super::Geom {
+pub fn geom(element: &Element) -> super::Geom {
     let reader = markup::Reader::new(element, &super::GEOM_SHAPE);
     super::Geom {
         unknown: reader.finish(),
@@ -925,7 +919,7 @@ pub fn geom(element: &xml::element::Element) -> super::Geom {
 
 /// Read `oac:graphicFrameMk` into a `GraphicFrameMk`.
 #[must_use]
-pub fn graphic_frame_mk(element: &xml::element::Element) -> super::GraphicFrameMk {
+pub fn graphic_frame_mk(element: &Element) -> super::GraphicFrameMk {
     let mut node = super::GraphicFrameMk::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -941,7 +935,7 @@ pub fn graphic_frame_mk(element: &xml::element::Element) -> super::GraphicFrameM
 
 /// Read `oac:graphicFrameMkLst` into a `GraphicFrameMkLst`.
 #[must_use]
-pub fn graphic_frame_mk_lst(element: &xml::element::Element) -> super::GraphicFrameMkLst {
+pub fn graphic_frame_mk_lst(element: &Element) -> super::GraphicFrameMkLst {
     let mut node = super::GraphicFrameMkLst::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -955,7 +949,7 @@ pub fn graphic_frame_mk_lst(element: &xml::element::Element) -> super::GraphicFr
 
 /// Read `oac:graphicParentMkLst` into a `GraphicParentMkLst`.
 #[must_use]
-pub fn graphic_parent_mk_lst(element: &xml::element::Element) -> super::GraphicParentMkLst {
+pub fn graphic_parent_mk_lst(element: &Element) -> super::GraphicParentMkLst {
     let mut node = super::GraphicParentMkLst::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_PARENT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -969,7 +963,7 @@ pub fn graphic_parent_mk_lst(element: &xml::element::Element) -> super::GraphicP
 
 /// Read `oac:gridColMkLst` into a `GridColMkLst`.
 #[must_use]
-pub fn grid_col_mk_lst(element: &xml::element::Element) -> super::GridColMkLst {
+pub fn grid_col_mk_lst(element: &Element) -> super::GridColMkLst {
     let mut node = super::GridColMkLst::default();
     let mut reader = markup::Reader::new(element, &super::GRID_COL_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -983,13 +977,13 @@ pub fn grid_col_mk_lst(element: &xml::element::Element) -> super::GridColMkLst {
 
 /// Read one item of `GroupCommandContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn group_command(element: &xml::element::Element) -> super::GroupCommandContent {
+pub fn group_command(element: &Element) -> super::GroupCommandContent {
     markup::read(element)
 }
 
 /// Read `oac:grpCmd` into a `GrpCmd`.
 #[must_use]
-pub fn grp_cmd(element: &xml::element::Element) -> super::GrpCmd {
+pub fn grp_cmd(element: &Element) -> super::GrpCmd {
     let mut node = super::GrpCmd::default();
     let mut reader = markup::Reader::new(element, &super::GRP_CMD_SHAPE);
     for (index, field) in &mut reader {
@@ -1011,7 +1005,7 @@ pub fn grp_cmd(element: &xml::element::Element) -> super::GrpCmd {
 
 /// Read `oac:grpSpMk` into a `GrpSpMk`.
 #[must_use]
-pub fn grp_sp_mk(element: &xml::element::Element) -> super::GrpSpMk {
+pub fn grp_sp_mk(element: &Element) -> super::GrpSpMk {
     let mut node = super::GrpSpMk::default();
     let mut reader = markup::Reader::new(element, &super::GRP_SP_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -1027,7 +1021,7 @@ pub fn grp_sp_mk(element: &xml::element::Element) -> super::GrpSpMk {
 
 /// Read `oac:grpSpMkLst` into a `GrpSpMkLst`.
 #[must_use]
-pub fn grp_sp_mk_lst(element: &xml::element::Element) -> super::GrpSpMkLst {
+pub fn grp_sp_mk_lst(element: &Element) -> super::GrpSpMkLst {
     let mut node = super::GrpSpMkLst::default();
     let mut reader = markup::Reader::new(element, &super::GRP_SP_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1041,9 +1035,7 @@ pub fn grp_sp_mk_lst(element: &xml::element::Element) -> super::GrpSpMkLst {
 
 /// Read `oac:grpSpPr` into a `GrpSpPrGroupShapeProperties`.
 #[must_use]
-pub fn grp_sp_pr_group_shape_properties(
-    element: &xml::element::Element,
-) -> super::GrpSpPrGroupShapeProperties {
+pub fn grp_sp_pr_group_shape_properties(element: &Element) -> super::GrpSpPrGroupShapeProperties {
     let mut node = super::GrpSpPrGroupShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1064,7 +1056,7 @@ pub fn grp_sp_pr_group_shape_properties(
 /// Read `oac:grpSpPr` into a `GrpSpPrResetGroupShapeProperties`.
 #[must_use]
 pub fn grp_sp_pr_reset_group_shape_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::GrpSpPrResetGroupShapeProperties {
     let mut node = super::GrpSpPrResetGroupShapeProperties::default();
     let mut reader = markup::Reader::new(
@@ -1088,7 +1080,7 @@ pub fn grp_sp_pr_reset_group_shape_properties(
 
 /// Read `oac:hlinkClick` into a `HlinkClickEmpty`.
 #[must_use]
-pub fn hlink_click_empty(element: &xml::element::Element) -> super::HlinkClickEmpty {
+pub fn hlink_click_empty(element: &Element) -> super::HlinkClickEmpty {
     let reader = markup::Reader::new(element, &super::HLINK_CLICK_EMPTY_SHAPE);
     super::HlinkClickEmpty {
         unknown: reader.finish(),
@@ -1097,9 +1089,7 @@ pub fn hlink_click_empty(element: &xml::element::Element) -> super::HlinkClickEm
 
 /// Read `oac:hlinkClick` into a `HlinkClickHyperlinkProps`.
 #[must_use]
-pub fn hlink_click_hyperlink_props(
-    element: &xml::element::Element,
-) -> super::HlinkClickHyperlinkProps {
+pub fn hlink_click_hyperlink_props(element: &Element) -> super::HlinkClickHyperlinkProps {
     let mut node = super::HlinkClickHyperlinkProps::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_CLICK_HYPERLINK_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1113,7 +1103,7 @@ pub fn hlink_click_hyperlink_props(
 
 /// Read `oac:hlinkHover` into a `HlinkHoverEmpty`.
 #[must_use]
-pub fn hlink_hover_empty(element: &xml::element::Element) -> super::HlinkHoverEmpty {
+pub fn hlink_hover_empty(element: &Element) -> super::HlinkHoverEmpty {
     let reader = markup::Reader::new(element, &super::HLINK_HOVER_EMPTY_SHAPE);
     super::HlinkHoverEmpty {
         unknown: reader.finish(),
@@ -1122,9 +1112,7 @@ pub fn hlink_hover_empty(element: &xml::element::Element) -> super::HlinkHoverEm
 
 /// Read `oac:hlinkHover` into a `HlinkHoverHyperlinkProps`.
 #[must_use]
-pub fn hlink_hover_hyperlink_props(
-    element: &xml::element::Element,
-) -> super::HlinkHoverHyperlinkProps {
+pub fn hlink_hover_hyperlink_props(element: &Element) -> super::HlinkHoverHyperlinkProps {
     let mut node = super::HlinkHoverHyperlinkProps::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_HOVER_HYPERLINK_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1138,7 +1126,7 @@ pub fn hlink_hover_hyperlink_props(
 
 /// Read `oac:hlinkMkLst` into a `HlinkMkLst`.
 #[must_use]
-pub fn hlink_mk_lst(element: &xml::element::Element) -> super::HlinkMkLst {
+pub fn hlink_mk_lst(element: &Element) -> super::HlinkMkLst {
     let mut node = super::HlinkMkLst::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1152,9 +1140,7 @@ pub fn hlink_mk_lst(element: &xml::element::Element) -> super::HlinkMkLst {
 
 /// Read `oac:hlink` into a `HlinkModifyHyperlinkProps`.
 #[must_use]
-pub fn hlink_modify_hyperlink_props(
-    element: &xml::element::Element,
-) -> super::HlinkModifyHyperlinkProps {
+pub fn hlink_modify_hyperlink_props(element: &Element) -> super::HlinkModifyHyperlinkProps {
     let mut node = super::HlinkModifyHyperlinkProps::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_MODIFY_HYPERLINK_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1170,9 +1156,7 @@ pub fn hlink_modify_hyperlink_props(
 
 /// Read `oac:hlink` into a `HlinkResetHyperlinkProps`.
 #[must_use]
-pub fn hlink_reset_hyperlink_props(
-    element: &xml::element::Element,
-) -> super::HlinkResetHyperlinkProps {
+pub fn hlink_reset_hyperlink_props(element: &Element) -> super::HlinkResetHyperlinkProps {
     let mut node = super::HlinkResetHyperlinkProps::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_RESET_HYPERLINK_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1188,7 +1172,7 @@ pub fn hlink_reset_hyperlink_props(
 
 /// Read `oac:imgData` into a `ImgData`.
 #[must_use]
-pub fn img_data(element: &xml::element::Element) -> super::ImgData {
+pub fn img_data(element: &Element) -> super::ImgData {
     let mut node = super::ImgData::default();
     let mut reader = markup::Reader::new(element, &super::IMG_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1202,7 +1186,7 @@ pub fn img_data(element: &xml::element::Element) -> super::ImgData {
 
 /// Read `oac:imgLink` into a `ImgLink`.
 #[must_use]
-pub fn img_link(element: &xml::element::Element) -> super::ImgLink {
+pub fn img_link(element: &Element) -> super::ImgLink {
     let mut node = super::ImgLink::default();
     let mut reader = markup::Reader::new(element, &super::IMG_LINK_SHAPE);
     for (index, field) in &mut reader {
@@ -1216,7 +1200,7 @@ pub fn img_link(element: &xml::element::Element) -> super::ImgLink {
 
 /// Read `oac:imgUrl` into a `ImgUrl`.
 #[must_use]
-pub fn img_url(element: &xml::element::Element) -> super::ImgUrl {
+pub fn img_url(element: &Element) -> super::ImgUrl {
     let mut node = super::ImgUrl::default();
     let mut reader = markup::Reader::new(element, &super::IMG_URL_SHAPE);
     for (index, field) in &mut reader {
@@ -1232,7 +1216,7 @@ pub fn img_url(element: &xml::element::Element) -> super::ImgUrl {
 
 /// Read `oac:inkMk` into a `InkMk`.
 #[must_use]
-pub fn ink_mk(element: &xml::element::Element) -> super::InkMk {
+pub fn ink_mk(element: &Element) -> super::InkMk {
     let mut node = super::InkMk::default();
     let mut reader = markup::Reader::new(element, &super::INK_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -1248,7 +1232,7 @@ pub fn ink_mk(element: &xml::element::Element) -> super::InkMk {
 
 /// Read `oac:inkMkLst` into a `InkMkLst`.
 #[must_use]
-pub fn ink_mk_lst(element: &xml::element::Element) -> super::InkMkLst {
+pub fn ink_mk_lst(element: &Element) -> super::InkMkLst {
     let mut node = super::InkMkLst::default();
     let mut reader = markup::Reader::new(element, &super::INK_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1262,7 +1246,7 @@ pub fn ink_mk_lst(element: &xml::element::Element) -> super::InkMkLst {
 
 /// Read `oac:lfPr` into a `LfPr`.
 #[must_use]
-pub fn lf_pr(element: &xml::element::Element) -> super::LfPr {
+pub fn lf_pr(element: &Element) -> super::LfPr {
     let reader = markup::Reader::new(element, &super::LF_PR_SHAPE);
     super::LfPr {
         unknown: reader.finish(),
@@ -1271,7 +1255,7 @@ pub fn lf_pr(element: &xml::element::Element) -> super::LfPr {
 
 /// Read `oac:lineProps` into a `LineProps`.
 #[must_use]
-pub fn line_props(element: &xml::element::Element) -> super::LineProps {
+pub fn line_props(element: &Element) -> super::LineProps {
     let mut node = super::LineProps::default();
     let mut reader = markup::Reader::new(element, &super::LINE_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1295,7 +1279,7 @@ pub fn line_props(element: &xml::element::Element) -> super::LineProps {
 
 /// Read `oac:ln` into a `Ln`.
 #[must_use]
-pub fn ln(element: &xml::element::Element) -> super::Ln {
+pub fn ln(element: &Element) -> super::Ln {
     let reader = markup::Reader::new(element, &super::LN_SHAPE);
     super::Ln {
         unknown: reader.finish(),
@@ -1304,7 +1288,7 @@ pub fn ln(element: &xml::element::Element) -> super::Ln {
 
 /// Read `oac:lnRef` into a `LnRef`.
 #[must_use]
-pub fn ln_ref(element: &xml::element::Element) -> super::LnRef {
+pub fn ln_ref(element: &Element) -> super::LnRef {
     let mut node = super::LnRef::default();
     let mut reader = markup::Reader::new(element, &super::LN_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -1320,7 +1304,7 @@ pub fn ln_ref(element: &xml::element::Element) -> super::LnRef {
 
 /// Read `oac:model3DMkLst` into a `Model3DMkLst`.
 #[must_use]
-pub fn model3d_mk_lst(element: &xml::element::Element) -> super::Model3DMkLst {
+pub fn model3d_mk_lst(element: &Element) -> super::Model3DMkLst {
     let mut node = super::Model3DMkLst::default();
     let mut reader = markup::Reader::new(element, &super::MODEL3D_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1334,7 +1318,7 @@ pub fn model3d_mk_lst(element: &xml::element::Element) -> super::Model3DMkLst {
 
 /// Read `oac:noAdjustHandles` into a `NoAdjustHandles`.
 #[must_use]
-pub fn no_adjust_handles(element: &xml::element::Element) -> super::NoAdjustHandles {
+pub fn no_adjust_handles(element: &Element) -> super::NoAdjustHandles {
     let reader = markup::Reader::new(element, &super::NO_ADJUST_HANDLES_SHAPE);
     super::NoAdjustHandles {
         unknown: reader.finish(),
@@ -1343,7 +1327,7 @@ pub fn no_adjust_handles(element: &xml::element::Element) -> super::NoAdjustHand
 
 /// Read `oac:noChangeArrowheads` into a `NoChangeArrowheads`.
 #[must_use]
-pub fn no_change_arrowheads(element: &xml::element::Element) -> super::NoChangeArrowheads {
+pub fn no_change_arrowheads(element: &Element) -> super::NoChangeArrowheads {
     let reader = markup::Reader::new(element, &super::NO_CHANGE_ARROWHEADS_SHAPE);
     super::NoChangeArrowheads {
         unknown: reader.finish(),
@@ -1352,7 +1336,7 @@ pub fn no_change_arrowheads(element: &xml::element::Element) -> super::NoChangeA
 
 /// Read `oac:noChangeAspect` into a `NoChangeAspect`.
 #[must_use]
-pub fn no_change_aspect(element: &xml::element::Element) -> super::NoChangeAspect {
+pub fn no_change_aspect(element: &Element) -> super::NoChangeAspect {
     let reader = markup::Reader::new(element, &super::NO_CHANGE_ASPECT_SHAPE);
     super::NoChangeAspect {
         unknown: reader.finish(),
@@ -1361,7 +1345,7 @@ pub fn no_change_aspect(element: &xml::element::Element) -> super::NoChangeAspec
 
 /// Read `oac:noChangeShapeType` into a `NoChangeShapeType`.
 #[must_use]
-pub fn no_change_shape_type(element: &xml::element::Element) -> super::NoChangeShapeType {
+pub fn no_change_shape_type(element: &Element) -> super::NoChangeShapeType {
     let reader = markup::Reader::new(element, &super::NO_CHANGE_SHAPE_TYPE_SHAPE);
     super::NoChangeShapeType {
         unknown: reader.finish(),
@@ -1370,7 +1354,7 @@ pub fn no_change_shape_type(element: &xml::element::Element) -> super::NoChangeS
 
 /// Read `oac:noEditPoints` into a `NoEditPoints`.
 #[must_use]
-pub fn no_edit_points(element: &xml::element::Element) -> super::NoEditPoints {
+pub fn no_edit_points(element: &Element) -> super::NoEditPoints {
     let reader = markup::Reader::new(element, &super::NO_EDIT_POINTS_SHAPE);
     super::NoEditPoints {
         unknown: reader.finish(),
@@ -1379,7 +1363,7 @@ pub fn no_edit_points(element: &xml::element::Element) -> super::NoEditPoints {
 
 /// Read `oac:noGrp` into a `NoGrp`.
 #[must_use]
-pub fn no_grp(element: &xml::element::Element) -> super::NoGrp {
+pub fn no_grp(element: &Element) -> super::NoGrp {
     let reader = markup::Reader::new(element, &super::NO_GRP_SHAPE);
     super::NoGrp {
         unknown: reader.finish(),
@@ -1388,7 +1372,7 @@ pub fn no_grp(element: &xml::element::Element) -> super::NoGrp {
 
 /// Read `oac:noMove` into a `NoMove`.
 #[must_use]
-pub fn no_move(element: &xml::element::Element) -> super::NoMove {
+pub fn no_move(element: &Element) -> super::NoMove {
     let reader = markup::Reader::new(element, &super::NO_MOVE_SHAPE);
     super::NoMove {
         unknown: reader.finish(),
@@ -1397,7 +1381,7 @@ pub fn no_move(element: &xml::element::Element) -> super::NoMove {
 
 /// Read `oac:noResize` into a `NoResize`.
 #[must_use]
-pub fn no_resize(element: &xml::element::Element) -> super::NoResize {
+pub fn no_resize(element: &Element) -> super::NoResize {
     let reader = markup::Reader::new(element, &super::NO_RESIZE_SHAPE);
     super::NoResize {
         unknown: reader.finish(),
@@ -1406,7 +1390,7 @@ pub fn no_resize(element: &xml::element::Element) -> super::NoResize {
 
 /// Read `oac:noRot` into a `NoRot`.
 #[must_use]
-pub fn no_rot(element: &xml::element::Element) -> super::NoRot {
+pub fn no_rot(element: &Element) -> super::NoRot {
     let reader = markup::Reader::new(element, &super::NO_ROT_SHAPE);
     super::NoRot {
         unknown: reader.finish(),
@@ -1415,7 +1399,7 @@ pub fn no_rot(element: &xml::element::Element) -> super::NoRot {
 
 /// Read `oac:noSelect` into a `NoSelect`.
 #[must_use]
-pub fn no_select(element: &xml::element::Element) -> super::NoSelect {
+pub fn no_select(element: &Element) -> super::NoSelect {
     let reader = markup::Reader::new(element, &super::NO_SELECT_SHAPE);
     super::NoSelect {
         unknown: reader.finish(),
@@ -1424,7 +1408,7 @@ pub fn no_select(element: &xml::element::Element) -> super::NoSelect {
 
 /// Read `oac:off` into a `Off`.
 #[must_use]
-pub fn off(element: &xml::element::Element) -> super::Off {
+pub fn off(element: &Element) -> super::Off {
     let mut node = super::Off::default();
     let mut reader = markup::Reader::new(element, &super::OFF_SHAPE);
     for (index, field) in &mut reader {
@@ -1440,7 +1424,7 @@ pub fn off(element: &xml::element::Element) -> super::Off {
 
 /// Read `oac:origImgData` into a `OrigImgData`.
 #[must_use]
-pub fn orig_img_data(element: &xml::element::Element) -> super::OrigImgData {
+pub fn orig_img_data(element: &Element) -> super::OrigImgData {
     let mut node = super::OrigImgData::default();
     let mut reader = markup::Reader::new(element, &super::ORIG_IMG_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1454,7 +1438,7 @@ pub fn orig_img_data(element: &xml::element::Element) -> super::OrigImgData {
 
 /// Read `oac:pPr` into a `PPr`.
 #[must_use]
-pub fn p_pr(element: &xml::element::Element) -> super::PPr {
+pub fn p_pr(element: &Element) -> super::PPr {
     let mut node = super::PPr::default();
     let mut reader = markup::Reader::new(element, &super::P_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -1489,7 +1473,7 @@ pub fn p_pr(element: &xml::element::Element) -> super::PPr {
 
 /// Read `oac:picMk` into a `PicMk`.
 #[must_use]
-pub fn pic_mk(element: &xml::element::Element) -> super::PicMk {
+pub fn pic_mk(element: &Element) -> super::PicMk {
     let mut node = super::PicMk::default();
     let mut reader = markup::Reader::new(element, &super::PIC_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -1505,7 +1489,7 @@ pub fn pic_mk(element: &xml::element::Element) -> super::PicMk {
 
 /// Read `oac:picMkLst` into a `PicMkLst`.
 #[must_use]
-pub fn pic_mk_lst(element: &xml::element::Element) -> super::PicMkLst {
+pub fn pic_mk_lst(element: &Element) -> super::PicMkLst {
     let mut node = super::PicMkLst::default();
     let mut reader = markup::Reader::new(element, &super::PIC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1519,7 +1503,7 @@ pub fn pic_mk_lst(element: &xml::element::Element) -> super::PicMkLst {
 
 /// Read `oac:reset` into a `Reset`.
 #[must_use]
-pub fn reset(element: &xml::element::Element) -> super::Reset {
+pub fn reset(element: &Element) -> super::Reset {
     let mut node = super::Reset::default();
     let mut reader = markup::Reader::new(element, &super::RESET_SHAPE);
     for (index, field) in &mut reader {
@@ -1533,7 +1517,7 @@ pub fn reset(element: &xml::element::Element) -> super::Reset {
 
 /// Read `oac:rotWithShape` into a `RotWithShape`.
 #[must_use]
-pub fn rot_with_shape(element: &xml::element::Element) -> super::RotWithShape {
+pub fn rot_with_shape(element: &Element) -> super::RotWithShape {
     let reader = markup::Reader::new(element, &super::ROT_WITH_SHAPE_SHAPE);
     super::RotWithShape {
         unknown: reader.finish(),
@@ -1542,7 +1526,7 @@ pub fn rot_with_shape(element: &xml::element::Element) -> super::RotWithShape {
 
 /// Read `oac:scene3d` into a `Scene3d`.
 #[must_use]
-pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
+pub fn scene3d(element: &Element) -> super::Scene3d {
     let reader = markup::Reader::new(element, &super::SCENE3D_SHAPE);
     super::Scene3d {
         unknown: reader.finish(),
@@ -1551,7 +1535,7 @@ pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
 
 /// Read `oac:sndData` into a `SndData`.
 #[must_use]
-pub fn snd_data(element: &xml::element::Element) -> super::SndData {
+pub fn snd_data(element: &Element) -> super::SndData {
     let mut node = super::SndData::default();
     let mut reader = markup::Reader::new(element, &super::SND_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1565,7 +1549,7 @@ pub fn snd_data(element: &xml::element::Element) -> super::SndData {
 
 /// Read `oac:sp3d` into a `Sp3d`.
 #[must_use]
-pub fn sp3d(element: &xml::element::Element) -> super::Sp3d {
+pub fn sp3d(element: &Element) -> super::Sp3d {
     let reader = markup::Reader::new(element, &super::SP3D_SHAPE);
     super::Sp3d {
         unknown: reader.finish(),
@@ -1574,7 +1558,7 @@ pub fn sp3d(element: &xml::element::Element) -> super::Sp3d {
 
 /// Read `oac:spMk` into a `SpMk`.
 #[must_use]
-pub fn sp_mk(element: &xml::element::Element) -> super::SpMk {
+pub fn sp_mk(element: &Element) -> super::SpMk {
     let mut node = super::SpMk::default();
     let mut reader = markup::Reader::new(element, &super::SP_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -1590,9 +1574,7 @@ pub fn sp_mk(element: &xml::element::Element) -> super::SpMk {
 
 /// Read `oac:spMkLst` into a `SpMkLstShapeMonikerList`.
 #[must_use]
-pub fn sp_mk_lst_shape_moniker_list(
-    element: &xml::element::Element,
-) -> super::SpMkLstShapeMonikerList {
+pub fn sp_mk_lst_shape_moniker_list(element: &Element) -> super::SpMkLstShapeMonikerList {
     let mut node = super::SpMkLstShapeMonikerList::default();
     let mut reader = markup::Reader::new(element, &super::SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1607,7 +1589,7 @@ pub fn sp_mk_lst_shape_moniker_list(
 /// Read `oac:spMkLst` into a `SpMkLstShapePropsMonikerList`.
 #[must_use]
 pub fn sp_mk_lst_shape_props_moniker_list(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SpMkLstShapePropsMonikerList {
     let mut node = super::SpMkLstShapePropsMonikerList::default();
     let mut reader = markup::Reader::new(element, &super::SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE);
@@ -1622,9 +1604,7 @@ pub fn sp_mk_lst_shape_props_moniker_list(
 
 /// Read `oac:spPr` into a `SpPrResetShapeProperties`.
 #[must_use]
-pub fn sp_pr_reset_shape_properties(
-    element: &xml::element::Element,
-) -> super::SpPrResetShapeProperties {
+pub fn sp_pr_reset_shape_properties(element: &Element) -> super::SpPrResetShapeProperties {
     let mut node = super::SpPrResetShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_RESET_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1647,7 +1627,7 @@ pub fn sp_pr_reset_shape_properties(
 
 /// Read `oac:spPr` into a `SpPrShapeProperties`.
 #[must_use]
-pub fn sp_pr_shape_properties(element: &xml::element::Element) -> super::SpPrShapeProperties {
+pub fn sp_pr_shape_properties(element: &Element) -> super::SpPrShapeProperties {
     let mut node = super::SpPrShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1670,7 +1650,7 @@ pub fn sp_pr_shape_properties(element: &xml::element::Element) -> super::SpPrSha
 
 /// Read `oac:srcRect` into a `SrcRectEmpty`.
 #[must_use]
-pub fn src_rect_empty(element: &xml::element::Element) -> super::SrcRectEmpty {
+pub fn src_rect_empty(element: &Element) -> super::SrcRectEmpty {
     let reader = markup::Reader::new(element, &super::SRC_RECT_EMPTY_SHAPE);
     super::SrcRectEmpty {
         unknown: reader.finish(),
@@ -1679,9 +1659,7 @@ pub fn src_rect_empty(element: &xml::element::Element) -> super::SrcRectEmpty {
 
 /// Read `oac:srcRect` into a `SrcRectRelativeRectProps`.
 #[must_use]
-pub fn src_rect_relative_rect_props(
-    element: &xml::element::Element,
-) -> super::SrcRectRelativeRectProps {
+pub fn src_rect_relative_rect_props(element: &Element) -> super::SrcRectRelativeRectProps {
     let reader = markup::Reader::new(element, &super::SRC_RECT_RELATIVE_RECT_PROPS_SHAPE);
     super::SrcRectRelativeRectProps {
         unknown: reader.finish(),
@@ -1690,7 +1668,7 @@ pub fn src_rect_relative_rect_props(
 
 /// Read `oac:stCxn` into a `StCxnConnection`.
 #[must_use]
-pub fn st_cxn_connection(element: &xml::element::Element) -> super::StCxnConnection {
+pub fn st_cxn_connection(element: &Element) -> super::StCxnConnection {
     let mut node = super::StCxnConnection::default();
     let mut reader = markup::Reader::new(element, &super::ST_CXN_CONNECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -1706,7 +1684,7 @@ pub fn st_cxn_connection(element: &xml::element::Element) -> super::StCxnConnect
 
 /// Read `oac:stCxn` into a `StCxnEmpty`.
 #[must_use]
-pub fn st_cxn_empty(element: &xml::element::Element) -> super::StCxnEmpty {
+pub fn st_cxn_empty(element: &Element) -> super::StCxnEmpty {
     let reader = markup::Reader::new(element, &super::ST_CXN_EMPTY_SHAPE);
     super::StCxnEmpty {
         unknown: reader.finish(),
@@ -1715,7 +1693,7 @@ pub fn st_cxn_empty(element: &xml::element::Element) -> super::StCxnEmpty {
 
 /// Read `oac:style` into a `Style`.
 #[must_use]
-pub fn style(element: &xml::element::Element) -> super::Style {
+pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1733,7 +1711,7 @@ pub fn style(element: &xml::element::Element) -> super::Style {
 
 /// Read `oac:svgBlipMkLst` into a `SvgBlipMkLst`.
 #[must_use]
-pub fn svg_blip_mk_lst(element: &xml::element::Element) -> super::SvgBlipMkLst {
+pub fn svg_blip_mk_lst(element: &Element) -> super::SvgBlipMkLst {
     let mut node = super::SvgBlipMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SVG_BLIP_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1747,7 +1725,7 @@ pub fn svg_blip_mk_lst(element: &xml::element::Element) -> super::SvgBlipMkLst {
 
 /// Read `oac:tblMkLst` into a `TblMkLst`.
 #[must_use]
-pub fn tbl_mk_lst(element: &xml::element::Element) -> super::TblMkLst {
+pub fn tbl_mk_lst(element: &Element) -> super::TblMkLst {
     let mut node = super::TblMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TBL_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1761,7 +1739,7 @@ pub fn tbl_mk_lst(element: &xml::element::Element) -> super::TblMkLst {
 
 /// Read `oac:tcMkLst` into a `TcMkLst`.
 #[must_use]
-pub fn tc_mk_lst(element: &xml::element::Element) -> super::TcMkLst {
+pub fn tc_mk_lst(element: &Element) -> super::TcMkLst {
     let mut node = super::TcMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1775,7 +1753,7 @@ pub fn tc_mk_lst(element: &xml::element::Element) -> super::TcMkLst {
 
 /// Read `oac:trMkLst` into a `TrMkLst`.
 #[must_use]
-pub fn tr_mk_lst(element: &xml::element::Element) -> super::TrMkLst {
+pub fn tr_mk_lst(element: &Element) -> super::TrMkLst {
     let mut node = super::TrMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TR_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1789,7 +1767,7 @@ pub fn tr_mk_lst(element: &xml::element::Element) -> super::TrMkLst {
 
 /// Read `oac:txBodyMkLst` into a `TxBodyMkLst`.
 #[must_use]
-pub fn tx_body_mk_lst(element: &xml::element::Element) -> super::TxBodyMkLst {
+pub fn tx_body_mk_lst(element: &Element) -> super::TxBodyMkLst {
     let mut node = super::TxBodyMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TX_BODY_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1803,7 +1781,7 @@ pub fn tx_body_mk_lst(element: &xml::element::Element) -> super::TxBodyMkLst {
 
 /// Read `oac:txBodyPkg` into a `TxBodyPkg`.
 #[must_use]
-pub fn tx_body_pkg(element: &xml::element::Element) -> super::TxBodyPkg {
+pub fn tx_body_pkg(element: &Element) -> super::TxBodyPkg {
     let reader = markup::Reader::new(element, &super::TX_BODY_PKG_SHAPE);
     super::TxBodyPkg {
         unknown: reader.finish(),
@@ -1812,7 +1790,7 @@ pub fn tx_body_pkg(element: &xml::element::Element) -> super::TxBodyPkg {
 
 /// Read `oac:txMkLst` into a `TxMkLst`.
 #[must_use]
-pub fn tx_mk_lst(element: &xml::element::Element) -> super::TxMkLst {
+pub fn tx_mk_lst(element: &Element) -> super::TxMkLst {
     let mut node = super::TxMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TX_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1826,7 +1804,7 @@ pub fn tx_mk_lst(element: &xml::element::Element) -> super::TxMkLst {
 
 /// Read `oac:useBounds` into a `UseBounds`.
 #[must_use]
-pub fn use_bounds(element: &xml::element::Element) -> super::UseBounds {
+pub fn use_bounds(element: &Element) -> super::UseBounds {
     let mut node = super::UseBounds::default();
     let mut reader = markup::Reader::new(element, &super::USE_BOUNDS_SHAPE);
     for (index, field) in &mut reader {
@@ -1840,7 +1818,7 @@ pub fn use_bounds(element: &xml::element::Element) -> super::UseBounds {
 
 /// Read `oac:viewSelLst` into a `ViewSelLst`.
 #[must_use]
-pub fn view_sel_lst(element: &xml::element::Element) -> super::ViewSelLst {
+pub fn view_sel_lst(element: &Element) -> super::ViewSelLst {
     let mut node = super::ViewSelLst::default();
     let mut reader = markup::Reader::new(element, &super::VIEW_SEL_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -1854,7 +1832,7 @@ pub fn view_sel_lst(element: &xml::element::Element) -> super::ViewSelLst {
 
 /// Read `oac:xfrm` into a `XfrmEmpty`.
 #[must_use]
-pub fn xfrm_empty(element: &xml::element::Element) -> super::XfrmEmpty {
+pub fn xfrm_empty(element: &Element) -> super::XfrmEmpty {
     let reader = markup::Reader::new(element, &super::XFRM_EMPTY_SHAPE);
     super::XfrmEmpty {
         unknown: reader.finish(),
@@ -1863,9 +1841,7 @@ pub fn xfrm_empty(element: &xml::element::Element) -> super::XfrmEmpty {
 
 /// Read `oac:xfrm` into a `XfrmModifyTransformProps`.
 #[must_use]
-pub fn xfrm_modify_transform_props(
-    element: &xml::element::Element,
-) -> super::XfrmModifyTransformProps {
+pub fn xfrm_modify_transform_props(element: &Element) -> super::XfrmModifyTransformProps {
     let mut node = super::XfrmModifyTransformProps::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_MODIFY_TRANSFORM_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1886,7 +1862,7 @@ pub fn xfrm_modify_transform_props(
 
 /// Read `oac:xfrm` into a `XfrmTransform2D`.
 #[must_use]
-pub fn xfrm_transform2d(element: &xml::element::Element) -> super::XfrmTransform2D {
+pub fn xfrm_transform2d(element: &Element) -> super::XfrmTransform2D {
     let mut node = super::XfrmTransform2D::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_TRANSFORM2D_SHAPE);
     for (index, field) in &mut reader {

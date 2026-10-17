@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `F` as its element, `xne:f`.
 #[must_use]
-pub fn f(node: &super::F, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn f(node: &super::F, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::F_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn f(node: &super::F, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `Sqref` as its element, `xne:sqref`.
 #[must_use]
-pub fn sqref(node: &super::Sqref, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sqref(node: &super::Sqref, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SQREF_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

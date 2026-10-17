@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `List` as its element, `x12ac:list`.
 #[must_use]
-pub fn list(node: &super::List, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn list(node: &super::List, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LIST_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

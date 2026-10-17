@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wetp:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `wetp:taskpane` into a `Taskpane`.
 #[must_use]
-pub fn taskpane(element: &xml::element::Element) -> super::Taskpane {
+pub fn taskpane(element: &Element) -> super::Taskpane {
     let mut node = super::Taskpane::default();
     let mut reader = markup::Reader::new(element, &super::TASKPANE_SHAPE);
     for (index, field) in &mut reader {
@@ -252,7 +252,7 @@ pub fn taskpane(element: &xml::element::Element) -> super::Taskpane {
 
 /// Read `wetp:taskpanes` into a `Taskpanes`.
 #[must_use]
-pub fn taskpanes(element: &xml::element::Element) -> super::Taskpanes {
+pub fn taskpanes(element: &Element) -> super::Taskpanes {
     let mut node = super::Taskpanes::default();
     let mut reader = markup::Reader::new(element, &super::TASKPANES_SHAPE);
     for (index, field) in &mut reader {
@@ -266,7 +266,7 @@ pub fn taskpanes(element: &xml::element::Element) -> super::Taskpanes {
 
 /// Read `wetp:webextensionref` into a `Webextensionref`.
 #[must_use]
-pub fn webextensionref(element: &xml::element::Element) -> super::Webextensionref {
+pub fn webextensionref(element: &Element) -> super::Webextensionref {
     let mut node = super::Webextensionref::default();
     let mut reader = markup::Reader::new(element, &super::WEBEXTENSIONREF_SHAPE);
     for (index, field) in &mut reader {

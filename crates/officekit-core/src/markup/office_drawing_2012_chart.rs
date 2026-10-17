@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -2110,7 +2110,7 @@ pub struct XForSave {
 }
 
 impl markup::Read for AutoCat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_cat(element)
     }
 }
@@ -2123,7 +2123,7 @@ impl markup::Write for AutoCat {
 }
 
 impl markup::Read for Bubble3D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bubble3d(element)
     }
 }
@@ -2136,7 +2136,7 @@ impl markup::Write for Bubble3D {
 }
 
 impl markup::Read for Cat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cat(element)
     }
 }
@@ -2149,7 +2149,7 @@ impl markup::Write for Cat {
 }
 
 impl markup::Read for CategoryFilterException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_filter_exception(element)
     }
 }
@@ -2162,7 +2162,7 @@ impl markup::Write for CategoryFilterException {
 }
 
 impl markup::Read for CategoryFilterExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_filter_exceptions(element)
     }
 }
@@ -2175,7 +2175,7 @@ impl markup::Write for CategoryFilterExceptions {
 }
 
 impl markup::Read for DLbl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::d_lbl(element)
     }
 }
@@ -2188,7 +2188,7 @@ impl markup::Write for DLbl {
 }
 
 impl markup::Read for DatalabelsRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::datalabels_range(element)
     }
 }
@@ -2201,7 +2201,7 @@ impl markup::Write for DatalabelsRange {
 }
 
 impl markup::Read for DlblFTEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dlbl_ft_entry(element)
     }
 }
@@ -2214,7 +2214,7 @@ impl markup::Write for DlblFTEntry {
 }
 
 impl markup::Read for DlblFieldTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dlbl_field_table(element)
     }
 }
@@ -2227,7 +2227,7 @@ impl markup::Write for DlblFieldTable {
 }
 
 impl markup::Read for DlblFieldTableCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dlbl_field_table_cache(element)
     }
 }
@@ -2240,7 +2240,7 @@ impl markup::Write for DlblFieldTableCache {
 }
 
 impl markup::Read for DlblRangeCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dlbl_range_cache(element)
     }
 }
@@ -2253,7 +2253,7 @@ impl markup::Write for DlblRangeCache {
 }
 
 impl markup::Read for Explosion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::explosion(element)
     }
 }
@@ -2266,7 +2266,7 @@ impl markup::Write for Explosion {
 }
 
 impl markup::Read for F {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::f(element)
     }
 }
@@ -2279,7 +2279,7 @@ impl markup::Write for F {
 }
 
 impl markup::Read for FilteredAreaSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_area_series(element)
     }
 }
@@ -2292,7 +2292,7 @@ impl markup::Write for FilteredAreaSeries {
 }
 
 impl markup::Read for FilteredBarSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_bar_series(element)
     }
 }
@@ -2305,7 +2305,7 @@ impl markup::Write for FilteredBarSeries {
 }
 
 impl markup::Read for FilteredBubbleSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_bubble_series(element)
     }
 }
@@ -2318,7 +2318,7 @@ impl markup::Write for FilteredBubbleSeries {
 }
 
 impl markup::Read for FilteredCategoryTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_category_title(element)
     }
 }
@@ -2331,7 +2331,7 @@ impl markup::Write for FilteredCategoryTitle {
 }
 
 impl markup::Read for FilteredLineSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_line_series(element)
     }
 }
@@ -2344,7 +2344,7 @@ impl markup::Write for FilteredLineSeries {
 }
 
 impl markup::Read for FilteredPieSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_pie_series(element)
     }
 }
@@ -2357,7 +2357,7 @@ impl markup::Write for FilteredPieSeries {
 }
 
 impl markup::Read for FilteredRadarSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_radar_series(element)
     }
 }
@@ -2370,7 +2370,7 @@ impl markup::Write for FilteredRadarSeries {
 }
 
 impl markup::Read for FilteredScatterSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_scatter_series(element)
     }
 }
@@ -2383,7 +2383,7 @@ impl markup::Write for FilteredScatterSeries {
 }
 
 impl markup::Read for FilteredSeriesTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_series_title(element)
     }
 }
@@ -2396,7 +2396,7 @@ impl markup::Write for FilteredSeriesTitle {
 }
 
 impl markup::Read for FilteredSurfaceSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_surface_series(element)
     }
 }
@@ -2409,7 +2409,7 @@ impl markup::Write for FilteredSurfaceSeries {
 }
 
 impl markup::Read for FormulaRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::formula_ref(element)
     }
 }
@@ -2422,7 +2422,7 @@ impl markup::Write for FormulaRef {
 }
 
 impl markup::Read for FullRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::full_ref(element)
     }
 }
@@ -2435,7 +2435,7 @@ impl markup::Write for FullRef {
 }
 
 impl markup::Read for InvertIfNegative {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::invert_if_negative(element)
     }
 }
@@ -2448,7 +2448,7 @@ impl markup::Write for InvertIfNegative {
 }
 
 impl markup::Read for Layout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout(element)
     }
 }
@@ -2461,7 +2461,7 @@ impl markup::Write for Layout {
 }
 
 impl markup::Read for LeaderLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::leader_lines(element)
     }
 }
@@ -2474,7 +2474,7 @@ impl markup::Write for LeaderLines {
 }
 
 impl markup::Read for LevelRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::level_ref(element)
     }
 }
@@ -2487,7 +2487,7 @@ impl markup::Write for LevelRef {
 }
 
 impl markup::Read for Marker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::marker(element)
     }
 }
@@ -2500,7 +2500,7 @@ impl markup::Write for Marker {
 }
 
 impl markup::Read for NumFmt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::num_fmt(element)
     }
 }
@@ -2513,7 +2513,7 @@ impl markup::Write for NumFmt {
 }
 
 impl markup::Read for PivotSource {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_source(element)
     }
 }
@@ -2526,7 +2526,7 @@ impl markup::Write for PivotSource {
 }
 
 impl markup::Read for SerAreaSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_area_ser(element)
     }
 }
@@ -2539,7 +2539,7 @@ impl markup::Write for SerAreaSer {
 }
 
 impl markup::Read for SerBarSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_bar_ser(element)
     }
 }
@@ -2552,7 +2552,7 @@ impl markup::Write for SerBarSer {
 }
 
 impl markup::Read for SerBubbleSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_bubble_ser(element)
     }
 }
@@ -2565,7 +2565,7 @@ impl markup::Write for SerBubbleSer {
 }
 
 impl markup::Read for SerLineSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_line_ser(element)
     }
 }
@@ -2578,7 +2578,7 @@ impl markup::Write for SerLineSer {
 }
 
 impl markup::Read for SerPieSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_pie_ser(element)
     }
 }
@@ -2591,7 +2591,7 @@ impl markup::Write for SerPieSer {
 }
 
 impl markup::Read for SerRadarSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_radar_ser(element)
     }
 }
@@ -2604,7 +2604,7 @@ impl markup::Write for SerRadarSer {
 }
 
 impl markup::Read for SerScatterSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_scatter_ser(element)
     }
 }
@@ -2617,7 +2617,7 @@ impl markup::Write for SerScatterSer {
 }
 
 impl markup::Read for SerSurfaceSer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ser_surface_ser(element)
     }
 }
@@ -2630,7 +2630,7 @@ impl markup::Write for SerSurfaceSer {
 }
 
 impl markup::Read for ShowDataLabelsRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_data_labels_range(element)
     }
 }
@@ -2643,7 +2643,7 @@ impl markup::Write for ShowDataLabelsRange {
 }
 
 impl markup::Read for ShowLeaderLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_leader_lines(element)
     }
 }
@@ -2656,7 +2656,7 @@ impl markup::Write for ShowLeaderLines {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -2669,7 +2669,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for Sqref {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sqref(element)
     }
 }
@@ -2682,7 +2682,7 @@ impl markup::Write for Sqref {
 }
 
 impl markup::Read for Tx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx(element)
     }
 }
@@ -2695,7 +2695,7 @@ impl markup::Write for Tx {
 }
 
 impl markup::Read for TxfldGUID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::txfld_guid(element)
     }
 }
@@ -2708,7 +2708,7 @@ impl markup::Write for TxfldGUID {
 }
 
 impl markup::Read for XForSave {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::x_for_save(element)
     }
 }

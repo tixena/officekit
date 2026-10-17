@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w16cur:ext` into a `Ext`.
 #[must_use]
-pub fn ext(element: &xml::element::Element) -> super::Ext {
+pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = markup::Reader::new(element, &super::EXT_SHAPE);
     for (index, field) in &mut reader {

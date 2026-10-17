@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -395,7 +395,7 @@ pub struct Webextensionref {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -408,7 +408,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Taskpane {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::taskpane(element)
     }
 }
@@ -421,7 +421,7 @@ impl markup::Write for Taskpane {
 }
 
 impl markup::Read for Taskpanes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::taskpanes(element)
     }
 }
@@ -434,7 +434,7 @@ impl markup::Write for Taskpanes {
 }
 
 impl markup::Read for Webextensionref {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::webextensionref(element)
     }
 }

@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `BackgroundProps` as its element, `alf:backgroundProps`.
 #[must_use]
-pub fn background_props(
-    node: &super::BackgroundProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn background_props(node: &super::BackgroundProps, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BACKGROUND_PROPS_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.child(&node.ext_lst);
@@ -230,7 +228,7 @@ pub fn background_props(
 
 /// Write a `Blur` as its element, `alf:Blur`.
 #[must_use]
-pub fn blur(node: &super::Blur, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn blur(node: &super::Blur, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BLUR_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -238,7 +236,7 @@ pub fn blur(node: &super::Blur, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Custom` as its element, `alf:Custom`.
 #[must_use]
-pub fn custom(node: &super::Custom, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn custom(node: &super::Custom, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -246,7 +244,7 @@ pub fn custom(node: &super::Custom, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `ExtLst` as its element, `alf:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -263,10 +261,7 @@ pub fn live_feed_background_properties(
 
 /// Write a `LiveFeedProps` as its element, `alf:liveFeedProps`.
 #[must_use]
-pub fn live_feed_props(
-    node: &super::LiveFeedProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn live_feed_props(node: &super::LiveFeedProps, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LIVE_FEED_PROPS_SHAPE, &node.unknown);
     writer.child(&node.background_props);
     writer.child(&node.ext_lst);
@@ -275,7 +270,7 @@ pub fn live_feed_props(
 
 /// Write a `Normal` as its element, `alf:Normal`.
 #[must_use]
-pub fn normal(node: &super::Normal, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn normal(node: &super::Normal, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NORMAL_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -283,7 +278,7 @@ pub fn normal(node: &super::Normal, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Removed` as its element, `alf:Removed`.
 #[must_use]
-pub fn removed(node: &super::Removed, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn removed(node: &super::Removed, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REMOVED_SHAPE, &node.unknown);
     writer.child(&node.ext_lst);
     writer.finish()

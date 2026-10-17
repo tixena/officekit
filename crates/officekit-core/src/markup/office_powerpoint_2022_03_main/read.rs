@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p223:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `p223:instance` into a `Instance`.
 #[must_use]
-pub fn instance(element: &xml::element::Element) -> super::Instance {
+pub fn instance(element: &Element) -> super::Instance {
     let mut node = super::Instance::default();
     let mut reader = markup::Reader::new(element, &super::INSTANCE_SHAPE);
     for (index, field) in &mut reader {
@@ -248,7 +248,7 @@ pub fn instance(element: &xml::element::Element) -> super::Instance {
 
 /// Read `p223:reactions` into a `Reactions`.
 #[must_use]
-pub fn reactions(element: &xml::element::Element) -> super::Reactions {
+pub fn reactions(element: &Element) -> super::Reactions {
     let mut node = super::Reactions::default();
     let mut reader = markup::Reader::new(element, &super::REACTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -262,7 +262,7 @@ pub fn reactions(element: &xml::element::Element) -> super::Reactions {
 
 /// Read `p223:rxn` into a `Rxn`.
 #[must_use]
-pub fn rxn(element: &xml::element::Element) -> super::Rxn {
+pub fn rxn(element: &Element) -> super::Rxn {
     let mut node = super::Rxn::default();
     let mut reader = markup::Reader::new(element, &super::RXN_SHAPE);
     for (index, field) in &mut reader {

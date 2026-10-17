@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AnimEffectMkLst` as its element, `pc:animEffectMkLst`.
 #[must_use]
-pub fn anim_effect_mk_lst(
-    node: &super::AnimEffectMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn anim_effect_mk_lst(node: &super::AnimEffectMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANIM_EFFECT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -230,8 +228,8 @@ pub fn anim_effect_mk_lst(
 #[must_use]
 pub fn anim_effect_parent_mk_lst(
     node: &super::AnimEffectParentMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::ANIM_EFFECT_PARENT_MK_LST_SHAPE,
@@ -243,7 +241,7 @@ pub fn anim_effect_parent_mk_lst(
 
 /// Write a `CXmlMkLst` as its element, `pc:cXmlMkLst`.
 #[must_use]
-pub fn c_xml_mk_lst(node: &super::CXmlMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_xml_mk_lst(node: &super::CXmlMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_XML_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -251,10 +249,7 @@ pub fn c_xml_mk_lst(node: &super::CXmlMkLst, scope: &mut markup::Scope) -> xml::
 
 /// Write a `CmAuthorMkLst` as its element, `pc:cmAuthorMkLst`.
 #[must_use]
-pub fn cm_author_mk_lst(
-    node: &super::CmAuthorMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cm_author_mk_lst(node: &super::CmAuthorMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_AUTHOR_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -262,7 +257,7 @@ pub fn cm_author_mk_lst(
 
 /// Write a `CmMkLst` as its element, `pc:cmMkLst`.
 #[must_use]
-pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -270,10 +265,7 @@ pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `CustShowMkLst` as its element, `pc:custShowMkLst`.
 #[must_use]
-pub fn cust_show_mk_lst(
-    node: &super::CustShowMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cust_show_mk_lst(node: &super::CustShowMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUST_SHOW_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -281,10 +273,7 @@ pub fn cust_show_mk_lst(
 
 /// Write a `DesignTagMkLst` as its element, `pc:designTagMkLst`.
 #[must_use]
-pub fn design_tag_mk_lst(
-    node: &super::DesignTagMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn design_tag_mk_lst(node: &super::DesignTagMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DESIGN_TAG_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -292,13 +281,13 @@ pub fn design_tag_mk_lst(
 
 /// Write a `DocMk` as its element, `pc:docMk`.
 #[must_use]
-pub fn doc_mk(node: &super::DocMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn doc_mk(node: &super::DocMk, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DOC_MK_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DocMkLst` as its element, `pc:docMkLst`.
 #[must_use]
-pub fn doc_mk_lst(node: &super::DocMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn doc_mk_lst(node: &super::DocMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -306,10 +295,7 @@ pub fn doc_mk_lst(node: &super::DocMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `HandoutMkLst` as its element, `pc:handoutMkLst`.
 #[must_use]
-pub fn handout_mk_lst(
-    node: &super::HandoutMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn handout_mk_lst(node: &super::HandoutMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HANDOUT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -317,10 +303,7 @@ pub fn handout_mk_lst(
 
 /// Write a `NotesMasterMkLst` as its element, `pc:notesMasterMkLst`.
 #[must_use]
-pub fn notes_master_mk_lst(
-    node: &super::NotesMasterMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn notes_master_mk_lst(node: &super::NotesMasterMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NOTES_MASTER_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -328,7 +311,7 @@ pub fn notes_master_mk_lst(
 
 /// Write a `NotesMkLst` as its element, `pc:notesMkLst`.
 #[must_use]
-pub fn notes_mk_lst(node: &super::NotesMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn notes_mk_lst(node: &super::NotesMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NOTES_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -336,10 +319,7 @@ pub fn notes_mk_lst(node: &super::NotesMkLst, scope: &mut markup::Scope) -> xml:
 
 /// Write a `NotesTxtMkLst` as its element, `pc:notesTxtMkLst`.
 #[must_use]
-pub fn notes_txt_mk_lst(
-    node: &super::NotesTxtMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn notes_txt_mk_lst(node: &super::NotesTxtMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NOTES_TXT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -347,10 +327,7 @@ pub fn notes_txt_mk_lst(
 
 /// Write a `SectionLnkObjMkLst` as its element, `pc:sectionLnkObjMkLst`.
 #[must_use]
-pub fn section_lnk_obj_mk_lst(
-    node: &super::SectionLnkObjMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn section_lnk_obj_mk_lst(node: &super::SectionLnkObjMkLst, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SECTION_LNK_OBJ_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
@@ -359,10 +336,7 @@ pub fn section_lnk_obj_mk_lst(
 
 /// Write a `SectionMkLst` as its element, `pc:sectionMkLst`.
 #[must_use]
-pub fn section_mk_lst(
-    node: &super::SectionMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn section_mk_lst(node: &super::SectionMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SECTION_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -370,10 +344,7 @@ pub fn section_mk_lst(
 
 /// Write a `SldBaseMkLst` as its element, `pc:sldBaseMkLst`.
 #[must_use]
-pub fn sld_base_mk_lst(
-    node: &super::SldBaseMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sld_base_mk_lst(node: &super::SldBaseMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_BASE_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -381,10 +352,7 @@ pub fn sld_base_mk_lst(
 
 /// Write a `SldLayoutMkLst` as its element, `pc:sldLayoutMkLst`.
 #[must_use]
-pub fn sld_layout_mk_lst(
-    node: &super::SldLayoutMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sld_layout_mk_lst(node: &super::SldLayoutMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_LAYOUT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -392,10 +360,7 @@ pub fn sld_layout_mk_lst(
 
 /// Write a `SldMasterMkLst` as its element, `pc:sldMasterMkLst`.
 #[must_use]
-pub fn sld_master_mk_lst(
-    node: &super::SldMasterMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sld_master_mk_lst(node: &super::SldMasterMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_MASTER_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -403,7 +368,7 @@ pub fn sld_master_mk_lst(
 
 /// Write a `SldMk` as its element, `pc:sldMk`.
 #[must_use]
-pub fn sld_mk(node: &super::SldMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sld_mk(node: &super::SldMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.c_id);
     writer.attribute(1, &node.sld_id);
@@ -412,7 +377,7 @@ pub fn sld_mk(node: &super::SldMk, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `SldMkLst` as its element, `pc:sldMkLst`.
 #[must_use]
-pub fn sld_mk_lst(node: &super::SldMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sld_mk_lst(node: &super::SldMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.doc_mk);
     writer.child(&node.sld_mk);
@@ -422,10 +387,7 @@ pub fn sld_mk_lst(node: &super::SldMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `SldPosMkLst` as its element, `pc:sldPosMkLst`.
 #[must_use]
-pub fn sld_pos_mk_lst(
-    node: &super::SldPosMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sld_pos_mk_lst(node: &super::SldPosMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLD_POS_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -433,7 +395,7 @@ pub fn sld_pos_mk_lst(
 
 /// Write a `TagMkLst` as its element, `pc:tagMkLst`.
 #[must_use]
-pub fn tag_mk_lst(node: &super::TagMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tag_mk_lst(node: &super::TagMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TAG_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -441,7 +403,7 @@ pub fn tag_mk_lst(node: &super::TagMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `TkAppMkLst` as its element, `pc:tkAppMkLst`.
 #[must_use]
-pub fn tk_app_mk_lst(node: &super::TkAppMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tk_app_mk_lst(node: &super::TkAppMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TK_APP_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -449,7 +411,7 @@ pub fn tk_app_mk_lst(node: &super::TkAppMkLst, scope: &mut markup::Scope) -> xml
 
 /// Write a `TocMkLst` as its element, `pc:tocMkLst`.
 #[must_use]
-pub fn toc_mk_lst(node: &super::TocMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn toc_mk_lst(node: &super::TocMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()

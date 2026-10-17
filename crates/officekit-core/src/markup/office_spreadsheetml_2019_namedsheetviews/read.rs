@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xnsv:columnFilter` into a `ColumnFilter`.
 #[must_use]
-pub fn column_filter(element: &xml::element::Element) -> super::ColumnFilter {
+pub fn column_filter(element: &Element) -> super::ColumnFilter {
     let mut node = super::ColumnFilter::default();
     let mut reader = markup::Reader::new(element, &super::COLUMN_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -236,7 +236,7 @@ pub fn column_filter(element: &xml::element::Element) -> super::ColumnFilter {
 
 /// Read `xnsv:dxf` into a `Dxf`.
 #[must_use]
-pub fn dxf(element: &xml::element::Element) -> super::Dxf {
+pub fn dxf(element: &Element) -> super::Dxf {
     let mut node = super::Dxf::default();
     let mut reader = markup::Reader::new(element, &super::DXF_SHAPE);
     for (index, field) in &mut reader {
@@ -257,7 +257,7 @@ pub fn dxf(element: &xml::element::Element) -> super::Dxf {
 
 /// Read `xnsv:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -271,7 +271,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xnsv:filter` into a `Filter`.
 #[must_use]
-pub fn filter(element: &xml::element::Element) -> super::Filter {
+pub fn filter(element: &Element) -> super::Filter {
     let mut node = super::Filter::default();
     let mut reader = markup::Reader::new(element, &super::FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -289,7 +289,7 @@ pub fn filter(element: &xml::element::Element) -> super::Filter {
 
 /// Read `xnsv:namedSheetView` into a `NamedSheetView`.
 #[must_use]
-pub fn named_sheet_view(element: &xml::element::Element) -> super::NamedSheetView {
+pub fn named_sheet_view(element: &Element) -> super::NamedSheetView {
     let mut node = super::NamedSheetView::default();
     let mut reader = markup::Reader::new(element, &super::NAMED_SHEET_VIEW_SHAPE);
     for (index, field) in &mut reader {
@@ -307,7 +307,7 @@ pub fn named_sheet_view(element: &xml::element::Element) -> super::NamedSheetVie
 
 /// Read `xnsv:namedSheetViews` into a `NamedSheetViews`.
 #[must_use]
-pub fn named_sheet_views(element: &xml::element::Element) -> super::NamedSheetViews {
+pub fn named_sheet_views(element: &Element) -> super::NamedSheetViews {
     let mut node = super::NamedSheetViews::default();
     let mut reader = markup::Reader::new(element, &super::NAMED_SHEET_VIEWS_SHAPE);
     for (index, field) in &mut reader {
@@ -323,7 +323,7 @@ pub fn named_sheet_views(element: &xml::element::Element) -> super::NamedSheetVi
 
 /// Read `xnsv:nsvFilter` into a `NsvFilter`.
 #[must_use]
-pub fn nsv_filter(element: &xml::element::Element) -> super::NsvFilter {
+pub fn nsv_filter(element: &Element) -> super::NsvFilter {
     let mut node = super::NsvFilter::default();
     let mut reader = markup::Reader::new(element, &super::NSV_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -343,7 +343,7 @@ pub fn nsv_filter(element: &xml::element::Element) -> super::NsvFilter {
 
 /// Read `xnsv:richSortCondition` into a `RichSortCondition`.
 #[must_use]
-pub fn rich_sort_condition(element: &xml::element::Element) -> super::RichSortCondition {
+pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
     let mut reader = markup::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
@@ -365,7 +365,7 @@ pub fn rich_sort_condition(element: &xml::element::Element) -> super::RichSortCo
 
 /// Read `xnsv:sortCondition` into a `SortCondition`.
 #[must_use]
-pub fn sort_condition(element: &xml::element::Element) -> super::SortCondition {
+pub fn sort_condition(element: &Element) -> super::SortCondition {
     let mut node = super::SortCondition::default();
     let mut reader = markup::Reader::new(element, &super::SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
@@ -386,7 +386,7 @@ pub fn sort_condition(element: &xml::element::Element) -> super::SortCondition {
 
 /// Read `xnsv:sortRule` into a `SortRule`.
 #[must_use]
-pub fn sort_rule(element: &xml::element::Element) -> super::SortRule {
+pub fn sort_rule(element: &Element) -> super::SortRule {
     let mut node = super::SortRule::default();
     let mut reader = markup::Reader::new(element, &super::SORT_RULE_SHAPE);
     for (index, field) in &mut reader {
@@ -404,13 +404,13 @@ pub fn sort_rule(element: &xml::element::Element) -> super::SortRule {
 
 /// Read one item of `SortRuleContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn sort_rule_content(element: &xml::element::Element) -> super::SortRuleContent {
+pub fn sort_rule_content(element: &Element) -> super::SortRuleContent {
     markup::read(element)
 }
 
 /// Read `xnsv:sortRules` into a `SortRules`.
 #[must_use]
-pub fn sort_rules(element: &xml::element::Element) -> super::SortRules {
+pub fn sort_rules(element: &Element) -> super::SortRules {
     let mut node = super::SortRules::default();
     let mut reader = markup::Reader::new(element, &super::SORT_RULES_SHAPE);
     for (index, field) in &mut reader {

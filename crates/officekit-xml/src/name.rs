@@ -95,6 +95,15 @@ impl OfficeVersion {
 
 impl QName {
     #[must_use]
+    pub const fn new(prefix: String, local: String, namespace: Namespace) -> Self {
+        Self {
+            local,
+            namespace,
+            prefix,
+        }
+    }
+
+    #[must_use]
     pub fn prefixed(prefix: &str, local: &str, uri: &str) -> Self {
         Self {
             local: local.to_owned(),
@@ -106,5 +115,17 @@ impl QName {
     #[must_use]
     pub fn unprefixed(local: &str, uri: &str) -> Self {
         Self::prefixed("", local, uri)
+    }
+}
+
+/// The tag of a name in the namespace table; `None` for a namespace the table
+/// does not know.
+#[must_use]
+pub const fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
+    let local = name.local.as_str();
+    match name.namespace {
+        Namespace::Known(id) => Some((Some(id), local)),
+        Namespace::None => Some((None, local)),
+        Namespace::Other(_) => None,
     }
 }

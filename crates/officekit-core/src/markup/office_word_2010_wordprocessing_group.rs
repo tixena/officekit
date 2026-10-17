@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -654,7 +654,7 @@ pub enum WordprocessingGroupContent {
     ContentPart(super::office_word_2010_wordml::ContentPart),
     GraphicFrame(GraphicFrame),
     GrpSp(GrpSp),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(super::picture::Picture),
     Wsp(super::office_word_2010_wordprocessing_shape::Wsp),
 }
@@ -672,7 +672,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for CNvFrPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_fr_pr(element)
     }
 }
@@ -685,7 +685,7 @@ impl markup::Write for CNvFrPr {
 }
 
 impl markup::Read for CNvGrpSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_grp_sp_pr(element)
     }
 }
@@ -698,7 +698,7 @@ impl markup::Write for CNvGrpSpPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -711,7 +711,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -724,7 +724,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for GraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame(element)
     }
 }
@@ -737,7 +737,7 @@ impl markup::Write for GraphicFrame {
 }
 
 impl markup::Read for GrpSp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp(element)
     }
 }
@@ -750,7 +750,7 @@ impl markup::Write for GrpSp {
 }
 
 impl markup::Read for GrpSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_pr(element)
     }
 }
@@ -763,7 +763,7 @@ impl markup::Write for GrpSpPr {
 }
 
 impl markup::Read for Wgp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wgp(element)
     }
 }
@@ -776,18 +776,18 @@ impl markup::Write for Wgp {
 }
 
 impl markup::Read for WordprocessingGroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W14, "contentPart")) => Self::ContentPart(markup::read(element)),
             Some((NS_WPG, "graphicFrame")) => Self::GraphicFrame(markup::read(element)),
             Some((NS_WPG, "grpSp")) => Self::GrpSp(markup::read(element)),
             Some((NS_PIC, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_WPS, "wsp")) => Self::Wsp(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -806,7 +806,7 @@ impl markup::Write for WordprocessingGroupContent {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

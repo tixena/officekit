@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `xlmsforms:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `MsForm` as its element, `xlmsforms:msForm`.
 #[must_use]
-pub fn ms_form(node: &super::MsForm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ms_form(node: &super::MsForm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MS_FORM_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.is_form_connected);
@@ -238,7 +239,7 @@ pub fn ms_form(node: &super::MsForm, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Question` as its element, `xlmsforms:question`.
 #[must_use]
-pub fn question(node: &super::Question, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn question(node: &super::Question, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::QUESTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.child(&node.ext_lst);
@@ -247,10 +248,7 @@ pub fn question(node: &super::Question, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `SyncedQuestionId` as its element, `xlmsforms:syncedQuestionId`.
 #[must_use]
-pub fn synced_question_id(
-    node: &super::SyncedQuestionId,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn synced_question_id(node: &super::SyncedQuestionId, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SYNCED_QUESTION_ID_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

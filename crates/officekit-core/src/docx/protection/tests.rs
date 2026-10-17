@@ -1,5 +1,7 @@
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+#[cfg(feature = "transitional")]
+use officekit_xml::conformance::ConformanceClass;
 
 use super::{hash, legacy_hash};
 #[cfg(feature = "transitional")]
@@ -16,8 +18,6 @@ use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::document_settings;
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::WordprocessingKind;
-#[cfg(feature = "transitional")]
-use crate::xml::conformance::ConformanceClass;
 
 const ASPOSE_SALT: &str = "hIqOl99kIr/+N0hyovEq7Q==";
 

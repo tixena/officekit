@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p16:designElem` into a `DesignElem`.
 #[must_use]
-pub fn design_elem(element: &xml::element::Element) -> super::DesignElem {
+pub fn design_elem(element: &Element) -> super::DesignElem {
     let mut node = super::DesignElem::default();
     let mut reader = markup::Reader::new(element, &super::DESIGN_ELEM_SHAPE);
     for (index, field) in &mut reader {

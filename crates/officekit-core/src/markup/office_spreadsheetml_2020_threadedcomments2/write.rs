@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Checksum` as its element, `xltc2:checksum`.
 #[must_use]
-pub fn checksum(node: &super::Checksum, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn checksum(node: &super::Checksum, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHECKSUM_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn checksum(node: &super::Checksum, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `ExtLst` as its element, `xltc2:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -233,7 +234,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Hyperlink` as its element, `xltc2:hyperlink`.
 #[must_use]
-pub fn hyperlink(node: &super::Hyperlink, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);
     writer.attribute(0, &node.start_index);
     writer.attribute(1, &node.length);

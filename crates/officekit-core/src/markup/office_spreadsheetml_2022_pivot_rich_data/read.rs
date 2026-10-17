@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xprd:richInfo` into a `RichInfo`.
 #[must_use]
-pub fn rich_info(element: &xml::element::Element) -> super::RichInfo {
+pub fn rich_info(element: &Element) -> super::RichInfo {
     let mut node = super::RichInfo::default();
     let mut reader = markup::Reader::new(element, &super::RICH_INFO_SHAPE);
     for (index, field) in &mut reader {

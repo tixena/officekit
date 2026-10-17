@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `lc:lockedCanvas` into a `LockedCanvasContainer`.
 #[must_use]
-pub fn locked_canvas_container(element: &xml::element::Element) -> super::LockedCanvasContainer {
+pub fn locked_canvas_container(element: &Element) -> super::LockedCanvasContainer {
     let mut node = super::LockedCanvasContainer::default();
     let mut reader = markup::Reader::new(element, &super::LOCKED_CANVAS_CONTAINER_SHAPE);
     for (index, field) in &mut reader {

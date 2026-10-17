@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlecs:externalCodeService` into a `ExternalCodeService`.
 #[must_use]
-pub fn external_code_service(element: &xml::element::Element) -> super::ExternalCodeService {
+pub fn external_code_service(element: &Element) -> super::ExternalCodeService {
     let mut node = super::ExternalCodeService::default();
     let mut reader = markup::Reader::new(element, &super::EXTERNAL_CODE_SERVICE_SHAPE);
     for (index, field) in &mut reader {

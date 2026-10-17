@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExternalLinksPr` as its element, `xxlnp:externalLinksPr`.
 #[must_use]
-pub fn external_links_pr(
-    node: &super::ExternalLinksPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn external_links_pr(node: &super::ExternalLinksPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXTERNAL_LINKS_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto_refresh);
     writer.finish()

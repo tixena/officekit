@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Decorative` as its element, `adec:decorative`.
 #[must_use]
-pub fn decorative(node: &super::Decorative, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn decorative(node: &super::Decorative, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DECORATIVE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

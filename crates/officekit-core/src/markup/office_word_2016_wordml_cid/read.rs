@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w16cid:commentId` into a `CommentId`.
 #[must_use]
-pub fn comment_id(element: &xml::element::Element) -> super::CommentId {
+pub fn comment_id(element: &Element) -> super::CommentId {
     let mut node = super::CommentId::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn comment_id(element: &xml::element::Element) -> super::CommentId {
 
 /// Read `w16cid:commentsIds` into a `CommentsIds`.
 #[must_use]
-pub fn comments_ids(element: &xml::element::Element) -> super::CommentsIds {
+pub fn comments_ids(element: &Element) -> super::CommentsIds {
     let mut node = super::CommentsIds::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_IDS_SHAPE);
     for (index, field) in &mut reader {

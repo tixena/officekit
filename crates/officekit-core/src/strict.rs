@@ -18,14 +18,15 @@ include!("strict/modules.rs");
 use core::cmp::Ordering;
 use core::mem;
 
-use crate::class_rules::{BASE_1900, BASE_1904, is, order, tag_of};
-use crate::error::{ReadError, WriteError};
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::error::{ReadError, WriteError};
+use officekit_xml::mc;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, NamespaceId, QName, tag_of};
+
+use crate::class_rules::{BASE_1900, BASE_1904, is, order};
 use crate::markup::{self, Tag};
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
-use crate::xml::mc;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, NamespaceId, QName};
 
 #[cfg(test)]
 mod tests;
@@ -664,11 +665,11 @@ fn to_child(element: &mut Element, index: usize, local: &str) {
     if present {
         return;
     }
-    let mut child = Element::new(QName {
-        local: local.to_owned(),
-        namespace: element.name.namespace.clone(),
-        prefix: element.name.prefix.clone(),
-    });
+    let mut child = Element::new(QName::new(
+        element.name.prefix.clone(),
+        local.to_owned(),
+        element.name.namespace.clone(),
+    ));
     child.children.push(Node::Text(attribute.value));
     element.children.insert(0, Node::Element(child));
 }
@@ -726,14 +727,14 @@ fn unpack(
             found.name.local == local && found.name.namespace == source.name.namespace
         });
         if !present {
-            element.attributes.push(Attribute {
-                name: QName {
-                    local: local.to_owned(),
-                    namespace: source.name.namespace.clone(),
-                    prefix: source.name.prefix.clone(),
-                },
-                value: if on { "1" } else { "0" }.to_owned(),
-            });
+            element.attributes.push(Attribute::new(
+                QName::new(
+                    source.name.prefix.clone(),
+                    local.to_owned(),
+                    source.name.namespace.clone(),
+                ),
+                if on { "1" } else { "0" }.to_owned(),
+            ));
         }
     }
     Ok(())
@@ -806,14 +807,10 @@ fn write_root(element: Element, conformance: Tag) -> Result<Element, WriteError>
         || (Namespace::None, String::new()),
         |id| (Namespace::Known(id), declared_prefix(&mut written, id)),
     );
-    written.attributes.push(Attribute {
-        name: QName {
-            local: conformance.1.to_owned(),
-            namespace,
-            prefix: attribute_prefix,
-        },
-        value: "strict".to_owned(),
-    });
+    written.attributes.push(Attribute::new(
+        QName::new(attribute_prefix, conformance.1.to_owned(), namespace),
+        "strict".to_owned(),
+    ));
     Ok(written)
 }
 
@@ -830,9 +827,11 @@ fn declared_prefix(element: &mut Element, id: NamespaceId) -> String {
         return found.prefix.clone();
     }
     let table_prefix = prefix(id).to_owned();
-    element.namespace_declarations.push(NamespaceDeclaration {
-        prefix: table_prefix.clone(),
-        uri: namespace.uri(ConformanceClass::Strict).to_owned(),
-    });
+    element
+        .namespace_declarations
+        .push(NamespaceDeclaration::new(
+            table_prefix.clone(),
+            namespace.uri(ConformanceClass::Strict).to_owned(),
+        ));
     table_prefix
 }

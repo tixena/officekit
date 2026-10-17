@@ -2,17 +2,13 @@
 //! on loaded whole as the generic tree.
 
 use core::mem;
-use std::io::{BufRead, Cursor};
+use std::io::BufRead;
 
 use quick_xml::Reader;
 use quick_xml::events::Event;
 
-use crate::error::PackageError;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::xml::element::{Element, Node, XmlError};
-use crate::xml::parse::{Scope, malformed, resolve, start_element};
-use crate::xml::write::WriteOptions;
+use crate::element::{Element, Node, XmlError};
+use crate::parse::{Scope, malformed, resolve, start_element};
 
 #[cfg(test)]
 mod tests;
@@ -38,7 +34,7 @@ pub enum PartEvent {
 /// so every element's names resolve, and gives the text between two other
 /// events as one node, references resolved, as [`parse`] does.
 ///
-/// [`parse`]: crate::xml::parse::parse
+/// [`parse`]: crate::parse::parse
 pub struct PartReader<R: BufRead> {
     buffer: Vec<u8>,
     depth: usize,
@@ -173,22 +169,5 @@ impl<R: BufRead> PartReader<R> {
     /// The text read since the last other event, as a node, when there is any.
     fn take_text(&mut self) -> Option<PartEvent> {
         (!self.text.is_empty()).then(|| PartEvent::Node(Node::Text(mem::take(&mut self.text))))
-    }
-}
-
-impl PartReader<Cursor<Vec<u8>>> {
-    /// A reader of the part `name` of `package` as its tree writes it with
-    /// [`WriteOptions::default`]: compact, with every namespace declaration
-    /// nothing uses removed, so a part streamed from it declares only
-    /// the prefixes it uses.
-    ///
-    /// # Errors
-    ///
-    /// The errors of [`Package::load_tree`].
-    pub fn from_part(package: &Package, name: &PartName) -> Result<Self, PackageError> {
-        let document = package.load_tree(name, OpenOptions::default())?;
-        Ok(Self::new(Cursor::new(
-            document.to_xml(WriteOptions::default()),
-        )))
     }
 }

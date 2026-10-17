@@ -1,5 +1,6 @@
 use alloc::collections::BTreeSet;
 
+use officekit_xml::name::OfficeVersion;
 use regex::Regex;
 
 use super::constraint::Constraint;
@@ -9,7 +10,6 @@ use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Finding};
 use crate::validation::generated::{SCHEMA_TYPES, SEMANTIC_CONSTRAINTS, type_id};
 use crate::validation::validator::Validator;
-use crate::xml::name::OfficeVersion;
 
 const FOOTER: &str = "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
 const FOOTNOTES: &str =

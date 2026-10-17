@@ -224,10 +224,10 @@ mod tests;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -2643,7 +2643,7 @@ pub struct AnimateColorBehavior {
 #[non_exhaustive]
 pub enum AnimateColorByContent {
     HSL(HSL),
-    Other(xml::element::Node),
+    Other(Node),
     RGB(RGB),
 }
 
@@ -2728,7 +2728,7 @@ pub enum AnimationVariantContent {
     ColorValue(ColorValue),
     FloatValue(FloatValue),
     Integer(Integer),
-    Other(xml::element::Node),
+    Other(Node),
     StringValue(StringValue),
 }
 
@@ -2935,7 +2935,7 @@ pub struct BuildGraphics {
 pub enum BuildGraphicsContent {
     BuildAsOne(BuildAsOne),
     BuildSubElements(BuildSubElements),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 19.5.14 `bldLst` (Build List): the tag `p:bldLst`, schema type `CT_BuildList`.
@@ -2954,7 +2954,7 @@ pub enum BuildListContent {
     BuildEmbeddedChart(BuildEmbeddedChart),
     BuildGraphics(BuildGraphics),
     BuildParagraph(BuildParagraph),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 19.5.16 `bldP` (Build Paragraph): the tag `p:bldP`, schema type `CT_TLBuildParagraph`.
@@ -7442,7 +7442,7 @@ pub struct EmbeddedFontName {
 pub enum EmbeddedObjectContent {
     EmbeddedObjectOrControl(EmbeddedObjectOrControl),
     LinkedObjectOrControl(LinkedObjectOrControl),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 19.3.2.2 embed (Embedded Object or Control): the tag `p:embed`, schema type `CT_OleObjectEmbed`.
@@ -7609,7 +7609,7 @@ pub enum GroupShapeContent {
     ContentPart(ContentPart),
     GraphicFrame(GraphicFrame),
     GroupShape(GroupShape),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(Picture),
     Shape(Shape),
 }
@@ -7780,7 +7780,7 @@ pub struct Iterate {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum IterateContent {
-    Other(xml::element::Node),
+    Other(Node),
     TimeAbsolute(TimeAbsolute),
     TimePercentage(TimePercentage),
 }
@@ -8082,7 +8082,7 @@ pub enum NonVisualPropertiesContent {
     AudioFromCD(super::drawing::AudioFromCD),
     AudioFromFile(super::drawing::AudioFromFile),
     AudioFromWAVFile(super::drawing::AudioFromWAVFile),
-    Other(xml::element::Node),
+    Other(Node),
     QuickTimeFromFile(super::drawing::QuickTimeFromFile),
     VideoFromFile(super::drawing::VideoFromFile),
 }
@@ -8828,7 +8828,7 @@ pub enum ShapeTargetContent {
     Background(Background),
     EmbeddedChartElement(EmbeddedChartElement),
     GraphicElement(GraphicElement),
-    Other(xml::element::Node),
+    Other(Node),
     Subshape(Subshape),
     TextElement(TextElement),
 }
@@ -8860,7 +8860,7 @@ pub struct ShapeTree {
 pub enum ShowTypeContent {
     BrowseSlideShowMode(BrowseSlideShowMode),
     KioskSlideShowMode(KioskSlideShowMode),
-    Other(xml::element::Node),
+    Other(Node),
     PresenterSlideShowMode(PresenterSlideShowMode),
 }
 
@@ -8879,7 +8879,7 @@ pub struct SlideBackground {
 pub enum SlideBackgroundContent {
     BackgroundProperties(BackgroundProperties),
     BackgroundStyleReference(BackgroundStyleReference),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 19.2.1.33 `sldId` (Slide ID): the tag `p:sldId`, schema type `CT_SlideIdListEntry`.
@@ -8985,7 +8985,7 @@ pub enum SlideLayoutTypeMember {
 pub enum SlideListContent {
     AllSlides(AllSlides),
     CustomShow(CustomShow),
-    Other(xml::element::Node),
+    Other(Node),
     SlideRange(SlideRange),
 }
 
@@ -9189,7 +9189,7 @@ pub enum SlideTransitionContent {
     Glitter(super::office_powerpoint_2010_main::Glitter),
     Honeycomb(super::office_powerpoint_2010_main::Honeycomb),
     NewsflashSlideTransition(NewsflashSlideTransition),
-    Other(xml::element::Node),
+    Other(Node),
     Pan(super::office_powerpoint_2010_main::Pan),
     PlusSlideTransition(PlusSlideTransition),
     Prism(super::office_powerpoint_2010_main::Prism),
@@ -9268,7 +9268,7 @@ pub struct SoundAction {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SoundActionContent {
-    Other(xml::element::Node),
+    Other(Node),
     StartSoundAction(StartSoundAction),
     StopSoundAction(StopSoundAction),
 }
@@ -9432,7 +9432,7 @@ pub struct TargetElement {
 pub enum TargetElementContent {
     BmkTgt(super::office_powerpoint_2010_main::BmkTgt),
     InkTarget(InkTarget),
-    Other(xml::element::Node),
+    Other(Node),
     ShapeTarget(ShapeTarget),
     SlideTarget(SlideTarget),
     SoundTarget(SoundTarget),
@@ -9468,7 +9468,7 @@ pub struct TextElement {
 #[non_exhaustive]
 pub enum TextElementContent {
     CharacterRange(CharacterRange),
-    Other(xml::element::Node),
+    Other(Node),
     ParagraphTextRange(ParagraphTextRange),
 }
 
@@ -9516,7 +9516,7 @@ pub struct TimeAnimatedValueList {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TimeConditionContent {
-    Other(xml::element::Node),
+    Other(Node),
     RuntimeNodeTriggerChoice(RuntimeNodeTriggerChoice),
     TargetElement(TargetElement),
     TimeNode(TimeNode),
@@ -9609,7 +9609,7 @@ pub enum TimeNodeListContent {
     Audio(Audio),
     Command(Command),
     Exclusive(Exclusive),
-    Other(xml::element::Node),
+    Other(Node),
     ParallelTimeNode(ParallelTimeNode),
     SequenceTimeNode(SequenceTimeNode),
     SetTimeNodeBehavior(SetTimeNodeBehavior),
@@ -10991,7 +10991,7 @@ pub struct ZoomSlideTransition {
 }
 
 impl markup::Read for AGuide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::a_guide(element)
     }
 }
@@ -11004,7 +11004,7 @@ impl markup::Write for AGuide {
 }
 
 impl markup::Read for AllSlides {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::all_slides(element)
     }
 }
@@ -11017,7 +11017,7 @@ impl markup::Write for AllSlides {
 }
 
 impl markup::Read for Animate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate(element)
     }
 }
@@ -11030,7 +11030,7 @@ impl markup::Write for Animate {
 }
 
 impl markup::Read for AnimateColorBehavior {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate_color_behavior(element)
     }
 }
@@ -11049,15 +11049,15 @@ impl Default for AnimateColorByContent {
 }
 
 impl markup::Read for AnimateColorByContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "hsl")) => Self::HSL(markup::read(element)),
             Some((NS_P, "rgb")) => Self::RGB(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -11073,7 +11073,7 @@ impl markup::Write for AnimateColorByContent {
 }
 
 impl markup::Read for AnimateEffect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate_effect(element)
     }
 }
@@ -11086,7 +11086,7 @@ impl markup::Write for AnimateEffect {
 }
 
 impl markup::Read for AnimateMotion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate_motion(element)
     }
 }
@@ -11099,7 +11099,7 @@ impl markup::Write for AnimateMotion {
 }
 
 impl markup::Read for AnimateRotation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate_rotation(element)
     }
 }
@@ -11112,7 +11112,7 @@ impl markup::Write for AnimateRotation {
 }
 
 impl markup::Read for AnimateScale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animate_scale(element)
     }
 }
@@ -11169,18 +11169,18 @@ impl Default for AnimationVariantContent {
 }
 
 impl markup::Read for AnimationVariantContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "boolVal")) => Self::BooleanVariant(markup::read(element)),
             Some((NS_P, "clrVal")) => Self::ColorValue(markup::read(element)),
             Some((NS_P, "fltVal")) => Self::FloatValue(markup::read(element)),
             Some((NS_P, "intVal")) => Self::Integer(markup::read(element)),
             Some((NS_P, "strVal")) => Self::StringValue(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -11199,7 +11199,7 @@ impl markup::Write for AnimationVariantContent {
 }
 
 impl markup::Read for AttributeName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attribute_name(element)
     }
 }
@@ -11212,7 +11212,7 @@ impl markup::Write for AttributeName {
 }
 
 impl markup::Read for AttributeNameList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attribute_name_list(element)
     }
 }
@@ -11225,7 +11225,7 @@ impl markup::Write for AttributeNameList {
 }
 
 impl markup::Read for Audio {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::audio(element)
     }
 }
@@ -11238,7 +11238,7 @@ impl markup::Write for Audio {
 }
 
 impl markup::Read for Background {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background(element)
     }
 }
@@ -11251,7 +11251,7 @@ impl markup::Write for Background {
 }
 
 impl markup::Read for BackgroundProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_properties(element)
     }
 }
@@ -11264,7 +11264,7 @@ impl markup::Write for BackgroundProperties {
 }
 
 impl markup::Read for BackgroundStyleReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_style_reference(element)
     }
 }
@@ -11487,7 +11487,7 @@ impl BehaviorTransformType {
 }
 
 impl markup::Read for BlindsSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blinds_slide_transition(element)
     }
 }
@@ -11500,7 +11500,7 @@ impl markup::Write for BlindsSlideTransition {
 }
 
 impl markup::Read for BoldEmbeddedFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bold_embedded_font(element)
     }
 }
@@ -11513,7 +11513,7 @@ impl markup::Write for BoldEmbeddedFont {
 }
 
 impl markup::Read for BoldItalicEmbeddedFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bold_italic_embedded_font(element)
     }
 }
@@ -11549,7 +11549,7 @@ impl BookmarkIDSeed {
 }
 
 impl markup::Read for BooleanVariant {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::boolean_variant(element)
     }
 }
@@ -11562,7 +11562,7 @@ impl markup::Write for BooleanVariant {
 }
 
 impl markup::Read for BrowseSlideShowMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::browse_slide_show_mode(element)
     }
 }
@@ -11575,7 +11575,7 @@ impl markup::Write for BrowseSlideShowMode {
 }
 
 impl markup::Read for BuildAsOne {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_as_one(element)
     }
 }
@@ -11588,7 +11588,7 @@ impl markup::Write for BuildAsOne {
 }
 
 impl markup::Read for BuildDiagram {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_diagram(element)
     }
 }
@@ -11601,7 +11601,7 @@ impl markup::Write for BuildDiagram {
 }
 
 impl markup::Read for BuildEmbeddedChart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_embedded_chart(element)
     }
 }
@@ -11614,7 +11614,7 @@ impl markup::Write for BuildEmbeddedChart {
 }
 
 impl markup::Read for BuildGraphics {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_graphics(element)
     }
 }
@@ -11633,15 +11633,15 @@ impl Default for BuildGraphicsContent {
 }
 
 impl markup::Read for BuildGraphicsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "bldAsOne")) => Self::BuildAsOne(markup::read(element)),
             Some((NS_P, "bldSub")) => Self::BuildSubElements(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -11657,7 +11657,7 @@ impl markup::Write for BuildGraphicsContent {
 }
 
 impl markup::Read for BuildList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_list(element)
     }
 }
@@ -11670,17 +11670,17 @@ impl markup::Write for BuildList {
 }
 
 impl markup::Read for BuildListContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "bldDgm")) => Self::BuildDiagram(markup::read(element)),
             Some((NS_P, "bldOleChart")) => Self::BuildEmbeddedChart(markup::read(element)),
             Some((NS_P, "bldGraphic")) => Self::BuildGraphics(markup::read(element)),
             Some((NS_P, "bldP")) => Self::BuildParagraph(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -11698,7 +11698,7 @@ impl markup::Write for BuildListContent {
 }
 
 impl markup::Read for BuildParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_paragraph(element)
     }
 }
@@ -11711,7 +11711,7 @@ impl markup::Write for BuildParagraph {
 }
 
 impl markup::Read for BuildSubElements {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::build_sub_elements(element)
     }
 }
@@ -11724,7 +11724,7 @@ impl markup::Write for BuildSubElements {
 }
 
 impl markup::Read for By {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::by(element)
     }
 }
@@ -11737,7 +11737,7 @@ impl markup::Write for By {
 }
 
 impl markup::Read for ByTLPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::by_tl_point(element)
     }
 }
@@ -11750,7 +11750,7 @@ impl markup::Write for ByTLPoint {
 }
 
 impl markup::Read for CharacterRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::character_range(element)
     }
 }
@@ -11819,7 +11819,7 @@ impl ChartSubelementType {
 }
 
 impl markup::Read for CheckerSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::checker_slide_transition(element)
     }
 }
@@ -11832,7 +11832,7 @@ impl markup::Write for CheckerSlideTransition {
 }
 
 impl markup::Read for ChildrenTimeNodeList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::children_time_node_list(element)
     }
 }
@@ -11845,7 +11845,7 @@ impl markup::Write for ChildrenTimeNodeList {
 }
 
 impl markup::Read for CircleSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::circle_slide_transition(element)
     }
 }
@@ -11858,7 +11858,7 @@ impl markup::Write for CircleSlideTransition {
 }
 
 impl markup::Read for ColorMRU {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_mru(element)
     }
 }
@@ -11871,7 +11871,7 @@ impl markup::Write for ColorMRU {
 }
 
 impl markup::Read for ColorSchemeMap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_scheme_map(element)
     }
 }
@@ -11884,7 +11884,7 @@ impl markup::Write for ColorSchemeMap {
 }
 
 impl markup::Read for ColorSchemeMapOverride {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_scheme_map_override(element)
     }
 }
@@ -11897,7 +11897,7 @@ impl markup::Write for ColorSchemeMapOverride {
 }
 
 impl markup::Read for ColorValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_value(element)
     }
 }
@@ -11910,7 +11910,7 @@ impl markup::Write for ColorValue {
 }
 
 impl markup::Read for CombSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comb_slide_transition(element)
     }
 }
@@ -11923,7 +11923,7 @@ impl markup::Write for CombSlideTransition {
 }
 
 impl markup::Read for Command {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::command(element)
     }
 }
@@ -11986,7 +11986,7 @@ impl CommandType {
 }
 
 impl markup::Read for Comment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment(element)
     }
 }
@@ -11999,7 +11999,7 @@ impl markup::Write for Comment {
 }
 
 impl markup::Read for CommentAuthor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_author(element)
     }
 }
@@ -12012,7 +12012,7 @@ impl markup::Write for CommentAuthor {
 }
 
 impl markup::Read for CommentList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_list(element)
     }
 }
@@ -12025,7 +12025,7 @@ impl markup::Write for CommentList {
 }
 
 impl markup::Read for CommentPosition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_position(element)
     }
 }
@@ -12038,7 +12038,7 @@ impl markup::Write for CommentPosition {
 }
 
 impl markup::Read for CommentsTextContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments_text_content(element)
     }
 }
@@ -12051,7 +12051,7 @@ impl markup::Write for CommentsTextContent {
 }
 
 impl markup::Read for CommonBehavior {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_behavior(element)
     }
 }
@@ -12064,7 +12064,7 @@ impl markup::Write for CommonBehavior {
 }
 
 impl markup::Read for CommonMediaNodeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_media_node_properties(element)
     }
 }
@@ -12077,7 +12077,7 @@ impl markup::Write for CommonMediaNodeProperties {
 }
 
 impl markup::Read for CommonSlideData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_slide_data(element)
     }
 }
@@ -12090,7 +12090,7 @@ impl markup::Write for CommonSlideData {
 }
 
 impl markup::Read for CommonSlideViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_slide_view_properties(element)
     }
 }
@@ -12103,7 +12103,7 @@ impl markup::Write for CommonSlideViewProperties {
 }
 
 impl markup::Read for CommonTimeNodeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_time_node_properties(element)
     }
 }
@@ -12116,7 +12116,7 @@ impl markup::Write for CommonTimeNodeProperties {
 }
 
 impl markup::Read for CommonViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_view_properties(element)
     }
 }
@@ -12129,7 +12129,7 @@ impl markup::Write for CommonViewProperties {
 }
 
 impl markup::Read for Condition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::condition(element)
     }
 }
@@ -12142,7 +12142,7 @@ impl markup::Write for Condition {
 }
 
 impl markup::Read for ConnectionShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection_shape(element)
     }
 }
@@ -12155,7 +12155,7 @@ impl markup::Write for ConnectionShape {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -12168,7 +12168,7 @@ impl markup::Write for ContentPart {
 }
 
 impl markup::Read for CoverSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cover_slide_transition(element)
     }
 }
@@ -12181,7 +12181,7 @@ impl markup::Write for CoverSlideTransition {
 }
 
 impl markup::Read for CustomShow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_show(element)
     }
 }
@@ -12194,7 +12194,7 @@ impl markup::Write for CustomShow {
 }
 
 impl markup::Read for CustomShowCustomShow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_show_custom_show(element)
     }
 }
@@ -12207,7 +12207,7 @@ impl markup::Write for CustomShowCustomShow {
 }
 
 impl markup::Read for CustomerData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::customer_data(element)
     }
 }
@@ -12220,7 +12220,7 @@ impl markup::Write for CustomerData {
 }
 
 impl markup::Read for CustomerDataList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::customer_data_list(element)
     }
 }
@@ -12233,7 +12233,7 @@ impl markup::Write for CustomerDataList {
 }
 
 impl markup::Read for CustomerDataTags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::customer_data_tags(element)
     }
 }
@@ -12246,7 +12246,7 @@ impl markup::Write for CustomerDataTags {
 }
 
 impl markup::Read for CutSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cut_slide_transition(element)
     }
 }
@@ -12383,7 +12383,7 @@ impl DiagramBuildTypes {
 }
 
 impl markup::Read for DiamondSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::diamond_slide_transition(element)
     }
 }
@@ -12443,7 +12443,7 @@ impl Direction {
 }
 
 impl markup::Read for DissolveSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dissolve_slide_transition(element)
     }
 }
@@ -12512,7 +12512,7 @@ impl EmbeddedChartBuildType {
 }
 
 impl markup::Read for EmbeddedChartElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_chart_element(element)
     }
 }
@@ -12525,7 +12525,7 @@ impl markup::Write for EmbeddedChartElement {
 }
 
 impl markup::Read for EmbeddedControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_control(element)
     }
 }
@@ -12538,7 +12538,7 @@ impl markup::Write for EmbeddedControl {
 }
 
 impl markup::Read for EmbeddedFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_font(element)
     }
 }
@@ -12551,7 +12551,7 @@ impl markup::Write for EmbeddedFont {
 }
 
 impl markup::Read for EmbeddedFontList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_font_list(element)
     }
 }
@@ -12564,7 +12564,7 @@ impl markup::Write for EmbeddedFontList {
 }
 
 impl markup::Read for EmbeddedFontName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_font_name(element)
     }
 }
@@ -12583,15 +12583,15 @@ impl Default for EmbeddedObjectContent {
 }
 
 impl markup::Read for EmbeddedObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "embed")) => Self::EmbeddedObjectOrControl(markup::read(element)),
             Some((NS_P, "link")) => Self::LinkedObjectOrControl(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -12607,7 +12607,7 @@ impl markup::Write for EmbeddedObjectContent {
 }
 
 impl markup::Read for EmbeddedObjectOrControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_object_or_control(element)
     }
 }
@@ -12620,7 +12620,7 @@ impl markup::Write for EmbeddedObjectOrControl {
 }
 
 impl markup::Read for EmbeddedObjectsAndControls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_objects_and_controls(element)
     }
 }
@@ -12633,7 +12633,7 @@ impl markup::Write for EmbeddedObjectsAndControls {
 }
 
 impl markup::Read for EndConditionsList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::end_conditions_list(element)
     }
 }
@@ -12646,7 +12646,7 @@ impl markup::Write for EndConditionsList {
 }
 
 impl markup::Read for EndSync {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::end_sync(element)
     }
 }
@@ -12659,7 +12659,7 @@ impl markup::Write for EndSync {
 }
 
 impl markup::Read for Exclusive {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::exclusive(element)
     }
 }
@@ -12672,7 +12672,7 @@ impl markup::Write for Exclusive {
 }
 
 impl markup::Read for Extension {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extension(element)
     }
 }
@@ -12685,7 +12685,7 @@ impl markup::Write for Extension {
 }
 
 impl markup::Read for ExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extension_list(element)
     }
 }
@@ -12698,7 +12698,7 @@ impl markup::Write for ExtensionList {
 }
 
 impl markup::Read for ExtensionListWithModificationFlag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extension_list_with_modification_flag(element)
     }
 }
@@ -12711,7 +12711,7 @@ impl markup::Write for ExtensionListWithModificationFlag {
 }
 
 impl markup::Read for FadeSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fade_slide_transition(element)
     }
 }
@@ -12724,7 +12724,7 @@ impl markup::Write for FadeSlideTransition {
 }
 
 impl markup::Read for FloatValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::float_value(element)
     }
 }
@@ -12737,7 +12737,7 @@ impl markup::Write for FloatValue {
 }
 
 impl markup::Read for FromColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::from_color(element)
     }
 }
@@ -12750,7 +12750,7 @@ impl markup::Write for FromColor {
 }
 
 impl markup::Read for FromTLPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::from_tl_point(element)
     }
 }
@@ -12763,7 +12763,7 @@ impl markup::Write for FromTLPoint {
 }
 
 impl markup::Read for GraphicElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_element(element)
     }
 }
@@ -12776,7 +12776,7 @@ impl markup::Write for GraphicElement {
 }
 
 impl markup::Read for GraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame(element)
     }
 }
@@ -12789,7 +12789,7 @@ impl markup::Write for GraphicFrame {
 }
 
 impl markup::Read for GridSpacing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_spacing(element)
     }
 }
@@ -12802,7 +12802,7 @@ impl markup::Write for GridSpacing {
 }
 
 impl markup::Read for GroupShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape(element)
     }
 }
@@ -12815,11 +12815,11 @@ impl markup::Write for GroupShape {
 }
 
 impl markup::Read for GroupShapeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "cxnSp")) => Self::ConnectionShape(markup::read(element)),
             Some((NS_P, "contentPart")) => Self::ContentPart(markup::read(element)),
@@ -12827,7 +12827,7 @@ impl markup::Read for GroupShapeContent {
             Some((NS_P, "grpSp")) => Self::GroupShape(markup::read(element)),
             Some((NS_P, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_P, "sp")) => Self::Shape(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -12847,7 +12847,7 @@ impl markup::Write for GroupShapeContent {
 }
 
 impl markup::Read for GroupShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape_properties(element)
     }
 }
@@ -12860,7 +12860,7 @@ impl markup::Write for GroupShapeProperties {
 }
 
 impl markup::Read for HSL {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hsl(element)
     }
 }
@@ -12873,7 +12873,7 @@ impl markup::Write for HSL {
 }
 
 impl markup::Read for HTMLPublishingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::html_publishing_properties(element)
     }
 }
@@ -13005,7 +13005,7 @@ impl HTMLWebScreenSizeTarget {
 }
 
 impl markup::Read for HandoutMaster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::handout_master(element)
     }
 }
@@ -13018,7 +13018,7 @@ impl markup::Write for HandoutMaster {
 }
 
 impl markup::Read for HandoutMasterID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::handout_master_id(element)
     }
 }
@@ -13031,7 +13031,7 @@ impl markup::Write for HandoutMasterID {
 }
 
 impl markup::Read for HeaderFooterInformationForASlideMaster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_footer_information_for_a_slide_master(element)
     }
 }
@@ -13117,7 +13117,7 @@ impl Index {
 }
 
 impl markup::Read for InkTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ink_target(element)
     }
 }
@@ -13130,7 +13130,7 @@ impl markup::Write for InkTarget {
 }
 
 impl markup::Read for Integer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::integer(element)
     }
 }
@@ -13143,7 +13143,7 @@ impl markup::Write for Integer {
 }
 
 impl markup::Read for ItalicEmbeddedFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::italic_embedded_font(element)
     }
 }
@@ -13156,7 +13156,7 @@ impl markup::Write for ItalicEmbeddedFont {
 }
 
 impl markup::Read for Iterate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::iterate(element)
     }
 }
@@ -13175,15 +13175,15 @@ impl Default for IterateContent {
 }
 
 impl markup::Read for IterateContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "tmAbs")) => Self::TimeAbsolute(markup::read(element)),
             Some((NS_P, "tmPct")) => Self::TimePercentage(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -13249,7 +13249,7 @@ impl IterateType {
 }
 
 impl markup::Read for KinsokuSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::kinsoku_settings(element)
     }
 }
@@ -13262,7 +13262,7 @@ impl markup::Write for KinsokuSettings {
 }
 
 impl markup::Read for KioskSlideShowMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::kiosk_slide_show_mode(element)
     }
 }
@@ -13275,7 +13275,7 @@ impl markup::Write for KioskSlideShowMode {
 }
 
 impl markup::Read for LinkedObjectOrControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_object_or_control(element)
     }
 }
@@ -13288,7 +13288,7 @@ impl markup::Write for LinkedObjectOrControl {
 }
 
 impl markup::Read for ListOfCommentAuthors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_comment_authors(element)
     }
 }
@@ -13301,7 +13301,7 @@ impl markup::Write for ListOfCommentAuthors {
 }
 
 impl markup::Read for ListOfControls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_controls(element)
     }
 }
@@ -13314,7 +13314,7 @@ impl markup::Write for ListOfControls {
 }
 
 impl markup::Read for ListOfCustomShows {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_custom_shows(element)
     }
 }
@@ -13327,7 +13327,7 @@ impl markup::Write for ListOfCustomShows {
 }
 
 impl markup::Read for ListOfGuides {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_guides(element)
     }
 }
@@ -13340,7 +13340,7 @@ impl markup::Write for ListOfGuides {
 }
 
 impl markup::Read for ListOfHandoutMasterIDs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_handout_master_i_ds(element)
     }
 }
@@ -13353,7 +13353,7 @@ impl markup::Write for ListOfHandoutMasterIDs {
 }
 
 impl markup::Read for ListOfNotesMasterIDs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_notes_master_i_ds(element)
     }
 }
@@ -13366,7 +13366,7 @@ impl markup::Write for ListOfNotesMasterIDs {
 }
 
 impl markup::Read for ListOfPresentationSlides {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_presentation_slides(element)
     }
 }
@@ -13379,7 +13379,7 @@ impl markup::Write for ListOfPresentationSlides {
 }
 
 impl markup::Read for ListOfPresentationSlidesOutlineViewSlideList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_presentation_slides_outline_view_slide_list(element)
     }
 }
@@ -13393,7 +13393,7 @@ impl markup::Write for ListOfPresentationSlidesOutlineViewSlideList {
 }
 
 impl markup::Read for ListOfSlideIDs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_slide_i_ds(element)
     }
 }
@@ -13406,7 +13406,7 @@ impl markup::Write for ListOfSlideIDs {
 }
 
 impl markup::Read for ListOfSlideLayouts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_slide_layouts(element)
     }
 }
@@ -13419,7 +13419,7 @@ impl markup::Write for ListOfSlideLayouts {
 }
 
 impl markup::Read for ListOfSlideMasterIDs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_slide_master_i_ds(element)
     }
 }
@@ -13487,7 +13487,7 @@ impl ListOfViewTypes {
 }
 
 impl markup::Read for ModificationVerifier {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::modification_verifier(element)
     }
 }
@@ -13500,7 +13500,7 @@ impl markup::Write for ModificationVerifier {
 }
 
 impl markup::Read for NewsflashSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::newsflash_slide_transition(element)
     }
 }
@@ -13564,7 +13564,7 @@ impl NextActionType {
 }
 
 impl markup::Read for NextConditionsList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::next_conditions_list(element)
     }
 }
@@ -13577,7 +13577,7 @@ impl markup::Write for NextConditionsList {
 }
 
 impl markup::Read for NonVisualConnectorShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_connector_shape_drawing_properties(element)
     }
 }
@@ -13590,7 +13590,7 @@ impl markup::Write for NonVisualConnectorShapeDrawingProperties {
 }
 
 impl markup::Read for NonVisualDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
     }
 }
@@ -13603,7 +13603,7 @@ impl markup::Write for NonVisualDrawingProperties {
 }
 
 impl markup::Read for NonVisualDrawingPropertiesForAShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties_for_a_shape(element)
     }
 }
@@ -13616,7 +13616,7 @@ impl markup::Write for NonVisualDrawingPropertiesForAShape {
 }
 
 impl markup::Read for NonVisualGraphicFrameDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_graphic_frame_drawing_properties(element)
     }
 }
@@ -13629,7 +13629,7 @@ impl markup::Write for NonVisualGraphicFrameDrawingProperties {
 }
 
 impl markup::Read for NonVisualGroupShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_group_shape_drawing_properties(element)
     }
 }
@@ -13642,7 +13642,7 @@ impl markup::Write for NonVisualGroupShapeDrawingProperties {
 }
 
 impl markup::Read for NonVisualPictureDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_picture_drawing_properties(element)
     }
 }
@@ -13655,7 +13655,7 @@ impl markup::Write for NonVisualPictureDrawingProperties {
 }
 
 impl markup::Read for NonVisualProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties(element)
     }
 }
@@ -13668,18 +13668,18 @@ impl markup::Write for NonVisualProperties {
 }
 
 impl markup::Read for NonVisualPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_A, "audioCd")) => Self::AudioFromCD(markup::read(element)),
             Some((NS_A, "audioFile")) => Self::AudioFromFile(markup::read(element)),
             Some((NS_A, "wavAudioFile")) => Self::AudioFromWAVFile(markup::read(element)),
             Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(markup::read(element)),
             Some((NS_A, "videoFile")) => Self::VideoFromFile(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -13698,7 +13698,7 @@ impl markup::Write for NonVisualPropertiesContent {
 }
 
 impl markup::Read for NonVisualPropertiesForAConnectionShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_connection_shape(element)
     }
 }
@@ -13711,7 +13711,7 @@ impl markup::Write for NonVisualPropertiesForAConnectionShape {
 }
 
 impl markup::Read for NonVisualPropertiesForAGraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_graphic_frame(element)
     }
 }
@@ -13724,7 +13724,7 @@ impl markup::Write for NonVisualPropertiesForAGraphicFrame {
 }
 
 impl markup::Read for NonVisualPropertiesForAGroupShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_group_shape(element)
     }
 }
@@ -13737,7 +13737,7 @@ impl markup::Write for NonVisualPropertiesForAGroupShape {
 }
 
 impl markup::Read for NonVisualPropertiesForAPicture {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_picture(element)
     }
 }
@@ -13750,7 +13750,7 @@ impl markup::Write for NonVisualPropertiesForAPicture {
 }
 
 impl markup::Read for NonVisualPropertiesForAShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_shape(element)
     }
 }
@@ -13763,7 +13763,7 @@ impl markup::Write for NonVisualPropertiesForAShape {
 }
 
 impl markup::Read for NormalViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::normal_view_properties(element)
     }
 }
@@ -13776,7 +13776,7 @@ impl markup::Write for NormalViewProperties {
 }
 
 impl markup::Read for NormalViewRestoredLeftProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::normal_view_restored_left_properties(element)
     }
 }
@@ -13789,7 +13789,7 @@ impl markup::Write for NormalViewRestoredLeftProperties {
 }
 
 impl markup::Read for NormalViewRestoredTopProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::normal_view_restored_top_properties(element)
     }
 }
@@ -13802,7 +13802,7 @@ impl markup::Write for NormalViewRestoredTopProperties {
 }
 
 impl markup::Read for NotesMaster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_master(element)
     }
 }
@@ -13815,7 +13815,7 @@ impl markup::Write for NotesMaster {
 }
 
 impl markup::Read for NotesMasterID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_master_id(element)
     }
 }
@@ -13828,7 +13828,7 @@ impl markup::Write for NotesMasterID {
 }
 
 impl markup::Read for NotesSlide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_slide(element)
     }
 }
@@ -13841,7 +13841,7 @@ impl markup::Write for NotesSlide {
 }
 
 impl markup::Read for NotesSlideSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_slide_size(element)
     }
 }
@@ -13854,7 +13854,7 @@ impl markup::Write for NotesSlideSize {
 }
 
 impl markup::Read for NotesTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_text_style(element)
     }
 }
@@ -13867,7 +13867,7 @@ impl markup::Write for NotesTextStyle {
 }
 
 impl markup::Read for NotesTextViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_text_view_properties(element)
     }
 }
@@ -13880,7 +13880,7 @@ impl markup::Write for NotesTextViewProperties {
 }
 
 impl markup::Read for NotesViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_view_properties(element)
     }
 }
@@ -13947,7 +13947,7 @@ impl OleObjectFollowColorScheme {
 }
 
 impl markup::Read for OutlineViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::outline_view_properties(element)
     }
 }
@@ -14015,7 +14015,7 @@ impl ParagraphBuildType {
 }
 
 impl markup::Read for ParagraphTextRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_text_range(element)
     }
 }
@@ -14028,7 +14028,7 @@ impl markup::Write for ParagraphTextRange {
 }
 
 impl markup::Read for ParallelTimeNode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::parallel_time_node(element)
     }
 }
@@ -14041,7 +14041,7 @@ impl markup::Write for ParallelTimeNode {
 }
 
 impl markup::Read for PenColorForSlideShow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pen_color_for_slide_show(element)
     }
 }
@@ -14054,7 +14054,7 @@ impl markup::Write for PenColorForSlideShow {
 }
 
 impl markup::Read for PhotoAlbumInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::photo_album_information(element)
     }
 }
@@ -14183,7 +14183,7 @@ impl PhotoAlbumShapeForPhotoMask {
 }
 
 impl markup::Read for Picture {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture(element)
     }
 }
@@ -14196,7 +14196,7 @@ impl markup::Write for Picture {
 }
 
 impl markup::Read for PictureFill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_fill(element)
     }
 }
@@ -14272,7 +14272,7 @@ impl PlaceholderIDs {
 }
 
 impl markup::Read for PlaceholderShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::placeholder_shape(element)
     }
 }
@@ -14339,7 +14339,7 @@ impl PlaceholderSize {
 }
 
 impl markup::Read for PlusSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plus_slide_transition(element)
     }
 }
@@ -14352,7 +14352,7 @@ impl markup::Write for PlusSlideTransition {
 }
 
 impl markup::Read for Presentation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation(element)
     }
 }
@@ -14365,7 +14365,7 @@ impl markup::Write for Presentation {
 }
 
 impl markup::Read for PresentationDefaultTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_default_text_style(element)
     }
 }
@@ -14378,7 +14378,7 @@ impl markup::Write for PresentationDefaultTextStyle {
 }
 
 impl markup::Read for PresentationSlide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_slide(element)
     }
 }
@@ -14391,7 +14391,7 @@ impl markup::Write for PresentationSlide {
 }
 
 impl markup::Read for PresentationSlideOutlineViewSlideEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_slide_outline_view_slide_entry(element)
     }
 }
@@ -14404,7 +14404,7 @@ impl markup::Write for PresentationSlideOutlineViewSlideEntry {
 }
 
 impl markup::Read for PresentationSlideSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_slide_size(element)
     }
 }
@@ -14417,7 +14417,7 @@ impl markup::Write for PresentationSlideSize {
 }
 
 impl markup::Read for PresentationSlideSlide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_slide_slide(element)
     }
 }
@@ -14430,7 +14430,7 @@ impl markup::Write for PresentationSlideSlide {
 }
 
 impl markup::Read for PresentationWideProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_wide_properties(element)
     }
 }
@@ -14443,7 +14443,7 @@ impl markup::Write for PresentationWideProperties {
 }
 
 impl markup::Read for PresentationWideShowProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_wide_show_properties(element)
     }
 }
@@ -14456,7 +14456,7 @@ impl markup::Write for PresentationWideShowProperties {
 }
 
 impl markup::Read for PresentationWideViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_wide_view_properties(element)
     }
 }
@@ -14469,7 +14469,7 @@ impl markup::Write for PresentationWideViewProperties {
 }
 
 impl markup::Read for PresenterSlideShowMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presenter_slide_show_mode(element)
     }
 }
@@ -14535,7 +14535,7 @@ impl PreviousActionType {
 }
 
 impl markup::Read for PreviousConditionsList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_conditions_list(element)
     }
 }
@@ -14598,7 +14598,7 @@ impl PrintColorMode {
 }
 
 impl markup::Read for PrintingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::printing_properties(element)
     }
 }
@@ -14611,7 +14611,7 @@ impl markup::Write for PrintingProperties {
 }
 
 impl markup::Read for ProgrammableExtensibilityTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::programmable_extensibility_tag(element)
     }
 }
@@ -14624,7 +14624,7 @@ impl markup::Write for ProgrammableExtensibilityTag {
 }
 
 impl markup::Read for ProgrammableTabList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::programmable_tab_list(element)
     }
 }
@@ -14637,7 +14637,7 @@ impl markup::Write for ProgrammableTabList {
 }
 
 impl markup::Read for Progress {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::progress(element)
     }
 }
@@ -14650,7 +14650,7 @@ impl markup::Write for Progress {
 }
 
 impl markup::Read for PullSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pull_slide_transition(element)
     }
 }
@@ -14663,7 +14663,7 @@ impl markup::Write for PullSlideTransition {
 }
 
 impl markup::Read for PushSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::push_slide_transition(element)
     }
 }
@@ -14676,7 +14676,7 @@ impl markup::Write for PushSlideTransition {
 }
 
 impl markup::Read for RGB {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rgb(element)
     }
 }
@@ -14689,7 +14689,7 @@ impl markup::Write for RGB {
 }
 
 impl markup::Read for RandomBarSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::random_bar_slide_transition(element)
     }
 }
@@ -14702,7 +14702,7 @@ impl markup::Write for RandomBarSlideTransition {
 }
 
 impl markup::Read for RandomSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::random_slide_transition(element)
     }
 }
@@ -14715,7 +14715,7 @@ impl markup::Write for RandomSlideTransition {
 }
 
 impl markup::Read for RegularEmbeddedFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::regular_embedded_font(element)
     }
 }
@@ -14728,7 +14728,7 @@ impl markup::Write for RegularEmbeddedFont {
 }
 
 impl markup::Read for RotationCenter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rotation_center(element)
     }
 }
@@ -14741,7 +14741,7 @@ impl markup::Write for RotationCenter {
 }
 
 impl markup::Read for RuntimeNodeTriggerChoice {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::runtime_node_trigger_choice(element)
     }
 }
@@ -14754,7 +14754,7 @@ impl markup::Write for RuntimeNodeTriggerChoice {
 }
 
 impl markup::Read for SequenceTimeNode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sequence_time_node(element)
     }
 }
@@ -14767,7 +14767,7 @@ impl markup::Write for SequenceTimeNode {
 }
 
 impl markup::Read for SetTimeNodeBehavior {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_time_node_behavior(element)
     }
 }
@@ -14780,7 +14780,7 @@ impl markup::Write for SetTimeNodeBehavior {
 }
 
 impl markup::Read for Shape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape(element)
     }
 }
@@ -14793,7 +14793,7 @@ impl markup::Write for Shape {
 }
 
 impl markup::Read for ShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_properties(element)
     }
 }
@@ -14806,7 +14806,7 @@ impl markup::Write for ShapeProperties {
 }
 
 impl markup::Read for ShapeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_style(element)
     }
 }
@@ -14819,7 +14819,7 @@ impl markup::Write for ShapeStyle {
 }
 
 impl markup::Read for ShapeTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_target(element)
     }
 }
@@ -14832,18 +14832,18 @@ impl markup::Write for ShapeTarget {
 }
 
 impl markup::Read for ShapeTargetContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "bg")) => Self::Background(markup::read(element)),
             Some((NS_P, "oleChartEl")) => Self::EmbeddedChartElement(markup::read(element)),
             Some((NS_P, "graphicEl")) => Self::GraphicElement(markup::read(element)),
             Some((NS_P, "subSp")) => Self::Subshape(markup::read(element)),
             Some((NS_P, "txEl")) => Self::TextElement(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -14862,7 +14862,7 @@ impl markup::Write for ShapeTargetContent {
 }
 
 impl markup::Read for ShapeTextBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_text_body(element)
     }
 }
@@ -14875,7 +14875,7 @@ impl markup::Write for ShapeTextBody {
 }
 
 impl markup::Read for ShapeTree {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_tree(element)
     }
 }
@@ -14888,16 +14888,16 @@ impl markup::Write for ShapeTree {
 }
 
 impl markup::Read for ShowTypeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "browse")) => Self::BrowseSlideShowMode(markup::read(element)),
             Some((NS_P, "kiosk")) => Self::KioskSlideShowMode(markup::read(element)),
             Some((NS_P, "present")) => Self::PresenterSlideShowMode(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -14914,7 +14914,7 @@ impl markup::Write for ShowTypeContent {
 }
 
 impl markup::Read for SlideBackground {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_background(element)
     }
 }
@@ -14933,15 +14933,15 @@ impl Default for SlideBackgroundContent {
 }
 
 impl markup::Read for SlideBackgroundContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "bgPr")) => Self::BackgroundProperties(markup::read(element)),
             Some((NS_P, "bgRef")) => Self::BackgroundStyleReference(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -14957,7 +14957,7 @@ impl markup::Write for SlideBackgroundContent {
 }
 
 impl markup::Read for SlideID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_id(element)
     }
 }
@@ -14993,7 +14993,7 @@ impl SlideIdentifier {
 }
 
 impl markup::Read for SlideLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_layout(element)
     }
 }
@@ -15029,7 +15029,7 @@ impl SlideLayoutID {
 }
 
 impl markup::Read for SlideLayoutId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_layout_id(element)
     }
 }
@@ -15139,16 +15139,16 @@ impl Default for SlideListContent {
 }
 
 impl markup::Read for SlideListContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "sldAll")) => Self::AllSlides(markup::read(element)),
             Some((NS_P, "custShow")) => Self::CustomShow(markup::read(element)),
             Some((NS_P, "sldRg")) => Self::SlideRange(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -15165,7 +15165,7 @@ impl markup::Write for SlideListContent {
 }
 
 impl markup::Read for SlideMaster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master(element)
     }
 }
@@ -15178,7 +15178,7 @@ impl markup::Write for SlideMaster {
 }
 
 impl markup::Read for SlideMasterBodyTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master_body_text_style(element)
     }
 }
@@ -15191,7 +15191,7 @@ impl markup::Write for SlideMasterBodyTextStyle {
 }
 
 impl markup::Read for SlideMasterID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master_id(element)
     }
 }
@@ -15204,7 +15204,7 @@ impl markup::Write for SlideMasterID {
 }
 
 impl markup::Read for SlideMasterOtherTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master_other_text_style(element)
     }
 }
@@ -15217,7 +15217,7 @@ impl markup::Write for SlideMasterOtherTextStyle {
 }
 
 impl markup::Read for SlideMasterTextStyles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master_text_styles(element)
     }
 }
@@ -15230,7 +15230,7 @@ impl markup::Write for SlideMasterTextStyles {
 }
 
 impl markup::Read for SlideMasterTitleTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_master_title_text_style(element)
     }
 }
@@ -15243,7 +15243,7 @@ impl markup::Write for SlideMasterTitleTextStyle {
 }
 
 impl markup::Read for SlideRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_range(element)
     }
 }
@@ -15342,7 +15342,7 @@ impl SlideSizeType {
 }
 
 impl markup::Read for SlideSorterViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_sorter_view_properties(element)
     }
 }
@@ -15355,7 +15355,7 @@ impl markup::Write for SlideSorterViewProperties {
 }
 
 impl markup::Read for SlideSynchronizationProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_synchronization_properties(element)
     }
 }
@@ -15368,7 +15368,7 @@ impl markup::Write for SlideSynchronizationProperties {
 }
 
 impl markup::Read for SlideTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_target(element)
     }
 }
@@ -15381,7 +15381,7 @@ impl markup::Write for SlideTarget {
 }
 
 impl markup::Read for SlideTimingInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_timing_information(element)
     }
 }
@@ -15394,11 +15394,11 @@ impl markup::Write for SlideTimingInformation {
 }
 
 impl markup::Read for SlideTransitionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "blinds")) => Self::BlindsSlideTransition(markup::read(element)),
             Some((NS_P, "checker")) => Self::CheckerSlideTransition(markup::read(element)),
@@ -15441,7 +15441,7 @@ impl markup::Read for SlideTransitionContent {
             Some((NS_P14, "window")) => Self::Window(markup::read(element)),
             Some((NS_P, "wipe")) => Self::WipeSlideTransition(markup::read(element)),
             Some((NS_P, "zoom")) => Self::ZoomSlideTransition(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -15496,7 +15496,7 @@ impl markup::Write for SlideTransitionContent {
 }
 
 impl markup::Read for SlideTransitionForASlideLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_transition_for_a_slide_layout(element)
     }
 }
@@ -15509,7 +15509,7 @@ impl markup::Write for SlideTransitionForASlideLayout {
 }
 
 impl markup::Read for SlideViewProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slide_view_properties(element)
     }
 }
@@ -15522,7 +15522,7 @@ impl markup::Write for SlideViewProperties {
 }
 
 impl markup::Read for SmartTags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::smart_tags(element)
     }
 }
@@ -15535,7 +15535,7 @@ impl markup::Write for SmartTags {
 }
 
 impl markup::Read for Sound {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sound(element)
     }
 }
@@ -15548,7 +15548,7 @@ impl markup::Write for Sound {
 }
 
 impl markup::Read for SoundAction {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sound_action(element)
     }
 }
@@ -15567,15 +15567,15 @@ impl Default for SoundActionContent {
 }
 
 impl markup::Read for SoundActionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "stSnd")) => Self::StartSoundAction(markup::read(element)),
             Some((NS_P, "endSnd")) => Self::StopSoundAction(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -15591,7 +15591,7 @@ impl markup::Write for SoundActionContent {
 }
 
 impl markup::Read for SoundTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sound_target(element)
     }
 }
@@ -15604,7 +15604,7 @@ impl markup::Write for SoundTarget {
 }
 
 impl markup::Read for SplitSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::split_slide_transition(element)
     }
 }
@@ -15694,7 +15694,7 @@ impl StSlideMasterId {
 }
 
 impl markup::Read for StartConditionsList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::start_conditions_list(element)
     }
 }
@@ -15707,7 +15707,7 @@ impl markup::Write for StartConditionsList {
 }
 
 impl markup::Read for StartSoundAction {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::start_sound_action(element)
     }
 }
@@ -15720,7 +15720,7 @@ impl markup::Write for StartSoundAction {
 }
 
 impl markup::Read for StopSoundAction {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::stop_sound_action(element)
     }
 }
@@ -15733,7 +15733,7 @@ impl markup::Write for StopSoundAction {
 }
 
 impl markup::Read for StringValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::string_value(element)
     }
 }
@@ -15746,7 +15746,7 @@ impl markup::Write for StringValue {
 }
 
 impl markup::Read for StripsSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::strips_slide_transition(element)
     }
 }
@@ -15759,7 +15759,7 @@ impl markup::Write for StripsSlideTransition {
 }
 
 impl markup::Read for SubTimeNodesList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sub_time_nodes_list(element)
     }
 }
@@ -15772,7 +15772,7 @@ impl markup::Write for SubTimeNodesList {
 }
 
 impl markup::Read for Subshape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subshape(element)
     }
 }
@@ -15999,7 +15999,7 @@ impl TLAnimateMotionPathEditMode {
 }
 
 impl markup::Read for TargetElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::target_element(element)
     }
 }
@@ -16018,18 +16018,18 @@ impl Default for TargetElementContent {
 }
 
 impl markup::Read for TargetElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P14, "bmkTgt")) => Self::BmkTgt(markup::read(element)),
             Some((NS_P, "inkTgt")) => Self::InkTarget(markup::read(element)),
             Some((NS_P, "spTgt")) => Self::ShapeTarget(markup::read(element)),
             Some((NS_P, "sldTgt")) => Self::SlideTarget(markup::read(element)),
             Some((NS_P, "sndTgt")) => Self::SoundTarget(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -16048,7 +16048,7 @@ impl markup::Write for TargetElementContent {
 }
 
 impl markup::Read for TemplateEffectsTmpl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::template_effects_tmpl(element)
     }
 }
@@ -16061,7 +16061,7 @@ impl markup::Write for TemplateEffectsTmpl {
 }
 
 impl markup::Read for TemplateEffectsTmplLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::template_effects_tmpl_lst(element)
     }
 }
@@ -16074,7 +16074,7 @@ impl markup::Write for TemplateEffectsTmplLst {
 }
 
 impl markup::Read for TextElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_element(element)
     }
 }
@@ -16087,15 +16087,15 @@ impl markup::Write for TextElement {
 }
 
 impl markup::Read for TextElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "charRg")) => Self::CharacterRange(markup::read(element)),
             Some((NS_P, "pRg")) => Self::ParagraphTextRange(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -16142,7 +16142,7 @@ impl Time {
 }
 
 impl markup::Read for TimeAbsolute {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_absolute(element)
     }
 }
@@ -16155,7 +16155,7 @@ impl markup::Write for TimeAbsolute {
 }
 
 impl markup::Read for TimeAnimateValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_animate_value(element)
     }
 }
@@ -16168,7 +16168,7 @@ impl markup::Write for TimeAnimateValue {
 }
 
 impl markup::Read for TimeAnimatedValueList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_animated_value_list(element)
     }
 }
@@ -16181,16 +16181,16 @@ impl markup::Write for TimeAnimatedValueList {
 }
 
 impl markup::Read for TimeConditionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "rtn")) => Self::RuntimeNodeTriggerChoice(markup::read(element)),
             Some((NS_P, "tgtEl")) => Self::TargetElement(markup::read(element)),
             Some((NS_P, "tn")) => Self::TimeNode(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -16361,7 +16361,7 @@ impl TimeListAnimateEffectTransition {
 }
 
 impl markup::Read for TimeNode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_node(element)
     }
 }
@@ -16452,7 +16452,7 @@ impl TimeNodeID {
 }
 
 impl markup::Read for TimeNodeList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_node_list(element)
     }
 }
@@ -16465,11 +16465,11 @@ impl markup::Write for TimeNodeList {
 }
 
 impl markup::Read for TimeNodeListContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P, "anim")) => Self::Animate(markup::read(element)),
             Some((NS_P, "animClr")) => Self::AnimateColorBehavior(markup::read(element)),
@@ -16484,7 +16484,7 @@ impl markup::Read for TimeNodeListContent {
             Some((NS_P, "seq")) => Self::SequenceTimeNode(markup::read(element)),
             Some((NS_P, "set")) => Self::SetTimeNodeBehavior(markup::read(element)),
             Some((NS_P, "video")) => Self::Video(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -16785,7 +16785,7 @@ impl TimeNodeType {
 }
 
 impl markup::Read for TimePercentage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::time_percentage(element)
     }
 }
@@ -16798,7 +16798,7 @@ impl markup::Write for TimePercentage {
 }
 
 impl markup::Read for To {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::to(element)
     }
 }
@@ -16811,7 +16811,7 @@ impl markup::Write for To {
 }
 
 impl markup::Read for ToColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::to_color(element)
     }
 }
@@ -16824,7 +16824,7 @@ impl markup::Write for ToColor {
 }
 
 impl markup::Read for ToTLAnimVariant {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::to_tl_anim_variant(element)
     }
 }
@@ -17196,7 +17196,7 @@ impl TriggerRunTimeNode {
 }
 
 impl markup::Read for Value {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::value(element)
     }
 }
@@ -17209,7 +17209,7 @@ impl markup::Write for Value {
 }
 
 impl markup::Read for Video {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::video(element)
     }
 }
@@ -17222,7 +17222,7 @@ impl markup::Write for Video {
 }
 
 impl markup::Read for ViewOrigin {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::view_origin(element)
     }
 }
@@ -17235,7 +17235,7 @@ impl markup::Write for ViewOrigin {
 }
 
 impl markup::Read for ViewScale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::view_scale(element)
     }
 }
@@ -17248,7 +17248,7 @@ impl markup::Write for ViewScale {
 }
 
 impl markup::Read for WebProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_properties(element)
     }
 }
@@ -17261,7 +17261,7 @@ impl markup::Write for WebProperties {
 }
 
 impl markup::Read for WedgeSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wedge_slide_transition(element)
     }
 }
@@ -17274,7 +17274,7 @@ impl markup::Write for WedgeSlideTransition {
 }
 
 impl markup::Read for WheelSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wheel_slide_transition(element)
     }
 }
@@ -17287,7 +17287,7 @@ impl markup::Write for WheelSlideTransition {
 }
 
 impl markup::Read for WipeSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wipe_slide_transition(element)
     }
 }
@@ -17300,7 +17300,7 @@ impl markup::Write for WipeSlideTransition {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }
@@ -17313,7 +17313,7 @@ impl markup::Write for Xfrm {
 }
 
 impl markup::Read for ZoomSlideTransition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::zoom_slide_transition(element)
     }
 }

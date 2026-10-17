@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `com14:compatSp` into a `CompatSp`.
 #[must_use]
-pub fn compat_sp(element: &xml::element::Element) -> super::CompatSp {
+pub fn compat_sp(element: &Element) -> super::CompatSp {
     let mut node = super::CompatSp::default();
     let mut reader = markup::Reader::new(element, &super::COMPAT_SP_SHAPE);
     for (index, field) in &mut reader {

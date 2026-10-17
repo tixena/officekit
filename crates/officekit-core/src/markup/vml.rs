@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_O: Option<NamespaceId> = Some(60);
@@ -2263,7 +2263,7 @@ pub enum MultiplePathLineContent {
     Ink(super::vml_office_drawing::Ink),
     LeftBorder(super::vml_wordprocessing_drawing::LeftBorder),
     LineStrokeSettings(LineStrokeSettings),
-    Other(xml::element::Node),
+    Other(Node),
     RightBorder(super::vml_wordprocessing_drawing::RightBorder),
     SetOfFormulas(SetOfFormulas),
     SetOfHandles(SetOfHandles),
@@ -2593,7 +2593,7 @@ pub enum ShapeDefinitionContent {
     InkAnnotationFlag(super::vml_presentation_drawing::InkAnnotationFlag),
     LeftBorder(super::vml_wordprocessing_drawing::LeftBorder),
     LineStrokeSettings(LineStrokeSettings),
-    Other(xml::element::Node),
+    Other(Node),
     RightBorder(super::vml_wordprocessing_drawing::RightBorder),
     SetOfFormulas(SetOfFormulas),
     SetOfHandles(SetOfHandles),
@@ -2628,7 +2628,7 @@ pub enum ShapeElementContent {
     ImageData(ImageData),
     LeftBorder(super::vml_wordprocessing_drawing::LeftBorder),
     LineStrokeSettings(LineStrokeSettings),
-    Other(xml::element::Node),
+    Other(Node),
     RightBorder(super::vml_wordprocessing_drawing::RightBorder),
     SetOfFormulas(SetOfFormulas),
     SetOfHandles(SetOfHandles),
@@ -2762,7 +2762,7 @@ pub enum ShapeGroupContent {
     Line(Line),
     LineStrokeSettings(LineStrokeSettings),
     MultiplePathLine(MultiplePathLine),
-    Other(xml::element::Node),
+    Other(Node),
     Oval(Oval),
     Rectangle(Rectangle),
     RightBorder(super::vml_wordprocessing_drawing::RightBorder),
@@ -3001,7 +3001,7 @@ pub struct TextBox {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextBoxContent {
-    Other(xml::element::Node),
+    Other(Node),
     RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainer),
 }
 
@@ -3153,7 +3153,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ArcSegment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::arc_segment(element)
     }
 }
@@ -3166,7 +3166,7 @@ impl markup::Write for ArcSegment {
 }
 
 impl markup::Read for BezierCurve {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bezier_curve(element)
     }
 }
@@ -3179,7 +3179,7 @@ impl markup::Write for BezierCurve {
 }
 
 impl markup::Read for DocumentBackground {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_background(element)
     }
 }
@@ -3248,7 +3248,7 @@ impl GradientFillComputationType {
 }
 
 impl markup::Read for ImageData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::image_data(element)
     }
 }
@@ -3261,7 +3261,7 @@ impl markup::Write for ImageData {
 }
 
 impl markup::Read for ImageFile {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::image_file(element)
     }
 }
@@ -3328,7 +3328,7 @@ impl ImageScalingBehavior {
 }
 
 impl markup::Read for Line {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line(element)
     }
 }
@@ -3391,7 +3391,7 @@ impl LineJoinType {
 }
 
 impl markup::Read for LineStrokeSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_stroke_settings(element)
     }
 }
@@ -3404,7 +3404,7 @@ impl markup::Write for LineStrokeSettings {
 }
 
 impl markup::Read for MultiplePathLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::multiple_path_line(element)
     }
 }
@@ -3417,11 +3417,11 @@ impl markup::Write for MultiplePathLine {
 }
 
 impl markup::Read for MultiplePathLineContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(markup::read(element)),
             Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(markup::read(element)),
@@ -3447,7 +3447,7 @@ impl markup::Read for MultiplePathLineContent {
             Some((NS_W10, "wrap")) => Self::TextWrapping(markup::read(element)),
             Some((NS_W10, "bordertop")) => Self::TopBorder(markup::read(element)),
             Some((NS_PVML, "textdata")) => Self::VMLDiagramText(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3554,7 +3554,7 @@ impl TryFrom<MultiplePathLineContent> for ShapeElementContent {
 }
 
 impl markup::Read for Oval {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::oval(element)
     }
 }
@@ -3567,7 +3567,7 @@ impl markup::Write for Oval {
 }
 
 impl markup::Read for Rectangle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rectangle(element)
     }
 }
@@ -3580,7 +3580,7 @@ impl markup::Write for Rectangle {
 }
 
 impl markup::Read for RoundedRectangle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rounded_rectangle(element)
     }
 }
@@ -3593,7 +3593,7 @@ impl markup::Write for RoundedRectangle {
 }
 
 impl markup::Read for SetOfFormulas {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_formulas(element)
     }
 }
@@ -3606,7 +3606,7 @@ impl markup::Write for SetOfFormulas {
 }
 
 impl markup::Read for SetOfHandles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_handles(element)
     }
 }
@@ -3619,7 +3619,7 @@ impl markup::Write for SetOfHandles {
 }
 
 impl markup::Read for ShadowEffect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shadow_effect(element)
     }
 }
@@ -3683,7 +3683,7 @@ impl ShadowType {
 }
 
 impl markup::Read for ShapeDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_definition(element)
     }
 }
@@ -3696,11 +3696,11 @@ impl markup::Write for ShapeDefinition {
 }
 
 impl markup::Read for ShapeDefinitionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(markup::read(element)),
             Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(markup::read(element)),
@@ -3730,7 +3730,7 @@ impl markup::Read for ShapeDefinitionContent {
             Some((NS_W10, "wrap")) => Self::TextWrapping(markup::read(element)),
             Some((NS_W10, "bordertop")) => Self::TopBorder(markup::read(element)),
             Some((NS_PVML, "textdata")) => Self::VMLDiagramText(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3923,11 +3923,11 @@ impl TryFrom<ShapeDefinitionContent> for MultiplePathLineContent {
 }
 
 impl markup::Read for ShapeElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(markup::read(element)),
             Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(markup::read(element)),
@@ -3952,7 +3952,7 @@ impl markup::Read for ShapeElementContent {
             Some((NS_W10, "wrap")) => Self::TextWrapping(markup::read(element)),
             Some((NS_W10, "bordertop")) => Self::TopBorder(markup::read(element)),
             Some((NS_PVML, "textdata")) => Self::VMLDiagramText(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3989,7 +3989,7 @@ impl markup::Write for ShapeElementContent {
 }
 
 impl markup::Read for ShapeFillProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_fill_properties(element)
     }
 }
@@ -4055,7 +4055,7 @@ impl ShapeFillType {
 }
 
 impl markup::Read for ShapeGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_group(element)
     }
 }
@@ -4068,11 +4068,11 @@ impl markup::Write for ShapeGroup {
 }
 
 impl markup::Read for ShapeGroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(markup::read(element)),
             Some((NS_V, "arc")) => Self::ArcSegment(markup::read(element)),
@@ -4109,7 +4109,7 @@ impl markup::Read for ShapeGroupContent {
             Some((NS_W10, "bordertop")) => Self::TopBorder(markup::read(element)),
             Some((NS_O, "diagram")) => Self::VMLDiagram(markup::read(element)),
             Some((NS_PVML, "textdata")) => Self::VMLDiagramText(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4292,7 +4292,7 @@ impl ShapeGroupingTypes {
 }
 
 impl markup::Read for ShapeHandle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_handle(element)
     }
 }
@@ -4305,7 +4305,7 @@ impl markup::Write for ShapeHandle {
 }
 
 impl markup::Read for ShapePath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_path(element)
     }
 }
@@ -4318,7 +4318,7 @@ impl markup::Write for ShapePath {
 }
 
 impl markup::Read for ShapeTemplate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_template(element)
     }
 }
@@ -4331,7 +4331,7 @@ impl markup::Write for ShapeTemplate {
 }
 
 impl markup::Read for SingleFormula {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_formula(element)
     }
 }
@@ -4615,7 +4615,7 @@ impl StrokeLineStyle {
 }
 
 impl markup::Read for TextBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box(element)
     }
 }
@@ -4628,14 +4628,14 @@ impl markup::Write for TextBox {
 }
 
 impl markup::Read for TextBoxContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "txbxContent")) => Self::RichTextBoxContentContainer(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4650,7 +4650,7 @@ impl markup::Write for TextBoxContent {
 }
 
 impl markup::Read for TextLayoutPath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_layout_path(element)
     }
 }

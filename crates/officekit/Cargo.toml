@@ -18,6 +18,9 @@ path = "src/main.rs"
 [dependencies]
 officekit-core.workspace = true
 
+# The Office versions a file is validated against
+officekit-xml.workspace = true
+
 # CLI framework
 clap.workspace = true
 

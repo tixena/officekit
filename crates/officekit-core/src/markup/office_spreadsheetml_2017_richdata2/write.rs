@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AArray` as its element, `xlrd2:a`.
 #[must_use]
-pub fn a_array(node: &super::AArray, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn a_array(node: &super::AArray, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::A_ARRAY_SHAPE, &node.unknown);
     writer.attribute(0, &node.r);
     writer.attribute(1, &node.c);
@@ -230,8 +231,8 @@ pub fn a_array(node: &super::AArray, scope: &mut markup::Scope) -> xml::element:
 #[must_use]
 pub fn a_supporting_property_bag_array(
     node: &super::ASupportingPropertyBagArray,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE,
@@ -244,7 +245,7 @@ pub fn a_supporting_property_bag_array(
 
 /// Write a `ArrayData` as its element, `xlrd2:arrayData`.
 #[must_use]
-pub fn array_data(node: &super::ArrayData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn array_data(node: &super::ArrayData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARRAY_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.a_array);
@@ -254,10 +255,7 @@ pub fn array_data(node: &super::ArrayData, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `CustomFilter` as its element, `xlrd2:customFilter`.
 #[must_use]
-pub fn custom_filter(
-    node: &super::CustomFilter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_filter(node: &super::CustomFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.key);
     writer.attribute(1, &node.operator);
@@ -267,10 +265,7 @@ pub fn custom_filter(
 
 /// Write a `CustomFilters` as its element, `xlrd2:customFilters`.
 #[must_use]
-pub fn custom_filters(
-    node: &super::CustomFilters,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_filters(node: &super::CustomFilters, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_FILTERS_SHAPE, &node.unknown);
     writer.attribute(0, &node.and);
     writer.child(&node.content);
@@ -287,10 +282,7 @@ pub fn custom_rich_filters(
 
 /// Write a `DateGroupItem` as its element, `xlrd2:dateGroupItem`.
 #[must_use]
-pub fn date_group_item(
-    node: &super::DateGroupItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn date_group_item(node: &super::DateGroupItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATE_GROUP_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.key);
     writer.attribute(1, &node.year);
@@ -305,7 +297,7 @@ pub fn date_group_item(
 
 /// Write a `Dxfs` as its element, `xlrd2:dxfs`.
 #[must_use]
-pub fn dxfs(node: &super::Dxfs, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dxfs(node: &super::Dxfs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXFS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.formatting);
@@ -314,10 +306,7 @@ pub fn dxfs(node: &super::Dxfs, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `DynamicFilter` as its element, `xlrd2:dynamicFilter`.
 #[must_use]
-pub fn dynamic_filter(
-    node: &super::DynamicFilter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dynamic_filter(node: &super::DynamicFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DYNAMIC_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.key);
     writer.attribute(1, &node.r#type);
@@ -330,7 +319,7 @@ pub fn dynamic_filter(
 
 /// Write a `ExtLst` as its element, `xlrd2:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -338,7 +327,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Filter` as its element, `xlrd2:filter`.
 #[must_use]
-pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn filter(node: &super::Filter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.key);
     writer.attribute(1, &node.val);
@@ -349,10 +338,7 @@ pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `FilterColumn` as its element, `xlrd2:filterColumn`.
 #[must_use]
-pub fn filter_column(
-    node: &super::FilterColumn,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn filter_column(node: &super::FilterColumn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILTER_COLUMN_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -360,7 +346,7 @@ pub fn filter_column(
 
 /// Write a `Filters` as its element, `xlrd2:filters`.
 #[must_use]
-pub fn filters(node: &super::Filters, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn filters(node: &super::Filters, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILTERS_SHAPE, &node.unknown);
     writer.child(&node.filter);
     writer.child(&node.date_group_item);
@@ -370,7 +356,7 @@ pub fn filters(node: &super::Filters, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Flag` as its element, `xlrd2:flag`.
 #[must_use]
-pub fn flag(node: &super::Flag, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn flag(node: &super::Flag, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FLAG_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.value);
@@ -379,7 +365,7 @@ pub fn flag(node: &super::Flag, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Global` as its element, `xlrd2:global`.
 #[must_use]
-pub fn global(node: &super::Global, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn global(node: &super::Global, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GLOBAL_SHAPE, &node.unknown);
     writer.child(&node.key_flags);
     writer.child(&node.ext_lst);
@@ -388,7 +374,7 @@ pub fn global(node: &super::Global, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `K` as its element, `xlrd2:k`.
 #[must_use]
-pub fn k(node: &super::K, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn k(node: &super::K, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::K_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.t);
@@ -397,7 +383,7 @@ pub fn k(node: &super::K, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `Key` as its element, `xlrd2:key`.
 #[must_use]
-pub fn key(node: &super::Key, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn key(node: &super::Key, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::KEY_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.child(&node.flag);
@@ -406,7 +392,7 @@ pub fn key(node: &super::Key, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `KeyFlags` as its element, `xlrd2:keyFlags`.
 #[must_use]
-pub fn key_flags(node: &super::KeyFlags, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn key_flags(node: &super::KeyFlags, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::KEY_FLAGS_SHAPE, &node.unknown);
     writer.child(&node.key);
     writer.finish()
@@ -414,7 +400,7 @@ pub fn key_flags(node: &super::KeyFlags, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `RPr` as its element, `xlrd2:rPr`.
 #[must_use]
-pub fn r_pr(node: &super::RPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r_pr(node: &super::RPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::R_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.t);
@@ -423,7 +409,7 @@ pub fn r_pr(node: &super::RPr, scope: &mut markup::Scope) -> xml::element::Eleme
 
 /// Write a `RSty` as its element, `xlrd2:rSty`.
 #[must_use]
-pub fn r_sty(node: &super::RSty, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r_sty(node: &super::RSty, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::R_STY_SHAPE, &node.unknown);
     writer.attribute(0, &node.dxfid);
     writer.child(&node.rpv);
@@ -440,10 +426,7 @@ pub fn rich_filter_column(
 
 /// Write a `RichProperties` as its element, `xlrd2:richProperties`.
 #[must_use]
-pub fn rich_properties(
-    node: &super::RichProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rich_properties(node: &super::RichProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.r_pr);
     writer.finish()
@@ -451,10 +434,7 @@ pub fn rich_properties(
 
 /// Write a `RichSortCondition` as its element, `xlrd2:richSortCondition`.
 #[must_use]
-pub fn rich_sort_condition(
-    node: &super::RichSortCondition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rich_sort_condition(node: &super::RichSortCondition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_SORT_CONDITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.rich_sort_key);
     writer.attribute(1, &node.descending);
@@ -469,10 +449,7 @@ pub fn rich_sort_condition(
 
 /// Write a `RichStyleSheet` as its element, `xlrd2:richStyleSheet`.
 #[must_use]
-pub fn rich_style_sheet(
-    node: &super::RichStyleSheet,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rich_style_sheet(node: &super::RichStyleSheet, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_STYLE_SHEET_SHAPE, &node.unknown);
     writer.child(&node.dxfs);
     writer.child(&node.rich_properties);
@@ -483,7 +460,7 @@ pub fn rich_style_sheet(
 
 /// Write a `RichStyles` as its element, `xlrd2:richStyles`.
 #[must_use]
-pub fn rich_styles(node: &super::RichStyles, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rich_styles(node: &super::RichStyles, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_STYLES_SHAPE, &node.unknown);
     writer.child(&node.r_sty);
     writer.finish()
@@ -491,7 +468,7 @@ pub fn rich_styles(node: &super::RichStyles, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Rpv` as its element, `xlrd2:rpv`.
 #[must_use]
-pub fn rpv(node: &super::Rpv, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rpv(node: &super::Rpv, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RPV_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
     writer.text(&node.value);
@@ -500,10 +477,7 @@ pub fn rpv(node: &super::Rpv, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `RvTypesInfo` as its element, `xlrd2:rvTypesInfo`.
 #[must_use]
-pub fn rv_types_info(
-    node: &super::RvTypesInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rv_types_info(node: &super::RvTypesInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RV_TYPES_INFO_SHAPE, &node.unknown);
     writer.child(&node.global);
     writer.child(&node.types);
@@ -513,7 +487,7 @@ pub fn rv_types_info(
 
 /// Write a `S` as its element, `xlrd2:s`.
 #[must_use]
-pub fn s(node: &super::S, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn s(node: &super::S, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::S_SHAPE, &node.unknown);
     writer.child(&node.k);
     writer.finish()
@@ -521,7 +495,7 @@ pub fn s(node: &super::S, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `Spb` as its element, `xlrd2:spb`.
 #[must_use]
-pub fn spb(node: &super::Spb, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn spb(node: &super::Spb, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPB_SHAPE, &node.unknown);
     writer.attribute(0, &node.s);
     writer.child(&node.v_supporting_property_bag_value);
@@ -530,7 +504,7 @@ pub fn spb(node: &super::Spb, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `SpbArrays` as its element, `xlrd2:spbArrays`.
 #[must_use]
-pub fn spb_arrays(node: &super::SpbArrays, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn spb_arrays(node: &super::SpbArrays, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPB_ARRAYS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.a_supporting_property_bag_array);
@@ -540,7 +514,7 @@ pub fn spb_arrays(node: &super::SpbArrays, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `SpbData` as its element, `xlrd2:spbData`.
 #[must_use]
-pub fn spb_data(node: &super::SpbData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn spb_data(node: &super::SpbData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPB_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.spb);
@@ -550,10 +524,7 @@ pub fn spb_data(node: &super::SpbData, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `SpbStructures` as its element, `xlrd2:spbStructures`.
 #[must_use]
-pub fn spb_structures(
-    node: &super::SpbStructures,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn spb_structures(node: &super::SpbStructures, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPB_STRUCTURES_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.s);
@@ -565,8 +536,8 @@ pub fn spb_structures(
 #[must_use]
 pub fn supporting_property_bags(
     node: &super::SupportingPropertyBags,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SUPPORTING_PROPERTY_BAGS_SHAPE, &node.unknown);
     writer.child(&node.spb_arrays);
@@ -576,7 +547,7 @@ pub fn supporting_property_bags(
 
 /// Write a `Top10` as its element, `xlrd2:top10`.
 #[must_use]
-pub fn top10(node: &super::Top10, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn top10(node: &super::Top10, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOP10_SHAPE, &node.unknown);
     writer.attribute(0, &node.key);
     writer.attribute(1, &node.top);
@@ -588,7 +559,7 @@ pub fn top10(node: &super::Top10, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Type` as its element, `xlrd2:type`.
 #[must_use]
-pub fn r#type(node: &super::Type, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r#type(node: &super::Type, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TYPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.child(&node.key_flags);
@@ -598,7 +569,7 @@ pub fn r#type(node: &super::Type, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Types` as its element, `xlrd2:types`.
 #[must_use]
-pub fn types(node: &super::Types, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn types(node: &super::Types, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TYPES_SHAPE, &node.unknown);
     writer.child(&node.r#type);
     writer.finish()
@@ -606,10 +577,7 @@ pub fn types(node: &super::Types, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `VArrayValue` as its element, `xlrd2:v`.
 #[must_use]
-pub fn v_array_value(
-    node: &super::VArrayValue,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn v_array_value(node: &super::VArrayValue, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::V_ARRAY_VALUE_SHAPE, &node.unknown);
     writer.attribute(0, &node.t);
     writer.text(&node.value);
@@ -620,8 +588,8 @@ pub fn v_array_value(
 #[must_use]
 pub fn v_supporting_property_bag_array_value(
     node: &super::VSupportingPropertyBagArrayValue,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE,
@@ -636,8 +604,8 @@ pub fn v_supporting_property_bag_array_value(
 #[must_use]
 pub fn v_supporting_property_bag_value(
     node: &super::VSupportingPropertyBagValue,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE,

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `tsle:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `tsle:timeslicer` into a `Timeslicer`.
 #[must_use]
-pub fn timeslicer(element: &xml::element::Element) -> super::Timeslicer {
+pub fn timeslicer(element: &Element) -> super::Timeslicer {
     let mut node = super::Timeslicer::default();
     let mut reader = markup::Reader::new(element, &super::TIMESLICER_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Oembed` as its element, `woe:oembed`.
 #[must_use]
-pub fn oembed(node: &super::Oembed, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn oembed(node: &super::Oembed, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OEMBED_SHAPE, &node.unknown);
     writer.attribute(0, &node.o_embed_url);
     writer.attribute(1, &node.media_type);

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
@@ -346,7 +346,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -359,7 +359,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Rel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rel(element)
     }
 }
@@ -372,7 +372,7 @@ impl markup::Write for Rel {
 }
 
 impl markup::Read for RichValueRels {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_value_rels(element)
     }
 }

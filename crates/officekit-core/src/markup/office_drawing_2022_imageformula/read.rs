@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `aif:imageFormula` into a `ImageFormula`.
 #[must_use]
-pub fn image_formula(element: &xml::element::Element) -> super::ImageFormula {
+pub fn image_formula(element: &Element) -> super::ImageFormula {
     let mut node = super::ImageFormula::default();
     let mut reader = markup::Reader::new(element, &super::IMAGE_FORMULA_SHAPE);
     for (index, field) in &mut reader {

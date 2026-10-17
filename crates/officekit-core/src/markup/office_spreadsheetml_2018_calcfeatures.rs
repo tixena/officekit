@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XCALCF: Option<NamespaceId> = Some(127);
@@ -310,7 +310,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CalcFeatures {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::calc_features(element)
     }
 }
@@ -323,7 +323,7 @@ impl markup::Write for CalcFeatures {
 }
 
 impl markup::Read for Feature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::feature(element)
     }
 }

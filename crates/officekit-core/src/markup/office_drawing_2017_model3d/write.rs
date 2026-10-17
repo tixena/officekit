@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AmbientLight` as its element, `am3d:ambientLight`.
 #[must_use]
-pub fn ambient_light(
-    node: &super::AmbientLight,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ambient_light(node: &super::AmbientLight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AMBIENT_LIGHT_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled);
     writer.child(&node.clr);
@@ -232,7 +230,7 @@ pub fn ambient_light(
 
 /// Write a `AttrSrcUrl` as its element, `am3d:attrSrcUrl`.
 #[must_use]
-pub fn attr_src_url(node: &super::AttrSrcUrl, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn attr_src_url(node: &super::AttrSrcUrl, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ATTR_SRC_URL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -240,7 +238,7 @@ pub fn attr_src_url(node: &super::AttrSrcUrl, scope: &mut markup::Scope) -> xml:
 
 /// Write a `Blip` as its element, `am3d:blip`.
 #[must_use]
-pub fn blip(node: &super::Blip, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn blip(node: &super::Blip, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BLIP_SHAPE, &node.unknown);
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);
@@ -252,7 +250,7 @@ pub fn blip(node: &super::Blip, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Camera` as its element, `am3d:camera`.
 #[must_use]
-pub fn camera(node: &super::Camera, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn camera(node: &super::Camera, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CAMERA_SHAPE, &node.unknown);
     writer.child(&node.pos);
     writer.child(&node.up);
@@ -264,7 +262,7 @@ pub fn camera(node: &super::Camera, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Clr` as its element, `am3d:clr`.
 #[must_use]
-pub fn clr(node: &super::Clr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CLR_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -272,7 +270,7 @@ pub fn clr(node: &super::Clr, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `DirLight` as its element, `am3d:dirLight`.
 #[must_use]
-pub fn dir_light(node: &super::DirLight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dir_light(node: &super::DirLight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DIR_LIGHT_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.angular_rad);
@@ -286,7 +284,7 @@ pub fn dir_light(node: &super::DirLight, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `Ext` as its element, `am3d:ext`.
 #[must_use]
-pub fn ext(node: &super::Ext, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
     writer.child(&node.content);
@@ -297,8 +295,8 @@ pub fn ext(node: &super::Ext, scope: &mut markup::Scope) -> xml::element::Elemen
 #[must_use]
 pub fn ext_lst_model3d_extension_list(
     node: &super::ExtLstModel3DExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE,
@@ -312,8 +310,8 @@ pub fn ext_lst_model3d_extension_list(
 #[must_use]
 pub fn ext_lst_office_art_extension_list(
     node: &super::ExtLstOfficeArtExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE,
@@ -325,19 +323,19 @@ pub fn ext_lst_office_art_extension_list(
 
 /// Write a `Illuminance` as its element, `am3d:illuminance`.
 #[must_use]
-pub fn illuminance(node: &super::Illuminance, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn illuminance(node: &super::Illuminance, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ILLUMINANCE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Intensity` as its element, `am3d:intensity`.
 #[must_use]
-pub fn intensity(node: &super::Intensity, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn intensity(node: &super::Intensity, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::INTENSITY_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LookAt` as its element, `am3d:lookAt`.
 #[must_use]
-pub fn look_at(node: &super::LookAt, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn look_at(node: &super::LookAt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LOOK_AT_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -347,16 +345,13 @@ pub fn look_at(node: &super::LookAt, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `MeterPerModelUnit` as its element, `am3d:meterPerModelUnit`.
 #[must_use]
-pub fn meter_per_model_unit(
-    node: &super::MeterPerModelUnit,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn meter_per_model_unit(node: &super::MeterPerModelUnit, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::METER_PER_MODEL_UNIT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Model3d` as its element, `am3d:model3d`.
 #[must_use]
-pub fn model3d(node: &super::Model3d, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn model3d(node: &super::Model3d, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MODEL3D_SHAPE, &node.unknown);
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);
@@ -397,7 +392,7 @@ pub fn model3d_viewport(node: &super::Model3DViewportContent, writer: &mut marku
 
 /// Write a `ObjViewport` as its element, `am3d:objViewport`.
 #[must_use]
-pub fn obj_viewport(node: &super::ObjViewport, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn obj_viewport(node: &super::ObjViewport, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OBJ_VIEWPORT_SHAPE, &node.unknown);
     writer.attribute(0, &node.viewport_sz);
     writer.child(&node.ext_lst_office_art_extension_list);
@@ -406,10 +401,7 @@ pub fn obj_viewport(node: &super::ObjViewport, scope: &mut markup::Scope) -> xml
 
 /// Write a `Orthographic` as its element, `am3d:orthographic`.
 #[must_use]
-pub fn orthographic(
-    node: &super::Orthographic,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn orthographic(node: &super::Orthographic, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ORTHOGRAPHIC_SHAPE, &node.unknown);
     writer.child(&node.sz_positive_ratio);
     writer.child(&node.ext_lst_office_art_extension_list);
@@ -418,7 +410,7 @@ pub fn orthographic(
 
 /// Write a `Perspective` as its element, `am3d:perspective`.
 #[must_use]
-pub fn perspective(node: &super::Perspective, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn perspective(node: &super::Perspective, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PERSPECTIVE_SHAPE, &node.unknown);
     writer.attribute(0, &node.fov);
     writer.child(&node.ext_lst_office_art_extension_list);
@@ -427,7 +419,7 @@ pub fn perspective(node: &super::Perspective, scope: &mut markup::Scope) -> xml:
 
 /// Write a `Pos` as its element, `am3d:pos`.
 #[must_use]
-pub fn pos(node: &super::Pos, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POS_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -437,7 +429,7 @@ pub fn pos(node: &super::Pos, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `PostTrans` as its element, `am3d:postTrans`.
 #[must_use]
-pub fn post_trans(node: &super::PostTrans, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn post_trans(node: &super::PostTrans, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POST_TRANS_SHAPE, &node.unknown);
     writer.attribute(0, &node.dx);
     writer.attribute(1, &node.dy);
@@ -447,7 +439,7 @@ pub fn post_trans(node: &super::PostTrans, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `PreTrans` as its element, `am3d:preTrans`.
 #[must_use]
-pub fn pre_trans(node: &super::PreTrans, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pre_trans(node: &super::PreTrans, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRE_TRANS_SHAPE, &node.unknown);
     writer.attribute(0, &node.dx);
     writer.attribute(1, &node.dy);
@@ -457,7 +449,7 @@ pub fn pre_trans(node: &super::PreTrans, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `PtLight` as its element, `am3d:ptLight`.
 #[must_use]
-pub fn pt_light(node: &super::PtLight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pt_light(node: &super::PtLight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PT_LIGHT_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.rad);
@@ -470,7 +462,7 @@ pub fn pt_light(node: &super::PtLight, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Raster` as its element, `am3d:raster`.
 #[must_use]
-pub fn raster(node: &super::Raster, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn raster(node: &super::Raster, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RASTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r_name);
     writer.attribute(1, &node.r_ver);
@@ -480,7 +472,7 @@ pub fn raster(node: &super::Raster, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Rot` as its element, `am3d:rot`.
 #[must_use]
-pub fn rot(node: &super::Rot, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rot(node: &super::Rot, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROT_SHAPE, &node.unknown);
     writer.attribute(0, &node.ax);
     writer.attribute(1, &node.ay);
@@ -490,7 +482,7 @@ pub fn rot(node: &super::Rot, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `Scale` as its element, `am3d:scale`.
 #[must_use]
-pub fn scale(node: &super::Scale, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn scale(node: &super::Scale, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCALE_SHAPE, &node.unknown);
     writer.child(&node.sx);
     writer.child(&node.sy);
@@ -500,7 +492,7 @@ pub fn scale(node: &super::Scale, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `SpPr` as its element, `am3d:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -516,7 +508,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `SpotLight` as its element, `am3d:spotLight`.
 #[must_use]
-pub fn spot_light(node: &super::SpotLight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn spot_light(node: &super::SpotLight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPOT_LIGHT_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.rad);
@@ -531,7 +523,7 @@ pub fn spot_light(node: &super::SpotLight, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Sx` as its element, `am3d:sx`.
 #[must_use]
-pub fn sx(node: &super::Sx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sx(node: &super::Sx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SX_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.d);
@@ -540,7 +532,7 @@ pub fn sx(node: &super::Sx, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `Sy` as its element, `am3d:sy`.
 #[must_use]
-pub fn sy(node: &super::Sy, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sy(node: &super::Sy, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SY_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.d);
@@ -549,16 +541,13 @@ pub fn sy(node: &super::Sy, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `SzPositiveRatio` as its element, `am3d:sz`.
 #[must_use]
-pub fn sz_positive_ratio(
-    node: &super::SzPositiveRatio,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sz_positive_ratio(node: &super::SzPositiveRatio, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SZ_POSITIVE_RATIO_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `SzRatio` as its element, `am3d:sz`.
 #[must_use]
-pub fn sz_ratio(node: &super::SzRatio, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sz_ratio(node: &super::SzRatio, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SZ_RATIO_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.d);
@@ -567,7 +556,7 @@ pub fn sz_ratio(node: &super::SzRatio, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Trans` as its element, `am3d:trans`.
 #[must_use]
-pub fn trans(node: &super::Trans, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn trans(node: &super::Trans, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRANS_SHAPE, &node.unknown);
     writer.child(&node.meter_per_model_unit);
     writer.child(&node.pre);
@@ -580,13 +569,13 @@ pub fn trans(node: &super::Trans, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `UnkLight` as its element, `am3d:unkLight`.
 #[must_use]
-pub fn unk_light(node: &super::UnkLight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn unk_light(node: &super::UnkLight, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNK_LIGHT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Up` as its element, `am3d:up`.
 #[must_use]
-pub fn up(node: &super::Up, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn up(node: &super::Up, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UP_SHAPE, &node.unknown);
     writer.attribute(0, &node.dx);
     writer.attribute(1, &node.dy);
@@ -596,7 +585,7 @@ pub fn up(node: &super::Up, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `WinViewport` as its element, `am3d:winViewport`.
 #[must_use]
-pub fn win_viewport(node: &super::WinViewport, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn win_viewport(node: &super::WinViewport, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WIN_VIEWPORT_SHAPE, &node.unknown);
     writer.child(&node.ext_lst_office_art_extension_list);
     writer.finish()

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_SL: Option<NamespaceId> = Some(90);
@@ -332,7 +332,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CustomXMLSchemaReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_schema_reference(element)
     }
 }
@@ -345,7 +345,7 @@ impl markup::Write for CustomXMLSchemaReference {
 }
 
 impl markup::Read for EmbeddedCustomXMLSchemaSupplementaryData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_custom_xml_schema_supplementary_data(element)
     }
 }

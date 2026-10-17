@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -1209,7 +1209,7 @@ pub struct CustomFilters {
 pub enum CustomRichFiltersContent {
     CustomFilter(CustomFilter),
     ExtLst(ExtLst),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `xlrd2:dateGroupItem`, schema type `CT_RichDateGroupItem` of SDK 3.5.1's data.
@@ -1356,7 +1356,7 @@ pub enum RichFilterColumnContent {
     DynamicFilter(DynamicFilter),
     ExtLst(ExtLst),
     Filters(Filters),
-    Other(xml::element::Node),
+    Other(Node),
     Top10(Top10),
 }
 
@@ -1753,7 +1753,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AArray {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::a_array(element)
     }
 }
@@ -1766,7 +1766,7 @@ impl markup::Write for AArray {
 }
 
 impl markup::Read for ASupportingPropertyBagArray {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::a_supporting_property_bag_array(element)
     }
 }
@@ -1779,7 +1779,7 @@ impl markup::Write for ASupportingPropertyBagArray {
 }
 
 impl markup::Read for ArrayData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::array_data(element)
     }
 }
@@ -1846,7 +1846,7 @@ impl ArrayValueType {
 }
 
 impl markup::Read for CustomFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_filter(element)
     }
 }
@@ -1859,7 +1859,7 @@ impl markup::Write for CustomFilter {
 }
 
 impl markup::Read for CustomFilters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_filters(element)
     }
 }
@@ -1872,15 +1872,15 @@ impl markup::Write for CustomFilters {
 }
 
 impl markup::Read for CustomRichFiltersContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XLRD2, "customFilter")) => Self::CustomFilter(markup::read(element)),
             Some((NS_XLRD2, "extLst")) => Self::ExtLst(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1896,7 +1896,7 @@ impl markup::Write for CustomRichFiltersContent {
 }
 
 impl markup::Read for DateGroupItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_group_item(element)
     }
 }
@@ -1909,7 +1909,7 @@ impl markup::Write for DateGroupItem {
 }
 
 impl markup::Read for Dxfs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxfs(element)
     }
 }
@@ -1922,7 +1922,7 @@ impl markup::Write for Dxfs {
 }
 
 impl markup::Read for DynamicFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dynamic_filter(element)
     }
 }
@@ -1935,7 +1935,7 @@ impl markup::Write for DynamicFilter {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -1948,7 +1948,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Filter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filter(element)
     }
 }
@@ -1961,7 +1961,7 @@ impl markup::Write for Filter {
 }
 
 impl markup::Read for FilterColumn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filter_column(element)
     }
 }
@@ -1974,7 +1974,7 @@ impl markup::Write for FilterColumn {
 }
 
 impl markup::Read for Filters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filters(element)
     }
 }
@@ -1987,7 +1987,7 @@ impl markup::Write for Filters {
 }
 
 impl markup::Read for Flag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::flag(element)
     }
 }
@@ -2000,7 +2000,7 @@ impl markup::Write for Flag {
 }
 
 impl markup::Read for Global {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::global(element)
     }
 }
@@ -2013,7 +2013,7 @@ impl markup::Write for Global {
 }
 
 impl markup::Read for K {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::k(element)
     }
 }
@@ -2026,7 +2026,7 @@ impl markup::Write for K {
 }
 
 impl markup::Read for Key {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::key(element)
     }
 }
@@ -2039,7 +2039,7 @@ impl markup::Write for Key {
 }
 
 impl markup::Read for KeyFlags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::key_flags(element)
     }
 }
@@ -2052,7 +2052,7 @@ impl markup::Write for KeyFlags {
 }
 
 impl markup::Read for RPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r_pr(element)
     }
 }
@@ -2065,7 +2065,7 @@ impl markup::Write for RPr {
 }
 
 impl markup::Read for RSty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r_sty(element)
     }
 }
@@ -2078,18 +2078,18 @@ impl markup::Write for RSty {
 }
 
 impl markup::Read for RichFilterColumnContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XLRD2, "customFilters")) => Self::CustomFilters(markup::read(element)),
             Some((NS_XLRD2, "dynamicFilter")) => Self::DynamicFilter(markup::read(element)),
             Some((NS_XLRD2, "extLst")) => Self::ExtLst(markup::read(element)),
             Some((NS_XLRD2, "filters")) => Self::Filters(markup::read(element)),
             Some((NS_XLRD2, "top10")) => Self::Top10(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2163,7 +2163,7 @@ impl RichFormatPropertyType {
 }
 
 impl markup::Read for RichProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_properties(element)
     }
 }
@@ -2176,7 +2176,7 @@ impl markup::Write for RichProperties {
 }
 
 impl markup::Read for RichSortCondition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_sort_condition(element)
     }
 }
@@ -2189,7 +2189,7 @@ impl markup::Write for RichSortCondition {
 }
 
 impl markup::Read for RichStyleSheet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_style_sheet(element)
     }
 }
@@ -2202,7 +2202,7 @@ impl markup::Write for RichStyleSheet {
 }
 
 impl markup::Read for RichStyles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_styles(element)
     }
 }
@@ -2215,7 +2215,7 @@ impl markup::Write for RichStyles {
 }
 
 impl markup::Read for Rpv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rpv(element)
     }
 }
@@ -2228,7 +2228,7 @@ impl markup::Write for Rpv {
 }
 
 impl markup::Read for RvTypesInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rv_types_info(element)
     }
 }
@@ -2241,7 +2241,7 @@ impl markup::Write for RvTypesInfo {
 }
 
 impl markup::Read for S {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::s(element)
     }
 }
@@ -2254,7 +2254,7 @@ impl markup::Write for S {
 }
 
 impl markup::Read for Spb {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spb(element)
     }
 }
@@ -2267,7 +2267,7 @@ impl markup::Write for Spb {
 }
 
 impl markup::Read for SpbArrays {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spb_arrays(element)
     }
 }
@@ -2280,7 +2280,7 @@ impl markup::Write for SpbArrays {
 }
 
 impl markup::Read for SpbData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spb_data(element)
     }
 }
@@ -2293,7 +2293,7 @@ impl markup::Write for SpbData {
 }
 
 impl markup::Read for SpbStructures {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spb_structures(element)
     }
 }
@@ -2419,7 +2419,7 @@ impl SupportingPropertyBagValueType {
 }
 
 impl markup::Read for SupportingPropertyBags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::supporting_property_bags(element)
     }
 }
@@ -2432,7 +2432,7 @@ impl markup::Write for SupportingPropertyBags {
 }
 
 impl markup::Read for Top10 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top10(element)
     }
 }
@@ -2445,7 +2445,7 @@ impl markup::Write for Top10 {
 }
 
 impl markup::Read for Type {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#type(element)
     }
 }
@@ -2458,7 +2458,7 @@ impl markup::Write for Type {
 }
 
 impl markup::Read for Types {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::types(element)
     }
 }
@@ -2471,7 +2471,7 @@ impl markup::Write for Types {
 }
 
 impl markup::Read for VArrayValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v_array_value(element)
     }
 }
@@ -2484,7 +2484,7 @@ impl markup::Write for VArrayValue {
 }
 
 impl markup::Read for VSupportingPropertyBagArrayValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v_supporting_property_bag_array_value(element)
     }
 }
@@ -2497,7 +2497,7 @@ impl markup::Write for VSupportingPropertyBagArrayValue {
 }
 
 impl markup::Read for VSupportingPropertyBagValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v_supporting_property_bag_value(element)
     }
 }

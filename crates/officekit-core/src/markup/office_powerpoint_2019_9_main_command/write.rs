@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CmMK` as its element, `pc2:cmMK`.
 #[must_use]
-pub fn cm_mk(node: &super::CmMK, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm_mk(node: &super::CmMK, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn cm_mk(node: &super::CmMK, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `CmMkLst` as its element, `pc2:cmMkLst`.
 #[must_use]
-pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.sld_mk_lst);
     writer.child(&node.cm_mk);
@@ -234,7 +235,7 @@ pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `CmRplyMk` as its element, `pc2:cmRplyMk`.
 #[must_use]
-pub fn cm_rply_mk(node: &super::CmRplyMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm_rply_mk(node: &super::CmRplyMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_RPLY_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -242,10 +243,7 @@ pub fn cm_rply_mk(node: &super::CmRplyMk, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `CmRplyMkLst` as its element, `pc2:cmRplyMkLst`.
 #[must_use]
-pub fn cm_rply_mk_lst(
-    node: &super::CmRplyMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cm_rply_mk_lst(node: &super::CmRplyMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_RPLY_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.cm_mk_lst);
     writer.child(&node.cm_rply_mk);

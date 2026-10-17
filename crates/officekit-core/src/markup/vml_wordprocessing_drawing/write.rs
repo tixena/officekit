@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AnchorLocationIsLocked` as its element, `w10:anchorlock`.
 #[must_use]
 pub fn anchor_location_is_locked(
     node: &super::AnchorLocationIsLocked,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let writer = markup::Writer::new(
         scope,
         &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
@@ -231,10 +232,7 @@ pub fn anchor_location_is_locked(
 
 /// Write a `BottomBorder` as its element, `w10:borderbottom`.
 #[must_use]
-pub fn bottom_border(
-    node: &super::BottomBorder,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn bottom_border(node: &super::BottomBorder, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOTTOM_BORDER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
@@ -244,7 +242,7 @@ pub fn bottom_border(
 
 /// Write a `LeftBorder` as its element, `w10:borderleft`.
 #[must_use]
-pub fn left_border(node: &super::LeftBorder, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn left_border(node: &super::LeftBorder, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEFT_BORDER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
@@ -254,7 +252,7 @@ pub fn left_border(node: &super::LeftBorder, scope: &mut markup::Scope) -> xml::
 
 /// Write a `RightBorder` as its element, `w10:borderright`.
 #[must_use]
-pub fn right_border(node: &super::RightBorder, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn right_border(node: &super::RightBorder, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RIGHT_BORDER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
@@ -264,10 +262,7 @@ pub fn right_border(node: &super::RightBorder, scope: &mut markup::Scope) -> xml
 
 /// Write a `TextWrapping` as its element, `w10:wrap`.
 #[must_use]
-pub fn text_wrapping(
-    node: &super::TextWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_wrapping(node: &super::TextWrapping, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_WRAPPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.side);
@@ -278,7 +273,7 @@ pub fn text_wrapping(
 
 /// Write a `TopBorder` as its element, `w10:bordertop`.
 #[must_use]
-pub fn top_border(node: &super::TopBorder, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn top_border(node: &super::TopBorder, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOP_BORDER_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);

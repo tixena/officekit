@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -548,7 +548,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -561,7 +561,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Mention {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mention(element)
     }
 }
@@ -574,7 +574,7 @@ impl markup::Write for Mention {
 }
 
 impl markup::Read for Mentions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mentions(element)
     }
 }
@@ -587,7 +587,7 @@ impl markup::Write for Mentions {
 }
 
 impl markup::Read for Person {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::person(element)
     }
 }
@@ -600,7 +600,7 @@ impl markup::Write for Person {
 }
 
 impl markup::Read for PersonList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::person_list(element)
     }
 }
@@ -613,7 +613,7 @@ impl markup::Write for PersonList {
 }
 
 impl markup::Read for Text {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text(element)
     }
 }
@@ -626,7 +626,7 @@ impl markup::Write for Text {
 }
 
 impl markup::Read for ThreadedComment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::threaded_comment(element)
     }
 }
@@ -639,7 +639,7 @@ impl markup::Write for ThreadedComment {
 }
 
 impl markup::Read for ThreadedComments {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::threaded_comments(element)
     }
 }

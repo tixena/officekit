@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_W10: Option<NamespaceId> = Some(98);
@@ -578,7 +578,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AnchorLocationIsLocked {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor_location_is_locked(element)
     }
 }
@@ -716,7 +716,7 @@ impl BorderType {
 }
 
 impl markup::Read for BottomBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bottom_border(element)
     }
 }
@@ -784,7 +784,7 @@ impl HorizontalAnchorType {
 }
 
 impl markup::Read for LeftBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_border(element)
     }
 }
@@ -797,7 +797,7 @@ impl markup::Write for LeftBorder {
 }
 
 impl markup::Read for RightBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_border(element)
     }
 }
@@ -810,7 +810,7 @@ impl markup::Write for RightBorder {
 }
 
 impl markup::Read for TextWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_wrapping(element)
     }
 }
@@ -926,7 +926,7 @@ impl TextWrappingType {
 }
 
 impl markup::Read for TopBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_border(element)
     }
 }

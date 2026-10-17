@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_AC: Option<NamespaceId> = Some(7);
@@ -405,7 +405,7 @@ impl CharacteristicRelationshipTypes {
 }
 
 impl markup::Read for SetOfAdditionalCharacteristics {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_additional_characteristics(element)
     }
 }
@@ -418,7 +418,7 @@ impl markup::Write for SetOfAdditionalCharacteristics {
 }
 
 impl markup::Read for SingleCharacteristic {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_characteristic(element)
     }
 }

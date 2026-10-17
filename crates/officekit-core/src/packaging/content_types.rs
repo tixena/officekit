@@ -1,10 +1,11 @@
 //! The package's `[Content_Types].xml` (ECMA-376 Part 2, 10.1.2): a content
 //! type for every part, by extension or by name.
 
+use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::{Namespace, QName};
+
 use crate::packaging::package::DECLARATION;
 use crate::packaging::part_name::PartName;
-use crate::xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
-use crate::xml::name::{Namespace, QName};
 
 #[cfg(test)]
 mod tests;
@@ -124,10 +125,10 @@ impl ContentTypes {
     /// The `[Content_Types].xml` these entries make.
     pub(crate) fn to_document(&self) -> Document {
         let mut root = Element::new(QName::unprefixed("Types", NAMESPACE));
-        root.namespace_declarations.push(NamespaceDeclaration {
-            prefix: String::new(),
-            uri: NAMESPACE.to_owned(),
-        });
+        root.namespace_declarations.push(NamespaceDeclaration::new(
+            String::new(),
+            NAMESPACE.to_owned(),
+        ));
         for (extension, content_type) in &self.defaults {
             root.children.push(entry(
                 "Default",
@@ -149,10 +150,7 @@ fn entry(local: &str, attributes: [(&str, &str); 2]) -> Node {
     let mut element = Element::new(QName::unprefixed(local, NAMESPACE));
     element.attributes = attributes
         .into_iter()
-        .map(|(name, value)| Attribute {
-            name: QName::unprefixed(name, ""),
-            value: value.to_owned(),
-        })
+        .map(|(name, value)| Attribute::new(QName::unprefixed(name, ""), value.to_owned()))
         .collect();
     Node::Element(element)
 }

@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
@@ -2153,7 +2153,7 @@ pub struct DataModel {
 pub enum DatabaseSourceContent {
     DbCommand(DbCommand),
     DbTables(DbTables),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `x15:dbCommand`, schema type `CT_DbCommand` of SDK 3.5.1's data.
@@ -3150,7 +3150,7 @@ pub struct X {
 }
 
 impl markup::Read for ActiveTabTopLevelEntity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::active_tab_top_level_entity(element)
     }
 }
@@ -3163,7 +3163,7 @@ impl markup::Write for ActiveTabTopLevelEntity {
 }
 
 impl markup::Read for AutoFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_filter(element)
     }
 }
@@ -3176,7 +3176,7 @@ impl markup::Write for AutoFilter {
 }
 
 impl markup::Read for Bounds {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bounds(element)
     }
 }
@@ -3189,7 +3189,7 @@ impl markup::Write for Bounds {
 }
 
 impl markup::Read for C {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c(element)
     }
 }
@@ -3202,7 +3202,7 @@ impl markup::Write for C {
 }
 
 impl markup::Read for CacheHierarchy {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cache_hierarchy(element)
     }
 }
@@ -3215,7 +3215,7 @@ impl markup::Write for CacheHierarchy {
 }
 
 impl markup::Read for CachedUniqueName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cached_unique_name(element)
     }
 }
@@ -3228,7 +3228,7 @@ impl markup::Write for CachedUniqueName {
 }
 
 impl markup::Read for CachedUniqueNames {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cached_unique_names(element)
     }
 }
@@ -3295,7 +3295,7 @@ impl CalcMemNumberFormat {
 }
 
 impl markup::Read for CalculatedMember {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::calculated_member(element)
     }
 }
@@ -3308,7 +3308,7 @@ impl markup::Write for CalculatedMember {
 }
 
 impl markup::Read for Connection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection(element)
     }
 }
@@ -3321,7 +3321,7 @@ impl markup::Write for Connection {
 }
 
 impl markup::Read for DataFeedPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_feed_pr(element)
     }
 }
@@ -3334,7 +3334,7 @@ impl markup::Write for DataFeedPr {
 }
 
 impl markup::Read for DataField {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_field(element)
     }
 }
@@ -3347,7 +3347,7 @@ impl markup::Write for DataField {
 }
 
 impl markup::Read for DataModel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_model(element)
     }
 }
@@ -3366,15 +3366,15 @@ impl Default for DatabaseSourceContent {
 }
 
 impl markup::Read for DatabaseSourceContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_X15, "dbCommand")) => Self::DbCommand(markup::read(element)),
             Some((NS_X15, "dbTables")) => Self::DbTables(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3390,7 +3390,7 @@ impl markup::Write for DatabaseSourceContent {
 }
 
 impl markup::Read for DbCommand {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::db_command(element)
     }
 }
@@ -3403,7 +3403,7 @@ impl markup::Write for DbCommand {
 }
 
 impl markup::Read for DbTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::db_table(element)
     }
 }
@@ -3416,7 +3416,7 @@ impl markup::Write for DbTable {
 }
 
 impl markup::Read for DbTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::db_tables(element)
     }
 }
@@ -3429,7 +3429,7 @@ impl markup::Write for DbTables {
 }
 
 impl markup::Read for DescriptionPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::description_pr(element)
     }
 }
@@ -3442,7 +3442,7 @@ impl markup::Write for DescriptionPr {
 }
 
 impl markup::Read for Dxfs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxfs(element)
     }
 }
@@ -3455,7 +3455,7 @@ impl markup::Write for Dxfs {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -3468,7 +3468,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for ModelRelationship {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_relationship(element)
     }
 }
@@ -3481,7 +3481,7 @@ impl markup::Write for ModelRelationship {
 }
 
 impl markup::Read for ModelRelationships {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_relationships(element)
     }
 }
@@ -3494,7 +3494,7 @@ impl markup::Write for ModelRelationships {
 }
 
 impl markup::Read for ModelTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_table(element)
     }
 }
@@ -3507,7 +3507,7 @@ impl markup::Write for ModelTable {
 }
 
 impl markup::Read for ModelTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_tables(element)
     }
 }
@@ -3520,7 +3520,7 @@ impl markup::Write for ModelTables {
 }
 
 impl markup::Read for ModelTextPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_text_pr(element)
     }
 }
@@ -3533,7 +3533,7 @@ impl markup::Write for ModelTextPr {
 }
 
 impl markup::Read for MovingPeriodState {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::moving_period_state(element)
     }
 }
@@ -3602,7 +3602,7 @@ impl MovingPeriodStep {
 }
 
 impl markup::Read for OledbPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::oledb_pr(element)
     }
 }
@@ -3615,7 +3615,7 @@ impl markup::Write for OledbPr {
 }
 
 impl markup::Read for PivotCacheDecoupled {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_cache_decoupled(element)
     }
 }
@@ -3628,7 +3628,7 @@ impl markup::Write for PivotCacheDecoupled {
 }
 
 impl markup::Read for PivotCacheIdVersion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_cache_id_version(element)
     }
 }
@@ -3641,7 +3641,7 @@ impl markup::Write for PivotCacheIdVersion {
 }
 
 impl markup::Read for PivotCaches {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_caches(element)
     }
 }
@@ -3654,7 +3654,7 @@ impl markup::Write for PivotCaches {
 }
 
 impl markup::Read for PivotFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_filter(element)
     }
 }
@@ -3667,7 +3667,7 @@ impl markup::Write for PivotFilter {
 }
 
 impl markup::Read for PivotRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_row(element)
     }
 }
@@ -3680,7 +3680,7 @@ impl markup::Write for PivotRow {
 }
 
 impl markup::Read for PivotTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table(element)
     }
 }
@@ -3693,7 +3693,7 @@ impl markup::Write for PivotTable {
 }
 
 impl markup::Read for PivotTableData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_data(element)
     }
 }
@@ -3706,7 +3706,7 @@ impl markup::Write for PivotTableData {
 }
 
 impl markup::Read for PivotTableReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_reference(element)
     }
 }
@@ -3719,7 +3719,7 @@ impl markup::Write for PivotTableReference {
 }
 
 impl markup::Read for PivotTableReferences {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_references(element)
     }
 }
@@ -3732,7 +3732,7 @@ impl markup::Write for PivotTableReferences {
 }
 
 impl markup::Read for PivotTableServerFormats {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_server_formats(element)
     }
 }
@@ -3745,7 +3745,7 @@ impl markup::Write for PivotTableServerFormats {
 }
 
 impl markup::Read for PivotTableUISettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_ui_settings(element)
     }
 }
@@ -3758,7 +3758,7 @@ impl markup::Write for PivotTableUISettings {
 }
 
 impl markup::Read for PivotTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_tables(element)
     }
 }
@@ -3771,7 +3771,7 @@ impl markup::Write for PivotTables {
 }
 
 impl markup::Read for QueryTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::query_table(element)
     }
 }
@@ -3784,7 +3784,7 @@ impl markup::Write for QueryTable {
 }
 
 impl markup::Read for Question {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::question(element)
     }
 }
@@ -3870,7 +3870,7 @@ impl QuestionFormat {
 }
 
 impl markup::Read for QuestionPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::question_pr(element)
     }
 }
@@ -3945,7 +3945,7 @@ impl QuestionType {
 }
 
 impl markup::Read for Questions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::questions(element)
     }
 }
@@ -3958,7 +3958,7 @@ impl markup::Write for Questions {
 }
 
 impl markup::Read for QuestionsPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::questions_pr(element)
     }
 }
@@ -3971,7 +3971,7 @@ impl markup::Write for QuestionsPr {
 }
 
 impl markup::Read for RangePr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::range_pr(element)
     }
 }
@@ -4037,7 +4037,7 @@ impl SXVCellType {
 }
 
 impl markup::Read for Selection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::selection(element)
     }
 }
@@ -4050,7 +4050,7 @@ impl markup::Write for Selection {
 }
 
 impl markup::Read for ServerFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::server_format(element)
     }
 }
@@ -4063,7 +4063,7 @@ impl markup::Write for ServerFormat {
 }
 
 impl markup::Read for SlicerCacheHideItemsWithNoData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slicer_cache_hide_items_with_no_data(element)
     }
 }
@@ -4076,7 +4076,7 @@ impl markup::Write for SlicerCacheHideItemsWithNoData {
 }
 
 impl markup::Read for SlicerCacheOlapLevelName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slicer_cache_olap_level_name(element)
     }
 }
@@ -4089,7 +4089,7 @@ impl markup::Write for SlicerCacheOlapLevelName {
 }
 
 impl markup::Read for SlicerCachePivotTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slicer_cache_pivot_tables(element)
     }
 }
@@ -4102,7 +4102,7 @@ impl markup::Write for SlicerCachePivotTables {
 }
 
 impl markup::Read for SlicerCaches {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slicer_caches(element)
     }
 }
@@ -4115,7 +4115,7 @@ impl markup::Write for SlicerCaches {
 }
 
 impl markup::Read for State {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::state(element)
     }
 }
@@ -4128,7 +4128,7 @@ impl markup::Write for State {
 }
 
 impl markup::Read for Survey {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::survey(element)
     }
 }
@@ -4141,7 +4141,7 @@ impl markup::Write for Survey {
 }
 
 impl markup::Read for SurveyPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::survey_pr(element)
     }
 }
@@ -4154,7 +4154,7 @@ impl markup::Write for SurveyPr {
 }
 
 impl markup::Read for TableSlicerCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_slicer_cache(element)
     }
 }
@@ -4167,7 +4167,7 @@ impl markup::Write for TableSlicerCache {
 }
 
 impl markup::Read for TextPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_pr(element)
     }
 }
@@ -4180,7 +4180,7 @@ impl markup::Write for TextPr {
 }
 
 impl markup::Read for Timeline {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline(element)
     }
 }
@@ -4193,7 +4193,7 @@ impl markup::Write for Timeline {
 }
 
 impl markup::Read for TimelineCacheDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_cache_definition(element)
     }
 }
@@ -4206,7 +4206,7 @@ impl markup::Write for TimelineCacheDefinition {
 }
 
 impl markup::Read for TimelineCachePivotCaches {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_cache_pivot_caches(element)
     }
 }
@@ -4219,7 +4219,7 @@ impl markup::Write for TimelineCachePivotCaches {
 }
 
 impl markup::Read for TimelineCacheRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_cache_ref(element)
     }
 }
@@ -4232,7 +4232,7 @@ impl markup::Write for TimelineCacheRef {
 }
 
 impl markup::Read for TimelineCacheRefs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_cache_refs(element)
     }
 }
@@ -4245,7 +4245,7 @@ impl markup::Write for TimelineCacheRefs {
 }
 
 impl markup::Read for TimelinePivotCacheDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_pivot_cache_definition(element)
     }
 }
@@ -4258,7 +4258,7 @@ impl markup::Write for TimelinePivotCacheDefinition {
 }
 
 impl markup::Read for TimelineRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_ref(element)
     }
 }
@@ -4271,7 +4271,7 @@ impl markup::Write for TimelineRef {
 }
 
 impl markup::Read for TimelineRefs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_refs(element)
     }
 }
@@ -4284,7 +4284,7 @@ impl markup::Write for TimelineRefs {
 }
 
 impl markup::Read for TimelineStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_style(element)
     }
 }
@@ -4297,7 +4297,7 @@ impl markup::Write for TimelineStyle {
 }
 
 impl markup::Read for TimelineStyleElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_style_element(element)
     }
 }
@@ -4310,7 +4310,7 @@ impl markup::Write for TimelineStyleElement {
 }
 
 impl markup::Read for TimelineStyleElements {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_style_elements(element)
     }
 }
@@ -4409,7 +4409,7 @@ impl TimelineStyleType {
 }
 
 impl markup::Read for TimelineStyles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timeline_styles(element)
     }
 }
@@ -4422,7 +4422,7 @@ impl markup::Write for TimelineStyles {
 }
 
 impl markup::Read for Timelines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::timelines(element)
     }
 }
@@ -4435,7 +4435,7 @@ impl markup::Write for Timelines {
 }
 
 impl markup::Read for TitlePr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_pr(element)
     }
 }
@@ -4448,7 +4448,7 @@ impl markup::Write for TitlePr {
 }
 
 impl markup::Read for V {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v(element)
     }
 }
@@ -4461,7 +4461,7 @@ impl markup::Write for V {
 }
 
 impl markup::Read for WebExtension {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_extension(element)
     }
 }
@@ -4474,7 +4474,7 @@ impl markup::Write for WebExtension {
 }
 
 impl markup::Read for WebExtensions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_extensions(element)
     }
 }
@@ -4487,7 +4487,7 @@ impl markup::Write for WebExtensions {
 }
 
 impl markup::Read for WorkbookPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::workbook_pr(element)
     }
 }
@@ -4500,7 +4500,7 @@ impl markup::Write for WorkbookPr {
 }
 
 impl markup::Read for X {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::x(element)
     }
 }

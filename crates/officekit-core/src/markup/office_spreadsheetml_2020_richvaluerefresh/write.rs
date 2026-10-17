@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `RefreshInterval` as its element, `xlrvr:refreshInterval`.
 #[must_use]
-pub fn refresh_interval(
-    node: &super::RefreshInterval,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn refresh_interval(node: &super::RefreshInterval, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REFRESH_INTERVAL_SHAPE, &node.unknown);
     writer.attribute(0, &node.resource_id_int);
     writer.attribute(1, &node.resource_id_str);
@@ -230,10 +228,7 @@ pub fn refresh_interval(
 
 /// Write a `RefreshIntervals` as its element, `xlrvr:refreshIntervals`.
 #[must_use]
-pub fn refresh_intervals(
-    node: &super::RefreshIntervals,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn refresh_intervals(node: &super::RefreshIntervals, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REFRESH_INTERVALS_SHAPE, &node.unknown);
     writer.child(&node.refresh_interval);
     writer.finish()

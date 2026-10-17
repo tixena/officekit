@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -2977,7 +2977,7 @@ pub struct Wall {
 }
 
 impl markup::Read for AxisTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::axis_title(element)
     }
 }
@@ -2990,7 +2990,7 @@ impl markup::Write for AxisTitle {
 }
 
 impl markup::Read for BodyPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::body_pr(element)
     }
 }
@@ -3053,7 +3053,7 @@ impl Boolean {
 }
 
 impl markup::Read for CategoryAxisAxisProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_axis_axis_props(element)
     }
 }
@@ -3066,7 +3066,7 @@ impl markup::Write for CategoryAxisAxisProps {
 }
 
 impl markup::Read for CategoryAxisStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_axis_style_entry(element)
     }
 }
@@ -3079,7 +3079,7 @@ impl markup::Write for CategoryAxisStyleEntry {
 }
 
 impl markup::Read for ChartArea {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_area(element)
     }
 }
@@ -3092,7 +3092,7 @@ impl markup::Write for ChartArea {
 }
 
 impl markup::Read for ChartStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_style(element)
     }
 }
@@ -3105,7 +3105,7 @@ impl markup::Write for ChartStyle {
 }
 
 impl markup::Read for ColorStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_style(element)
     }
 }
@@ -3118,7 +3118,7 @@ impl markup::Write for ColorStyle {
 }
 
 impl markup::Read for DataLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_label(element)
     }
 }
@@ -3131,7 +3131,7 @@ impl markup::Write for DataLabel {
 }
 
 impl markup::Read for DataLabelCallout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_label_callout(element)
     }
 }
@@ -3144,7 +3144,7 @@ impl markup::Write for DataLabelCallout {
 }
 
 impl markup::Read for DataLabels {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_labels(element)
     }
 }
@@ -3225,7 +3225,7 @@ impl DataLabelsPosition {
 }
 
 impl markup::Read for DataPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point(element)
     }
 }
@@ -3238,7 +3238,7 @@ impl markup::Write for DataPoint {
 }
 
 impl markup::Read for DataPoint3D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point3d(element)
     }
 }
@@ -3251,7 +3251,7 @@ impl markup::Write for DataPoint3D {
 }
 
 impl markup::Read for DataPointLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point_line(element)
     }
 }
@@ -3264,7 +3264,7 @@ impl markup::Write for DataPointLine {
 }
 
 impl markup::Read for DataPointMarker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point_marker(element)
     }
 }
@@ -3277,7 +3277,7 @@ impl markup::Write for DataPointMarker {
 }
 
 impl markup::Read for DataPointMarkerLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point_marker_layout(element)
     }
 }
@@ -3290,7 +3290,7 @@ impl markup::Write for DataPointMarkerLayout {
 }
 
 impl markup::Read for DataPointWireframe {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_point_wireframe(element)
     }
 }
@@ -3303,7 +3303,7 @@ impl markup::Write for DataPointWireframe {
 }
 
 impl markup::Read for DataSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_series(element)
     }
 }
@@ -3316,7 +3316,7 @@ impl markup::Write for DataSeries {
 }
 
 impl markup::Read for DataTableDataTableProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_table_data_table_props(element)
     }
 }
@@ -3329,7 +3329,7 @@ impl markup::Write for DataTableDataTableProps {
 }
 
 impl markup::Read for DataTableStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_table_style_entry(element)
     }
 }
@@ -3342,7 +3342,7 @@ impl markup::Write for DataTableStyleEntry {
 }
 
 impl markup::Read for DefRPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::def_r_pr(element)
     }
 }
@@ -3355,7 +3355,7 @@ impl markup::Write for DefRPr {
 }
 
 impl markup::Read for DownBar {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::down_bar(element)
     }
 }
@@ -3368,7 +3368,7 @@ impl markup::Write for DownBar {
 }
 
 impl markup::Read for DropLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_line(element)
     }
 }
@@ -3381,7 +3381,7 @@ impl markup::Write for DropLine {
 }
 
 impl markup::Read for EffectRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::effect_ref(element)
     }
 }
@@ -3394,7 +3394,7 @@ impl markup::Write for EffectRef {
 }
 
 impl markup::Read for ErrorBar {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::error_bar(element)
     }
 }
@@ -3407,7 +3407,7 @@ impl markup::Write for ErrorBar {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -3420,7 +3420,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for FillRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill_ref(element)
     }
 }
@@ -3433,7 +3433,7 @@ impl markup::Write for FillRef {
 }
 
 impl markup::Read for Floor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::floor(element)
     }
 }
@@ -3446,7 +3446,7 @@ impl markup::Write for Floor {
 }
 
 impl markup::Read for FontRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_ref(element)
     }
 }
@@ -3459,7 +3459,7 @@ impl markup::Write for FontRef {
 }
 
 impl markup::Read for GridlineMajor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gridline_major(element)
     }
 }
@@ -3472,7 +3472,7 @@ impl markup::Write for GridlineMajor {
 }
 
 impl markup::Read for GridlineMinor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gridline_minor(element)
     }
 }
@@ -3485,7 +3485,7 @@ impl markup::Write for GridlineMinor {
 }
 
 impl markup::Read for HiLoLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hi_lo_line(element)
     }
 }
@@ -3498,7 +3498,7 @@ impl markup::Write for HiLoLine {
 }
 
 impl markup::Read for LeaderLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::leader_line(element)
     }
 }
@@ -3511,7 +3511,7 @@ impl markup::Write for LeaderLine {
 }
 
 impl markup::Read for LegendLegendProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::legend_legend_props(element)
     }
 }
@@ -3576,7 +3576,7 @@ impl LegendPosition {
 }
 
 impl markup::Read for LegendStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::legend_style_entry(element)
     }
 }
@@ -3589,7 +3589,7 @@ impl markup::Write for LegendStyleEntry {
 }
 
 impl markup::Read for LineWidthScale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_width_scale(element)
     }
 }
@@ -3602,7 +3602,7 @@ impl markup::Write for LineWidthScale {
 }
 
 impl markup::Read for LnRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ln_ref(element)
     }
 }
@@ -3671,7 +3671,7 @@ impl MarkerStyle {
 }
 
 impl markup::Read for PlotArea {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plot_area(element)
     }
 }
@@ -3684,7 +3684,7 @@ impl markup::Write for PlotArea {
 }
 
 impl markup::Read for PlotArea3D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plot_area3d(element)
     }
 }
@@ -3697,7 +3697,7 @@ impl markup::Write for PlotArea3D {
 }
 
 impl markup::Read for SeriesAxisAxisProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::series_axis_axis_props(element)
     }
 }
@@ -3710,7 +3710,7 @@ impl markup::Write for SeriesAxisAxisProps {
 }
 
 impl markup::Read for SeriesAxisStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::series_axis_style_entry(element)
     }
 }
@@ -3723,7 +3723,7 @@ impl markup::Write for SeriesAxisStyleEntry {
 }
 
 impl markup::Read for SeriesLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::series_line(element)
     }
 }
@@ -3736,7 +3736,7 @@ impl markup::Write for SeriesLine {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -3749,7 +3749,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for StyleClr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_clr(element)
     }
 }
@@ -3813,7 +3813,7 @@ impl TitlePosition {
 }
 
 impl markup::Read for TitleStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_style_entry(element)
     }
 }
@@ -3826,7 +3826,7 @@ impl markup::Write for TitleStyleEntry {
 }
 
 impl markup::Read for TitleTitleProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_title_props(element)
     }
 }
@@ -3839,7 +3839,7 @@ impl markup::Write for TitleTitleProps {
 }
 
 impl markup::Read for TrendlineLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trendline_label(element)
     }
 }
@@ -3852,7 +3852,7 @@ impl markup::Write for TrendlineLabel {
 }
 
 impl markup::Read for TrendlineStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trendline_style_entry(element)
     }
 }
@@ -3865,7 +3865,7 @@ impl markup::Write for TrendlineStyleEntry {
 }
 
 impl markup::Read for TrendlineTrendlineProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trendline_trendline_props(element)
     }
 }
@@ -3878,7 +3878,7 @@ impl markup::Write for TrendlineTrendlineProps {
 }
 
 impl markup::Read for UpBar {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::up_bar(element)
     }
 }
@@ -3891,7 +3891,7 @@ impl markup::Write for UpBar {
 }
 
 impl markup::Read for ValueAxisAxisProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::value_axis_axis_props(element)
     }
 }
@@ -3904,7 +3904,7 @@ impl markup::Write for ValueAxisAxisProps {
 }
 
 impl markup::Read for ValueAxisStyleEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::value_axis_style_entry(element)
     }
 }
@@ -3917,7 +3917,7 @@ impl markup::Write for ValueAxisStyleEntry {
 }
 
 impl markup::Read for Variation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::variation(element)
     }
 }
@@ -3930,7 +3930,7 @@ impl markup::Write for Variation {
 }
 
 impl markup::Read for View3D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::view3d(element)
     }
 }
@@ -3943,7 +3943,7 @@ impl markup::Write for View3D {
 }
 
 impl markup::Read for Wall {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wall(element)
     }
 }

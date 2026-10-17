@@ -5,6 +5,10 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_xml::values::parse::boolean;
+use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::error::PackageError;
@@ -27,10 +31,6 @@ use crate::parts::{pivot_table, table_definition};
 use crate::strict::iso_date_time;
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::{SaveWarning, convert_date_cells};
-use crate::xml::conformance::ConformanceClass;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::xml::values::parse::boolean;
-use crate::xml::write::WriteOptions;
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
 #[derive(Debug)]

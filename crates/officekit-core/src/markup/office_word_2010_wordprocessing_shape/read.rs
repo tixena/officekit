@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wps:bodyPr` into a `BodyPr`.
 #[must_use]
-pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
+pub fn body_pr(element: &Element) -> super::BodyPr {
     let mut node = super::BodyPr::default();
     let mut reader = markup::Reader::new(element, &super::BODY_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -255,7 +255,7 @@ pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
 
 /// Read `wps:cNvCnPr` into a `CNvCnPr`.
 #[must_use]
-pub fn c_nv_cn_pr(element: &xml::element::Element) -> super::CNvCnPr {
+pub fn c_nv_cn_pr(element: &Element) -> super::CNvCnPr {
     let mut node = super::CNvCnPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_CN_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -273,7 +273,7 @@ pub fn c_nv_cn_pr(element: &xml::element::Element) -> super::CNvCnPr {
 
 /// Read `wps:cNvPr` into a `CNvPr`.
 #[must_use]
-pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
+pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -295,7 +295,7 @@ pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
 
 /// Read `wps:cNvSpPr` into a `CNvSpPr`.
 #[must_use]
-pub fn c_nv_sp_pr(element: &xml::element::Element) -> super::CNvSpPr {
+pub fn c_nv_sp_pr(element: &Element) -> super::CNvSpPr {
     let mut node = super::CNvSpPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -312,7 +312,7 @@ pub fn c_nv_sp_pr(element: &xml::element::Element) -> super::CNvSpPr {
 
 /// Read `wps:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -326,7 +326,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `wps:linkedTxbx` into a `LinkedTxbx`.
 #[must_use]
-pub fn linked_txbx(element: &xml::element::Element) -> super::LinkedTxbx {
+pub fn linked_txbx(element: &Element) -> super::LinkedTxbx {
     let mut node = super::LinkedTxbx::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_TXBX_SHAPE);
     for (index, field) in &mut reader {
@@ -344,21 +344,19 @@ pub fn linked_txbx(element: &xml::element::Element) -> super::LinkedTxbx {
 /// Read one item of `ShapeNonVisualPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn shape_non_visual_properties(
-    element: &xml::element::Element,
-) -> super::ShapeNonVisualPropertiesContent {
+pub fn shape_non_visual_properties(element: &Element) -> super::ShapeNonVisualPropertiesContent {
     markup::read(element)
 }
 
 /// Read one item of `ShapeTextContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_text(element: &xml::element::Element) -> super::ShapeTextContent {
+pub fn shape_text(element: &Element) -> super::ShapeTextContent {
     markup::read(element)
 }
 
 /// Read `wps:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -381,7 +379,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `wps:style` into a `Style`.
 #[must_use]
-pub fn style(element: &xml::element::Element) -> super::Style {
+pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +397,7 @@ pub fn style(element: &xml::element::Element) -> super::Style {
 
 /// Read `wps:txbx` into a `Txbx`.
 #[must_use]
-pub fn txbx(element: &xml::element::Element) -> super::Txbx {
+pub fn txbx(element: &Element) -> super::Txbx {
     let mut node = super::Txbx::default();
     let mut reader = markup::Reader::new(element, &super::TXBX_SHAPE);
     for (index, field) in &mut reader {
@@ -416,7 +414,7 @@ pub fn txbx(element: &xml::element::Element) -> super::Txbx {
 
 /// Read `wps:wsp` into a `Wsp`.
 #[must_use]
-pub fn wsp(element: &xml::element::Element) -> super::Wsp {
+pub fn wsp(element: &Element) -> super::Wsp {
     let mut node = super::Wsp::default();
     let mut reader = markup::Reader::new(element, &super::WSP_SHAPE);
     for (index, field) in &mut reader {

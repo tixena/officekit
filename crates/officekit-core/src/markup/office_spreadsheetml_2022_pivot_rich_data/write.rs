@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `RichInfo` as its element, `xprd:richInfo`.
 #[must_use]
-pub fn rich_info(node: &super::RichInfo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rich_info(node: &super::RichInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.pivot_cache_guid);
     writer.attribute(1, &node.pivot_ignore_invalid_cache);

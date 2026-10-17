@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w16se:symEx` into a `SymEx`.
 #[must_use]
-pub fn sym_ex(element: &xml::element::Element) -> super::SymEx {
+pub fn sym_ex(element: &Element) -> super::SymEx {
     let mut node = super::SymEx::default();
     let mut reader = markup::Reader::new(element, &super::SYM_EX_SHAPE);
     for (index, field) in &mut reader {

@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CNvFrPr` as its element, `wpg:cNvFrPr`.
 #[must_use]
-pub fn c_nv_fr_pr(node: &super::CNvFrPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_fr_pr(node: &super::CNvFrPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_FR_PR_SHAPE, &node.unknown);
     writer.child(&node.graphic_frame_locks);
     writer.child(&node.extension_list);
@@ -227,10 +228,7 @@ pub fn c_nv_fr_pr(node: &super::CNvFrPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `CNvGrpSpPr` as its element, `wpg:cNvGrpSpPr`.
 #[must_use]
-pub fn c_nv_grp_sp_pr(
-    node: &super::CNvGrpSpPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_GRP_SP_PR_SHAPE, &node.unknown);
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
@@ -239,7 +237,7 @@ pub fn c_nv_grp_sp_pr(
 
 /// Write a `CNvPr` as its element, `wpg:cNvPr`.
 #[must_use]
-pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -254,7 +252,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `ExtLst` as its element, `wpg:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -262,10 +260,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `GraphicFrame` as its element, `wpg:graphicFrame`.
 #[must_use]
-pub fn graphic_frame(
-    node: &super::GraphicFrame,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_fr_pr);
@@ -277,7 +272,7 @@ pub fn graphic_frame(
 
 /// Write a `GrpSp` as its element, `wpg:grpSp`.
 #[must_use]
-pub fn grp_sp(node: &super::GrpSp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_grp_sp_pr);
@@ -289,7 +284,7 @@ pub fn grp_sp(node: &super::GrpSp, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `GrpSpPr` as its element, `wpg:grpSpPr`.
 #[must_use]
-pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
@@ -302,7 +297,7 @@ pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Wgp` as its element, `wpg:wgp`.
 #[must_use]
-pub fn wgp(node: &super::Wgp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wgp(node: &super::Wgp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WGP_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_grp_sp_pr);
@@ -323,7 +318,7 @@ pub fn wordprocessing_group(
 
 /// Write a `Xfrm` as its element, `wpg:xfrm`.
 #[must_use]
-pub fn xfrm(node: &super::Xfrm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

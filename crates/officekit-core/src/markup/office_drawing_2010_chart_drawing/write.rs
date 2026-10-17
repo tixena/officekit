@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CNvContentPartPr` as its element, `cdr14:cNvContentPartPr`.
 #[must_use]
-pub fn c_nv_content_part_pr(
-    node: &super::CNvContentPartPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn c_nv_content_part_pr(node: &super::CNvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_CONTENT_PART_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.is_comment);
     writer.child(&node.cp_locks);
@@ -230,7 +228,7 @@ pub fn c_nv_content_part_pr(
 
 /// Write a `CNvPr` as its element, `cdr14:cNvPr`.
 #[must_use]
-pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -245,7 +243,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `ContentPart` as its element, `cdr14:contentPart`.
 #[must_use]
-pub fn content_part(node: &super::ContentPart, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.bw_mode);
@@ -258,7 +256,7 @@ pub fn content_part(node: &super::ContentPart, scope: &mut markup::Scope) -> xml
 
 /// Write a `ExtLst` as its element, `cdr14:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -266,10 +264,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `NvContentPartPr` as its element, `cdr14:nvContentPartPr`.
 #[must_use]
-pub fn nv_content_part_pr(
-    node: &super::NvContentPartPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c);
@@ -278,7 +273,7 @@ pub fn nv_content_part_pr(
 
 /// Write a `NvPr` as its element, `cdr14:nvPr`.
 #[must_use]
-pub fn nv_pr(node: &super::NvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nv_pr(node: &super::NvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -287,7 +282,7 @@ pub fn nv_pr(node: &super::NvPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `Xfrm` as its element, `cdr14:xfrm`.
 #[must_use]
-pub fn xfrm(node: &super::Xfrm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

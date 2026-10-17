@@ -1,14 +1,14 @@
 use std::io::{Cursor, Read as _, Write as _};
 use std::path::{Path, PathBuf};
 
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 use zip::ZipArchive;
 use zip::write::{SimpleFileOptions, ZipWriter};
 
 use super::{DEFAULT_SUFFIX, DownOptions, FolderError, UpOptions, down, format, up};
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
 
 const RELS: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\"><Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/></Relationships>";
 const DOCUMENT: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t xml:space=\"preserve\"> kept </w:t></w:r></w:p></w:body></w:document>";
@@ -85,10 +85,9 @@ fn is_xml(name: &str) -> bool {
 }
 
 fn tree(bytes: &[u8], layout: Layout) -> Vec<u8> {
-    parse(bytes).unwrap().to_xml(WriteOptions {
-        layout,
-        namespace_cleanup: false,
-    })
+    parse(bytes)
+        .unwrap()
+        .to_xml(WriteOptions::new(layout, false))
 }
 
 #[test]

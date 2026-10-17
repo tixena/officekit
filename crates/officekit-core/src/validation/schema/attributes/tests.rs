@@ -1,12 +1,13 @@
+use officekit_xml::element::Element;
+use officekit_xml::name::{Namespace, OfficeVersion};
+use officekit_xml::parse::parse;
+
 use super::{Failure, check, run};
 use crate::validation::error::ErrorCode;
 use crate::validation::generated::{SCHEMA_TYPES, type_id};
 use crate::validation::schema::types::{
     AttributeConstraint, Bounds, Check, SchemaType, StringKind, ValueCheck, ValueClass, Versions,
 };
-use crate::xml::element::Element;
-use crate::xml::name::{Namespace, OfficeVersion};
-use crate::xml::parse::parse;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

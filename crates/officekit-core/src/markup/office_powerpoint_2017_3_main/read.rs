@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p173:track` into a `Track`.
 #[must_use]
-pub fn track(element: &xml::element::Element) -> super::Track {
+pub fn track(element: &Element) -> super::Track {
     let mut node = super::Track::default();
     let mut reader = markup::Reader::new(element, &super::TRACK_SHAPE);
     for (index, field) in &mut reader {
@@ -236,7 +236,7 @@ pub fn track(element: &xml::element::Element) -> super::Track {
 
 /// Read `p173:trackLst` into a `TrackLst`.
 #[must_use]
-pub fn track_lst(element: &xml::element::Element) -> super::TrackLst {
+pub fn track_lst(element: &Element) -> super::TrackLst {
     let mut node = super::TrackLst::default();
     let mut reader = markup::Reader::new(element, &super::TRACK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -250,7 +250,7 @@ pub fn track_lst(element: &xml::element::Element) -> super::TrackLst {
 
 /// Read `p173:tracksInfo` into a `TracksInfo`.
 #[must_use]
-pub fn tracks_info(element: &xml::element::Element) -> super::TracksInfo {
+pub fn tracks_info(element: &Element) -> super::TracksInfo {
     let mut node = super::TracksInfo::default();
     let mut reader = markup::Reader::new(element, &super::TRACKS_INFO_SHAPE);
     for (index, field) in &mut reader {

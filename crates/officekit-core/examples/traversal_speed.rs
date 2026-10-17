@@ -18,15 +18,13 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use clap::Parser;
-use officekit_core::markup::{
-    self, Scope, Transform, Visit, presentation, spreadsheet, wordprocessing,
-};
+use officekit_core::markup::{self, Transform, Visit, presentation, spreadsheet, wordprocessing};
 use officekit_core::packaging::package::{OpenOptions, Package};
 use officekit_core::packaging::part_name::PartName;
 use officekit_core::stream::transform::{Unchanged, WriteThrough};
-use officekit_core::stream::writer::PartWriter;
-use officekit_core::xml::element::Element;
-use officekit_core::xml::write::Layout;
+use officekit_xml::element::Element;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{Layout, Scope};
 use os_shim::System as _;
 use os_shim::real::RealSystem;
 use sha1::{Digest as _, Sha1};

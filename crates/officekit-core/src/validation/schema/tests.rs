@@ -1,6 +1,8 @@
 use alloc::collections::BTreeSet;
 
-use super::matches_pattern;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::values::matches_pattern;
+
 use super::types::{
     Bounds, Check, CompositeKind, Particle, SchemaType, StringKind, ValueCheck, ValueClass,
     Versions,
@@ -8,7 +10,6 @@ use super::types::{
 use crate::validation::generated::{
     ENUMERATIONS, PART_RULES, SCHEMA_TYPES, TRANSITIONAL_ONLY_NAMESPACES, type_id,
 };
-use crate::xml::name::table::NAMESPACES;
 
 const ALL: Versions = Versions(0b11_1111);
 

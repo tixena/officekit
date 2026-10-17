@@ -213,68 +213,48 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DropZoneCategories` as its element, `c14:dropZoneCategories`.
 #[must_use]
-pub fn drop_zone_categories(
-    node: &super::DropZoneCategories,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drop_zone_categories(node: &super::DropZoneCategories, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DROP_ZONE_CATEGORIES_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DropZoneData` as its element, `c14:dropZoneData`.
 #[must_use]
-pub fn drop_zone_data(
-    node: &super::DropZoneData,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drop_zone_data(node: &super::DropZoneData, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DROP_ZONE_DATA_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DropZoneFilter` as its element, `c14:dropZoneFilter`.
 #[must_use]
-pub fn drop_zone_filter(
-    node: &super::DropZoneFilter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drop_zone_filter(node: &super::DropZoneFilter, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DROP_ZONE_FILTER_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DropZoneSeries` as its element, `c14:dropZoneSeries`.
 #[must_use]
-pub fn drop_zone_series(
-    node: &super::DropZoneSeries,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drop_zone_series(node: &super::DropZoneSeries, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DROP_ZONE_SERIES_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DropZonesVisible` as its element, `c14:dropZonesVisible`.
 #[must_use]
-pub fn drop_zones_visible(
-    node: &super::DropZonesVisible,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drop_zones_visible(node: &super::DropZonesVisible, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DROP_ZONES_VISIBLE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `InSketchMode` as its element, `c14:inSketchMode`.
 #[must_use]
-pub fn in_sketch_mode(
-    node: &super::InSketchMode,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn in_sketch_mode(node: &super::InSketchMode, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::IN_SKETCH_MODE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `InvertSolidFillFmt` as its element, `c14:invertSolidFillFmt`.
 #[must_use]
-pub fn invert_solid_fill_fmt(
-    node: &super::InvertSolidFillFmt,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn invert_solid_fill_fmt(node: &super::InvertSolidFillFmt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::INVERT_SOLID_FILL_FMT_SHAPE, &node.unknown);
     writer.child(&node.sp_pr);
     writer.finish()
@@ -282,10 +262,7 @@ pub fn invert_solid_fill_fmt(
 
 /// Write a `PivotOptions` as its element, `c14:pivotOptions`.
 #[must_use]
-pub fn pivot_options(
-    node: &super::PivotOptions,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_options(node: &super::PivotOptions, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_OPTIONS_SHAPE, &node.unknown);
     writer.child(&node.drop_zone_filter);
     writer.child(&node.drop_zone_categories);
@@ -297,10 +274,7 @@ pub fn pivot_options(
 
 /// Write a `ShowSketchBtn` as its element, `c14:showSketchBtn`.
 #[must_use]
-pub fn show_sketch_btn(
-    node: &super::ShowSketchBtn,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn show_sketch_btn(node: &super::ShowSketchBtn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHOW_SKETCH_BTN_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -308,10 +282,7 @@ pub fn show_sketch_btn(
 
 /// Write a `SketchOptions` as its element, `c14:sketchOptions`.
 #[must_use]
-pub fn sketch_options(
-    node: &super::SketchOptions,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sketch_options(node: &super::SketchOptions, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SKETCH_OPTIONS_SHAPE, &node.unknown);
     writer.child(&node.in_sketch_mode);
     writer.child(&node.show_sketch_btn);
@@ -320,7 +291,7 @@ pub fn sketch_options(
 
 /// Write a `SpPr` as its element, `c14:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -336,7 +307,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `Style` as its element, `c14:style`.
 #[must_use]
-pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

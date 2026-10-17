@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_AP: Option<NamespaceId> = Some(16);
@@ -498,7 +498,7 @@ pub enum ApplicationSpecificFilePropertiesContent {
     NumberOfHiddenSlides(NumberOfHiddenSlides),
     NumberOfLines(NumberOfLines),
     NumberOfSlidesContainingNotes(NumberOfSlidesContainingNotes),
-    Other(xml::element::Node),
+    Other(Node),
     PartTitles(PartTitles),
     RelativeHyperlinkBase(RelativeHyperlinkBase),
     SharedDocument(SharedDocument),
@@ -1373,7 +1373,7 @@ pub struct WordCount {
 }
 
 impl markup::Read for ApplicationName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::application_name(element)
     }
 }
@@ -1386,7 +1386,7 @@ impl markup::Write for ApplicationName {
 }
 
 impl markup::Read for ApplicationSpecificFileProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::application_specific_file_properties(element)
     }
 }
@@ -1399,11 +1399,11 @@ impl markup::Write for ApplicationSpecificFileProperties {
 }
 
 impl markup::Read for ApplicationSpecificFilePropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_AP, "Application")) => Self::ApplicationName(markup::read(element)),
             Some((NS_AP, "AppVersion")) => Self::ApplicationVersion(markup::read(element)),
@@ -1436,7 +1436,7 @@ impl markup::Read for ApplicationSpecificFilePropertiesContent {
             Some((NS_AP, "Pages")) => Self::TotalNumberOfPages(markup::read(element)),
             Some((NS_AP, "Paragraphs")) => Self::TotalNumberOfParagraphs(markup::read(element)),
             Some((NS_AP, "Words")) => Self::WordCount(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1477,7 +1477,7 @@ impl markup::Write for ApplicationSpecificFilePropertiesContent {
 }
 
 impl markup::Read for ApplicationVersion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::application_version(element)
     }
 }
@@ -1490,7 +1490,7 @@ impl markup::Write for ApplicationVersion {
 }
 
 impl markup::Read for CharactersWithSpaces {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::characters_with_spaces(element)
     }
 }
@@ -1503,7 +1503,7 @@ impl markup::Write for CharactersWithSpaces {
 }
 
 impl markup::Read for DigitalSignature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::digital_signature(element)
     }
 }
@@ -1516,7 +1516,7 @@ impl markup::Write for DigitalSignature {
 }
 
 impl markup::Read for DocumentSecurity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_security(element)
     }
 }
@@ -1529,7 +1529,7 @@ impl markup::Write for DocumentSecurity {
 }
 
 impl markup::Read for HeadingPairs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::heading_pairs(element)
     }
 }
@@ -1542,7 +1542,7 @@ impl markup::Write for HeadingPairs {
 }
 
 impl markup::Read for HyperlinkList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyperlink_list(element)
     }
 }
@@ -1555,7 +1555,7 @@ impl markup::Write for HyperlinkList {
 }
 
 impl markup::Read for HyperlinksChanged {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyperlinks_changed(element)
     }
 }
@@ -1568,7 +1568,7 @@ impl markup::Write for HyperlinksChanged {
 }
 
 impl markup::Read for IntendedFormatOfPresentation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::intended_format_of_presentation(element)
     }
 }
@@ -1581,7 +1581,7 @@ impl markup::Write for IntendedFormatOfPresentation {
 }
 
 impl markup::Read for LinksUpToDate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::links_up_to_date(element)
     }
 }
@@ -1594,7 +1594,7 @@ impl markup::Write for LinksUpToDate {
 }
 
 impl markup::Read for NameOfCompany {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::name_of_company(element)
     }
 }
@@ -1607,7 +1607,7 @@ impl markup::Write for NameOfCompany {
 }
 
 impl markup::Read for NameOfDocumentTemplate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::name_of_document_template(element)
     }
 }
@@ -1620,7 +1620,7 @@ impl markup::Write for NameOfDocumentTemplate {
 }
 
 impl markup::Read for NameOfManager {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::name_of_manager(element)
     }
 }
@@ -1633,7 +1633,7 @@ impl markup::Write for NameOfManager {
 }
 
 impl markup::Read for NumberOfHiddenSlides {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_hidden_slides(element)
     }
 }
@@ -1646,7 +1646,7 @@ impl markup::Write for NumberOfHiddenSlides {
 }
 
 impl markup::Read for NumberOfLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_lines(element)
     }
 }
@@ -1659,7 +1659,7 @@ impl markup::Write for NumberOfLines {
 }
 
 impl markup::Read for NumberOfSlidesContainingNotes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_slides_containing_notes(element)
     }
 }
@@ -1672,7 +1672,7 @@ impl markup::Write for NumberOfSlidesContainingNotes {
 }
 
 impl markup::Read for PartTitles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::part_titles(element)
     }
 }
@@ -1685,7 +1685,7 @@ impl markup::Write for PartTitles {
 }
 
 impl markup::Read for RelativeHyperlinkBase {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::relative_hyperlink_base(element)
     }
 }
@@ -1698,7 +1698,7 @@ impl markup::Write for RelativeHyperlinkBase {
 }
 
 impl markup::Read for SharedDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shared_document(element)
     }
 }
@@ -1711,7 +1711,7 @@ impl markup::Write for SharedDocument {
 }
 
 impl markup::Read for SlidesMetadataElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::slides_metadata_element(element)
     }
 }
@@ -1724,7 +1724,7 @@ impl markup::Write for SlidesMetadataElement {
 }
 
 impl markup::Read for ThumbnailDisplayMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::thumbnail_display_mode(element)
     }
 }
@@ -1737,7 +1737,7 @@ impl markup::Write for ThumbnailDisplayMode {
 }
 
 impl markup::Read for TotalEditTimeMetadataElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::total_edit_time_metadata_element(element)
     }
 }
@@ -1750,7 +1750,7 @@ impl markup::Write for TotalEditTimeMetadataElement {
 }
 
 impl markup::Read for TotalNumberOfCharacters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::total_number_of_characters(element)
     }
 }
@@ -1763,7 +1763,7 @@ impl markup::Write for TotalNumberOfCharacters {
 }
 
 impl markup::Read for TotalNumberOfMultimediaClips {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::total_number_of_multimedia_clips(element)
     }
 }
@@ -1776,7 +1776,7 @@ impl markup::Write for TotalNumberOfMultimediaClips {
 }
 
 impl markup::Read for TotalNumberOfPages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::total_number_of_pages(element)
     }
 }
@@ -1789,7 +1789,7 @@ impl markup::Write for TotalNumberOfPages {
 }
 
 impl markup::Read for TotalNumberOfParagraphs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::total_number_of_paragraphs(element)
     }
 }
@@ -1802,7 +1802,7 @@ impl markup::Write for TotalNumberOfParagraphs {
 }
 
 impl markup::Read for WordCount {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::word_count(element)
     }
 }

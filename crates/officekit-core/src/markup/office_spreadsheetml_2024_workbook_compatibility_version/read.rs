@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlwcv:version` into a `Version`.
 #[must_use]
-pub fn version(element: &xml::element::Element) -> super::Version {
+pub fn version(element: &Element) -> super::Version {
     let mut node = super::Version::default();
     let mut reader = markup::Reader::new(element, &super::VERSION_SHAPE);
     for (index, field) in &mut reader {

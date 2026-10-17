@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `x16:calculatedTimeColumn` into a `CalculatedTimeColumn`.
 #[must_use]
-pub fn calculated_time_column(element: &xml::element::Element) -> super::CalculatedTimeColumn {
+pub fn calculated_time_column(element: &Element) -> super::CalculatedTimeColumn {
     let mut node = super::CalculatedTimeColumn::default();
     let mut reader = markup::Reader::new(element, &super::CALCULATED_TIME_COLUMN_SHAPE);
     for (index, field) in &mut reader {
@@ -235,7 +235,7 @@ pub fn calculated_time_column(element: &xml::element::Element) -> super::Calcula
 
 /// Read `x16:modelTimeGrouping` into a `ModelTimeGrouping`.
 #[must_use]
-pub fn model_time_grouping(element: &xml::element::Element) -> super::ModelTimeGrouping {
+pub fn model_time_grouping(element: &Element) -> super::ModelTimeGrouping {
     let mut node = super::ModelTimeGrouping::default();
     let mut reader = markup::Reader::new(element, &super::MODEL_TIME_GROUPING_SHAPE);
     for (index, field) in &mut reader {
@@ -253,7 +253,7 @@ pub fn model_time_grouping(element: &xml::element::Element) -> super::ModelTimeG
 
 /// Read `x16:modelTimeGroupings` into a `ModelTimeGroupings`.
 #[must_use]
-pub fn model_time_groupings(element: &xml::element::Element) -> super::ModelTimeGroupings {
+pub fn model_time_groupings(element: &Element) -> super::ModelTimeGroupings {
     let mut node = super::ModelTimeGroupings::default();
     let mut reader = markup::Reader::new(element, &super::MODEL_TIME_GROUPINGS_SHAPE);
     for (index, field) in &mut reader {

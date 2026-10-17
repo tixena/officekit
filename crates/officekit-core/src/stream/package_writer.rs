@@ -4,16 +4,16 @@
 use alloc::collections::BTreeMap;
 use std::io::{self, Write};
 
+use officekit_xml::element::NamespaceDeclaration;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::Layout;
 use os_shim::archive::ZipStreamWriter;
 
-use super::writer::PartWriter;
 use crate::error::PackageError;
 use crate::packaging::content_types;
 use crate::packaging::package::{CONTENT_TYPES_PART, PACKAGE_RELATIONSHIPS_PART, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relationship, TargetMode};
-use crate::xml::element::NamespaceDeclaration;
-use crate::xml::write::Layout;
 
 #[cfg(test)]
 mod tests;
@@ -193,10 +193,7 @@ impl<W: Write> PackageWriter<W> {
 
 /// The default namespace declaration of `uri`.
 fn declare(uri: &str) -> [NamespaceDeclaration; 1] {
-    [NamespaceDeclaration {
-        prefix: String::new(),
-        uri: uri.to_owned(),
-    }]
+    [NamespaceDeclaration::new(String::new(), uri.to_owned())]
 }
 
 /// The zip entry of a part name: the leading `/` dropped.

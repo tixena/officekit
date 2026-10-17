@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `PivotTableDefinition16` as its element, `xpdl:pivotTableDefinition16`.
 #[must_use]
 pub fn pivot_table_definition16(
     node: &super::PivotTableDefinition16,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::PIVOT_TABLE_DEFINITION16_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled_subtotals_default);

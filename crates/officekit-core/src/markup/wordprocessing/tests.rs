@@ -1,6 +1,12 @@
 #[path = "traversal_tests.rs"]
 mod traversal_tests;
 
+use officekit_xml::element::Node;
+use officekit_xml::name::OfficeVersion;
+use officekit_xml::stream::reader::{PartEvent, PartReader};
+use officekit_xml::values::{DateTime, Measure, MeasureUnit, ValueError};
+use officekit_xml::write::Scope;
+
 use super::{
     AnchorForImportedExternalContent, BlockContent, ContentBlockContent, HorizontalAlignmentType,
     HorizontalAlignmentTypeMember, MeasurementOrPercentageValue,
@@ -8,11 +14,8 @@ use super::{
     StandardDateAndTimeStorageFormat, Text, TextRun, TextRunContent, read, write,
 };
 use crate::markup::common_simple_types::OnOffValue;
+use crate::markup::generic;
 use crate::markup::spreadsheet::ReferenceSequence;
-use crate::markup::{Scope, generic};
-use crate::xml::element::Node;
-use crate::xml::name::OfficeVersion;
-use crate::xml::values::{DateTime, Measure, MeasureUnit, ValueError};
 
 #[test]
 fn an_enumeration_reads_its_members_and_keeps_text_it_does_not_know() {
@@ -23,10 +26,7 @@ fn an_enumeration_reads_its_members_and_keeps_text_it_does_not_know() {
     let unknown = HorizontalAlignmentType("justifyLow".to_owned());
     assert_eq!(
         unknown.value(),
-        Err(ValueError {
-            simple_type: "ST_Jc",
-            text: "justifyLow".to_owned(),
-        })
+        Err(ValueError::new("ST_Jc", "justifyLow".to_owned()))
     );
     assert_eq!(unknown.0, "justifyLow");
     assert_eq!(
@@ -58,10 +58,7 @@ fn on_off_reads_every_spelling_and_writes_the_canonical_one() {
     }
     assert_eq!(
         OnOffValue("yes".to_owned()).value(),
-        Err(ValueError {
-            simple_type: "ST_OnOff",
-            text: "yes".to_owned(),
-        })
+        Err(ValueError::new("ST_OnOff", "yes".to_owned()))
     );
     assert_eq!(OnOffValue::from(false).0, "false");
 }
@@ -82,19 +79,16 @@ fn a_union_gives_the_first_member_type_that_reads_the_text() {
     assert_eq!(
         value("2.5cm"),
         Ok(MeasurementOrPercentageValueMember::UniversalMeasurement(
-            Measure {
-                unit: MeasureUnit::Centimeters,
-                value: 2.5,
-            }
+            Measure::new(MeasureUnit::Centimeters, 2.5)
         ))
     );
     for refused in ["2.5", "5.%"] {
         assert_eq!(
             value(refused),
-            Err(ValueError {
-                simple_type: "ST_MeasurementOrPercent",
-                text: refused.to_owned(),
-            })
+            Err(ValueError::new(
+                "ST_MeasurementOrPercent",
+                refused.to_owned()
+            ))
         );
     }
 }
@@ -117,16 +111,7 @@ fn a_date_reads_its_zone_and_fraction() {
     let date = |text: &str| StandardDateAndTimeStorageFormat(text.to_owned()).value();
     assert_eq!(
         date("2026-10-15T09:30:05Z"),
-        Ok(DateTime {
-            day: 15,
-            hour: 9,
-            minute: 30,
-            month: 10,
-            nanosecond: 0,
-            offset_minutes: Some(0),
-            second: 5,
-            year: 2026,
-        })
+        Ok(DateTime::new((2026_i32, 10, 15), (9, 30, 5, 0), Some(0)))
     );
     assert_eq!(
         date("2024-02-29T23:59:59.25-04:30").map(|found| (found.nanosecond, found.offset_minutes)),
@@ -139,10 +124,7 @@ fn a_date_reads_its_zone_and_fraction() {
     for refused in ["2025-02-29T00:00:00", "2026-10-15"] {
         assert_eq!(
             date(refused),
-            Err(ValueError {
-                simple_type: "ST_DateTime",
-                text: refused.to_owned(),
-            })
+            Err(ValueError::new("ST_DateTime", refused.to_owned()))
         );
     }
 }
@@ -200,4 +182,29 @@ fn an_item_in_its_generic_form_is_its_element_or_its_other_node() {
     assert_eq!(name, Some(("w", "p")));
     let other = BlockContent::Other(Node::Comment("kept".to_owned()));
     assert_eq!(generic(&other), Node::Comment("kept".to_owned()));
+}
+
+#[test]
+fn an_element_a_part_reader_loads_reads_as_a_typed_paragraph() {
+    const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    let xml = format!(
+        "<?xml version=\"1.0\"?><w:document xmlns:w=\"{W}\"><w:body><w:p><w:r><w:t>a &amp; b</w:t></w:r></w:p>\
+         <!--c--><w:sectPr/></w:body></w:document>"
+    );
+    let mut reader = PartReader::new(xml.as_bytes());
+    let mut element = None;
+    while let Some(event) = reader.read_event().unwrap() {
+        if let PartEvent::Start(start) = event
+            && start.name.local == "p"
+        {
+            element = Some(reader.read_element(start).unwrap());
+            break;
+        }
+    }
+    let paragraph = read::paragraph(&element.unwrap());
+    assert!(matches!(
+        paragraph.content.as_slice(),
+        [ParagraphContent::TextRun(run)]
+            if matches!(run.content.as_slice(), [TextRunContent::Text(text)] if text.value == "a & b")
+    ));
 }

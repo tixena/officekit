@@ -1,5 +1,10 @@
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Document as Part, Element};
+use officekit_xml::error::{ReadError, WriteError};
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
+
 use super::{Strict, iso_date_time};
-use crate::error::{ReadError, WriteError};
 use crate::markup::drawing::Alpha;
 use crate::markup::presentation::Presentation;
 use crate::markup::spreadsheet::{
@@ -13,10 +18,6 @@ use crate::markup::wordprocessing::{
     RunProperties, SuggestedSorting, TableCellBorders,
     TableStyleConditionalFormattingSettingsException, TextRun,
 };
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::{Document as Part, Element};
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
 
 const A: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";
@@ -34,10 +35,7 @@ const X: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 const X_STRICT: &str = "http://purl.oclc.org/ooxml/spreadsheetml/main";
 /// A run's root declarations for the text box tests, Transitional URIs.
 const RUN_DECLARATIONS: &str = "xmlns:w=\"{w}\" xmlns:mc=\"{mc}\" xmlns:wp=\"{wp}\" xmlns:wps=\"{wps}\" xmlns:a=\"{a}\" xmlns:v=\"{v}\"";
-const KEEP: WriteOptions = WriteOptions {
-    layout: Layout::Compact,
-    namespace_cleanup: false,
-};
+const KEEP: WriteOptions = WriteOptions::new(Layout::Compact, false);
 
 /// The root element of `text`, with `{w}`, `{a}`, `{x}`, `{p}`, `{mc}`, `{v}`,
 /// `{wp}`, `{wpg}`, and `{wps}` standing for the Transitional URIs.
@@ -61,11 +59,12 @@ fn refusal<T>(text: &str) -> Option<&'static str>
 where
     T: Strict,
 {
-    match T::from_strict(&element(text)).unwrap().to_strict() {
-        Err(WriteError::NotInClass { class, tag }) => {
-            (class == ConformanceClass::Strict).then_some(tag)
-        }
-        Ok(_) => None,
+    if let Err(WriteError::NotInClass { class, tag }) =
+        T::from_strict(&element(text)).unwrap().to_strict()
+    {
+        (class == ConformanceClass::Strict).then_some(tag)
+    } else {
+        None
     }
 }
 
@@ -78,12 +77,9 @@ where
 }
 
 fn written(root: Element) -> String {
-    let part = Part {
-        declaration: None,
-        epilog: Vec::new(),
-        prolog: Vec::new(),
-        root,
-    };
+    let mut part = Part::new("", root);
+    part.declaration = None;
+    part.prolog.clear();
     String::from_utf8(part.to_xml(KEEP)).unwrap()
 }
 

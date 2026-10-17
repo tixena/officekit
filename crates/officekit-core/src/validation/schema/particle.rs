@@ -8,11 +8,12 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, OfficeVersion, QName};
+
 use super::types::{AnyNamespace, CompositeKind, Particle, SchemaType, TypeId};
 use crate::validation::error::ErrorCode;
 use crate::validation::generated::SCHEMA_TYPES;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, OfficeVersion, QName};
 
 #[cfg(test)]
 mod tests;

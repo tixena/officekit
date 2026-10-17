@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `c16ac:multiLvlStrLit` into a `MultiLvlStrLit`.
 #[must_use]
-pub fn multi_lvl_str_lit(element: &xml::element::Element) -> super::MultiLvlStrLit {
+pub fn multi_lvl_str_lit(element: &Element) -> super::MultiLvlStrLit {
     let mut node = super::MultiLvlStrLit::default();
     let mut reader = markup::Reader::new(element, &super::MULTI_LVL_STR_LIT_SHAPE);
     for (index, field) in &mut reader {

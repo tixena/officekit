@@ -1,8 +1,8 @@
 use alloc::sync::Arc;
 
 use super::parse;
-use crate::xml::element::{Node, XmlError};
-use crate::xml::name::{Namespace, QName};
+use crate::element::{Node, XmlError};
+use crate::name::{Namespace, QName};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";

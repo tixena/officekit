@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `xltc:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Mention` as its element, `xltc:mention`.
 #[must_use]
-pub fn mention(node: &super::Mention, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn mention(node: &super::Mention, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.mentionperson_id);
     writer.attribute(1, &node.mention_id);
@@ -236,7 +237,7 @@ pub fn mention(node: &super::Mention, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Mentions` as its element, `xltc:mentions`.
 #[must_use]
-pub fn mentions(node: &super::Mentions, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn mentions(node: &super::Mentions, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENTIONS_SHAPE, &node.unknown);
     writer.child(&node.mention);
     writer.finish()
@@ -244,7 +245,7 @@ pub fn mentions(node: &super::Mentions, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Person` as its element, `xltc:person`.
 #[must_use]
-pub fn person(node: &super::Person, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PERSON_SHAPE, &node.unknown);
     writer.attribute(0, &node.display_name);
     writer.attribute(1, &node.id);
@@ -256,7 +257,7 @@ pub fn person(node: &super::Person, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `PersonList` as its element, `xltc:personList`.
 #[must_use]
-pub fn person_list(node: &super::PersonList, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn person_list(node: &super::PersonList, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PERSON_LIST_SHAPE, &node.unknown);
     writer.child(&node.person);
     writer.child(&node.ext_lst);
@@ -265,7 +266,7 @@ pub fn person_list(node: &super::PersonList, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Text` as its element, `xltc:text`.
 #[must_use]
-pub fn text(node: &super::Text, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -273,10 +274,7 @@ pub fn text(node: &super::Text, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `ThreadedComment` as its element, `xltc:threadedComment`.
 #[must_use]
-pub fn threaded_comment(
-    node: &super::ThreadedComment,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn threaded_comment(node: &super::ThreadedComment, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THREADED_COMMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#ref);
     writer.attribute(1, &node.d_t);
@@ -292,10 +290,7 @@ pub fn threaded_comment(
 
 /// Write a `ThreadedComments` as its element, `xltc:ThreadedComments`.
 #[must_use]
-pub fn threaded_comments(
-    node: &super::ThreadedComments,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn threaded_comments(node: &super::ThreadedComments, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THREADED_COMMENTS_SHAPE, &node.unknown);
     writer.child(&node.threaded_comment);
     writer.child(&node.ext_lst);

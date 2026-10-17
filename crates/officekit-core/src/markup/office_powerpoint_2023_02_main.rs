@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_P232: Option<NamespaceId> = Some(77);
@@ -359,7 +359,7 @@ pub struct PhTypeExt {
 #[non_exhaustive]
 pub enum PlaceholderTypeContent {
     Cameo(Cameo),
-    Other(xml::element::Node),
+    Other(Node),
     Unknown(Unknown),
 }
 
@@ -406,7 +406,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Cameo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cameo(element)
     }
 }
@@ -419,7 +419,7 @@ impl markup::Write for Cameo {
 }
 
 impl markup::Read for PhTypeExt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ph_type_ext(element)
     }
 }
@@ -438,15 +438,15 @@ impl Default for PlaceholderTypeContent {
 }
 
 impl markup::Read for PlaceholderTypeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P232, "cameo")) => Self::Cameo(markup::read(element)),
             Some((NS_P232, "unknown")) => Self::Unknown(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -462,7 +462,7 @@ impl markup::Write for PlaceholderTypeContent {
 }
 
 impl markup::Read for Type {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#type(element)
     }
 }
@@ -475,7 +475,7 @@ impl markup::Write for Type {
 }
 
 impl markup::Read for Unknown {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unknown(element)
     }
 }

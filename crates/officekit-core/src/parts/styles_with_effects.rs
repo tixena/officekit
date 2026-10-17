@@ -350,9 +350,9 @@ use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
 #[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::xml::conformance::ConformanceClass;
+use officekit_xml::conformance::ConformanceClass;
 #[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::xml::write::WriteOptions;
+use officekit_xml::write::WriteOptions;
 
 /// The content type SDK 3.5.1's part data gives.
 pub const CONTENT_TYPE: &str = "application/vnd.ms-word.stylesWithEffects+xml";

@@ -1,8 +1,8 @@
 use super::{Attribute, Document, Element, NamespaceDeclaration, Node};
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::name::{Namespace, QName};
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
+use crate::conformance::ConformanceClass;
+use crate::name::{Namespace, QName};
+use crate::parse::parse;
+use crate::write::{Layout, WriteOptions};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";

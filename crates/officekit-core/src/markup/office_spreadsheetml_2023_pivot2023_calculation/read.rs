@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlpcalc:aggregationInfo` into a `AggregationInfo`.
 #[must_use]
-pub fn aggregation_info(element: &xml::element::Element) -> super::AggregationInfo {
+pub fn aggregation_info(element: &Element) -> super::AggregationInfo {
     let mut node = super::AggregationInfo::default();
     let mut reader = markup::Reader::new(element, &super::AGGREGATION_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn aggregation_info(element: &xml::element::Element) -> super::AggregationIn
 
 /// Read `xlpcalc:featureSupportInfo` into a `FeatureSupportInfo`.
 #[must_use]
-pub fn feature_support_info(element: &xml::element::Element) -> super::FeatureSupportInfo {
+pub fn feature_support_info(element: &Element) -> super::FeatureSupportInfo {
     let mut node = super::FeatureSupportInfo::default();
     let mut reader = markup::Reader::new(element, &super::FEATURE_SUPPORT_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -247,9 +247,7 @@ pub fn feature_support_info(element: &xml::element::Element) -> super::FeatureSu
 
 /// Read `xlpcalc:pivotAreaReferenceSubtotals` into a `PivotAreaReferenceSubtotals`.
 #[must_use]
-pub fn pivot_area_reference_subtotals(
-    element: &xml::element::Element,
-) -> super::PivotAreaReferenceSubtotals {
+pub fn pivot_area_reference_subtotals(element: &Element) -> super::PivotAreaReferenceSubtotals {
     let mut node = super::PivotAreaReferenceSubtotals::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE);
     for (index, field) in &mut reader {
@@ -263,9 +261,7 @@ pub fn pivot_area_reference_subtotals(
 
 /// Read `xlpcalc:pivotFieldSubtotalLineItems` into a `PivotFieldSubtotalLineItems`.
 #[must_use]
-pub fn pivot_field_subtotal_line_items(
-    element: &xml::element::Element,
-) -> super::PivotFieldSubtotalLineItems {
+pub fn pivot_field_subtotal_line_items(element: &Element) -> super::PivotFieldSubtotalLineItems {
     let mut node = super::PivotFieldSubtotalLineItems::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE);
     for (index, field) in &mut reader {
@@ -279,7 +275,7 @@ pub fn pivot_field_subtotal_line_items(
 
 /// Read `xlpcalc:pivotFieldSubtotals` into a `PivotFieldSubtotals`.
 #[must_use]
-pub fn pivot_field_subtotals(element: &xml::element::Element) -> super::PivotFieldSubtotals {
+pub fn pivot_field_subtotals(element: &Element) -> super::PivotFieldSubtotals {
     let mut node = super::PivotFieldSubtotals::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_FIELD_SUBTOTALS_SHAPE);
     for (index, field) in &mut reader {
@@ -293,7 +289,7 @@ pub fn pivot_field_subtotals(element: &xml::element::Element) -> super::PivotFie
 
 /// Read `xlpcalc:subtotalLineItem` into a `SubtotalLineItem`.
 #[must_use]
-pub fn subtotal_line_item(element: &xml::element::Element) -> super::SubtotalLineItem {
+pub fn subtotal_line_item(element: &Element) -> super::SubtotalLineItem {
     let reader = markup::Reader::new(element, &super::SUBTOTAL_LINE_ITEM_SHAPE);
     super::SubtotalLineItem {
         unknown: reader.finish(),
@@ -302,9 +298,7 @@ pub fn subtotal_line_item(element: &xml::element::Element) -> super::SubtotalLin
 
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotItemSubtotal`.
 #[must_use]
-pub fn subtotal_pivot_item_subtotal(
-    element: &xml::element::Element,
-) -> super::SubtotalPivotItemSubtotal {
+pub fn subtotal_pivot_item_subtotal(element: &Element) -> super::SubtotalPivotItemSubtotal {
     let reader = markup::Reader::new(element, &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE);
     super::SubtotalPivotItemSubtotal {
         unknown: reader.finish(),
@@ -313,9 +307,7 @@ pub fn subtotal_pivot_item_subtotal(
 
 /// Read `xlpcalc:subtotal` into a `SubtotalPivotSubtotalType`.
 #[must_use]
-pub fn subtotal_pivot_subtotal_type(
-    element: &xml::element::Element,
-) -> super::SubtotalPivotSubtotalType {
+pub fn subtotal_pivot_subtotal_type(element: &Element) -> super::SubtotalPivotSubtotalType {
     let mut node = super::SubtotalPivotSubtotalType::default();
     let mut reader = markup::Reader::new(element, &super::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE);
     for (index, field) in &mut reader {

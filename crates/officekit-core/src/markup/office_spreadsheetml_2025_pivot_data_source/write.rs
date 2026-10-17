@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `PivotCacheDataSource` as its element, `xlpds:pivotCacheDataSource`.
 #[must_use]
-pub fn pivot_cache_data_source(
-    node: &super::PivotCacheDataSource,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_cache_data_source(node: &super::PivotCacheDataSource, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::PIVOT_CACHE_DATA_SOURCE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#ref);

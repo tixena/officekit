@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `clbl:ext` into a `Ext`.
 #[must_use]
-pub fn ext(element: &xml::element::Element) -> super::Ext {
+pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = markup::Reader::new(element, &super::EXT_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn ext(element: &xml::element::Element) -> super::Ext {
 
 /// Read `clbl:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -247,7 +247,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `clbl:label` into a `Label`.
 #[must_use]
-pub fn label(element: &xml::element::Element) -> super::Label {
+pub fn label(element: &Element) -> super::Label {
     let mut node = super::Label::default();
     let mut reader = markup::Reader::new(element, &super::LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +270,7 @@ pub fn label(element: &xml::element::Element) -> super::Label {
 
 /// Read `clbl:labelList` into a `LabelList`.
 #[must_use]
-pub fn label_list(element: &xml::element::Element) -> super::LabelList {
+pub fn label_list(element: &Element) -> super::LabelList {
     let mut node = super::LabelList::default();
     let mut reader = markup::Reader::new(element, &super::LABEL_LIST_SHAPE);
     for (index, field) in &mut reader {

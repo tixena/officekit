@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1464,7 +1464,7 @@ pub struct Axis {
 #[non_exhaustive]
 pub enum AxisContent {
     CatScaling(CatScaling),
-    Other(xml::element::Node),
+    Other(Node),
     ValScaling(ValScaling),
 }
 
@@ -1537,7 +1537,7 @@ pub struct Binning {
 pub enum BinningContent {
     BinCount(BinCount),
     BinSize(BinSize),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `cx:catScaling`, schema type `CT_CategoryAxisScaling` of SDK 3.5.1's data.
@@ -3621,7 +3621,7 @@ pub struct Data {
 #[non_exhaustive]
 pub enum DataContent {
     NumDim(NumDim),
-    Other(xml::element::Node),
+    Other(Node),
     StrDim(StrDim),
 }
 
@@ -4110,7 +4110,7 @@ pub struct Geography {
 pub enum GeographyCacheContent {
     Binary(Binary),
     Clear(Clear),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `cx:headerFooter`, schema type `CT_HeaderFooter` of SDK 3.5.1's data.
@@ -4322,7 +4322,7 @@ pub enum NumericDimensionContent {
     F(F),
     LvlNumericLevel(LvlNumericLevel),
     Nf(Nf),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// `ST_NumericDimensionType`: the text the file carried.
@@ -4587,7 +4587,7 @@ pub enum SeriesLayoutMember {
 pub enum SeriesLayoutPropertiesContent {
     Aggregation(Aggregation),
     Binning(Binning),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// `ST_SidePos`: the text the file carried.
@@ -4692,7 +4692,7 @@ pub enum StringDimensionContent {
     F(F),
     LvlStringLevel(LvlStringLevel),
     Nf(Nf),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// `ST_StringDimensionType`: the text the file carried.
@@ -4720,7 +4720,7 @@ pub struct Subtotals {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum TextContent {
-    Other(xml::element::Node),
+    Other(Node),
     Rich(Rich),
     TxData(TxData),
 }
@@ -4730,7 +4730,7 @@ pub enum TextContent {
 #[non_exhaustive]
 pub enum TextDataContent {
     F(F),
-    Other(xml::element::Node),
+    Other(Node),
     V(V),
 }
 
@@ -4841,7 +4841,7 @@ pub struct ValScaling {
 pub enum ValueColorEndPositionContent {
     ExtremeValue(ExtremeValue),
     Number(Number),
-    Other(xml::element::Node),
+    Other(Node),
     Percent(Percent),
 }
 
@@ -4850,7 +4850,7 @@ pub enum ValueColorEndPositionContent {
 #[non_exhaustive]
 pub enum ValueColorMiddlePositionContent {
     Number(Number),
-    Other(xml::element::Node),
+    Other(Node),
     Percent(Percent),
 }
 
@@ -5470,7 +5470,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Address {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::address(element)
     }
 }
@@ -5483,7 +5483,7 @@ impl markup::Write for Address {
 }
 
 impl markup::Read for Aggregation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::aggregation(element)
     }
 }
@@ -5496,7 +5496,7 @@ impl markup::Write for Aggregation {
 }
 
 impl markup::Read for Axis {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::axis(element)
     }
 }
@@ -5515,15 +5515,15 @@ impl Default for AxisContent {
 }
 
 impl markup::Read for AxisContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "catScaling")) => Self::CatScaling(markup::read(element)),
             Some((NS_CX, "valScaling")) => Self::ValScaling(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -5539,7 +5539,7 @@ impl markup::Write for AxisContent {
 }
 
 impl markup::Read for AxisId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::axis_id(element)
     }
 }
@@ -5637,7 +5637,7 @@ impl AxisUnit {
 }
 
 impl markup::Read for BinCount {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bin_count(element)
     }
 }
@@ -5650,7 +5650,7 @@ impl markup::Write for BinCount {
 }
 
 impl markup::Read for BinSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bin_size(element)
     }
 }
@@ -5663,7 +5663,7 @@ impl markup::Write for BinSize {
 }
 
 impl markup::Read for Binary {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary(element)
     }
 }
@@ -5676,7 +5676,7 @@ impl markup::Write for Binary {
 }
 
 impl markup::Read for Binning {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binning(element)
     }
 }
@@ -5689,15 +5689,15 @@ impl markup::Write for Binning {
 }
 
 impl markup::Read for BinningContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "binCount")) => Self::BinCount(markup::read(element)),
             Some((NS_CX, "binSize")) => Self::BinSize(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -5713,7 +5713,7 @@ impl markup::Write for BinningContent {
 }
 
 impl markup::Read for CatScaling {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cat_scaling(element)
     }
 }
@@ -5726,7 +5726,7 @@ impl markup::Write for CatScaling {
 }
 
 impl markup::Read for ChartChart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_chart(element)
     }
 }
@@ -5739,7 +5739,7 @@ impl markup::Write for ChartChart {
 }
 
 impl markup::Read for ChartData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_data(element)
     }
 }
@@ -5752,7 +5752,7 @@ impl markup::Write for ChartData {
 }
 
 impl markup::Read for ChartRelId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_rel_id(element)
     }
 }
@@ -5765,7 +5765,7 @@ impl markup::Write for ChartRelId {
 }
 
 impl markup::Read for ChartSpace {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_space(element)
     }
 }
@@ -5778,7 +5778,7 @@ impl markup::Write for ChartSpace {
 }
 
 impl markup::Read for Clear {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::clear(element)
     }
 }
@@ -5791,7 +5791,7 @@ impl markup::Write for Clear {
 }
 
 impl markup::Read for ClrMapOvr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::clr_map_ovr(element)
     }
 }
@@ -5804,7 +5804,7 @@ impl markup::Write for ClrMapOvr {
 }
 
 impl markup::Read for Copyright {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::copyright(element)
     }
 }
@@ -5817,7 +5817,7 @@ impl markup::Write for Copyright {
 }
 
 impl markup::Read for Copyrights {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::copyrights(element)
     }
 }
@@ -5830,7 +5830,7 @@ impl markup::Write for Copyrights {
 }
 
 impl markup::Read for Data {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data(element)
     }
 }
@@ -5843,15 +5843,15 @@ impl markup::Write for Data {
 }
 
 impl markup::Read for DataContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "numDim")) => Self::NumDim(markup::read(element)),
             Some((NS_CX, "strDim")) => Self::StrDim(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -5867,7 +5867,7 @@ impl markup::Write for DataContent {
 }
 
 impl markup::Read for DataId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_id(element)
     }
 }
@@ -5880,7 +5880,7 @@ impl markup::Write for DataId {
 }
 
 impl markup::Read for DataLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_label(element)
     }
 }
@@ -5893,7 +5893,7 @@ impl markup::Write for DataLabel {
 }
 
 impl markup::Read for DataLabelHidden {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_label_hidden(element)
     }
 }
@@ -5962,7 +5962,7 @@ impl DataLabelPos {
 }
 
 impl markup::Read for DataLabels {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_labels(element)
     }
 }
@@ -5975,7 +5975,7 @@ impl markup::Write for DataLabels {
 }
 
 impl markup::Read for DataPt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_pt(element)
     }
 }
@@ -5988,7 +5988,7 @@ impl markup::Write for DataPt {
 }
 
 impl markup::Read for EntityType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entity_type(element)
     }
 }
@@ -6001,7 +6001,7 @@ impl markup::Write for EntityType {
 }
 
 impl markup::Read for EvenFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::even_footer(element)
     }
 }
@@ -6014,7 +6014,7 @@ impl markup::Write for EvenFooter {
 }
 
 impl markup::Read for EvenHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::even_header(element)
     }
 }
@@ -6027,7 +6027,7 @@ impl markup::Write for EvenHeader {
 }
 
 impl markup::Read for Ext {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext(element)
     }
 }
@@ -6040,7 +6040,7 @@ impl markup::Write for Ext {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -6053,7 +6053,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for ExternalData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::external_data(element)
     }
 }
@@ -6066,7 +6066,7 @@ impl markup::Write for ExternalData {
 }
 
 impl markup::Read for ExtremeValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extreme_value(element)
     }
 }
@@ -6079,7 +6079,7 @@ impl markup::Write for ExtremeValue {
 }
 
 impl markup::Read for F {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::f(element)
     }
 }
@@ -6092,7 +6092,7 @@ impl markup::Write for F {
 }
 
 impl markup::Read for FirstFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::first_footer(element)
     }
 }
@@ -6105,7 +6105,7 @@ impl markup::Write for FirstFooter {
 }
 
 impl markup::Read for FirstHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::first_header(element)
     }
 }
@@ -6118,7 +6118,7 @@ impl markup::Write for FirstHeader {
 }
 
 impl markup::Read for FmtOvr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fmt_ovr(element)
     }
 }
@@ -6131,7 +6131,7 @@ impl markup::Write for FmtOvr {
 }
 
 impl markup::Read for FmtOvrs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fmt_ovrs(element)
     }
 }
@@ -6144,7 +6144,7 @@ impl markup::Write for FmtOvrs {
 }
 
 impl markup::Read for GeoCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_cache(element)
     }
 }
@@ -6157,7 +6157,7 @@ impl markup::Write for GeoCache {
 }
 
 impl markup::Read for GeoChildEntities {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_child_entities(element)
     }
 }
@@ -6170,7 +6170,7 @@ impl markup::Write for GeoChildEntities {
 }
 
 impl markup::Read for GeoChildEntitiesQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_child_entities_query(element)
     }
 }
@@ -6183,7 +6183,7 @@ impl markup::Write for GeoChildEntitiesQuery {
 }
 
 impl markup::Read for GeoChildEntitiesQueryResult {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_child_entities_query_result(element)
     }
 }
@@ -6196,7 +6196,7 @@ impl markup::Write for GeoChildEntitiesQueryResult {
 }
 
 impl markup::Read for GeoChildEntitiesQueryResults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_child_entities_query_results(element)
     }
 }
@@ -6209,7 +6209,7 @@ impl markup::Write for GeoChildEntitiesQueryResults {
 }
 
 impl markup::Read for GeoChildTypes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_child_types(element)
     }
 }
@@ -6222,7 +6222,7 @@ impl markup::Write for GeoChildTypes {
 }
 
 impl markup::Read for GeoData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data(element)
     }
 }
@@ -6235,7 +6235,7 @@ impl markup::Write for GeoData {
 }
 
 impl markup::Read for GeoDataEntityQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_entity_query(element)
     }
 }
@@ -6248,7 +6248,7 @@ impl markup::Write for GeoDataEntityQuery {
 }
 
 impl markup::Read for GeoDataEntityQueryResult {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_entity_query_result(element)
     }
 }
@@ -6261,7 +6261,7 @@ impl markup::Write for GeoDataEntityQueryResult {
 }
 
 impl markup::Read for GeoDataEntityQueryResults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_entity_query_results(element)
     }
 }
@@ -6274,7 +6274,7 @@ impl markup::Write for GeoDataEntityQueryResults {
 }
 
 impl markup::Read for GeoDataPointQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_point_query(element)
     }
 }
@@ -6287,7 +6287,7 @@ impl markup::Write for GeoDataPointQuery {
 }
 
 impl markup::Read for GeoDataPointToEntityQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_point_to_entity_query(element)
     }
 }
@@ -6300,7 +6300,7 @@ impl markup::Write for GeoDataPointToEntityQuery {
 }
 
 impl markup::Read for GeoDataPointToEntityQueryResult {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_point_to_entity_query_result(element)
     }
 }
@@ -6313,7 +6313,7 @@ impl markup::Write for GeoDataPointToEntityQueryResult {
 }
 
 impl markup::Read for GeoDataPointToEntityQueryResults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_data_point_to_entity_query_results(element)
     }
 }
@@ -6326,7 +6326,7 @@ impl markup::Write for GeoDataPointToEntityQueryResults {
 }
 
 impl markup::Read for GeoEntity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_entity(element)
     }
 }
@@ -6339,7 +6339,7 @@ impl markup::Write for GeoEntity {
 }
 
 impl markup::Read for GeoHierarchyEntity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_hierarchy_entity(element)
     }
 }
@@ -6352,7 +6352,7 @@ impl markup::Write for GeoHierarchyEntity {
 }
 
 impl markup::Read for GeoLocation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_location(element)
     }
 }
@@ -6365,7 +6365,7 @@ impl markup::Write for GeoLocation {
 }
 
 impl markup::Read for GeoLocationQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_location_query(element)
     }
 }
@@ -6378,7 +6378,7 @@ impl markup::Write for GeoLocationQuery {
 }
 
 impl markup::Read for GeoLocationQueryResult {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_location_query_result(element)
     }
 }
@@ -6391,7 +6391,7 @@ impl markup::Write for GeoLocationQueryResult {
 }
 
 impl markup::Read for GeoLocationQueryResults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_location_query_results(element)
     }
 }
@@ -6404,7 +6404,7 @@ impl markup::Write for GeoLocationQueryResults {
 }
 
 impl markup::Read for GeoLocations {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_locations(element)
     }
 }
@@ -6487,7 +6487,7 @@ impl GeoMappingLevel {
 }
 
 impl markup::Read for GeoParentEntitiesQuery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_parent_entities_query(element)
     }
 }
@@ -6500,7 +6500,7 @@ impl markup::Write for GeoParentEntitiesQuery {
 }
 
 impl markup::Read for GeoParentEntitiesQueryResult {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_parent_entities_query_result(element)
     }
 }
@@ -6513,7 +6513,7 @@ impl markup::Write for GeoParentEntitiesQueryResult {
 }
 
 impl markup::Read for GeoParentEntitiesQueryResults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_parent_entities_query_results(element)
     }
 }
@@ -6526,7 +6526,7 @@ impl markup::Write for GeoParentEntitiesQueryResults {
 }
 
 impl markup::Read for GeoParentEntity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_parent_entity(element)
     }
 }
@@ -6539,7 +6539,7 @@ impl markup::Write for GeoParentEntity {
 }
 
 impl markup::Read for GeoPolygon {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_polygon(element)
     }
 }
@@ -6552,7 +6552,7 @@ impl markup::Write for GeoPolygon {
 }
 
 impl markup::Read for GeoPolygons {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geo_polygons(element)
     }
 }
@@ -6620,7 +6620,7 @@ impl GeoProjectionType {
 }
 
 impl markup::Read for Geography {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geography(element)
     }
 }
@@ -6633,15 +6633,15 @@ impl markup::Write for Geography {
 }
 
 impl markup::Read for GeographyCacheContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "binary")) => Self::Binary(markup::read(element)),
             Some((NS_CX, "clear")) => Self::Clear(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6657,7 +6657,7 @@ impl markup::Write for GeographyCacheContent {
 }
 
 impl markup::Read for HeaderFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_footer(element)
     }
 }
@@ -6670,7 +6670,7 @@ impl markup::Write for HeaderFooter {
 }
 
 impl markup::Read for Idx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::idx(element)
     }
 }
@@ -6736,7 +6736,7 @@ impl IntervalClosedSide {
 }
 
 impl markup::Read for LayoutPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_pr(element)
     }
 }
@@ -6749,7 +6749,7 @@ impl markup::Write for LayoutPr {
 }
 
 impl markup::Read for Legend {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::legend(element)
     }
 }
@@ -6762,7 +6762,7 @@ impl markup::Write for Legend {
 }
 
 impl markup::Read for LvlNumericLevel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lvl_numeric_level(element)
     }
 }
@@ -6775,7 +6775,7 @@ impl markup::Write for LvlNumericLevel {
 }
 
 impl markup::Read for LvlStringLevel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lvl_string_level(element)
     }
 }
@@ -6788,7 +6788,7 @@ impl markup::Write for LvlStringLevel {
 }
 
 impl markup::Read for MajorGridlines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::major_gridlines(element)
     }
 }
@@ -6801,7 +6801,7 @@ impl markup::Write for MajorGridlines {
 }
 
 impl markup::Read for MajorTickMarks {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::major_tick_marks(element)
     }
 }
@@ -6814,7 +6814,7 @@ impl markup::Write for MajorTickMarks {
 }
 
 impl markup::Read for Max {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::max(element)
     }
 }
@@ -6827,7 +6827,7 @@ impl markup::Write for Max {
 }
 
 impl markup::Read for MaxColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::max_color(element)
     }
 }
@@ -6840,7 +6840,7 @@ impl markup::Write for MaxColor {
 }
 
 impl markup::Read for Mid {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mid(element)
     }
 }
@@ -6853,7 +6853,7 @@ impl markup::Write for Mid {
 }
 
 impl markup::Read for MidColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mid_color(element)
     }
 }
@@ -6866,7 +6866,7 @@ impl markup::Write for MidColor {
 }
 
 impl markup::Read for Min {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::min(element)
     }
 }
@@ -6879,7 +6879,7 @@ impl markup::Write for Min {
 }
 
 impl markup::Read for MinColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::min_color(element)
     }
 }
@@ -6892,7 +6892,7 @@ impl markup::Write for MinColor {
 }
 
 impl markup::Read for MinorGridlines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::minor_gridlines(element)
     }
 }
@@ -6905,7 +6905,7 @@ impl markup::Write for MinorGridlines {
 }
 
 impl markup::Read for MinorTickMarks {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::minor_tick_marks(element)
     }
 }
@@ -6918,7 +6918,7 @@ impl markup::Write for MinorTickMarks {
 }
 
 impl markup::Read for Nf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nf(element)
     }
 }
@@ -6931,7 +6931,7 @@ impl markup::Write for Nf {
 }
 
 impl markup::Read for NumDim {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::num_dim(element)
     }
 }
@@ -6944,7 +6944,7 @@ impl markup::Write for NumDim {
 }
 
 impl markup::Read for NumFmt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::num_fmt(element)
     }
 }
@@ -6957,7 +6957,7 @@ impl markup::Write for NumFmt {
 }
 
 impl markup::Read for Number {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number(element)
     }
 }
@@ -6970,16 +6970,16 @@ impl markup::Write for Number {
 }
 
 impl markup::Read for NumericDimensionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "f")) => Self::F(markup::read(element)),
             Some((NS_CX, "lvl")) => Self::LvlNumericLevel(markup::read(element)),
             Some((NS_CX, "nf")) => Self::Nf(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7052,7 +7052,7 @@ impl NumericDimensionType {
 }
 
 impl markup::Read for OddFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::odd_footer(element)
     }
 }
@@ -7065,7 +7065,7 @@ impl markup::Write for OddFooter {
 }
 
 impl markup::Read for OddHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::odd_header(element)
     }
 }
@@ -7078,7 +7078,7 @@ impl markup::Write for OddHeader {
 }
 
 impl markup::Read for Offset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::offset(element)
     }
 }
@@ -7091,7 +7091,7 @@ impl markup::Write for Offset {
 }
 
 impl markup::Read for Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::openxmlsdk49becffa3b034d138272d6ccb22579e3(element)
     }
 }
@@ -7104,7 +7104,7 @@ impl markup::Write for Openxmlsdk49BECFFA3B034D138272D6CCB22579E3 {
 }
 
 impl markup::Read for PageMargins {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_margins(element)
     }
 }
@@ -7175,7 +7175,7 @@ impl PageOrientation {
 }
 
 impl markup::Read for PageSetup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_setup(element)
     }
 }
@@ -7188,7 +7188,7 @@ impl markup::Write for PageSetup {
 }
 
 impl markup::Read for ParentLabelLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::parent_label_layout(element)
     }
 }
@@ -7201,7 +7201,7 @@ impl markup::Write for ParentLabelLayout {
 }
 
 impl markup::Read for Percent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::percent(element)
     }
 }
@@ -7214,7 +7214,7 @@ impl markup::Write for Percent {
 }
 
 impl markup::Read for PlotArea {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plot_area(element)
     }
 }
@@ -7227,7 +7227,7 @@ impl markup::Write for PlotArea {
 }
 
 impl markup::Read for PlotAreaRegion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plot_area_region(element)
     }
 }
@@ -7240,7 +7240,7 @@ impl markup::Write for PlotAreaRegion {
 }
 
 impl markup::Read for PlotSurface {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plot_surface(element)
     }
 }
@@ -7303,7 +7303,7 @@ impl PosAlign {
 }
 
 impl markup::Read for PrintSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_settings(element)
     }
 }
@@ -7316,7 +7316,7 @@ impl markup::Write for PrintSettings {
 }
 
 impl markup::Read for PtNumericValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pt_numeric_value(element)
     }
 }
@@ -7329,7 +7329,7 @@ impl markup::Write for PtNumericValue {
 }
 
 impl markup::Read for PtStringValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pt_string_value(element)
     }
 }
@@ -7399,7 +7399,7 @@ impl QuartileMethod {
 }
 
 impl markup::Read for RegionLabelLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::region_label_layout(element)
     }
 }
@@ -7412,7 +7412,7 @@ impl markup::Write for RegionLabelLayout {
 }
 
 impl markup::Read for Rich {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich(element)
     }
 }
@@ -7425,7 +7425,7 @@ impl markup::Write for Rich {
 }
 
 impl markup::Read for Separator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::separator(element)
     }
 }
@@ -7438,7 +7438,7 @@ impl markup::Write for Separator {
 }
 
 impl markup::Read for Series {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::series(element)
     }
 }
@@ -7526,15 +7526,15 @@ impl SeriesLayout {
 }
 
 impl markup::Read for SeriesLayoutPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "aggregation")) => Self::Aggregation(markup::read(element)),
             Some((NS_CX, "binning")) => Self::Binning(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7601,7 +7601,7 @@ impl SidePos {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -7817,7 +7817,7 @@ impl StRegionLabelLayout {
 }
 
 impl markup::Read for Statistics {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::statistics(element)
     }
 }
@@ -7830,7 +7830,7 @@ impl markup::Write for Statistics {
 }
 
 impl markup::Read for StrDim {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::str_dim(element)
     }
 }
@@ -7843,16 +7843,16 @@ impl markup::Write for StrDim {
 }
 
 impl markup::Read for StringDimensionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "f")) => Self::F(markup::read(element)),
             Some((NS_CX, "lvl")) => Self::LvlStringLevel(markup::read(element)),
             Some((NS_CX, "nf")) => Self::Nf(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7923,7 +7923,7 @@ impl StringDimensionType {
 }
 
 impl markup::Read for Subtotals {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subtotals(element)
     }
 }
@@ -7942,15 +7942,15 @@ impl Default for TextContent {
 }
 
 impl markup::Read for TextContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "rich")) => Self::Rich(markup::read(element)),
             Some((NS_CX, "txData")) => Self::TxData(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7972,15 +7972,15 @@ impl Default for TextDataContent {
 }
 
 impl markup::Read for TextDataContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "f")) => Self::F(markup::read(element)),
             Some((NS_CX, "v")) => Self::V(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7996,7 +7996,7 @@ impl markup::Write for TextDataContent {
 }
 
 impl markup::Read for TickLabels {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tick_labels(element)
     }
 }
@@ -8009,7 +8009,7 @@ impl markup::Write for TickLabels {
 }
 
 impl markup::Read for TitleAxisTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_axis_title(element)
     }
 }
@@ -8022,7 +8022,7 @@ impl markup::Write for TitleAxisTitle {
 }
 
 impl markup::Read for TitleChartTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_chart_title(element)
     }
 }
@@ -8035,7 +8035,7 @@ impl markup::Write for TitleChartTitle {
 }
 
 impl markup::Read for Tx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx(element)
     }
 }
@@ -8048,7 +8048,7 @@ impl markup::Write for Tx {
 }
 
 impl markup::Read for TxData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_data(element)
     }
 }
@@ -8061,7 +8061,7 @@ impl markup::Write for TxData {
 }
 
 impl markup::Read for TxPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_pr(element)
     }
 }
@@ -8074,7 +8074,7 @@ impl markup::Write for TxPr {
 }
 
 impl markup::Read for Units {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::units(element)
     }
 }
@@ -8087,7 +8087,7 @@ impl markup::Write for Units {
 }
 
 impl markup::Read for UnitsLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::units_label(element)
     }
 }
@@ -8100,7 +8100,7 @@ impl markup::Write for UnitsLabel {
 }
 
 impl markup::Read for V {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v(element)
     }
 }
@@ -8113,7 +8113,7 @@ impl markup::Write for V {
 }
 
 impl markup::Read for ValScaling {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::val_scaling(element)
     }
 }
@@ -8132,16 +8132,16 @@ impl Default for ValueColorEndPositionContent {
 }
 
 impl markup::Read for ValueColorEndPositionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "extremeValue")) => Self::ExtremeValue(markup::read(element)),
             Some((NS_CX, "number")) => Self::Number(markup::read(element)),
             Some((NS_CX, "percent")) => Self::Percent(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8189,15 +8189,15 @@ impl Default for ValueColorMiddlePositionContent {
 }
 
 impl markup::Read for ValueColorMiddlePositionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_CX, "number")) => Self::Number(markup::read(element)),
             Some((NS_CX, "percent")) => Self::Percent(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8213,7 +8213,7 @@ impl markup::Write for ValueColorMiddlePositionContent {
 }
 
 impl markup::Read for ValueColorPositions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::value_color_positions(element)
     }
 }
@@ -8226,7 +8226,7 @@ impl markup::Write for ValueColorPositions {
 }
 
 impl markup::Read for ValueColors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::value_colors(element)
     }
 }
@@ -8239,7 +8239,7 @@ impl markup::Write for ValueColors {
 }
 
 impl markup::Read for VisibilityDataLabelVisibilities {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::visibility_data_label_visibilities(element)
     }
 }
@@ -8252,7 +8252,7 @@ impl markup::Write for VisibilityDataLabelVisibilities {
 }
 
 impl markup::Read for VisibilitySeriesElementVisibilities {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::visibility_series_element_visibilities(element)
     }
 }

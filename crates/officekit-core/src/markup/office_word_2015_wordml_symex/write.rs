@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `SymEx` as its element, `w16se:symEx`.
 #[must_use]
-pub fn sym_ex(node: &super::SymEx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sym_ex(node: &super::SymEx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SYM_EX_SHAPE, &node.unknown);
     writer.attribute(0, &node.font);
     writer.attribute(1, &node.char);

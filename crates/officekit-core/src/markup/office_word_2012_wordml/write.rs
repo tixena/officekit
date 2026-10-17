@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Appearance` as its element, `w15:appearance`.
 #[must_use]
-pub fn appearance(node: &super::Appearance, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn appearance(node: &super::Appearance, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::APPEARANCE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -225,10 +226,7 @@ pub fn appearance(node: &super::Appearance, scope: &mut markup::Scope) -> xml::e
 
 /// Write a `ChartTrackingRefBased` as its element, `w15:chartTrackingRefBased`.
 #[must_use]
-pub fn chart_tracking_ref_based(
-    node: &super::ChartTrackingRefBased,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CHART_TRACKING_REF_BASED_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -237,7 +235,7 @@ pub fn chart_tracking_ref_based(
 
 /// Write a `Collapsed` as its element, `w15:collapsed`.
 #[must_use]
-pub fn collapsed(node: &super::Collapsed, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn collapsed(node: &super::Collapsed, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLLAPSED_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -245,7 +243,7 @@ pub fn collapsed(node: &super::Collapsed, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Color` as its element, `w15:color`.
 #[must_use]
-pub fn color(node: &super::Color, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color(node: &super::Color, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.attribute(1, &node.theme_color);
@@ -256,7 +254,7 @@ pub fn color(node: &super::Color, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `CommentEx` as its element, `w15:commentEx`.
 #[must_use]
-pub fn comment_ex(node: &super::CommentEx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comment_ex(node: &super::CommentEx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_EX_SHAPE, &node.unknown);
     writer.attribute(0, &node.para_id);
     writer.attribute(1, &node.para_id_parent);
@@ -266,7 +264,7 @@ pub fn comment_ex(node: &super::CommentEx, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `CommentsEx` as its element, `w15:commentsEx`.
 #[must_use]
-pub fn comments_ex(node: &super::CommentsEx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comments_ex(node: &super::CommentsEx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENTS_EX_SHAPE, &node.unknown);
     writer.child(&node.comment_ex);
     writer.finish()
@@ -274,7 +272,7 @@ pub fn comments_ex(node: &super::CommentsEx, scope: &mut markup::Scope) -> xml::
 
 /// Write a `DataBinding` as its element, `w15:dataBinding`.
 #[must_use]
-pub fn data_binding(node: &super::DataBinding, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_binding(node: &super::DataBinding, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_BINDING_SHAPE, &node.unknown);
     writer.attribute(0, &node.prefix_mappings);
     writer.attribute(1, &node.xpath);
@@ -286,8 +284,8 @@ pub fn data_binding(node: &super::DataBinding, scope: &mut markup::Scope) -> xml
 #[must_use]
 pub fn do_not_allow_insert_delete_section(
     node: &super::DoNotAllowInsertDeleteSection,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DO_NOT_ALLOW_INSERT_DELETE_SECTION_SHAPE,
@@ -299,7 +297,7 @@ pub fn do_not_allow_insert_delete_section(
 
 /// Write a `DocId` as its element, `w15:docId`.
 #[must_use]
-pub fn doc_id(node: &super::DocId, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn doc_id(node: &super::DocId, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOC_ID_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -307,10 +305,7 @@ pub fn doc_id(node: &super::DocId, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `FootnoteColumns` as its element, `w15:footnoteColumns`.
 #[must_use]
-pub fn footnote_columns(
-    node: &super::FootnoteColumns,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn footnote_columns(node: &super::FootnoteColumns, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FOOTNOTE_COLUMNS_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -318,7 +313,7 @@ pub fn footnote_columns(
 
 /// Write a `People` as its element, `w15:people`.
 #[must_use]
-pub fn people(node: &super::People, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn people(node: &super::People, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PEOPLE_SHAPE, &node.unknown);
     writer.child(&node.person);
     writer.finish()
@@ -326,7 +321,7 @@ pub fn people(node: &super::People, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Person` as its element, `w15:person`.
 #[must_use]
-pub fn person(node: &super::Person, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PERSON_SHAPE, &node.unknown);
     writer.attribute(0, &node.author);
     writer.child(&node.presence_info);
@@ -335,10 +330,7 @@ pub fn person(node: &super::Person, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `PresenceInfo` as its element, `w15:presenceInfo`.
 #[must_use]
-pub fn presence_info(
-    node: &super::PresenceInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRESENCE_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.provider_id);
     writer.attribute(1, &node.user_id);
@@ -347,10 +339,7 @@ pub fn presence_info(
 
 /// Write a `RepeatingSection` as its element, `w15:repeatingSection`.
 #[must_use]
-pub fn repeating_section(
-    node: &super::RepeatingSection,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn repeating_section(node: &super::RepeatingSection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REPEATING_SECTION_SHAPE, &node.unknown);
     writer.child(&node.title);
     writer.child(&node.do_not_allow_insert_delete_section);
@@ -359,19 +348,13 @@ pub fn repeating_section(
 
 /// Write a `RepeatingSectionItem` as its element, `w15:repeatingSectionItem`.
 #[must_use]
-pub fn repeating_section_item(
-    node: &super::RepeatingSectionItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn repeating_section_item(node: &super::RepeatingSectionItem, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::REPEATING_SECTION_ITEM_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `SectionTitle` as its element, `w15:sectionTitle`.
 #[must_use]
-pub fn section_title(
-    node: &super::SectionTitle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn section_title(node: &super::SectionTitle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SECTION_TITLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -379,10 +362,7 @@ pub fn section_title(
 
 /// Write a `WebExtensionCreated` as its element, `w15:webExtensionCreated`.
 #[must_use]
-pub fn web_extension_created(
-    node: &super::WebExtensionCreated,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn web_extension_created(node: &super::WebExtensionCreated, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEB_EXTENSION_CREATED_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -390,10 +370,7 @@ pub fn web_extension_created(
 
 /// Write a `WebExtensionLinked` as its element, `w15:webExtensionLinked`.
 #[must_use]
-pub fn web_extension_linked(
-    node: &super::WebExtensionLinked,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn web_extension_linked(node: &super::WebExtensionLinked, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEB_EXTENSION_LINKED_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

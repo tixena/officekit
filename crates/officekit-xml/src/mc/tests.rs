@@ -1,8 +1,8 @@
 use super::MarkupCompatibility;
-use crate::xml::element::XmlError;
-use crate::xml::name::OfficeVersion;
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
+use crate::element::XmlError;
+use crate::name::OfficeVersion;
+use crate::parse::parse;
+use crate::write::{Layout, WriteOptions};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const MC: &str = r#"xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006""#;

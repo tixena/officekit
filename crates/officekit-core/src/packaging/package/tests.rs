@@ -2,12 +2,19 @@ use core::slice;
 use std::io::{Cursor, Write as _};
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Element, NamespaceDeclaration, Node};
+use officekit_xml::error::WriteError;
+use officekit_xml::mc::MarkupCompatibility;
+use officekit_xml::name::{OfficeVersion, QName};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{Layout, WriteOptions};
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
 use super::{OpenOptions, Package, PartRoot};
-use crate::error::{PackageError, WriteError};
+use crate::error::PackageError;
 use crate::image::{Image, ImageFormat, PixelSize};
 #[cfg(feature = "transitional")]
 use crate::markup::wordprocessing::Footer;
@@ -15,11 +22,6 @@ use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target, TargetMode};
 #[cfg(feature = "transitional")]
 use crate::parts::footer;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::{Element, NamespaceDeclaration, Node};
-use crate::xml::mc::MarkupCompatibility;
-use crate::xml::name::{OfficeVersion, QName};
-use crate::xml::write::WriteOptions;
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
@@ -66,10 +68,10 @@ impl PartRoot for Note {
 
     fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
         let mut root = Element::new(QName::prefixed("w", "note", WORDPROCESSING));
-        root.namespace_declarations.push(NamespaceDeclaration {
-            prefix: "w".to_owned(),
-            uri: WORDPROCESSING.to_owned(),
-        });
+        root.namespace_declarations.push(NamespaceDeclaration::new(
+            "w".to_owned(),
+            WORDPROCESSING.to_owned(),
+        ));
         root.children.push(Node::Text(self.text.clone()));
         Ok(root)
     }
@@ -1128,5 +1130,40 @@ fn a_generated_store_of_a_new_part_registers_the_modules_content_type() {
         package
             .content_type_overrides()
             .contains(&(footer, footer::CONTENT_TYPE.to_owned()))
+    );
+}
+
+#[test]
+fn a_part_read_from_its_package_streams_a_root_that_declares_only_the_prefixes_it_uses() {
+    const MC: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+    const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
+    const W15: &str = "http://schemas.microsoft.com/office/word/2012/wordml";
+    let main = PartName::new("/word/document.xml").unwrap();
+    let declarations =
+        format!("xmlns:w=\"{W}\" xmlns:mc=\"{MC}\" xmlns:w14=\"{W14}\" xmlns:w15=\"{W15}\"");
+    let mut package = Package::new();
+    package
+        .set_part_bytes(
+            &main,
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+            format!(
+                "<w:document {declarations} mc:Ignorable=\"w14 w15\"><w:body>\n  <w:p w14:paraId=\"00000001\"/>\n</w:body></w:document>"
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+    let mut reader = package.part_reader(&main).unwrap();
+    let mut sink = Vec::new();
+    let mut out = PartWriter::new(&mut sink, Layout::Compact);
+    while let Some(event) = reader.read_event().unwrap() {
+        out.write_event(event).unwrap();
+    }
+    assert_eq!(
+        String::from_utf8(sink).unwrap(),
+        format!(
+            "<w:document xmlns:w=\"{W}\" xmlns:mc=\"{MC}\" xmlns:w14=\"{W14}\" mc:Ignorable=\"w14\">\
+             <w:body><w:p w14:paraId=\"00000001\"/></w:body></w:document>"
+        )
     );
 }

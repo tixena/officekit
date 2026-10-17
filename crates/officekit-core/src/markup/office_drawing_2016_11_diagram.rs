@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_DGM1611: Option<NamespaceId> = Some(44);
@@ -363,7 +363,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AutoBuNodeInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_bu_node_info(element)
     }
 }
@@ -376,7 +376,7 @@ impl markup::Write for AutoBuNodeInfo {
 }
 
 impl markup::Read for AutoBuNodeInfoLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_bu_node_info_lst(element)
     }
 }
@@ -389,7 +389,7 @@ impl markup::Write for AutoBuNodeInfoLst {
 }
 
 impl markup::Read for BuPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bu_pr(element)
     }
 }

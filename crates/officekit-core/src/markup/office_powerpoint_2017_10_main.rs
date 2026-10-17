@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_P1710: Option<NamespaceId> = Some(68);
@@ -280,7 +280,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ReadonlyRecommended {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::readonly_recommended(element)
     }
 }

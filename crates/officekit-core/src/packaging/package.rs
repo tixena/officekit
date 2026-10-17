@@ -7,12 +7,20 @@ use core::fmt;
 use std::io::{Cursor, Read as _};
 use std::path::{Path, PathBuf};
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use officekit_xml::error::WriteError;
+use officekit_xml::mc::MarkupCompatibility;
+use officekit_xml::name::QName;
+use officekit_xml::parse::parse;
+use officekit_xml::stream::reader::PartReader;
+use officekit_xml::write::WriteOptions;
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 
 use crate::docx::Docx;
 use crate::embedded::Embedded;
-use crate::error::{PackageError, WriteError};
+use crate::error::PackageError;
 use crate::file;
 use crate::image::{Image, ImageFormat};
 use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
@@ -27,12 +35,6 @@ use crate::pptx::Pptx;
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
 use crate::xlsx::Xlsx;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
-use crate::xml::mc::MarkupCompatibility;
-use crate::xml::name::QName;
-use crate::xml::parse::parse;
-use crate::xml::write::WriteOptions;
 
 #[cfg(test)]
 mod tests;
@@ -555,6 +557,21 @@ impl Package {
         Ok(names)
     }
 
+    /// A reader of the part's events, from its tree written again with the prefixes it uses.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::load_tree`].
+    pub fn part_reader(
+        &self,
+        name: &PartName,
+    ) -> Result<PartReader<Cursor<Vec<u8>>>, PackageError> {
+        let document = self.load_tree(name, OpenOptions::default())?;
+        Ok(PartReader::new(Cursor::new(
+            document.to_xml(WriteOptions::default()),
+        )))
+    }
+
     /// Relate `source` (`None`: the package) to a part already in the
     /// package; returns the id, one above the highest `rIdN` the source has.
     ///
@@ -957,10 +974,10 @@ impl Package {
         })?;
         tree.set_class(class);
         let document = match self.tree_at(name) {
-            Ok(previous) => Document {
-                root: tree,
-                ..previous
-            },
+            Ok(mut previous) => {
+                previous.root = tree;
+                previous
+            }
             Err(_) => Document::new(DECLARATION, tree),
         };
         self.store_tree(name, content_type, &document, options)
@@ -1123,21 +1140,21 @@ fn item_properties(item_id: &str, schema_references: &[&str]) -> Vec<u8> {
     let mut references = Element::new(QName::prefixed("ds", "schemaRefs", CUSTOM_XML_NAMESPACE));
     for uri in schema_references {
         let mut reference = Element::new(QName::prefixed("ds", "schemaRef", CUSTOM_XML_NAMESPACE));
-        reference.attributes.push(Attribute {
-            name: QName::prefixed("ds", "uri", CUSTOM_XML_NAMESPACE),
-            value: (*uri).to_owned(),
-        });
+        reference.attributes.push(Attribute::new(
+            QName::prefixed("ds", "uri", CUSTOM_XML_NAMESPACE),
+            (*uri).to_owned(),
+        ));
         references.children.push(Node::Element(reference));
     }
     let mut root = Element::new(QName::prefixed("ds", "datastoreItem", CUSTOM_XML_NAMESPACE));
-    root.namespace_declarations.push(NamespaceDeclaration {
-        prefix: "ds".to_owned(),
-        uri: CUSTOM_XML_NAMESPACE.to_owned(),
-    });
-    root.attributes.push(Attribute {
-        name: QName::prefixed("ds", "itemID", CUSTOM_XML_NAMESPACE),
-        value: item_id.to_owned(),
-    });
+    root.namespace_declarations.push(NamespaceDeclaration::new(
+        "ds".to_owned(),
+        CUSTOM_XML_NAMESPACE.to_owned(),
+    ));
+    root.attributes.push(Attribute::new(
+        QName::prefixed("ds", "itemID", CUSTOM_XML_NAMESPACE),
+        item_id.to_owned(),
+    ));
     root.children.push(Node::Element(references));
     Document::new(CUSTOM_XML_PROPERTIES_DECLARATION, root).to_xml(WriteOptions::default())
 }

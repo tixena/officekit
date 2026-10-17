@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -530,7 +530,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for NonVisualDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
     }
 }
@@ -543,7 +543,7 @@ impl markup::Write for NonVisualDrawingProperties {
 }
 
 impl markup::Read for NonVisualPictureDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_picture_drawing_properties(element)
     }
 }
@@ -556,7 +556,7 @@ impl markup::Write for NonVisualPictureDrawingProperties {
 }
 
 impl markup::Read for NonVisualPictureProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_picture_properties(element)
     }
 }
@@ -569,7 +569,7 @@ impl markup::Write for NonVisualPictureProperties {
 }
 
 impl markup::Read for Picture {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture(element)
     }
 }
@@ -582,7 +582,7 @@ impl markup::Write for Picture {
 }
 
 impl markup::Read for PictureFill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_fill(element)
     }
 }
@@ -595,7 +595,7 @@ impl markup::Write for PictureFill {
 }
 
 impl markup::Read for ShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_properties(element)
     }
 }

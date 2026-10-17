@@ -1,21 +1,22 @@
 #[cfg(feature = "transitional")]
 use core::fmt::Debug;
 
+use officekit_xml::conformance::ConformanceClass;
+#[cfg(feature = "strict")]
+use officekit_xml::error::WriteError;
+#[cfg(feature = "transitional")]
+use officekit_xml::parse::parse;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_xml::write::WriteOptions;
+
 use super::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use super::{MODULES, header, main_document, presentation, workbook};
 use crate::error::PackageError;
-#[cfg(feature = "strict")]
-use crate::error::WriteError;
 #[cfg(feature = "transitional")]
 use crate::packaging::package::PartRoot;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
-use crate::xml::conformance::ConformanceClass;
-#[cfg(feature = "transitional")]
-use crate::xml::parse::parse;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::xml::write::WriteOptions;
 
 const DOCUMENT: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><w:body><w:p><w:pPr><w:jc w:val=\"left\"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Hello </w:t></w:r></w:p><w:sectPr><w:headerReference r:id=\"rId1\" w:type=\"default\"/><w:pgSz w:w=\"12240\" w:h=\"15840\"/></w:sectPr></w:body></w:document>";
 #[cfg(any(feature = "strict", feature = "transitional"))]

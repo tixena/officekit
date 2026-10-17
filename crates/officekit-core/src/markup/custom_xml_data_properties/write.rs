@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AssociatedXMLSchema` as its element, `ds:schemaRef`.
 #[must_use]
-pub fn associated_xml_schema(
-    node: &super::AssociatedXMLSchema,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn associated_xml_schema(node: &super::AssociatedXMLSchema, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ASSOCIATED_XML_SCHEMA_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
     writer.finish()
@@ -230,8 +228,8 @@ pub fn associated_xml_schema(
 #[must_use]
 pub fn custom_xml_data_properties(
     node: &super::CustomXMLDataProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE,
@@ -246,8 +244,8 @@ pub fn custom_xml_data_properties(
 #[must_use]
 pub fn set_of_associated_xml_schemas(
     node: &super::SetOfAssociatedXMLSchemas,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE,

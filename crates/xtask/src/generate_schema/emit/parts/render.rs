@@ -45,6 +45,43 @@ const TRANSITIONAL_ONLY: &str = "#[cfg(feature = \"transitional\")]\n";
 /// The attribute of an item only a build with a class's feature uses.
 const EITHER_CLASS: &str = "#[cfg(any(feature = \"strict\", feature = \"transitional\"))]\n";
 
+/// The body of a typed root's `PartRoot::to_tree`: each class's writer when
+/// its feature is on, else the shared one, and the end of the `impl`.
+const TO_TREE_BODY: &str = "        #[cfg(feature = \"strict\")]
+        let strict = Self::to_strict;
+        #[cfg(not(feature = \"strict\"))]
+        let strict = |root: &Self| Ok(shared_tree(root));
+        #[cfg(feature = \"transitional\")]
+        let transitional = Self::to_transitional;
+        #[cfg(not(feature = \"transitional\"))]
+        let transitional = |root: &Self| Ok(shared_tree(root));
+        super::tree_in_class(self, class, strict, transitional)
+    }
+}
+
+";
+
+/// The helper every typed root's `to_tree` calls, the last item of `parts.rs`.
+const TREE_IN_CLASS: &str = "
+/// The tree of `root` in `class`, from `strict` or `transitional`, the writer of that class.
+///
+/// # Errors
+///
+/// The writer's.
+fn tree_in_class<R>(
+    root: &R,
+    class: ConformanceClass,
+    strict: fn(&R) -> Result<Element, WriteError>,
+    transitional: fn(&R) -> Result<Element, WriteError>,
+) -> Result<Element, WriteError> {
+    if class == ConformanceClass::Strict {
+        strict(root)
+    } else {
+        transitional(root)
+    }
+}
+";
+
 /// The file types of the document kinds: their enum and the file family its
 /// doc names, in the order of their enums.
 const KIND_ENUMS: [(&str, &str, &str); 3] = [
@@ -189,9 +226,10 @@ const RELATIONSHIP_METHODS: &str = "
     /// The spelling `class` writes.
     #[must_use]
     pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
-        match class {
-            ConformanceClass::Strict => self.strict,
-            ConformanceClass::Transitional => self.transitional,
+        if matches!(class, ConformanceClass::Strict) {
+            self.strict
+        } else {
+            self.transitional
         }
     }
 
@@ -551,12 +589,7 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
         &["&self".to_owned(), "class: ConformanceClass".to_owned()],
         "Result<Element, WriteError>",
     ));
-    out.push_str("        match class {\n");
-    out.push_str("            #[cfg(feature = \"strict\")]\n            ConformanceClass::Strict => self.to_strict(),\n");
-    out.push_str("            #[cfg(not(feature = \"strict\"))]\n            ConformanceClass::Strict => Ok(shared_tree(self)),\n");
-    out.push_str("            #[cfg(feature = \"transitional\")]\n            ConformanceClass::Transitional => self.to_transitional(),\n");
-    out.push_str("            #[cfg(not(feature = \"transitional\"))]\n            ConformanceClass::Transitional => Ok(shared_tree(self)),\n");
-    out.push_str("        }\n    }\n}\n\n");
+    out.push_str(TO_TREE_BODY);
     out.push_str(SHARED_WRITER);
     out.push_str(&layout::signature(
         0,
@@ -623,11 +656,11 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
     let parse_use = if shared.is_empty() {
         ""
     } else {
-        "use crate::xml::parse::parse;\n"
+        "use officekit_xml::parse::parse;\n"
     };
     let _ = write!(
         out,
-        "\nuse crate::error::PackageError;\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\nuse crate::xml::conformance::ConformanceClass;\nuse crate::xml::element::Element;\nuse crate::xml::name::{{Namespace, NamespaceId}};\n{parse_use}use crate::xml::write::WriteOptions;\n\n",
+        "\nuse crate::error::PackageError;\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
     );
     out.push_str(&layout::doc(
         0,
@@ -661,6 +694,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
     out.push_str(THROUGH);
     out.push_str(CHECK_ROOT);
     out.push_str(RESTORE_THROUGH_MODULE);
+    out.push_str(TREE_IN_CLASS);
     out
 }
 
@@ -782,7 +816,7 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
         "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
     ));
     out.push_str(
-        "\nuse crate::packaging::relationship::RelationshipType;\nuse crate::xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
+        "\nuse crate::packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
     );
     let mut all_written = false;
     for constant in &joined.constants {
@@ -924,11 +958,11 @@ fn uses(root: Option<&RootText>) -> String {
     match root {
         None => "use crate::error::PackageError;\nuse crate::packaging::package::Package;\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n".to_owned(),
         Some(known) if known.shared => format!(
-            "use crate::error::PackageError;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{EITHER_CLASS}use crate::xml::conformance::ConformanceClass;\n{EITHER_CLASS}use crate::xml::write::WriteOptions;\n",
+            "use crate::error::PackageError;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
         Some(known) => format!(
-            "use crate::error::{{PackageError, WriteError}};\n{SHARED_WRITER}use crate::markup::Scope;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse crate::xml::conformance::ConformanceClass;\nuse crate::xml::element::Element;\n{EITHER_CLASS}use crate::xml::write::WriteOptions;\n",
+            "use crate::error::PackageError;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

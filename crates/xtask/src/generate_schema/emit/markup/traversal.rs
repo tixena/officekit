@@ -24,7 +24,7 @@ const ELEMENT_HOOKS: [(&str, &str); 2] = [
         "    /// Asked for each generic element: an unknown element in a list's `Other`
     /// items, in a node's `unknown.children`, or in a wildcard position.
     /// `None` rebuilds the element from its transformed children.
-    fn element(&mut self, _node: &xml::element::Element) -> Option<xml::element::Element> {
+    fn element(&mut self, _node: &Element) -> Option<Element> {
         None
     }
 ",
@@ -39,7 +39,7 @@ const ELEMENT_HOOKS: [(&str, &str); 2] = [
     /// The sink's.
     fn write_element(
         &mut self,
-        _node: &xml::element::Element,
+        _node: &Element,
         _out: &mut PartWriter<'_>,
     ) -> io::Result<Written> {
         Ok(Written::No)
@@ -51,14 +51,14 @@ const ELEMENT_HOOKS: [(&str, &str); 2] = [
 /// The root visitor's hook for content the schemas do not declare.
 const ELEMENT_VISITOR_HOOK: &str =
     "    /// Shown each generic element; `Descend::Yes` walks into its children.
-    fn element(&mut self, _node: &xml::element::Element) -> Descend {
+    fn element(&mut self, _node: &Element) -> Descend {
         Descend::Yes
     }
 ";
 
 /// The imports of every `traversal.rs` after `crate::markup`'s.
 const TRAVERSAL_USES: &str = "use crate::stream::transform::{Unchanged, WriteThrough, Written};
-use crate::stream::writer::PartWriter;
+use officekit_xml::stream::writer::PartWriter;
 ";
 
 /// The name prefixes clippy's `wrong_self_convention` refuses for a method

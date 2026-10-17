@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wp:posOffset` into a `AbsolutePositionOffset`.
 #[must_use]
-pub fn absolute_position_offset(element: &xml::element::Element) -> super::AbsolutePositionOffset {
+pub fn absolute_position_offset(element: &Element) -> super::AbsolutePositionOffset {
     let mut node = super::AbsolutePositionOffset::default();
     let mut reader = markup::Reader::new(element, &super::ABSOLUTE_POSITION_OFFSET_SHAPE);
     for (index, field) in &mut reader {
@@ -231,14 +231,14 @@ pub fn absolute_position_offset(element: &xml::element::Element) -> super::Absol
 
 /// Read one item of `AnchorContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn anchor(element: &xml::element::Element) -> super::AnchorContent {
+pub fn anchor(element: &Element) -> super::AnchorContent {
     markup::read(element)
 }
 
 /// Read `wp:anchor` into a `AnchorForFloatingDrawingMLObject`.
 #[must_use]
 pub fn anchor_for_floating_drawing_ml_object(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AnchorForFloatingDrawingMLObject {
     let mut node = super::AnchorForFloatingDrawingMLObject::default();
     let mut reader =
@@ -278,7 +278,7 @@ pub fn anchor_for_floating_drawing_ml_object(
 
 /// Read `wp:bg` into a `BackgroundFormatting`.
 #[must_use]
-pub fn background_formatting(element: &xml::element::Element) -> super::BackgroundFormatting {
+pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
     let mut node = super::BackgroundFormatting::default();
     let mut reader = markup::Reader::new(element, &super::BACKGROUND_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
@@ -294,7 +294,7 @@ pub fn background_formatting(element: &xml::element::Element) -> super::Backgrou
 
 /// Read `wp:bodyPr` into a `BodyProperties`.
 #[must_use]
-pub fn body_properties(element: &xml::element::Element) -> super::BodyProperties {
+pub fn body_properties(element: &Element) -> super::BodyProperties {
     let mut node = super::BodyProperties::default();
     let mut reader = markup::Reader::new(element, &super::BODY_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -333,7 +333,7 @@ pub fn body_properties(element: &xml::element::Element) -> super::BodyProperties
 /// Read `wp:cNvGraphicFramePr` into a `CommonDrawingMLNonVisualProperties`.
 #[must_use]
 pub fn common_drawing_ml_non_visual_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CommonDrawingMLNonVisualProperties {
     let mut node = super::CommonDrawingMLNonVisualProperties::default();
     let mut reader = markup::Reader::new(
@@ -353,7 +353,7 @@ pub fn common_drawing_ml_non_visual_properties(
 
 /// Read `wp:contentPart` into a `ContentPart`.
 #[must_use]
-pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
+pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = markup::Reader::new(element, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -372,14 +372,14 @@ pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
 
 /// Read one item of `DrawingCanvasContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn drawing_canvas(element: &xml::element::Element) -> super::DrawingCanvasContent {
+pub fn drawing_canvas(element: &Element) -> super::DrawingCanvasContent {
     markup::read(element)
 }
 
 /// Read `wp:docPr` into a `DrawingObjectNonVisualProperties`.
 #[must_use]
 pub fn drawing_object_non_visual_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DrawingObjectNonVisualProperties {
     let mut node = super::DrawingObjectNonVisualProperties::default();
     let mut reader =
@@ -403,7 +403,7 @@ pub fn drawing_object_non_visual_properties(
 
 /// Read `wp:extent` into a `DrawingObjectSize`.
 #[must_use]
-pub fn drawing_object_size(element: &xml::element::Element) -> super::DrawingObjectSize {
+pub fn drawing_object_size(element: &Element) -> super::DrawingObjectSize {
     let mut node = super::DrawingObjectSize::default();
     let mut reader = markup::Reader::new(element, &super::DRAWING_OBJECT_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -419,7 +419,7 @@ pub fn drawing_object_size(element: &xml::element::Element) -> super::DrawingObj
 
 /// Read `wp:extLst` into a `ExtensionList`.
 #[must_use]
-pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
+pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -433,9 +433,7 @@ pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
 
 /// Read `wp:graphicFrame` into a `GraphicalObjectContainer`.
 #[must_use]
-pub fn graphical_object_container(
-    element: &xml::element::Element,
-) -> super::GraphicalObjectContainer {
+pub fn graphical_object_container(element: &Element) -> super::GraphicalObjectContainer {
     let mut node = super::GraphicalObjectContainer::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHICAL_OBJECT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
@@ -454,7 +452,7 @@ pub fn graphical_object_container(
 
 /// Read `wp:grpSp` into a `GroupShape`.
 #[must_use]
-pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
+pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -473,13 +471,13 @@ pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn group_shape_content(element: &xml::element::Element) -> super::GroupShapeContent {
+pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
     markup::read(element)
 }
 
 /// Read `wp:grpSpPr` into a `GroupShapeProperties`.
 #[must_use]
-pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupShapeProperties {
+pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -499,7 +497,7 @@ pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupSh
 
 /// Read `wp:positionH` into a `HorizontalPositioning`.
 #[must_use]
-pub fn horizontal_positioning(element: &xml::element::Element) -> super::HorizontalPositioning {
+pub fn horizontal_positioning(element: &Element) -> super::HorizontalPositioning {
     let mut node = super::HorizontalPositioning::default();
     let mut reader = markup::Reader::new(element, &super::HORIZONTAL_POSITIONING_SHAPE);
     for (index, field) in &mut reader {
@@ -516,15 +514,13 @@ pub fn horizontal_positioning(element: &xml::element::Element) -> super::Horizon
 /// Read one item of `HorizontalPositioningContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn horizontal_positioning_content(
-    element: &xml::element::Element,
-) -> super::HorizontalPositioningContent {
+pub fn horizontal_positioning_content(element: &Element) -> super::HorizontalPositioningContent {
     markup::read(element)
 }
 
 /// Read `wp:inline` into a `InlineDrawingMLObject`.
 #[must_use]
-pub fn inline_drawing_ml_object(element: &xml::element::Element) -> super::InlineDrawingMLObject {
+pub fn inline_drawing_ml_object(element: &Element) -> super::InlineDrawingMLObject {
     let mut node = super::InlineDrawingMLObject::default();
     let mut reader = markup::Reader::new(element, &super::INLINE_DRAWING_ML_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -549,7 +545,7 @@ pub fn inline_drawing_ml_object(element: &xml::element::Element) -> super::Inlin
 
 /// Read `wp:wrapNone` into a `NoTextWrapping`.
 #[must_use]
-pub fn no_text_wrapping(element: &xml::element::Element) -> super::NoTextWrapping {
+pub fn no_text_wrapping(element: &Element) -> super::NoTextWrapping {
     let reader = markup::Reader::new(element, &super::NO_TEXT_WRAPPING_SHAPE);
     super::NoTextWrapping {
         unknown: reader.finish(),
@@ -559,7 +555,7 @@ pub fn no_text_wrapping(element: &xml::element::Element) -> super::NoTextWrappin
 /// Read `wp:cNvCnPr` into a `NonVisualConnectorShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_connector_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
     let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -582,7 +578,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 /// Read `wp:cNvContentPartPr` into a `NonVisualContentPartDrawingProperties`.
 #[must_use]
 pub fn non_visual_content_part_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualContentPartDrawingProperties {
     let mut node = super::NonVisualContentPartDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -603,9 +599,7 @@ pub fn non_visual_content_part_drawing_properties(
 
 /// Read `wp:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use]
-pub fn non_visual_drawing_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualDrawingProperties {
+pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -628,7 +622,7 @@ pub fn non_visual_drawing_properties(
 /// Read `wp:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape`.
 #[must_use]
 pub fn non_visual_drawing_properties_for_a_shape(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
     let mut node = super::NonVisualDrawingPropertiesForAShape::default();
     let mut reader = markup::Reader::new(
@@ -650,7 +644,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
 /// Read `wp:cNvFrPr` into a `NonVisualGraphicFrameDrawingProperties`.
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
     let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -671,7 +665,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 /// Read `wp:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
     let mut node = super::NonVisualGroupShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -691,7 +685,7 @@ pub fn non_visual_group_shape_drawing_properties(
 
 /// Read `wp:nvContentPartPr` into a `NvContentPartPr`.
 #[must_use]
-pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPartPr {
+pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = markup::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -707,9 +701,7 @@ pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPa
 
 /// Read `wp:effectExtent` into a `ObjectExtentsIncludingEffects`.
 #[must_use]
-pub fn object_extents_including_effects(
-    element: &xml::element::Element,
-) -> super::ObjectExtentsIncludingEffects {
+pub fn object_extents_including_effects(element: &Element) -> super::ObjectExtentsIncludingEffects {
     let mut node = super::ObjectExtentsIncludingEffects::default();
     let mut reader = markup::Reader::new(element, &super::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE);
     for (index, field) in &mut reader {
@@ -727,9 +719,7 @@ pub fn object_extents_including_effects(
 
 /// Read `wp:align` into a `RelativeHorizontalAlignment`.
 #[must_use]
-pub fn relative_horizontal_alignment(
-    element: &xml::element::Element,
-) -> super::RelativeHorizontalAlignment {
+pub fn relative_horizontal_alignment(element: &Element) -> super::RelativeHorizontalAlignment {
     let mut node = super::RelativeHorizontalAlignment::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -743,9 +733,7 @@ pub fn relative_horizontal_alignment(
 
 /// Read `wp:align` into a `RelativeVerticalAlignment`.
 #[must_use]
-pub fn relative_vertical_alignment(
-    element: &xml::element::Element,
-) -> super::RelativeVerticalAlignment {
+pub fn relative_vertical_alignment(element: &Element) -> super::RelativeVerticalAlignment {
     let mut node = super::RelativeVerticalAlignment::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_VERTICAL_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -759,9 +747,7 @@ pub fn relative_vertical_alignment(
 
 /// Read `wp:txbxContent` into a `RichTextBoxContentContainer`.
 #[must_use]
-pub fn rich_text_box_content_container(
-    element: &xml::element::Element,
-) -> super::RichTextBoxContentContainer {
+pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxContentContainer {
     let mut node = super::RichTextBoxContentContainer::default();
     let mut reader = markup::Reader::new(element, &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
@@ -776,15 +762,13 @@ pub fn rich_text_box_content_container(
 /// Read one item of `ShapeNonVisualPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn shape_non_visual_properties(
-    element: &xml::element::Element,
-) -> super::ShapeNonVisualPropertiesContent {
+pub fn shape_non_visual_properties(element: &Element) -> super::ShapeNonVisualPropertiesContent {
     markup::read(element)
 }
 
 /// Read `wp:spPr` into a `ShapeProperties`.
 #[must_use]
-pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperties {
+pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -807,7 +791,7 @@ pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperti
 
 /// Read `wp:style` into a `ShapeStyle`.
 #[must_use]
-pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
+pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -825,15 +809,13 @@ pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
 
 /// Read one item of `ShapeTextContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_text(element: &xml::element::Element) -> super::ShapeTextContent {
+pub fn shape_text(element: &Element) -> super::ShapeTextContent {
     markup::read(element)
 }
 
 /// Read `wp:simplePos` into a `SimplePositioningCoordinates`.
 #[must_use]
-pub fn simple_positioning_coordinates(
-    element: &xml::element::Element,
-) -> super::SimplePositioningCoordinates {
+pub fn simple_positioning_coordinates(element: &Element) -> super::SimplePositioningCoordinates {
     let mut node = super::SimplePositioningCoordinates::default();
     let mut reader = markup::Reader::new(element, &super::SIMPLE_POSITIONING_COORDINATES_SHAPE);
     for (index, field) in &mut reader {
@@ -849,7 +831,7 @@ pub fn simple_positioning_coordinates(
 
 /// Read `wp:wrapSquare` into a `SquareWrapping`.
 #[must_use]
-pub fn square_wrapping(element: &xml::element::Element) -> super::SquareWrapping {
+pub fn square_wrapping(element: &Element) -> super::SquareWrapping {
     let mut node = super::SquareWrapping::default();
     let mut reader = markup::Reader::new(element, &super::SQUARE_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -870,7 +852,7 @@ pub fn square_wrapping(element: &xml::element::Element) -> super::SquareWrapping
 /// Read `wp:linkedTxbx` into a `TextualContentsOfShapeLinkedTxbx`.
 #[must_use]
 pub fn textual_contents_of_shape_linked_txbx(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TextualContentsOfShapeLinkedTxbx {
     let mut node = super::TextualContentsOfShapeLinkedTxbx::default();
     let mut reader =
@@ -889,9 +871,7 @@ pub fn textual_contents_of_shape_linked_txbx(
 
 /// Read `wp:txbx` into a `TextualContentsOfShapeTxbx`.
 #[must_use]
-pub fn textual_contents_of_shape_txbx(
-    element: &xml::element::Element,
-) -> super::TextualContentsOfShapeTxbx {
+pub fn textual_contents_of_shape_txbx(element: &Element) -> super::TextualContentsOfShapeTxbx {
     let mut node = super::TextualContentsOfShapeTxbx::default();
     let mut reader = markup::Reader::new(element, &super::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE);
     for (index, field) in &mut reader {
@@ -908,7 +888,7 @@ pub fn textual_contents_of_shape_txbx(
 
 /// Read `wp:wrapThrough` into a `ThroughWrapping`.
 #[must_use]
-pub fn through_wrapping(element: &xml::element::Element) -> super::ThroughWrapping {
+pub fn through_wrapping(element: &Element) -> super::ThroughWrapping {
     let mut node = super::ThroughWrapping::default();
     let mut reader = markup::Reader::new(element, &super::THROUGH_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -926,7 +906,7 @@ pub fn through_wrapping(element: &xml::element::Element) -> super::ThroughWrappi
 
 /// Read `wp:wrapTight` into a `TightWrapping`.
 #[must_use]
-pub fn tight_wrapping(element: &xml::element::Element) -> super::TightWrapping {
+pub fn tight_wrapping(element: &Element) -> super::TightWrapping {
     let mut node = super::TightWrapping::default();
     let mut reader = markup::Reader::new(element, &super::TIGHT_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -944,7 +924,7 @@ pub fn tight_wrapping(element: &xml::element::Element) -> super::TightWrapping {
 
 /// Read `wp:wrapTopAndBottom` into a `TopAndBottomWrapping`.
 #[must_use]
-pub fn top_and_bottom_wrapping(element: &xml::element::Element) -> super::TopAndBottomWrapping {
+pub fn top_and_bottom_wrapping(element: &Element) -> super::TopAndBottomWrapping {
     let mut node = super::TopAndBottomWrapping::default();
     let mut reader = markup::Reader::new(element, &super::TOP_AND_BOTTOM_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -961,7 +941,7 @@ pub fn top_and_bottom_wrapping(element: &xml::element::Element) -> super::TopAnd
 
 /// Read `wp:positionV` into a `VerticalPositioning`.
 #[must_use]
-pub fn vertical_positioning(element: &xml::element::Element) -> super::VerticalPositioning {
+pub fn vertical_positioning(element: &Element) -> super::VerticalPositioning {
     let mut node = super::VerticalPositioning::default();
     let mut reader = markup::Reader::new(element, &super::VERTICAL_POSITIONING_SHAPE);
     for (index, field) in &mut reader {
@@ -977,15 +957,13 @@ pub fn vertical_positioning(element: &xml::element::Element) -> super::VerticalP
 
 /// Read one item of `VerticalPositioningContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn vertical_positioning_content(
-    element: &xml::element::Element,
-) -> super::VerticalPositioningContent {
+pub fn vertical_positioning_content(element: &Element) -> super::VerticalPositioningContent {
     markup::read(element)
 }
 
 /// Read `wp:whole` into a `WholeE2OFormatting`.
 #[must_use]
-pub fn whole_e2o_formatting(element: &xml::element::Element) -> super::WholeE2OFormatting {
+pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
     let mut node = super::WholeE2OFormatting::default();
     let mut reader = markup::Reader::new(element, &super::WHOLE_E2O_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
@@ -1001,9 +979,7 @@ pub fn whole_e2o_formatting(element: &xml::element::Element) -> super::WholeE2OF
 
 /// Read `wp:wpc` into a `WordprocessingMLDrawingCanvas`.
 #[must_use]
-pub fn wordprocessing_ml_drawing_canvas(
-    element: &xml::element::Element,
-) -> super::WordprocessingMLDrawingCanvas {
+pub fn wordprocessing_ml_drawing_canvas(element: &Element) -> super::WordprocessingMLDrawingCanvas {
     let mut node = super::WordprocessingMLDrawingCanvas::default();
     let mut reader = markup::Reader::new(element, &super::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE);
     for (index, field) in &mut reader {
@@ -1021,7 +997,7 @@ pub fn wordprocessing_ml_drawing_canvas(
 
 /// Read `wp:wsp` into a `WordprocessingMLShape`.
 #[must_use]
-pub fn wordprocessing_ml_shape(element: &xml::element::Element) -> super::WordprocessingMLShape {
+pub fn wordprocessing_ml_shape(element: &Element) -> super::WordprocessingMLShape {
     let mut node = super::WordprocessingMLShape::default();
     let mut reader = markup::Reader::new(element, &super::WORDPROCESSING_ML_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1043,9 +1019,7 @@ pub fn wordprocessing_ml_shape(element: &xml::element::Element) -> super::Wordpr
 
 /// Read `wp:wgp` into a `WordprocessingMLShapeGroup`.
 #[must_use]
-pub fn wordprocessing_ml_shape_group(
-    element: &xml::element::Element,
-) -> super::WordprocessingMLShapeGroup {
+pub fn wordprocessing_ml_shape_group(element: &Element) -> super::WordprocessingMLShapeGroup {
     let mut node = super::WordprocessingMLShapeGroup::default();
     let mut reader = markup::Reader::new(element, &super::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -1064,7 +1038,7 @@ pub fn wordprocessing_ml_shape_group(
 
 /// Read `wp:wrapPolygon` into a `WrappingPolygon`.
 #[must_use]
-pub fn wrapping_polygon(element: &xml::element::Element) -> super::WrappingPolygon {
+pub fn wrapping_polygon(element: &Element) -> super::WrappingPolygon {
     let mut node = super::WrappingPolygon::default();
     let mut reader = markup::Reader::new(element, &super::WRAPPING_POLYGON_SHAPE);
     for (index, field) in &mut reader {
@@ -1082,7 +1056,7 @@ pub fn wrapping_polygon(element: &xml::element::Element) -> super::WrappingPolyg
 /// Read `wp:lineTo` into a `WrappingPolygonLineEndPosition`.
 #[must_use]
 pub fn wrapping_polygon_line_end_position(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::WrappingPolygonLineEndPosition {
     let mut node = super::WrappingPolygonLineEndPosition::default();
     let mut reader = markup::Reader::new(element, &super::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE);
@@ -1099,7 +1073,7 @@ pub fn wrapping_polygon_line_end_position(
 
 /// Read `wp:start` into a `WrappingPolygonStart`.
 #[must_use]
-pub fn wrapping_polygon_start(element: &xml::element::Element) -> super::WrappingPolygonStart {
+pub fn wrapping_polygon_start(element: &Element) -> super::WrappingPolygonStart {
     let mut node = super::WrappingPolygonStart::default();
     let mut reader = markup::Reader::new(element, &super::WRAPPING_POLYGON_START_SHAPE);
     for (index, field) in &mut reader {
@@ -1115,7 +1089,7 @@ pub fn wrapping_polygon_start(element: &xml::element::Element) -> super::Wrappin
 
 /// Read `wp:xfrm` into a `Xfrm`.
 #[must_use]
-pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
+pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {

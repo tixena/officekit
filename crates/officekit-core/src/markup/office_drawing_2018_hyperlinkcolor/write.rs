@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `HlinkClr` as its element, `ahyp:hlinkClr`.
 #[must_use]
-pub fn hlink_clr(node: &super::HlinkClr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hlink_clr(node: &super::HlinkClr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HLINK_CLR_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

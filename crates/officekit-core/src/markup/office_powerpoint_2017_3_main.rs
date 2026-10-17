@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_P173: Option<NamespaceId> = Some(69);
@@ -422,7 +422,7 @@ impl DisplayLocation {
 }
 
 impl markup::Read for Track {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::track(element)
     }
 }
@@ -435,7 +435,7 @@ impl markup::Write for Track {
 }
 
 impl markup::Read for TrackLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::track_lst(element)
     }
 }
@@ -448,7 +448,7 @@ impl markup::Write for TrackLst {
 }
 
 impl markup::Read for TracksInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tracks_info(element)
     }
 }

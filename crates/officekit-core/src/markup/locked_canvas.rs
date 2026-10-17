@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -294,7 +294,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for LockedCanvasContainer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::locked_canvas_container(element)
     }
 }

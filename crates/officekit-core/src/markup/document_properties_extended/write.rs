@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ApplicationName` as its element, `ap:Application`.
 #[must_use]
-pub fn application_name(
-    node: &super::ApplicationName,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn application_name(node: &super::ApplicationName, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::APPLICATION_NAME_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -231,8 +229,8 @@ pub fn application_name(
 #[must_use]
 pub fn application_specific_file_properties(
     node: &super::ApplicationSpecificFileProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE,
@@ -253,10 +251,7 @@ pub fn application_specific_file_properties_content(
 
 /// Write a `ApplicationVersion` as its element, `ap:AppVersion`.
 #[must_use]
-pub fn application_version(
-    node: &super::ApplicationVersion,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn application_version(node: &super::ApplicationVersion, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::APPLICATION_VERSION_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -264,10 +259,7 @@ pub fn application_version(
 
 /// Write a `CharactersWithSpaces` as its element, `ap:CharactersWithSpaces`.
 #[must_use]
-pub fn characters_with_spaces(
-    node: &super::CharactersWithSpaces,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn characters_with_spaces(node: &super::CharactersWithSpaces, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CHARACTERS_WITH_SPACES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -276,10 +268,7 @@ pub fn characters_with_spaces(
 
 /// Write a `DigitalSignature` as its element, `ap:DigSig`.
 #[must_use]
-pub fn digital_signature(
-    node: &super::DigitalSignature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn digital_signature(node: &super::DigitalSignature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DIGITAL_SIGNATURE_SHAPE, &node.unknown);
     writer.child(&node.binary_blob);
     writer.finish()
@@ -287,10 +276,7 @@ pub fn digital_signature(
 
 /// Write a `DocumentSecurity` as its element, `ap:DocSecurity`.
 #[must_use]
-pub fn document_security(
-    node: &super::DocumentSecurity,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn document_security(node: &super::DocumentSecurity, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOCUMENT_SECURITY_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -298,10 +284,7 @@ pub fn document_security(
 
 /// Write a `HeadingPairs` as its element, `ap:HeadingPairs`.
 #[must_use]
-pub fn heading_pairs(
-    node: &super::HeadingPairs,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn heading_pairs(node: &super::HeadingPairs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HEADING_PAIRS_SHAPE, &node.unknown);
     writer.child(&node.vector);
     writer.finish()
@@ -309,10 +292,7 @@ pub fn heading_pairs(
 
 /// Write a `HyperlinkList` as its element, `ap:HLinks`.
 #[must_use]
-pub fn hyperlink_list(
-    node: &super::HyperlinkList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hyperlink_list(node: &super::HyperlinkList, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HYPERLINK_LIST_SHAPE, &node.unknown);
     writer.child(&node.vector);
     writer.finish()
@@ -320,10 +300,7 @@ pub fn hyperlink_list(
 
 /// Write a `HyperlinksChanged` as its element, `ap:HyperlinksChanged`.
 #[must_use]
-pub fn hyperlinks_changed(
-    node: &super::HyperlinksChanged,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hyperlinks_changed(node: &super::HyperlinksChanged, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HYPERLINKS_CHANGED_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -333,8 +310,8 @@ pub fn hyperlinks_changed(
 #[must_use]
 pub fn intended_format_of_presentation(
     node: &super::IntendedFormatOfPresentation,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::INTENDED_FORMAT_OF_PRESENTATION_SHAPE,
@@ -346,10 +323,7 @@ pub fn intended_format_of_presentation(
 
 /// Write a `LinksUpToDate` as its element, `ap:LinksUpToDate`.
 #[must_use]
-pub fn links_up_to_date(
-    node: &super::LinksUpToDate,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn links_up_to_date(node: &super::LinksUpToDate, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINKS_UP_TO_DATE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -357,10 +331,7 @@ pub fn links_up_to_date(
 
 /// Write a `NameOfCompany` as its element, `ap:Company`.
 #[must_use]
-pub fn name_of_company(
-    node: &super::NameOfCompany,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn name_of_company(node: &super::NameOfCompany, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NAME_OF_COMPANY_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -370,8 +341,8 @@ pub fn name_of_company(
 #[must_use]
 pub fn name_of_document_template(
     node: &super::NameOfDocumentTemplate,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NAME_OF_DOCUMENT_TEMPLATE_SHAPE,
@@ -383,10 +354,7 @@ pub fn name_of_document_template(
 
 /// Write a `NameOfManager` as its element, `ap:Manager`.
 #[must_use]
-pub fn name_of_manager(
-    node: &super::NameOfManager,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn name_of_manager(node: &super::NameOfManager, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NAME_OF_MANAGER_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -394,10 +362,7 @@ pub fn name_of_manager(
 
 /// Write a `NumberOfHiddenSlides` as its element, `ap:HiddenSlides`.
 #[must_use]
-pub fn number_of_hidden_slides(
-    node: &super::NumberOfHiddenSlides,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn number_of_hidden_slides(node: &super::NumberOfHiddenSlides, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -406,10 +371,7 @@ pub fn number_of_hidden_slides(
 
 /// Write a `NumberOfLines` as its element, `ap:Lines`.
 #[must_use]
-pub fn number_of_lines(
-    node: &super::NumberOfLines,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn number_of_lines(node: &super::NumberOfLines, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NUMBER_OF_LINES_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -419,8 +381,8 @@ pub fn number_of_lines(
 #[must_use]
 pub fn number_of_slides_containing_notes(
     node: &super::NumberOfSlidesContainingNotes,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE,
@@ -432,7 +394,7 @@ pub fn number_of_slides_containing_notes(
 
 /// Write a `PartTitles` as its element, `ap:TitlesOfParts`.
 #[must_use]
-pub fn part_titles(node: &super::PartTitles, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn part_titles(node: &super::PartTitles, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PART_TITLES_SHAPE, &node.unknown);
     writer.child(&node.vector);
     writer.finish()
@@ -440,10 +402,7 @@ pub fn part_titles(node: &super::PartTitles, scope: &mut markup::Scope) -> xml::
 
 /// Write a `RelativeHyperlinkBase` as its element, `ap:HyperlinkBase`.
 #[must_use]
-pub fn relative_hyperlink_base(
-    node: &super::RelativeHyperlinkBase,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn relative_hyperlink_base(node: &super::RelativeHyperlinkBase, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::RELATIVE_HYPERLINK_BASE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -452,10 +411,7 @@ pub fn relative_hyperlink_base(
 
 /// Write a `SharedDocument` as its element, `ap:SharedDoc`.
 #[must_use]
-pub fn shared_document(
-    node: &super::SharedDocument,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shared_document(node: &super::SharedDocument, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHARED_DOCUMENT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -463,10 +419,7 @@ pub fn shared_document(
 
 /// Write a `SlidesMetadataElement` as its element, `ap:Slides`.
 #[must_use]
-pub fn slides_metadata_element(
-    node: &super::SlidesMetadataElement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slides_metadata_element(node: &super::SlidesMetadataElement, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SLIDES_METADATA_ELEMENT_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -475,10 +428,7 @@ pub fn slides_metadata_element(
 
 /// Write a `ThumbnailDisplayMode` as its element, `ap:ScaleCrop`.
 #[must_use]
-pub fn thumbnail_display_mode(
-    node: &super::ThumbnailDisplayMode,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn thumbnail_display_mode(node: &super::ThumbnailDisplayMode, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::THUMBNAIL_DISPLAY_MODE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -489,8 +439,8 @@ pub fn thumbnail_display_mode(
 #[must_use]
 pub fn total_edit_time_metadata_element(
     node: &super::TotalEditTimeMetadataElement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE,
@@ -504,8 +454,8 @@ pub fn total_edit_time_metadata_element(
 #[must_use]
 pub fn total_number_of_characters(
     node: &super::TotalNumberOfCharacters,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOTAL_NUMBER_OF_CHARACTERS_SHAPE,
@@ -519,8 +469,8 @@ pub fn total_number_of_characters(
 #[must_use]
 pub fn total_number_of_multimedia_clips(
     node: &super::TotalNumberOfMultimediaClips,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE,
@@ -532,10 +482,7 @@ pub fn total_number_of_multimedia_clips(
 
 /// Write a `TotalNumberOfPages` as its element, `ap:Pages`.
 #[must_use]
-pub fn total_number_of_pages(
-    node: &super::TotalNumberOfPages,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn total_number_of_pages(node: &super::TotalNumberOfPages, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOTAL_NUMBER_OF_PAGES_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -545,8 +492,8 @@ pub fn total_number_of_pages(
 #[must_use]
 pub fn total_number_of_paragraphs(
     node: &super::TotalNumberOfParagraphs,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE,
@@ -558,7 +505,7 @@ pub fn total_number_of_paragraphs(
 
 /// Write a `WordCount` as its element, `ap:Words`.
 #[must_use]
-pub fn word_count(node: &super::WordCount, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn word_count(node: &super::WordCount, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WORD_COUNT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

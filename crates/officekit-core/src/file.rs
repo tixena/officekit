@@ -1,16 +1,20 @@
 //! What the three file types share: the main part, its class, and its kind on open; the store of a
 //! typed root in the file's class; and the bytes of the file in a class.
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::write::WriteOptions;
+
 use crate::error::PackageError;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::packaging::package::OpenOptions;
 use crate::packaging::package::{PACKAGE_RELATIONSHIPS_PART, Package, PartRoot};
 use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::Target;
+use crate::packaging::relationship::{Target, class_of_office_document};
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::write::WriteOptions;
+
+#[cfg(test)]
+mod tests;
 
 /// The part a package's `officeDocument` relationship names, that part's content type, and the
 /// class the relationship's type names.
@@ -18,6 +22,12 @@ pub struct MainPart {
     pub class: ConformanceClass,
     pub content_type: Option<String>,
     pub name: PartName,
+}
+
+/// Whether this build reads and writes `class`: its feature is on.
+const fn class_enabled(class: ConformanceClass) -> bool {
+    (cfg!(feature = "strict") && matches!(class, ConformanceClass::Strict))
+        || (cfg!(feature = "transitional") && matches!(class, ConformanceClass::Transitional))
 }
 
 /// The kind among `kinds` whose main part has the main part's content type.
@@ -56,7 +66,7 @@ where
 pub fn main_part(package: &Package) -> Result<MainPart, PackageError> {
     let relationships = PartName::new(PACKAGE_RELATIONSHIPS_PART)?;
     let found = package.related(None)?.into_iter().find_map(|related| {
-        let class = ConformanceClass::from_office_document_relationship(&related.type_uri)?;
+        let class = class_of_office_document(&related.type_uri)?;
         match related.target {
             Target::Part(name) => Some(MainPart {
                 class,
@@ -67,7 +77,7 @@ pub fn main_part(package: &Package) -> Result<MainPart, PackageError> {
         }
     });
     let main = found.ok_or(PackageError::MissingPart(relationships))?;
-    if !main.class.enabled() {
+    if !class_enabled(main.class) {
         return Err(PackageError::ClassNotEnabled(main.class));
     }
     Ok(main)

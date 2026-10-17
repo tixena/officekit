@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Bg` as its element, `wpc:bg`.
 #[must_use]
-pub fn bg(node: &super::Bg, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bg(node: &super::Bg, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BG_SHAPE, &node.unknown);
     writer.child(&node.fill_properties_content);
     writer.child(&node.effect_properties_content);
@@ -227,7 +228,7 @@ pub fn bg(node: &super::Bg, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `ExtLst` as its element, `wpc:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -235,10 +236,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `GraphicFrame` as its element, `wpc:graphicFrame`.
 #[must_use]
-pub fn graphic_frame(
-    node: &super::GraphicFrame,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_fr_pr);
@@ -250,7 +248,7 @@ pub fn graphic_frame(
 
 /// Write a `Whole` as its element, `wpc:whole`.
 #[must_use]
-pub fn whole(node: &super::Whole, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn whole(node: &super::Whole, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WHOLE_SHAPE, &node.unknown);
     writer.child(&node.outline);
     writer.child(&node.content);
@@ -268,7 +266,7 @@ pub fn wordprocessing_canvas(
 
 /// Write a `Wpc` as its element, `wpc:wpc`.
 #[must_use]
-pub fn wpc(node: &super::Wpc, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wpc(node: &super::Wpc, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WPC_SHAPE, &node.unknown);
     writer.child(&node.bg);
     writer.child(&node.whole);

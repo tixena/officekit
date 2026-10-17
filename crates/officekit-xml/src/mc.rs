@@ -73,13 +73,13 @@ fn alternate_content(block: Element, target: OfficeVersion, scope: &mut Scope) -
     })
 }
 
-/// The nodes that take the place of an `mc:AlternateContent` block declaring `declarations`
-/// when `branch` is the one chosen: its children, each element given the block's and the
+/// The nodes that take the place of an `mc:AlternateContent` block when `branch` is the one
+/// chosen.
+///
+/// They are the branch's children, each element given the block's `declarations` and the
 /// branch's declarations it does not make itself.
-pub(crate) fn branch_content(
-    declarations: Vec<NamespaceDeclaration>,
-    branch: Element,
-) -> Vec<Node> {
+#[must_use]
+pub fn branch_content(declarations: Vec<NamespaceDeclaration>, branch: Element) -> Vec<Node> {
     let mut moved: Vec<NamespaceDeclaration> = Vec::new();
     for declaration in declarations
         .into_iter()
@@ -139,7 +139,8 @@ fn context<'context>(
 }
 
 /// Whether `namespace` is the markup-compatibility namespace.
-pub(crate) fn is_mc(namespace: &Namespace) -> bool {
+#[must_use]
+pub fn is_mc(namespace: &Namespace) -> bool {
     if let Namespace::Known(id) = *namespace {
         NAMESPACES
             .get(usize::from(id))
@@ -289,7 +290,8 @@ fn understands_requires(choice: &Element, target: OfficeVersion, scope: &mut Sco
 
 /// A node taking the place of an element that held `declarations`: an
 /// element gets the ones it does not declare itself, before its own.
-pub(crate) fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> Node {
+#[must_use]
+pub fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> Node {
     let Node::Element(mut element) = node else {
         return node;
     };

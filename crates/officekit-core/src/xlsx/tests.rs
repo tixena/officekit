@@ -1,6 +1,13 @@
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+#[cfg(feature = "strict")]
+use officekit_xml::element::Element;
+#[cfg(feature = "strict")]
+use officekit_xml::name::Namespace;
+#[cfg(feature = "strict")]
+use officekit_xml::parse::parse;
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
@@ -23,13 +30,6 @@ use crate::parts::{pivot_table, table_definition};
 use crate::strict::iso_date_time;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use crate::transitional::dates::SaveWarning;
-use crate::xml::conformance::ConformanceClass;
-#[cfg(feature = "strict")]
-use crate::xml::element::Element;
-#[cfg(feature = "strict")]
-use crate::xml::name::Namespace;
-#[cfg(feature = "strict")]
-use crate::xml::parse::parse;
 
 /// A Transitional worksheet whose filter keeps the dates up to a serial date-time.
 #[cfg(feature = "strict")]

@@ -11,6 +11,8 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::compact::{self, Comments};
@@ -29,8 +31,6 @@ use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, header, main_document};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::write::WriteOptions;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
 #[derive(Debug)]

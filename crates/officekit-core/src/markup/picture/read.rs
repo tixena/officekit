@@ -213,13 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `pic:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use]
-pub fn non_visual_drawing_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualDrawingProperties {
+pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -242,7 +240,7 @@ pub fn non_visual_drawing_properties(
 /// Read `pic:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
     let mut node = super::NonVisualPictureDrawingProperties::default();
     let mut reader =
@@ -261,9 +259,7 @@ pub fn non_visual_picture_drawing_properties(
 
 /// Read `pic:nvPicPr` into a `NonVisualPictureProperties`.
 #[must_use]
-pub fn non_visual_picture_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualPictureProperties {
+pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictureProperties {
     let mut node = super::NonVisualPictureProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -279,7 +275,7 @@ pub fn non_visual_picture_properties(
 
 /// Read `pic:pic` into a `Picture`.
 #[must_use]
-pub fn picture(element: &xml::element::Element) -> super::Picture {
+pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_SHAPE);
     for (index, field) in &mut reader {
@@ -298,7 +294,7 @@ pub fn picture(element: &xml::element::Element) -> super::Picture {
 
 /// Read `pic:blipFill` into a `PictureFill`.
 #[must_use]
-pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
+pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -317,7 +313,7 @@ pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
 
 /// Read `pic:spPr` into a `ShapeProperties`.
 #[must_use]
-pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperties {
+pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {

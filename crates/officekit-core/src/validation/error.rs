@@ -5,10 +5,10 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_xml::name::OfficeVersion;
 use serde_json::{Value, json};
 
 use crate::packaging::part_name::PartName;
-use crate::xml::name::OfficeVersion;
 
 #[cfg(test)]
 mod tests;
@@ -287,13 +287,18 @@ impl ValidationError {
 /// The target as the JSON record and the oracle name it.
 #[must_use]
 pub const fn target_name(target: OfficeVersion) -> &'static str {
-    match target {
-        OfficeVersion::Office2010 => "Office2010",
-        OfficeVersion::Office2013 => "Office2013",
-        OfficeVersion::Office2016 => "Office2016",
-        OfficeVersion::Office2019 => "Office2019",
-        OfficeVersion::Office2021 => "Office2021",
-        OfficeVersion::Microsoft365 => "Microsoft365",
+    if matches!(target, OfficeVersion::Office2010) {
+        "Office2010"
+    } else if matches!(target, OfficeVersion::Office2013) {
+        "Office2013"
+    } else if matches!(target, OfficeVersion::Office2016) {
+        "Office2016"
+    } else if matches!(target, OfficeVersion::Office2019) {
+        "Office2019"
+    } else if matches!(target, OfficeVersion::Office2021) {
+        "Office2021"
+    } else {
+        "Microsoft365"
     }
 }
 

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `asl:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `ScriptLink` as its element, `asl:scriptLink`.
 #[must_use]
-pub fn script_link(node: &super::ScriptLink, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn script_link(node: &super::ScriptLink, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCRIPT_LINK_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.child(&node.ext_lst);

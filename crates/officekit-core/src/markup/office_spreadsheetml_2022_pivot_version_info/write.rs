@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CacheVersionInfo` as its element, `xxpvi:cacheVersionInfo`.
 #[must_use]
-pub fn cache_version_info(
-    node: &super::CacheVersionInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cache_version_info(node: &super::CacheVersionInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CACHE_VERSION_INFO_SHAPE, &node.unknown);
     writer.child(&node.required_feature);
     writer.child(&node.last_refresh_feature);
@@ -229,10 +227,7 @@ pub fn cache_version_info(
 
 /// Write a `LastRefreshFeature` as its element, `xxpvi:lastRefreshFeature`.
 #[must_use]
-pub fn last_refresh_feature(
-    node: &super::LastRefreshFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn last_refresh_feature(node: &super::LastRefreshFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LAST_REFRESH_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -240,10 +235,7 @@ pub fn last_refresh_feature(
 
 /// Write a `LastUpdateFeature` as its element, `xxpvi:lastUpdateFeature`.
 #[must_use]
-pub fn last_update_feature(
-    node: &super::LastUpdateFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn last_update_feature(node: &super::LastUpdateFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LAST_UPDATE_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -251,10 +243,7 @@ pub fn last_update_feature(
 
 /// Write a `PivotVersionInfo` as its element, `xxpvi:pivotVersionInfo`.
 #[must_use]
-pub fn pivot_version_info(
-    node: &super::PivotVersionInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_version_info(node: &super::PivotVersionInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_VERSION_INFO_SHAPE, &node.unknown);
     writer.child(&node.required_feature);
     writer.child(&node.last_update_feature);
@@ -263,10 +252,7 @@ pub fn pivot_version_info(
 
 /// Write a `RequiredFeature` as its element, `xxpvi:requiredFeature`.
 #[must_use]
-pub fn required_feature(
-    node: &super::RequiredFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn required_feature(node: &super::RequiredFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REQUIRED_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Anchor` as its element, `xvml:Anchor`.
 #[must_use]
-pub fn anchor(node: &super::Anchor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANCHOR_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -226,10 +227,7 @@ pub fn anchor(node: &super::Anchor, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `AttachedObjectData` as its element, `xvml:ClientData`.
 #[must_use]
-pub fn attached_object_data(
-    node: &super::AttachedObjectData,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn attached_object_data(node: &super::AttachedObjectData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ATTACHED_OBJECT_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.object_type);
     writer.child(&node.content);
@@ -247,7 +245,7 @@ pub fn attached_object_data_content(
 
 /// Write a `AutoFill` as its element, `xvml:AutoFill`.
 #[must_use]
-pub fn auto_fill(node: &super::AutoFill, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn auto_fill(node: &super::AutoFill, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTO_FILL_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -255,7 +253,7 @@ pub fn auto_fill(node: &super::AutoFill, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `AutoLine` as its element, `xvml:AutoLine`.
 #[must_use]
-pub fn auto_line(node: &super::AutoLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn auto_line(node: &super::AutoLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTO_LINE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -263,10 +261,7 @@ pub fn auto_line(node: &super::AutoLine, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `AutomaticallySize` as its element, `xvml:AutoPict`.
 #[must_use]
-pub fn automatically_size(
-    node: &super::AutomaticallySize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn automatically_size(node: &super::AutomaticallySize, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTOMATICALLY_SIZE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -274,10 +269,7 @@ pub fn automatically_size(
 
 /// Write a `CallbackType` as its element, `xvml:LCT`.
 #[must_use]
-pub fn callback_type(
-    node: &super::CallbackType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn callback_type(node: &super::CallbackType, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CALLBACK_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -285,10 +277,7 @@ pub fn callback_type(
 
 /// Write a `CameraSourceRange` as its element, `xvml:FmlaPict`.
 #[must_use]
-pub fn camera_source_range(
-    node: &super::CameraSourceRange,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn camera_source_range(node: &super::CameraSourceRange, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CAMERA_SOURCE_RANGE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -296,7 +285,7 @@ pub fn camera_source_range(
 
 /// Write a `CameraTool` as its element, `xvml:Camera`.
 #[must_use]
-pub fn camera_tool(node: &super::CameraTool, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn camera_tool(node: &super::CameraTool, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CAMERA_TOOL_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -304,10 +293,7 @@ pub fn camera_tool(node: &super::CameraTool, scope: &mut markup::Scope) -> xml::
 
 /// Write a `CancelButton` as its element, `xvml:Cancel`.
 #[must_use]
-pub fn cancel_button(
-    node: &super::CancelButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cancel_button(node: &super::CancelButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CANCEL_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -315,7 +301,7 @@ pub fn cancel_button(
 
 /// Write a `Checked` as its element, `xvml:Checked`.
 #[must_use]
-pub fn checked(node: &super::Checked, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn checked(node: &super::Checked, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHECKED_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -323,10 +309,7 @@ pub fn checked(node: &super::Checked, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `ClipboardFormat` as its element, `xvml:CF`.
 #[must_use]
-pub fn clipboard_format(
-    node: &super::ClipboardFormat,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn clipboard_format(node: &super::ClipboardFormat, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CLIPBOARD_FORMAT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -334,10 +317,7 @@ pub fn clipboard_format(
 
 /// Write a `CommentColumnTarget` as its element, `xvml:Column`.
 #[must_use]
-pub fn comment_column_target(
-    node: &super::CommentColumnTarget,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn comment_column_target(node: &super::CommentColumnTarget, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_COLUMN_TARGET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -345,10 +325,7 @@ pub fn comment_column_target(
 
 /// Write a `CommentRowTarget` as its element, `xvml:Row`.
 #[must_use]
-pub fn comment_row_target(
-    node: &super::CommentRowTarget,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn comment_row_target(node: &super::CommentRowTarget, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_ROW_TARGET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -358,8 +335,8 @@ pub fn comment_row_target(
 #[must_use]
 pub fn comment_visibility_toggle(
     node: &super::CommentVisibilityToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::COMMENT_VISIBILITY_TOGGLE_SHAPE,
@@ -373,8 +350,8 @@ pub fn comment_visibility_toggle(
 #[must_use]
 pub fn comments_column_is_hidden(
     node: &super::CommentsColumnIsHidden,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::COMMENTS_COLUMN_IS_HIDDEN_SHAPE,
@@ -386,10 +363,7 @@ pub fn comments_column_is_hidden(
 
 /// Write a `CommentsRowIsHidden` as its element, `xvml:RowHidden`.
 #[must_use]
-pub fn comments_row_is_hidden(
-    node: &super::CommentsRowIsHidden,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn comments_row_is_hidden(node: &super::CommentsRowIsHidden, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -398,10 +372,7 @@ pub fn comments_row_is_hidden(
 
 /// Write a `DefaultButton` as its element, `xvml:Default`.
 #[must_use]
-pub fn default_button(
-    node: &super::DefaultButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn default_button(node: &super::DefaultButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEFAULT_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -409,10 +380,7 @@ pub fn default_button(
 
 /// Write a `DefaultSizeToggle` as its element, `xvml:DefaultSize`.
 #[must_use]
-pub fn default_size_toggle(
-    node: &super::DefaultSizeToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn default_size_toggle(node: &super::DefaultSizeToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEFAULT_SIZE_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -420,10 +388,7 @@ pub fn default_size_toggle(
 
 /// Write a `Disable3DNoThreeD` as its element, `xvml:NoThreeD`.
 #[must_use]
-pub fn disable3d_no_three_d(
-    node: &super::Disable3DNoThreeD,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn disable3d_no_three_d(node: &super::Disable3DNoThreeD, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DISABLE3D_NO_THREE_D_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -431,10 +396,7 @@ pub fn disable3d_no_three_d(
 
 /// Write a `Disable3DNoThreeD2` as its element, `xvml:NoThreeD2`.
 #[must_use]
-pub fn disable3d_no_three_d2(
-    node: &super::Disable3DNoThreeD2,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn disable3d_no_three_d2(node: &super::Disable3DNoThreeD2, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DISABLE3D_NO_THREE_D2_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -442,10 +404,7 @@ pub fn disable3d_no_three_d2(
 
 /// Write a `DismissButton` as its element, `xvml:Dismiss`.
 #[must_use]
-pub fn dismiss_button(
-    node: &super::DismissButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dismiss_button(node: &super::DismissButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DISMISS_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -453,10 +412,7 @@ pub fn dismiss_button(
 
 /// Write a `DropdownColorToggle` as its element, `xvml:Colored`.
 #[must_use]
-pub fn dropdown_color_toggle(
-    node: &super::DropdownColorToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dropdown_color_toggle(node: &super::DropdownColorToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DROPDOWN_COLOR_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -464,10 +420,7 @@ pub fn dropdown_color_toggle(
 
 /// Write a `DropdownMaximumLines` as its element, `xvml:DropLines`.
 #[must_use]
-pub fn dropdown_maximum_lines(
-    node: &super::DropdownMaximumLines,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dropdown_maximum_lines(node: &super::DropdownMaximumLines, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DROPDOWN_MAXIMUM_LINES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -476,10 +429,7 @@ pub fn dropdown_maximum_lines(
 
 /// Write a `DropdownStyle` as its element, `xvml:DropStyle`.
 #[must_use]
-pub fn dropdown_style(
-    node: &super::DropdownStyle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dropdown_style(node: &super::DropdownStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DROPDOWN_STYLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -487,10 +437,7 @@ pub fn dropdown_style(
 
 /// Write a `DynamicDataExchange` as its element, `xvml:DDE`.
 #[must_use]
-pub fn dynamic_data_exchange(
-    node: &super::DynamicDataExchange,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dynamic_data_exchange(node: &super::DynamicDataExchange, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DYNAMIC_DATA_EXCHANGE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -498,10 +445,7 @@ pub fn dynamic_data_exchange(
 
 /// Write a `EmbeddedControl` as its element, `xvml:MapOCX`.
 #[must_use]
-pub fn embedded_control(
-    node: &super::EmbeddedControl,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn embedded_control(node: &super::EmbeddedControl, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EMBEDDED_CONTROL_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -511,8 +455,8 @@ pub fn embedded_control(
 #[must_use]
 pub fn far_east_alignment_toggle(
     node: &super::FarEastAlignmentToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE,
@@ -524,10 +468,7 @@ pub fn far_east_alignment_toggle(
 
 /// Write a `FirstRadioButton` as its element, `xvml:FirstButton`.
 #[must_use]
-pub fn first_radio_button(
-    node: &super::FirstRadioButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn first_radio_button(node: &super::FirstRadioButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FIRST_RADIO_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -535,10 +476,7 @@ pub fn first_radio_button(
 
 /// Write a `FontAutoScale` as its element, `xvml:AutoScale`.
 #[must_use]
-pub fn font_auto_scale(
-    node: &super::FontAutoScale,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn font_auto_scale(node: &super::FontAutoScale, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FONT_AUTO_SCALE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -546,7 +484,7 @@ pub fn font_auto_scale(
 
 /// Write a `HelpButton` as its element, `xvml:Help`.
 #[must_use]
-pub fn help_button(node: &super::HelpButton, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn help_button(node: &super::HelpButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HELP_BUTTON_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -556,8 +494,8 @@ pub fn help_button(node: &super::HelpButton, scope: &mut markup::Scope) -> xml::
 #[must_use]
 pub fn horizontal_text_alignment(
     node: &super::HorizontalTextAlignment,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HORIZONTAL_TEXT_ALIGNMENT_SHAPE,
@@ -569,10 +507,7 @@ pub fn horizontal_text_alignment(
 
 /// Write a `HTMLScriptAttributes` as its element, `xvml:ScriptExtended`.
 #[must_use]
-pub fn html_script_attributes(
-    node: &super::HTMLScriptAttributes,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn html_script_attributes(node: &super::HTMLScriptAttributes, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -581,10 +516,7 @@ pub fn html_script_attributes(
 
 /// Write a `HTMLScriptLanguage` as its element, `xvml:ScriptLanguage`.
 #[must_use]
-pub fn html_script_language(
-    node: &super::HTMLScriptLanguage,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn html_script_language(node: &super::HTMLScriptLanguage, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HTML_SCRIPT_LANGUAGE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -592,10 +524,7 @@ pub fn html_script_language(
 
 /// Write a `HTMLScriptLocation` as its element, `xvml:ScriptLocation`.
 #[must_use]
-pub fn html_script_location(
-    node: &super::HTMLScriptLocation,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn html_script_location(node: &super::HTMLScriptLocation, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HTML_SCRIPT_LOCATION_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -603,10 +532,7 @@ pub fn html_script_location(
 
 /// Write a `HTMLScriptText` as its element, `xvml:ScriptText`.
 #[must_use]
-pub fn html_script_text(
-    node: &super::HTMLScriptText,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn html_script_text(node: &super::HTMLScriptText, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HTML_SCRIPT_TEXT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -614,10 +540,7 @@ pub fn html_script_text(
 
 /// Write a `LinkedFormula` as its element, `xvml:FmlaLink`.
 #[must_use]
-pub fn linked_formula(
-    node: &super::LinkedFormula,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn linked_formula(node: &super::LinkedFormula, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINKED_FORMULA_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -625,10 +548,7 @@ pub fn linked_formula(
 
 /// Write a `LinkedFormulaGroupBox` as its element, `xvml:FmlaGroup`.
 #[must_use]
-pub fn linked_formula_group_box(
-    node: &super::LinkedFormulaGroupBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn linked_formula_group_box(node: &super::LinkedFormulaGroupBox, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::LINKED_FORMULA_GROUP_BOX_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -637,10 +557,7 @@ pub fn linked_formula_group_box(
 
 /// Write a `ListItemsSourceRange` as its element, `xvml:FmlaRange`.
 #[must_use]
-pub fn list_items_source_range(
-    node: &super::ListItemsSourceRange,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn list_items_source_range(node: &super::ListItemsSourceRange, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -649,7 +566,7 @@ pub fn list_items_source_range(
 
 /// Write a `LockToggle` as its element, `xvml:Locked`.
 #[must_use]
-pub fn lock_toggle(node: &super::LockToggle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn lock_toggle(node: &super::LockToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LOCK_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -657,10 +574,7 @@ pub fn lock_toggle(node: &super::LockToggle, scope: &mut markup::Scope) -> xml::
 
 /// Write a `MacroDisableToggle` as its element, `xvml:Disabled`.
 #[must_use]
-pub fn macro_disable_toggle(
-    node: &super::MacroDisableToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn macro_disable_toggle(node: &super::MacroDisableToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MACRO_DISABLE_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -668,10 +582,7 @@ pub fn macro_disable_toggle(
 
 /// Write a `MinimumWidth` as its element, `xvml:WidthMin`.
 #[must_use]
-pub fn minimum_width(
-    node: &super::MinimumWidth,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn minimum_width(node: &super::MinimumWidth, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MINIMUM_WIDTH_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -679,10 +590,7 @@ pub fn minimum_width(
 
 /// Write a `MoveWithCells` as its element, `xvml:MoveWithCells`.
 #[must_use]
-pub fn move_with_cells(
-    node: &super::MoveWithCells,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn move_with_cells(node: &super::MoveWithCells, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MOVE_WITH_CELLS_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -690,7 +598,7 @@ pub fn move_with_cells(
 
 /// Write a `MultiLine` as its element, `xvml:MultiLine`.
 #[must_use]
-pub fn multi_line(node: &super::MultiLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn multi_line(node: &super::MultiLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MULTI_LINE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -698,10 +606,7 @@ pub fn multi_line(node: &super::MultiLine, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `MultipleSelections` as its element, `xvml:MultiSel`.
 #[must_use]
-pub fn multiple_selections(
-    node: &super::MultipleSelections,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn multiple_selections(node: &super::MultipleSelections, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MULTIPLE_SELECTIONS_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -709,10 +614,7 @@ pub fn multiple_selections(
 
 /// Write a `NonLinkedListItem` as its element, `xvml:ListItem`.
 #[must_use]
-pub fn non_linked_list_item(
-    node: &super::NonLinkedListItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn non_linked_list_item(node: &super::NonLinkedListItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NON_LINKED_LIST_ITEM_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -720,10 +622,7 @@ pub fn non_linked_list_item(
 
 /// Write a `PasswordEdit` as its element, `xvml:SecretEdit`.
 #[must_use]
-pub fn password_edit(
-    node: &super::PasswordEdit,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn password_edit(node: &super::PasswordEdit, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PASSWORD_EDIT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -733,8 +632,8 @@ pub fn password_edit(
 #[must_use]
 pub fn primary_keyboard_accelerator(
     node: &super::PrimaryKeyboardAccelerator,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE,
@@ -746,7 +645,7 @@ pub fn primary_keyboard_accelerator(
 
 /// Write a `PrintToggle` as its element, `xvml:PrintObject`.
 #[must_use]
-pub fn print_toggle(node: &super::PrintToggle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn print_toggle(node: &super::PrintToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRINT_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -754,10 +653,7 @@ pub fn print_toggle(node: &super::PrintToggle, scope: &mut markup::Scope) -> xml
 
 /// Write a `RecalculationToggle` as its element, `xvml:RecalcAlways`.
 #[must_use]
-pub fn recalculation_toggle(
-    node: &super::RecalculationToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn recalculation_toggle(node: &super::RecalculationToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RECALCULATION_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -767,8 +663,8 @@ pub fn recalculation_toggle(
 #[must_use]
 pub fn reference_to_custom_function(
     node: &super::ReferenceToCustomFunction,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE,
@@ -780,10 +676,7 @@ pub fn reference_to_custom_function(
 
 /// Write a `ResizeWithCells` as its element, `xvml:SizeWithCells`.
 #[must_use]
-pub fn resize_with_cells(
-    node: &super::ResizeWithCells,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn resize_with_cells(node: &super::ResizeWithCells, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RESIZE_WITH_CELLS_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -791,10 +684,7 @@ pub fn resize_with_cells(
 
 /// Write a `ScrollBarIncrement` as its element, `xvml:Inc`.
 #[must_use]
-pub fn scroll_bar_increment(
-    node: &super::ScrollBarIncrement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_increment(node: &super::ScrollBarIncrement, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCROLL_BAR_INCREMENT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -802,10 +692,7 @@ pub fn scroll_bar_increment(
 
 /// Write a `ScrollBarMaximum` as its element, `xvml:Max`.
 #[must_use]
-pub fn scroll_bar_maximum(
-    node: &super::ScrollBarMaximum,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_maximum(node: &super::ScrollBarMaximum, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCROLL_BAR_MAXIMUM_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -813,10 +700,7 @@ pub fn scroll_bar_maximum(
 
 /// Write a `ScrollBarMinimum` as its element, `xvml:Min`.
 #[must_use]
-pub fn scroll_bar_minimum(
-    node: &super::ScrollBarMinimum,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_minimum(node: &super::ScrollBarMinimum, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCROLL_BAR_MINIMUM_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -824,10 +708,7 @@ pub fn scroll_bar_minimum(
 
 /// Write a `ScrollBarOrientation` as its element, `xvml:Horiz`.
 #[must_use]
-pub fn scroll_bar_orientation(
-    node: &super::ScrollBarOrientation,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_orientation(node: &super::ScrollBarOrientation, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SCROLL_BAR_ORIENTATION_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -838,8 +719,8 @@ pub fn scroll_bar_orientation(
 #[must_use]
 pub fn scroll_bar_page_increment(
     node: &super::ScrollBarPageIncrement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SCROLL_BAR_PAGE_INCREMENT_SHAPE,
@@ -851,10 +732,7 @@ pub fn scroll_bar_page_increment(
 
 /// Write a `ScrollBarPosition` as its element, `xvml:Val`.
 #[must_use]
-pub fn scroll_bar_position(
-    node: &super::ScrollBarPosition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_position(node: &super::ScrollBarPosition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCROLL_BAR_POSITION_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -862,10 +740,7 @@ pub fn scroll_bar_position(
 
 /// Write a `ScrollBarWidth` as its element, `xvml:Dx`.
 #[must_use]
-pub fn scroll_bar_width(
-    node: &super::ScrollBarWidth,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn scroll_bar_width(node: &super::ScrollBarWidth, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCROLL_BAR_WIDTH_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -875,8 +750,8 @@ pub fn scroll_bar_width(
 #[must_use]
 pub fn secondary_keyboard_accelerator(
     node: &super::SecondaryKeyboardAccelerator,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE,
@@ -888,10 +763,7 @@ pub fn secondary_keyboard_accelerator(
 
 /// Write a `SelectedEntry` as its element, `xvml:Sel`.
 #[must_use]
-pub fn selected_entry(
-    node: &super::SelectedEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn selected_entry(node: &super::SelectedEntry, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SELECTED_ENTRY_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -899,10 +771,7 @@ pub fn selected_entry(
 
 /// Write a `SelectionType` as its element, `xvml:SelType`.
 #[must_use]
-pub fn selection_type(
-    node: &super::SelectionType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn selection_type(node: &super::SelectionType, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SELECTION_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -910,7 +779,7 @@ pub fn selection_type(
 
 /// Write a `TextFormula` as its element, `xvml:FmlaTxbx`.
 #[must_use]
-pub fn text_formula(node: &super::TextFormula, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn text_formula(node: &super::TextFormula, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_FORMULA_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -918,7 +787,7 @@ pub fn text_formula(node: &super::TextFormula, scope: &mut markup::Scope) -> xml
 
 /// Write a `TextLock` as its element, `xvml:LockText`.
 #[must_use]
-pub fn text_lock(node: &super::TextLock, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn text_lock(node: &super::TextLock, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_LOCK_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -926,10 +795,7 @@ pub fn text_lock(node: &super::TextLock, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `UIObjectToggle` as its element, `xvml:UIObj`.
 #[must_use]
-pub fn ui_object_toggle(
-    node: &super::UIObjectToggle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ui_object_toggle(node: &super::UIObjectToggle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UI_OBJECT_TOGGLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -937,7 +803,7 @@ pub fn ui_object_toggle(
 
 /// Write a `ValidID` as its element, `xvml:ValidIds`.
 #[must_use]
-pub fn valid_id(node: &super::ValidID, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn valid_id(node: &super::ValidID, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VALID_ID_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -945,10 +811,7 @@ pub fn valid_id(node: &super::ValidID, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `ValidationType` as its element, `xvml:VTEdit`.
 #[must_use]
-pub fn validation_type(
-    node: &super::ValidationType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn validation_type(node: &super::ValidationType, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VALIDATION_TYPE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -956,10 +819,7 @@ pub fn validation_type(
 
 /// Write a `VerticalScroll` as its element, `xvml:VScroll`.
 #[must_use]
-pub fn vertical_scroll(
-    node: &super::VerticalScroll,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn vertical_scroll(node: &super::VerticalScroll, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VERTICAL_SCROLL_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -967,10 +827,7 @@ pub fn vertical_scroll(
 
 /// Write a `VerticalTextAlignment` as its element, `xvml:TextVAlign`.
 #[must_use]
-pub fn vertical_text_alignment(
-    node: &super::VerticalTextAlignment,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn vertical_text_alignment(node: &super::VerticalTextAlignment, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE, &node.unknown);
     writer.text(&node.value);

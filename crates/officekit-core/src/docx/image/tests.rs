@@ -1,16 +1,17 @@
+use officekit_xml::element::Element;
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::write::Scope;
+
 use super::PictureFit;
 use crate::docx::Docx;
 use crate::error::PackageError;
 use crate::image::{Image, ImageFormat};
 use crate::markup::Read as _;
-use crate::markup::Scope;
 use crate::markup::wordprocessing::{TextRun, write};
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
-use crate::xml::element::Element;
-use crate::xml::name::{Namespace, QName};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";

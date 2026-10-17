@@ -1,12 +1,13 @@
 use std::io;
 
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::QName;
+use officekit_xml::parse::parse;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::Layout;
+
 use super::{Place, Unchanged, WriteThrough as _, Written};
 use crate::markup::{Context, Extra, Unknown};
-use crate::stream::writer::PartWriter;
-use crate::xml::element::{Element, Node};
-use crate::xml::name::QName;
-use crate::xml::parse::parse;
-use crate::xml::write::Layout;
 
 const XML: &str = "<x:a xmlns:x=\"urn:x\"><!--c--><x:b/><x:c><x:b/><x:e/></x:c>t</x:a>";
 

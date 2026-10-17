@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XPDL: Option<NamespaceId> = Some(151);
@@ -291,7 +291,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for PivotTableDefinition16 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_definition16(element)
     }
 }

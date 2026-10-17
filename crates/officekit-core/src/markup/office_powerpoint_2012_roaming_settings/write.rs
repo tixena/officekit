@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Key` as its element, `pRoam:key`.
 #[must_use]
-pub fn key(node: &super::Key, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn key(node: &super::Key, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::KEY_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn key(node: &super::Key, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `Props` as its element, `pRoam:props`.
 #[must_use]
-pub fn props(node: &super::Props, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn props(node: &super::Props, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROPS_SHAPE, &node.unknown);
     writer.child(&node.key);
     writer.child(&node.value);
@@ -234,7 +235,7 @@ pub fn props(node: &super::Props, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Value` as its element, `pRoam:value`.
 #[must_use]
-pub fn value(node: &super::Value, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn value(node: &super::Value, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VALUE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

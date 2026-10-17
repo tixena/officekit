@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `dgm14:cNvPr` into a `CNvPr`.
 #[must_use]
-pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
+pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -239,7 +239,7 @@ pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
 
 /// Read `dgm14:recolorImg` into a `RecolorImg`.
 #[must_use]
-pub fn recolor_img(element: &xml::element::Element) -> super::RecolorImg {
+pub fn recolor_img(element: &Element) -> super::RecolorImg {
     let mut node = super::RecolorImg::default();
     let mut reader = markup::Reader::new(element, &super::RECOLOR_IMG_SHAPE);
     for (index, field) in &mut reader {

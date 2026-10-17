@@ -224,10 +224,10 @@ mod tests;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::{DateTime, Measure, ValueError};
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::{DateTime, Measure, ValueError};
 use std::io;
 
 const NS_M: Option<NamespaceId> = Some(52);
@@ -7604,7 +7604,7 @@ pub enum BlockContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     Paragraph(Paragraph),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
@@ -8044,7 +8044,7 @@ pub struct CellLevelStructuredDocumentTagContent {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum CellMarkupContent {
-    Other(xml::element::Node),
+    Other(Node),
     TableCellDeletion(TableCellDeletion),
     TableCellInsertion(TableCellInsertion),
     VerticallyMergedSplitTableCells(VerticallyMergedSplitTableCells),
@@ -8144,7 +8144,7 @@ pub struct CheckboxFormFieldProperties {
 pub enum CheckboxFormFieldPropertiesContent {
     AutomaticallySizeFormField(AutomaticallySizeFormField),
     CheckboxFormFieldSize(CheckboxFormFieldSize),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.16.29 size (Checkbox Form Field Size): the tag `w:size`, schema type `CT_HpsMeasure`.
@@ -8423,7 +8423,7 @@ pub struct ComplexFieldCharacter {
 pub enum ComplexFieldCharacterContent {
     CustomFieldData(CustomFieldData),
     FormFieldProperties(FormFieldProperties),
-    Other(xml::element::Node),
+    Other(Node),
     PreviousNumberingFieldProperties(PreviousNumberingFieldProperties),
 }
 
@@ -8509,7 +8509,7 @@ pub enum ConditionalTableStyleFormattingTypesMember {
 pub enum ConflictChangeContent {
     ConflictDelTrackChange(super::office_word_2010_wordml::ConflictDelTrackChange),
     ConflictInsTrackChange(super::office_word_2010_wordml::ConflictInsTrackChange),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.9.28 suff (Content Between Numbering Symbol and Paragraph Text): the tag `w:suff`, schema
@@ -8555,7 +8555,7 @@ pub enum ContentBlockContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     Paragraph(Paragraph),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
@@ -8597,7 +8597,7 @@ pub enum ContentCellContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
     RangePermissionStart(RangePermissionStart),
@@ -8644,7 +8644,7 @@ pub enum ContentRowContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
     RangePermissionStart(RangePermissionStart),
@@ -22409,7 +22409,7 @@ pub enum DrawingObjectContent {
         Box<super::wordprocessing_drawing::AnchorForFloatingDrawingMLObject>,
     ),
     InlineDrawingMLObject(super::wordprocessing_drawing::InlineDrawingMLObject),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.16.25 `listEntry` (Drop-Down List Entry): the tag `w:listEntry`, schema type `CT_String`.
@@ -22551,7 +22551,7 @@ pub enum EmbeddedObjectContent {
     EmbeddedObjectProperties(EmbeddedObjectProperties),
     EmbeddedVideo(EmbeddedVideo),
     LinkedObjectProperties(LinkedObjectProperties),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.3.3.20 `objectEmbed` (Embedded Object Properties): the tag `w:objectEmbed`, schema type
@@ -23148,7 +23148,7 @@ pub enum FormFieldPropertiesContent {
     ExecuteOnFormFieldExit(ExecuteOnFormFieldExit),
     FormFieldEnabled(FormFieldEnabled),
     FormFieldName(FormFieldName),
-    Other(xml::element::Node),
+    Other(Node),
     RecalculateFieldsWhenModified(RecalculateFieldsWhenModified),
     StructuredDocumentTagLabel(StructuredDocumentTagLabel),
     StructuredDocumentTagNavigationOrderIndex(StructuredDocumentTagNavigationOrderIndex),
@@ -23211,7 +23211,7 @@ pub struct FrameSize {
 #[non_exhaustive]
 pub enum FramesetDefinitionContent {
     NestedFramesetDefinition(NestedFramesetDefinition),
-    Other(xml::element::Node),
+    Other(Node),
     SingleFrameProperties(SingleFrameProperties),
 }
 
@@ -23333,7 +23333,7 @@ pub enum GlossaryDocumentEntryPropertiesContent {
     EntryInsertionBehaviors(EntryInsertionBehaviors),
     EntryName(EntryName),
     EntryTypes(EntryTypes),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.12.10 `glossaryDocument` (Glossary Document Root Element): the tag `w:glossaryDocument`,
@@ -23791,7 +23791,7 @@ pub struct InsertedMathControlCharacter {
 #[non_exhaustive]
 pub enum InsertedMathControlCharacterContent {
     Del(Del),
-    Other(xml::element::Node),
+    Other(Node),
     RunProperties(RunProperties),
 }
 
@@ -25180,7 +25180,7 @@ pub enum ParagraphContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
     RangePermissionStart(RangePermissionStart),
@@ -25445,7 +25445,7 @@ pub enum PhoneticGuideContent {
     MoveSourceRunContent(MoveSourceRunContent),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     ProofingErrorAnchor(ProofingErrorAnchor),
     RangePermissionEnd(RangePermissionEnd),
     RangePermissionStart(RangePermissionStart),
@@ -25505,7 +25505,7 @@ pub struct PictureNumberingSymbolDefinition {
 #[non_exhaustive]
 pub enum PictureNumberingSymbolDefinitionContent {
     DrawingMLObject(DrawingMLObject),
-    Other(xml::element::Node),
+    Other(Node),
     VMLObject(VMLObject),
 }
 
@@ -26024,7 +26024,7 @@ pub enum RangeMarkupContent {
     MoveDestinationLocationContainerStart(MoveDestinationLocationContainerStart),
     MoveSourceLocationContainerEnd(MoveSourceLocationContainerEnd),
     MoveSourceLocationContainerStart(MoveSourceLocationContainerStart),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.18.21 `ST_EdGrp` (Range Permision Editing Group): the text the file carried.
@@ -26543,7 +26543,7 @@ pub enum RunPropertiesContent {
     ManualRunWidth(ManualRunWidth),
     NonComplexScriptFontSize(NonComplexScriptFontSize),
     OfficeOpenXMLMath(OfficeOpenXMLMath),
-    Other(xml::element::Node),
+    Other(Node),
     ParagraphMarkIsAlwaysHidden(ParagraphMarkIsAlwaysHidden),
     ParagraphShading(ParagraphShading),
     ReferencedCharacterStyle(ReferencedCharacterStyle),
@@ -26627,7 +26627,7 @@ pub struct ScrollbarDisplayOption {
 pub enum SectionPropertiesContent {
     FooterReference(FooterReference),
     HeaderReference(HeaderReference),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 17.6.22 type (Section Type): the tag `w:type`, schema type `CT_SectType`.
@@ -27282,7 +27282,7 @@ pub enum StructuredDocumentTagPropertiesContent {
     EntityPicker(super::office_word_2010_wordml::EntityPicker),
     EquationStructuredDocumentTag(EquationStructuredDocumentTag),
     GroupStructuredDocumentTag(GroupStructuredDocumentTag),
-    Other(xml::element::Node),
+    Other(Node),
     PictureStructuredDocumentTag(PictureStructuredDocumentTag),
     PlainTextStructuredDocumentTag(PlainTextStructuredDocumentTag),
     RepeatingSection(super::office_word_2012_wordml::RepeatingSection),
@@ -27978,7 +27978,7 @@ pub enum TableRowPropertiesContent {
     GridColumnsAfterLastCell(GridColumnsAfterLastCell),
     GridColumnsBeforeFirstCell(GridColumnsBeforeFirstCell),
     HiddenTableRowMarker(HiddenTableRowMarker),
-    Other(xml::element::Node),
+    Other(Node),
     ParagraphConditionalFormatting(Box<ParagraphConditionalFormatting>),
     PreferredWidthAfterTableRow(PreferredWidthAfterTableRow),
     PreferredWidthBeforeTableRow(PreferredWidthBeforeTableRow),
@@ -28245,7 +28245,7 @@ pub enum TextRunContent {
     FootnoteReferenceMark(FootnoteReferenceMark),
     NonBreakingHyphenCharacter(NonBreakingHyphenCharacter),
     OptionalHyphenCharacter(OptionalHyphenCharacter),
-    Other(xml::element::Node),
+    Other(Node),
     PageNumberBlock(PageNumberBlock),
     PhoneticGuide(PhoneticGuide),
     PositionOfLastCalculatedPageBreak(PositionOfLastCalculatedPageBreak),
@@ -28521,7 +28521,7 @@ pub enum TrackedRunContent {
     Nary(super::math::Nary),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     PhantomObject(super::math::PhantomObject),
     PreSubSuperscriptObject(super::math::PreSubSuperscriptObject),
     ProofingErrorAnchor(ProofingErrorAnchor),
@@ -32820,7 +32820,7 @@ pub enum VmlElementContent {
     LineStrokeSettings(super::vml::LineStrokeSettings),
     MultiplePathLine(super::vml::MultiplePathLine),
     NewShapeDefaults(super::vml_office_drawing::NewShapeDefaults),
-    Other(xml::element::Node),
+    Other(Node),
     Oval(super::vml::Oval),
     Rectangle(super::vml::Rectangle),
     RoundedRectangle(super::vml::RoundedRectangle),
@@ -32860,7 +32860,7 @@ pub enum VmlOfficeDrawingElementContent {
     Extrusion(super::vml_office_drawing::Extrusion),
     Ink(super::vml_office_drawing::Ink),
     NewShapeDefaults(super::vml_office_drawing::NewShapeDefaults),
-    Other(xml::element::Node),
+    Other(Node),
     ShapeClippingPath(super::vml_office_drawing::ShapeClippingPath),
     ShapeFillExtendedProperties(super::vml_office_drawing::ShapeFillExtendedProperties),
     ShapeLayoutProperties(super::vml_office_drawing::ShapeLayoutProperties),
@@ -32994,7 +32994,7 @@ impl AbsolutePositionTabAlignment {
 }
 
 impl markup::Read for AbsolutePositionTabCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::absolute_position_tab_character(element)
     }
 }
@@ -33116,7 +33116,7 @@ impl AbsolutePositionTabPositioningBase {
 }
 
 impl markup::Read for AbstractNumberingDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::abstract_numbering_definition(element)
     }
 }
@@ -33129,7 +33129,7 @@ impl markup::Write for AbstractNumberingDefinition {
 }
 
 impl markup::Read for AbstractNumberingDefinitionIdentifier {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::abstract_numbering_definition_identifier(element)
     }
 }
@@ -33142,7 +33142,7 @@ impl markup::Write for AbstractNumberingDefinitionIdentifier {
 }
 
 impl markup::Read for AbstractNumberingDefinitionReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::abstract_numbering_definition_reference(element)
     }
 }
@@ -33155,7 +33155,7 @@ impl markup::Write for AbstractNumberingDefinitionReference {
 }
 
 impl markup::Read for AbstractNumberingDefinitionType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::abstract_numbering_definition_type(element)
     }
 }
@@ -33168,7 +33168,7 @@ impl markup::Write for AbstractNumberingDefinitionType {
 }
 
 impl markup::Read for AddDocumentGridLinePitch {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::add_document_grid_line_pitch(element)
     }
 }
@@ -33181,7 +33181,7 @@ impl markup::Write for AddDocumentGridLinePitch {
 }
 
 impl markup::Read for AddSpaceBelowUnderlinedText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::add_space_below_underlined_text(element)
     }
 }
@@ -33194,7 +33194,7 @@ impl markup::Write for AddSpaceBelowUnderlinedText {
 }
 
 impl markup::Read for AdjustSpacingEastAsianTextNumbers {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::adjust_spacing_east_asian_text_numbers(element)
     }
 }
@@ -33207,7 +33207,7 @@ impl markup::Write for AdjustSpacingEastAsianTextNumbers {
 }
 
 impl markup::Read for AdjustSpacingLatinEastAsianText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::adjust_spacing_latin_east_asian_text(element)
     }
 }
@@ -33220,7 +33220,7 @@ impl markup::Write for AdjustSpacingLatinEastAsianText {
 }
 
 impl markup::Read for AlignParagraphAndTableBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::align_paragraph_and_table_borders(element)
     }
 }
@@ -33233,7 +33233,7 @@ impl markup::Write for AlignParagraphAndTableBorders {
 }
 
 impl markup::Read for AlignTableRowsIndependently {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::align_table_rows_independently(element)
     }
 }
@@ -33246,7 +33246,7 @@ impl markup::Write for AlignTableRowsIndependently {
 }
 
 impl markup::Read for AllowAutomaticFormattingOverride {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_automatic_formatting_override(element)
     }
 }
@@ -33259,7 +33259,7 @@ impl markup::Write for AllowAutomaticFormattingOverride {
 }
 
 impl markup::Read for AllowContextualSpacingOfParagraphsInTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_contextual_spacing_of_paragraphs_in_tables(element)
     }
 }
@@ -33272,7 +33272,7 @@ impl markup::Write for AllowContextualSpacingOfParagraphsInTables {
 }
 
 impl markup::Read for AllowFirstLastLineDisplay {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_first_last_line_display(element)
     }
 }
@@ -33285,7 +33285,7 @@ impl markup::Write for AllowFirstLastLineDisplay {
 }
 
 impl markup::Read for AllowLineBreakingAtCharacterLevel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_line_breaking_at_character_level(element)
     }
 }
@@ -33298,7 +33298,7 @@ impl markup::Write for AllowLineBreakingAtCharacterLevel {
 }
 
 impl markup::Read for AllowPNGAsGraphicFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_png_as_graphic_format(element)
     }
 }
@@ -33311,7 +33311,7 @@ impl markup::Write for AllowPNGAsGraphicFormat {
 }
 
 impl markup::Read for AllowPunctuationExtendPastTextExtents {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_punctuation_extend_past_text_extents(element)
     }
 }
@@ -33324,7 +33324,7 @@ impl markup::Write for AllowPunctuationExtendPastTextExtents {
 }
 
 impl markup::Read for AllowSavingDocumentAsXMLFile {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_saving_document_as_xml_file(element)
     }
 }
@@ -33337,7 +33337,7 @@ impl markup::Write for AllowSavingDocumentAsXMLFile {
 }
 
 impl markup::Read for AllowTableRowsToWrapInlineObjectsIndependently {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_table_rows_to_wrap_inline_objects_independently(element)
     }
 }
@@ -33351,7 +33351,7 @@ impl markup::Write for AllowTableRowsToWrapInlineObjectsIndependently {
 }
 
 impl markup::Read for AllowTablesToAutoFitIntoPageMargins {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::allow_tables_to_auto_fit_into_page_margins(element)
     }
 }
@@ -33364,7 +33364,7 @@ impl markup::Write for AllowTablesToAutoFitIntoPageMargins {
 }
 
 impl markup::Read for AlternateNamesForFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::alternate_names_for_font(element)
     }
 }
@@ -33377,7 +33377,7 @@ impl markup::Write for AlternateNamesForFont {
 }
 
 impl markup::Read for AlternateStyleNames {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::alternate_style_names(element)
     }
 }
@@ -33390,7 +33390,7 @@ impl markup::Write for AlternateStyleNames {
 }
 
 impl markup::Read for AlwaysMergeEmptyNamespace {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::always_merge_empty_namespace(element)
     }
 }
@@ -33403,7 +33403,7 @@ impl markup::Write for AlwaysMergeEmptyNamespace {
 }
 
 impl markup::Read for AlwaysShowPlaceholderText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::always_show_placeholder_text(element)
     }
 }
@@ -33416,7 +33416,7 @@ impl markup::Write for AlwaysShowPlaceholderText {
 }
 
 impl markup::Read for AlwaysUseFixedWidthForHangulCharacters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::always_use_fixed_width_for_hangul_characters(element)
     }
 }
@@ -33429,7 +33429,7 @@ impl markup::Write for AlwaysUseFixedWidthForHangulCharacters {
 }
 
 impl markup::Read for AnchorForImportedExternalContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor_for_imported_external_content(element)
     }
 }
@@ -33442,7 +33442,7 @@ impl markup::Write for AnchorForImportedExternalContent {
 }
 
 impl markup::Read for AnchorForSubdocumentLocation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor_for_subdocument_location(element)
     }
 }
@@ -33455,7 +33455,7 @@ impl markup::Write for AnchorForSubdocumentLocation {
 }
 
 impl markup::Read for AnimatedTextEffect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::animated_text_effect(element)
     }
 }
@@ -33522,7 +33522,7 @@ impl AnimatedTextEffects {
 }
 
 impl markup::Read for AssociatedHTMLDivID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_html_div_id(element)
     }
 }
@@ -33535,7 +33535,7 @@ impl markup::Write for AssociatedHTMLDivID {
 }
 
 impl markup::Read for AssociatedHelpText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_help_text(element)
     }
 }
@@ -33548,7 +33548,7 @@ impl markup::Write for AssociatedHelpText {
 }
 
 impl markup::Read for AssociatedOutlineLevel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_outline_level(element)
     }
 }
@@ -33561,7 +33561,7 @@ impl markup::Write for AssociatedOutlineLevel {
 }
 
 impl markup::Read for AssociatedParagraphStyleName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_paragraph_style_name(element)
     }
 }
@@ -33574,7 +33574,7 @@ impl markup::Write for AssociatedParagraphStyleName {
 }
 
 impl markup::Read for AssociatedStatusText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_status_text(element)
     }
 }
@@ -33587,7 +33587,7 @@ impl markup::Write for AssociatedStatusText {
 }
 
 impl markup::Read for AttachedCustomXMLSchema {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attached_custom_xml_schema(element)
     }
 }
@@ -33600,7 +33600,7 @@ impl markup::Write for AttachedCustomXMLSchema {
 }
 
 impl markup::Read for AttachedDocumentTemplate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attached_document_template(element)
     }
 }
@@ -33613,7 +33613,7 @@ impl markup::Write for AttachedDocumentTemplate {
 }
 
 impl markup::Read for AutoSpaceLikeWord95 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_space_like_word95(element)
     }
 }
@@ -33626,7 +33626,7 @@ impl markup::Write for AutoSpaceLikeWord95 {
 }
 
 impl markup::Read for AutofitToFirstFixedWidthCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::autofit_to_first_fixed_width_cell(element)
     }
 }
@@ -33694,7 +33694,7 @@ impl AutomaticCaptionPositioningValues {
 }
 
 impl markup::Read for AutomaticCaptioningSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatic_captioning_settings(element)
     }
 }
@@ -33707,7 +33707,7 @@ impl markup::Write for AutomaticCaptioningSettings {
 }
 
 impl markup::Read for AutomaticallyAdjustRightIndent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_adjust_right_indent(element)
     }
 }
@@ -33720,7 +33720,7 @@ impl markup::Write for AutomaticallyAdjustRightIndent {
 }
 
 impl markup::Read for AutomaticallyHyphenateDocumentContentsWhenDisplayed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_hyphenate_document_contents_when_displayed(element)
     }
 }
@@ -33734,7 +33734,7 @@ impl markup::Write for AutomaticallyHyphenateDocumentContentsWhenDisplayed {
 }
 
 impl markup::Read for AutomaticallyMergeUserFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_merge_user_formatting(element)
     }
 }
@@ -33747,7 +33747,7 @@ impl markup::Write for AutomaticallyMergeUserFormatting {
 }
 
 impl markup::Read for AutomaticallyRecalculateFieldsOnOpen {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_recalculate_fields_on_open(element)
     }
 }
@@ -33760,7 +33760,7 @@ impl markup::Write for AutomaticallyRecalculateFieldsOnOpen {
 }
 
 impl markup::Read for AutomaticallySizeFormField {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_size_form_field(element)
     }
 }
@@ -33773,7 +33773,7 @@ impl markup::Write for AutomaticallySizeFormField {
 }
 
 impl markup::Read for AutomaticallyUpdateStylesFromDocumentTemplate {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_update_styles_from_document_template(element)
     }
 }
@@ -33787,7 +33787,7 @@ impl markup::Write for AutomaticallyUpdateStylesFromDocumentTemplate {
 }
 
 impl markup::Read for BalanceSingleByteDoubleByteWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::balance_single_byte_double_byte_width(element)
     }
 }
@@ -33800,7 +33800,7 @@ impl markup::Write for BalanceSingleByteDoubleByteWidth {
 }
 
 impl markup::Read for BibliographyStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bibliography_structured_document_tag(element)
     }
 }
@@ -33863,7 +33863,7 @@ impl BidirectionalDirectionTypes {
 }
 
 impl markup::Read for BidirectionalEmbeddingLevel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bidirectional_embedding_level(element)
     }
 }
@@ -33876,7 +33876,7 @@ impl markup::Write for BidirectionalEmbeddingLevel {
 }
 
 impl markup::Read for BidirectionalOverride {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bidirectional_override(element)
     }
 }
@@ -33889,11 +33889,11 @@ impl markup::Write for BidirectionalOverride {
 }
 
 impl markup::Read for BlockContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "altChunk")) => {
                 Self::AnchorForImportedExternalContent(markup::read(element))
@@ -33967,7 +33967,7 @@ impl markup::Read for BlockContent {
             Some((NS_W, "permEnd")) => Self::RangePermissionEnd(markup::read(element)),
             Some((NS_W, "permStart")) => Self::RangePermissionStart(markup::read(element)),
             Some((NS_W, "tbl")) => Self::Table(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -34334,7 +34334,7 @@ impl TryFrom<BlockContent> for RangeMarkupContent {
 }
 
 impl markup::Read for BlockLevelCustomXMLElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::block_level_custom_xml_element(element)
     }
 }
@@ -34347,7 +34347,7 @@ impl markup::Write for BlockLevelCustomXMLElement {
 }
 
 impl markup::Read for BlockLevelStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::block_level_structured_document_tag(element)
     }
 }
@@ -34360,7 +34360,7 @@ impl markup::Write for BlockLevelStructuredDocumentTag {
 }
 
 impl markup::Read for BlockLevelStructuredDocumentTagContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::block_level_structured_document_tag_content(element)
     }
 }
@@ -34373,7 +34373,7 @@ impl markup::Write for BlockLevelStructuredDocumentTagContent {
 }
 
 impl markup::Read for Bold {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bold(element)
     }
 }
@@ -34386,7 +34386,7 @@ impl markup::Write for Bold {
 }
 
 impl markup::Read for BoldItalicFontStyleEmbedding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bold_italic_font_style_embedding(element)
     }
 }
@@ -34399,7 +34399,7 @@ impl markup::Write for BoldItalicFontStyleEmbedding {
 }
 
 impl markup::Read for BoldStyleFontStyleEmbedding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bold_style_font_style_embedding(element)
     }
 }
@@ -34412,7 +34412,7 @@ impl markup::Write for BoldStyleFontStyleEmbedding {
 }
 
 impl markup::Read for BookFoldPrinting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::book_fold_printing(element)
     }
 }
@@ -34425,7 +34425,7 @@ impl markup::Write for BookFoldPrinting {
 }
 
 impl markup::Read for BookmarkEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bookmark_end(element)
     }
 }
@@ -34438,7 +34438,7 @@ impl markup::Write for BookmarkEnd {
 }
 
 impl markup::Read for BookmarkStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bookmark_start(element)
     }
 }
@@ -34691,7 +34691,7 @@ impl BorderStyles {
 }
 
 impl markup::Read for BottomBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bottom_border(element)
     }
 }
@@ -34704,7 +34704,7 @@ impl markup::Write for BottomBorder {
 }
 
 impl markup::Read for BottomMarginForHTMLDiv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bottom_margin_for_html_div(element)
     }
 }
@@ -34717,7 +34717,7 @@ impl markup::Write for BottomMarginForHTMLDiv {
 }
 
 impl markup::Read for Break {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#break(element)
     }
 }
@@ -34780,7 +34780,7 @@ impl BreakTypes {
 }
 
 impl markup::Read for BuiltInDocumentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::built_in_document_part(element)
     }
 }
@@ -34793,7 +34793,7 @@ impl markup::Write for BuiltInDocumentPart {
 }
 
 impl markup::Read for BuiltInDocumentPartStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::built_in_document_part_structured_document_tag(element)
     }
 }
@@ -34806,7 +34806,7 @@ impl markup::Write for BuiltInDocumentPartStructuredDocumentTag {
 }
 
 impl markup::Read for CaptionSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::caption_settings(element)
     }
 }
@@ -34819,7 +34819,7 @@ impl markup::Write for CaptionSettings {
 }
 
 impl markup::Read for CarriageReturn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::carriage_return(element)
     }
 }
@@ -34832,7 +34832,7 @@ impl markup::Write for CarriageReturn {
 }
 
 impl markup::Read for CellLevelCustomXMLElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cell_level_custom_xml_element(element)
     }
 }
@@ -34845,7 +34845,7 @@ impl markup::Write for CellLevelCustomXMLElement {
 }
 
 impl markup::Read for CellLevelStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cell_level_structured_document_tag(element)
     }
 }
@@ -34858,7 +34858,7 @@ impl markup::Write for CellLevelStructuredDocumentTag {
 }
 
 impl markup::Read for CellLevelStructuredDocumentTagContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cell_level_structured_document_tag_content(element)
     }
 }
@@ -34871,18 +34871,18 @@ impl markup::Write for CellLevelStructuredDocumentTagContent {
 }
 
 impl markup::Read for CellMarkupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "cellDel")) => Self::TableCellDeletion(markup::read(element)),
             Some((NS_W, "cellIns")) => Self::TableCellInsertion(markup::read(element)),
             Some((NS_W, "cellMerge")) => {
                 Self::VerticallyMergedSplitTableCells(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -34955,7 +34955,7 @@ impl ChapterSeparatorTypes {
 }
 
 impl markup::Read for CharacterLevelWhitespaceCompression {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::character_level_whitespace_compression(element)
     }
 }
@@ -35028,7 +35028,7 @@ impl CharacterLevelWhitespaceCompressionSettings {
 }
 
 impl markup::Read for CharacterSetSupportedByFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::character_set_supported_by_font(element)
     }
 }
@@ -35041,7 +35041,7 @@ impl markup::Write for CharacterSetSupportedByFont {
 }
 
 impl markup::Read for CharacterSpacingAdjustment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::character_spacing_adjustment(element)
     }
 }
@@ -35054,7 +35054,7 @@ impl markup::Write for CharacterSpacingAdjustment {
 }
 
 impl markup::Read for CharactersWhichCannotBeginALine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::characters_which_cannot_begin_a_line(element)
     }
 }
@@ -35067,7 +35067,7 @@ impl markup::Write for CharactersWhichCannotBeginALine {
 }
 
 impl markup::Read for CharactersWhichCannotEndALine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::characters_which_cannot_end_a_line(element)
     }
 }
@@ -35080,7 +35080,7 @@ impl markup::Write for CharactersWhichCannotEndALine {
 }
 
 impl markup::Read for CheckboxFormFieldProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::checkbox_form_field_properties(element)
     }
 }
@@ -35099,15 +35099,15 @@ impl Default for CheckboxFormFieldPropertiesContent {
 }
 
 impl markup::Read for CheckboxFormFieldPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "sizeAuto")) => Self::AutomaticallySizeFormField(markup::read(element)),
             Some((NS_W, "size")) => Self::CheckboxFormFieldSize(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -35123,7 +35123,7 @@ impl markup::Write for CheckboxFormFieldPropertiesContent {
 }
 
 impl markup::Read for CheckboxFormFieldSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::checkbox_form_field_size(element)
     }
 }
@@ -35136,7 +35136,7 @@ impl markup::Write for CheckboxFormFieldSize {
 }
 
 impl markup::Read for CheckboxFormFieldState {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::checkbox_form_field_state(element)
     }
 }
@@ -35149,7 +35149,7 @@ impl markup::Write for CheckboxFormFieldState {
 }
 
 impl markup::Read for ChildDivElements {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::child_div_elements(element)
     }
 }
@@ -35162,7 +35162,7 @@ impl markup::Write for ChildDivElements {
 }
 
 impl markup::Read for CitationStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::citation_structured_document_tag(element)
     }
 }
@@ -35175,7 +35175,7 @@ impl markup::Write for CitationStructuredDocumentTag {
 }
 
 impl markup::Read for ClickAndTypeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::click_and_type_style(element)
     }
 }
@@ -35219,7 +35219,7 @@ impl ColorValue {
 }
 
 impl markup::Read for ColumnContainingEMailAddress {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_containing_e_mail_address(element)
     }
 }
@@ -35232,7 +35232,7 @@ impl markup::Write for ColumnContainingEMailAddress {
 }
 
 impl markup::Read for ColumnDefinitions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_definitions(element)
     }
 }
@@ -35245,7 +35245,7 @@ impl markup::Write for ColumnDefinitions {
 }
 
 impl markup::Read for ColumnDelimiterForDataSource {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_delimiter_for_data_source(element)
     }
 }
@@ -35258,7 +35258,7 @@ impl markup::Write for ColumnDelimiterForDataSource {
 }
 
 impl markup::Read for ComboBoxListItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::combo_box_list_item(element)
     }
 }
@@ -35271,7 +35271,7 @@ impl markup::Write for ComboBoxListItem {
 }
 
 impl markup::Read for ComboBoxStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::combo_box_structured_document_tag(element)
     }
 }
@@ -35284,7 +35284,7 @@ impl markup::Write for ComboBoxStructuredDocumentTag {
 }
 
 impl markup::Read for CommentAnchorRangeEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_anchor_range_end(element)
     }
 }
@@ -35297,7 +35297,7 @@ impl markup::Write for CommentAnchorRangeEnd {
 }
 
 impl markup::Read for CommentAnchorRangeStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_anchor_range_start(element)
     }
 }
@@ -35310,7 +35310,7 @@ impl markup::Write for CommentAnchorRangeStart {
 }
 
 impl markup::Read for CommentContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_content(element)
     }
 }
@@ -35323,7 +35323,7 @@ impl markup::Write for CommentContent {
 }
 
 impl markup::Read for CommentContentReferenceMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_content_reference_mark(element)
     }
 }
@@ -35336,7 +35336,7 @@ impl markup::Write for CommentContentReferenceMark {
 }
 
 impl markup::Read for CommentInformationBlock {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_information_block(element)
     }
 }
@@ -35349,7 +35349,7 @@ impl markup::Write for CommentInformationBlock {
 }
 
 impl markup::Read for CommentsCollection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments_collection(element)
     }
 }
@@ -35362,7 +35362,7 @@ impl markup::Write for CommentsCollection {
 }
 
 impl markup::Read for CompatibilitySettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::compatibility_settings(element)
     }
 }
@@ -35375,7 +35375,7 @@ impl markup::Write for CompatibilitySettings {
 }
 
 impl markup::Read for ComplexFieldCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::complex_field_character(element)
     }
 }
@@ -35388,18 +35388,18 @@ impl markup::Write for ComplexFieldCharacter {
 }
 
 impl markup::Read for ComplexFieldCharacterContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "fldData")) => Self::CustomFieldData(markup::read(element)),
             Some((NS_W, "ffData")) => Self::FormFieldProperties(markup::read(element)),
             Some((NS_W, "numberingChange")) => {
                 Self::PreviousNumberingFieldProperties(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -35470,7 +35470,7 @@ impl ComplexFieldCharacterType {
 }
 
 impl markup::Read for ComplexScriptBold {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::complex_script_bold(element)
     }
 }
@@ -35483,7 +35483,7 @@ impl markup::Write for ComplexScriptBold {
 }
 
 impl markup::Read for ComplexScriptFontSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::complex_script_font_size(element)
     }
 }
@@ -35496,7 +35496,7 @@ impl markup::Write for ComplexScriptFontSize {
 }
 
 impl markup::Read for ComplexScriptItalics {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::complex_script_italics(element)
     }
 }
@@ -35509,7 +35509,7 @@ impl markup::Write for ComplexScriptItalics {
 }
 
 impl markup::Read for CompressPunctuationAtStartOfLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::compress_punctuation_at_start_of_line(element)
     }
 }
@@ -35609,15 +35609,15 @@ impl ConditionalTableStyleFormattingTypes {
 }
 
 impl markup::Read for ConflictChangeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W14, "conflictDel")) => Self::ConflictDelTrackChange(markup::read(element)),
             Some((NS_W14, "conflictIns")) => Self::ConflictInsTrackChange(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -35633,7 +35633,7 @@ impl markup::Write for ConflictChangeContent {
 }
 
 impl markup::Read for ContentBetweenNumberingSymbolAndText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_between_numbering_symbol_and_text(element)
     }
 }
@@ -35646,11 +35646,11 @@ impl markup::Write for ContentBetweenNumberingSymbolAndText {
 }
 
 impl markup::Read for ContentBlockContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "customXml")) => Self::BlockLevelCustomXMLElement(markup::read(element)),
             Some((NS_W, "sdt")) => Self::BlockLevelStructuredDocumentTag(markup::read(element)),
@@ -35721,7 +35721,7 @@ impl markup::Read for ContentBlockContent {
             Some((NS_W, "permEnd")) => Self::RangePermissionEnd(markup::read(element)),
             Some((NS_W, "permStart")) => Self::RangePermissionStart(markup::read(element)),
             Some((NS_W, "tbl")) => Self::Table(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -35836,11 +35836,11 @@ impl TryFrom<ContentBlockContent> for RangeMarkupContent {
 }
 
 impl markup::Read for ContentCellContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(markup::read(element)),
             Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(markup::read(element)),
@@ -35910,7 +35910,7 @@ impl markup::Read for ContentCellContent {
             Some((NS_W, "permEnd")) => Self::RangePermissionEnd(markup::read(element)),
             Some((NS_W, "permStart")) => Self::RangePermissionStart(markup::read(element)),
             Some((NS_W, "tc")) => Self::TableCell(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -36024,7 +36024,7 @@ impl TryFrom<ContentCellContent> for RangeMarkupContent {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -36037,11 +36037,11 @@ impl markup::Write for ContentPart {
 }
 
 impl markup::Read for ContentRowContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(markup::read(element)),
             Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(markup::read(element)),
@@ -36111,7 +36111,7 @@ impl markup::Read for ContentRowContent {
             Some((NS_W, "customXml")) => Self::RowLevelCustomXMLElement(markup::read(element)),
             Some((NS_W, "sdt")) => Self::RowLevelStructuredDocumentTag(markup::read(element)),
             Some((NS_W, "tr")) => Self::TableRow(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -36225,7 +36225,7 @@ impl TryFrom<ContentRowContent> for RangeMarkupContent {
 }
 
 impl markup::Read for ContentsOfGlossaryDocumentEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::contents_of_glossary_document_entry(element)
     }
 }
@@ -36238,7 +36238,7 @@ impl markup::Write for ContentsOfGlossaryDocumentEntry {
 }
 
 impl markup::Read for ContinuationSeparatorMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::continuation_separator_mark(element)
     }
 }
@@ -36251,7 +36251,7 @@ impl markup::Write for ContinuationSeparatorMark {
 }
 
 impl markup::Read for CurrentContentsArePlaceholderText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::current_contents_are_placeholder_text(element)
     }
 }
@@ -36264,7 +36264,7 @@ impl markup::Write for CurrentContentsArePlaceholderText {
 }
 
 impl markup::Read for CustomCompatibilitySetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_compatibility_setting(element)
     }
 }
@@ -36277,7 +36277,7 @@ impl markup::Write for CustomCompatibilitySetting {
 }
 
 impl markup::Read for CustomFieldData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_field_data(element)
     }
 }
@@ -36290,7 +36290,7 @@ impl markup::Write for CustomFieldData {
 }
 
 impl markup::Read for CustomTabStop {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_tab_stop(element)
     }
 }
@@ -36416,7 +36416,7 @@ impl CustomTabStopType {
 }
 
 impl markup::Read for CustomXMLAttribute {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_attribute(element)
     }
 }
@@ -36429,7 +36429,7 @@ impl markup::Write for CustomXMLAttribute {
 }
 
 impl markup::Read for CustomXMLDataDateStorageFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_data_date_storage_format(element)
     }
 }
@@ -36442,7 +36442,7 @@ impl markup::Write for CustomXMLDataDateStorageFormat {
 }
 
 impl markup::Read for CustomXMLElementPlaceholderText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_element_placeholder_text(element)
     }
 }
@@ -36455,7 +36455,7 @@ impl markup::Write for CustomXMLElementPlaceholderText {
 }
 
 impl markup::Read for CustomXMLElementProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_element_properties(element)
     }
 }
@@ -36468,7 +36468,7 @@ impl markup::Write for CustomXMLElementProperties {
 }
 
 impl markup::Read for CustomXMLMarkupDeletionEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_deletion_end(element)
     }
 }
@@ -36481,7 +36481,7 @@ impl markup::Write for CustomXMLMarkupDeletionEnd {
 }
 
 impl markup::Read for CustomXMLMarkupDeletionStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_deletion_start(element)
     }
 }
@@ -36494,7 +36494,7 @@ impl markup::Write for CustomXMLMarkupDeletionStart {
 }
 
 impl markup::Read for CustomXMLMarkupInsertionEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_insertion_end(element)
     }
 }
@@ -36507,7 +36507,7 @@ impl markup::Write for CustomXMLMarkupInsertionEnd {
 }
 
 impl markup::Read for CustomXMLMarkupInsertionStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_insertion_start(element)
     }
 }
@@ -36520,7 +36520,7 @@ impl markup::Write for CustomXMLMarkupInsertionStart {
 }
 
 impl markup::Read for CustomXMLMarkupMoveSourceEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_move_source_end(element)
     }
 }
@@ -36533,7 +36533,7 @@ impl markup::Write for CustomXMLMarkupMoveSourceEnd {
 }
 
 impl markup::Read for CustomXMLMarkupMoveSourceStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_markup_move_source_start(element)
     }
 }
@@ -36546,7 +36546,7 @@ impl markup::Write for CustomXMLMarkupMoveSourceStart {
 }
 
 impl markup::Read for CustomXSLTransform {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xsl_transform(element)
     }
 }
@@ -36559,7 +36559,7 @@ impl markup::Write for CustomXSLTransform {
 }
 
 impl markup::Read for CustomXmlMoveToRangeEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_move_to_range_end(element)
     }
 }
@@ -36572,7 +36572,7 @@ impl markup::Write for CustomXmlMoveToRangeEnd {
 }
 
 impl markup::Read for CustomXmlMoveToRangeStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_move_to_range_start(element)
     }
 }
@@ -36585,7 +36585,7 @@ impl markup::Write for CustomXmlMoveToRangeStart {
 }
 
 impl markup::Read for DataAboutSingleDataSourceRecord {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_about_single_data_source_record(element)
     }
 }
@@ -36598,7 +36598,7 @@ impl markup::Write for DataAboutSingleDataSourceRecord {
 }
 
 impl markup::Read for DataForHTMLBlockquoteElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_for_html_blockquote_element(element)
     }
 }
@@ -36611,7 +36611,7 @@ impl markup::Write for DataForHTMLBlockquoteElement {
 }
 
 impl markup::Read for DataForHTMLBodyElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_for_html_body_element(element)
     }
 }
@@ -36624,7 +36624,7 @@ impl markup::Write for DataForHTMLBodyElement {
 }
 
 impl markup::Read for DataSourceConnectionString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_source_connection_string(element)
     }
 }
@@ -36637,7 +36637,7 @@ impl markup::Write for DataSourceConnectionString {
 }
 
 impl markup::Read for DataSourceFilePath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_source_file_path(element)
     }
 }
@@ -36650,7 +36650,7 @@ impl markup::Write for DataSourceFilePath {
 }
 
 impl markup::Read for DataSourceTableName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_source_table_name(element)
     }
 }
@@ -36663,7 +36663,7 @@ impl markup::Write for DataSourceTableName {
 }
 
 impl markup::Read for DataSourceType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_source_type(element)
     }
 }
@@ -36676,7 +36676,7 @@ impl markup::Write for DataSourceType {
 }
 
 impl markup::Read for DateBlockLongDayFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_long_day_format(element)
     }
 }
@@ -36689,7 +36689,7 @@ impl markup::Write for DateBlockLongDayFormat {
 }
 
 impl markup::Read for DateBlockLongMonthFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_long_month_format(element)
     }
 }
@@ -36702,7 +36702,7 @@ impl markup::Write for DateBlockLongMonthFormat {
 }
 
 impl markup::Read for DateBlockLongYearFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_long_year_format(element)
     }
 }
@@ -36715,7 +36715,7 @@ impl markup::Write for DateBlockLongYearFormat {
 }
 
 impl markup::Read for DateBlockShortDayFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_short_day_format(element)
     }
 }
@@ -36728,7 +36728,7 @@ impl markup::Write for DateBlockShortDayFormat {
 }
 
 impl markup::Read for DateBlockShortMonthFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_short_month_format(element)
     }
 }
@@ -36741,7 +36741,7 @@ impl markup::Write for DateBlockShortMonthFormat {
 }
 
 impl markup::Read for DateBlockShortYearFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_block_short_year_format(element)
     }
 }
@@ -36754,7 +36754,7 @@ impl markup::Write for DateBlockShortYearFormat {
 }
 
 impl markup::Read for DateDisplayMask {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_display_mask(element)
     }
 }
@@ -36767,7 +36767,7 @@ impl markup::Write for DateDisplayMask {
 }
 
 impl markup::Read for DatePickerCalendarType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_picker_calendar_type(element)
     }
 }
@@ -36834,7 +36834,7 @@ impl DateStorageFormatTypes {
 }
 
 impl markup::Read for DateStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_structured_document_tag(element)
     }
 }
@@ -36870,7 +36870,7 @@ impl DecimalNumberValue {
 }
 
 impl markup::Read for DefaultCheckboxFormFieldState {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_checkbox_form_field_state(element)
     }
 }
@@ -36883,7 +36883,7 @@ impl markup::Write for DefaultCheckboxFormFieldState {
 }
 
 impl markup::Read for DefaultDropDownListItemIndex {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_drop_down_list_item_index(element)
     }
 }
@@ -36896,7 +36896,7 @@ impl markup::Write for DefaultDropDownListItemIndex {
 }
 
 impl markup::Read for DefaultParagraphProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_paragraph_properties(element)
     }
 }
@@ -36909,7 +36909,7 @@ impl markup::Write for DefaultParagraphProperties {
 }
 
 impl markup::Read for DefaultPropertiesForVMLObjectsInHeaderAndFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_properties_for_vml_objects_in_header_and_footer(element)
     }
 }
@@ -36923,7 +36923,7 @@ impl markup::Write for DefaultPropertiesForVMLObjectsInHeaderAndFooter {
 }
 
 impl markup::Read for DefaultPropertiesForVMLObjectsInMainDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_properties_for_vml_objects_in_main_document(element)
     }
 }
@@ -36937,7 +36937,7 @@ impl markup::Write for DefaultPropertiesForVMLObjectsInMainDocument {
 }
 
 impl markup::Read for DefaultRunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_run_properties(element)
     }
 }
@@ -36950,7 +36950,7 @@ impl markup::Write for DefaultRunProperties {
 }
 
 impl markup::Read for DefaultTableStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_table_style(element)
     }
 }
@@ -36963,7 +36963,7 @@ impl markup::Write for DefaultTableStyle {
 }
 
 impl markup::Read for DefaultTextBoxFormFieldString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_text_box_form_field_string(element)
     }
 }
@@ -36976,7 +36976,7 @@ impl markup::Write for DefaultTextBoxFormFieldString {
 }
 
 impl markup::Read for Del {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::del(element)
     }
 }
@@ -36989,7 +36989,7 @@ impl markup::Write for Del {
 }
 
 impl markup::Read for DeletedFieldCode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::deleted_field_code(element)
     }
 }
@@ -37002,7 +37002,7 @@ impl markup::Write for DeletedFieldCode {
 }
 
 impl markup::Read for DeletedMathControlCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::deleted_math_control_character(element)
     }
 }
@@ -37015,7 +37015,7 @@ impl markup::Write for DeletedMathControlCharacter {
 }
 
 impl markup::Read for DeletedRunContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::deleted_run_content(element)
     }
 }
@@ -37028,7 +37028,7 @@ impl markup::Write for DeletedRunContent {
 }
 
 impl markup::Read for DeletedTableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::deleted_table_row(element)
     }
 }
@@ -37041,7 +37041,7 @@ impl markup::Write for DeletedTableRow {
 }
 
 impl markup::Read for DeletedText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::deleted_text(element)
     }
 }
@@ -37054,7 +37054,7 @@ impl markup::Write for DeletedText {
 }
 
 impl markup::Read for DescriptionForEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::description_for_entry(element)
     }
 }
@@ -37067,7 +37067,7 @@ impl markup::Write for DescriptionForEntry {
 }
 
 impl markup::Read for DifferentEvenOddPageHeadersAndFooters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::different_even_odd_page_headers_and_footers(element)
     }
 }
@@ -37080,7 +37080,7 @@ impl markup::Write for DifferentEvenOddPageHeadersAndFooters {
 }
 
 impl markup::Read for DifferentFirstPageHeadersAndFooters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::different_first_page_headers_and_footers(element)
     }
 }
@@ -37093,7 +37093,7 @@ impl markup::Write for DifferentFirstPageHeadersAndFooters {
 }
 
 impl markup::Read for DisableFeaturesNotSupported {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::disable_features_not_supported(element)
     }
 }
@@ -37157,7 +37157,7 @@ impl DisplacedByCustomXml {
 }
 
 impl markup::Read for DisplayAllCharactersAsCapitalLetters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_all_characters_as_capital_letters(element)
     }
 }
@@ -37170,7 +37170,7 @@ impl markup::Write for DisplayAllCharactersAsCapitalLetters {
 }
 
 impl markup::Read for DisplayAllLevelsUsingArabicNumerals {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_all_levels_using_arabic_numerals(element)
     }
 }
@@ -37183,7 +37183,7 @@ impl markup::Write for DisplayAllLevelsUsingArabicNumerals {
 }
 
 impl markup::Read for DisplayBackgroundShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_background_shape(element)
     }
 }
@@ -37196,7 +37196,7 @@ impl markup::Write for DisplayBackgroundShape {
 }
 
 impl markup::Read for DisplayBackslashAsYenSign {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_backslash_as_yen_sign(element)
     }
 }
@@ -37209,7 +37209,7 @@ impl markup::Write for DisplayBackslashAsYenSign {
 }
 
 impl markup::Read for DisplayCharacterOutline {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_character_outline(element)
     }
 }
@@ -37222,7 +37222,7 @@ impl markup::Write for DisplayCharacterOutline {
 }
 
 impl markup::Read for DisplayPageColumnBreaksPresentInFrames {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::display_page_column_breaks_present_in_frames(element)
     }
 }
@@ -37235,7 +37235,7 @@ impl markup::Write for DisplayPageColumnBreaksPresentInFrames {
 }
 
 impl markup::Read for DistanceBetweenAutomaticTabStops {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::distance_between_automatic_tab_stops(element)
     }
 }
@@ -37248,7 +37248,7 @@ impl markup::Write for DistanceBetweenAutomaticTabStops {
 }
 
 impl markup::Read for DistanceBetweenHorizontalGridlines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::distance_between_horizontal_gridlines(element)
     }
 }
@@ -37261,7 +37261,7 @@ impl markup::Write for DistanceBetweenHorizontalGridlines {
 }
 
 impl markup::Read for DistanceBetweenPhoneticGuideText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::distance_between_phonetic_guide_text(element)
     }
 }
@@ -37274,7 +37274,7 @@ impl markup::Write for DistanceBetweenPhoneticGuideText {
 }
 
 impl markup::Read for DistanceBetweenVerticalGridlines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::distance_between_vertical_gridlines(element)
     }
 }
@@ -37287,7 +37287,7 @@ impl markup::Write for DistanceBetweenVerticalGridlines {
 }
 
 impl markup::Read for DoNotAddLeadingBetweenLinesOfText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_add_leading_between_lines_of_text(element)
     }
 }
@@ -37300,7 +37300,7 @@ impl markup::Write for DoNotAddLeadingBetweenLinesOfText {
 }
 
 impl markup::Read for DoNotAllowFloatingTablesToBreakAcrossPages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_allow_floating_tables_to_break_across_pages(element)
     }
 }
@@ -37314,7 +37314,7 @@ impl markup::Write for DoNotAllowFloatingTablesToBreakAcrossPages {
 }
 
 impl markup::Read for DoNotAutofitConstrainedTables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_autofit_constrained_tables(element)
     }
 }
@@ -37327,7 +37327,7 @@ impl markup::Write for DoNotAutofitConstrainedTables {
 }
 
 impl markup::Read for DoNotAutomaticallyCompressImages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_automatically_compress_images(element)
     }
 }
@@ -37340,7 +37340,7 @@ impl markup::Write for DoNotAutomaticallyCompressImages {
 }
 
 impl markup::Read for DoNotBalanceTextColumnsWithinASection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_balance_text_columns_within_a_section(element)
     }
 }
@@ -37353,7 +37353,7 @@ impl markup::Write for DoNotBalanceTextColumnsWithinASection {
 }
 
 impl markup::Read for DoNotBreakConstrainedForcedTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_break_constrained_forced_table(element)
     }
 }
@@ -37366,7 +37366,7 @@ impl markup::Write for DoNotBreakConstrainedForcedTable {
 }
 
 impl markup::Read for DoNotBypassEastAsianComplexScriptLayoutCode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_bypass_east_asian_complex_script_layout_code(element)
     }
 }
@@ -37380,7 +37380,7 @@ impl markup::Write for DoNotBypassEastAsianComplexScriptLayoutCode {
 }
 
 impl markup::Read for DoNotCenterContentOnLinesWithExactLineHeight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_center_content_on_lines_with_exact_line_height(element)
     }
 }
@@ -37394,7 +37394,7 @@ impl markup::Write for DoNotCenterContentOnLinesWithExactLineHeight {
 }
 
 impl markup::Read for DoNotCheckSpellingOrGrammar {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_check_spelling_or_grammar(element)
     }
 }
@@ -37407,7 +37407,7 @@ impl markup::Write for DoNotCheckSpellingOrGrammar {
 }
 
 impl markup::Read for DoNotCreateCustomTabStopForHangingIndent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_create_custom_tab_stop_for_hanging_indent(element)
     }
 }
@@ -37420,7 +37420,7 @@ impl markup::Write for DoNotCreateCustomTabStopForHangingIndent {
 }
 
 impl markup::Read for DoNotDisplayFramesetSplitters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_display_frameset_splitters(element)
     }
 }
@@ -37433,7 +37433,7 @@ impl markup::Write for DoNotDisplayFramesetSplitters {
 }
 
 impl markup::Read for DoNotDisplayGrammaticalErrors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_display_grammatical_errors(element)
     }
 }
@@ -37446,7 +37446,7 @@ impl markup::Write for DoNotDisplayGrammaticalErrors {
 }
 
 impl markup::Read for DoNotDisplayPageBoundaries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_display_page_boundaries(element)
     }
 }
@@ -37459,7 +37459,7 @@ impl markup::Write for DoNotDisplayPageBoundaries {
 }
 
 impl markup::Read for DoNotDisplaySpellingErrors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_display_spelling_errors(element)
     }
 }
@@ -37472,7 +37472,7 @@ impl markup::Write for DoNotDisplaySpellingErrors {
 }
 
 impl markup::Read for DoNotHyphenateCapitalLetters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_hyphenate_capital_letters(element)
     }
 }
@@ -37485,7 +37485,7 @@ impl markup::Write for DoNotHyphenateCapitalLetters {
 }
 
 impl markup::Read for DoNotIncludeSubdocsInStats {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_include_subdocs_in_stats(element)
     }
 }
@@ -37498,7 +37498,7 @@ impl markup::Write for DoNotIncludeSubdocsInStats {
 }
 
 impl markup::Read for DoNotIncreaseLineHeightForRaisedLoweredText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_increase_line_height_for_raised_lowered_text(element)
     }
 }
@@ -37512,7 +37512,7 @@ impl markup::Write for DoNotIncreaseLineHeightForRaisedLoweredText {
 }
 
 impl markup::Read for DoNotPlaceSupportingFiles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_place_supporting_files(element)
     }
 }
@@ -37525,7 +37525,7 @@ impl markup::Write for DoNotPlaceSupportingFiles {
 }
 
 impl markup::Read for DoNotRelyOnCSS {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_rely_on_css(element)
     }
 }
@@ -37538,7 +37538,7 @@ impl markup::Write for DoNotRelyOnCSS {
 }
 
 impl markup::Read for DoNotShowFormFieldIndicator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_show_form_field_indicator(element)
     }
 }
@@ -37551,7 +37551,7 @@ impl markup::Write for DoNotShowFormFieldIndicator {
 }
 
 impl markup::Read for DoNotShowInvalidMarkupIndicator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_show_invalid_markup_indicator(element)
     }
 }
@@ -37564,7 +37564,7 @@ impl markup::Write for DoNotShowInvalidMarkupIndicator {
 }
 
 impl markup::Read for DoNotSnapToDocumentGridInTableCellsWithObjects {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_snap_to_document_grid_in_table_cells_with_objects(element)
     }
 }
@@ -37578,7 +37578,7 @@ impl markup::Write for DoNotSnapToDocumentGridInTableCellsWithObjects {
 }
 
 impl markup::Read for DoNotSuppressBlankLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_suppress_blank_lines(element)
     }
 }
@@ -37591,7 +37591,7 @@ impl markup::Write for DoNotSuppressBlankLines {
 }
 
 impl markup::Read for DoNotSuppressIndentation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_suppress_indentation(element)
     }
 }
@@ -37604,7 +37604,7 @@ impl markup::Write for DoNotSuppressIndentation {
 }
 
 impl markup::Read for DoNotSuppressParagraphBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_suppress_paragraph_borders(element)
     }
 }
@@ -37617,7 +37617,7 @@ impl markup::Write for DoNotSuppressParagraphBorders {
 }
 
 impl markup::Read for DoNotTrackFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_track_formatting(element)
     }
 }
@@ -37630,7 +37630,7 @@ impl markup::Write for DoNotTrackFormatting {
 }
 
 impl markup::Read for DoNotUseEastAsianBreakRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_east_asian_break_rules(element)
     }
 }
@@ -37643,7 +37643,7 @@ impl markup::Write for DoNotUseEastAsianBreakRules {
 }
 
 impl markup::Read for DoNotUseFileNames {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_file_names(element)
     }
 }
@@ -37656,7 +37656,7 @@ impl markup::Write for DoNotUseFileNames {
 }
 
 impl markup::Read for DoNotUseHTMLParagraphAutoSpacing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_html_paragraph_auto_spacing(element)
     }
 }
@@ -37669,7 +37669,7 @@ impl markup::Write for DoNotUseHTMLParagraphAutoSpacing {
 }
 
 impl markup::Read for DoNotUseIndentAsNumberingTabStop {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_indent_as_numbering_tab_stop(element)
     }
 }
@@ -37682,7 +37682,7 @@ impl markup::Write for DoNotUseIndentAsNumberingTabStop {
 }
 
 impl markup::Read for DoNotUseMarginsForDrawingGridOrigin {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_margins_for_drawing_grid_origin(element)
     }
 }
@@ -37695,7 +37695,7 @@ impl markup::Write for DoNotUseMarginsForDrawingGridOrigin {
 }
 
 impl markup::Read for DoNotUseMoveSyntax {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_use_move_syntax(element)
     }
 }
@@ -37708,7 +37708,7 @@ impl markup::Write for DoNotUseMoveSyntax {
 }
 
 impl markup::Read for DoNotValidateAgainstSchema {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_validate_against_schema(element)
     }
 }
@@ -37721,7 +37721,7 @@ impl markup::Write for DoNotValidateAgainstSchema {
 }
 
 impl markup::Read for DoNotVertAlignCellWithSp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_vert_align_cell_with_sp(element)
     }
 }
@@ -37734,7 +37734,7 @@ impl markup::Write for DoNotVertAlignCellWithSp {
 }
 
 impl markup::Read for DoNotWrapTextWithPunct {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_wrap_text_with_punct(element)
     }
 }
@@ -37747,7 +37747,7 @@ impl markup::Write for DoNotWrapTextWithPunct {
 }
 
 impl markup::Read for Document {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document(element)
     }
 }
@@ -37760,7 +37760,7 @@ impl markup::Write for Document {
 }
 
 impl markup::Read for DocumentBackground {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_background(element)
     }
 }
@@ -37773,7 +37773,7 @@ impl markup::Write for DocumentBackground {
 }
 
 impl markup::Read for DocumentBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_body(element)
     }
 }
@@ -37786,7 +37786,7 @@ impl markup::Write for DocumentBody {
 }
 
 impl markup::Read for DocumentClassification {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_classification(element)
     }
 }
@@ -37799,7 +37799,7 @@ impl markup::Write for DocumentClassification {
 }
 
 impl markup::Read for DocumentDefaultParagraphAndRunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_default_paragraph_and_run_properties(element)
     }
 }
@@ -37812,7 +37812,7 @@ impl markup::Write for DocumentDefaultParagraphAndRunProperties {
 }
 
 impl markup::Read for DocumentEditingRestrictions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_editing_restrictions(element)
     }
 }
@@ -37825,7 +37825,7 @@ impl markup::Write for DocumentEditingRestrictions {
 }
 
 impl markup::Read for DocumentEndnotes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_endnotes(element)
     }
 }
@@ -37838,7 +37838,7 @@ impl markup::Write for DocumentEndnotes {
 }
 
 impl markup::Read for DocumentFinalSectionProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_final_section_properties(element)
     }
 }
@@ -37851,7 +37851,7 @@ impl markup::Write for DocumentFinalSectionProperties {
 }
 
 impl markup::Read for DocumentFootnotes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_footnotes(element)
     }
 }
@@ -37864,7 +37864,7 @@ impl markup::Write for DocumentFootnotes {
 }
 
 impl markup::Read for DocumentGrid {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_grid(element)
     }
 }
@@ -37877,7 +37877,7 @@ impl markup::Write for DocumentGrid {
 }
 
 impl markup::Read for DocumentGridInterLineParagraphSpacing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_grid_inter_line_paragraph_spacing(element)
     }
 }
@@ -37941,7 +37941,7 @@ impl DocumentGridTypes {
 }
 
 impl markup::Read for DocumentPartCategoryFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_part_category_filter(element)
     }
 }
@@ -37954,7 +37954,7 @@ impl markup::Write for DocumentPartCategoryFilter {
 }
 
 impl markup::Read for DocumentPartGalleryFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_part_gallery_filter(element)
     }
 }
@@ -37967,7 +37967,7 @@ impl markup::Write for DocumentPartGalleryFilter {
 }
 
 impl markup::Read for DocumentPartGalleryStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_part_gallery_structured_document_tag(element)
     }
 }
@@ -37980,7 +37980,7 @@ impl markup::Write for DocumentPartGalleryStructuredDocumentTag {
 }
 
 impl markup::Read for DocumentPartReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_part_reference(element)
     }
 }
@@ -38049,7 +38049,7 @@ impl DocumentProtectionTypes {
 }
 
 impl markup::Read for DocumentSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_settings(element)
     }
 }
@@ -38062,7 +38062,7 @@ impl markup::Write for DocumentSettings {
 }
 
 impl markup::Read for DocumentVariables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_variables(element)
     }
 }
@@ -38075,7 +38075,7 @@ impl markup::Write for DocumentVariables {
 }
 
 impl markup::Read for DocumentViewSetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_view_setting(element)
     }
 }
@@ -38141,7 +38141,7 @@ impl DocumentViewValues {
 }
 
 impl markup::Read for DocumentWideEndnoteProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_wide_endnote_properties(element)
     }
 }
@@ -38154,7 +38154,7 @@ impl markup::Write for DocumentWideEndnoteProperties {
 }
 
 impl markup::Read for DocumentWideFootnoteProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_wide_footnote_properties(element)
     }
 }
@@ -38167,7 +38167,7 @@ impl markup::Write for DocumentWideFootnoteProperties {
 }
 
 impl markup::Read for DontJustifySoftLineBreakLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dont_justify_soft_line_break_lines(element)
     }
 }
@@ -38180,7 +38180,7 @@ impl markup::Write for DontJustifySoftLineBreakLines {
 }
 
 impl markup::Read for DontWrapCellContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dont_wrap_cell_content(element)
     }
 }
@@ -38193,7 +38193,7 @@ impl markup::Write for DontWrapCellContent {
 }
 
 impl markup::Read for DoubleStrikethrough {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::double_strikethrough(element)
     }
 }
@@ -38206,7 +38206,7 @@ impl markup::Write for DoubleStrikethrough {
 }
 
 impl markup::Read for DrawingGridHorizontalGridUnitSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_grid_horizontal_grid_unit_size(element)
     }
 }
@@ -38219,7 +38219,7 @@ impl markup::Write for DrawingGridHorizontalGridUnitSize {
 }
 
 impl markup::Read for DrawingGridHorizontalOriginPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_grid_horizontal_origin_point(element)
     }
 }
@@ -38232,7 +38232,7 @@ impl markup::Write for DrawingGridHorizontalOriginPoint {
 }
 
 impl markup::Read for DrawingGridVerticalGridUnitSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_grid_vertical_grid_unit_size(element)
     }
 }
@@ -38245,7 +38245,7 @@ impl markup::Write for DrawingGridVerticalGridUnitSize {
 }
 
 impl markup::Read for DrawingGridVerticalOriginPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_grid_vertical_origin_point(element)
     }
 }
@@ -38258,7 +38258,7 @@ impl markup::Write for DrawingGridVerticalOriginPoint {
 }
 
 impl markup::Read for DrawingMLObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_ml_object(element)
     }
 }
@@ -38271,17 +38271,17 @@ impl markup::Write for DrawingMLObject {
 }
 
 impl markup::Read for DrawingObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "anchor")) => {
                 Self::AnchorForFloatingDrawingMLObject(Box::new(markup::read(element)))
             }
             Some((NS_WP, "inline")) => Self::InlineDrawingMLObject(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -38297,7 +38297,7 @@ impl markup::Write for DrawingObjectContent {
 }
 
 impl markup::Read for DropDownListEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_list_entry(element)
     }
 }
@@ -38310,7 +38310,7 @@ impl markup::Write for DropDownListEntry {
 }
 
 impl markup::Read for DropDownListFormFieldProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_list_form_field_properties(element)
     }
 }
@@ -38323,7 +38323,7 @@ impl markup::Write for DropDownListFormFieldProperties {
 }
 
 impl markup::Read for DropDownListSelection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_list_selection(element)
     }
 }
@@ -38336,7 +38336,7 @@ impl markup::Write for DropDownListSelection {
 }
 
 impl markup::Read for DropDownListStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_list_structured_document_tag(element)
     }
 }
@@ -38349,7 +38349,7 @@ impl markup::Write for DropDownListStructuredDocumentTag {
 }
 
 impl markup::Read for EMailMessageCompositionStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::e_mail_message_composition_style(element)
     }
 }
@@ -38362,7 +38362,7 @@ impl markup::Write for EMailMessageCompositionStyle {
 }
 
 impl markup::Read for EMailMessageReplyStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::e_mail_message_reply_style(element)
     }
 }
@@ -38375,7 +38375,7 @@ impl markup::Write for EMailMessageReplyStyle {
 }
 
 impl markup::Read for EMailMessageTextStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::e_mail_message_text_style(element)
     }
 }
@@ -38388,7 +38388,7 @@ impl markup::Write for EMailMessageTextStyle {
 }
 
 impl markup::Read for EastAsianTypographyRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::east_asian_typography_rules(element)
     }
 }
@@ -38401,7 +38401,7 @@ impl markup::Write for EastAsianTypographyRules {
 }
 
 impl markup::Read for EastAsianTypographySettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::east_asian_typography_settings(element)
     }
 }
@@ -38437,7 +38437,7 @@ impl EightDigitHexadecimalValue {
 }
 
 impl markup::Read for EmbedCommonSystemFonts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embed_common_system_fonts(element)
     }
 }
@@ -38450,7 +38450,7 @@ impl markup::Write for EmbedCommonSystemFonts {
 }
 
 impl markup::Read for EmbedTrueTypeFonts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embed_true_type_fonts(element)
     }
 }
@@ -38463,7 +38463,7 @@ impl markup::Write for EmbedTrueTypeFonts {
 }
 
 impl markup::Read for EmbeddedControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_control(element)
     }
 }
@@ -38476,7 +38476,7 @@ impl markup::Write for EmbeddedControl {
 }
 
 impl markup::Read for EmbeddedObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_object(element)
     }
 }
@@ -38489,17 +38489,17 @@ impl markup::Write for EmbeddedObject {
 }
 
 impl markup::Read for EmbeddedObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "control")) => Self::EmbeddedControl(markup::read(element)),
             Some((NS_W, "objectEmbed")) => Self::EmbeddedObjectProperties(markup::read(element)),
             Some((NS_W, "movie")) => Self::EmbeddedVideo(markup::read(element)),
             Some((NS_W, "objectLink")) => Self::LinkedObjectProperties(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -38517,7 +38517,7 @@ impl markup::Write for EmbeddedObjectContent {
 }
 
 impl markup::Read for EmbeddedObjectProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_object_properties(element)
     }
 }
@@ -38634,7 +38634,7 @@ impl EmbeddedObjectUpdateModes {
 }
 
 impl markup::Read for EmbeddedVideo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_video(element)
     }
 }
@@ -38647,7 +38647,7 @@ impl markup::Write for EmbeddedVideo {
 }
 
 impl markup::Read for Embossing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embossing(element)
     }
 }
@@ -38660,7 +38660,7 @@ impl markup::Write for Embossing {
 }
 
 impl markup::Read for EmphasisMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::emphasis_mark(element)
     }
 }
@@ -38725,7 +38725,7 @@ impl EmphasisMarkType {
 }
 
 impl markup::Read for EndnoteContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::endnote_content(element)
     }
 }
@@ -38738,7 +38738,7 @@ impl markup::Write for EndnoteContent {
 }
 
 impl markup::Read for EndnotePlacement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::endnote_placement(element)
     }
 }
@@ -38804,7 +38804,7 @@ impl EndnotePositioningLocation {
 }
 
 impl markup::Read for EndnoteReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::endnote_reference(element)
     }
 }
@@ -38817,7 +38817,7 @@ impl markup::Write for EndnoteReference {
 }
 
 impl markup::Read for EndnoteReferenceMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::endnote_reference_mark(element)
     }
 }
@@ -38830,7 +38830,7 @@ impl markup::Write for EndnoteReferenceMark {
 }
 
 impl markup::Read for EntryCategorization {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_categorization(element)
     }
 }
@@ -38932,7 +38932,7 @@ impl EntryGalleryTypes {
 }
 
 impl markup::Read for EntryID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_id(element)
     }
 }
@@ -38945,7 +38945,7 @@ impl markup::Write for EntryID {
 }
 
 impl markup::Read for EntryInsertionBehavior {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_insertion_behavior(element)
     }
 }
@@ -38958,7 +38958,7 @@ impl markup::Write for EntryInsertionBehavior {
 }
 
 impl markup::Read for EntryInsertionBehaviors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_insertion_behaviors(element)
     }
 }
@@ -38971,7 +38971,7 @@ impl markup::Write for EntryInsertionBehaviors {
 }
 
 impl markup::Read for EntryName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_name(element)
     }
 }
@@ -38984,7 +38984,7 @@ impl markup::Write for EntryName {
 }
 
 impl markup::Read for EntryType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_type(element)
     }
 }
@@ -38997,7 +38997,7 @@ impl markup::Write for EntryType {
 }
 
 impl markup::Read for EntryTypes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::entry_types(element)
     }
 }
@@ -39010,7 +39010,7 @@ impl markup::Write for EntryTypes {
 }
 
 impl markup::Read for EquationStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::equation_structured_document_tag(element)
     }
 }
@@ -39023,7 +39023,7 @@ impl markup::Write for EquationStructuredDocumentTag {
 }
 
 impl markup::Read for ExecuteOnFormFieldEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::execute_on_form_field_entry(element)
     }
 }
@@ -39036,7 +39036,7 @@ impl markup::Write for ExecuteOnFormFieldEntry {
 }
 
 impl markup::Read for ExecuteOnFormFieldExit {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::execute_on_form_field_exit(element)
     }
 }
@@ -39049,7 +39049,7 @@ impl markup::Write for ExecuteOnFormFieldExit {
 }
 
 impl markup::Read for ExpandedCompressedText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::expanded_compressed_text(element)
     }
 }
@@ -39062,7 +39062,7 @@ impl markup::Write for ExpandedCompressedText {
 }
 
 impl markup::Read for ExternalContentImportProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::external_content_import_properties(element)
     }
 }
@@ -39075,7 +39075,7 @@ impl markup::Write for ExternalContentImportProperties {
 }
 
 impl markup::Read for ExternalDataSourceMergeFieldMapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::external_data_source_merge_field_mapping(element)
     }
 }
@@ -39088,7 +39088,7 @@ impl markup::Write for ExternalDataSourceMergeFieldMapping {
 }
 
 impl markup::Read for FieldCode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::field_code(element)
     }
 }
@@ -39101,7 +39101,7 @@ impl markup::Write for FieldCode {
 }
 
 impl markup::Read for FirstRowContainsColumnNames {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::first_row_contains_column_names(element)
     }
 }
@@ -39114,7 +39114,7 @@ impl markup::Write for FirstRowContainsColumnNames {
 }
 
 impl markup::Read for FitTextWithinCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fit_text_within_cell(element)
     }
 }
@@ -39127,7 +39127,7 @@ impl markup::Write for FitTextWithinCell {
 }
 
 impl markup::Read for FitToExpandedWidthWhenPerformingFullJustification {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fit_to_expanded_width_when_performing_full_justification(element)
     }
 }
@@ -39141,7 +39141,7 @@ impl markup::Write for FitToExpandedWidthWhenPerformingFullJustification {
 }
 
 impl markup::Read for FloatingTableAllowsOverlap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::floating_table_allows_overlap(element)
     }
 }
@@ -39154,7 +39154,7 @@ impl markup::Write for FloatingTableAllowsOverlap {
 }
 
 impl markup::Read for FloatingTablePositioning {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::floating_table_positioning(element)
     }
 }
@@ -39167,7 +39167,7 @@ impl markup::Write for FloatingTablePositioning {
 }
 
 impl markup::Read for FontFamily {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_family(element)
     }
 }
@@ -39233,7 +39233,7 @@ impl FontFamilyValue {
 }
 
 impl markup::Read for FontKerning {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_kerning(element)
     }
 }
@@ -39246,7 +39246,7 @@ impl markup::Write for FontKerning {
 }
 
 impl markup::Read for FontPitch {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_pitch(element)
     }
 }
@@ -39309,7 +39309,7 @@ impl FontPitchValue {
 }
 
 impl markup::Read for FontTableRootElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_table_root_element(element)
     }
 }
@@ -39371,7 +39371,7 @@ impl FontTypeHint {
 }
 
 impl markup::Read for Footer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footer(element)
     }
 }
@@ -39384,7 +39384,7 @@ impl markup::Write for Footer {
 }
 
 impl markup::Read for FooterReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footer_reference(element)
     }
 }
@@ -39397,7 +39397,7 @@ impl markup::Write for FooterReference {
 }
 
 impl markup::Read for FootnoteAndEndnoteNumberingRestartLocation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_and_endnote_numbering_restart_location(element)
     }
 }
@@ -39410,7 +39410,7 @@ impl markup::Write for FootnoteAndEndnoteNumberingRestartLocation {
 }
 
 impl markup::Read for FootnoteAndEndnoteNumberingStartingValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_and_endnote_numbering_starting_value(element)
     }
 }
@@ -39423,7 +39423,7 @@ impl markup::Write for FootnoteAndEndnoteNumberingStartingValue {
 }
 
 impl markup::Read for FootnoteContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_content(element)
     }
 }
@@ -39492,7 +39492,7 @@ impl FootnoteEndnoteNumberingRestartLocations {
 }
 
 impl markup::Read for FootnoteEndnoteSeparatorMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_endnote_separator_mark(element)
     }
 }
@@ -39556,7 +39556,7 @@ impl FootnoteOrEndnoteType {
 }
 
 impl markup::Read for FootnotePlacement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_placement(element)
     }
 }
@@ -39624,7 +39624,7 @@ impl FootnotePositioningLocation {
 }
 
 impl markup::Read for FootnoteReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_reference(element)
     }
 }
@@ -39637,7 +39637,7 @@ impl markup::Write for FootnoteReference {
 }
 
 impl markup::Read for FootnoteReferenceMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_reference_mark(element)
     }
 }
@@ -39650,7 +39650,7 @@ impl markup::Write for FootnoteReferenceMark {
 }
 
 impl markup::Read for ForgetLastTabAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::forget_last_tab_alignment(element)
     }
 }
@@ -39663,7 +39663,7 @@ impl markup::Write for ForgetLastTabAlignment {
 }
 
 impl markup::Read for FormFieldEnabled {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::form_field_enabled(element)
     }
 }
@@ -39676,7 +39676,7 @@ impl markup::Write for FormFieldEnabled {
 }
 
 impl markup::Read for FormFieldName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::form_field_name(element)
     }
 }
@@ -39712,7 +39712,7 @@ impl FormFieldNameValue {
 }
 
 impl markup::Read for FormFieldProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::form_field_properties(element)
     }
 }
@@ -39725,11 +39725,11 @@ impl markup::Write for FormFieldProperties {
 }
 
 impl markup::Read for FormFieldPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "helpText")) => Self::AssociatedHelpText(markup::read(element)),
             Some((NS_W, "statusText")) => Self::AssociatedStatusText(markup::read(element)),
@@ -39747,7 +39747,7 @@ impl markup::Read for FormFieldPropertiesContent {
                 Self::StructuredDocumentTagNavigationOrderIndex(markup::read(element))
             }
             Some((NS_W, "textInput")) => Self::TextBoxFormFieldProperties(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -39796,7 +39796,7 @@ impl FourDigitHexadecimalValue {
 }
 
 impl markup::Read for FrameCannotBeResized {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frame_cannot_be_resized(element)
     }
 }
@@ -39809,7 +39809,7 @@ impl markup::Write for FrameCannotBeResized {
 }
 
 impl markup::Read for FrameLongDescription {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frame_long_description(element)
     }
 }
@@ -39822,7 +39822,7 @@ impl markup::Write for FrameLongDescription {
 }
 
 impl markup::Read for FrameOrFramesetTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frame_or_frameset_title(element)
     }
 }
@@ -39889,7 +39889,7 @@ impl FrameScrollbarVisibility {
 }
 
 impl markup::Read for FrameSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frame_size(element)
     }
 }
@@ -39902,15 +39902,15 @@ impl markup::Write for FrameSize {
 }
 
 impl markup::Read for FramesetDefinitionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "frameset")) => Self::NestedFramesetDefinition(markup::read(element)),
             Some((NS_W, "frame")) => Self::SingleFrameProperties(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -39926,7 +39926,7 @@ impl markup::Write for FramesetDefinitionContent {
 }
 
 impl markup::Read for FramesetLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frameset_layout(element)
     }
 }
@@ -39993,7 +39993,7 @@ impl FramesetLayoutOrder {
 }
 
 impl markup::Read for FramesetSplitterBorderStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frameset_splitter_border_style(element)
     }
 }
@@ -40006,7 +40006,7 @@ impl markup::Write for FramesetSplitterBorderStyle {
 }
 
 impl markup::Read for FramesetSplitterProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frameset_splitter_properties(element)
     }
 }
@@ -40019,7 +40019,7 @@ impl markup::Write for FramesetSplitterProperties {
 }
 
 impl markup::Read for FramesetSplitterWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::frameset_splitter_width(element)
     }
 }
@@ -40032,7 +40032,7 @@ impl markup::Write for FramesetSplitterWidth {
 }
 
 impl markup::Read for FreezeDocumentLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::freeze_document_layout(element)
     }
 }
@@ -40045,7 +40045,7 @@ impl markup::Write for FreezeDocumentLayout {
 }
 
 impl markup::Read for FriendlyName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::friendly_name(element)
     }
 }
@@ -40058,7 +40058,7 @@ impl markup::Write for FriendlyName {
 }
 
 impl markup::Read for GalleryAssociatedWithEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gallery_associated_with_entry(element)
     }
 }
@@ -40071,7 +40071,7 @@ impl markup::Write for GalleryAssociatedWithEntry {
 }
 
 impl markup::Read for GenerateThumbnailForDocumentOnSave {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::generate_thumbnail_for_document_on_save(element)
     }
 }
@@ -40084,7 +40084,7 @@ impl markup::Write for GenerateThumbnailForDocumentOnSave {
 }
 
 impl markup::Read for GlossaryDocumentEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::glossary_document_entry(element)
     }
 }
@@ -40097,7 +40097,7 @@ impl markup::Write for GlossaryDocumentEntry {
 }
 
 impl markup::Read for GlossaryDocumentEntryProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::glossary_document_entry_properties(element)
     }
 }
@@ -40110,11 +40110,11 @@ impl markup::Write for GlossaryDocumentEntryProperties {
 }
 
 impl markup::Read for GlossaryDocumentEntryPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "style")) => Self::AssociatedParagraphStyleName(markup::read(element)),
             Some((NS_W, "description")) => Self::DescriptionForEntry(markup::read(element)),
@@ -40123,7 +40123,7 @@ impl markup::Read for GlossaryDocumentEntryPropertiesContent {
             Some((NS_W, "behaviors")) => Self::EntryInsertionBehaviors(markup::read(element)),
             Some((NS_W, "name")) => Self::EntryName(markup::read(element)),
             Some((NS_W, "types")) => Self::EntryTypes(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -40144,7 +40144,7 @@ impl markup::Write for GlossaryDocumentEntryPropertiesContent {
 }
 
 impl markup::Read for GlossaryDocumentRootElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::glossary_document_root_element(element)
     }
 }
@@ -40157,7 +40157,7 @@ impl markup::Write for GlossaryDocumentRootElement {
 }
 
 impl markup::Read for GrammarCheckingSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grammar_checking_settings(element)
     }
 }
@@ -40170,7 +40170,7 @@ impl markup::Write for GrammarCheckingSettings {
 }
 
 impl markup::Read for GridColumnDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_column_definition(element)
     }
 }
@@ -40183,7 +40183,7 @@ impl markup::Write for GridColumnDefinition {
 }
 
 impl markup::Read for GridColumnsAfterLastCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_columns_after_last_cell(element)
     }
 }
@@ -40196,7 +40196,7 @@ impl markup::Write for GridColumnsAfterLastCell {
 }
 
 impl markup::Read for GridColumnsBeforeFirstCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_columns_before_first_cell(element)
     }
 }
@@ -40209,7 +40209,7 @@ impl markup::Write for GridColumnsBeforeFirstCell {
 }
 
 impl markup::Read for GridColumnsSpanned {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_columns_spanned(element)
     }
 }
@@ -40222,7 +40222,7 @@ impl markup::Write for GridColumnsSpanned {
 }
 
 impl markup::Read for GroupStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_structured_document_tag(element)
     }
 }
@@ -40235,7 +40235,7 @@ impl markup::Write for GroupStructuredDocumentTag {
 }
 
 impl markup::Read for GutterOnRightSideOfPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gutter_on_right_side_of_page(element)
     }
 }
@@ -40248,7 +40248,7 @@ impl markup::Write for GutterOnRightSideOfPage {
 }
 
 impl markup::Read for Header {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header(element)
     }
 }
@@ -40261,7 +40261,7 @@ impl markup::Write for Header {
 }
 
 impl markup::Read for HeaderCellReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_cell_reference(element)
     }
 }
@@ -40274,7 +40274,7 @@ impl markup::Write for HeaderCellReference {
 }
 
 impl markup::Read for HeaderCellsAssociatedWithTableCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_cells_associated_with_table_cell(element)
     }
 }
@@ -40287,7 +40287,7 @@ impl markup::Write for HeaderCellsAssociatedWithTableCell {
 }
 
 impl markup::Read for HeaderDefinitionFilePath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_definition_file_path(element)
     }
 }
@@ -40350,7 +40350,7 @@ impl HeaderOrFooterType {
 }
 
 impl markup::Read for HeaderReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_reference(element)
     }
 }
@@ -40535,7 +40535,7 @@ impl HexColorAuto {
 }
 
 impl markup::Read for HiddenTableRowMarker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_table_row_marker(element)
     }
 }
@@ -40548,7 +40548,7 @@ impl markup::Write for HiddenTableRowMarker {
 }
 
 impl markup::Read for HiddenText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_text(element)
     }
 }
@@ -40561,7 +40561,7 @@ impl markup::Write for HiddenText {
 }
 
 impl markup::Read for HideStyleFromMainUserInterface {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hide_style_from_main_user_interface(element)
     }
 }
@@ -40687,7 +40687,7 @@ impl HorizontalAnchorLocation {
 }
 
 impl markup::Read for HorizontallyMergedCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::horizontally_merged_cell(element)
     }
 }
@@ -40700,7 +40700,7 @@ impl markup::Write for HorizontallyMergedCell {
 }
 
 impl markup::Read for Hyperlink {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyperlink(element)
     }
 }
@@ -40713,7 +40713,7 @@ impl markup::Write for Hyperlink {
 }
 
 impl markup::Read for HyphenationZone {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyphenation_zone(element)
     }
 }
@@ -40726,7 +40726,7 @@ impl markup::Write for HyphenationZone {
 }
 
 impl markup::Read for IgnoreEndOfCellMarker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_end_of_cell_marker(element)
     }
 }
@@ -40739,7 +40739,7 @@ impl markup::Write for IgnoreEndOfCellMarker {
 }
 
 impl markup::Read for IgnoreExactLineHeightForLastLineOnPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_exact_line_height_for_last_line_on_page(element)
     }
 }
@@ -40752,7 +40752,7 @@ impl markup::Write for IgnoreExactLineHeightForLastLineOnPage {
 }
 
 impl markup::Read for IgnoreMinimumLineHeightForFirstLineOnPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_minimum_line_height_for_first_line_on_page(element)
     }
 }
@@ -40766,7 +40766,7 @@ impl markup::Write for IgnoreMinimumLineHeightForFirstLineOnPage {
 }
 
 impl markup::Read for IgnoreMixedContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_mixed_content(element)
     }
 }
@@ -40779,7 +40779,7 @@ impl markup::Write for IgnoreMixedContent {
 }
 
 impl markup::Read for IgnorePageBreakFromContinuousSectionBreak {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_page_break_from_continuous_section_break(element)
     }
 }
@@ -40792,7 +40792,7 @@ impl markup::Write for IgnorePageBreakFromContinuousSectionBreak {
 }
 
 impl markup::Read for IgnoreSpacingAboveAndBelow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_spacing_above_and_below(element)
     }
 }
@@ -40805,7 +40805,7 @@ impl markup::Write for IgnoreSpacingAboveAndBelow {
 }
 
 impl markup::Read for IgnoreTextWrappingAroundObjectsAtBottomOfPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_text_wrapping_around_objects_at_bottom_of_page(element)
     }
 }
@@ -40819,7 +40819,7 @@ impl markup::Write for IgnoreTextWrappingAroundObjectsAtBottomOfPage {
 }
 
 impl markup::Read for IgnoreVerticalAlignmentInTextboxes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignore_vertical_alignment_in_textboxes(element)
     }
 }
@@ -40832,7 +40832,7 @@ impl markup::Write for IgnoreVerticalAlignmentInTextboxes {
 }
 
 impl markup::Read for Imprinting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::imprinting(element)
     }
 }
@@ -40845,7 +40845,7 @@ impl markup::Write for Imprinting {
 }
 
 impl markup::Read for InclusionExclusionDataForDataSource {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inclusion_exclusion_data_for_data_source(element)
     }
 }
@@ -40858,7 +40858,7 @@ impl markup::Write for InclusionExclusionDataForDataSource {
 }
 
 impl markup::Read for IndexOfColumnBeingMapped {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::index_of_column_being_mapped(element)
     }
 }
@@ -40871,7 +40871,7 @@ impl markup::Write for IndexOfColumnBeingMapped {
 }
 
 impl markup::Read for InformationAboutHTMLDivElements {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::information_about_html_div_elements(element)
     }
 }
@@ -40884,7 +40884,7 @@ impl markup::Write for InformationAboutHTMLDivElements {
 }
 
 impl markup::Read for InformationAboutSingleHTMLDivElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::information_about_single_html_div_element(element)
     }
 }
@@ -40897,7 +40897,7 @@ impl markup::Write for InformationAboutSingleHTMLDivElement {
 }
 
 impl markup::Read for InlineLevelCustomXMLElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inline_level_custom_xml_element(element)
     }
 }
@@ -40910,7 +40910,7 @@ impl markup::Write for InlineLevelCustomXMLElement {
 }
 
 impl markup::Read for InlineLevelSmartTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inline_level_smart_tag(element)
     }
 }
@@ -40923,7 +40923,7 @@ impl markup::Write for InlineLevelSmartTag {
 }
 
 impl markup::Read for InlineLevelStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inline_level_structured_document_tag(element)
     }
 }
@@ -40936,7 +40936,7 @@ impl markup::Write for InlineLevelStructuredDocumentTag {
 }
 
 impl markup::Read for InlineLevelStructuredDocumentTagContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inline_level_structured_document_tag_content(element)
     }
 }
@@ -40949,7 +40949,7 @@ impl markup::Write for InlineLevelStructuredDocumentTagContent {
 }
 
 impl markup::Read for InsertedMathControlCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inserted_math_control_character(element)
     }
 }
@@ -40962,15 +40962,15 @@ impl markup::Write for InsertedMathControlCharacter {
 }
 
 impl markup::Read for InsertedMathControlCharacterContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "del")) => Self::Del(markup::read(element)),
             Some((NS_W, "rPr")) => Self::RunProperties(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -40986,7 +40986,7 @@ impl markup::Write for InsertedMathControlCharacterContent {
 }
 
 impl markup::Read for InsertedRunContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inserted_run_content(element)
     }
 }
@@ -40999,7 +40999,7 @@ impl markup::Write for InsertedRunContent {
 }
 
 impl markup::Read for InsertedTableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inserted_table_row(element)
     }
 }
@@ -41066,7 +41066,7 @@ impl InsertionBehaviorTypes {
 }
 
 impl markup::Read for InvalidatedFieldCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::invalidated_field_cache(element)
     }
 }
@@ -41079,7 +41079,7 @@ impl markup::Write for InvalidatedFieldCache {
 }
 
 impl markup::Read for ItalicFontStyleEmbedding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::italic_font_style_embedding(element)
     }
 }
@@ -41092,7 +41092,7 @@ impl markup::Write for ItalicFontStyleEmbedding {
 }
 
 impl markup::Read for Italics {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::italics(element)
     }
 }
@@ -41105,7 +41105,7 @@ impl markup::Write for Italics {
 }
 
 impl markup::Read for Justification {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::justification(element)
     }
 }
@@ -41118,7 +41118,7 @@ impl markup::Write for Justification {
 }
 
 impl markup::Read for KeepAllLinesOnOnePage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::keep_all_lines_on_one_page(element)
     }
 }
@@ -41131,7 +41131,7 @@ impl markup::Write for KeepAllLinesOnOnePage {
 }
 
 impl markup::Read for KeepParagraphWithNextParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::keep_paragraph_with_next_paragraph(element)
     }
 }
@@ -41144,7 +41144,7 @@ impl markup::Write for KeepParagraphWithNextParagraph {
 }
 
 impl markup::Read for KeepSourceFormattingOnImport {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::keep_source_formatting_on_import(element)
     }
 }
@@ -41157,7 +41157,7 @@ impl markup::Write for KeepSourceFormattingOnImport {
 }
 
 impl markup::Read for LanguageIDForPhoneticGuide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::language_id_for_phonetic_guide(element)
     }
 }
@@ -41170,7 +41170,7 @@ impl markup::Write for LanguageIDForPhoneticGuide {
 }
 
 impl markup::Read for LanguagesForRunContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::languages_for_run_content(element)
     }
 }
@@ -41183,7 +41183,7 @@ impl markup::Write for LanguagesForRunContent {
 }
 
 impl markup::Read for LastReviewedAbstractNumberingDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::last_reviewed_abstract_numbering_definition(element)
     }
 }
@@ -41196,7 +41196,7 @@ impl markup::Write for LastReviewedAbstractNumberingDefinition {
 }
 
 impl markup::Read for LatentStyleException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::latent_style_exception(element)
     }
 }
@@ -41209,7 +41209,7 @@ impl markup::Write for LatentStyleException {
 }
 
 impl markup::Read for LatentStyleInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::latent_style_information(element)
     }
 }
@@ -41222,7 +41222,7 @@ impl markup::Write for LatentStyleInformation {
 }
 
 impl markup::Read for LayoutRawTableWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_raw_table_width(element)
     }
 }
@@ -41235,7 +41235,7 @@ impl markup::Write for LayoutRawTableWidth {
 }
 
 impl markup::Read for LeftAndRightMarginForFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_and_right_margin_for_frame(element)
     }
 }
@@ -41248,7 +41248,7 @@ impl markup::Write for LeftAndRightMarginForFrame {
 }
 
 impl markup::Read for LeftBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_border(element)
     }
 }
@@ -41261,7 +41261,7 @@ impl markup::Write for LeftBorder {
 }
 
 impl markup::Read for LeftMarginForHTMLDiv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_margin_for_html_div(element)
     }
 }
@@ -41274,7 +41274,7 @@ impl markup::Write for LeftMarginForHTMLDiv {
 }
 
 impl markup::Read for LeftParagraphBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_paragraph_border(element)
     }
 }
@@ -41287,7 +41287,7 @@ impl markup::Write for LeftParagraphBorder {
 }
 
 impl markup::Read for LeftParagraphBorderTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::left_paragraph_border_tbl_width(element)
     }
 }
@@ -41300,7 +41300,7 @@ impl markup::Write for LeftParagraphBorderTblWidth {
 }
 
 impl markup::Read for LegacyEthiopicAmharicLineBreakingRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::legacy_ethiopic_amharic_line_breaking_rules(element)
     }
 }
@@ -41313,7 +41313,7 @@ impl markup::Write for LegacyEthiopicAmharicLineBreakingRules {
 }
 
 impl markup::Read for LegacyNumberingLevelProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::legacy_numbering_level_properties(element)
     }
 }
@@ -41435,7 +41435,7 @@ impl LineNumberingRestartPosition {
 }
 
 impl markup::Read for LineNumberingSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_numbering_settings(element)
     }
 }
@@ -41502,7 +41502,7 @@ impl LineSpacingRule {
 }
 
 impl markup::Read for LineWrapLikeWord6 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_wrap_like_word6(element)
     }
 }
@@ -41515,7 +41515,7 @@ impl markup::Write for LineWrapLikeWord6 {
 }
 
 impl markup::Read for LineWrapTrailingSpaces {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_wrap_trailing_spaces(element)
     }
 }
@@ -41528,7 +41528,7 @@ impl markup::Write for LineWrapTrailingSpaces {
 }
 
 impl markup::Read for LinkToExternalQueryFile {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::link_to_external_query_file(element)
     }
 }
@@ -41541,7 +41541,7 @@ impl markup::Write for LinkToExternalQueryFile {
 }
 
 impl markup::Read for LinkedObjectProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_object_properties(element)
     }
 }
@@ -41554,7 +41554,7 @@ impl markup::Write for LinkedObjectProperties {
 }
 
 impl markup::Read for LinkedStyleReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_style_reference(element)
     }
 }
@@ -41567,7 +41567,7 @@ impl markup::Write for LinkedStyleReference {
 }
 
 impl markup::Read for ListOfGlossaryDocumentEntries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_glossary_document_entries(element)
     }
 }
@@ -41580,7 +41580,7 @@ impl markup::Write for ListOfGlossaryDocumentEntries {
 }
 
 impl markup::Read for ListSeparatorForFieldCodeEvaluation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_separator_for_field_code_evaluation(element)
     }
 }
@@ -41593,7 +41593,7 @@ impl markup::Write for ListSeparatorForFieldCodeEvaluation {
 }
 
 impl markup::Read for LockingSetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::locking_setting(element)
     }
 }
@@ -41708,7 +41708,7 @@ impl MagnificationPresetValues {
 }
 
 impl markup::Read for MagnificationSetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::magnification_setting(element)
     }
 }
@@ -41721,7 +41721,7 @@ impl markup::Write for MagnificationSetting {
 }
 
 impl markup::Read for MailMergeErrorReportingSetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mail_merge_error_reporting_setting(element)
     }
 }
@@ -41794,7 +41794,7 @@ impl MailMergeODSODataSourceTypes {
 }
 
 impl markup::Read for MailMergeSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mail_merge_settings(element)
     }
 }
@@ -41807,7 +41807,7 @@ impl markup::Write for MailMergeSettings {
 }
 
 impl markup::Read for MaintainLinkToExistingFile {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::maintain_link_to_existing_file(element)
     }
 }
@@ -41820,7 +41820,7 @@ impl markup::Write for MaintainLinkToExistingFile {
 }
 
 impl markup::Read for ManualRunWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::manual_run_width(element)
     }
 }
@@ -41833,7 +41833,7 @@ impl markup::Write for ManualRunWidth {
 }
 
 impl markup::Read for MaximumNumberOfConsecutivelyHyphenatedLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::maximum_number_of_consecutively_hyphenated_lines(element)
     }
 }
@@ -41991,7 +41991,7 @@ impl MeasurementOrPercentageValue {
 }
 
 impl markup::Read for MergeFieldMapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::merge_field_mapping(element)
     }
 }
@@ -42106,7 +42106,7 @@ impl MergedCellType {
 }
 
 impl markup::Read for MergedDocumentDestination {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::merged_document_destination(element)
     }
 }
@@ -42174,7 +42174,7 @@ impl MergedDocumentDestinationTypes {
 }
 
 impl markup::Read for MergedDocumentToEMailAttachment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::merged_document_to_e_mail_attachment(element)
     }
 }
@@ -42187,7 +42187,7 @@ impl markup::Write for MergedDocumentToEMailAttachment {
 }
 
 impl markup::Read for MergedEMailOrFaxSubjectLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::merged_e_mail_or_fax_subject_line(element)
     }
 }
@@ -42200,7 +42200,7 @@ impl markup::Write for MergedEMailOrFaxSubjectLine {
 }
 
 impl markup::Read for MirrorPageMargins {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mirror_page_margins(element)
     }
 }
@@ -42213,7 +42213,7 @@ impl markup::Write for MirrorPageMargins {
 }
 
 impl markup::Read for MoveDestinationLocationContainerEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_destination_location_container_end(element)
     }
 }
@@ -42226,7 +42226,7 @@ impl markup::Write for MoveDestinationLocationContainerEnd {
 }
 
 impl markup::Read for MoveDestinationLocationContainerStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_destination_location_container_start(element)
     }
 }
@@ -42239,7 +42239,7 @@ impl markup::Write for MoveDestinationLocationContainerStart {
 }
 
 impl markup::Read for MoveDestinationParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_destination_paragraph(element)
     }
 }
@@ -42252,7 +42252,7 @@ impl markup::Write for MoveDestinationParagraph {
 }
 
 impl markup::Read for MoveDestinationRunContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_destination_run_content(element)
     }
 }
@@ -42265,7 +42265,7 @@ impl markup::Write for MoveDestinationRunContent {
 }
 
 impl markup::Read for MoveSourceLocationContainerEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_source_location_container_end(element)
     }
 }
@@ -42278,7 +42278,7 @@ impl markup::Write for MoveSourceLocationContainerEnd {
 }
 
 impl markup::Read for MoveSourceLocationContainerStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_source_location_container_start(element)
     }
 }
@@ -42291,7 +42291,7 @@ impl markup::Write for MoveSourceLocationContainerStart {
 }
 
 impl markup::Read for MoveSourceParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_source_paragraph(element)
     }
 }
@@ -42304,7 +42304,7 @@ impl markup::Write for MoveSourceParagraph {
 }
 
 impl markup::Read for MoveSourceRunContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_source_run_content(element)
     }
 }
@@ -42317,7 +42317,7 @@ impl markup::Write for MoveSourceRunContent {
 }
 
 impl markup::Read for NestedFramesetDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nested_frameset_definition(element)
     }
 }
@@ -42330,7 +42330,7 @@ impl markup::Write for NestedFramesetDefinition {
 }
 
 impl markup::Read for NeverKernPunctuationCharacters {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::never_kern_punctuation_characters(element)
     }
 }
@@ -42343,7 +42343,7 @@ impl markup::Write for NeverKernPunctuationCharacters {
 }
 
 impl markup::Read for NonBreakingHyphenCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_breaking_hyphen_character(element)
     }
 }
@@ -42356,7 +42356,7 @@ impl markup::Write for NonBreakingHyphenCharacter {
 }
 
 impl markup::Read for NonComplexScriptFontSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_complex_script_font_size(element)
     }
 }
@@ -42369,7 +42369,7 @@ impl markup::Write for NonComplexScriptFontSize {
 }
 
 impl markup::Read for NotATrueTypeOutlineFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::not_a_true_type_outline_font(element)
     }
 }
@@ -42382,7 +42382,7 @@ impl markup::Write for NotATrueTypeOutlineFont {
 }
 
 impl markup::Read for NumberOfColumnsInColumnBand {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_columns_in_column_band(element)
     }
 }
@@ -42395,7 +42395,7 @@ impl markup::Write for NumberOfColumnsInColumnBand {
 }
 
 impl markup::Read for NumberOfPagesPerBooklet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_pages_per_booklet(element)
     }
 }
@@ -42408,7 +42408,7 @@ impl markup::Write for NumberOfPagesPerBooklet {
 }
 
 impl markup::Read for NumberOfRowsInRowBand {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_rows_in_row_band(element)
     }
 }
@@ -42421,7 +42421,7 @@ impl markup::Write for NumberOfRowsInRowBand {
 }
 
 impl markup::Read for NumberingDefinitionInstance {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_definition_instance(element)
     }
 }
@@ -42434,7 +42434,7 @@ impl markup::Write for NumberingDefinitionInstance {
 }
 
 impl markup::Read for NumberingDefinitionInstanceReferenceNumId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_definition_instance_reference_num_id(element)
     }
 }
@@ -42447,7 +42447,7 @@ impl markup::Write for NumberingDefinitionInstanceReferenceNumId {
 }
 
 impl markup::Read for NumberingDefinitionInstanceReferenceNumPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_definition_instance_reference_num_pr(element)
     }
 }
@@ -42514,7 +42514,7 @@ impl NumberingDefinitionType {
 }
 
 impl markup::Read for NumberingDefinitions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_definitions(element)
     }
 }
@@ -42527,7 +42527,7 @@ impl markup::Write for NumberingDefinitions {
 }
 
 impl markup::Read for NumberingFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_format(element)
     }
 }
@@ -42540,7 +42540,7 @@ impl markup::Write for NumberingFormat {
 }
 
 impl markup::Read for NumberingLevelDefinitionOverride {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_level_definition_override(element)
     }
 }
@@ -42553,7 +42553,7 @@ impl markup::Write for NumberingLevelDefinitionOverride {
 }
 
 impl markup::Read for NumberingLevelOverrideDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_level_override_definition(element)
     }
 }
@@ -42566,7 +42566,7 @@ impl markup::Write for NumberingLevelOverrideDefinition {
 }
 
 impl markup::Read for NumberingLevelReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_level_reference(element)
     }
 }
@@ -42579,7 +42579,7 @@ impl markup::Write for NumberingLevelReference {
 }
 
 impl markup::Read for NumberingLevelStartingValueOverride {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_level_starting_value_override(element)
     }
 }
@@ -42592,7 +42592,7 @@ impl markup::Write for NumberingLevelStartingValueOverride {
 }
 
 impl markup::Read for NumberingLevelText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_level_text(element)
     }
 }
@@ -42605,7 +42605,7 @@ impl markup::Write for NumberingLevelText {
 }
 
 impl markup::Read for NumberingStyleDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_style_definition(element)
     }
 }
@@ -42618,7 +42618,7 @@ impl markup::Write for NumberingStyleDefinition {
 }
 
 impl markup::Read for NumberingStyleReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_style_reference(element)
     }
 }
@@ -42631,7 +42631,7 @@ impl markup::Write for NumberingStyleReference {
 }
 
 impl markup::Read for NumberingTemplateCode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::numbering_template_code(element)
     }
 }
@@ -42644,7 +42644,7 @@ impl markup::Write for NumberingTemplateCode {
 }
 
 impl markup::Read for ODSODataSourceFilePath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::odso_data_source_file_path(element)
     }
 }
@@ -42657,7 +42657,7 @@ impl markup::Write for ODSODataSourceFilePath {
 }
 
 impl markup::Read for ODSODataSourceType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::odso_data_source_type(element)
     }
 }
@@ -42670,7 +42670,7 @@ impl markup::Write for ODSODataSourceType {
 }
 
 impl markup::Read for OfficeDataSourceObjectSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::office_data_source_object_settings(element)
     }
 }
@@ -42683,7 +42683,7 @@ impl markup::Write for OfficeDataSourceObjectSettings {
 }
 
 impl markup::Read for OfficeOpenXMLMath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::office_open_xml_math(element)
     }
 }
@@ -42696,7 +42696,7 @@ impl markup::Write for OfficeOpenXMLMath {
 }
 
 impl markup::Read for OnlyAllowEditingOfFormFields {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::only_allow_editing_of_form_fields(element)
     }
 }
@@ -42709,7 +42709,7 @@ impl markup::Write for OnlyAllowEditingOfFormFields {
 }
 
 impl markup::Read for OnlyExpandCondenseTextByWholePoints {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::only_expand_condense_text_by_whole_points(element)
     }
 }
@@ -42722,7 +42722,7 @@ impl markup::Write for OnlyExpandCondenseTextByWholePoints {
 }
 
 impl markup::Read for OnlyPrintFormFieldContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::only_print_form_field_content(element)
     }
 }
@@ -42735,7 +42735,7 @@ impl markup::Write for OnlyPrintFormFieldContent {
 }
 
 impl markup::Read for OnlySaveCustomXMLMarkup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::only_save_custom_xml_markup(element)
     }
 }
@@ -42748,7 +42748,7 @@ impl markup::Write for OnlySaveCustomXMLMarkup {
 }
 
 impl markup::Read for OnlySaveFormFieldContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::only_save_form_field_content(element)
     }
 }
@@ -42761,7 +42761,7 @@ impl markup::Write for OnlySaveFormFieldContent {
 }
 
 impl markup::Read for OptionalHyphenCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::optional_hyphen_character(element)
     }
 }
@@ -42774,7 +42774,7 @@ impl markup::Write for OptionalHyphenCharacter {
 }
 
 impl markup::Read for OptionalUserInterfaceSortingOrder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::optional_user_interface_sorting_order(element)
     }
 }
@@ -42787,7 +42787,7 @@ impl markup::Write for OptionalUserInterfaceSortingOrder {
 }
 
 impl markup::Read for OriginalDocumentRevisionSaveID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::original_document_revision_save_id(element)
     }
 }
@@ -42800,7 +42800,7 @@ impl markup::Write for OriginalDocumentRevisionSaveID {
 }
 
 impl markup::Read for OutputEncoding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::output_encoding(element)
     }
 }
@@ -42867,7 +42867,7 @@ impl PageBorderDisplayOptions {
 }
 
 impl markup::Read for PageBorderExcludesFooter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_border_excludes_footer(element)
     }
 }
@@ -42880,7 +42880,7 @@ impl markup::Write for PageBorderExcludesFooter {
 }
 
 impl markup::Read for PageBorderExcludesHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_border_excludes_header(element)
     }
 }
@@ -42995,7 +42995,7 @@ impl PageBorderZOrder {
 }
 
 impl markup::Read for PageBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_borders(element)
     }
 }
@@ -43008,7 +43008,7 @@ impl markup::Write for PageBorders {
 }
 
 impl markup::Read for PageMargins {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_margins(element)
     }
 }
@@ -43021,7 +43021,7 @@ impl markup::Write for PageMargins {
 }
 
 impl markup::Read for PageNumberBlock {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_number_block(element)
     }
 }
@@ -43034,7 +43034,7 @@ impl markup::Write for PageNumberBlock {
 }
 
 impl markup::Read for PageNumberingSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_numbering_settings(element)
     }
 }
@@ -43100,7 +43100,7 @@ impl PageOrientation {
 }
 
 impl markup::Read for PageSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::page_size(element)
     }
 }
@@ -43113,7 +43113,7 @@ impl markup::Write for PageSize {
 }
 
 impl markup::Read for Panose1TypefaceClassificationNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::panose1typeface_classification_number(element)
     }
 }
@@ -43126,7 +43126,7 @@ impl markup::Write for Panose1TypefaceClassificationNumber {
 }
 
 impl markup::Read for PaperSourceInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paper_source_information(element)
     }
 }
@@ -43139,7 +43139,7 @@ impl markup::Write for PaperSourceInformation {
 }
 
 impl markup::Read for Paragraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph(element)
     }
 }
@@ -43152,7 +43152,7 @@ impl markup::Write for Paragraph {
 }
 
 impl markup::Read for ParagraphAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_alignment(element)
     }
 }
@@ -43165,7 +43165,7 @@ impl markup::Write for ParagraphAlignment {
 }
 
 impl markup::Read for ParagraphBorderAboveIdenticalParagraphs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_above_identical_paragraphs(element)
     }
 }
@@ -43178,7 +43178,7 @@ impl markup::Write for ParagraphBorderAboveIdenticalParagraphs {
 }
 
 impl markup::Read for ParagraphBorderAboveIdenticalParagraphsTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_above_identical_paragraphs_tbl_width(element)
     }
 }
@@ -43192,7 +43192,7 @@ impl markup::Write for ParagraphBorderAboveIdenticalParagraphsTblWidth {
 }
 
 impl markup::Read for ParagraphBorderBelowIdenticalParagraphs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_below_identical_paragraphs(element)
     }
 }
@@ -43205,7 +43205,7 @@ impl markup::Write for ParagraphBorderBelowIdenticalParagraphs {
 }
 
 impl markup::Read for ParagraphBorderBelowIdenticalParagraphsTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_below_identical_paragraphs_tbl_width(element)
     }
 }
@@ -43219,7 +43219,7 @@ impl markup::Write for ParagraphBorderBelowIdenticalParagraphsTblWidth {
 }
 
 impl markup::Read for ParagraphBorderBetweenFacingPages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_between_facing_pages(element)
     }
 }
@@ -43232,7 +43232,7 @@ impl markup::Write for ParagraphBorderBetweenFacingPages {
 }
 
 impl markup::Read for ParagraphBorderBetweenIdenticalParagraphs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_border_between_identical_paragraphs(element)
     }
 }
@@ -43245,7 +43245,7 @@ impl markup::Write for ParagraphBorderBetweenIdenticalParagraphs {
 }
 
 impl markup::Read for ParagraphBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_borders(element)
     }
 }
@@ -43258,7 +43258,7 @@ impl markup::Write for ParagraphBorders {
 }
 
 impl markup::Read for ParagraphConditionalFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_conditional_formatting(element)
     }
 }
@@ -43271,11 +43271,11 @@ impl markup::Write for ParagraphConditionalFormatting {
 }
 
 impl markup::Read for ParagraphContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "subDoc")) => Self::AnchorForSubdocumentLocation(markup::read(element)),
             Some((NS_W, "dir")) => Self::BidirectionalEmbeddingLevel(markup::read(element)),
@@ -43351,7 +43351,7 @@ impl markup::Read for ParagraphContent {
             Some((NS_W, "permStart")) => Self::RangePermissionStart(markup::read(element)),
             Some((NS_W, "fldSimple")) => Self::SimpleField(markup::read(element)),
             Some((NS_W, "r")) => Self::TextRun(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -43561,7 +43561,7 @@ impl TryFrom<ParagraphContent> for RangeMarkupContent {
 }
 
 impl markup::Read for ParagraphIndentation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_indentation(element)
     }
 }
@@ -43574,7 +43574,7 @@ impl markup::Write for ParagraphIndentation {
 }
 
 impl markup::Read for ParagraphMarkIsAlwaysHidden {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_mark_is_always_hidden(element)
     }
 }
@@ -43587,7 +43587,7 @@ impl markup::Write for ParagraphMarkIsAlwaysHidden {
 }
 
 impl markup::Read for ParagraphMarkRunPropertiesRevision {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_mark_run_properties_revision(element)
     }
 }
@@ -43600,7 +43600,7 @@ impl markup::Write for ParagraphMarkRunPropertiesRevision {
 }
 
 impl markup::Read for ParagraphProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_properties(element)
     }
 }
@@ -43613,7 +43613,7 @@ impl markup::Write for ParagraphProperties {
 }
 
 impl markup::Read for ParagraphPropertiesPPrGeneral {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_properties_p_pr_general(element)
     }
 }
@@ -43626,7 +43626,7 @@ impl markup::Write for ParagraphPropertiesPPrGeneral {
 }
 
 impl markup::Read for ParagraphShading {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_shading(element)
     }
 }
@@ -43639,7 +43639,7 @@ impl markup::Write for ParagraphShading {
 }
 
 impl markup::Read for ParagraphTextFlowDirection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::paragraph_text_flow_direction(element)
     }
 }
@@ -43652,7 +43652,7 @@ impl markup::Write for ParagraphTextFlowDirection {
 }
 
 impl markup::Read for ParentStyleID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::parent_style_id(element)
     }
 }
@@ -43696,7 +43696,7 @@ impl PercentageMeasurement {
 }
 
 impl markup::Read for PercentageOfDocumentToUse {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::percentage_of_document_to_use(element)
     }
 }
@@ -43732,7 +43732,7 @@ impl PercentageValueWithoutPercentSign {
 }
 
 impl markup::Read for PhoneticGuide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide(element)
     }
 }
@@ -43745,7 +43745,7 @@ impl markup::Write for PhoneticGuide {
 }
 
 impl markup::Read for PhoneticGuideBaseText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_base_text(element)
     }
 }
@@ -43758,7 +43758,7 @@ impl markup::Write for PhoneticGuideBaseText {
 }
 
 impl markup::Read for PhoneticGuideBaseTextFontSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_base_text_font_size(element)
     }
 }
@@ -43771,11 +43771,11 @@ impl markup::Write for PhoneticGuideBaseTextFontSize {
 }
 
 impl markup::Read for PhoneticGuideContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(markup::read(element)),
             Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(markup::read(element)),
@@ -43843,7 +43843,7 @@ impl markup::Read for PhoneticGuideContent {
             Some((NS_W, "permEnd")) => Self::RangePermissionEnd(markup::read(element)),
             Some((NS_W, "permStart")) => Self::RangePermissionStart(markup::read(element)),
             Some((NS_W, "r")) => Self::TextRun(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -43955,7 +43955,7 @@ impl TryFrom<PhoneticGuideContent> for RangeMarkupContent {
 }
 
 impl markup::Read for PhoneticGuideProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_properties(element)
     }
 }
@@ -43968,7 +43968,7 @@ impl markup::Write for PhoneticGuideProperties {
 }
 
 impl markup::Read for PhoneticGuideText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_text(element)
     }
 }
@@ -43981,7 +43981,7 @@ impl markup::Write for PhoneticGuideText {
 }
 
 impl markup::Read for PhoneticGuideTextAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_text_alignment(element)
     }
 }
@@ -43994,7 +43994,7 @@ impl markup::Write for PhoneticGuideTextAlignment {
 }
 
 impl markup::Read for PhoneticGuideTextFontSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::phonetic_guide_text_font_size(element)
     }
 }
@@ -44007,7 +44007,7 @@ impl markup::Write for PhoneticGuideTextFontSize {
 }
 
 impl markup::Read for PictureNumberingSymbolDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_numbering_symbol_definition(element)
     }
 }
@@ -44026,15 +44026,15 @@ impl Default for PictureNumberingSymbolDefinitionContent {
 }
 
 impl markup::Read for PictureNumberingSymbolDefinitionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "drawing")) => Self::DrawingMLObject(markup::read(element)),
             Some((NS_W, "pict")) => Self::VMLObject(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -44050,7 +44050,7 @@ impl markup::Write for PictureNumberingSymbolDefinitionContent {
 }
 
 impl markup::Read for PictureNumberingSymbolDefinitionReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_numbering_symbol_definition_reference(element)
     }
 }
@@ -44063,7 +44063,7 @@ impl markup::Write for PictureNumberingSymbolDefinitionReference {
 }
 
 impl markup::Read for PictureStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_structured_document_tag(element)
     }
 }
@@ -44076,7 +44076,7 @@ impl markup::Write for PictureStructuredDocumentTag {
 }
 
 impl markup::Read for PixelsPerInchForGraphicsImages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pixels_per_inch_for_graphics_images(element)
     }
 }
@@ -44089,7 +44089,7 @@ impl markup::Write for PixelsPerInchForGraphicsImages {
 }
 
 impl markup::Read for PlaceholderTextShouldBeResaved {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::placeholder_text_should_be_resaved(element)
     }
 }
@@ -44102,7 +44102,7 @@ impl markup::Write for PlaceholderTextShouldBeResaved {
 }
 
 impl markup::Read for PlainTextStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::plain_text_structured_document_tag(element)
     }
 }
@@ -44115,7 +44115,7 @@ impl markup::Write for PlainTextStructuredDocumentTag {
 }
 
 impl markup::Read for PositionGutterAtTopOfPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::position_gutter_at_top_of_page(element)
     }
 }
@@ -44128,7 +44128,7 @@ impl markup::Write for PositionGutterAtTopOfPage {
 }
 
 impl markup::Read for PositionOfLastCalculatedPageBreak {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::position_of_last_calculated_page_break(element)
     }
 }
@@ -44141,7 +44141,7 @@ impl markup::Write for PositionOfLastCalculatedPageBreak {
 }
 
 impl markup::Read for PredefinedMergeFieldName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::predefined_merge_field_name(element)
     }
 }
@@ -44154,7 +44154,7 @@ impl markup::Write for PredefinedMergeFieldName {
 }
 
 impl markup::Read for PreferredTableCellWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::preferred_table_cell_width(element)
     }
 }
@@ -44167,7 +44167,7 @@ impl markup::Write for PreferredTableCellWidth {
 }
 
 impl markup::Read for PreferredTableWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::preferred_table_width(element)
     }
 }
@@ -44180,7 +44180,7 @@ impl markup::Write for PreferredTableWidth {
 }
 
 impl markup::Read for PreferredWidthAfterTableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::preferred_width_after_table_row(element)
     }
 }
@@ -44193,7 +44193,7 @@ impl markup::Write for PreferredWidthAfterTableRow {
 }
 
 impl markup::Read for PreferredWidthBeforeTableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::preferred_width_before_table_row(element)
     }
 }
@@ -44206,7 +44206,7 @@ impl markup::Write for PreferredWidthBeforeTableRow {
 }
 
 impl markup::Read for PreventModificationOfThemesPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::prevent_modification_of_themes_part(element)
     }
 }
@@ -44219,7 +44219,7 @@ impl markup::Write for PreventModificationOfThemesPart {
 }
 
 impl markup::Read for PreventReplacementOfStylesPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::prevent_replacement_of_styles_part(element)
     }
 }
@@ -44232,7 +44232,7 @@ impl markup::Write for PreventReplacementOfStylesPart {
 }
 
 impl markup::Read for PreventTextFramesFromOverlapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::prevent_text_frames_from_overlapping(element)
     }
 }
@@ -44245,7 +44245,7 @@ impl markup::Write for PreventTextFramesFromOverlapping {
 }
 
 impl markup::Read for PreviousNumberingFieldProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_numbering_field_properties(element)
     }
 }
@@ -44258,7 +44258,7 @@ impl markup::Write for PreviousNumberingFieldProperties {
 }
 
 impl markup::Read for PreviousParagraphMarkRunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_paragraph_mark_run_properties(element)
     }
 }
@@ -44271,7 +44271,7 @@ impl markup::Write for PreviousParagraphMarkRunProperties {
 }
 
 impl markup::Read for PreviousParagraphProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_paragraph_properties(element)
     }
 }
@@ -44284,7 +44284,7 @@ impl markup::Write for PreviousParagraphProperties {
 }
 
 impl markup::Read for PreviousRunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_run_properties(element)
     }
 }
@@ -44297,7 +44297,7 @@ impl markup::Write for PreviousRunProperties {
 }
 
 impl markup::Read for PreviousSectionProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_section_properties(element)
     }
 }
@@ -44310,7 +44310,7 @@ impl markup::Write for PreviousSectionProperties {
 }
 
 impl markup::Read for PreviousTableCellProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_table_cell_properties(element)
     }
 }
@@ -44323,7 +44323,7 @@ impl markup::Write for PreviousTableCellProperties {
 }
 
 impl markup::Read for PreviousTableGrid {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_table_grid(element)
     }
 }
@@ -44336,7 +44336,7 @@ impl markup::Write for PreviousTableGrid {
 }
 
 impl markup::Read for PreviousTableLevelPropertyExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_table_level_property_exceptions(element)
     }
 }
@@ -44349,7 +44349,7 @@ impl markup::Write for PreviousTableLevelPropertyExceptions {
 }
 
 impl markup::Read for PreviousTableProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_table_properties(element)
     }
 }
@@ -44362,7 +44362,7 @@ impl markup::Write for PreviousTableProperties {
 }
 
 impl markup::Read for PreviousTableRowProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::previous_table_row_properties(element)
     }
 }
@@ -44375,7 +44375,7 @@ impl markup::Write for PreviousTableRowProperties {
 }
 
 impl markup::Read for PrimaryStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::primary_style(element)
     }
 }
@@ -44388,7 +44388,7 @@ impl markup::Write for PrimaryStyle {
 }
 
 impl markup::Read for PrimaryStyleName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::primary_style_name(element)
     }
 }
@@ -44401,7 +44401,7 @@ impl markup::Write for PrimaryStyleName {
 }
 
 impl markup::Read for PrintBodyTextBeforeHeaderFooterContents {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_body_text_before_header_footer_contents(element)
     }
 }
@@ -44414,7 +44414,7 @@ impl markup::Write for PrintBodyTextBeforeHeaderFooterContents {
 }
 
 impl markup::Read for PrintColorsAsBlackAndWhiteWithoutDithering {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_colors_as_black_and_white_without_dithering(element)
     }
 }
@@ -44428,7 +44428,7 @@ impl markup::Write for PrintColorsAsBlackAndWhiteWithoutDithering {
 }
 
 impl markup::Read for PrintFractionalCharacterWidths {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_fractional_character_widths(element)
     }
 }
@@ -44441,7 +44441,7 @@ impl markup::Write for PrintFractionalCharacterWidths {
 }
 
 impl markup::Read for PrintPostScriptCodesWithDocumentText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_post_script_codes_with_document_text(element)
     }
 }
@@ -44454,7 +44454,7 @@ impl markup::Write for PrintPostScriptCodesWithDocumentText {
 }
 
 impl markup::Read for PrintTwoPagesPerSheet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_two_pages_per_sheet(element)
     }
 }
@@ -44467,7 +44467,7 @@ impl markup::Write for PrintTwoPagesPerSheet {
 }
 
 impl markup::Read for ProgrammaticTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::programmatic_tag(element)
     }
 }
@@ -44480,7 +44480,7 @@ impl markup::Write for ProgrammaticTag {
 }
 
 impl markup::Read for ProofingErrorAnchor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::proofing_error_anchor(element)
     }
 }
@@ -44591,7 +44591,7 @@ impl ProofingStateValues {
 }
 
 impl markup::Read for PropertiesForASingleFont {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::properties_for_a_single_font(element)
     }
 }
@@ -44604,7 +44604,7 @@ impl markup::Write for PropertiesForASingleFont {
 }
 
 impl markup::Read for QueryForDataSourceRecords {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::query_for_data_source_records(element)
     }
 }
@@ -44617,7 +44617,7 @@ impl markup::Write for QueryForDataSourceRecords {
 }
 
 impl markup::Read for RadixPointForFieldCodeEvaluation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::radix_point_for_field_code_evaluation(element)
     }
 }
@@ -44630,11 +44630,11 @@ impl markup::Write for RadixPointForFieldCodeEvaluation {
 }
 
 impl markup::Read for RangeMarkupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "bookmarkEnd")) => Self::BookmarkEnd(markup::read(element)),
             Some((NS_W, "bookmarkStart")) => Self::BookmarkStart(markup::read(element)),
@@ -44690,7 +44690,7 @@ impl markup::Read for RangeMarkupContent {
             Some((NS_W, "moveFromRangeStart")) => {
                 Self::MoveSourceLocationContainerStart(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -44782,7 +44782,7 @@ impl RangePermisionEditingGroup {
 }
 
 impl markup::Read for RangePermissionEnd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::range_permission_end(element)
     }
 }
@@ -44795,7 +44795,7 @@ impl markup::Write for RangePermissionEnd {
 }
 
 impl markup::Read for RangePermissionStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::range_permission_start(element)
     }
 }
@@ -44808,7 +44808,7 @@ impl markup::Write for RangePermissionStart {
 }
 
 impl markup::Read for RecalculateFieldsWhenModified {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::recalculate_fields_when_modified(element)
     }
 }
@@ -44821,7 +44821,7 @@ impl markup::Write for RecalculateFieldsWhenModified {
 }
 
 impl markup::Read for RecommendWebPageFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::recommend_web_page_format(element)
     }
 }
@@ -44834,7 +44834,7 @@ impl markup::Write for RecommendWebPageFormat {
 }
 
 impl markup::Read for RecordCurrentlyDisplayedInMergedDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::record_currently_displayed_in_merged_document(element)
     }
 }
@@ -44847,7 +44847,7 @@ impl markup::Write for RecordCurrentlyDisplayedInMergedDocument {
 }
 
 impl markup::Read for RecordIsIncludedInMailMerge {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::record_is_included_in_mail_merge(element)
     }
 }
@@ -44860,7 +44860,7 @@ impl markup::Write for RecordIsIncludedInMailMerge {
 }
 
 impl markup::Read for ReferenceToInclusionExclusionData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reference_to_inclusion_exclusion_data(element)
     }
 }
@@ -44873,7 +44873,7 @@ impl markup::Write for ReferenceToInclusionExclusionData {
 }
 
 impl markup::Read for ReferenceToPrinterSettingsData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reference_to_printer_settings_data(element)
     }
 }
@@ -44886,7 +44886,7 @@ impl markup::Write for ReferenceToPrinterSettingsData {
 }
 
 impl markup::Read for ReferencedCharacterStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::referenced_character_style(element)
     }
 }
@@ -44899,7 +44899,7 @@ impl markup::Write for ReferencedCharacterStyle {
 }
 
 impl markup::Read for ReferencedParagraphStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::referenced_paragraph_style(element)
     }
 }
@@ -44912,7 +44912,7 @@ impl markup::Write for ReferencedParagraphStyle {
 }
 
 impl markup::Read for ReferencedTableStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::referenced_table_style(element)
     }
 }
@@ -44925,7 +44925,7 @@ impl markup::Write for ReferencedTableStyle {
 }
 
 impl markup::Read for RegularFontStyleEmbedding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::regular_font_style_embedding(element)
     }
 }
@@ -44938,7 +44938,7 @@ impl markup::Write for RegularFontStyleEmbedding {
 }
 
 impl markup::Read for RemoveDateAndTimeFromAnnotations {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::remove_date_and_time_from_annotations(element)
     }
 }
@@ -44951,7 +44951,7 @@ impl markup::Write for RemoveDateAndTimeFromAnnotations {
 }
 
 impl markup::Read for RemovePersonalInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::remove_personal_information(element)
     }
 }
@@ -44964,7 +44964,7 @@ impl markup::Write for RemovePersonalInformation {
 }
 
 impl markup::Read for RemoveSemiHiddenProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::remove_semi_hidden_property(element)
     }
 }
@@ -44977,7 +44977,7 @@ impl markup::Write for RemoveSemiHiddenProperty {
 }
 
 impl markup::Read for RemoveSmartTagsWhenSaving {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::remove_smart_tags_when_saving(element)
     }
 }
@@ -44990,7 +44990,7 @@ impl markup::Write for RemoveSmartTagsWhenSaving {
 }
 
 impl markup::Read for RemoveStructuredDocumentTagWhenEdited {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::remove_structured_document_tag_when_edited(element)
     }
 }
@@ -45003,7 +45003,7 @@ impl markup::Write for RemoveStructuredDocumentTagWhenEdited {
 }
 
 impl markup::Read for RepeatTableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::repeat_table_row(element)
     }
 }
@@ -45016,7 +45016,7 @@ impl markup::Write for RepeatTableRow {
 }
 
 impl markup::Read for RequireExactSizeDuringFontSubstitution {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::require_exact_size_during_font_substitution(element)
     }
 }
@@ -45029,7 +45029,7 @@ impl markup::Write for RequireExactSizeDuringFontSubstitution {
 }
 
 impl markup::Read for RestartNumberingLevelSymbol {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::restart_numbering_level_symbol(element)
     }
 }
@@ -45042,7 +45042,7 @@ impl markup::Write for RestartNumberingLevelSymbol {
 }
 
 impl markup::Read for ReverseBookFoldPrinting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reverse_book_fold_printing(element)
     }
 }
@@ -45055,7 +45055,7 @@ impl markup::Write for ReverseBookFoldPrinting {
 }
 
 impl markup::Read for RevisionIdentifierForStyleDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_identifier_for_style_definition(element)
     }
 }
@@ -45068,7 +45068,7 @@ impl markup::Write for RevisionIdentifierForStyleDefinition {
 }
 
 impl markup::Read for RevisionInformationForParagraphProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_paragraph_properties(element)
     }
 }
@@ -45081,7 +45081,7 @@ impl markup::Write for RevisionInformationForParagraphProperties {
 }
 
 impl markup::Read for RevisionInformationForRunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_run_properties(element)
     }
 }
@@ -45094,7 +45094,7 @@ impl markup::Write for RevisionInformationForRunProperties {
 }
 
 impl markup::Read for RevisionInformationForSectionProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_section_properties(element)
     }
 }
@@ -45107,7 +45107,7 @@ impl markup::Write for RevisionInformationForSectionProperties {
 }
 
 impl markup::Read for RevisionInformationForTableCellProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_table_cell_properties(element)
     }
 }
@@ -45120,7 +45120,7 @@ impl markup::Write for RevisionInformationForTableCellProperties {
 }
 
 impl markup::Read for RevisionInformationForTableLevelPropertyExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_table_level_property_exceptions(element)
     }
 }
@@ -45134,7 +45134,7 @@ impl markup::Write for RevisionInformationForTableLevelPropertyExceptions {
 }
 
 impl markup::Read for RevisionInformationForTableProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_table_properties(element)
     }
 }
@@ -45147,7 +45147,7 @@ impl markup::Write for RevisionInformationForTableProperties {
 }
 
 impl markup::Read for RevisionInformationForTableRowProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_information_for_table_row_properties(element)
     }
 }
@@ -45160,7 +45160,7 @@ impl markup::Write for RevisionInformationForTableRowProperties {
 }
 
 impl markup::Read for RevisionSaveIDValues {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_save_id_values(element)
     }
 }
@@ -45173,7 +45173,7 @@ impl markup::Write for RevisionSaveIDValues {
 }
 
 impl markup::Read for RichTextBoxContentContainer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_text_box_content_container(element)
     }
 }
@@ -45186,7 +45186,7 @@ impl markup::Write for RichTextBoxContentContainer {
 }
 
 impl markup::Read for RichTextStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_text_structured_document_tag(element)
     }
 }
@@ -45199,7 +45199,7 @@ impl markup::Write for RichTextStructuredDocumentTag {
 }
 
 impl markup::Read for RightBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_border(element)
     }
 }
@@ -45212,7 +45212,7 @@ impl markup::Write for RightBorder {
 }
 
 impl markup::Read for RightMarginForHTMLDiv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_margin_for_html_div(element)
     }
 }
@@ -45225,7 +45225,7 @@ impl markup::Write for RightMarginForHTMLDiv {
 }
 
 impl markup::Read for RightParagraphBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_paragraph_border(element)
     }
 }
@@ -45238,7 +45238,7 @@ impl markup::Write for RightParagraphBorder {
 }
 
 impl markup::Read for RightParagraphBorderTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_paragraph_border_tbl_width(element)
     }
 }
@@ -45251,7 +45251,7 @@ impl markup::Write for RightParagraphBorderTblWidth {
 }
 
 impl markup::Read for RightToLeftParagraphLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_to_left_paragraph_layout(element)
     }
 }
@@ -45264,7 +45264,7 @@ impl markup::Write for RightToLeftParagraphLayout {
 }
 
 impl markup::Read for RightToLeftText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::right_to_left_text(element)
     }
 }
@@ -45277,7 +45277,7 @@ impl markup::Write for RightToLeftText {
 }
 
 impl markup::Read for RowLevelCustomXMLElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_level_custom_xml_element(element)
     }
 }
@@ -45290,7 +45290,7 @@ impl markup::Write for RowLevelCustomXMLElement {
 }
 
 impl markup::Read for RowLevelStructuredDocumentTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_level_structured_document_tag(element)
     }
 }
@@ -45303,7 +45303,7 @@ impl markup::Write for RowLevelStructuredDocumentTag {
 }
 
 impl markup::Read for RowLevelStructuredDocumentTagContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_level_structured_document_tag_content(element)
     }
 }
@@ -45316,7 +45316,7 @@ impl markup::Write for RowLevelStructuredDocumentTagContent {
 }
 
 impl markup::Read for RunContentColor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::run_content_color(element)
     }
 }
@@ -45329,7 +45329,7 @@ impl markup::Write for RunContentColor {
 }
 
 impl markup::Read for RunFonts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::run_fonts(element)
     }
 }
@@ -45342,7 +45342,7 @@ impl markup::Write for RunFonts {
 }
 
 impl markup::Read for RunProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::run_properties(element)
     }
 }
@@ -45355,11 +45355,11 @@ impl markup::Write for RunProperties {
 }
 
 impl markup::Read for RunPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "effect")) => Self::AnimatedTextEffect(markup::read(element)),
             Some((NS_W, "b")) => Self::Bold(markup::read(element)),
@@ -45406,7 +45406,7 @@ impl markup::Read for RunPropertiesContent {
             Some((NS_W, "cs")) => Self::UseComplexScriptFormattingOnRun(markup::read(element)),
             Some((NS_W, "position")) => Self::VerticallyRaisedOrLoweredText(markup::read(element)),
             Some((NS_W, "webHidden")) => Self::WebHiddenText(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -45459,7 +45459,7 @@ impl markup::Write for RunPropertiesContent {
 }
 
 impl markup::Read for RunPropertiesForTheParagraphMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::run_properties_for_the_paragraph_mark(element)
     }
 }
@@ -45472,7 +45472,7 @@ impl markup::Write for RunPropertiesForTheParagraphMark {
 }
 
 impl markup::Read for SaveSmartTagData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::save_smart_tag_data(element)
     }
 }
@@ -45485,7 +45485,7 @@ impl markup::Write for SaveSmartTagData {
 }
 
 impl markup::Read for SaveThroughCustomXSLTransform {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::save_through_custom_xsl_transform(element)
     }
 }
@@ -45525,7 +45525,7 @@ impl ScriptSubroutineNameValue {
 }
 
 impl markup::Read for ScrollbarDisplayOption {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scrollbar_display_option(element)
     }
 }
@@ -45538,15 +45538,15 @@ impl markup::Write for ScrollbarDisplayOption {
 }
 
 impl markup::Read for SectionPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "footerReference")) => Self::FooterReference(markup::read(element)),
             Some((NS_W, "headerReference")) => Self::HeaderReference(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -45562,7 +45562,7 @@ impl markup::Write for SectionPropertiesContent {
 }
 
 impl markup::Read for SectionType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_type(element)
     }
 }
@@ -45575,7 +45575,7 @@ impl markup::Write for SectionType {
 }
 
 impl markup::Read for SectionWideEndnoteProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_wide_endnote_properties(element)
     }
 }
@@ -45588,7 +45588,7 @@ impl markup::Write for SectionWideEndnoteProperties {
 }
 
 impl markup::Read for SectionWideFootnoteProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_wide_footnote_properties(element)
     }
 }
@@ -45601,7 +45601,7 @@ impl markup::Write for SectionWideFootnoteProperties {
 }
 
 impl markup::Read for SelectFldWithFirstOrLastChar {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::select_fld_with_first_or_last_char(element)
     }
 }
@@ -45614,7 +45614,7 @@ impl markup::Write for SelectFldWithFirstOrLastChar {
 }
 
 impl markup::Read for SetOfBordersForHTMLDiv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_borders_for_html_div(element)
     }
 }
@@ -45627,7 +45627,7 @@ impl markup::Write for SetOfBordersForHTMLDiv {
 }
 
 impl markup::Read for SetOfCustomTabStops {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_custom_tab_stops(element)
     }
 }
@@ -45725,7 +45725,7 @@ impl ShadingPatterns {
 }
 
 impl markup::Read for Shadow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shadow(element)
     }
 }
@@ -45738,7 +45738,7 @@ impl markup::Write for Shadow {
 }
 
 impl markup::Read for ShowEMailMessageHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_e_mail_message_header(element)
     }
 }
@@ -45751,7 +45751,7 @@ impl markup::Write for ShowEMailMessageHeader {
 }
 
 impl markup::Read for ShowXMLTags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_xml_tags(element)
     }
 }
@@ -45828,7 +45828,7 @@ impl SignedMeasurementInTwentiethsOfPoint {
 }
 
 impl markup::Read for SimpleField {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::simple_field(element)
     }
 }
@@ -45841,7 +45841,7 @@ impl markup::Write for SimpleField {
 }
 
 impl markup::Read for SingleAutomaticCaptioningSetting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_automatic_captioning_setting(element)
     }
 }
@@ -45854,7 +45854,7 @@ impl markup::Write for SingleAutomaticCaptioningSetting {
 }
 
 impl markup::Read for SingleCaptionTypeDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_caption_type_definition(element)
     }
 }
@@ -45867,7 +45867,7 @@ impl markup::Write for SingleCaptionTypeDefinition {
 }
 
 impl markup::Read for SingleColumnDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_column_definition(element)
     }
 }
@@ -45880,7 +45880,7 @@ impl markup::Write for SingleColumnDefinition {
 }
 
 impl markup::Read for SingleDocumentVariable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_document_variable(element)
     }
 }
@@ -45893,7 +45893,7 @@ impl markup::Write for SingleDocumentVariable {
 }
 
 impl markup::Read for SingleFrameProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_frame_properties(element)
     }
 }
@@ -45906,7 +45906,7 @@ impl markup::Write for SingleFrameProperties {
 }
 
 impl markup::Read for SingleStrikethrough {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_strikethrough(element)
     }
 }
@@ -45919,7 +45919,7 @@ impl markup::Write for SingleStrikethrough {
 }
 
 impl markup::Read for SingleTableCellMargins {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::single_table_cell_margins(element)
     }
 }
@@ -45932,7 +45932,7 @@ impl markup::Write for SingleTableCellMargins {
 }
 
 impl markup::Read for SmallCaps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::small_caps(element)
     }
 }
@@ -45945,7 +45945,7 @@ impl markup::Write for SmallCaps {
 }
 
 impl markup::Read for SmartTagProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::smart_tag_properties(element)
     }
 }
@@ -45958,7 +45958,7 @@ impl markup::Write for SmartTagProperties {
 }
 
 impl markup::Read for SourceDocumentType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::source_document_type(element)
     }
 }
@@ -46028,7 +46028,7 @@ impl SourceDocumentTypes {
 }
 
 impl markup::Read for SourceFileForFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::source_file_for_frame(element)
     }
 }
@@ -46041,7 +46041,7 @@ impl markup::Write for SourceFileForFrame {
 }
 
 impl markup::Read for SpacingBetweenLinesAndAboveBelowParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spacing_between_lines_and_above_below_paragraph(element)
     }
 }
@@ -46054,7 +46054,7 @@ impl markup::Write for SpacingBetweenLinesAndAboveBelowParagraph {
 }
 
 impl markup::Read for SpecialEndnoteList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::special_endnote_list(element)
     }
 }
@@ -46067,7 +46067,7 @@ impl markup::Write for SpecialEndnoteList {
 }
 
 impl markup::Read for SpecialFootnoteList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::special_footnote_list(element)
     }
 }
@@ -46080,7 +46080,7 @@ impl markup::Write for SpecialFootnoteList {
 }
 
 impl markup::Read for SpellingAndGrammaticalCheckingState {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spelling_and_grammatical_checking_state(element)
     }
 }
@@ -46093,7 +46093,7 @@ impl markup::Write for SpellingAndGrammaticalCheckingState {
 }
 
 impl markup::Read for SplitPgBreakAndParaMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::split_pg_break_and_para_mark(element)
     }
 }
@@ -46601,7 +46601,7 @@ impl StandardDateAndTimeStorageFormat {
 }
 
 impl markup::Read for StartParagraphOnNextPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::start_paragraph_on_next_page(element)
     }
 }
@@ -46614,7 +46614,7 @@ impl markup::Write for StartParagraphOnNextPage {
 }
 
 impl markup::Read for StartingValue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::starting_value(element)
     }
 }
@@ -46650,7 +46650,7 @@ impl StatusTextValue {
 }
 
 impl markup::Read for StrictKinsokuRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::strict_kinsoku_rules(element)
     }
 }
@@ -46663,7 +46663,7 @@ impl markup::Write for StrictKinsokuRules {
 }
 
 impl markup::Read for StructuredDocumentTagEndCharacterProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::structured_document_tag_end_character_properties(element)
     }
 }
@@ -46676,7 +46676,7 @@ impl markup::Write for StructuredDocumentTagEndCharacterProperties {
 }
 
 impl markup::Read for StructuredDocumentTagLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::structured_document_tag_label(element)
     }
 }
@@ -46689,7 +46689,7 @@ impl markup::Write for StructuredDocumentTagLabel {
 }
 
 impl markup::Read for StructuredDocumentTagNavigationOrderIndex {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::structured_document_tag_navigation_order_index(element)
     }
 }
@@ -46702,7 +46702,7 @@ impl markup::Write for StructuredDocumentTagNavigationOrderIndex {
 }
 
 impl markup::Read for StructuredDocumentTagPlaceholderText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::structured_document_tag_placeholder_text(element)
     }
 }
@@ -46715,7 +46715,7 @@ impl markup::Write for StructuredDocumentTagPlaceholderText {
 }
 
 impl markup::Read for StructuredDocumentTagProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::structured_document_tag_properties(element)
     }
 }
@@ -46728,11 +46728,11 @@ impl markup::Write for StructuredDocumentTagProperties {
 }
 
 impl markup::Read for StructuredDocumentTagPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "bibliography")) => {
                 Self::BibliographyStructuredDocumentTag(markup::read(element))
@@ -46760,7 +46760,7 @@ impl markup::Read for StructuredDocumentTagPropertiesContent {
                 Self::RepeatingSectionItem(markup::read(element))
             }
             Some((NS_W, "richText")) => Self::RichTextStructuredDocumentTag(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -46790,7 +46790,7 @@ impl markup::Write for StructuredDocumentTagPropertiesContent {
 }
 
 impl markup::Read for StyleCannotBeApplied {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_cannot_be_applied(element)
     }
 }
@@ -46803,7 +46803,7 @@ impl markup::Write for StyleCannotBeApplied {
 }
 
 impl markup::Read for StyleConditionalTableFormattingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_conditional_table_formatting_properties(element)
     }
 }
@@ -46816,7 +46816,7 @@ impl markup::Write for StyleConditionalTableFormattingProperties {
 }
 
 impl markup::Read for StyleDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_definition(element)
     }
 }
@@ -46829,7 +46829,7 @@ impl markup::Write for StyleDefinition {
 }
 
 impl markup::Read for StyleDefinitions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_definitions(element)
     }
 }
@@ -46842,7 +46842,7 @@ impl markup::Write for StyleDefinitions {
 }
 
 impl markup::Read for StyleForNextParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_for_next_paragraph(element)
     }
 }
@@ -46965,7 +46965,7 @@ impl StyleTypes {
 }
 
 impl markup::Read for SubscriptSuperscriptText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subscript_superscript_text(element)
     }
 }
@@ -46978,7 +46978,7 @@ impl markup::Write for SubscriptSuperscriptText {
 }
 
 impl markup::Read for SubsetFontsWhenEmbedding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subset_fonts_when_embedding(element)
     }
 }
@@ -46991,7 +46991,7 @@ impl markup::Write for SubsetFontsWhenEmbedding {
 }
 
 impl markup::Read for SuggestedFiltering {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suggested_filtering(element)
     }
 }
@@ -47004,7 +47004,7 @@ impl markup::Write for SuggestedFiltering {
 }
 
 impl markup::Read for SuggestedSorting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suggested_sorting(element)
     }
 }
@@ -47017,7 +47017,7 @@ impl markup::Write for SuggestedSorting {
 }
 
 impl markup::Read for SupplementarySmartTagInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::supplementary_smart_tag_information(element)
     }
 }
@@ -47030,7 +47030,7 @@ impl markup::Write for SupplementarySmartTagInformation {
 }
 
 impl markup::Read for SupportedUnicodeSubrangesAndCodePages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::supported_unicode_subranges_and_code_pages(element)
     }
 }
@@ -47043,7 +47043,7 @@ impl markup::Write for SupportedUnicodeSubrangesAndCodePages {
 }
 
 impl markup::Read for SuppressEndnotesInDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suppress_endnotes_in_document(element)
     }
 }
@@ -47056,7 +47056,7 @@ impl markup::Write for SuppressEndnotesInDocument {
 }
 
 impl markup::Read for SuppressHyphenationForParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suppress_hyphenation_for_paragraph(element)
     }
 }
@@ -47069,7 +47069,7 @@ impl markup::Write for SuppressHyphenationForParagraph {
 }
 
 impl markup::Read for SuppressLineNumbersForParagraph {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suppress_line_numbers_for_paragraph(element)
     }
 }
@@ -47082,7 +47082,7 @@ impl markup::Write for SuppressLineNumbersForParagraph {
 }
 
 impl markup::Read for SuppressSpBfAfterPgBrk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suppress_sp_bf_after_pg_brk(element)
     }
 }
@@ -47095,7 +47095,7 @@ impl markup::Write for SuppressSpBfAfterPgBrk {
 }
 
 impl markup::Read for SuppressTopSpacing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::suppress_top_spacing(element)
     }
 }
@@ -47108,7 +47108,7 @@ impl markup::Write for SuppressTopSpacing {
 }
 
 impl markup::Read for SwapParagraphBordersOnOddNumberedPages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::swap_paragraph_borders_on_odd_numbered_pages(element)
     }
 }
@@ -47121,7 +47121,7 @@ impl markup::Write for SwapParagraphBordersOnOddNumberedPages {
 }
 
 impl markup::Read for SymbolCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::symbol_character(element)
     }
 }
@@ -47134,7 +47134,7 @@ impl markup::Write for SymbolCharacter {
 }
 
 impl markup::Read for TabCharacter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tab_character(element)
     }
 }
@@ -47147,7 +47147,7 @@ impl markup::Write for TabCharacter {
 }
 
 impl markup::Read for Table {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table(element)
     }
 }
@@ -47160,7 +47160,7 @@ impl markup::Write for Table {
 }
 
 impl markup::Read for TableAlignmentException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_alignment_exception(element)
     }
 }
@@ -47225,7 +47225,7 @@ impl TableAlignmentType {
 }
 
 impl markup::Read for TableBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_borders(element)
     }
 }
@@ -47238,7 +47238,7 @@ impl markup::Write for TableBorders {
 }
 
 impl markup::Read for TableCaption {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_caption(element)
     }
 }
@@ -47251,7 +47251,7 @@ impl markup::Write for TableCaption {
 }
 
 impl markup::Read for TableCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell(element)
     }
 }
@@ -47264,7 +47264,7 @@ impl markup::Write for TableCell {
 }
 
 impl markup::Read for TableCellBorders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_borders(element)
     }
 }
@@ -47277,7 +47277,7 @@ impl markup::Write for TableCellBorders {
 }
 
 impl markup::Read for TableCellDeletion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_deletion(element)
     }
 }
@@ -47290,7 +47290,7 @@ impl markup::Write for TableCellDeletion {
 }
 
 impl markup::Read for TableCellInsertion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_insertion(element)
     }
 }
@@ -47303,7 +47303,7 @@ impl markup::Write for TableCellInsertion {
 }
 
 impl markup::Read for TableCellLeadingEdgeBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_leading_edge_border(element)
     }
 }
@@ -47316,7 +47316,7 @@ impl markup::Write for TableCellLeadingEdgeBorder {
 }
 
 impl markup::Read for TableCellLeadingEdgeBorderTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_leading_edge_border_tbl_width(element)
     }
 }
@@ -47329,7 +47329,7 @@ impl markup::Write for TableCellLeadingEdgeBorderTblWidth {
 }
 
 impl markup::Read for TableCellMarginExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_margin_exceptions(element)
     }
 }
@@ -47342,7 +47342,7 @@ impl markup::Write for TableCellMarginExceptions {
 }
 
 impl markup::Read for TableCellProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_properties(element)
     }
 }
@@ -47355,7 +47355,7 @@ impl markup::Write for TableCellProperties {
 }
 
 impl markup::Read for TableCellTrailingMarginException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_trailing_margin_exception(element)
     }
 }
@@ -47368,7 +47368,7 @@ impl markup::Write for TableCellTrailingMarginException {
 }
 
 impl markup::Read for TableCellTrailingMarginExceptionTblWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_trailing_margin_exception_tbl_width(element)
     }
 }
@@ -47381,7 +47381,7 @@ impl markup::Write for TableCellTrailingMarginExceptionTblWidth {
 }
 
 impl markup::Read for TableCellVerticalAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_cell_vertical_alignment(element)
     }
 }
@@ -47445,7 +47445,7 @@ impl TableCellVerticalMergeRevisionType {
 }
 
 impl markup::Read for TableDescription {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_description(element)
     }
 }
@@ -47458,7 +47458,7 @@ impl markup::Write for TableDescription {
 }
 
 impl markup::Read for TableGrid {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_grid(element)
     }
 }
@@ -47471,7 +47471,7 @@ impl markup::Write for TableGrid {
 }
 
 impl markup::Read for TableGridColumnRevisionInformation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_grid_column_revision_information(element)
     }
 }
@@ -47484,7 +47484,7 @@ impl markup::Write for TableGridColumnRevisionInformation {
 }
 
 impl markup::Read for TableIndentFromLeadingMargin {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_indent_from_leading_margin(element)
     }
 }
@@ -47497,7 +47497,7 @@ impl markup::Write for TableIndentFromLeadingMargin {
 }
 
 impl markup::Read for TableInsideHorizontalEdgesBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_inside_horizontal_edges_border(element)
     }
 }
@@ -47510,7 +47510,7 @@ impl markup::Write for TableInsideHorizontalEdgesBorder {
 }
 
 impl markup::Read for TableInsideVerticalEdgesBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_inside_vertical_edges_border(element)
     }
 }
@@ -47523,7 +47523,7 @@ impl markup::Write for TableInsideVerticalEdgesBorder {
 }
 
 impl markup::Read for TableLayout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_layout(element)
     }
 }
@@ -47585,7 +47585,7 @@ impl TableLayoutType {
 }
 
 impl markup::Read for TableLevelPropertyExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_level_property_exceptions(element)
     }
 }
@@ -47647,7 +47647,7 @@ impl TableOverlapSetting {
 }
 
 impl markup::Read for TableProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_properties(element)
     }
 }
@@ -47660,7 +47660,7 @@ impl markup::Write for TableProperties {
 }
 
 impl markup::Read for TableRow {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_row(element)
     }
 }
@@ -47673,7 +47673,7 @@ impl markup::Write for TableRow {
 }
 
 impl markup::Read for TableRowCannotBreakAcrossPages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_row_cannot_break_across_pages(element)
     }
 }
@@ -47686,7 +47686,7 @@ impl markup::Write for TableRowCannotBreakAcrossPages {
 }
 
 impl markup::Read for TableRowCellSpacing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_row_cell_spacing(element)
     }
 }
@@ -47699,7 +47699,7 @@ impl markup::Write for TableRowCellSpacing {
 }
 
 impl markup::Read for TableRowHeight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_row_height(element)
     }
 }
@@ -47712,7 +47712,7 @@ impl markup::Write for TableRowHeight {
 }
 
 impl markup::Read for TableRowProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_row_properties(element)
     }
 }
@@ -47725,11 +47725,11 @@ impl markup::Write for TableRowProperties {
 }
 
 impl markup::Read for TableRowPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "divId")) => Self::AssociatedHTMLDivID(markup::read(element)),
             Some((NS_W, "gridAfter")) => Self::GridColumnsAfterLastCell(markup::read(element)),
@@ -47747,7 +47747,7 @@ impl markup::Read for TableRowPropertiesContent {
             }
             Some((NS_W, "tblCellSpacing")) => Self::TableRowCellSpacing(markup::read(element)),
             Some((NS_W, "trHeight")) => Self::TableRowHeight(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -47773,7 +47773,7 @@ impl markup::Write for TableRowPropertiesContent {
 }
 
 impl markup::Read for TableStyleConditionalFormattingSettingsException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_style_conditional_formatting_settings_exception(element)
     }
 }
@@ -47838,7 +47838,7 @@ impl TableWidthUnits {
 }
 
 impl markup::Read for TargetScreenSizeForWebPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::target_screen_size_for_web_page(element)
     }
 }
@@ -47913,7 +47913,7 @@ impl TargetScreenSizes {
 }
 
 impl markup::Read for Text {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text(element)
     }
 }
@@ -47926,7 +47926,7 @@ impl markup::Write for Text {
 }
 
 impl markup::Read for TextBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_border(element)
     }
 }
@@ -47939,7 +47939,7 @@ impl markup::Write for TextBorder {
 }
 
 impl markup::Read for TextBoxFormFieldFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_form_field_formatting(element)
     }
 }
@@ -47952,7 +47952,7 @@ impl markup::Write for TextBoxFormFieldFormatting {
 }
 
 impl markup::Read for TextBoxFormFieldMaximumLength {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_form_field_maximum_length(element)
     }
 }
@@ -47965,7 +47965,7 @@ impl markup::Write for TextBoxFormFieldMaximumLength {
 }
 
 impl markup::Read for TextBoxFormFieldProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_form_field_properties(element)
     }
 }
@@ -47978,7 +47978,7 @@ impl markup::Write for TextBoxFormFieldProperties {
 }
 
 impl markup::Read for TextBoxFormFieldType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_form_field_type(element)
     }
 }
@@ -48125,7 +48125,7 @@ impl TextFrameDropCapLocation {
 }
 
 impl markup::Read for TextFrameProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_frame_properties(element)
     }
 }
@@ -48206,7 +48206,7 @@ impl TextHighlightColors {
 }
 
 impl markup::Read for TextHighlighting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_highlighting(element)
     }
 }
@@ -48219,7 +48219,7 @@ impl markup::Write for TextHighlighting {
 }
 
 impl markup::Read for TextRun {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_run(element)
     }
 }
@@ -48232,11 +48232,11 @@ impl markup::Write for TextRun {
 }
 
 impl markup::Read for TextRunContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W, "ptab")) => Self::AbsolutePositionTabCharacter(markup::read(element)),
             Some((NS_W, "br")) => Self::Break(markup::read(element)),
@@ -48279,7 +48279,7 @@ impl markup::Read for TextRunContent {
             Some((NS_W, "tab")) => Self::TabCharacter(markup::read(element)),
             Some((NS_W, "t")) => Self::Text(markup::read(element)),
             Some((NS_W, "pict")) => Self::VMLObject(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -48472,7 +48472,7 @@ impl TextWrappingAroundTextFrameType {
 }
 
 impl markup::Read for TextboxTightWrap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::textbox_tight_wrap(element)
     }
 }
@@ -48549,7 +48549,7 @@ impl ThemeColor {
 }
 
 impl markup::Read for ThemeColorMappings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::theme_color_mappings(element)
     }
 }
@@ -48680,7 +48680,7 @@ impl ThemeFont {
 }
 
 impl markup::Read for ThemeFontLanguages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::theme_font_languages(element)
     }
 }
@@ -48749,7 +48749,7 @@ impl TightWrapWithinTextBox {
 }
 
 impl markup::Read for TopAndBottomMarginForFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_and_bottom_margin_for_frame(element)
     }
 }
@@ -48762,7 +48762,7 @@ impl markup::Write for TopAndBottomMarginForFrame {
 }
 
 impl markup::Read for TopBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_border(element)
     }
 }
@@ -48775,7 +48775,7 @@ impl markup::Write for TopBorder {
 }
 
 impl markup::Read for TopLeftBottomRightDiagonalBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_left_bottom_right_diagonal_border(element)
     }
 }
@@ -48788,7 +48788,7 @@ impl markup::Write for TopLeftBottomRightDiagonalBorder {
 }
 
 impl markup::Read for TopMarginForHTMLDiv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_margin_for_html_div(element)
     }
 }
@@ -48801,7 +48801,7 @@ impl markup::Write for TopMarginForHTMLDiv {
 }
 
 impl markup::Read for TopRightBottomLeftDiagonalBorder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_right_bottom_left_diagonal_border(element)
     }
 }
@@ -48814,7 +48814,7 @@ impl markup::Write for TopRightBottomLeftDiagonalBorder {
 }
 
 impl markup::Read for TrackRevisionsToDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::track_revisions_to_document(element)
     }
 }
@@ -48827,11 +48827,11 @@ impl markup::Write for TrackRevisionsToDocument {
 }
 
 impl markup::Read for TrackedRunContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_M, "acc")) => Self::Accent(markup::read(element)),
             Some((NS_M, "eqArr")) => Self::ArrayObject(markup::read(element)),
@@ -48924,7 +48924,7 @@ impl markup::Read for TrackedRunContent {
             Some((NS_M, "sSup")) => Self::SuperscriptObject(markup::read(element)),
             Some((NS_W, "r")) => Self::TextRun(markup::read(element)),
             Some((NS_M, "limUpp")) => Self::UpperLimitObject(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -49151,7 +49151,7 @@ impl TryFrom<TrackedRunContent> for RangeMarkupContent {
 }
 
 impl markup::Read for TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::treat_backslash_quotation_delimiter_as_two_quotation_marks(element)
     }
 }
@@ -49165,7 +49165,7 @@ impl markup::Write for TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
 }
 
 impl markup::Read for TruncateFontHeightsLikeWP6 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::truncate_font_heights_like_wp6(element)
     }
 }
@@ -49257,7 +49257,7 @@ impl TwoLinesEnclosingCharacterType {
 }
 
 impl markup::Read for UDLConnectionString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::udl_connection_string(element)
     }
 }
@@ -49270,7 +49270,7 @@ impl markup::Write for UDLConnectionString {
 }
 
 impl markup::Read for Underline {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::underline(element)
     }
 }
@@ -49283,7 +49283,7 @@ impl markup::Write for Underline {
 }
 
 impl markup::Read for UnderlineAllTrailingSpaces {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::underline_all_trailing_spaces(element)
     }
 }
@@ -49296,7 +49296,7 @@ impl markup::Write for UnderlineAllTrailingSpaces {
 }
 
 impl markup::Read for UnderlineFollowingCharacterFollowingNumbering {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::underline_following_character_following_numbering(element)
     }
 }
@@ -49375,7 +49375,7 @@ impl UnderlinePatterns {
 }
 
 impl markup::Read for UniqueID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unique_id(element)
     }
 }
@@ -49388,7 +49388,7 @@ impl markup::Write for UniqueID {
 }
 
 impl markup::Read for UniqueValueForRecord {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unique_value_for_record(element)
     }
 }
@@ -49401,7 +49401,7 @@ impl markup::Write for UniqueValueForRecord {
 }
 
 impl markup::Read for UpgradeDocumentOnOpen {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::upgrade_document_on_open(element)
     }
 }
@@ -49414,7 +49414,7 @@ impl markup::Write for UpgradeDocumentOnOpen {
 }
 
 impl markup::Read for UseANSIKerningPairsFromFonts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_ansi_kerning_pairs_from_fonts(element)
     }
 }
@@ -49427,7 +49427,7 @@ impl markup::Write for UseANSIKerningPairsFromFonts {
 }
 
 impl markup::Read for UseAltKinsokuLineBreakRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_alt_kinsoku_line_break_rules(element)
     }
 }
@@ -49440,7 +49440,7 @@ impl markup::Write for UseAltKinsokuLineBreakRules {
 }
 
 impl markup::Read for UseCachedParagraphInformationForColumnBalancing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_cached_paragraph_information_for_column_balancing(element)
     }
 }
@@ -49454,7 +49454,7 @@ impl markup::Write for UseCachedParagraphInformationForColumnBalancing {
 }
 
 impl markup::Read for UseComplexScriptFormattingOnRun {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_complex_script_formatting_on_run(element)
     }
 }
@@ -49467,7 +49467,7 @@ impl markup::Write for UseComplexScriptFormattingOnRun {
 }
 
 impl markup::Read for UseCountryBasedAddressFieldOrdering {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_country_based_address_field_ordering(element)
     }
 }
@@ -49480,7 +49480,7 @@ impl markup::Write for UseCountryBasedAddressFieldOrdering {
 }
 
 impl markup::Read for UseIncorrectInterCharacterSpacingRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_incorrect_inter_character_spacing_rules(element)
     }
 }
@@ -49493,7 +49493,7 @@ impl markup::Write for UseIncorrectInterCharacterSpacingRules {
 }
 
 impl markup::Read for UseLeftRightIndentsAsInsideOutsideIndents {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_left_right_indents_as_inside_outside_indents(element)
     }
 }
@@ -49506,7 +49506,7 @@ impl markup::Write for UseLeftRightIndentsAsInsideOutsideIndents {
 }
 
 impl markup::Read for UseNormalStyleForList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_normal_style_for_list(element)
     }
 }
@@ -49519,7 +49519,7 @@ impl markup::Write for UseNormalStyleForList {
 }
 
 impl markup::Read for UsePrinterMetricsToDisplayDocuments {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_printer_metrics_to_display_documents(element)
     }
 }
@@ -49532,7 +49532,7 @@ impl markup::Write for UsePrinterMetricsToDisplayDocuments {
 }
 
 impl markup::Read for UseSingleBorderforContiguousCells {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_single_borderfor_contiguous_cells(element)
     }
 }
@@ -49545,7 +49545,7 @@ impl markup::Write for UseSingleBorderforContiguousCells {
 }
 
 impl markup::Read for UseSpecificSmallCapsAlgorithm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_specific_small_caps_algorithm(element)
     }
 }
@@ -49558,7 +49558,7 @@ impl markup::Write for UseSpecificSmallCapsAlgorithm {
 }
 
 impl markup::Read for UseSpecificSpaceWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_specific_space_width(element)
     }
 }
@@ -49571,7 +49571,7 @@ impl markup::Write for UseSpecificSpaceWidth {
 }
 
 impl markup::Read for UseStaticTextLeading {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_static_text_leading(element)
     }
 }
@@ -49584,7 +49584,7 @@ impl markup::Write for UseStaticTextLeading {
 }
 
 impl markup::Read for UseWord2002TableStyleRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_word2002table_style_rules(element)
     }
 }
@@ -49597,7 +49597,7 @@ impl markup::Write for UseWord2002TableStyleRules {
 }
 
 impl markup::Read for UtilizeVMLWhenSavingAsWebPage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::utilize_vml_when_saving_as_web_page(element)
     }
 }
@@ -49610,7 +49610,7 @@ impl markup::Write for UtilizeVMLWhenSavingAsWebPage {
 }
 
 impl markup::Read for VMLObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vml_object(element)
     }
 }
@@ -49728,7 +49728,7 @@ impl VerticalAnchorLocation {
 }
 
 impl markup::Read for VerticalCharacterAlignmentOnLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertical_character_alignment_on_line(element)
     }
 }
@@ -49797,7 +49797,7 @@ impl VerticalTextAlignmentTypes {
 }
 
 impl markup::Read for VerticallyMergedCell {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertically_merged_cell(element)
     }
 }
@@ -49810,7 +49810,7 @@ impl markup::Write for VerticallyMergedCell {
 }
 
 impl markup::Read for VerticallyMergedSplitTableCells {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertically_merged_split_table_cells(element)
     }
 }
@@ -49823,7 +49823,7 @@ impl markup::Write for VerticallyMergedSplitTableCells {
 }
 
 impl markup::Read for VerticallyRaisedOrLoweredText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertically_raised_or_lowered_text(element)
     }
 }
@@ -49836,7 +49836,7 @@ impl markup::Write for VerticallyRaisedOrLoweredText {
 }
 
 impl markup::Read for ViewMergedDataWithinDocument {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::view_merged_data_within_document(element)
     }
 }
@@ -49849,7 +49849,7 @@ impl markup::Write for ViewMergedDataWithinDocument {
 }
 
 impl markup::Read for VisibilityOfAnnotationTypes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::visibility_of_annotation_types(element)
     }
 }
@@ -49862,7 +49862,7 @@ impl markup::Write for VisibilityOfAnnotationTypes {
 }
 
 impl markup::Read for VisuallyRightToLeftTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::visually_right_to_left_table(element)
     }
 }
@@ -49875,11 +49875,11 @@ impl markup::Write for VisuallyRightToLeftTable {
 }
 
 impl markup::Read for VmlElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_V, "arc")) => Self::ArcSegment(markup::read(element)),
             Some((NS_V, "curve")) => Self::BezierCurve(markup::read(element)),
@@ -49923,7 +49923,7 @@ impl markup::Read for VmlElementContent {
             Some((NS_O, "top")) => Self::TextBoxTopStroke(markup::read(element)),
             Some((NS_V, "textpath")) => Self::TextLayoutPath(markup::read(element)),
             Some((NS_O, "diagram")) => Self::VMLDiagram(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -50082,11 +50082,11 @@ impl TryFrom<VmlElementContent> for VmlOfficeDrawingElementContent {
 }
 
 impl markup::Read for VmlOfficeDrawingElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_O, "callout")) => Self::Callout(markup::read(element)),
             Some((NS_O, "complex")) => Self::Complex(markup::read(element)),
@@ -50109,7 +50109,7 @@ impl markup::Read for VmlOfficeDrawingElementContent {
             Some((NS_O, "right")) => Self::TextBoxRightStroke(markup::read(element)),
             Some((NS_O, "top")) => Self::TextBoxTopStroke(markup::read(element)),
             Some((NS_O, "diagram")) => Self::VMLDiagram(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -50142,7 +50142,7 @@ impl markup::Write for VmlOfficeDrawingElementContent {
 }
 
 impl markup::Read for WebHiddenText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_hidden_text(element)
     }
 }
@@ -50155,7 +50155,7 @@ impl markup::Write for WebHiddenText {
 }
 
 impl markup::Read for WebPageSettings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_page_settings(element)
     }
 }
@@ -50168,7 +50168,7 @@ impl markup::Write for WebPageSettings {
 }
 
 impl markup::Read for WriteProtection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::write_protection(element)
     }
 }
@@ -50181,7 +50181,7 @@ impl markup::Write for WriteProtection {
 }
 
 impl markup::Read for XMLMapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xml_mapping(element)
     }
 }

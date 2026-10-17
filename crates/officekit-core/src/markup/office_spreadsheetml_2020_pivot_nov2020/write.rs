@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DataFieldFutureData` as its element, `xxpim:dataFieldFutureData`.
 #[must_use]
-pub fn data_field_future_data(
-    node: &super::DataFieldFutureData,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_field_future_data(node: &super::DataFieldFutureData, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DATA_FIELD_FUTURE_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.version);
@@ -230,10 +228,7 @@ pub fn data_field_future_data(
 
 /// Write a `IgnorableAfterVersion` as its element, `xxpim:ignorableAfterVersion`.
 #[must_use]
-pub fn ignorable_after_version(
-    node: &super::IgnorableAfterVersion,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ignorable_after_version(node: &super::IgnorableAfterVersion, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::IGNORABLE_AFTER_VERSION_SHAPE, &node.unknown);
     writer.attribute(0, &node.version);
@@ -244,8 +239,8 @@ pub fn ignorable_after_version(
 #[must_use]
 pub fn implicit_measure_support(
     node: &super::ImplicitMeasureSupport,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::IMPLICIT_MEASURE_SUPPORT_SHAPE, &node.unknown);
     writer.text(&node.value);

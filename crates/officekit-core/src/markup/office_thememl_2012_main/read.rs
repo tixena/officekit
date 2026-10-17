@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `thm15:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `thm15:themeFamily` into a `ThemeFamily`.
 #[must_use]
-pub fn theme_family(element: &xml::element::Element) -> super::ThemeFamily {
+pub fn theme_family(element: &Element) -> super::ThemeFamily {
     let mut node = super::ThemeFamily::default();
     let mut reader = markup::Reader::new(element, &super::THEME_FAMILY_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn theme_family(element: &xml::element::Element) -> super::ThemeFamily {
 
 /// Read `thm15:themeVariant` into a `ThemeVariant`.
 #[must_use]
-pub fn theme_variant(element: &xml::element::Element) -> super::ThemeVariant {
+pub fn theme_variant(element: &Element) -> super::ThemeVariant {
     let mut node = super::ThemeVariant::default();
     let mut reader = markup::Reader::new(element, &super::THEME_VARIANT_SHAPE);
     for (index, field) in &mut reader {
@@ -269,7 +269,7 @@ pub fn theme_variant(element: &xml::element::Element) -> super::ThemeVariant {
 
 /// Read `thm15:themeVariantLst` into a `ThemeVariantLst`.
 #[must_use]
-pub fn theme_variant_lst(element: &xml::element::Element) -> super::ThemeVariantLst {
+pub fn theme_variant_lst(element: &Element) -> super::ThemeVariantLst {
     let mut node = super::ThemeVariantLst::default();
     let mut reader = markup::Reader::new(element, &super::THEME_VARIANT_LST_SHAPE);
     for (index, field) in &mut reader {

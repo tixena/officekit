@@ -109,9 +109,9 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
         &format!("pub fn {function}"),
         &[
             format!("node: &super::{}", node.name),
-            "scope: &mut markup::Scope".to_owned(),
+            "scope: &mut Scope".to_owned(),
         ],
-        "xml::element::Element",
+        "Element",
     ));
     let new_writer = Expr::call(
         "markup::Writer::new",

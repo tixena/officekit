@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Accent` as its element, `m:acc`.
 #[must_use]
-pub fn accent(node: &super::Accent, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn accent(node: &super::Accent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ACCENT_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.e);
@@ -227,10 +228,7 @@ pub fn accent(node: &super::Accent, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `AccentProperties` as its element, `m:accPr`.
 #[must_use]
-pub fn accent_properties(
-    node: &super::AccentProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn accent_properties(node: &super::AccentProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ACCENT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.character);
     writer.child(&node.control_properties);
@@ -239,10 +237,7 @@ pub fn accent_properties(
 
 /// Write a `AlignScripts` as its element, `m:alnScr`.
 #[must_use]
-pub fn align_scripts(
-    node: &super::AlignScripts,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn align_scripts(node: &super::AlignScripts, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ALIGN_SCRIPTS_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -250,7 +245,7 @@ pub fn align_scripts(
 
 /// Write a `Alignment` as its element, `m:aln`.
 #[must_use]
-pub fn alignment(node: &super::Alignment, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn alignment(node: &super::Alignment, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ALIGNMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -258,10 +253,7 @@ pub fn alignment(node: &super::Alignment, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `ArgumentProperties` as its element, `m:argPr`.
 #[must_use]
-pub fn argument_properties(
-    node: &super::ArgumentProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn argument_properties(node: &super::ArgumentProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARGUMENT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.argument_size);
     writer.finish()
@@ -269,10 +261,7 @@ pub fn argument_properties(
 
 /// Write a `ArgumentSize` as its element, `m:argSz`.
 #[must_use]
-pub fn argument_size(
-    node: &super::ArgumentSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn argument_size(node: &super::ArgumentSize, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARGUMENT_SIZE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -280,7 +269,7 @@ pub fn argument_size(
 
 /// Write a `ArrayObject` as its element, `m:eqArr`.
 #[must_use]
-pub fn array_object(node: &super::ArrayObject, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn array_object(node: &super::ArrayObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARRAY_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.array_properties);
     writer.child(&node.e);
@@ -289,10 +278,7 @@ pub fn array_object(node: &super::ArrayObject, scope: &mut markup::Scope) -> xml
 
 /// Write a `ArrayProperties` as its element, `m:eqArrPr`.
 #[must_use]
-pub fn array_properties(
-    node: &super::ArrayProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn array_properties(node: &super::ArrayProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARRAY_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.matrix_base_justification);
     writer.child(&node.maximum_distribution);
@@ -305,7 +291,7 @@ pub fn array_properties(
 
 /// Write a `Bar` as its element, `m:bar`.
 #[must_use]
-pub fn bar(node: &super::Bar, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bar(node: &super::Bar, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BAR_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.e);
@@ -314,10 +300,7 @@ pub fn bar(node: &super::Bar, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `BarProperties` as its element, `m:barPr`.
 #[must_use]
-pub fn bar_properties(
-    node: &super::BarProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn bar_properties(node: &super::BarProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BAR_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.position);
     writer.child(&node.control_properties);
@@ -326,10 +309,7 @@ pub fn bar_properties(
 
 /// Write a `BorderBoxObject` as its element, `m:borderBox`.
 #[must_use]
-pub fn border_box_object(
-    node: &super::BorderBoxObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn border_box_object(node: &super::BorderBoxObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BORDER_BOX_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.border_box_properties);
     writer.child(&node.e);
@@ -338,10 +318,7 @@ pub fn border_box_object(
 
 /// Write a `BorderBoxProperties` as its element, `m:borderBoxPr`.
 #[must_use]
-pub fn border_box_properties(
-    node: &super::BorderBoxProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn border_box_properties(node: &super::BorderBoxProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BORDER_BOX_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.hide_top_edge);
     writer.child(&node.hide_bottom_edge);
@@ -359,8 +336,8 @@ pub fn border_box_properties(
 #[must_use]
 pub fn border_box_strikethrough_bottom_left_to_top_right(
     node: &super::BorderBoxStrikethroughBottomLeftToTopRight,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE,
@@ -374,8 +351,8 @@ pub fn border_box_strikethrough_bottom_left_to_top_right(
 #[must_use]
 pub fn border_box_strikethrough_horizontal(
     node: &super::BorderBoxStrikethroughHorizontal,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE,
@@ -389,8 +366,8 @@ pub fn border_box_strikethrough_horizontal(
 #[must_use]
 pub fn border_box_strikethrough_top_left_to_bottom_right(
     node: &super::BorderBoxStrikethroughTopLeftToBottomRight,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE,
@@ -404,8 +381,8 @@ pub fn border_box_strikethrough_top_left_to_bottom_right(
 #[must_use]
 pub fn border_box_strikethrough_vertical(
     node: &super::BorderBoxStrikethroughVertical,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE,
@@ -417,7 +394,7 @@ pub fn border_box_strikethrough_vertical(
 
 /// Write a `BoxObject` as its element, `m:box`.
 #[must_use]
-pub fn box_object(node: &super::BoxObject, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn box_object(node: &super::BoxObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOX_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.box_properties);
     writer.child(&node.e);
@@ -426,10 +403,7 @@ pub fn box_object(node: &super::BoxObject, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `BoxProperties` as its element, `m:boxPr`.
 #[must_use]
-pub fn box_properties(
-    node: &super::BoxProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn box_properties(node: &super::BoxProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOX_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.operator_emulator);
     writer.child(&node.no_break);
@@ -442,7 +416,7 @@ pub fn box_properties(
 
 /// Write a `Break` as its element, `m:brk`.
 #[must_use]
-pub fn r#break(node: &super::Break, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r#break(node: &super::Break, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BREAK_SHAPE, &node.unknown);
     writer.attribute(0, &node.aln_at);
     writer.finish()
@@ -452,8 +426,8 @@ pub fn r#break(node: &super::Break, scope: &mut markup::Scope) -> xml::element::
 #[must_use]
 pub fn break_on_binary_operators(
     node: &super::BreakOnBinaryOperators,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BREAK_ON_BINARY_OPERATORS_SHAPE,
@@ -467,8 +441,8 @@ pub fn break_on_binary_operators(
 #[must_use]
 pub fn break_on_binary_subtraction(
     node: &super::BreakOnBinarySubtraction,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BREAK_ON_BINARY_SUBTRACTION_SHAPE,
@@ -480,7 +454,7 @@ pub fn break_on_binary_subtraction(
 
 /// Write a `Character` as its element, `m:chr`.
 #[must_use]
-pub fn character(node: &super::Character, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn character(node: &super::Character, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHARACTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -488,10 +462,7 @@ pub fn character(node: &super::Character, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `ControlProperties` as its element, `m:ctrlPr`.
 #[must_use]
-pub fn control_properties(
-    node: &super::ControlProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn control_properties(node: &super::ControlProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTROL_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -507,10 +478,7 @@ pub fn control_properties_content(
 
 /// Write a `DefaultJustification` as its element, `m:defJc`.
 #[must_use]
-pub fn default_justification(
-    node: &super::DefaultJustification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn default_justification(node: &super::DefaultJustification, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEFAULT_JUSTIFICATION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -518,7 +486,7 @@ pub fn default_justification(
 
 /// Write a `Degree` as its element, `m:deg`.
 #[must_use]
-pub fn degree(node: &super::Degree, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn degree(node: &super::Degree, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEGREE_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -530,8 +498,8 @@ pub fn degree(node: &super::Degree, scope: &mut markup::Scope) -> xml::element::
 #[must_use]
 pub fn delimiter_beginning_character(
     node: &super::DelimiterBeginningCharacter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DELIMITER_BEGINNING_CHARACTER_SHAPE,
@@ -545,8 +513,8 @@ pub fn delimiter_beginning_character(
 #[must_use]
 pub fn delimiter_ending_character(
     node: &super::DelimiterEndingCharacter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DELIMITER_ENDING_CHARACTER_SHAPE,
@@ -558,10 +526,7 @@ pub fn delimiter_ending_character(
 
 /// Write a `DelimiterObject` as its element, `m:d`.
 #[must_use]
-pub fn delimiter_object(
-    node: &super::DelimiterObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn delimiter_object(node: &super::DelimiterObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DELIMITER_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.delimiter_properties);
     writer.child(&node.e);
@@ -570,10 +535,7 @@ pub fn delimiter_object(
 
 /// Write a `DelimiterProperties` as its element, `m:dPr`.
 #[must_use]
-pub fn delimiter_properties(
-    node: &super::DelimiterProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn delimiter_properties(node: &super::DelimiterProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DELIMITER_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.delimiter_beginning_character);
     writer.child(&node.delimiter_separator_character);
@@ -588,8 +550,8 @@ pub fn delimiter_properties(
 #[must_use]
 pub fn delimiter_separator_character(
     node: &super::DelimiterSeparatorCharacter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DELIMITER_SEPARATOR_CHARACTER_SHAPE,
@@ -601,7 +563,7 @@ pub fn delimiter_separator_character(
 
 /// Write a `Denominator` as its element, `m:den`.
 #[must_use]
-pub fn denominator(node: &super::Denominator, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn denominator(node: &super::Denominator, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DENOMINATOR_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -611,10 +573,7 @@ pub fn denominator(node: &super::Denominator, scope: &mut markup::Scope) -> xml:
 
 /// Write a `Differential` as its element, `m:diff`.
 #[must_use]
-pub fn differential(
-    node: &super::Differential,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn differential(node: &super::Differential, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DIFFERENTIAL_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -622,7 +581,7 @@ pub fn differential(
 
 /// Write a `E` as its element, `m:e`.
 #[must_use]
-pub fn e(node: &super::E, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn e(node: &super::E, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::E_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -632,10 +591,7 @@ pub fn e(node: &super::E, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `FractionObject` as its element, `m:f`.
 #[must_use]
-pub fn fraction_object(
-    node: &super::FractionObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn fraction_object(node: &super::FractionObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FRACTION_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.fraction_properties);
     writer.child(&node.numerator);
@@ -645,10 +601,7 @@ pub fn fraction_object(
 
 /// Write a `FractionProperties` as its element, `m:fPr`.
 #[must_use]
-pub fn fraction_properties(
-    node: &super::FractionProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn fraction_properties(node: &super::FractionProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FRACTION_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.fraction_type);
     writer.child(&node.control_properties);
@@ -657,10 +610,7 @@ pub fn fraction_properties(
 
 /// Write a `FractionType` as its element, `m:type`.
 #[must_use]
-pub fn fraction_type(
-    node: &super::FractionType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn fraction_type(node: &super::FractionType, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FRACTION_TYPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -668,10 +618,7 @@ pub fn fraction_type(
 
 /// Write a `FunctionApplyObject` as its element, `m:func`.
 #[must_use]
-pub fn function_apply_object(
-    node: &super::FunctionApplyObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn function_apply_object(node: &super::FunctionApplyObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FUNCTION_APPLY_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.function_properties);
     writer.child(&node.function_name);
@@ -681,10 +628,7 @@ pub fn function_apply_object(
 
 /// Write a `FunctionName` as its element, `m:fName`.
 #[must_use]
-pub fn function_name(
-    node: &super::FunctionName,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn function_name(node: &super::FunctionName, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FUNCTION_NAME_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -694,10 +638,7 @@ pub fn function_name(
 
 /// Write a `FunctionProperties` as its element, `m:funcPr`.
 #[must_use]
-pub fn function_properties(
-    node: &super::FunctionProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn function_properties(node: &super::FunctionProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FUNCTION_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.control_properties);
     writer.finish()
@@ -705,10 +646,7 @@ pub fn function_properties(
 
 /// Write a `GroupCharacterObject` as its element, `m:groupChr`.
 #[must_use]
-pub fn group_character_object(
-    node: &super::GroupCharacterObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn group_character_object(node: &super::GroupCharacterObject, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GROUP_CHARACTER_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.group_character_properties);
@@ -720,8 +658,8 @@ pub fn group_character_object(
 #[must_use]
 pub fn group_character_properties(
     node: &super::GroupCharacterProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::GROUP_CHARACTER_PROPERTIES_SHAPE,
@@ -736,7 +674,7 @@ pub fn group_character_properties(
 
 /// Write a `Grow` as its element, `m:grow`.
 #[must_use]
-pub fn grow(node: &super::Grow, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grow(node: &super::Grow, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROW_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -744,10 +682,7 @@ pub fn grow(node: &super::Grow, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `HideBottomEdge` as its element, `m:hideBot`.
 #[must_use]
-pub fn hide_bottom_edge(
-    node: &super::HideBottomEdge,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hide_bottom_edge(node: &super::HideBottomEdge, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HIDE_BOTTOM_EDGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -755,7 +690,7 @@ pub fn hide_bottom_edge(
 
 /// Write a `HideDegree` as its element, `m:degHide`.
 #[must_use]
-pub fn hide_degree(node: &super::HideDegree, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hide_degree(node: &super::HideDegree, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HIDE_DEGREE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -763,10 +698,7 @@ pub fn hide_degree(node: &super::HideDegree, scope: &mut markup::Scope) -> xml::
 
 /// Write a `HideLeftEdge` as its element, `m:hideLeft`.
 #[must_use]
-pub fn hide_left_edge(
-    node: &super::HideLeftEdge,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hide_left_edge(node: &super::HideLeftEdge, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HIDE_LEFT_EDGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -774,10 +706,7 @@ pub fn hide_left_edge(
 
 /// Write a `HideRightEdge` as its element, `m:hideRight`.
 #[must_use]
-pub fn hide_right_edge(
-    node: &super::HideRightEdge,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hide_right_edge(node: &super::HideRightEdge, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HIDE_RIGHT_EDGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -785,10 +714,7 @@ pub fn hide_right_edge(
 
 /// Write a `HideTopEdge` as its element, `m:hideTop`.
 #[must_use]
-pub fn hide_top_edge(
-    node: &super::HideTopEdge,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hide_top_edge(node: &super::HideTopEdge, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HIDE_TOP_EDGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -798,8 +724,8 @@ pub fn hide_top_edge(
 #[must_use]
 pub fn integral_limit_locations(
     node: &super::IntegralLimitLocations,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::INTEGRAL_LIMIT_LOCATIONS_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -808,10 +734,7 @@ pub fn integral_limit_locations(
 
 /// Write a `InterEquationSpacing` as its element, `m:interSp`.
 #[must_use]
-pub fn inter_equation_spacing(
-    node: &super::InterEquationSpacing,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn inter_equation_spacing(node: &super::InterEquationSpacing, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::INTER_EQUATION_SPACING_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -820,10 +743,7 @@ pub fn inter_equation_spacing(
 
 /// Write a `IntraEquationSpacing` as its element, `m:intraSp`.
 #[must_use]
-pub fn intra_equation_spacing(
-    node: &super::IntraEquationSpacing,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn intra_equation_spacing(node: &super::IntraEquationSpacing, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::INTRA_EQUATION_SPACING_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -832,10 +752,7 @@ pub fn intra_equation_spacing(
 
 /// Write a `Justification` as its element, `m:jc`.
 #[must_use]
-pub fn justification(
-    node: &super::Justification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn justification(node: &super::Justification, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::JUSTIFICATION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -843,7 +760,7 @@ pub fn justification(
 
 /// Write a `LeftMargin` as its element, `m:lMargin`.
 #[must_use]
-pub fn left_margin(node: &super::LeftMargin, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn left_margin(node: &super::LeftMargin, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEFT_MARGIN_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -851,7 +768,7 @@ pub fn left_margin(node: &super::LeftMargin, scope: &mut markup::Scope) -> xml::
 
 /// Write a `LimLoc` as its element, `m:limLoc`.
 #[must_use]
-pub fn lim_loc(node: &super::LimLoc, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn lim_loc(node: &super::LimLoc, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LIM_LOC_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -859,7 +776,7 @@ pub fn lim_loc(node: &super::LimLoc, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Limit` as its element, `m:lim`.
 #[must_use]
-pub fn limit(node: &super::Limit, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn limit(node: &super::Limit, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LIMIT_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -869,7 +786,7 @@ pub fn limit(node: &super::Limit, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Literal` as its element, `m:lit`.
 #[must_use]
-pub fn literal(node: &super::Literal, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn literal(node: &super::Literal, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LITERAL_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -877,10 +794,7 @@ pub fn literal(node: &super::Literal, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `LowerLimitObject` as its element, `m:limLow`.
 #[must_use]
-pub fn lower_limit_object(
-    node: &super::LowerLimitObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn lower_limit_object(node: &super::LowerLimitObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LOWER_LIMIT_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.lower_limit_properties);
     writer.child(&node.e);
@@ -890,10 +804,7 @@ pub fn lower_limit_object(
 
 /// Write a `LowerLimitProperties` as its element, `m:limLowPr`.
 #[must_use]
-pub fn lower_limit_properties(
-    node: &super::LowerLimitProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn lower_limit_properties(node: &super::LowerLimitProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::LOWER_LIMIT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.control_properties);
@@ -902,7 +813,7 @@ pub fn lower_limit_properties(
 
 /// Write a `MathFont` as its element, `m:mathFont`.
 #[must_use]
-pub fn math_font(node: &super::MathFont, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn math_font(node: &super::MathFont, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATH_FONT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -910,10 +821,7 @@ pub fn math_font(node: &super::MathFont, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `MathProperties` as its element, `m:mathPr`.
 #[must_use]
-pub fn math_properties(
-    node: &super::MathProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn math_properties(node: &super::MathProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATH_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.math_font);
     writer.child(&node.break_on_binary_operators);
@@ -945,8 +853,8 @@ pub fn math_properties_content(
 #[must_use]
 pub fn matrix_base_justification(
     node: &super::MatrixBaseJustification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MATRIX_BASE_JUSTIFICATION_SHAPE,
@@ -958,10 +866,7 @@ pub fn matrix_base_justification(
 
 /// Write a `MatrixColumn` as its element, `m:mc`.
 #[must_use]
-pub fn matrix_column(
-    node: &super::MatrixColumn,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_column(node: &super::MatrixColumn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_COLUMN_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.finish()
@@ -969,10 +874,7 @@ pub fn matrix_column(
 
 /// Write a `MatrixColumnCount` as its element, `m:count`.
 #[must_use]
-pub fn matrix_column_count(
-    node: &super::MatrixColumnCount,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_column_count(node: &super::MatrixColumnCount, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_COLUMN_COUNT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -980,10 +882,7 @@ pub fn matrix_column_count(
 
 /// Write a `MatrixColumnGap` as its element, `m:cGp`.
 #[must_use]
-pub fn matrix_column_gap(
-    node: &super::MatrixColumnGap,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_column_gap(node: &super::MatrixColumnGap, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_COLUMN_GAP_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -991,10 +890,7 @@ pub fn matrix_column_gap(
 
 /// Write a `MatrixColumnGapRule` as its element, `m:cGpRule`.
 #[must_use]
-pub fn matrix_column_gap_rule(
-    node: &super::MatrixColumnGapRule,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_column_gap_rule(node: &super::MatrixColumnGapRule, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::MATRIX_COLUMN_GAP_RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -1005,8 +901,8 @@ pub fn matrix_column_gap_rule(
 #[must_use]
 pub fn matrix_column_justification(
     node: &super::MatrixColumnJustification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MATRIX_COLUMN_JUSTIFICATION_SHAPE,
@@ -1020,8 +916,8 @@ pub fn matrix_column_justification(
 #[must_use]
 pub fn matrix_column_properties(
     node: &super::MatrixColumnProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::MATRIX_COLUMN_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.matrix_column_count);
@@ -1031,10 +927,7 @@ pub fn matrix_column_properties(
 
 /// Write a `MatrixColumns` as its element, `m:mcs`.
 #[must_use]
-pub fn matrix_columns(
-    node: &super::MatrixColumns,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_columns(node: &super::MatrixColumns, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_COLUMNS_SHAPE, &node.unknown);
     writer.child(&node.matrix_column);
     writer.finish()
@@ -1042,10 +935,7 @@ pub fn matrix_columns(
 
 /// Write a `MatrixObject` as its element, `m:m`.
 #[must_use]
-pub fn matrix_object(
-    node: &super::MatrixObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_object(node: &super::MatrixObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.matrix_properties);
     writer.child(&node.matrix_row);
@@ -1054,10 +944,7 @@ pub fn matrix_object(
 
 /// Write a `MatrixProperties` as its element, `m:mPr`.
 #[must_use]
-pub fn matrix_properties(
-    node: &super::MatrixProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn matrix_properties(node: &super::MatrixProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.matrix_base_justification);
     writer.child(&node.plc_hide);
@@ -1073,7 +960,7 @@ pub fn matrix_properties(
 
 /// Write a `MatrixRow` as its element, `m:mr`.
 #[must_use]
-pub fn matrix_row(node: &super::MatrixRow, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn matrix_row(node: &super::MatrixRow, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MATRIX_ROW_SHAPE, &node.unknown);
     writer.child(&node.e);
     writer.finish()
@@ -1081,10 +968,7 @@ pub fn matrix_row(node: &super::MatrixRow, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `MaximumDistribution` as its element, `m:maxDist`.
 #[must_use]
-pub fn maximum_distribution(
-    node: &super::MaximumDistribution,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn maximum_distribution(node: &super::MaximumDistribution, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MAXIMUM_DISTRIBUTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1094,8 +978,8 @@ pub fn maximum_distribution(
 #[must_use]
 pub fn minimum_matrix_column_width(
     node: &super::MinimumMatrixColumnWidth,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE,
@@ -1107,7 +991,7 @@ pub fn minimum_matrix_column_width(
 
 /// Write a `Nary` as its element, `m:nary`.
 #[must_use]
-pub fn nary(node: &super::Nary, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nary(node: &super::Nary, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NARY_SHAPE, &node.unknown);
     writer.child(&node.pr);
     writer.child(&node.sub);
@@ -1118,7 +1002,7 @@ pub fn nary(node: &super::Nary, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `NaryLim` as its element, `m:naryLim`.
 #[must_use]
-pub fn nary_lim(node: &super::NaryLim, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nary_lim(node: &super::NaryLim, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NARY_LIM_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1126,7 +1010,7 @@ pub fn nary_lim(node: &super::NaryLim, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `NaryPr` as its element, `m:naryPr`.
 #[must_use]
-pub fn nary_pr(node: &super::NaryPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nary_pr(node: &super::NaryPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NARY_PR_SHAPE, &node.unknown);
     writer.child(&node.character);
     writer.child(&node.lim_loc);
@@ -1139,7 +1023,7 @@ pub fn nary_pr(node: &super::NaryPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `NoBreak` as its element, `m:noBreak`.
 #[must_use]
-pub fn no_break(node: &super::NoBreak, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_break(node: &super::NoBreak, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NO_BREAK_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1147,7 +1031,7 @@ pub fn no_break(node: &super::NoBreak, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `NormalText` as its element, `m:nor`.
 #[must_use]
-pub fn normal_text(node: &super::NormalText, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn normal_text(node: &super::NormalText, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NORMAL_TEXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1155,7 +1039,7 @@ pub fn normal_text(node: &super::NormalText, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Numerator` as its element, `m:num`.
 #[must_use]
-pub fn numerator(node: &super::Numerator, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn numerator(node: &super::Numerator, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NUMERATOR_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -1165,10 +1049,7 @@ pub fn numerator(node: &super::Numerator, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `ObjectDistribution` as its element, `m:objDist`.
 #[must_use]
-pub fn object_distribution(
-    node: &super::ObjectDistribution,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn object_distribution(node: &super::ObjectDistribution, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OBJECT_DISTRIBUTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1176,7 +1057,7 @@ pub fn object_distribution(
 
 /// Write a `OfficeMath` as its element, `m:oMath`.
 #[must_use]
-pub fn office_math(node: &super::OfficeMath, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn office_math(node: &super::OfficeMath, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OFFICE_MATH_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1189,10 +1070,7 @@ pub fn office_math_content(node: &super::OfficeMathContent, writer: &mut markup:
 
 /// Write a `OfficeMathParagraph` as its element, `m:oMathPara`.
 #[must_use]
-pub fn office_math_paragraph(
-    node: &super::OfficeMathParagraph,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn office_math_paragraph(node: &super::OfficeMathParagraph, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OFFICE_MATH_PARAGRAPH_SHAPE, &node.unknown);
     writer.child(&node.custom_xml_conflict_ins_range_start);
     writer.child(&node.custom_xml_conflict_ins_range_end);
@@ -1209,8 +1087,8 @@ pub fn office_math_paragraph(
 #[must_use]
 pub fn office_math_paragraph_properties(
     node: &super::OfficeMathParagraphProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE,
@@ -1222,10 +1100,7 @@ pub fn office_math_paragraph_properties(
 
 /// Write a `OperatorEmulator` as its element, `m:opEmu`.
 #[must_use]
-pub fn operator_emulator(
-    node: &super::OperatorEmulator,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn operator_emulator(node: &super::OperatorEmulator, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OPERATOR_EMULATOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1233,10 +1108,7 @@ pub fn operator_emulator(
 
 /// Write a `PhantomObject` as its element, `m:phant`.
 #[must_use]
-pub fn phantom_object(
-    node: &super::PhantomObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn phantom_object(node: &super::PhantomObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.phantom_properties);
     writer.child(&node.e);
@@ -1245,10 +1117,7 @@ pub fn phantom_object(
 
 /// Write a `PhantomProperties` as its element, `m:phantPr`.
 #[must_use]
-pub fn phantom_properties(
-    node: &super::PhantomProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn phantom_properties(node: &super::PhantomProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.phantom_show);
     writer.child(&node.phantom_zero_width);
@@ -1261,7 +1130,7 @@ pub fn phantom_properties(
 
 /// Write a `PhantomShow` as its element, `m:show`.
 #[must_use]
-pub fn phantom_show(node: &super::PhantomShow, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn phantom_show(node: &super::PhantomShow, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_SHOW_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1269,10 +1138,7 @@ pub fn phantom_show(node: &super::PhantomShow, scope: &mut markup::Scope) -> xml
 
 /// Write a `PhantomZeroAscent` as its element, `m:zeroAsc`.
 #[must_use]
-pub fn phantom_zero_ascent(
-    node: &super::PhantomZeroAscent,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn phantom_zero_ascent(node: &super::PhantomZeroAscent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_ZERO_ASCENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1280,10 +1146,7 @@ pub fn phantom_zero_ascent(
 
 /// Write a `PhantomZeroDescent` as its element, `m:zeroDesc`.
 #[must_use]
-pub fn phantom_zero_descent(
-    node: &super::PhantomZeroDescent,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn phantom_zero_descent(node: &super::PhantomZeroDescent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_ZERO_DESCENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1291,10 +1154,7 @@ pub fn phantom_zero_descent(
 
 /// Write a `PhantomZeroWidth` as its element, `m:zeroWid`.
 #[must_use]
-pub fn phantom_zero_width(
-    node: &super::PhantomZeroWidth,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn phantom_zero_width(node: &super::PhantomZeroWidth, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PHANTOM_ZERO_WIDTH_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1302,7 +1162,7 @@ pub fn phantom_zero_width(
 
 /// Write a `PlcHide` as its element, `m:plcHide`.
 #[must_use]
-pub fn plc_hide(node: &super::PlcHide, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn plc_hide(node: &super::PlcHide, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PLC_HIDE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1310,7 +1170,7 @@ pub fn plc_hide(node: &super::PlcHide, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Position` as its element, `m:pos`.
 #[must_use]
-pub fn position(node: &super::Position, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn position(node: &super::Position, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POSITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1318,10 +1178,7 @@ pub fn position(node: &super::Position, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `PostParagraphSpacing` as its element, `m:postSp`.
 #[must_use]
-pub fn post_paragraph_spacing(
-    node: &super::PostParagraphSpacing,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn post_paragraph_spacing(node: &super::PostParagraphSpacing, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::POST_PARAGRAPH_SPACING_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -1330,10 +1187,7 @@ pub fn post_paragraph_spacing(
 
 /// Write a `PreParagraphSpacing` as its element, `m:preSp`.
 #[must_use]
-pub fn pre_paragraph_spacing(
-    node: &super::PreParagraphSpacing,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pre_paragraph_spacing(node: &super::PreParagraphSpacing, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRE_PARAGRAPH_SPACING_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1343,8 +1197,8 @@ pub fn pre_paragraph_spacing(
 #[must_use]
 pub fn pre_sub_superscript_object(
     node: &super::PreSubSuperscriptObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE,
@@ -1361,8 +1215,8 @@ pub fn pre_sub_superscript_object(
 #[must_use]
 pub fn pre_sub_superscript_properties(
     node: &super::PreSubSuperscriptProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
@@ -1374,7 +1228,7 @@ pub fn pre_sub_superscript_properties(
 
 /// Write a `RSp` as its element, `m:rSp`.
 #[must_use]
-pub fn r_sp(node: &super::RSp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r_sp(node: &super::RSp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::R_SP_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1382,10 +1236,7 @@ pub fn r_sp(node: &super::RSp, scope: &mut markup::Scope) -> xml::element::Eleme
 
 /// Write a `RadicalObject` as its element, `m:rad`.
 #[must_use]
-pub fn radical_object(
-    node: &super::RadicalObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn radical_object(node: &super::RadicalObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RADICAL_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.radical_properties);
     writer.child(&node.degree);
@@ -1395,10 +1246,7 @@ pub fn radical_object(
 
 /// Write a `RadicalProperties` as its element, `m:radPr`.
 #[must_use]
-pub fn radical_properties(
-    node: &super::RadicalProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn radical_properties(node: &super::RadicalProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RADICAL_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.hide_degree);
     writer.child(&node.control_properties);
@@ -1407,7 +1255,7 @@ pub fn radical_properties(
 
 /// Write a `RightMargin` as its element, `m:rMargin`.
 #[must_use]
-pub fn right_margin(node: &super::RightMargin, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn right_margin(node: &super::RightMargin, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RIGHT_MARGIN_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1415,10 +1263,7 @@ pub fn right_margin(node: &super::RightMargin, scope: &mut markup::Scope) -> xml
 
 /// Write a `RowSpacingRule` as its element, `m:rSpRule`.
 #[must_use]
-pub fn row_spacing_rule(
-    node: &super::RowSpacingRule,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn row_spacing_rule(node: &super::RowSpacingRule, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROW_SPACING_RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1426,7 +1271,7 @@ pub fn row_spacing_rule(
 
 /// Write a `Run` as its element, `m:r`.
 #[must_use]
-pub fn run(node: &super::Run, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn run(node: &super::Run, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RUN_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.w_properties);
@@ -1441,10 +1286,7 @@ pub fn run_content(node: &super::RunContent, writer: &mut markup::Writer<'_, '_>
 
 /// Write a `RunProperties` as its element, `m:rPr`.
 #[must_use]
-pub fn run_properties(
-    node: &super::RunProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn run_properties(node: &super::RunProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RUN_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.literal);
     writer.child(&node.content);
@@ -1463,7 +1305,7 @@ pub fn run_properties_content(
 
 /// Write a `Script` as its element, `m:scr`.
 #[must_use]
-pub fn script(node: &super::Script, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn script(node: &super::Script, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCRIPT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1471,7 +1313,7 @@ pub fn script(node: &super::Script, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Shp` as its element, `m:shp`.
 #[must_use]
-pub fn shp(node: &super::Shp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shp(node: &super::Shp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHP_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1479,10 +1321,7 @@ pub fn shp(node: &super::Shp, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `SmallFraction` as its element, `m:smallFrac`.
 #[must_use]
-pub fn small_fraction(
-    node: &super::SmallFraction,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn small_fraction(node: &super::SmallFraction, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SMALL_FRACTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1490,7 +1329,7 @@ pub fn small_fraction(
 
 /// Write a `Sty` as its element, `m:sty`.
 #[must_use]
-pub fn sty(node: &super::Sty, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sty(node: &super::Sty, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STY_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1498,7 +1337,7 @@ pub fn sty(node: &super::Sty, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `Sub` as its element, `m:sub`.
 #[must_use]
-pub fn sub(node: &super::Sub, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sub(node: &super::Sub, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUB_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -1508,7 +1347,7 @@ pub fn sub(node: &super::Sub, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `SubHide` as its element, `m:subHide`.
 #[must_use]
-pub fn sub_hide(node: &super::SubHide, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sub_hide(node: &super::SubHide, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUB_HIDE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1516,10 +1355,7 @@ pub fn sub_hide(node: &super::SubHide, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `SubSuperscriptObject` as its element, `m:sSubSup`.
 #[must_use]
-pub fn sub_superscript_object(
-    node: &super::SubSuperscriptObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sub_superscript_object(node: &super::SubSuperscriptObject, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SUB_SUPERSCRIPT_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.sub_superscript_properties);
@@ -1533,8 +1369,8 @@ pub fn sub_superscript_object(
 #[must_use]
 pub fn sub_superscript_properties(
     node: &super::SubSuperscriptProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
@@ -1547,10 +1383,7 @@ pub fn sub_superscript_properties(
 
 /// Write a `SubscriptObject` as its element, `m:sSub`.
 #[must_use]
-pub fn subscript_object(
-    node: &super::SubscriptObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn subscript_object(node: &super::SubscriptObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUBSCRIPT_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.subscript_properties);
     writer.child(&node.e);
@@ -1560,10 +1393,7 @@ pub fn subscript_object(
 
 /// Write a `SubscriptProperties` as its element, `m:sSubPr`.
 #[must_use]
-pub fn subscript_properties(
-    node: &super::SubscriptProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn subscript_properties(node: &super::SubscriptProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUBSCRIPT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.control_properties);
     writer.finish()
@@ -1571,7 +1401,7 @@ pub fn subscript_properties(
 
 /// Write a `Sup` as its element, `m:sup`.
 #[must_use]
-pub fn sup(node: &super::Sup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sup(node: &super::Sup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUP_SHAPE, &node.unknown);
     writer.child(&node.argument_properties);
     writer.child(&node.content);
@@ -1581,7 +1411,7 @@ pub fn sup(node: &super::Sup, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `SupHide` as its element, `m:supHide`.
 #[must_use]
-pub fn sup_hide(node: &super::SupHide, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sup_hide(node: &super::SupHide, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUP_HIDE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1589,10 +1419,7 @@ pub fn sup_hide(node: &super::SupHide, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `SuperscriptObject` as its element, `m:sSup`.
 #[must_use]
-pub fn superscript_object(
-    node: &super::SuperscriptObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn superscript_object(node: &super::SuperscriptObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SUPERSCRIPT_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.superscript_properties);
     writer.child(&node.e);
@@ -1602,10 +1429,7 @@ pub fn superscript_object(
 
 /// Write a `SuperscriptProperties` as its element, `m:sSupPr`.
 #[must_use]
-pub fn superscript_properties(
-    node: &super::SuperscriptProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn superscript_properties(node: &super::SuperscriptProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SUPERSCRIPT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.control_properties);
@@ -1614,7 +1438,7 @@ pub fn superscript_properties(
 
 /// Write a `Text` as its element, `m:t`.
 #[must_use]
-pub fn text(node: &super::Text, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.space);
     writer.text(&node.value);
@@ -1623,7 +1447,7 @@ pub fn text(node: &super::Text, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Transp` as its element, `m:transp`.
 #[must_use]
-pub fn transp(node: &super::Transp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn transp(node: &super::Transp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRANSP_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1631,10 +1455,7 @@ pub fn transp(node: &super::Transp, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `UpperLimitObject` as its element, `m:limUpp`.
 #[must_use]
-pub fn upper_limit_object(
-    node: &super::UpperLimitObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn upper_limit_object(node: &super::UpperLimitObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UPPER_LIMIT_OBJECT_SHAPE, &node.unknown);
     writer.child(&node.upper_limit_properties);
     writer.child(&node.e);
@@ -1644,10 +1465,7 @@ pub fn upper_limit_object(
 
 /// Write a `UpperLimitProperties` as its element, `m:limUppPr`.
 #[must_use]
-pub fn upper_limit_properties(
-    node: &super::UpperLimitProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn upper_limit_properties(node: &super::UpperLimitProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::UPPER_LIMIT_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.control_properties);
@@ -1658,8 +1476,8 @@ pub fn upper_limit_properties(
 #[must_use]
 pub fn use_display_math_defaults(
     node: &super::UseDisplayMathDefaults,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::USE_DISPLAY_MATH_DEFAULTS_SHAPE,
@@ -1671,10 +1489,7 @@ pub fn use_display_math_defaults(
 
 /// Write a `VerticalJustification` as its element, `m:vertJc`.
 #[must_use]
-pub fn vertical_justification(
-    node: &super::VerticalJustification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn vertical_justification(node: &super::VerticalJustification, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::VERTICAL_JUSTIFICATION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
@@ -1683,7 +1498,7 @@ pub fn vertical_justification(
 
 /// Write a `WrapIndent` as its element, `m:wrapIndent`.
 #[must_use]
-pub fn wrap_indent(node: &super::WrapIndent, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wrap_indent(node: &super::WrapIndent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WRAP_INDENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -1691,7 +1506,7 @@ pub fn wrap_indent(node: &super::WrapIndent, scope: &mut markup::Scope) -> xml::
 
 /// Write a `WrapRight` as its element, `m:wrapRight`.
 #[must_use]
-pub fn wrap_right(node: &super::WrapRight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wrap_right(node: &super::WrapRight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WRAP_RIGHT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

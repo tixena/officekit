@@ -18,12 +18,12 @@ use officekit_core::docx::Docx;
 use officekit_core::docx::chart::ChartRanges;
 use officekit_core::docx::image::PictureFit;
 use officekit_core::embedded::Embedded;
-use officekit_core::error::{PackageError, WriteError};
+use officekit_core::error::PackageError;
 use officekit_core::image::Image;
+use officekit_core::markup::Read as _;
 use officekit_core::markup::wordprocessing::{
     DocumentProtectionTypesMember, Header, HeaderOrFooterTypeMember, TextRun, write,
 };
-use officekit_core::markup::{Read as _, Scope};
 use officekit_core::packaging::package::{OpenOptions, Package};
 use officekit_core::packaging::part_name::PartName;
 use officekit_core::packaging::relationship::{RelationshipType, Target};
@@ -31,10 +31,11 @@ use officekit_core::parts::kinds::{PresentationKind, SpreadsheetKind, Wordproces
 use officekit_core::parts::{connections, font_table};
 use officekit_core::pptx::Pptx;
 use officekit_core::xlsx::Xlsx;
-use officekit_core::xml::conformance::ConformanceClass;
-use officekit_core::xml::element::{Element, Node};
-use officekit_core::xml::parse::parse;
-use officekit_core::xml::write::WriteOptions;
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::error::WriteError;
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Scope, WriteOptions};
 use os_shim::System as _;
 use os_shim::real::RealSystem;
 

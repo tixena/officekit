@@ -9,11 +9,12 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use core::iter;
 
-use super::matches_pattern;
+use officekit_xml::name::OfficeVersion;
+use officekit_xml::values::matches_pattern;
+use officekit_xml::values::parse::date_time;
+
 use super::types::{Bounds, Check, Enumeration, StringKind, ValueClass};
 use crate::validation::generated::ENUMERATIONS;
-use crate::xml::name::OfficeVersion;
-use crate::xml::values::parse::date_time;
 
 #[cfg(test)]
 mod tests;

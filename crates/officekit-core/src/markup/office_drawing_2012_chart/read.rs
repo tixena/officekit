@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `c15:autoCat` into a `AutoCat`.
 #[must_use]
-pub fn auto_cat(element: &xml::element::Element) -> super::AutoCat {
+pub fn auto_cat(element: &Element) -> super::AutoCat {
     let mut node = super::AutoCat::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_CAT_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn auto_cat(element: &xml::element::Element) -> super::AutoCat {
 
 /// Read `c15:bubble3D` into a `Bubble3D`.
 #[must_use]
-pub fn bubble3d(element: &xml::element::Element) -> super::Bubble3D {
+pub fn bubble3d(element: &Element) -> super::Bubble3D {
     let mut node = super::Bubble3D::default();
     let mut reader = markup::Reader::new(element, &super::BUBBLE3D_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn bubble3d(element: &xml::element::Element) -> super::Bubble3D {
 
 /// Read `c15:cat` into a `Cat`.
 #[must_use]
-pub fn cat(element: &xml::element::Element) -> super::Cat {
+pub fn cat(element: &Element) -> super::Cat {
     let mut node = super::Cat::default();
     let mut reader = markup::Reader::new(element, &super::CAT_SHAPE);
     for (index, field) in &mut reader {
@@ -259,9 +259,7 @@ pub fn cat(element: &xml::element::Element) -> super::Cat {
 
 /// Read `c15:categoryFilterException` into a `CategoryFilterException`.
 #[must_use]
-pub fn category_filter_exception(
-    element: &xml::element::Element,
-) -> super::CategoryFilterException {
+pub fn category_filter_exception(element: &Element) -> super::CategoryFilterException {
     let mut node = super::CategoryFilterException::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -282,9 +280,7 @@ pub fn category_filter_exception(
 
 /// Read `c15:categoryFilterExceptions` into a `CategoryFilterExceptions`.
 #[must_use]
-pub fn category_filter_exceptions(
-    element: &xml::element::Element,
-) -> super::CategoryFilterExceptions {
+pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExceptions {
     let mut node = super::CategoryFilterExceptions::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -298,7 +294,7 @@ pub fn category_filter_exceptions(
 
 /// Read `c15:dLbl` into a `DLbl`.
 #[must_use]
-pub fn d_lbl(element: &xml::element::Element) -> super::DLbl {
+pub fn d_lbl(element: &Element) -> super::DLbl {
     let mut node = super::DLbl::default();
     let mut reader = markup::Reader::new(element, &super::D_LBL_SHAPE);
     for (index, field) in &mut reader {
@@ -315,7 +311,7 @@ pub fn d_lbl(element: &xml::element::Element) -> super::DLbl {
 
 /// Read `c15:datalabelsRange` into a `DatalabelsRange`.
 #[must_use]
-pub fn datalabels_range(element: &xml::element::Element) -> super::DatalabelsRange {
+pub fn datalabels_range(element: &Element) -> super::DatalabelsRange {
     let mut node = super::DatalabelsRange::default();
     let mut reader = markup::Reader::new(element, &super::DATALABELS_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -331,7 +327,7 @@ pub fn datalabels_range(element: &xml::element::Element) -> super::DatalabelsRan
 
 /// Read `c15:dlblFieldTable` into a `DlblFieldTable`.
 #[must_use]
-pub fn dlbl_field_table(element: &xml::element::Element) -> super::DlblFieldTable {
+pub fn dlbl_field_table(element: &Element) -> super::DlblFieldTable {
     let mut node = super::DlblFieldTable::default();
     let mut reader = markup::Reader::new(element, &super::DLBL_FIELD_TABLE_SHAPE);
     for (index, field) in &mut reader {
@@ -345,7 +341,7 @@ pub fn dlbl_field_table(element: &xml::element::Element) -> super::DlblFieldTabl
 
 /// Read `c15:dlblFieldTableCache` into a `DlblFieldTableCache`.
 #[must_use]
-pub fn dlbl_field_table_cache(element: &xml::element::Element) -> super::DlblFieldTableCache {
+pub fn dlbl_field_table_cache(element: &Element) -> super::DlblFieldTableCache {
     let mut node = super::DlblFieldTableCache::default();
     let mut reader = markup::Reader::new(element, &super::DLBL_FIELD_TABLE_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -362,7 +358,7 @@ pub fn dlbl_field_table_cache(element: &xml::element::Element) -> super::DlblFie
 
 /// Read `c15:dlblFTEntry` into a `DlblFTEntry`.
 #[must_use]
-pub fn dlbl_ft_entry(element: &xml::element::Element) -> super::DlblFTEntry {
+pub fn dlbl_ft_entry(element: &Element) -> super::DlblFTEntry {
     let mut node = super::DlblFTEntry::default();
     let mut reader = markup::Reader::new(element, &super::DLBL_FT_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -379,7 +375,7 @@ pub fn dlbl_ft_entry(element: &xml::element::Element) -> super::DlblFTEntry {
 
 /// Read `c15:dlblRangeCache` into a `DlblRangeCache`.
 #[must_use]
-pub fn dlbl_range_cache(element: &xml::element::Element) -> super::DlblRangeCache {
+pub fn dlbl_range_cache(element: &Element) -> super::DlblRangeCache {
     let mut node = super::DlblRangeCache::default();
     let mut reader = markup::Reader::new(element, &super::DLBL_RANGE_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -396,7 +392,7 @@ pub fn dlbl_range_cache(element: &xml::element::Element) -> super::DlblRangeCach
 
 /// Read `c15:explosion` into a `Explosion`.
 #[must_use]
-pub fn explosion(element: &xml::element::Element) -> super::Explosion {
+pub fn explosion(element: &Element) -> super::Explosion {
     let mut node = super::Explosion::default();
     let mut reader = markup::Reader::new(element, &super::EXPLOSION_SHAPE);
     for (index, field) in &mut reader {
@@ -410,7 +406,7 @@ pub fn explosion(element: &xml::element::Element) -> super::Explosion {
 
 /// Read `c15:f` into a `F`.
 #[must_use]
-pub fn f(element: &xml::element::Element) -> super::F {
+pub fn f(element: &Element) -> super::F {
     let mut node = super::F::default();
     let mut reader = markup::Reader::new(element, &super::F_SHAPE);
     for (index, field) in &mut reader {
@@ -424,7 +420,7 @@ pub fn f(element: &xml::element::Element) -> super::F {
 
 /// Read `c15:filteredAreaSeries` into a `FilteredAreaSeries`.
 #[must_use]
-pub fn filtered_area_series(element: &xml::element::Element) -> super::FilteredAreaSeries {
+pub fn filtered_area_series(element: &Element) -> super::FilteredAreaSeries {
     let mut node = super::FilteredAreaSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_AREA_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -438,7 +434,7 @@ pub fn filtered_area_series(element: &xml::element::Element) -> super::FilteredA
 
 /// Read `c15:filteredBarSeries` into a `FilteredBarSeries`.
 #[must_use]
-pub fn filtered_bar_series(element: &xml::element::Element) -> super::FilteredBarSeries {
+pub fn filtered_bar_series(element: &Element) -> super::FilteredBarSeries {
     let mut node = super::FilteredBarSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_BAR_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -452,7 +448,7 @@ pub fn filtered_bar_series(element: &xml::element::Element) -> super::FilteredBa
 
 /// Read `c15:filteredBubbleSeries` into a `FilteredBubbleSeries`.
 #[must_use]
-pub fn filtered_bubble_series(element: &xml::element::Element) -> super::FilteredBubbleSeries {
+pub fn filtered_bubble_series(element: &Element) -> super::FilteredBubbleSeries {
     let mut node = super::FilteredBubbleSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_BUBBLE_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -466,7 +462,7 @@ pub fn filtered_bubble_series(element: &xml::element::Element) -> super::Filtere
 
 /// Read `c15:filteredCategoryTitle` into a `FilteredCategoryTitle`.
 #[must_use]
-pub fn filtered_category_title(element: &xml::element::Element) -> super::FilteredCategoryTitle {
+pub fn filtered_category_title(element: &Element) -> super::FilteredCategoryTitle {
     let mut node = super::FilteredCategoryTitle::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_CATEGORY_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -480,7 +476,7 @@ pub fn filtered_category_title(element: &xml::element::Element) -> super::Filter
 
 /// Read `c15:filteredLineSeries` into a `FilteredLineSeries`.
 #[must_use]
-pub fn filtered_line_series(element: &xml::element::Element) -> super::FilteredLineSeries {
+pub fn filtered_line_series(element: &Element) -> super::FilteredLineSeries {
     let mut node = super::FilteredLineSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_LINE_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -494,7 +490,7 @@ pub fn filtered_line_series(element: &xml::element::Element) -> super::FilteredL
 
 /// Read `c15:filteredPieSeries` into a `FilteredPieSeries`.
 #[must_use]
-pub fn filtered_pie_series(element: &xml::element::Element) -> super::FilteredPieSeries {
+pub fn filtered_pie_series(element: &Element) -> super::FilteredPieSeries {
     let mut node = super::FilteredPieSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_PIE_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -508,7 +504,7 @@ pub fn filtered_pie_series(element: &xml::element::Element) -> super::FilteredPi
 
 /// Read `c15:filteredRadarSeries` into a `FilteredRadarSeries`.
 #[must_use]
-pub fn filtered_radar_series(element: &xml::element::Element) -> super::FilteredRadarSeries {
+pub fn filtered_radar_series(element: &Element) -> super::FilteredRadarSeries {
     let mut node = super::FilteredRadarSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_RADAR_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -522,7 +518,7 @@ pub fn filtered_radar_series(element: &xml::element::Element) -> super::Filtered
 
 /// Read `c15:filteredScatterSeries` into a `FilteredScatterSeries`.
 #[must_use]
-pub fn filtered_scatter_series(element: &xml::element::Element) -> super::FilteredScatterSeries {
+pub fn filtered_scatter_series(element: &Element) -> super::FilteredScatterSeries {
     let mut node = super::FilteredScatterSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_SCATTER_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -536,7 +532,7 @@ pub fn filtered_scatter_series(element: &xml::element::Element) -> super::Filter
 
 /// Read `c15:filteredSeriesTitle` into a `FilteredSeriesTitle`.
 #[must_use]
-pub fn filtered_series_title(element: &xml::element::Element) -> super::FilteredSeriesTitle {
+pub fn filtered_series_title(element: &Element) -> super::FilteredSeriesTitle {
     let mut node = super::FilteredSeriesTitle::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_SERIES_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -550,7 +546,7 @@ pub fn filtered_series_title(element: &xml::element::Element) -> super::Filtered
 
 /// Read `c15:filteredSurfaceSeries` into a `FilteredSurfaceSeries`.
 #[must_use]
-pub fn filtered_surface_series(element: &xml::element::Element) -> super::FilteredSurfaceSeries {
+pub fn filtered_surface_series(element: &Element) -> super::FilteredSurfaceSeries {
     let mut node = super::FilteredSurfaceSeries::default();
     let mut reader = markup::Reader::new(element, &super::FILTERED_SURFACE_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -564,7 +560,7 @@ pub fn filtered_surface_series(element: &xml::element::Element) -> super::Filter
 
 /// Read `c15:formulaRef` into a `FormulaRef`.
 #[must_use]
-pub fn formula_ref(element: &xml::element::Element) -> super::FormulaRef {
+pub fn formula_ref(element: &Element) -> super::FormulaRef {
     let mut node = super::FormulaRef::default();
     let mut reader = markup::Reader::new(element, &super::FORMULA_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -578,7 +574,7 @@ pub fn formula_ref(element: &xml::element::Element) -> super::FormulaRef {
 
 /// Read `c15:fullRef` into a `FullRef`.
 #[must_use]
-pub fn full_ref(element: &xml::element::Element) -> super::FullRef {
+pub fn full_ref(element: &Element) -> super::FullRef {
     let mut node = super::FullRef::default();
     let mut reader = markup::Reader::new(element, &super::FULL_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -592,7 +588,7 @@ pub fn full_ref(element: &xml::element::Element) -> super::FullRef {
 
 /// Read `c15:invertIfNegative` into a `InvertIfNegative`.
 #[must_use]
-pub fn invert_if_negative(element: &xml::element::Element) -> super::InvertIfNegative {
+pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
     let mut node = super::InvertIfNegative::default();
     let mut reader = markup::Reader::new(element, &super::INVERT_IF_NEGATIVE_SHAPE);
     for (index, field) in &mut reader {
@@ -606,7 +602,7 @@ pub fn invert_if_negative(element: &xml::element::Element) -> super::InvertIfNeg
 
 /// Read `c15:layout` into a `Layout`.
 #[must_use]
-pub fn layout(element: &xml::element::Element) -> super::Layout {
+pub fn layout(element: &Element) -> super::Layout {
     let mut node = super::Layout::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -622,7 +618,7 @@ pub fn layout(element: &xml::element::Element) -> super::Layout {
 
 /// Read `c15:leaderLines` into a `LeaderLines`.
 #[must_use]
-pub fn leader_lines(element: &xml::element::Element) -> super::LeaderLines {
+pub fn leader_lines(element: &Element) -> super::LeaderLines {
     let mut node = super::LeaderLines::default();
     let mut reader = markup::Reader::new(element, &super::LEADER_LINES_SHAPE);
     for (index, field) in &mut reader {
@@ -636,7 +632,7 @@ pub fn leader_lines(element: &xml::element::Element) -> super::LeaderLines {
 
 /// Read `c15:levelRef` into a `LevelRef`.
 #[must_use]
-pub fn level_ref(element: &xml::element::Element) -> super::LevelRef {
+pub fn level_ref(element: &Element) -> super::LevelRef {
     let mut node = super::LevelRef::default();
     let mut reader = markup::Reader::new(element, &super::LEVEL_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -650,7 +646,7 @@ pub fn level_ref(element: &xml::element::Element) -> super::LevelRef {
 
 /// Read `c15:marker` into a `Marker`.
 #[must_use]
-pub fn marker(element: &xml::element::Element) -> super::Marker {
+pub fn marker(element: &Element) -> super::Marker {
     let mut node = super::Marker::default();
     let mut reader = markup::Reader::new(element, &super::MARKER_SHAPE);
     for (index, field) in &mut reader {
@@ -668,7 +664,7 @@ pub fn marker(element: &xml::element::Element) -> super::Marker {
 
 /// Read `c15:numFmt` into a `NumFmt`.
 #[must_use]
-pub fn num_fmt(element: &xml::element::Element) -> super::NumFmt {
+pub fn num_fmt(element: &Element) -> super::NumFmt {
     let mut node = super::NumFmt::default();
     let mut reader = markup::Reader::new(element, &super::NUM_FMT_SHAPE);
     for (index, field) in &mut reader {
@@ -684,7 +680,7 @@ pub fn num_fmt(element: &xml::element::Element) -> super::NumFmt {
 
 /// Read `c15:pivotSource` into a `PivotSource`.
 #[must_use]
-pub fn pivot_source(element: &xml::element::Element) -> super::PivotSource {
+pub fn pivot_source(element: &Element) -> super::PivotSource {
     let mut node = super::PivotSource::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_SOURCE_SHAPE);
     for (index, field) in &mut reader {
@@ -701,7 +697,7 @@ pub fn pivot_source(element: &xml::element::Element) -> super::PivotSource {
 
 /// Read `c15:ser` into a `SerAreaSer`.
 #[must_use]
-pub fn ser_area_ser(element: &xml::element::Element) -> super::SerAreaSer {
+pub fn ser_area_ser(element: &Element) -> super::SerAreaSer {
     let mut node = super::SerAreaSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_AREA_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -727,7 +723,7 @@ pub fn ser_area_ser(element: &xml::element::Element) -> super::SerAreaSer {
 
 /// Read `c15:ser` into a `SerBarSer`.
 #[must_use]
-pub fn ser_bar_ser(element: &xml::element::Element) -> super::SerBarSer {
+pub fn ser_bar_ser(element: &Element) -> super::SerBarSer {
     let mut node = super::SerBarSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_BAR_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -755,7 +751,7 @@ pub fn ser_bar_ser(element: &xml::element::Element) -> super::SerBarSer {
 
 /// Read `c15:ser` into a `SerBubbleSer`.
 #[must_use]
-pub fn ser_bubble_ser(element: &xml::element::Element) -> super::SerBubbleSer {
+pub fn ser_bubble_ser(element: &Element) -> super::SerBubbleSer {
     let mut node = super::SerBubbleSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_BUBBLE_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -783,7 +779,7 @@ pub fn ser_bubble_ser(element: &xml::element::Element) -> super::SerBubbleSer {
 
 /// Read `c15:ser` into a `SerLineSer`.
 #[must_use]
-pub fn ser_line_ser(element: &xml::element::Element) -> super::SerLineSer {
+pub fn ser_line_ser(element: &Element) -> super::SerLineSer {
     let mut node = super::SerLineSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_LINE_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -810,7 +806,7 @@ pub fn ser_line_ser(element: &xml::element::Element) -> super::SerLineSer {
 
 /// Read `c15:ser` into a `SerPieSer`.
 #[must_use]
-pub fn ser_pie_ser(element: &xml::element::Element) -> super::SerPieSer {
+pub fn ser_pie_ser(element: &Element) -> super::SerPieSer {
     let mut node = super::SerPieSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_PIE_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -834,7 +830,7 @@ pub fn ser_pie_ser(element: &xml::element::Element) -> super::SerPieSer {
 
 /// Read `c15:ser` into a `SerRadarSer`.
 #[must_use]
-pub fn ser_radar_ser(element: &xml::element::Element) -> super::SerRadarSer {
+pub fn ser_radar_ser(element: &Element) -> super::SerRadarSer {
     let mut node = super::SerRadarSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_RADAR_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -858,7 +854,7 @@ pub fn ser_radar_ser(element: &xml::element::Element) -> super::SerRadarSer {
 
 /// Read `c15:ser` into a `SerScatterSer`.
 #[must_use]
-pub fn ser_scatter_ser(element: &xml::element::Element) -> super::SerScatterSer {
+pub fn ser_scatter_ser(element: &Element) -> super::SerScatterSer {
     let mut node = super::SerScatterSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_SCATTER_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -885,7 +881,7 @@ pub fn ser_scatter_ser(element: &xml::element::Element) -> super::SerScatterSer 
 
 /// Read `c15:ser` into a `SerSurfaceSer`.
 #[must_use]
-pub fn ser_surface_ser(element: &xml::element::Element) -> super::SerSurfaceSer {
+pub fn ser_surface_ser(element: &Element) -> super::SerSurfaceSer {
     let mut node = super::SerSurfaceSer::default();
     let mut reader = markup::Reader::new(element, &super::SER_SURFACE_SER_SHAPE);
     for (index, field) in &mut reader {
@@ -906,7 +902,7 @@ pub fn ser_surface_ser(element: &xml::element::Element) -> super::SerSurfaceSer 
 
 /// Read `c15:showDataLabelsRange` into a `ShowDataLabelsRange`.
 #[must_use]
-pub fn show_data_labels_range(element: &xml::element::Element) -> super::ShowDataLabelsRange {
+pub fn show_data_labels_range(element: &Element) -> super::ShowDataLabelsRange {
     let mut node = super::ShowDataLabelsRange::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_DATA_LABELS_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -920,7 +916,7 @@ pub fn show_data_labels_range(element: &xml::element::Element) -> super::ShowDat
 
 /// Read `c15:showLeaderLines` into a `ShowLeaderLines`.
 #[must_use]
-pub fn show_leader_lines(element: &xml::element::Element) -> super::ShowLeaderLines {
+pub fn show_leader_lines(element: &Element) -> super::ShowLeaderLines {
     let mut node = super::ShowLeaderLines::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_LEADER_LINES_SHAPE);
     for (index, field) in &mut reader {
@@ -934,7 +930,7 @@ pub fn show_leader_lines(element: &xml::element::Element) -> super::ShowLeaderLi
 
 /// Read `c15:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -957,7 +953,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `c15:sqref` into a `Sqref`.
 #[must_use]
-pub fn sqref(element: &xml::element::Element) -> super::Sqref {
+pub fn sqref(element: &Element) -> super::Sqref {
     let mut node = super::Sqref::default();
     let mut reader = markup::Reader::new(element, &super::SQREF_SHAPE);
     for (index, field) in &mut reader {
@@ -971,7 +967,7 @@ pub fn sqref(element: &xml::element::Element) -> super::Sqref {
 
 /// Read `c15:tx` into a `Tx`.
 #[must_use]
-pub fn tx(element: &xml::element::Element) -> super::Tx {
+pub fn tx(element: &Element) -> super::Tx {
     let mut node = super::Tx::default();
     let mut reader = markup::Reader::new(element, &super::TX_SHAPE);
     for (index, field) in &mut reader {
@@ -985,7 +981,7 @@ pub fn tx(element: &xml::element::Element) -> super::Tx {
 
 /// Read `c15:txfldGUID` into a `TxfldGUID`.
 #[must_use]
-pub fn txfld_guid(element: &xml::element::Element) -> super::TxfldGUID {
+pub fn txfld_guid(element: &Element) -> super::TxfldGUID {
     let mut node = super::TxfldGUID::default();
     let mut reader = markup::Reader::new(element, &super::TXFLD_GUID_SHAPE);
     for (index, field) in &mut reader {
@@ -999,7 +995,7 @@ pub fn txfld_guid(element: &xml::element::Element) -> super::TxfldGUID {
 
 /// Read `c15:xForSave` into a `XForSave`.
 #[must_use]
-pub fn x_for_save(element: &xml::element::Element) -> super::XForSave {
+pub fn x_for_save(element: &Element) -> super::XForSave {
     let mut node = super::XForSave::default();
     let mut reader = markup::Reader::new(element, &super::X_FOR_SAVE_SHAPE);
     for (index, field) in &mut reader {

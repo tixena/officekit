@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Backstage` as its element, `mso14:backstage`.
 #[must_use]
-pub fn backstage(node: &super::Backstage, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn backstage(node: &super::Backstage, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BACKSTAGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.on_show);
     writer.attribute(1, &node.on_hide);
@@ -247,7 +248,7 @@ pub fn backstage_menu_group(
 
 /// Write a `BottomItems` as its element, `mso14:bottomItems`.
 #[must_use]
-pub fn bottom_items(node: &super::BottomItems, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bottom_items(node: &super::BottomItems, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOTTOM_ITEMS_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -260,7 +261,7 @@ pub fn r#box(node: &super::BoxContent, writer: &mut markup::Writer<'_, '_>) {
 
 /// Write a `BoxBox` as its element, `mso14:box`.
 #[must_use]
-pub fn box_box(node: &super::BoxBox, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn box_box(node: &super::BoxBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOX_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -280,8 +281,8 @@ pub fn box_box(node: &super::BoxBox, scope: &mut markup::Scope) -> xml::element:
 #[must_use]
 pub fn button_backstage_fast_command_button(
     node: &super::ButtonBackstageFastCommandButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
@@ -315,8 +316,8 @@ pub fn button_backstage_fast_command_button(
 #[must_use]
 pub fn button_backstage_group_button(
     node: &super::ButtonBackstageGroupButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
@@ -351,8 +352,8 @@ pub fn button_backstage_group_button(
 #[must_use]
 pub fn button_backstage_menu_button(
     node: &super::ButtonBackstageMenuButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
@@ -383,8 +384,8 @@ pub fn button_backstage_menu_button(
 #[must_use]
 pub fn button_backstage_regular_button(
     node: &super::ButtonBackstageRegularButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
@@ -415,10 +416,7 @@ pub fn button_backstage_regular_button(
 
 /// Write a `ButtonButton` as its element, `mso14:button`.
 #[must_use]
-pub fn button_button(
-    node: &super::ButtonButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn button_button(node: &super::ButtonButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BUTTON_BUTTON_SHAPE, &node.unknown);
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -457,10 +455,7 @@ pub fn button_button(
 
 /// Write a `ButtonButtonRegular` as its element, `mso14:button`.
 #[must_use]
-pub fn button_button_regular(
-    node: &super::ButtonButtonRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn button_button_regular(node: &super::ButtonButtonRegular, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BUTTON_BUTTON_REGULAR_SHAPE, &node.unknown);
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -497,7 +492,7 @@ pub fn button_button_regular(
 
 /// Write a `ButtonGroup` as its element, `mso14:buttonGroup`.
 #[must_use]
-pub fn button_group(node: &super::ButtonGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn button_group(node: &super::ButtonGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BUTTON_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -519,10 +514,7 @@ pub fn button_group_content(node: &super::ButtonGroupContent, writer: &mut marku
 
 /// Write a `ButtonVisibleButton` as its element, `mso14:button`.
 #[must_use]
-pub fn button_visible_button(
-    node: &super::ButtonVisibleButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn button_visible_button(node: &super::ButtonVisibleButton, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BUTTON_VISIBLE_BUTTON_SHAPE, &node.unknown);
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -559,8 +551,8 @@ pub fn button_visible_button(
 #[must_use]
 pub fn category_task_form_group_category(
     node: &super::CategoryTaskFormGroupCategory,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
@@ -586,8 +578,8 @@ pub fn category_task_form_group_category(
 #[must_use]
 pub fn category_task_group_category(
     node: &super::CategoryTaskGroupCategory,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
@@ -613,8 +605,8 @@ pub fn category_task_group_category(
 #[must_use]
 pub fn check_box_backstage_check_box(
     node: &super::CheckBoxBackstageCheckBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
@@ -647,8 +639,8 @@ pub fn check_box_backstage_check_box(
 #[must_use]
 pub fn check_box_backstage_menu_check_box(
     node: &super::CheckBoxBackstageMenuCheckBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
@@ -674,10 +666,7 @@ pub fn check_box_backstage_menu_check_box(
 
 /// Write a `CheckBoxCheckBox` as its element, `mso14:checkBox`.
 #[must_use]
-pub fn check_box_check_box(
-    node: &super::CheckBoxCheckBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn check_box_check_box(node: &super::CheckBoxCheckBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHECK_BOX_CHECK_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.get_pressed);
     writer.attribute(1, &node.on_action);
@@ -710,8 +699,8 @@ pub fn check_box_check_box(
 #[must_use]
 pub fn combo_box_backstage_combo_box(
     node: &super::ComboBoxBackstageComboBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
@@ -742,10 +731,7 @@ pub fn combo_box_backstage_combo_box(
 
 /// Write a `ComboBoxComboBox` as its element, `mso14:comboBox`.
 #[must_use]
-pub fn combo_box_combo_box(
-    node: &super::ComboBoxComboBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn combo_box_combo_box(node: &super::ComboBoxComboBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMBO_BOX_COMBO_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.show_item_image);
     writer.attribute(1, &node.get_item_count);
@@ -792,7 +778,7 @@ pub fn combo_box_combo_box(
 
 /// Write a `Command` as its element, `mso14:command`.
 #[must_use]
-pub fn command(node: &super::Command, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn command(node: &super::Command, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMAND_SHAPE, &node.unknown);
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -803,7 +789,7 @@ pub fn command(node: &super::Command, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Commands` as its element, `mso14:commands`.
 #[must_use]
-pub fn commands(node: &super::Commands, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn commands(node: &super::Commands, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMANDS_SHAPE, &node.unknown);
     writer.child(&node.command);
     writer.finish()
@@ -811,7 +797,7 @@ pub fn commands(node: &super::Commands, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `ContextMenu` as its element, `mso14:contextMenu`.
 #[must_use]
-pub fn context_menu(node: &super::ContextMenu, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn context_menu(node: &super::ContextMenu, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTEXT_MENU_SHAPE, &node.unknown);
     writer.attribute(0, &node.id_mso);
     writer.child(&node.content);
@@ -825,10 +811,7 @@ pub fn context_menu_content(node: &super::ContextMenuContent, writer: &mut marku
 
 /// Write a `ContextMenus` as its element, `mso14:contextMenus`.
 #[must_use]
-pub fn context_menus(
-    node: &super::ContextMenus,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn context_menus(node: &super::ContextMenus, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTEXT_MENUS_SHAPE, &node.unknown);
     writer.child(&node.context_menu);
     writer.finish()
@@ -836,10 +819,7 @@ pub fn context_menus(
 
 /// Write a `ContextualTabs` as its element, `mso14:contextualTabs`.
 #[must_use]
-pub fn contextual_tabs(
-    node: &super::ContextualTabs,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn contextual_tabs(node: &super::ContextualTabs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTEXTUAL_TABS_SHAPE, &node.unknown);
     writer.child(&node.tab_set);
     writer.finish()
@@ -847,10 +827,7 @@ pub fn contextual_tabs(
 
 /// Write a `ControlControlClone` as its element, `mso14:control`.
 #[must_use]
-pub fn control_control_clone(
-    node: &super::ControlControlClone,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn control_control_clone(node: &super::ControlControlClone, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTROL_CONTROL_CLONE_SHAPE, &node.unknown);
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -889,8 +866,8 @@ pub fn control_control_clone(
 #[must_use]
 pub fn control_control_clone_qat(
     node: &super::ControlControlCloneQat,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CONTROL_CONTROL_CLONE_QAT_SHAPE,
@@ -933,8 +910,8 @@ pub fn control_control_clone_qat(
 #[must_use]
 pub fn control_control_clone_regular(
     node: &super::ControlControlCloneRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
@@ -971,7 +948,7 @@ pub fn control_control_clone_regular(
 
 /// Write a `CustomUI` as its element, `mso14:customUI`.
 #[must_use]
-pub fn custom_ui(node: &super::CustomUI, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn custom_ui(node: &super::CustomUI, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_UI_SHAPE, &node.unknown);
     writer.attribute(0, &node.on_load);
     writer.attribute(1, &node.load_image);
@@ -984,10 +961,7 @@ pub fn custom_ui(node: &super::CustomUI, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `DialogBoxLauncher` as its element, `mso14:dialogBoxLauncher`.
 #[must_use]
-pub fn dialog_box_launcher(
-    node: &super::DialogBoxLauncher,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dialog_box_launcher(node: &super::DialogBoxLauncher, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DIALOG_BOX_LAUNCHER_SHAPE, &node.unknown);
     writer.child(&node.button_button_regular);
     writer.finish()
@@ -995,10 +969,7 @@ pub fn dialog_box_launcher(
 
 /// Write a `DocumentControls` as its element, `mso14:documentControls`.
 #[must_use]
-pub fn document_controls(
-    node: &super::DocumentControls,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn document_controls(node: &super::DocumentControls, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOCUMENT_CONTROLS_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1008,8 +979,8 @@ pub fn document_controls(
 #[must_use]
 pub fn drop_down_backstage_drop_down(
     node: &super::DropDownBackstageDropDown,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
@@ -1046,8 +1017,8 @@ pub fn drop_down_backstage_drop_down(
 #[must_use]
 pub fn drop_down_drop_down_regular(
     node: &super::DropDownDropDownRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
@@ -1101,8 +1072,8 @@ pub fn drop_down_drop_down_regular(
 #[must_use]
 pub fn dynamic_menu_dynamic_menu(
     node: &super::DynamicMenuDynamicMenu,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
@@ -1148,8 +1119,8 @@ pub fn dynamic_menu_dynamic_menu(
 #[must_use]
 pub fn dynamic_menu_dynamic_menu_regular(
     node: &super::DynamicMenuDynamicMenuRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
@@ -1193,8 +1164,8 @@ pub fn dynamic_menu_dynamic_menu_regular(
 #[must_use]
 pub fn edit_box_backstage_edit_box(
     node: &super::EditBoxBackstageEditBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
@@ -1222,10 +1193,7 @@ pub fn edit_box_backstage_edit_box(
 
 /// Write a `EditBoxEditBox` as its element, `mso14:editBox`.
 #[must_use]
-pub fn edit_box_edit_box(
-    node: &super::EditBoxEditBox,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn edit_box_edit_box(node: &super::EditBoxEditBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EDIT_BOX_EDIT_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.get_enabled);
@@ -1263,7 +1231,7 @@ pub fn edit_box_edit_box(
 
 /// Write a `FirstColumn` as its element, `mso14:firstColumn`.
 #[must_use]
-pub fn first_column(node: &super::FirstColumn, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn first_column(node: &super::FirstColumn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FIRST_COLUMN_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1271,10 +1239,7 @@ pub fn first_column(node: &super::FirstColumn, scope: &mut markup::Scope) -> xml
 
 /// Write a `GalleryGallery` as its element, `mso14:gallery`.
 #[must_use]
-pub fn gallery_gallery(
-    node: &super::GalleryGallery,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn gallery_gallery(node: &super::GalleryGallery, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GALLERY_GALLERY_SHAPE, &node.unknown);
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -1334,10 +1299,7 @@ pub fn gallery_gallery(
 
 /// Write a `GalleryGalleryRegular` as its element, `mso14:gallery`.
 #[must_use]
-pub fn gallery_gallery_regular(
-    node: &super::GalleryGalleryRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn gallery_gallery_regular(node: &super::GalleryGalleryRegular, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GALLERY_GALLERY_REGULAR_SHAPE, &node.unknown);
     writer.attribute(0, &node.description);
@@ -1401,10 +1363,7 @@ pub fn group(node: &super::GroupContent, writer: &mut markup::Writer<'_, '_>) {
 
 /// Write a `GroupBackstageGroup` as its element, `mso14:group`.
 #[must_use]
-pub fn group_backstage_group(
-    node: &super::GroupBackstageGroup,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn group_backstage_group(node: &super::GroupBackstageGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_BACKSTAGE_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1432,7 +1391,7 @@ pub fn group_backstage_group(
 
 /// Write a `GroupBox` as its element, `mso14:groupBox`.
 #[must_use]
-pub fn group_box(node: &super::GroupBox, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn group_box(node: &super::GroupBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1451,7 +1410,7 @@ pub fn group_controls(node: &super::GroupControlsContent, writer: &mut markup::W
 
 /// Write a `GroupGroup` as its element, `mso14:group`.
 #[must_use]
-pub fn group_group(node: &super::GroupGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn group_group(node: &super::GroupGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1483,7 +1442,7 @@ pub fn group_group(node: &super::GroupGroup, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Hyperlink` as its element, `mso14:hyperlink`.
 #[must_use]
-pub fn hyperlink(node: &super::Hyperlink, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1513,10 +1472,7 @@ pub fn hyperlink(node: &super::Hyperlink, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `ImageControl` as its element, `mso14:imageControl`.
 #[must_use]
-pub fn image_control(
-    node: &super::ImageControl,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn image_control(node: &super::ImageControl, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMAGE_CONTROL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1535,16 +1491,13 @@ pub fn image_control(
 
 /// Write a `ItemBackstageItem` as its element, `mso14:item`.
 #[must_use]
-pub fn item_backstage_item(
-    node: &super::ItemBackstageItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn item_backstage_item(node: &super::ItemBackstageItem, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ITEM_BACKSTAGE_ITEM_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ItemItem` as its element, `mso14:item`.
 #[must_use]
-pub fn item_item(node: &super::ItemItem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn item_item(node: &super::ItemItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ITEM_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.label);
@@ -1559,8 +1512,8 @@ pub fn item_item(node: &super::ItemItem, scope: &mut markup::Scope) -> xml::elem
 #[must_use]
 pub fn label_control_backstage_label_control(
     node: &super::LabelControlBackstageLabelControl,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
@@ -1585,8 +1538,8 @@ pub fn label_control_backstage_label_control(
 #[must_use]
 pub fn label_control_label_control(
     node: &super::LabelControlLabelControl,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
@@ -1617,10 +1570,7 @@ pub fn label_control_label_control(
 
 /// Write a `LayoutContainer` as its element, `mso14:layoutContainer`.
 #[must_use]
-pub fn layout_container(
-    node: &super::LayoutContainer,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn layout_container(node: &super::LayoutContainer, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LAYOUT_CONTAINER_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1641,8 +1591,8 @@ pub fn menu(node: &super::MenuContent, writer: &mut markup::Writer<'_, '_>) {
 #[must_use]
 pub fn menu_backstage_primary_menu(
     node: &super::MenuBackstagePrimaryMenu,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
@@ -1672,10 +1622,7 @@ pub fn menu_backstage_primary_menu(
 
 /// Write a `MenuBackstageSubMenu` as its element, `mso14:menu`.
 #[must_use]
-pub fn menu_backstage_sub_menu(
-    node: &super::MenuBackstageSubMenu,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn menu_backstage_sub_menu(node: &super::MenuBackstageSubMenu, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::MENU_BACKSTAGE_SUB_MENU_SHAPE, &node.unknown);
     writer.attribute(0, &node.description);
@@ -1700,7 +1647,7 @@ pub fn menu_backstage_sub_menu(
 
 /// Write a `MenuGroup` as its element, `mso14:menuGroup`.
 #[must_use]
-pub fn menu_group(node: &super::MenuGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn menu_group(node: &super::MenuGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENU_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1714,7 +1661,7 @@ pub fn menu_group(node: &super::MenuGroup, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `MenuMenu` as its element, `mso14:menu`.
 #[must_use]
-pub fn menu_menu(node: &super::MenuMenu, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn menu_menu(node: &super::MenuMenu, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENU_MENU_SHAPE, &node.unknown);
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -1754,10 +1701,7 @@ pub fn menu_menu(node: &super::MenuMenu, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `MenuMenuRegular` as its element, `mso14:menu`.
 #[must_use]
-pub fn menu_menu_regular(
-    node: &super::MenuMenuRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn menu_menu_regular(node: &super::MenuMenuRegular, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENU_MENU_REGULAR_SHAPE, &node.unknown);
     writer.attribute(0, &node.item_size);
     writer.attribute(1, &node.description);
@@ -1795,10 +1739,7 @@ pub fn menu_menu_regular(
 
 /// Write a `MenuMenuRoot` as its element, `mso14:menu`.
 #[must_use]
-pub fn menu_menu_root(
-    node: &super::MenuMenuRoot,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn menu_menu_root(node: &super::MenuMenuRoot, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENU_MENU_ROOT_SHAPE, &node.unknown);
     writer.attribute(0, &node.title);
     writer.attribute(1, &node.get_title);
@@ -1809,10 +1750,7 @@ pub fn menu_menu_root(
 
 /// Write a `MenuMenuWithTitle` as its element, `mso14:menu`.
 #[must_use]
-pub fn menu_menu_with_title(
-    node: &super::MenuMenuWithTitle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn menu_menu_with_title(node: &super::MenuMenuWithTitle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MENU_MENU_WITH_TITLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1852,8 +1790,8 @@ pub fn menu_menu_with_title(
 #[must_use]
 pub fn menu_separator_menu_separator(
     node: &super::MenuSeparatorMenuSeparator,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
@@ -1875,8 +1813,8 @@ pub fn menu_separator_menu_separator(
 #[must_use]
 pub fn menu_separator_menu_separator_no_title(
     node: &super::MenuSeparatorMenuSeparatorNoTitle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
@@ -1899,7 +1837,7 @@ pub fn menu_with_title(node: &super::MenuWithTitleContent, writer: &mut markup::
 
 /// Write a `PrimaryItem` as its element, `mso14:primaryItem`.
 #[must_use]
-pub fn primary_item(node: &super::PrimaryItem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn primary_item(node: &super::PrimaryItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRIMARY_ITEM_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1912,7 +1850,7 @@ pub fn primary_item_content(node: &super::PrimaryItemContent, writer: &mut marku
 
 /// Write a `Qat` as its element, `mso14:qat`.
 #[must_use]
-pub fn qat(node: &super::Qat, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn qat(node: &super::Qat, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::QAT_SHAPE, &node.unknown);
     writer.child(&node.shared_controls);
     writer.child(&node.document_controls);
@@ -1930,13 +1868,13 @@ pub fn quick_access_toolbar_items(
 
 /// Write a `RadioButton` as its element, `mso14:radioButton`.
 #[must_use]
-pub fn radio_button(node: &super::RadioButton, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn radio_button(node: &super::RadioButton, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::RADIO_BUTTON_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `RadioGroup` as its element, `mso14:radioGroup`.
 #[must_use]
-pub fn radio_group(node: &super::RadioGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn radio_group(node: &super::RadioGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RADIO_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1962,7 +1900,7 @@ pub fn radio_group(node: &super::RadioGroup, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Ribbon` as its element, `mso14:ribbon`.
 #[must_use]
-pub fn ribbon(node: &super::Ribbon, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ribbon(node: &super::Ribbon, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RIBBON_SHAPE, &node.unknown);
     writer.attribute(0, &node.start_from_scratch);
     writer.child(&node.content);
@@ -1976,10 +1914,7 @@ pub fn ribbon_content(node: &super::RibbonContent, writer: &mut markup::Writer<'
 
 /// Write a `SecondColumn` as its element, `mso14:secondColumn`.
 #[must_use]
-pub fn second_column(
-    node: &super::SecondColumn,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn second_column(node: &super::SecondColumn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SECOND_COLUMN_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1987,7 +1922,7 @@ pub fn second_column(
 
 /// Write a `Separator` as its element, `mso14:separator`.
 #[must_use]
-pub fn separator(node: &super::Separator, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn separator(node: &super::Separator, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SEPARATOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2003,10 +1938,7 @@ pub fn separator(node: &super::Separator, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `SharedControls` as its element, `mso14:sharedControls`.
 #[must_use]
-pub fn shared_controls(
-    node: &super::SharedControls,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shared_controls(node: &super::SharedControls, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHARED_CONTROLS_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -2026,8 +1958,8 @@ pub fn split_button(node: &super::SplitButtonContent, writer: &mut markup::Write
 #[must_use]
 pub fn split_button_split_button(
     node: &super::SplitButtonSplitButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
@@ -2060,8 +1992,8 @@ pub fn split_button_split_button(
 #[must_use]
 pub fn split_button_split_button_regular(
     node: &super::SplitButtonSplitButtonRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
@@ -2092,8 +2024,8 @@ pub fn split_button_split_button_regular(
 #[must_use]
 pub fn split_button_split_button_with_title(
     node: &super::SplitButtonSplitButtonWithTitle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
@@ -2122,10 +2054,7 @@ pub fn split_button_split_button_with_title(
 
 /// Write a `TabBackstageTab` as its element, `mso14:tab`.
 #[must_use]
-pub fn tab_backstage_tab(
-    node: &super::TabBackstageTab,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn tab_backstage_tab(node: &super::TabBackstageTab, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TAB_BACKSTAGE_TAB_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2157,7 +2086,7 @@ pub fn tab_backstage_tab(
 
 /// Write a `TabSet` as its element, `mso14:tabSet`.
 #[must_use]
-pub fn tab_set(node: &super::TabSet, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tab_set(node: &super::TabSet, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TAB_SET_SHAPE, &node.unknown);
     writer.attribute(0, &node.id_mso);
     writer.attribute(1, &node.visible);
@@ -2168,7 +2097,7 @@ pub fn tab_set(node: &super::TabSet, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `TabTab` as its element, `mso14:tab`.
 #[must_use]
-pub fn tab_tab(node: &super::TabTab, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tab_tab(node: &super::TabTab, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TAB_TAB_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2190,7 +2119,7 @@ pub fn tab_tab(node: &super::TabTab, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Tabs` as its element, `mso14:tabs`.
 #[must_use]
-pub fn tabs(node: &super::Tabs, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tabs(node: &super::Tabs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TABS_SHAPE, &node.unknown);
     writer.child(&node.tab_tab);
     writer.finish()
@@ -2198,10 +2127,7 @@ pub fn tabs(node: &super::Tabs, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `TaskFormGroup` as its element, `mso14:taskFormGroup`.
 #[must_use]
-pub fn task_form_group(
-    node: &super::TaskFormGroup,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn task_form_group(node: &super::TaskFormGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASK_FORM_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2222,7 +2148,7 @@ pub fn task_form_group(
 
 /// Write a `TaskGroup` as its element, `mso14:taskGroup`.
 #[must_use]
-pub fn task_group(node: &super::TaskGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn task_group(node: &super::TaskGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASK_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2249,8 +2175,8 @@ pub fn task_group(node: &super::TaskGroup, scope: &mut markup::Scope) -> xml::el
 #[must_use]
 pub fn task_task_form_group_task(
     node: &super::TaskTaskFormGroupTask,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TASK_TASK_FORM_GROUP_TASK_SHAPE,
@@ -2283,10 +2209,7 @@ pub fn task_task_form_group_task(
 
 /// Write a `TaskTaskGroupTask` as its element, `mso14:task`.
 #[must_use]
-pub fn task_task_group_task(
-    node: &super::TaskTaskGroupTask,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn task_task_group_task(node: &super::TaskTaskGroupTask, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASK_TASK_GROUP_TASK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2318,8 +2241,8 @@ pub fn task_task_group_task(
 #[must_use]
 pub fn toggle_button_backstage_menu_toggle_button(
     node: &super::ToggleButtonBackstageMenuToggleButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
@@ -2350,8 +2273,8 @@ pub fn toggle_button_backstage_menu_toggle_button(
 #[must_use]
 pub fn toggle_button_toggle_button(
     node: &super::ToggleButtonToggleButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
@@ -2397,8 +2320,8 @@ pub fn toggle_button_toggle_button(
 #[must_use]
 pub fn toggle_button_toggle_button_regular(
     node: &super::ToggleButtonToggleButtonRegular,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
@@ -2442,8 +2365,8 @@ pub fn toggle_button_toggle_button_regular(
 #[must_use]
 pub fn toggle_button_visible_toggle_button(
     node: &super::ToggleButtonVisibleToggleButton,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
@@ -2483,7 +2406,7 @@ pub fn toggle_button_visible_toggle_button(
 
 /// Write a `TopItems` as its element, `mso14:topItems`.
 #[must_use]
-pub fn top_items(node: &super::TopItems, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn top_items(node: &super::TopItems, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOP_ITEMS_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()

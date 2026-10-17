@@ -6,10 +6,10 @@ use quick_xml::Writer;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
 use super::reader::PartEvent;
-use crate::markup::Scope;
-use crate::xml::element::{Element, NamespaceDeclaration, Node};
-use crate::xml::write::{
-    Layout, escape, is_whitespace, preserves_space, qualified, start_tag, write_element, write_node,
+use crate::element::{Element, NamespaceDeclaration, Node};
+use crate::write::{
+    Layout, Scope, escape, is_whitespace, preserves_space, qualified, start_tag, write_element,
+    write_node,
 };
 
 #[cfg(test)]
@@ -139,7 +139,11 @@ impl<'sink> PartWriter<'sink> {
     /// The start tag of an element whose declarations the scope already
     /// holds, a typed node's: its name, declarations, and attributes, as
     /// [`Self::start`] writes them.
-    pub(crate) fn open(&mut self, element: &Element) -> io::Result<()> {
+    ///
+    /// # Errors
+    ///
+    /// The sink's.
+    pub fn open(&mut self, element: &Element) -> io::Result<()> {
         self.flush()?;
         let preserve = preserves_space(element, self.preserved());
         self.preserve.push(preserve);
@@ -167,7 +171,7 @@ impl<'sink> PartWriter<'sink> {
         self.writer.get_mut().write_all(markup)
     }
 
-    pub(crate) const fn scope(&mut self) -> &mut Scope {
+    pub const fn scope(&mut self) -> &mut Scope {
         &mut self.scope
     }
 

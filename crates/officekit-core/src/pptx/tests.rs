@@ -1,6 +1,7 @@
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
 use os_shim::mock::MemorySystem;
 
@@ -13,7 +14,6 @@ use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::PresentationKind;
 use crate::parts::{slide_layout, slide_master, theme};
-use crate::xml::conformance::ConformanceClass;
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()

@@ -1,12 +1,13 @@
-//! Failures raised by the packaging layer, and the refusals of a class's
-//! reader and writer.
+//! Failures raised by the packaging layer.
 
 use std::io;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::XmlError;
+use officekit_xml::error::WriteError;
+
 use crate::image::ImageError;
 use crate::packaging::part_name::PartName;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::XmlError;
 
 /// Failure while opening, reading, editing, or writing a package.
 #[derive(Debug, thiserror::Error)]
@@ -64,25 +65,6 @@ pub enum PackageError {
     /// processed.
     #[error("the part {part}: {error}")]
     Xml { error: XmlError, part: PartName },
-}
-
-/// Why a node cannot be written in a conformance class.
-#[derive(Debug, thiserror::Error)]
-#[non_exhaustive]
-pub enum WriteError {
-    #[error("{tag} has no form in {class:?}")]
-    NotInClass {
-        class: ConformanceClass,
-        tag: &'static str,
-    },
-}
-
-/// Why an element could not be read as a node of the typed tree.
-#[derive(Debug, thiserror::Error)]
-#[non_exhaustive]
-pub enum ReadError {
-    #[error("expected the element {expected}, found {found}")]
-    UnexpectedTag { expected: String, found: String },
 }
 
 /// A relationship's source as a message names it.

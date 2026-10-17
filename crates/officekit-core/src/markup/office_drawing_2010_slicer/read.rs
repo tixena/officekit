@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `sle:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `sle:slicer` into a `Slicer`.
 #[must_use]
-pub fn slicer(element: &xml::element::Element) -> super::Slicer {
+pub fn slicer(element: &Element) -> super::Slicer {
     let mut node = super::Slicer::default();
     let mut reader = markup::Reader::new(element, &super::SLICER_SHAPE);
     for (index, field) in &mut reader {

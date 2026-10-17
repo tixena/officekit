@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlrd2:a` into a `AArray`.
 #[must_use]
-pub fn a_array(element: &xml::element::Element) -> super::AArray {
+pub fn a_array(element: &Element) -> super::AArray {
     let mut node = super::AArray::default();
     let mut reader = markup::Reader::new(element, &super::A_ARRAY_SHAPE);
     for (index, field) in &mut reader {
@@ -234,9 +234,7 @@ pub fn a_array(element: &xml::element::Element) -> super::AArray {
 
 /// Read `xlrd2:a` into a `ASupportingPropertyBagArray`.
 #[must_use]
-pub fn a_supporting_property_bag_array(
-    element: &xml::element::Element,
-) -> super::ASupportingPropertyBagArray {
+pub fn a_supporting_property_bag_array(element: &Element) -> super::ASupportingPropertyBagArray {
     let mut node = super::ASupportingPropertyBagArray::default();
     let mut reader = markup::Reader::new(element, &super::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE);
     for (index, field) in &mut reader {
@@ -252,7 +250,7 @@ pub fn a_supporting_property_bag_array(
 
 /// Read `xlrd2:arrayData` into a `ArrayData`.
 #[must_use]
-pub fn array_data(element: &xml::element::Element) -> super::ArrayData {
+pub fn array_data(element: &Element) -> super::ArrayData {
     let mut node = super::ArrayData::default();
     let mut reader = markup::Reader::new(element, &super::ARRAY_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -269,7 +267,7 @@ pub fn array_data(element: &xml::element::Element) -> super::ArrayData {
 
 /// Read `xlrd2:customFilter` into a `CustomFilter`.
 #[must_use]
-pub fn custom_filter(element: &xml::element::Element) -> super::CustomFilter {
+pub fn custom_filter(element: &Element) -> super::CustomFilter {
     let mut node = super::CustomFilter::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -286,7 +284,7 @@ pub fn custom_filter(element: &xml::element::Element) -> super::CustomFilter {
 
 /// Read `xlrd2:customFilters` into a `CustomFilters`.
 #[must_use]
-pub fn custom_filters(element: &xml::element::Element) -> super::CustomFilters {
+pub fn custom_filters(element: &Element) -> super::CustomFilters {
     let mut node = super::CustomFilters::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_FILTERS_SHAPE);
     for (index, field) in &mut reader {
@@ -302,13 +300,13 @@ pub fn custom_filters(element: &xml::element::Element) -> super::CustomFilters {
 
 /// Read one item of `CustomRichFiltersContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn custom_rich_filters(element: &xml::element::Element) -> super::CustomRichFiltersContent {
+pub fn custom_rich_filters(element: &Element) -> super::CustomRichFiltersContent {
     markup::read(element)
 }
 
 /// Read `xlrd2:dateGroupItem` into a `DateGroupItem`.
 #[must_use]
-pub fn date_group_item(element: &xml::element::Element) -> super::DateGroupItem {
+pub fn date_group_item(element: &Element) -> super::DateGroupItem {
     let mut node = super::DateGroupItem::default();
     let mut reader = markup::Reader::new(element, &super::DATE_GROUP_ITEM_SHAPE);
     for (index, field) in &mut reader {
@@ -330,7 +328,7 @@ pub fn date_group_item(element: &xml::element::Element) -> super::DateGroupItem 
 
 /// Read `xlrd2:dxfs` into a `Dxfs`.
 #[must_use]
-pub fn dxfs(element: &xml::element::Element) -> super::Dxfs {
+pub fn dxfs(element: &Element) -> super::Dxfs {
     let mut node = super::Dxfs::default();
     let mut reader = markup::Reader::new(element, &super::DXFS_SHAPE);
     for (index, field) in &mut reader {
@@ -346,7 +344,7 @@ pub fn dxfs(element: &xml::element::Element) -> super::Dxfs {
 
 /// Read `xlrd2:dynamicFilter` into a `DynamicFilter`.
 #[must_use]
-pub fn dynamic_filter(element: &xml::element::Element) -> super::DynamicFilter {
+pub fn dynamic_filter(element: &Element) -> super::DynamicFilter {
     let mut node = super::DynamicFilter::default();
     let mut reader = markup::Reader::new(element, &super::DYNAMIC_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -366,7 +364,7 @@ pub fn dynamic_filter(element: &xml::element::Element) -> super::DynamicFilter {
 
 /// Read `xlrd2:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -380,7 +378,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xlrd2:filter` into a `Filter`.
 #[must_use]
-pub fn filter(element: &xml::element::Element) -> super::Filter {
+pub fn filter(element: &Element) -> super::Filter {
     let mut node = super::Filter::default();
     let mut reader = markup::Reader::new(element, &super::FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -398,7 +396,7 @@ pub fn filter(element: &xml::element::Element) -> super::Filter {
 
 /// Read `xlrd2:filterColumn` into a `FilterColumn`.
 #[must_use]
-pub fn filter_column(element: &xml::element::Element) -> super::FilterColumn {
+pub fn filter_column(element: &Element) -> super::FilterColumn {
     let mut node = super::FilterColumn::default();
     let mut reader = markup::Reader::new(element, &super::FILTER_COLUMN_SHAPE);
     for (index, field) in &mut reader {
@@ -412,7 +410,7 @@ pub fn filter_column(element: &xml::element::Element) -> super::FilterColumn {
 
 /// Read `xlrd2:filters` into a `Filters`.
 #[must_use]
-pub fn filters(element: &xml::element::Element) -> super::Filters {
+pub fn filters(element: &Element) -> super::Filters {
     let mut node = super::Filters::default();
     let mut reader = markup::Reader::new(element, &super::FILTERS_SHAPE);
     for (index, field) in &mut reader {
@@ -429,7 +427,7 @@ pub fn filters(element: &xml::element::Element) -> super::Filters {
 
 /// Read `xlrd2:flag` into a `Flag`.
 #[must_use]
-pub fn flag(element: &xml::element::Element) -> super::Flag {
+pub fn flag(element: &Element) -> super::Flag {
     let mut node = super::Flag::default();
     let mut reader = markup::Reader::new(element, &super::FLAG_SHAPE);
     for (index, field) in &mut reader {
@@ -445,7 +443,7 @@ pub fn flag(element: &xml::element::Element) -> super::Flag {
 
 /// Read `xlrd2:global` into a `Global`.
 #[must_use]
-pub fn global(element: &xml::element::Element) -> super::Global {
+pub fn global(element: &Element) -> super::Global {
     let mut node = super::Global::default();
     let mut reader = markup::Reader::new(element, &super::GLOBAL_SHAPE);
     for (index, field) in &mut reader {
@@ -461,7 +459,7 @@ pub fn global(element: &xml::element::Element) -> super::Global {
 
 /// Read `xlrd2:k` into a `K`.
 #[must_use]
-pub fn k(element: &xml::element::Element) -> super::K {
+pub fn k(element: &Element) -> super::K {
     let mut node = super::K::default();
     let mut reader = markup::Reader::new(element, &super::K_SHAPE);
     for (index, field) in &mut reader {
@@ -477,7 +475,7 @@ pub fn k(element: &xml::element::Element) -> super::K {
 
 /// Read `xlrd2:key` into a `Key`.
 #[must_use]
-pub fn key(element: &xml::element::Element) -> super::Key {
+pub fn key(element: &Element) -> super::Key {
     let mut node = super::Key::default();
     let mut reader = markup::Reader::new(element, &super::KEY_SHAPE);
     for (index, field) in &mut reader {
@@ -493,7 +491,7 @@ pub fn key(element: &xml::element::Element) -> super::Key {
 
 /// Read `xlrd2:keyFlags` into a `KeyFlags`.
 #[must_use]
-pub fn key_flags(element: &xml::element::Element) -> super::KeyFlags {
+pub fn key_flags(element: &Element) -> super::KeyFlags {
     let mut node = super::KeyFlags::default();
     let mut reader = markup::Reader::new(element, &super::KEY_FLAGS_SHAPE);
     for (index, field) in &mut reader {
@@ -507,7 +505,7 @@ pub fn key_flags(element: &xml::element::Element) -> super::KeyFlags {
 
 /// Read `xlrd2:rPr` into a `RPr`.
 #[must_use]
-pub fn r_pr(element: &xml::element::Element) -> super::RPr {
+pub fn r_pr(element: &Element) -> super::RPr {
     let mut node = super::RPr::default();
     let mut reader = markup::Reader::new(element, &super::R_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -523,7 +521,7 @@ pub fn r_pr(element: &xml::element::Element) -> super::RPr {
 
 /// Read `xlrd2:rSty` into a `RSty`.
 #[must_use]
-pub fn r_sty(element: &xml::element::Element) -> super::RSty {
+pub fn r_sty(element: &Element) -> super::RSty {
     let mut node = super::RSty::default();
     let mut reader = markup::Reader::new(element, &super::R_STY_SHAPE);
     for (index, field) in &mut reader {
@@ -539,13 +537,13 @@ pub fn r_sty(element: &xml::element::Element) -> super::RSty {
 
 /// Read one item of `RichFilterColumnContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn rich_filter_column(element: &xml::element::Element) -> super::RichFilterColumnContent {
+pub fn rich_filter_column(element: &Element) -> super::RichFilterColumnContent {
     markup::read(element)
 }
 
 /// Read `xlrd2:richProperties` into a `RichProperties`.
 #[must_use]
-pub fn rich_properties(element: &xml::element::Element) -> super::RichProperties {
+pub fn rich_properties(element: &Element) -> super::RichProperties {
     let mut node = super::RichProperties::default();
     let mut reader = markup::Reader::new(element, &super::RICH_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -559,7 +557,7 @@ pub fn rich_properties(element: &xml::element::Element) -> super::RichProperties
 
 /// Read `xlrd2:richSortCondition` into a `RichSortCondition`.
 #[must_use]
-pub fn rich_sort_condition(element: &xml::element::Element) -> super::RichSortCondition {
+pub fn rich_sort_condition(element: &Element) -> super::RichSortCondition {
     let mut node = super::RichSortCondition::default();
     let mut reader = markup::Reader::new(element, &super::RICH_SORT_CONDITION_SHAPE);
     for (index, field) in &mut reader {
@@ -581,7 +579,7 @@ pub fn rich_sort_condition(element: &xml::element::Element) -> super::RichSortCo
 
 /// Read `xlrd2:richStyleSheet` into a `RichStyleSheet`.
 #[must_use]
-pub fn rich_style_sheet(element: &xml::element::Element) -> super::RichStyleSheet {
+pub fn rich_style_sheet(element: &Element) -> super::RichStyleSheet {
     let mut node = super::RichStyleSheet::default();
     let mut reader = markup::Reader::new(element, &super::RICH_STYLE_SHEET_SHAPE);
     for (index, field) in &mut reader {
@@ -599,7 +597,7 @@ pub fn rich_style_sheet(element: &xml::element::Element) -> super::RichStyleShee
 
 /// Read `xlrd2:richStyles` into a `RichStyles`.
 #[must_use]
-pub fn rich_styles(element: &xml::element::Element) -> super::RichStyles {
+pub fn rich_styles(element: &Element) -> super::RichStyles {
     let mut node = super::RichStyles::default();
     let mut reader = markup::Reader::new(element, &super::RICH_STYLES_SHAPE);
     for (index, field) in &mut reader {
@@ -613,7 +611,7 @@ pub fn rich_styles(element: &xml::element::Element) -> super::RichStyles {
 
 /// Read `xlrd2:rpv` into a `Rpv`.
 #[must_use]
-pub fn rpv(element: &xml::element::Element) -> super::Rpv {
+pub fn rpv(element: &Element) -> super::Rpv {
     let mut node = super::Rpv::default();
     let mut reader = markup::Reader::new(element, &super::RPV_SHAPE);
     for (index, field) in &mut reader {
@@ -629,7 +627,7 @@ pub fn rpv(element: &xml::element::Element) -> super::Rpv {
 
 /// Read `xlrd2:rvTypesInfo` into a `RvTypesInfo`.
 #[must_use]
-pub fn rv_types_info(element: &xml::element::Element) -> super::RvTypesInfo {
+pub fn rv_types_info(element: &Element) -> super::RvTypesInfo {
     let mut node = super::RvTypesInfo::default();
     let mut reader = markup::Reader::new(element, &super::RV_TYPES_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -646,7 +644,7 @@ pub fn rv_types_info(element: &xml::element::Element) -> super::RvTypesInfo {
 
 /// Read `xlrd2:s` into a `S`.
 #[must_use]
-pub fn s(element: &xml::element::Element) -> super::S {
+pub fn s(element: &Element) -> super::S {
     let mut node = super::S::default();
     let mut reader = markup::Reader::new(element, &super::S_SHAPE);
     for (index, field) in &mut reader {
@@ -660,7 +658,7 @@ pub fn s(element: &xml::element::Element) -> super::S {
 
 /// Read `xlrd2:spb` into a `Spb`.
 #[must_use]
-pub fn spb(element: &xml::element::Element) -> super::Spb {
+pub fn spb(element: &Element) -> super::Spb {
     let mut node = super::Spb::default();
     let mut reader = markup::Reader::new(element, &super::SPB_SHAPE);
     for (index, field) in &mut reader {
@@ -676,7 +674,7 @@ pub fn spb(element: &xml::element::Element) -> super::Spb {
 
 /// Read `xlrd2:spbArrays` into a `SpbArrays`.
 #[must_use]
-pub fn spb_arrays(element: &xml::element::Element) -> super::SpbArrays {
+pub fn spb_arrays(element: &Element) -> super::SpbArrays {
     let mut node = super::SpbArrays::default();
     let mut reader = markup::Reader::new(element, &super::SPB_ARRAYS_SHAPE);
     for (index, field) in &mut reader {
@@ -693,7 +691,7 @@ pub fn spb_arrays(element: &xml::element::Element) -> super::SpbArrays {
 
 /// Read `xlrd2:spbData` into a `SpbData`.
 #[must_use]
-pub fn spb_data(element: &xml::element::Element) -> super::SpbData {
+pub fn spb_data(element: &Element) -> super::SpbData {
     let mut node = super::SpbData::default();
     let mut reader = markup::Reader::new(element, &super::SPB_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -710,7 +708,7 @@ pub fn spb_data(element: &xml::element::Element) -> super::SpbData {
 
 /// Read `xlrd2:spbStructures` into a `SpbStructures`.
 #[must_use]
-pub fn spb_structures(element: &xml::element::Element) -> super::SpbStructures {
+pub fn spb_structures(element: &Element) -> super::SpbStructures {
     let mut node = super::SpbStructures::default();
     let mut reader = markup::Reader::new(element, &super::SPB_STRUCTURES_SHAPE);
     for (index, field) in &mut reader {
@@ -727,7 +725,7 @@ pub fn spb_structures(element: &xml::element::Element) -> super::SpbStructures {
 
 /// Read `xlrd2:supportingPropertyBags` into a `SupportingPropertyBags`.
 #[must_use]
-pub fn supporting_property_bags(element: &xml::element::Element) -> super::SupportingPropertyBags {
+pub fn supporting_property_bags(element: &Element) -> super::SupportingPropertyBags {
     let mut node = super::SupportingPropertyBags::default();
     let mut reader = markup::Reader::new(element, &super::SUPPORTING_PROPERTY_BAGS_SHAPE);
     for (index, field) in &mut reader {
@@ -743,7 +741,7 @@ pub fn supporting_property_bags(element: &xml::element::Element) -> super::Suppo
 
 /// Read `xlrd2:top10` into a `Top10`.
 #[must_use]
-pub fn top10(element: &xml::element::Element) -> super::Top10 {
+pub fn top10(element: &Element) -> super::Top10 {
     let mut node = super::Top10::default();
     let mut reader = markup::Reader::new(element, &super::TOP10_SHAPE);
     for (index, field) in &mut reader {
@@ -762,7 +760,7 @@ pub fn top10(element: &xml::element::Element) -> super::Top10 {
 
 /// Read `xlrd2:type` into a `Type`.
 #[must_use]
-pub fn r#type(element: &xml::element::Element) -> super::Type {
+pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = markup::Reader::new(element, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -779,7 +777,7 @@ pub fn r#type(element: &xml::element::Element) -> super::Type {
 
 /// Read `xlrd2:types` into a `Types`.
 #[must_use]
-pub fn types(element: &xml::element::Element) -> super::Types {
+pub fn types(element: &Element) -> super::Types {
     let mut node = super::Types::default();
     let mut reader = markup::Reader::new(element, &super::TYPES_SHAPE);
     for (index, field) in &mut reader {
@@ -793,7 +791,7 @@ pub fn types(element: &xml::element::Element) -> super::Types {
 
 /// Read `xlrd2:v` into a `VArrayValue`.
 #[must_use]
-pub fn v_array_value(element: &xml::element::Element) -> super::VArrayValue {
+pub fn v_array_value(element: &Element) -> super::VArrayValue {
     let mut node = super::VArrayValue::default();
     let mut reader = markup::Reader::new(element, &super::V_ARRAY_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -810,7 +808,7 @@ pub fn v_array_value(element: &xml::element::Element) -> super::VArrayValue {
 /// Read `xlrd2:v` into a `VSupportingPropertyBagArrayValue`.
 #[must_use]
 pub fn v_supporting_property_bag_array_value(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::VSupportingPropertyBagArrayValue {
     let mut node = super::VSupportingPropertyBagArrayValue::default();
     let mut reader =
@@ -828,9 +826,7 @@ pub fn v_supporting_property_bag_array_value(
 
 /// Read `xlrd2:v` into a `VSupportingPropertyBagValue`.
 #[must_use]
-pub fn v_supporting_property_bag_value(
-    element: &xml::element::Element,
-) -> super::VSupportingPropertyBagValue {
+pub fn v_supporting_property_bag_value(element: &Element) -> super::VSupportingPropertyBagValue {
     let mut node = super::VSupportingPropertyBagValue::default();
     let mut reader = markup::Reader::new(element, &super::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE);
     for (index, field) in &mut reader {

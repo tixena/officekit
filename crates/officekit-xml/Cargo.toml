@@ -1,0 +1,17 @@
+[package]
+name = "officekit-xml"
+description = "The XML layer of officekit: element tree, names, values, markup compatibility, part reader and writer"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+quick-xml.workspace = true
+thiserror.workspace = true
+regex = "1"

@@ -1,10 +1,11 @@
 use alloc::collections::BTreeSet;
 
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::parse::parse;
+
 use super::{Counted, DRAWING, SPREADSHEET, WORDPROCESSING};
-use crate::xml::element::Element;
-use crate::xml::name::NamespaceId;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::parse::parse;
 
 const A: &str = r#"xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main""#;
 const W: &str = r#"xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main""#;

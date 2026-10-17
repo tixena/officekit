@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `SetOfAdditionalCharacteristics` as its element, `ac:additionalCharacteristics`.
 #[must_use]
 pub fn set_of_additional_characteristics(
     node: &super::SetOfAdditionalCharacteristics,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
@@ -232,10 +233,7 @@ pub fn set_of_additional_characteristics(
 
 /// Write a `SingleCharacteristic` as its element, `ac:characteristic`.
 #[must_use]
-pub fn single_characteristic(
-    node: &super::SingleCharacteristic,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn single_characteristic(node: &super::SingleCharacteristic, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SINGLE_CHARACTERISTIC_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.relation);

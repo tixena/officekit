@@ -1,6 +1,12 @@
 use core::slice;
 use std::io::{self, Write};
 
+use officekit_xml::element::{Element, NamespaceDeclaration, Node};
+use officekit_xml::name::Namespace;
+use officekit_xml::stream::reader::PartEvent;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::Layout;
+
 use super::PackageWriter;
 use crate::markup::wordprocessing::{self, TableRow, Text, read};
 use crate::markup::{self, Descend, Visit as _};
@@ -10,12 +16,7 @@ use crate::packaging::relationship::{
     RELATIONSHIPS_CONTENT_TYPE, Relationship, Target, TargetMode,
 };
 use crate::parts::{main_document, style_definitions};
-use crate::stream::reader::{PartEvent, PartReader};
 use crate::stream::transform::{WriteThrough as _, Written};
-use crate::stream::writer::PartWriter;
-use crate::xml::element::{Element, NamespaceDeclaration, Node};
-use crate::xml::name::Namespace;
-use crate::xml::write::Layout;
 
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
 const STYLES: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n\
@@ -108,21 +109,19 @@ where
     let mut part = out
         .part(&main, main_document::CONTENT_TYPES[0], Layout::Compact)
         .unwrap();
-    let mut reader = PartReader::from_part(template, &main).unwrap();
+    let mut reader = template.part_reader(&main).unwrap();
     while let Some(event) = reader.read_event().unwrap() {
-        match event {
-            PartEvent::Start(start) if is_table(&start) => {
+        if let PartEvent::Start(start) = event {
+            if is_table(&start) {
                 let table = read::table(&reader.read_element(start).unwrap());
                 table
                     .write_through(&mut RepeatRows { count }, &mut part)
                     .unwrap();
+            } else {
+                part.write_event(PartEvent::Start(start)).unwrap();
             }
-            PartEvent::Declaration(_)
-            | PartEvent::End
-            | PartEvent::Node(_)
-            | PartEvent::Start(_) => {
-                part.write_event(event).unwrap();
-            }
+        } else {
+            part.write_event(event).unwrap();
         }
     }
     out.finish().unwrap()
@@ -198,10 +197,10 @@ fn text_of(element: &Element) -> String {
 fn a_part_written_in_each_layout_gives_its_bytes() {
     let template = template();
     let name = PartName::new("/word/note.xml").unwrap();
-    let declarations = [NamespaceDeclaration {
-        prefix: "x".to_owned(),
-        uri: "urn:x".to_owned(),
-    }];
+    let declarations = [NamespaceDeclaration::new(
+        "x".to_owned(),
+        "urn:x".to_owned(),
+    )];
     for (layout, expected) in [
         (
             Layout::Compact,

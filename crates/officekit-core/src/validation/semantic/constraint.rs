@@ -4,8 +4,9 @@
 //! row that keys one to its element type, the Office versions, and the
 //! applications it applies to.
 
+use officekit_xml::name::NamespaceId;
+
 use crate::validation::schema::types::{TypeId, Versions};
-use crate::xml::name::NamespaceId;
 
 /// Index into the attributes of the element type a row keys.
 pub type Slot = u8;

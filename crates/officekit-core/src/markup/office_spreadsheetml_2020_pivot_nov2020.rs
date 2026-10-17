@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XXPIM: Option<NamespaceId> = Some(166);
@@ -359,7 +359,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for DataFieldFutureData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_field_future_data(element)
     }
 }
@@ -372,7 +372,7 @@ impl markup::Write for DataFieldFutureData {
 }
 
 impl markup::Read for IgnorableAfterVersion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ignorable_after_version(element)
     }
 }
@@ -385,7 +385,7 @@ impl markup::Write for IgnorableAfterVersion {
 }
 
 impl markup::Read for ImplicitMeasureSupport {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::implicit_measure_support(element)
     }
 }

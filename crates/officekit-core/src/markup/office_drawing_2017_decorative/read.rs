@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `adec:decorative` into a `Decorative`.
 #[must_use]
-pub fn decorative(element: &xml::element::Element) -> super::Decorative {
+pub fn decorative(element: &Element) -> super::Decorative {
     let mut node = super::Decorative::default();
     let mut reader = markup::Reader::new(element, &super::DECORATIVE_SHAPE);
     for (index, field) in &mut reader {

@@ -213,12 +213,12 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `ac:additionalCharacteristics` into a `SetOfAdditionalCharacteristics`.
 #[must_use]
 pub fn set_of_additional_characteristics(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SetOfAdditionalCharacteristics {
     let mut node = super::SetOfAdditionalCharacteristics::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE);
@@ -233,7 +233,7 @@ pub fn set_of_additional_characteristics(
 
 /// Read `ac:characteristic` into a `SingleCharacteristic`.
 #[must_use]
-pub fn single_characteristic(element: &xml::element::Element) -> super::SingleCharacteristic {
+pub fn single_characteristic(element: &Element) -> super::SingleCharacteristic {
     let mut node = super::SingleCharacteristic::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_CHARACTERISTIC_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w15:appearance` into a `Appearance`.
 #[must_use]
-pub fn appearance(element: &xml::element::Element) -> super::Appearance {
+pub fn appearance(element: &Element) -> super::Appearance {
     let mut node = super::Appearance::default();
     let mut reader = markup::Reader::new(element, &super::APPEARANCE_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn appearance(element: &xml::element::Element) -> super::Appearance {
 
 /// Read `w15:chartTrackingRefBased` into a `ChartTrackingRefBased`.
 #[must_use]
-pub fn chart_tracking_ref_based(element: &xml::element::Element) -> super::ChartTrackingRefBased {
+pub fn chart_tracking_ref_based(element: &Element) -> super::ChartTrackingRefBased {
     let mut node = super::ChartTrackingRefBased::default();
     let mut reader = markup::Reader::new(element, &super::CHART_TRACKING_REF_BASED_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn chart_tracking_ref_based(element: &xml::element::Element) -> super::Chart
 
 /// Read `w15:collapsed` into a `Collapsed`.
 #[must_use]
-pub fn collapsed(element: &xml::element::Element) -> super::Collapsed {
+pub fn collapsed(element: &Element) -> super::Collapsed {
     let mut node = super::Collapsed::default();
     let mut reader = markup::Reader::new(element, &super::COLLAPSED_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn collapsed(element: &xml::element::Element) -> super::Collapsed {
 
 /// Read `w15:color` into a `Color`.
 #[must_use]
-pub fn color(element: &xml::element::Element) -> super::Color {
+pub fn color(element: &Element) -> super::Color {
     let mut node = super::Color::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_SHAPE);
     for (index, field) in &mut reader {
@@ -277,7 +277,7 @@ pub fn color(element: &xml::element::Element) -> super::Color {
 
 /// Read `w15:commentEx` into a `CommentEx`.
 #[must_use]
-pub fn comment_ex(element: &xml::element::Element) -> super::CommentEx {
+pub fn comment_ex(element: &Element) -> super::CommentEx {
     let mut node = super::CommentEx::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_EX_SHAPE);
     for (index, field) in &mut reader {
@@ -294,7 +294,7 @@ pub fn comment_ex(element: &xml::element::Element) -> super::CommentEx {
 
 /// Read `w15:commentsEx` into a `CommentsEx`.
 #[must_use]
-pub fn comments_ex(element: &xml::element::Element) -> super::CommentsEx {
+pub fn comments_ex(element: &Element) -> super::CommentsEx {
     let mut node = super::CommentsEx::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_EX_SHAPE);
     for (index, field) in &mut reader {
@@ -308,7 +308,7 @@ pub fn comments_ex(element: &xml::element::Element) -> super::CommentsEx {
 
 /// Read `w15:dataBinding` into a `DataBinding`.
 #[must_use]
-pub fn data_binding(element: &xml::element::Element) -> super::DataBinding {
+pub fn data_binding(element: &Element) -> super::DataBinding {
     let mut node = super::DataBinding::default();
     let mut reader = markup::Reader::new(element, &super::DATA_BINDING_SHAPE);
     for (index, field) in &mut reader {
@@ -326,7 +326,7 @@ pub fn data_binding(element: &xml::element::Element) -> super::DataBinding {
 /// Read `w15:doNotAllowInsertDeleteSection` into a `DoNotAllowInsertDeleteSection`.
 #[must_use]
 pub fn do_not_allow_insert_delete_section(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotAllowInsertDeleteSection {
     let mut node = super::DoNotAllowInsertDeleteSection::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_ALLOW_INSERT_DELETE_SECTION_SHAPE);
@@ -341,7 +341,7 @@ pub fn do_not_allow_insert_delete_section(
 
 /// Read `w15:docId` into a `DocId`.
 #[must_use]
-pub fn doc_id(element: &xml::element::Element) -> super::DocId {
+pub fn doc_id(element: &Element) -> super::DocId {
     let mut node = super::DocId::default();
     let mut reader = markup::Reader::new(element, &super::DOC_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -355,7 +355,7 @@ pub fn doc_id(element: &xml::element::Element) -> super::DocId {
 
 /// Read `w15:footnoteColumns` into a `FootnoteColumns`.
 #[must_use]
-pub fn footnote_columns(element: &xml::element::Element) -> super::FootnoteColumns {
+pub fn footnote_columns(element: &Element) -> super::FootnoteColumns {
     let mut node = super::FootnoteColumns::default();
     let mut reader = markup::Reader::new(element, &super::FOOTNOTE_COLUMNS_SHAPE);
     for (index, field) in &mut reader {
@@ -369,7 +369,7 @@ pub fn footnote_columns(element: &xml::element::Element) -> super::FootnoteColum
 
 /// Read `w15:people` into a `People`.
 #[must_use]
-pub fn people(element: &xml::element::Element) -> super::People {
+pub fn people(element: &Element) -> super::People {
     let mut node = super::People::default();
     let mut reader = markup::Reader::new(element, &super::PEOPLE_SHAPE);
     for (index, field) in &mut reader {
@@ -383,7 +383,7 @@ pub fn people(element: &xml::element::Element) -> super::People {
 
 /// Read `w15:person` into a `Person`.
 #[must_use]
-pub fn person(element: &xml::element::Element) -> super::Person {
+pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = markup::Reader::new(element, &super::PERSON_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +399,7 @@ pub fn person(element: &xml::element::Element) -> super::Person {
 
 /// Read `w15:presenceInfo` into a `PresenceInfo`.
 #[must_use]
-pub fn presence_info(element: &xml::element::Element) -> super::PresenceInfo {
+pub fn presence_info(element: &Element) -> super::PresenceInfo {
     let mut node = super::PresenceInfo::default();
     let mut reader = markup::Reader::new(element, &super::PRESENCE_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -415,7 +415,7 @@ pub fn presence_info(element: &xml::element::Element) -> super::PresenceInfo {
 
 /// Read `w15:repeatingSection` into a `RepeatingSection`.
 #[must_use]
-pub fn repeating_section(element: &xml::element::Element) -> super::RepeatingSection {
+pub fn repeating_section(element: &Element) -> super::RepeatingSection {
     let mut node = super::RepeatingSection::default();
     let mut reader = markup::Reader::new(element, &super::REPEATING_SECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -431,7 +431,7 @@ pub fn repeating_section(element: &xml::element::Element) -> super::RepeatingSec
 
 /// Read `w15:repeatingSectionItem` into a `RepeatingSectionItem`.
 #[must_use]
-pub fn repeating_section_item(element: &xml::element::Element) -> super::RepeatingSectionItem {
+pub fn repeating_section_item(element: &Element) -> super::RepeatingSectionItem {
     let reader = markup::Reader::new(element, &super::REPEATING_SECTION_ITEM_SHAPE);
     super::RepeatingSectionItem {
         unknown: reader.finish(),
@@ -440,7 +440,7 @@ pub fn repeating_section_item(element: &xml::element::Element) -> super::Repeati
 
 /// Read `w15:sectionTitle` into a `SectionTitle`.
 #[must_use]
-pub fn section_title(element: &xml::element::Element) -> super::SectionTitle {
+pub fn section_title(element: &Element) -> super::SectionTitle {
     let mut node = super::SectionTitle::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -454,7 +454,7 @@ pub fn section_title(element: &xml::element::Element) -> super::SectionTitle {
 
 /// Read `w15:webExtensionCreated` into a `WebExtensionCreated`.
 #[must_use]
-pub fn web_extension_created(element: &xml::element::Element) -> super::WebExtensionCreated {
+pub fn web_extension_created(element: &Element) -> super::WebExtensionCreated {
     let mut node = super::WebExtensionCreated::default();
     let mut reader = markup::Reader::new(element, &super::WEB_EXTENSION_CREATED_SHAPE);
     for (index, field) in &mut reader {
@@ -468,7 +468,7 @@ pub fn web_extension_created(element: &xml::element::Element) -> super::WebExten
 
 /// Read `w15:webExtensionLinked` into a `WebExtensionLinked`.
 #[must_use]
-pub fn web_extension_linked(element: &xml::element::Element) -> super::WebExtensionLinked {
+pub fn web_extension_linked(element: &Element) -> super::WebExtensionLinked {
     let mut node = super::WebExtensionLinked::default();
     let mut reader = markup::Reader::new(element, &super::WEB_EXTENSION_LINKED_SHAPE);
     for (index, field) in &mut reader {

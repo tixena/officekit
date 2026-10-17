@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AxisTitle` as its element, `cs:axisTitle`.
 #[must_use]
-pub fn axis_title(node: &super::AxisTitle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn axis_title(node: &super::AxisTitle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AXIS_TITLE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -233,7 +234,7 @@ pub fn axis_title(node: &super::AxisTitle, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `BodyPr` as its element, `cs:bodyPr`.
 #[must_use]
-pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
@@ -264,10 +265,7 @@ pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `CategoryAxisAxisProps` as its element, `cs:categoryAxis`.
 #[must_use]
-pub fn category_axis_axis_props(
-    node: &super::CategoryAxisAxisProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn category_axis_axis_props(node: &super::CategoryAxisAxisProps, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::CATEGORY_AXIS_AXIS_PROPS_SHAPE, &node.unknown).finish()
 }
 
@@ -275,8 +273,8 @@ pub fn category_axis_axis_props(
 #[must_use]
 pub fn category_axis_style_entry(
     node: &super::CategoryAxisStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CATEGORY_AXIS_STYLE_ENTRY_SHAPE,
@@ -296,7 +294,7 @@ pub fn category_axis_style_entry(
 
 /// Write a `ChartArea` as its element, `cs:chartArea`.
 #[must_use]
-pub fn chart_area(node: &super::ChartArea, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn chart_area(node: &super::ChartArea, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHART_AREA_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -312,7 +310,7 @@ pub fn chart_area(node: &super::ChartArea, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ChartStyle` as its element, `cs:chartStyle`.
 #[must_use]
-pub fn chart_style(node: &super::ChartStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn chart_style(node: &super::ChartStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CHART_STYLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.child(&node.axis_title);
@@ -352,7 +350,7 @@ pub fn chart_style(node: &super::ChartStyle, scope: &mut markup::Scope) -> xml::
 
 /// Write a `ColorStyle` as its element, `cs:colorStyle`.
 #[must_use]
-pub fn color_style(node: &super::ColorStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_style(node: &super::ColorStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_STYLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.meth);
     writer.attribute(1, &node.id);
@@ -364,7 +362,7 @@ pub fn color_style(node: &super::ColorStyle, scope: &mut markup::Scope) -> xml::
 
 /// Write a `DataLabel` as its element, `cs:dataLabel`.
 #[must_use]
-pub fn data_label(node: &super::DataLabel, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_label(node: &super::DataLabel, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_LABEL_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -380,10 +378,7 @@ pub fn data_label(node: &super::DataLabel, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `DataLabelCallout` as its element, `cs:dataLabelCallout`.
 #[must_use]
-pub fn data_label_callout(
-    node: &super::DataLabelCallout,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_label_callout(node: &super::DataLabelCallout, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_LABEL_CALLOUT_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -399,7 +394,7 @@ pub fn data_label_callout(
 
 /// Write a `DataLabels` as its element, `cs:dataLabels`.
 #[must_use]
-pub fn data_labels(node: &super::DataLabels, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_labels(node: &super::DataLabels, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_LABELS_SHAPE, &node.unknown);
     writer.attribute(0, &node.position);
     writer.attribute(1, &node.value);
@@ -412,7 +407,7 @@ pub fn data_labels(node: &super::DataLabels, scope: &mut markup::Scope) -> xml::
 
 /// Write a `DataPoint` as its element, `cs:dataPoint`.
 #[must_use]
-pub fn data_point(node: &super::DataPoint, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_point(node: &super::DataPoint, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_POINT_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -428,7 +423,7 @@ pub fn data_point(node: &super::DataPoint, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `DataPoint3D` as its element, `cs:dataPoint3D`.
 #[must_use]
-pub fn data_point3d(node: &super::DataPoint3D, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_point3d(node: &super::DataPoint3D, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_POINT3D_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -444,10 +439,7 @@ pub fn data_point3d(node: &super::DataPoint3D, scope: &mut markup::Scope) -> xml
 
 /// Write a `DataPointLine` as its element, `cs:dataPointLine`.
 #[must_use]
-pub fn data_point_line(
-    node: &super::DataPointLine,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_point_line(node: &super::DataPointLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_POINT_LINE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
@@ -463,10 +455,7 @@ pub fn data_point_line(
 
 /// Write a `DataPointMarker` as its element, `cs:dataPointMarker`.
 #[must_use]
-pub fn data_point_marker(
-    node: &super::DataPointMarker,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_point_marker(node: &super::DataPointMarker, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_POINT_MARKER_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -482,10 +471,7 @@ pub fn data_point_marker(
 
 /// Write a `DataPointMarkerLayout` as its element, `cs:dataPointMarkerLayout`.
 #[must_use]
-pub fn data_point_marker_layout(
-    node: &super::DataPointMarkerLayout,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_point_marker_layout(node: &super::DataPointMarkerLayout, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DATA_POINT_MARKER_LAYOUT_SHAPE, &node.unknown);
     writer.attribute(0, &node.symbol);
@@ -495,10 +481,7 @@ pub fn data_point_marker_layout(
 
 /// Write a `DataPointWireframe` as its element, `cs:dataPointWireframe`.
 #[must_use]
-pub fn data_point_wireframe(
-    node: &super::DataPointWireframe,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_point_wireframe(node: &super::DataPointWireframe, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_POINT_WIREFRAME_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -514,7 +497,7 @@ pub fn data_point_wireframe(
 
 /// Write a `DataSeries` as its element, `cs:dataSeries`.
 #[must_use]
-pub fn data_series(node: &super::DataSeries, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_series(node: &super::DataSeries, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_SERIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.overlap);
     writer.attribute(1, &node.gap_width);
@@ -531,8 +514,8 @@ pub fn data_series(node: &super::DataSeries, scope: &mut markup::Scope) -> xml::
 #[must_use]
 pub fn data_table_data_table_props(
     node: &super::DataTableDataTableProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DATA_TABLE_DATA_TABLE_PROPS_SHAPE,
@@ -547,10 +530,7 @@ pub fn data_table_data_table_props(
 
 /// Write a `DataTableStyleEntry` as its element, `cs:dataTable`.
 #[must_use]
-pub fn data_table_style_entry(
-    node: &super::DataTableStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_table_style_entry(node: &super::DataTableStyleEntry, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DATA_TABLE_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
@@ -567,7 +547,7 @@ pub fn data_table_style_entry(
 
 /// Write a `DefRPr` as its element, `cs:defRPr`.
 #[must_use]
-pub fn def_r_pr(node: &super::DefRPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn def_r_pr(node: &super::DefRPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEF_R_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.kumimoji);
     writer.attribute(1, &node.lang);
@@ -607,7 +587,7 @@ pub fn def_r_pr(node: &super::DefRPr, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `DownBar` as its element, `cs:downBar`.
 #[must_use]
-pub fn down_bar(node: &super::DownBar, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn down_bar(node: &super::DownBar, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOWN_BAR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -623,7 +603,7 @@ pub fn down_bar(node: &super::DownBar, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `DropLine` as its element, `cs:dropLine`.
 #[must_use]
-pub fn drop_line(node: &super::DropLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn drop_line(node: &super::DropLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DROP_LINE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
@@ -639,7 +619,7 @@ pub fn drop_line(node: &super::DropLine, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `EffectRef` as its element, `cs:effectRef`.
 #[must_use]
-pub fn effect_ref(node: &super::EffectRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EFFECT_REF_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.child(&node.style_clr);
@@ -648,7 +628,7 @@ pub fn effect_ref(node: &super::EffectRef, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ErrorBar` as its element, `cs:errorBar`.
 #[must_use]
-pub fn error_bar(node: &super::ErrorBar, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn error_bar(node: &super::ErrorBar, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ERROR_BAR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -664,7 +644,7 @@ pub fn error_bar(node: &super::ErrorBar, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `ExtLst` as its element, `cs:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -672,7 +652,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `FillRef` as its element, `cs:fillRef`.
 #[must_use]
-pub fn fill_ref(node: &super::FillRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILL_REF_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.child(&node.style_clr);
@@ -681,7 +661,7 @@ pub fn fill_ref(node: &super::FillRef, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Floor` as its element, `cs:floor`.
 #[must_use]
-pub fn floor(node: &super::Floor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn floor(node: &super::Floor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FLOOR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -697,7 +677,7 @@ pub fn floor(node: &super::Floor, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `FontRef` as its element, `cs:fontRef`.
 #[must_use]
-pub fn font_ref(node: &super::FontRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FONT_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.idx);
     writer.attribute(1, &node.mods);
@@ -708,10 +688,7 @@ pub fn font_ref(node: &super::FontRef, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `GridlineMajor` as its element, `cs:gridlineMajor`.
 #[must_use]
-pub fn gridline_major(
-    node: &super::GridlineMajor,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn gridline_major(node: &super::GridlineMajor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRIDLINE_MAJOR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -727,10 +704,7 @@ pub fn gridline_major(
 
 /// Write a `GridlineMinor` as its element, `cs:gridlineMinor`.
 #[must_use]
-pub fn gridline_minor(
-    node: &super::GridlineMinor,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn gridline_minor(node: &super::GridlineMinor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRIDLINE_MINOR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -746,7 +720,7 @@ pub fn gridline_minor(
 
 /// Write a `HiLoLine` as its element, `cs:hiLoLine`.
 #[must_use]
-pub fn hi_lo_line(node: &super::HiLoLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hi_lo_line(node: &super::HiLoLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HI_LO_LINE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
@@ -762,7 +736,7 @@ pub fn hi_lo_line(node: &super::HiLoLine, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `LeaderLine` as its element, `cs:leaderLine`.
 #[must_use]
-pub fn leader_line(node: &super::LeaderLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn leader_line(node: &super::LeaderLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEADER_LINE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
@@ -778,10 +752,7 @@ pub fn leader_line(node: &super::LeaderLine, scope: &mut markup::Scope) -> xml::
 
 /// Write a `LegendLegendProps` as its element, `cs:legend`.
 #[must_use]
-pub fn legend_legend_props(
-    node: &super::LegendLegendProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn legend_legend_props(node: &super::LegendLegendProps, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEGEND_LEGEND_PROPS_SHAPE, &node.unknown);
     writer.attribute(0, &node.visible);
     writer.attribute(1, &node.include_in_layout);
@@ -791,10 +762,7 @@ pub fn legend_legend_props(
 
 /// Write a `LegendStyleEntry` as its element, `cs:legend`.
 #[must_use]
-pub fn legend_style_entry(
-    node: &super::LegendStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn legend_style_entry(node: &super::LegendStyleEntry, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEGEND_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -810,10 +778,7 @@ pub fn legend_style_entry(
 
 /// Write a `LineWidthScale` as its element, `cs:lineWidthScale`.
 #[must_use]
-pub fn line_width_scale(
-    node: &super::LineWidthScale,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_width_scale(node: &super::LineWidthScale, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINE_WIDTH_SCALE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -821,7 +786,7 @@ pub fn line_width_scale(
 
 /// Write a `LnRef` as its element, `cs:lnRef`.
 #[must_use]
-pub fn ln_ref(node: &super::LnRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LN_REF_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.child(&node.style_clr);
@@ -830,7 +795,7 @@ pub fn ln_ref(node: &super::LnRef, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `PlotArea` as its element, `cs:plotArea`.
 #[must_use]
-pub fn plot_area(node: &super::PlotArea, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn plot_area(node: &super::PlotArea, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PLOT_AREA_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -846,7 +811,7 @@ pub fn plot_area(node: &super::PlotArea, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `PlotArea3D` as its element, `cs:plotArea3D`.
 #[must_use]
-pub fn plot_area3d(node: &super::PlotArea3D, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn plot_area3d(node: &super::PlotArea3D, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PLOT_AREA3D_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -862,19 +827,13 @@ pub fn plot_area3d(node: &super::PlotArea3D, scope: &mut markup::Scope) -> xml::
 
 /// Write a `SeriesAxisAxisProps` as its element, `cs:seriesAxis`.
 #[must_use]
-pub fn series_axis_axis_props(
-    node: &super::SeriesAxisAxisProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn series_axis_axis_props(node: &super::SeriesAxisAxisProps, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SERIES_AXIS_AXIS_PROPS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `SeriesAxisStyleEntry` as its element, `cs:seriesAxis`.
 #[must_use]
-pub fn series_axis_style_entry(
-    node: &super::SeriesAxisStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn series_axis_style_entry(node: &super::SeriesAxisStyleEntry, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SERIES_AXIS_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
@@ -891,7 +850,7 @@ pub fn series_axis_style_entry(
 
 /// Write a `SeriesLine` as its element, `cs:seriesLine`.
 #[must_use]
-pub fn series_line(node: &super::SeriesLine, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn series_line(node: &super::SeriesLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SERIES_LINE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
@@ -907,7 +866,7 @@ pub fn series_line(node: &super::SeriesLine, scope: &mut markup::Scope) -> xml::
 
 /// Write a `SpPr` as its element, `cs:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -923,7 +882,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `StyleClr` as its element, `cs:styleClr`.
 #[must_use]
-pub fn style_clr(node: &super::StyleClr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn style_clr(node: &super::StyleClr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STYLE_CLR_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.child(&node.content);
@@ -932,10 +891,7 @@ pub fn style_clr(node: &super::StyleClr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `TitleStyleEntry` as its element, `cs:title`.
 #[must_use]
-pub fn title_style_entry(
-    node: &super::TitleStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn title_style_entry(node: &super::TitleStyleEntry, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TITLE_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -951,10 +907,7 @@ pub fn title_style_entry(
 
 /// Write a `TitleTitleProps` as its element, `cs:title`.
 #[must_use]
-pub fn title_title_props(
-    node: &super::TitleTitleProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn title_title_props(node: &super::TitleTitleProps, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TITLE_TITLE_PROPS_SHAPE, &node.unknown);
     writer.attribute(0, &node.position);
     writer.finish()
@@ -962,10 +915,7 @@ pub fn title_title_props(
 
 /// Write a `TrendlineLabel` as its element, `cs:trendlineLabel`.
 #[must_use]
-pub fn trendline_label(
-    node: &super::TrendlineLabel,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn trendline_label(node: &super::TrendlineLabel, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRENDLINE_LABEL_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -981,10 +931,7 @@ pub fn trendline_label(
 
 /// Write a `TrendlineStyleEntry` as its element, `cs:trendline`.
 #[must_use]
-pub fn trendline_style_entry(
-    node: &super::TrendlineStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn trendline_style_entry(node: &super::TrendlineStyleEntry, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRENDLINE_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -1002,8 +949,8 @@ pub fn trendline_style_entry(
 #[must_use]
 pub fn trendline_trendline_props(
     node: &super::TrendlineTrendlineProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TRENDLINE_TRENDLINE_PROPS_SHAPE,
@@ -1017,7 +964,7 @@ pub fn trendline_trendline_props(
 
 /// Write a `UpBar` as its element, `cs:upBar`.
 #[must_use]
-pub fn up_bar(node: &super::UpBar, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn up_bar(node: &super::UpBar, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UP_BAR_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -1033,19 +980,13 @@ pub fn up_bar(node: &super::UpBar, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `ValueAxisAxisProps` as its element, `cs:valueAxis`.
 #[must_use]
-pub fn value_axis_axis_props(
-    node: &super::ValueAxisAxisProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn value_axis_axis_props(node: &super::ValueAxisAxisProps, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::VALUE_AXIS_AXIS_PROPS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ValueAxisStyleEntry` as its element, `cs:valueAxis`.
 #[must_use]
-pub fn value_axis_style_entry(
-    node: &super::ValueAxisStyleEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn value_axis_style_entry(node: &super::ValueAxisStyleEntry, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::VALUE_AXIS_STYLE_ENTRY_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
@@ -1062,7 +1003,7 @@ pub fn value_axis_style_entry(
 
 /// Write a `Variation` as its element, `cs:variation`.
 #[must_use]
-pub fn variation(node: &super::Variation, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn variation(node: &super::Variation, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VARIATION_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1070,7 +1011,7 @@ pub fn variation(node: &super::Variation, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `View3D` as its element, `cs:view3D`.
 #[must_use]
-pub fn view3d(node: &super::View3D, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn view3d(node: &super::View3D, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VIEW3D_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot_x);
     writer.attribute(1, &node.rot_y);
@@ -1083,7 +1024,7 @@ pub fn view3d(node: &super::View3D, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Wall` as its element, `cs:wall`.
 #[must_use]
-pub fn wall(node: &super::Wall, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wall(node: &super::Wall, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WALL_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);

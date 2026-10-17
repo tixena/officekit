@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DesignElem` as its element, `p16:designElem`.
 #[must_use]
-pub fn design_elem(node: &super::DesignElem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn design_elem(node: &super::DesignElem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DESIGN_ELEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

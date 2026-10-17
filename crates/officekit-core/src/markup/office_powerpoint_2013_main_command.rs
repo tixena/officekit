@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_PC: Option<NamespaceId> = Some(81);
@@ -1106,7 +1106,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AnimEffectMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anim_effect_mk_lst(element)
     }
 }
@@ -1119,7 +1119,7 @@ impl markup::Write for AnimEffectMkLst {
 }
 
 impl markup::Read for AnimEffectParentMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anim_effect_parent_mk_lst(element)
     }
 }
@@ -1132,7 +1132,7 @@ impl markup::Write for AnimEffectParentMkLst {
 }
 
 impl markup::Read for CXmlMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_xml_mk_lst(element)
     }
 }
@@ -1145,7 +1145,7 @@ impl markup::Write for CXmlMkLst {
 }
 
 impl markup::Read for CmAuthorMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cm_author_mk_lst(element)
     }
 }
@@ -1158,7 +1158,7 @@ impl markup::Write for CmAuthorMkLst {
 }
 
 impl markup::Read for CmMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cm_mk_lst(element)
     }
 }
@@ -1171,7 +1171,7 @@ impl markup::Write for CmMkLst {
 }
 
 impl markup::Read for CustShowMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cust_show_mk_lst(element)
     }
 }
@@ -1184,7 +1184,7 @@ impl markup::Write for CustShowMkLst {
 }
 
 impl markup::Read for DesignTagMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::design_tag_mk_lst(element)
     }
 }
@@ -1197,7 +1197,7 @@ impl markup::Write for DesignTagMkLst {
 }
 
 impl markup::Read for DocMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::doc_mk(element)
     }
 }
@@ -1210,7 +1210,7 @@ impl markup::Write for DocMk {
 }
 
 impl markup::Read for DocMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::doc_mk_lst(element)
     }
 }
@@ -1223,7 +1223,7 @@ impl markup::Write for DocMkLst {
 }
 
 impl markup::Read for HandoutMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::handout_mk_lst(element)
     }
 }
@@ -1236,7 +1236,7 @@ impl markup::Write for HandoutMkLst {
 }
 
 impl markup::Read for NotesMasterMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_master_mk_lst(element)
     }
 }
@@ -1249,7 +1249,7 @@ impl markup::Write for NotesMasterMkLst {
 }
 
 impl markup::Read for NotesMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_mk_lst(element)
     }
 }
@@ -1262,7 +1262,7 @@ impl markup::Write for NotesMkLst {
 }
 
 impl markup::Read for NotesTxtMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_txt_mk_lst(element)
     }
 }
@@ -1275,7 +1275,7 @@ impl markup::Write for NotesTxtMkLst {
 }
 
 impl markup::Read for SectionLnkObjMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_lnk_obj_mk_lst(element)
     }
 }
@@ -1288,7 +1288,7 @@ impl markup::Write for SectionLnkObjMkLst {
 }
 
 impl markup::Read for SectionMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_mk_lst(element)
     }
 }
@@ -1301,7 +1301,7 @@ impl markup::Write for SectionMkLst {
 }
 
 impl markup::Read for SldBaseMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_base_mk_lst(element)
     }
 }
@@ -1314,7 +1314,7 @@ impl markup::Write for SldBaseMkLst {
 }
 
 impl markup::Read for SldLayoutMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_layout_mk_lst(element)
     }
 }
@@ -1327,7 +1327,7 @@ impl markup::Write for SldLayoutMkLst {
 }
 
 impl markup::Read for SldMasterMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_master_mk_lst(element)
     }
 }
@@ -1340,7 +1340,7 @@ impl markup::Write for SldMasterMkLst {
 }
 
 impl markup::Read for SldMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_mk(element)
     }
 }
@@ -1353,7 +1353,7 @@ impl markup::Write for SldMk {
 }
 
 impl markup::Read for SldMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_mk_lst(element)
     }
 }
@@ -1366,7 +1366,7 @@ impl markup::Write for SldMkLst {
 }
 
 impl markup::Read for SldPosMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_pos_mk_lst(element)
     }
 }
@@ -1379,7 +1379,7 @@ impl markup::Write for SldPosMkLst {
 }
 
 impl markup::Read for TagMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tag_mk_lst(element)
     }
 }
@@ -1392,7 +1392,7 @@ impl markup::Write for TagMkLst {
 }
 
 impl markup::Read for TkAppMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tk_app_mk_lst(element)
     }
 }
@@ -1405,7 +1405,7 @@ impl markup::Write for TkAppMkLst {
 }
 
 impl markup::Read for TocMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::toc_mk_lst(element)
     }
 }

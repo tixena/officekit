@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XXPVI: Option<NamespaceId> = Some(167);
@@ -425,7 +425,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CacheVersionInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cache_version_info(element)
     }
 }
@@ -438,7 +438,7 @@ impl markup::Write for CacheVersionInfo {
 }
 
 impl markup::Read for LastRefreshFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::last_refresh_feature(element)
     }
 }
@@ -451,7 +451,7 @@ impl markup::Write for LastRefreshFeature {
 }
 
 impl markup::Read for LastUpdateFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::last_update_feature(element)
     }
 }
@@ -464,7 +464,7 @@ impl markup::Write for LastUpdateFeature {
 }
 
 impl markup::Read for PivotVersionInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_version_info(element)
     }
 }
@@ -477,7 +477,7 @@ impl markup::Write for PivotVersionInfo {
 }
 
 impl markup::Read for RequiredFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::required_feature(element)
     }
 }

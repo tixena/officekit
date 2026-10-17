@@ -15,6 +15,9 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use officekit_xml::element::{Document, Element};
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, OfficeVersion};
 use regex::Regex;
 
 use super::constraint::{Application, AttributeName, Constraint, ElementName, Registration, Slot};
@@ -30,9 +33,6 @@ use crate::validation::schema::types::{
 };
 use crate::validation::schema::walk::{Observer, traverse};
 use crate::validation::validator::{document_rule, transitional_type};
-use crate::xml::element::{Document, Element};
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, OfficeVersion};
 
 /// The elements counted in a part, by folded part name and the parent they need.
 type CountKey = (String, Option<ElementName>);

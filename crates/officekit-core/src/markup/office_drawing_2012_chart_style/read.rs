@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `cs:axisTitle` into a `AxisTitle`.
 #[must_use]
-pub fn axis_title(element: &xml::element::Element) -> super::AxisTitle {
+pub fn axis_title(element: &Element) -> super::AxisTitle {
     let mut node = super::AxisTitle::default();
     let mut reader = markup::Reader::new(element, &super::AXIS_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -240,7 +240,7 @@ pub fn axis_title(element: &xml::element::Element) -> super::AxisTitle {
 
 /// Read `cs:bodyPr` into a `BodyPr`.
 #[must_use]
-pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
+pub fn body_pr(element: &Element) -> super::BodyPr {
     let mut node = super::BodyPr::default();
     let mut reader = markup::Reader::new(element, &super::BODY_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -278,7 +278,7 @@ pub fn body_pr(element: &xml::element::Element) -> super::BodyPr {
 
 /// Read `cs:categoryAxis` into a `CategoryAxisAxisProps`.
 #[must_use]
-pub fn category_axis_axis_props(element: &xml::element::Element) -> super::CategoryAxisAxisProps {
+pub fn category_axis_axis_props(element: &Element) -> super::CategoryAxisAxisProps {
     let reader = markup::Reader::new(element, &super::CATEGORY_AXIS_AXIS_PROPS_SHAPE);
     super::CategoryAxisAxisProps {
         unknown: reader.finish(),
@@ -287,7 +287,7 @@ pub fn category_axis_axis_props(element: &xml::element::Element) -> super::Categ
 
 /// Read `cs:categoryAxis` into a `CategoryAxisStyleEntry`.
 #[must_use]
-pub fn category_axis_style_entry(element: &xml::element::Element) -> super::CategoryAxisStyleEntry {
+pub fn category_axis_style_entry(element: &Element) -> super::CategoryAxisStyleEntry {
     let mut node = super::CategoryAxisStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_AXIS_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -310,7 +310,7 @@ pub fn category_axis_style_entry(element: &xml::element::Element) -> super::Cate
 
 /// Read `cs:chartArea` into a `ChartArea`.
 #[must_use]
-pub fn chart_area(element: &xml::element::Element) -> super::ChartArea {
+pub fn chart_area(element: &Element) -> super::ChartArea {
     let mut node = super::ChartArea::default();
     let mut reader = markup::Reader::new(element, &super::CHART_AREA_SHAPE);
     for (index, field) in &mut reader {
@@ -333,7 +333,7 @@ pub fn chart_area(element: &xml::element::Element) -> super::ChartArea {
 
 /// Read `cs:chartStyle` into a `ChartStyle`.
 #[must_use]
-pub fn chart_style(element: &xml::element::Element) -> super::ChartStyle {
+pub fn chart_style(element: &Element) -> super::ChartStyle {
     let mut node = super::ChartStyle::default();
     let mut reader = markup::Reader::new(element, &super::CHART_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -380,7 +380,7 @@ pub fn chart_style(element: &xml::element::Element) -> super::ChartStyle {
 
 /// Read `cs:colorStyle` into a `ColorStyle`.
 #[must_use]
-pub fn color_style(element: &xml::element::Element) -> super::ColorStyle {
+pub fn color_style(element: &Element) -> super::ColorStyle {
     let mut node = super::ColorStyle::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +399,7 @@ pub fn color_style(element: &xml::element::Element) -> super::ColorStyle {
 
 /// Read `cs:dataLabel` into a `DataLabel`.
 #[must_use]
-pub fn data_label(element: &xml::element::Element) -> super::DataLabel {
+pub fn data_label(element: &Element) -> super::DataLabel {
     let mut node = super::DataLabel::default();
     let mut reader = markup::Reader::new(element, &super::DATA_LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -422,7 +422,7 @@ pub fn data_label(element: &xml::element::Element) -> super::DataLabel {
 
 /// Read `cs:dataLabelCallout` into a `DataLabelCallout`.
 #[must_use]
-pub fn data_label_callout(element: &xml::element::Element) -> super::DataLabelCallout {
+pub fn data_label_callout(element: &Element) -> super::DataLabelCallout {
     let mut node = super::DataLabelCallout::default();
     let mut reader = markup::Reader::new(element, &super::DATA_LABEL_CALLOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -445,7 +445,7 @@ pub fn data_label_callout(element: &xml::element::Element) -> super::DataLabelCa
 
 /// Read `cs:dataLabels` into a `DataLabels`.
 #[must_use]
-pub fn data_labels(element: &xml::element::Element) -> super::DataLabels {
+pub fn data_labels(element: &Element) -> super::DataLabels {
     let mut node = super::DataLabels::default();
     let mut reader = markup::Reader::new(element, &super::DATA_LABELS_SHAPE);
     for (index, field) in &mut reader {
@@ -465,7 +465,7 @@ pub fn data_labels(element: &xml::element::Element) -> super::DataLabels {
 
 /// Read `cs:dataPoint` into a `DataPoint`.
 #[must_use]
-pub fn data_point(element: &xml::element::Element) -> super::DataPoint {
+pub fn data_point(element: &Element) -> super::DataPoint {
     let mut node = super::DataPoint::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -488,7 +488,7 @@ pub fn data_point(element: &xml::element::Element) -> super::DataPoint {
 
 /// Read `cs:dataPoint3D` into a `DataPoint3D`.
 #[must_use]
-pub fn data_point3d(element: &xml::element::Element) -> super::DataPoint3D {
+pub fn data_point3d(element: &Element) -> super::DataPoint3D {
     let mut node = super::DataPoint3D::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT3D_SHAPE);
     for (index, field) in &mut reader {
@@ -511,7 +511,7 @@ pub fn data_point3d(element: &xml::element::Element) -> super::DataPoint3D {
 
 /// Read `cs:dataPointLine` into a `DataPointLine`.
 #[must_use]
-pub fn data_point_line(element: &xml::element::Element) -> super::DataPointLine {
+pub fn data_point_line(element: &Element) -> super::DataPointLine {
     let mut node = super::DataPointLine::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -534,7 +534,7 @@ pub fn data_point_line(element: &xml::element::Element) -> super::DataPointLine 
 
 /// Read `cs:dataPointMarker` into a `DataPointMarker`.
 #[must_use]
-pub fn data_point_marker(element: &xml::element::Element) -> super::DataPointMarker {
+pub fn data_point_marker(element: &Element) -> super::DataPointMarker {
     let mut node = super::DataPointMarker::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT_MARKER_SHAPE);
     for (index, field) in &mut reader {
@@ -557,7 +557,7 @@ pub fn data_point_marker(element: &xml::element::Element) -> super::DataPointMar
 
 /// Read `cs:dataPointMarkerLayout` into a `DataPointMarkerLayout`.
 #[must_use]
-pub fn data_point_marker_layout(element: &xml::element::Element) -> super::DataPointMarkerLayout {
+pub fn data_point_marker_layout(element: &Element) -> super::DataPointMarkerLayout {
     let mut node = super::DataPointMarkerLayout::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT_MARKER_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -573,7 +573,7 @@ pub fn data_point_marker_layout(element: &xml::element::Element) -> super::DataP
 
 /// Read `cs:dataPointWireframe` into a `DataPointWireframe`.
 #[must_use]
-pub fn data_point_wireframe(element: &xml::element::Element) -> super::DataPointWireframe {
+pub fn data_point_wireframe(element: &Element) -> super::DataPointWireframe {
     let mut node = super::DataPointWireframe::default();
     let mut reader = markup::Reader::new(element, &super::DATA_POINT_WIREFRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -596,7 +596,7 @@ pub fn data_point_wireframe(element: &xml::element::Element) -> super::DataPoint
 
 /// Read `cs:dataSeries` into a `DataSeries`.
 #[must_use]
-pub fn data_series(element: &xml::element::Element) -> super::DataSeries {
+pub fn data_series(element: &Element) -> super::DataSeries {
     let mut node = super::DataSeries::default();
     let mut reader = markup::Reader::new(element, &super::DATA_SERIES_SHAPE);
     for (index, field) in &mut reader {
@@ -618,9 +618,7 @@ pub fn data_series(element: &xml::element::Element) -> super::DataSeries {
 
 /// Read `cs:dataTable` into a `DataTableDataTableProps`.
 #[must_use]
-pub fn data_table_data_table_props(
-    element: &xml::element::Element,
-) -> super::DataTableDataTableProps {
+pub fn data_table_data_table_props(element: &Element) -> super::DataTableDataTableProps {
     let mut node = super::DataTableDataTableProps::default();
     let mut reader = markup::Reader::new(element, &super::DATA_TABLE_DATA_TABLE_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -638,7 +636,7 @@ pub fn data_table_data_table_props(
 
 /// Read `cs:dataTable` into a `DataTableStyleEntry`.
 #[must_use]
-pub fn data_table_style_entry(element: &xml::element::Element) -> super::DataTableStyleEntry {
+pub fn data_table_style_entry(element: &Element) -> super::DataTableStyleEntry {
     let mut node = super::DataTableStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::DATA_TABLE_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -661,7 +659,7 @@ pub fn data_table_style_entry(element: &xml::element::Element) -> super::DataTab
 
 /// Read `cs:defRPr` into a `DefRPr`.
 #[must_use]
-pub fn def_r_pr(element: &xml::element::Element) -> super::DefRPr {
+pub fn def_r_pr(element: &Element) -> super::DefRPr {
     let mut node = super::DefRPr::default();
     let mut reader = markup::Reader::new(element, &super::DEF_R_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -708,7 +706,7 @@ pub fn def_r_pr(element: &xml::element::Element) -> super::DefRPr {
 
 /// Read `cs:downBar` into a `DownBar`.
 #[must_use]
-pub fn down_bar(element: &xml::element::Element) -> super::DownBar {
+pub fn down_bar(element: &Element) -> super::DownBar {
     let mut node = super::DownBar::default();
     let mut reader = markup::Reader::new(element, &super::DOWN_BAR_SHAPE);
     for (index, field) in &mut reader {
@@ -731,7 +729,7 @@ pub fn down_bar(element: &xml::element::Element) -> super::DownBar {
 
 /// Read `cs:dropLine` into a `DropLine`.
 #[must_use]
-pub fn drop_line(element: &xml::element::Element) -> super::DropLine {
+pub fn drop_line(element: &Element) -> super::DropLine {
     let mut node = super::DropLine::default();
     let mut reader = markup::Reader::new(element, &super::DROP_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -754,7 +752,7 @@ pub fn drop_line(element: &xml::element::Element) -> super::DropLine {
 
 /// Read `cs:effectRef` into a `EffectRef`.
 #[must_use]
-pub fn effect_ref(element: &xml::element::Element) -> super::EffectRef {
+pub fn effect_ref(element: &Element) -> super::EffectRef {
     let mut node = super::EffectRef::default();
     let mut reader = markup::Reader::new(element, &super::EFFECT_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -770,7 +768,7 @@ pub fn effect_ref(element: &xml::element::Element) -> super::EffectRef {
 
 /// Read `cs:errorBar` into a `ErrorBar`.
 #[must_use]
-pub fn error_bar(element: &xml::element::Element) -> super::ErrorBar {
+pub fn error_bar(element: &Element) -> super::ErrorBar {
     let mut node = super::ErrorBar::default();
     let mut reader = markup::Reader::new(element, &super::ERROR_BAR_SHAPE);
     for (index, field) in &mut reader {
@@ -793,7 +791,7 @@ pub fn error_bar(element: &xml::element::Element) -> super::ErrorBar {
 
 /// Read `cs:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -807,7 +805,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `cs:fillRef` into a `FillRef`.
 #[must_use]
-pub fn fill_ref(element: &xml::element::Element) -> super::FillRef {
+pub fn fill_ref(element: &Element) -> super::FillRef {
     let mut node = super::FillRef::default();
     let mut reader = markup::Reader::new(element, &super::FILL_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -823,7 +821,7 @@ pub fn fill_ref(element: &xml::element::Element) -> super::FillRef {
 
 /// Read `cs:floor` into a `Floor`.
 #[must_use]
-pub fn floor(element: &xml::element::Element) -> super::Floor {
+pub fn floor(element: &Element) -> super::Floor {
     let mut node = super::Floor::default();
     let mut reader = markup::Reader::new(element, &super::FLOOR_SHAPE);
     for (index, field) in &mut reader {
@@ -846,7 +844,7 @@ pub fn floor(element: &xml::element::Element) -> super::Floor {
 
 /// Read `cs:fontRef` into a `FontRef`.
 #[must_use]
-pub fn font_ref(element: &xml::element::Element) -> super::FontRef {
+pub fn font_ref(element: &Element) -> super::FontRef {
     let mut node = super::FontRef::default();
     let mut reader = markup::Reader::new(element, &super::FONT_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -864,7 +862,7 @@ pub fn font_ref(element: &xml::element::Element) -> super::FontRef {
 
 /// Read `cs:gridlineMajor` into a `GridlineMajor`.
 #[must_use]
-pub fn gridline_major(element: &xml::element::Element) -> super::GridlineMajor {
+pub fn gridline_major(element: &Element) -> super::GridlineMajor {
     let mut node = super::GridlineMajor::default();
     let mut reader = markup::Reader::new(element, &super::GRIDLINE_MAJOR_SHAPE);
     for (index, field) in &mut reader {
@@ -887,7 +885,7 @@ pub fn gridline_major(element: &xml::element::Element) -> super::GridlineMajor {
 
 /// Read `cs:gridlineMinor` into a `GridlineMinor`.
 #[must_use]
-pub fn gridline_minor(element: &xml::element::Element) -> super::GridlineMinor {
+pub fn gridline_minor(element: &Element) -> super::GridlineMinor {
     let mut node = super::GridlineMinor::default();
     let mut reader = markup::Reader::new(element, &super::GRIDLINE_MINOR_SHAPE);
     for (index, field) in &mut reader {
@@ -910,7 +908,7 @@ pub fn gridline_minor(element: &xml::element::Element) -> super::GridlineMinor {
 
 /// Read `cs:hiLoLine` into a `HiLoLine`.
 #[must_use]
-pub fn hi_lo_line(element: &xml::element::Element) -> super::HiLoLine {
+pub fn hi_lo_line(element: &Element) -> super::HiLoLine {
     let mut node = super::HiLoLine::default();
     let mut reader = markup::Reader::new(element, &super::HI_LO_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -933,7 +931,7 @@ pub fn hi_lo_line(element: &xml::element::Element) -> super::HiLoLine {
 
 /// Read `cs:leaderLine` into a `LeaderLine`.
 #[must_use]
-pub fn leader_line(element: &xml::element::Element) -> super::LeaderLine {
+pub fn leader_line(element: &Element) -> super::LeaderLine {
     let mut node = super::LeaderLine::default();
     let mut reader = markup::Reader::new(element, &super::LEADER_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -956,7 +954,7 @@ pub fn leader_line(element: &xml::element::Element) -> super::LeaderLine {
 
 /// Read `cs:legend` into a `LegendLegendProps`.
 #[must_use]
-pub fn legend_legend_props(element: &xml::element::Element) -> super::LegendLegendProps {
+pub fn legend_legend_props(element: &Element) -> super::LegendLegendProps {
     let mut node = super::LegendLegendProps::default();
     let mut reader = markup::Reader::new(element, &super::LEGEND_LEGEND_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -973,7 +971,7 @@ pub fn legend_legend_props(element: &xml::element::Element) -> super::LegendLege
 
 /// Read `cs:legend` into a `LegendStyleEntry`.
 #[must_use]
-pub fn legend_style_entry(element: &xml::element::Element) -> super::LegendStyleEntry {
+pub fn legend_style_entry(element: &Element) -> super::LegendStyleEntry {
     let mut node = super::LegendStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::LEGEND_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -996,7 +994,7 @@ pub fn legend_style_entry(element: &xml::element::Element) -> super::LegendStyle
 
 /// Read `cs:lineWidthScale` into a `LineWidthScale`.
 #[must_use]
-pub fn line_width_scale(element: &xml::element::Element) -> super::LineWidthScale {
+pub fn line_width_scale(element: &Element) -> super::LineWidthScale {
     let mut node = super::LineWidthScale::default();
     let mut reader = markup::Reader::new(element, &super::LINE_WIDTH_SCALE_SHAPE);
     for (index, field) in &mut reader {
@@ -1010,7 +1008,7 @@ pub fn line_width_scale(element: &xml::element::Element) -> super::LineWidthScal
 
 /// Read `cs:lnRef` into a `LnRef`.
 #[must_use]
-pub fn ln_ref(element: &xml::element::Element) -> super::LnRef {
+pub fn ln_ref(element: &Element) -> super::LnRef {
     let mut node = super::LnRef::default();
     let mut reader = markup::Reader::new(element, &super::LN_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -1026,7 +1024,7 @@ pub fn ln_ref(element: &xml::element::Element) -> super::LnRef {
 
 /// Read `cs:plotArea` into a `PlotArea`.
 #[must_use]
-pub fn plot_area(element: &xml::element::Element) -> super::PlotArea {
+pub fn plot_area(element: &Element) -> super::PlotArea {
     let mut node = super::PlotArea::default();
     let mut reader = markup::Reader::new(element, &super::PLOT_AREA_SHAPE);
     for (index, field) in &mut reader {
@@ -1049,7 +1047,7 @@ pub fn plot_area(element: &xml::element::Element) -> super::PlotArea {
 
 /// Read `cs:plotArea3D` into a `PlotArea3D`.
 #[must_use]
-pub fn plot_area3d(element: &xml::element::Element) -> super::PlotArea3D {
+pub fn plot_area3d(element: &Element) -> super::PlotArea3D {
     let mut node = super::PlotArea3D::default();
     let mut reader = markup::Reader::new(element, &super::PLOT_AREA3D_SHAPE);
     for (index, field) in &mut reader {
@@ -1072,7 +1070,7 @@ pub fn plot_area3d(element: &xml::element::Element) -> super::PlotArea3D {
 
 /// Read `cs:seriesAxis` into a `SeriesAxisAxisProps`.
 #[must_use]
-pub fn series_axis_axis_props(element: &xml::element::Element) -> super::SeriesAxisAxisProps {
+pub fn series_axis_axis_props(element: &Element) -> super::SeriesAxisAxisProps {
     let reader = markup::Reader::new(element, &super::SERIES_AXIS_AXIS_PROPS_SHAPE);
     super::SeriesAxisAxisProps {
         unknown: reader.finish(),
@@ -1081,7 +1079,7 @@ pub fn series_axis_axis_props(element: &xml::element::Element) -> super::SeriesA
 
 /// Read `cs:seriesAxis` into a `SeriesAxisStyleEntry`.
 #[must_use]
-pub fn series_axis_style_entry(element: &xml::element::Element) -> super::SeriesAxisStyleEntry {
+pub fn series_axis_style_entry(element: &Element) -> super::SeriesAxisStyleEntry {
     let mut node = super::SeriesAxisStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::SERIES_AXIS_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -1104,7 +1102,7 @@ pub fn series_axis_style_entry(element: &xml::element::Element) -> super::Series
 
 /// Read `cs:seriesLine` into a `SeriesLine`.
 #[must_use]
-pub fn series_line(element: &xml::element::Element) -> super::SeriesLine {
+pub fn series_line(element: &Element) -> super::SeriesLine {
     let mut node = super::SeriesLine::default();
     let mut reader = markup::Reader::new(element, &super::SERIES_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -1127,7 +1125,7 @@ pub fn series_line(element: &xml::element::Element) -> super::SeriesLine {
 
 /// Read `cs:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -1150,7 +1148,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `cs:styleClr` into a `StyleClr`.
 #[must_use]
-pub fn style_clr(element: &xml::element::Element) -> super::StyleClr {
+pub fn style_clr(element: &Element) -> super::StyleClr {
     let mut node = super::StyleClr::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -1166,7 +1164,7 @@ pub fn style_clr(element: &xml::element::Element) -> super::StyleClr {
 
 /// Read `cs:title` into a `TitleStyleEntry`.
 #[must_use]
-pub fn title_style_entry(element: &xml::element::Element) -> super::TitleStyleEntry {
+pub fn title_style_entry(element: &Element) -> super::TitleStyleEntry {
     let mut node = super::TitleStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -1189,7 +1187,7 @@ pub fn title_style_entry(element: &xml::element::Element) -> super::TitleStyleEn
 
 /// Read `cs:title` into a `TitleTitleProps`.
 #[must_use]
-pub fn title_title_props(element: &xml::element::Element) -> super::TitleTitleProps {
+pub fn title_title_props(element: &Element) -> super::TitleTitleProps {
     let mut node = super::TitleTitleProps::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_TITLE_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1203,7 +1201,7 @@ pub fn title_title_props(element: &xml::element::Element) -> super::TitleTitlePr
 
 /// Read `cs:trendlineLabel` into a `TrendlineLabel`.
 #[must_use]
-pub fn trendline_label(element: &xml::element::Element) -> super::TrendlineLabel {
+pub fn trendline_label(element: &Element) -> super::TrendlineLabel {
     let mut node = super::TrendlineLabel::default();
     let mut reader = markup::Reader::new(element, &super::TRENDLINE_LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -1226,7 +1224,7 @@ pub fn trendline_label(element: &xml::element::Element) -> super::TrendlineLabel
 
 /// Read `cs:trendline` into a `TrendlineStyleEntry`.
 #[must_use]
-pub fn trendline_style_entry(element: &xml::element::Element) -> super::TrendlineStyleEntry {
+pub fn trendline_style_entry(element: &Element) -> super::TrendlineStyleEntry {
     let mut node = super::TrendlineStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::TRENDLINE_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -1249,9 +1247,7 @@ pub fn trendline_style_entry(element: &xml::element::Element) -> super::Trendlin
 
 /// Read `cs:trendline` into a `TrendlineTrendlineProps`.
 #[must_use]
-pub fn trendline_trendline_props(
-    element: &xml::element::Element,
-) -> super::TrendlineTrendlineProps {
+pub fn trendline_trendline_props(element: &Element) -> super::TrendlineTrendlineProps {
     let mut node = super::TrendlineTrendlineProps::default();
     let mut reader = markup::Reader::new(element, &super::TRENDLINE_TRENDLINE_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -1268,7 +1264,7 @@ pub fn trendline_trendline_props(
 
 /// Read `cs:upBar` into a `UpBar`.
 #[must_use]
-pub fn up_bar(element: &xml::element::Element) -> super::UpBar {
+pub fn up_bar(element: &Element) -> super::UpBar {
     let mut node = super::UpBar::default();
     let mut reader = markup::Reader::new(element, &super::UP_BAR_SHAPE);
     for (index, field) in &mut reader {
@@ -1291,7 +1287,7 @@ pub fn up_bar(element: &xml::element::Element) -> super::UpBar {
 
 /// Read `cs:valueAxis` into a `ValueAxisAxisProps`.
 #[must_use]
-pub fn value_axis_axis_props(element: &xml::element::Element) -> super::ValueAxisAxisProps {
+pub fn value_axis_axis_props(element: &Element) -> super::ValueAxisAxisProps {
     let reader = markup::Reader::new(element, &super::VALUE_AXIS_AXIS_PROPS_SHAPE);
     super::ValueAxisAxisProps {
         unknown: reader.finish(),
@@ -1300,7 +1296,7 @@ pub fn value_axis_axis_props(element: &xml::element::Element) -> super::ValueAxi
 
 /// Read `cs:valueAxis` into a `ValueAxisStyleEntry`.
 #[must_use]
-pub fn value_axis_style_entry(element: &xml::element::Element) -> super::ValueAxisStyleEntry {
+pub fn value_axis_style_entry(element: &Element) -> super::ValueAxisStyleEntry {
     let mut node = super::ValueAxisStyleEntry::default();
     let mut reader = markup::Reader::new(element, &super::VALUE_AXIS_STYLE_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -1323,7 +1319,7 @@ pub fn value_axis_style_entry(element: &xml::element::Element) -> super::ValueAx
 
 /// Read `cs:variation` into a `Variation`.
 #[must_use]
-pub fn variation(element: &xml::element::Element) -> super::Variation {
+pub fn variation(element: &Element) -> super::Variation {
     let mut node = super::Variation::default();
     let mut reader = markup::Reader::new(element, &super::VARIATION_SHAPE);
     for (index, field) in &mut reader {
@@ -1337,7 +1333,7 @@ pub fn variation(element: &xml::element::Element) -> super::Variation {
 
 /// Read `cs:view3D` into a `View3D`.
 #[must_use]
-pub fn view3d(element: &xml::element::Element) -> super::View3D {
+pub fn view3d(element: &Element) -> super::View3D {
     let mut node = super::View3D::default();
     let mut reader = markup::Reader::new(element, &super::VIEW3D_SHAPE);
     for (index, field) in &mut reader {
@@ -1357,7 +1353,7 @@ pub fn view3d(element: &xml::element::Element) -> super::View3D {
 
 /// Read `cs:wall` into a `Wall`.
 #[must_use]
-pub fn wall(element: &xml::element::Element) -> super::Wall {
+pub fn wall(element: &Element) -> super::Wall {
     let mut node = super::Wall::default();
     let mut reader = markup::Reader::new(element, &super::WALL_SHAPE);
     for (index, field) in &mut reader {

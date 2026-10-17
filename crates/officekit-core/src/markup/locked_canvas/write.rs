@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `LockedCanvasContainer` as its element, `lc:lockedCanvas`.
 #[must_use]
-pub fn locked_canvas_container(
-    node: &super::LockedCanvasContainer,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn locked_canvas_container(node: &super::LockedCanvasContainer, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::LOCKED_CANVAS_CONTAINER_SHAPE, &node.unknown);
     writer.child(&node.non_visual_properties_for_a_group_shape);

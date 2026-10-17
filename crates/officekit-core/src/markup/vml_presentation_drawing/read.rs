@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `pvml:iscomment` into a `InkAnnotationFlag`.
 #[must_use]
-pub fn ink_annotation_flag(element: &xml::element::Element) -> super::InkAnnotationFlag {
+pub fn ink_annotation_flag(element: &Element) -> super::InkAnnotationFlag {
     let reader = markup::Reader::new(element, &super::INK_ANNOTATION_FLAG_SHAPE);
     super::InkAnnotationFlag {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn ink_annotation_flag(element: &xml::element::Element) -> super::InkAnnotat
 
 /// Read `pvml:textdata` into a `VMLDiagramText`.
 #[must_use]
-pub fn vml_diagram_text(element: &xml::element::Element) -> super::VMLDiagramText {
+pub fn vml_diagram_text(element: &Element) -> super::VMLDiagramText {
     let mut node = super::VMLDiagramText::default();
     let mut reader = markup::Reader::new(element, &super::VML_DIAGRAM_TEXT_SHAPE);
     for (index, field) in &mut reader {

@@ -214,14 +214,15 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AbsoluteAnchorShapeSize` as its element, `xdr:absoluteAnchor`.
 #[must_use]
 pub fn absolute_anchor_shape_size(
     node: &super::AbsoluteAnchorShapeSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -236,7 +237,7 @@ pub fn absolute_anchor_shape_size(
 
 /// Write a `ClientData` as its element, `xdr:clientData`.
 #[must_use]
-pub fn client_data(node: &super::ClientData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn client_data(node: &super::ClientData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CLIENT_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.f_locks_with_sheet);
     writer.attribute(1, &node.f_prints_with_sheet);
@@ -245,7 +246,7 @@ pub fn client_data(node: &super::ClientData, scope: &mut markup::Scope) -> xml::
 
 /// Write a `Col` as its element, `xdr:col`.
 #[must_use]
-pub fn col(node: &super::Col, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn col(node: &super::Col, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COL_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -253,10 +254,7 @@ pub fn col(node: &super::Col, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `ColumnOffset` as its element, `xdr:colOff`.
 #[must_use]
-pub fn column_offset(
-    node: &super::ColumnOffset,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn column_offset(node: &super::ColumnOffset, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLUMN_OFFSET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -266,8 +264,8 @@ pub fn column_offset(
 #[must_use]
 pub fn connection_non_visual_shape_properties(
     node: &super::ConnectionNonVisualShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CONNECTION_NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
@@ -281,10 +279,7 @@ pub fn connection_non_visual_shape_properties(
 
 /// Write a `ConnectionShape` as its element, `xdr:cxnSp`.
 #[must_use]
-pub fn connection_shape(
-    node: &super::ConnectionShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONNECTION_SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -296,7 +291,7 @@ pub fn connection_shape(
 
 /// Write a `ContentPart` as its element, `xdr:contentPart`.
 #[must_use]
-pub fn content_part(node: &super::ContentPart, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -304,10 +299,7 @@ pub fn content_part(node: &super::ContentPart, scope: &mut markup::Scope) -> xml
 
 /// Write a `EndingAnchorPoint` as its element, `xdr:to`.
 #[must_use]
-pub fn ending_anchor_point(
-    node: &super::EndingAnchorPoint,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ENDING_ANCHOR_POINT_SHAPE, &node.unknown);
     writer.child(&node.col);
     writer.child(&node.column_offset);
@@ -318,10 +310,7 @@ pub fn ending_anchor_point(
 
 /// Write a `GraphicFrame` as its element, `xdr:graphicFrame`.
 #[must_use]
-pub fn graphic_frame(
-    node: &super::GraphicFrame,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -333,7 +322,7 @@ pub fn graphic_frame(
 
 /// Write a `GroupShape` as its element, `xdr:grpSp`.
 #[must_use]
-pub fn group_shape(node: &super::GroupShape, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
     writer.child(&node.non_visual_properties);
     writer.child(&node.properties);
@@ -348,10 +337,7 @@ pub fn group_shape_content(node: &super::GroupShapeContent, writer: &mut markup:
 
 /// Write a `GroupShapeProperties` as its element, `xdr:grpSpPr`.
 #[must_use]
-pub fn group_shape_properties(
-    node: &super::GroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GROUP_SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -367,8 +353,8 @@ pub fn group_shape_properties(
 #[must_use]
 pub fn non_visual_connector_shape_drawing_properties(
     node: &super::NonVisualConnectorShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -385,8 +371,8 @@ pub fn non_visual_connector_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -407,8 +393,8 @@ pub fn non_visual_drawing_properties(
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
     node: &super::NonVisualGraphicFrameDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -423,8 +409,8 @@ pub fn non_visual_graphic_frame_drawing_properties(
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
     node: &super::NonVisualGroupShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -439,8 +425,8 @@ pub fn non_visual_group_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
     node: &super::NonVisualPictureDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -456,8 +442,8 @@ pub fn non_visual_picture_drawing_properties(
 #[must_use]
 pub fn non_visual_properties_for_a_connection_shape(
     node: &super::NonVisualPropertiesForAConnectionShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
@@ -472,8 +458,8 @@ pub fn non_visual_properties_for_a_connection_shape(
 #[must_use]
 pub fn non_visual_properties_for_a_graphic_frame(
     node: &super::NonVisualPropertiesForAGraphicFrame,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
@@ -488,8 +474,8 @@ pub fn non_visual_properties_for_a_graphic_frame(
 #[must_use]
 pub fn non_visual_properties_for_a_group_shape(
     node: &super::NonVisualPropertiesForAGroupShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
@@ -504,8 +490,8 @@ pub fn non_visual_properties_for_a_group_shape(
 #[must_use]
 pub fn non_visual_properties_for_a_picture(
     node: &super::NonVisualPropertiesForAPicture,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
@@ -520,8 +506,8 @@ pub fn non_visual_properties_for_a_picture(
 #[must_use]
 pub fn non_visual_properties_for_a_shape(
     node: &super::NonVisualPropertiesForAShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
@@ -541,8 +527,8 @@ pub fn object(node: &super::ObjectContent, writer: &mut markup::Writer<'_, '_>) 
 #[must_use]
 pub fn one_cell_anchor_shape_size(
     node: &super::OneCellAnchorShapeSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::ONE_CELL_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -557,7 +543,7 @@ pub fn one_cell_anchor_shape_size(
 
 /// Write a `Picture` as its element, `xdr:pic`.
 #[must_use]
-pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -570,7 +556,7 @@ pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `PictureFill` as its element, `xdr:blipFill`.
 #[must_use]
-pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
@@ -582,7 +568,7 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml
 
 /// Write a `Position` as its element, `xdr:pos`.
 #[must_use]
-pub fn position(node: &super::Position, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn position(node: &super::Position, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POSITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -591,7 +577,7 @@ pub fn position(node: &super::Position, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Row` as its element, `xdr:row`.
 #[must_use]
-pub fn row(node: &super::Row, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn row(node: &super::Row, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROW_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -599,7 +585,7 @@ pub fn row(node: &super::Row, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `RowOffset` as its element, `xdr:rowOff`.
 #[must_use]
-pub fn row_offset(node: &super::RowOffset, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn row_offset(node: &super::RowOffset, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROW_OFFSET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -607,7 +593,7 @@ pub fn row_offset(node: &super::RowOffset, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Shape` as its element, `xdr:sp`.
 #[must_use]
-pub fn shape(node: &super::Shape, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.textlink);
@@ -622,7 +608,7 @@ pub fn shape(node: &super::Shape, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ShapeExtent` as its element, `xdr:ext`.
 #[must_use]
-pub fn shape_extent(node: &super::ShapeExtent, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_EXTENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.cx);
     writer.attribute(1, &node.cy);
@@ -631,10 +617,7 @@ pub fn shape_extent(node: &super::ShapeExtent, scope: &mut markup::Scope) -> xml
 
 /// Write a `ShapeProperties` as its element, `xdr:spPr`.
 #[must_use]
-pub fn shape_properties(
-    node: &super::ShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -650,7 +633,7 @@ pub fn shape_properties(
 
 /// Write a `ShapeStyle` as its element, `xdr:style`.
 #[must_use]
-pub fn shape_style(node: &super::ShapeStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
@@ -661,10 +644,7 @@ pub fn shape_style(node: &super::ShapeStyle, scope: &mut markup::Scope) -> xml::
 
 /// Write a `ShapeTextBody` as its element, `xdr:txBody`.
 #[must_use]
-pub fn shape_text_body(
-    node: &super::ShapeTextBody,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_text_body(node: &super::ShapeTextBody, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_TEXT_BODY_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.text_list_styles);
@@ -674,10 +654,7 @@ pub fn shape_text_body(
 
 /// Write a `StartingAnchorPoint` as its element, `xdr:from`.
 #[must_use]
-pub fn starting_anchor_point(
-    node: &super::StartingAnchorPoint,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn starting_anchor_point(node: &super::StartingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STARTING_ANCHOR_POINT_SHAPE, &node.unknown);
     writer.child(&node.col);
     writer.child(&node.column_offset);
@@ -690,8 +667,8 @@ pub fn starting_anchor_point(
 #[must_use]
 pub fn two_cell_anchor_shape_size(
     node: &super::TwoCellAnchorShapeSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TWO_CELL_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -707,10 +684,7 @@ pub fn two_cell_anchor_shape_size(
 
 /// Write a `WorksheetDrawing` as its element, `xdr:wsDr`.
 #[must_use]
-pub fn worksheet_drawing(
-    node: &super::WorksheetDrawing,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn worksheet_drawing(node: &super::WorksheetDrawing, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WORKSHEET_DRAWING_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -726,7 +700,7 @@ pub fn worksheet_drawing_content(
 
 /// Write a `Xfrm` as its element, `xdr:xfrm`.
 #[must_use]
-pub fn xfrm(node: &super::Xfrm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_P: Option<NamespaceId> = Some(64);
@@ -666,7 +666,7 @@ pub enum TaskHistoryEventContent {
     Add(Add),
     Asgn(Asgn),
     Date(Date),
-    Other(xml::element::Node),
+    Other(Node),
     PcntCmplt(PcntCmplt),
     Title(Title),
     UnasgnAll(UnasgnAll),
@@ -776,7 +776,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Add {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::add(element)
     }
 }
@@ -789,7 +789,7 @@ impl markup::Write for Add {
 }
 
 impl markup::Read for Anchr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchr(element)
     }
 }
@@ -802,7 +802,7 @@ impl markup::Write for Anchr {
 }
 
 impl markup::Read for Asgn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::asgn(element)
     }
 }
@@ -815,7 +815,7 @@ impl markup::Write for Asgn {
 }
 
 impl markup::Read for Atrbtn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::atrbtn(element)
     }
 }
@@ -828,7 +828,7 @@ impl markup::Write for Atrbtn {
 }
 
 impl markup::Read for Comment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment(element)
     }
 }
@@ -841,7 +841,7 @@ impl markup::Write for Comment {
 }
 
 impl markup::Read for Date {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date(element)
     }
 }
@@ -854,7 +854,7 @@ impl markup::Write for Date {
 }
 
 impl markup::Read for Event {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::event(element)
     }
 }
@@ -867,7 +867,7 @@ impl markup::Write for Event {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -880,7 +880,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for History {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::history(element)
     }
 }
@@ -893,7 +893,7 @@ impl markup::Write for History {
 }
 
 impl markup::Read for PcntCmplt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pcnt_cmplt(element)
     }
 }
@@ -906,7 +906,7 @@ impl markup::Write for PcntCmplt {
 }
 
 impl markup::Read for TaskDetails {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task_details(element)
     }
 }
@@ -919,11 +919,11 @@ impl markup::Write for TaskDetails {
 }
 
 impl markup::Read for TaskHistoryEventContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P228, "add")) => Self::Add(markup::read(element)),
             Some((NS_P228, "asgn")) => Self::Asgn(markup::read(element)),
@@ -933,7 +933,7 @@ impl markup::Read for TaskHistoryEventContent {
             Some((NS_P228, "unasgnAll")) => Self::UnasgnAll(markup::read(element)),
             Some((NS_P228, "undo")) => Self::Undo(markup::read(element)),
             Some((NS_P228, "unknown")) => Self::Unknown(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -955,7 +955,7 @@ impl markup::Write for TaskHistoryEventContent {
 }
 
 impl markup::Read for Title {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title(element)
     }
 }
@@ -968,7 +968,7 @@ impl markup::Write for Title {
 }
 
 impl markup::Read for UnasgnAll {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unasgn_all(element)
     }
 }
@@ -981,7 +981,7 @@ impl markup::Write for UnasgnAll {
 }
 
 impl markup::Read for Undo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::undo(element)
     }
 }
@@ -994,7 +994,7 @@ impl markup::Write for Undo {
 }
 
 impl markup::Read for Unknown {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unknown(element)
     }
 }

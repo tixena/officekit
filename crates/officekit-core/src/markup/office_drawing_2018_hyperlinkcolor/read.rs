@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `ahyp:hlinkClr` into a `HlinkClr`.
 #[must_use]
-pub fn hlink_clr(element: &xml::element::Element) -> super::HlinkClr {
+pub fn hlink_clr(element: &Element) -> super::HlinkClr {
     let mut node = super::HlinkClr::default();
     let mut reader = markup::Reader::new(element, &super::HLINK_CLR_SHAPE);
     for (index, field) in &mut reader {

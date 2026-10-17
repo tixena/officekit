@@ -1,11 +1,12 @@
 use core::iter;
 
+use officekit_xml::name::OfficeVersion;
+
 use super::{Validator, document_parts, reachable_parts, rule};
 use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
 use crate::validation::error::{ErrorCode, ValidationError};
-use crate::xml::name::OfficeVersion;
 
 const COMMENTS_EXTENDED: &str =
     "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -450,7 +450,7 @@ pub struct WebImagesSrd {
 }
 
 impl markup::Read for Address {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::address(element)
     }
 }
@@ -463,7 +463,7 @@ impl markup::Write for Address {
 }
 
 impl markup::Read for Blip {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blip(element)
     }
 }
@@ -476,7 +476,7 @@ impl markup::Write for Blip {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -489,7 +489,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for MoreImagesAddress {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::more_images_address(element)
     }
 }
@@ -502,7 +502,7 @@ impl markup::Write for MoreImagesAddress {
 }
 
 impl markup::Read for WebImageSrd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_image_srd(element)
     }
 }
@@ -515,7 +515,7 @@ impl markup::Write for WebImageSrd {
 }
 
 impl markup::Read for WebImagesSrd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_images_srd(element)
     }
 }

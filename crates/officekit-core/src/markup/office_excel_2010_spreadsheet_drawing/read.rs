@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xdr14:cNvContentPartPr` into a `CNvContentPartPr`.
 #[must_use]
-pub fn c_nv_content_part_pr(element: &xml::element::Element) -> super::CNvContentPartPr {
+pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
     let mut node = super::CNvContentPartPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -234,7 +234,7 @@ pub fn c_nv_content_part_pr(element: &xml::element::Element) -> super::CNvConten
 
 /// Read `xdr14:cNvPr` into a `CNvPr`.
 #[must_use]
-pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
+pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -256,7 +256,7 @@ pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
 
 /// Read `xdr14:contentPart` into a `ContentPart`.
 #[must_use]
-pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
+pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = markup::Reader::new(element, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -276,7 +276,7 @@ pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
 
 /// Read `xdr14:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -290,7 +290,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xdr14:nvContentPartPr` into a `NvContentPartPr`.
 #[must_use]
-pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPartPr {
+pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = markup::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -306,7 +306,7 @@ pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPa
 
 /// Read `xdr14:nvPr` into a `NvPr`.
 #[must_use]
-pub fn nv_pr(element: &xml::element::Element) -> super::NvPr {
+pub fn nv_pr(element: &Element) -> super::NvPr {
     let mut node = super::NvPr::default();
     let mut reader = markup::Reader::new(element, &super::NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -322,7 +322,7 @@ pub fn nv_pr(element: &xml::element::Element) -> super::NvPr {
 
 /// Read `xdr14:xfrm` into a `Xfrm`.
 #[must_use]
-pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
+pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {

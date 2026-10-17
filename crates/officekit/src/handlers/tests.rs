@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use officekit_core::packaging::package::Package;
 use officekit_core::packaging::part_name::PartName;
 use officekit_core::validation::error::{ErrorCode, Step, ValidationError};
-use officekit_core::xml::name::OfficeVersion;
+use officekit_xml::name::OfficeVersion;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 

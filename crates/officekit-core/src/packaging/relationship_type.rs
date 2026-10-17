@@ -346,7 +346,7 @@
 //! parts Part 2 defines and of Microsoft's extensions are one URI in both classes.
 
 use crate::packaging::relationship::RelationshipType;
-use crate::xml::conformance::ConformanceClass;
+use officekit_xml::conformance::ConformanceClass;
 
 impl RelationshipType {
     /// The relationship type of `embedded_control_persistence_binary_data`; one URI in both
@@ -1155,9 +1155,10 @@ impl RelationshipType {
     /// The spelling `class` writes.
     #[must_use]
     pub const fn in_class(&self, class: ConformanceClass) -> &'static str {
-        match class {
-            ConformanceClass::Strict => self.strict,
-            ConformanceClass::Transitional => self.transitional,
+        if matches!(class, ConformanceClass::Strict) {
+            self.strict
+        } else {
+            self.transitional
         }
     }
 

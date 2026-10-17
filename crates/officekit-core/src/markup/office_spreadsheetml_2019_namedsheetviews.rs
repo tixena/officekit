@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -664,7 +664,7 @@ pub struct SortRule {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum SortRuleContent {
-    Other(xml::element::Node),
+    Other(Node),
     RichSortCondition(RichSortCondition),
     SortCondition(SortCondition),
 }
@@ -736,7 +736,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ColumnFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_filter(element)
     }
 }
@@ -749,7 +749,7 @@ impl markup::Write for ColumnFilter {
 }
 
 impl markup::Read for Dxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxf(element)
     }
 }
@@ -762,7 +762,7 @@ impl markup::Write for Dxf {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -775,7 +775,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Filter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filter(element)
     }
 }
@@ -788,7 +788,7 @@ impl markup::Write for Filter {
 }
 
 impl markup::Read for NamedSheetView {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::named_sheet_view(element)
     }
 }
@@ -801,7 +801,7 @@ impl markup::Write for NamedSheetView {
 }
 
 impl markup::Read for NamedSheetViews {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::named_sheet_views(element)
     }
 }
@@ -814,7 +814,7 @@ impl markup::Write for NamedSheetViews {
 }
 
 impl markup::Read for NsvFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nsv_filter(element)
     }
 }
@@ -827,7 +827,7 @@ impl markup::Write for NsvFilter {
 }
 
 impl markup::Read for RichSortCondition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_sort_condition(element)
     }
 }
@@ -840,7 +840,7 @@ impl markup::Write for RichSortCondition {
 }
 
 impl markup::Read for SortCondition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sort_condition(element)
     }
 }
@@ -853,7 +853,7 @@ impl markup::Write for SortCondition {
 }
 
 impl markup::Read for SortRule {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sort_rule(element)
     }
 }
@@ -866,15 +866,15 @@ impl markup::Write for SortRule {
 }
 
 impl markup::Read for SortRuleContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XNSV, "richSortCondition")) => Self::RichSortCondition(markup::read(element)),
             Some((NS_XNSV, "sortCondition")) => Self::SortCondition(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -890,7 +890,7 @@ impl markup::Write for SortRuleContent {
 }
 
 impl markup::Read for SortRules {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sort_rules(element)
     }
 }

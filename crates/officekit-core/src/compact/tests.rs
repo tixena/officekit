@@ -1,11 +1,12 @@
 use alloc::collections::BTreeSet;
 
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
+
 use super::{Comments, Compaction, PartCompaction, compact_package, compact_tree};
 use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
 
 const A: &str = r#"xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main""#;
 const C: &str = r#"xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart""#;
@@ -38,10 +39,7 @@ const SLIDE: &str = "application/vnd.openxmlformats-officedocument.presentationm
 const STYLES: &str = "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml";
 const WORKBOOK: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml";
 
-const KEEP: WriteOptions = WriteOptions {
-    layout: Layout::Compact,
-    namespace_cleanup: false,
-};
+const KEEP: WriteOptions = WriteOptions::new(Layout::Compact, false);
 
 /// Compact `xml` and write it back compact, with what the compaction did.
 fn compacted(xml: &str, comments: Comments) -> (String, PartCompaction) {

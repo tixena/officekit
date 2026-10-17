@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `PctHeight` as its element, `wp14:pctHeight`.
 #[must_use]
-pub fn pct_height(node: &super::PctHeight, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pct_height(node: &super::PctHeight, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PCT_HEIGHT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -225,10 +226,7 @@ pub fn pct_height(node: &super::PctHeight, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `PctPosHOffset` as its element, `wp14:pctPosHOffset`.
 #[must_use]
-pub fn pct_pos_h_offset(
-    node: &super::PctPosHOffset,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pct_pos_h_offset(node: &super::PctPosHOffset, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PCT_POS_H_OFFSET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -236,10 +234,7 @@ pub fn pct_pos_h_offset(
 
 /// Write a `PctPosVOffset` as its element, `wp14:pctPosVOffset`.
 #[must_use]
-pub fn pct_pos_v_offset(
-    node: &super::PctPosVOffset,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pct_pos_v_offset(node: &super::PctPosVOffset, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PCT_POS_V_OFFSET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -247,7 +242,7 @@ pub fn pct_pos_v_offset(
 
 /// Write a `PctWidth` as its element, `wp14:pctWidth`.
 #[must_use]
-pub fn pct_width(node: &super::PctWidth, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pct_width(node: &super::PctWidth, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PCT_WIDTH_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -255,7 +250,7 @@ pub fn pct_width(node: &super::PctWidth, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `SizeRelH` as its element, `wp14:sizeRelH`.
 #[must_use]
-pub fn size_rel_h(node: &super::SizeRelH, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn size_rel_h(node: &super::SizeRelH, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SIZE_REL_H_SHAPE, &node.unknown);
     writer.attribute(0, &node.relative_from);
     writer.child(&node.pct_width);
@@ -264,7 +259,7 @@ pub fn size_rel_h(node: &super::SizeRelH, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `SizeRelV` as its element, `wp14:sizeRelV`.
 #[must_use]
-pub fn size_rel_v(node: &super::SizeRelV, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn size_rel_v(node: &super::SizeRelV, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SIZE_REL_V_SHAPE, &node.unknown);
     writer.attribute(0, &node.relative_from);
     writer.child(&node.pct_height);

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `xlrvrel:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Rel` as its element, `xlrvrel:rel`.
 #[must_use]
-pub fn rel(node: &super::Rel, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rel(node: &super::Rel, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -233,10 +234,7 @@ pub fn rel(node: &super::Rel, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `RichValueRels` as its element, `xlrvrel:richValueRels`.
 #[must_use]
-pub fn rich_value_rels(
-    node: &super::RichValueRels,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rich_value_rels(node: &super::RichValueRels, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_VALUE_RELS_SHAPE, &node.unknown);
     writer.child(&node.rel);
     writer.child(&node.ext_lst);

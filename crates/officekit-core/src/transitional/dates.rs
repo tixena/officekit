@@ -7,10 +7,11 @@
 
 use core::mem;
 
+use officekit_xml::values::DateTime;
+
 use crate::class_rules::{BASE_1900, BASE_1904};
 use crate::markup::spreadsheet::Worksheet;
 use crate::packaging::part_name::PartName;
-use crate::xml::values::DateTime;
 
 #[cfg(test)]
 mod tests;
@@ -116,16 +117,11 @@ fn cell_date(text: &str, date1904: bool) -> Option<DateTime> {
         Some(found) => time_of_day(found)?,
         None => (0, 0, 0, 0),
     };
-    Some(DateTime {
-        day,
-        hour,
-        minute,
-        month,
-        nanosecond,
-        offset_minutes: None,
-        second,
-        year,
-    })
+    Some(DateTime::new(
+        (year, month, day),
+        (hour, minute, second, nanosecond),
+        None,
+    ))
 }
 
 /// `YYYY-MM-DD`: a year from 1 to 9999, a month, and a day of that month.

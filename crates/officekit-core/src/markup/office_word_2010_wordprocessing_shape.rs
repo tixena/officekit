@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -635,7 +635,7 @@ pub struct LinkedTxbx {
 pub enum ShapeNonVisualPropertiesContent {
     CNvCnPr(CNvCnPr),
     CNvSpPr(CNvSpPr),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// One item of `CT_WordprocessingShape`: choice in `CT_WordprocessingShape`.
@@ -643,7 +643,7 @@ pub enum ShapeNonVisualPropertiesContent {
 #[non_exhaustive]
 pub enum ShapeTextContent {
     LinkedTxbx(LinkedTxbx),
-    Other(xml::element::Node),
+    Other(Node),
     Txbx(Txbx),
 }
 
@@ -759,7 +759,7 @@ pub struct Wsp {
 }
 
 impl markup::Read for BodyPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::body_pr(element)
     }
 }
@@ -772,7 +772,7 @@ impl markup::Write for BodyPr {
 }
 
 impl markup::Read for CNvCnPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_cn_pr(element)
     }
 }
@@ -785,7 +785,7 @@ impl markup::Write for CNvCnPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -798,7 +798,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for CNvSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_sp_pr(element)
     }
 }
@@ -811,7 +811,7 @@ impl markup::Write for CNvSpPr {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -824,7 +824,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for LinkedTxbx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_txbx(element)
     }
 }
@@ -843,15 +843,15 @@ impl Default for ShapeNonVisualPropertiesContent {
 }
 
 impl markup::Read for ShapeNonVisualPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WPS, "cNvCnPr")) => Self::CNvCnPr(markup::read(element)),
             Some((NS_WPS, "cNvSpPr")) => Self::CNvSpPr(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -867,15 +867,15 @@ impl markup::Write for ShapeNonVisualPropertiesContent {
 }
 
 impl markup::Read for ShapeTextContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WPS, "linkedTxbx")) => Self::LinkedTxbx(markup::read(element)),
             Some((NS_WPS, "txbx")) => Self::Txbx(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -891,7 +891,7 @@ impl markup::Write for ShapeTextContent {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -904,7 +904,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for Style {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style(element)
     }
 }
@@ -917,7 +917,7 @@ impl markup::Write for Style {
 }
 
 impl markup::Read for Txbx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::txbx(element)
     }
 }
@@ -930,7 +930,7 @@ impl markup::Write for Txbx {
 }
 
 impl markup::Read for Wsp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wsp(element)
     }
 }

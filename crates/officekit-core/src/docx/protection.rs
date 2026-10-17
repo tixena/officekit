@@ -7,6 +7,7 @@ mod tests;
 
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+use officekit_xml::conformance::ConformanceClass;
 use sha1::{Digest as _, Sha1};
 
 use crate::markup::common_simple_types::{
@@ -16,7 +17,6 @@ use crate::markup::common_simple_types::{
 use crate::markup::wordprocessing::{
     DecimalNumberValue, DocumentEditingRestrictions, DocumentProtectionTypesMember,
 };
-use crate::xml::conformance::ConformanceClass;
 
 /// The rounds Aspose.Words 24.6.0 runs after the first hash.
 pub const SPIN_COUNT: u32 = 50_000;
@@ -156,22 +156,19 @@ pub fn entry(
     }
     let salt_text = STANDARD.encode(salt);
     let spin_count = DecimalNumberValue(SPIN_COUNT.to_string());
-    match class {
-        ConformanceClass::Transitional => {
-            entry.crypt_provider_type = Some(CryptographicProviderTypes("rsaFull".to_owned()));
-            entry.crypt_algorithm_class = Some(CryptographicAlgorithmClasses("hash".to_owned()));
-            entry.crypt_algorithm_type = Some(CryptographicAlgorithmTypes("typeAny".to_owned()));
-            entry.crypt_algorithm_sid = Some(DecimalNumberValue("4".to_owned()));
-            entry.crypt_spin_count = Some(spin_count);
-            entry.hash = Some(STANDARD.encode(legacy_hash(password, salt)));
-            entry.salt = Some(salt_text);
-        }
-        ConformanceClass::Strict => {
-            entry.algorithm_name = Some("SHA-1".to_owned());
-            entry.hash_value = Some(STANDARD.encode(hash(password, salt)));
-            entry.salt_value = Some(salt_text);
-            entry.spin_count = Some(spin_count);
-        }
+    if class == ConformanceClass::Transitional {
+        entry.crypt_provider_type = Some(CryptographicProviderTypes("rsaFull".to_owned()));
+        entry.crypt_algorithm_class = Some(CryptographicAlgorithmClasses("hash".to_owned()));
+        entry.crypt_algorithm_type = Some(CryptographicAlgorithmTypes("typeAny".to_owned()));
+        entry.crypt_algorithm_sid = Some(DecimalNumberValue("4".to_owned()));
+        entry.crypt_spin_count = Some(spin_count);
+        entry.hash = Some(STANDARD.encode(legacy_hash(password, salt)));
+        entry.salt = Some(salt_text);
+    } else {
+        entry.algorithm_name = Some("SHA-1".to_owned());
+        entry.hash_value = Some(STANDARD.encode(hash(password, salt)));
+        entry.salt_value = Some(salt_text);
+        entry.spin_count = Some(spin_count);
     }
     entry
 }

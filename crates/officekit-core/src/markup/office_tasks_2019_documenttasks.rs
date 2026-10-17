@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_OEL: Option<NamespaceId> = Some(62);
@@ -788,7 +788,7 @@ pub enum TaskHistoryEventContent {
     Assign(Assign),
     Create(Create),
     Delete(Delete),
-    Other(xml::element::Node),
+    Other(Node),
     Priority(Priority),
     Progress(Progress),
     Schedule(Schedule),
@@ -925,7 +925,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Anchor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor(element)
     }
 }
@@ -938,7 +938,7 @@ impl markup::Write for Anchor {
 }
 
 impl markup::Read for Assign {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::assign(element)
     }
 }
@@ -951,7 +951,7 @@ impl markup::Write for Assign {
 }
 
 impl markup::Read for Attribution {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attribution(element)
     }
 }
@@ -964,7 +964,7 @@ impl markup::Write for Attribution {
 }
 
 impl markup::Read for Comment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment(element)
     }
 }
@@ -977,7 +977,7 @@ impl markup::Write for Comment {
 }
 
 impl markup::Read for Create {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::create(element)
     }
 }
@@ -990,7 +990,7 @@ impl markup::Write for Create {
 }
 
 impl markup::Read for Delete {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::delete(element)
     }
 }
@@ -1003,7 +1003,7 @@ impl markup::Write for Delete {
 }
 
 impl markup::Read for Event {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::event(element)
     }
 }
@@ -1016,7 +1016,7 @@ impl markup::Write for Event {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -1029,7 +1029,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for History {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::history(element)
     }
 }
@@ -1042,7 +1042,7 @@ impl markup::Write for History {
 }
 
 impl markup::Read for Priority {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::priority(element)
     }
 }
@@ -1055,7 +1055,7 @@ impl markup::Write for Priority {
 }
 
 impl markup::Read for Progress {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::progress(element)
     }
 }
@@ -1068,7 +1068,7 @@ impl markup::Write for Progress {
 }
 
 impl markup::Read for Schedule {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::schedule(element)
     }
 }
@@ -1081,7 +1081,7 @@ impl markup::Write for Schedule {
 }
 
 impl markup::Read for SetTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_title(element)
     }
 }
@@ -1094,7 +1094,7 @@ impl markup::Write for SetTitle {
 }
 
 impl markup::Read for Task {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task(element)
     }
 }
@@ -1107,11 +1107,11 @@ impl markup::Write for Task {
 }
 
 impl markup::Read for TaskHistoryEventContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_T, "Assign")) => Self::Assign(markup::read(element)),
             Some((NS_T, "Create")) => Self::Create(markup::read(element)),
@@ -1124,7 +1124,7 @@ impl markup::Read for TaskHistoryEventContent {
             Some((NS_T, "UnassignAll")) => Self::UnassignAll(markup::read(element)),
             Some((NS_T, "Undelete")) => Self::Undelete(markup::read(element)),
             Some((NS_T, "Undo")) => Self::Undo(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1149,7 +1149,7 @@ impl markup::Write for TaskHistoryEventContent {
 }
 
 impl markup::Read for Tasks {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tasks(element)
     }
 }
@@ -1162,7 +1162,7 @@ impl markup::Write for Tasks {
 }
 
 impl markup::Read for Unassign {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unassign(element)
     }
 }
@@ -1175,7 +1175,7 @@ impl markup::Write for Unassign {
 }
 
 impl markup::Read for UnassignAll {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unassign_all(element)
     }
 }
@@ -1188,7 +1188,7 @@ impl markup::Write for UnassignAll {
 }
 
 impl markup::Read for Undelete {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::undelete(element)
     }
 }
@@ -1201,7 +1201,7 @@ impl markup::Write for Undelete {
 }
 
 impl markup::Read for Undo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::undo(element)
     }
 }

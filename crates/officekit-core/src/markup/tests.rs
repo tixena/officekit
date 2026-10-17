@@ -1,11 +1,12 @@
+use officekit_xml::element::{Document, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
+
 use super::{
     Children, Context, Descend, Extra, Pending, Placement, Rebase, Scope, Transform as _, Unknown,
     Visit as _, Visitor,
 };
-use crate::xml::element::{Document, Element, NamespaceDeclaration, Node};
-use crate::xml::name::{Namespace, QName};
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
 
 const EXTENDED_PROPERTIES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
@@ -179,16 +180,10 @@ fn text_of(element: &Element) -> String {
 }
 
 fn to_xml(root: Element) -> String {
-    let document = Document {
-        declaration: None,
-        epilog: Vec::new(),
-        prolog: Vec::new(),
-        root,
-    };
-    let options = WriteOptions {
-        layout: Layout::Compact,
-        namespace_cleanup: false,
-    };
+    let mut document = Document::new("", root);
+    document.declaration = None;
+    document.prolog.clear();
+    let options = WriteOptions::new(Layout::Compact, false);
     String::from_utf8(document.to_xml(options)).unwrap()
 }
 
@@ -361,10 +356,8 @@ fn a_visitor_is_shown_each_element_and_walks_in_on_yes() {
 
 #[test]
 fn a_scope_gives_the_bound_prefix_until_an_inner_declaration_rebinds_it() {
-    let declare = |prefix: &str, uri: &str| NamespaceDeclaration {
-        prefix: prefix.to_owned(),
-        uri: uri.to_owned(),
-    };
+    let declare =
+        |prefix: &str, uri: &str| NamespaceDeclaration::new(prefix.to_owned(), uri.to_owned());
     let mut scope = Scope::default();
     let mut paragraph = scope.element(W, "p", &[declare("a", W_STRICT)]);
     scope.attribute(&mut paragraph, Some(W), "rsidR", "1");
@@ -387,10 +380,7 @@ fn a_scope_gives_the_bound_prefix_until_an_inner_declaration_rebinds_it() {
 }
 
 fn declaration(prefix: &str, uri: &str) -> NamespaceDeclaration {
-    NamespaceDeclaration {
-        prefix: prefix.to_owned(),
-        uri: uri.to_owned(),
-    }
+    NamespaceDeclaration::new(prefix.to_owned(), uri.to_owned())
 }
 
 #[test]

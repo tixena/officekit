@@ -214,14 +214,15 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AbsolutePositionOffset` as its element, `wp:posOffset`.
 #[must_use]
 pub fn absolute_position_offset(
     node: &super::AbsolutePositionOffset,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::ABSOLUTE_POSITION_OFFSET_SHAPE, &node.unknown);
     writer.text(&node.value);
@@ -237,8 +238,8 @@ pub fn anchor(node: &super::AnchorContent, writer: &mut markup::Writer<'_, '_>) 
 #[must_use]
 pub fn anchor_for_floating_drawing_ml_object(
     node: &super::AnchorForFloatingDrawingMLObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE,
@@ -273,10 +274,7 @@ pub fn anchor_for_floating_drawing_ml_object(
 
 /// Write a `BackgroundFormatting` as its element, `wp:bg`.
 #[must_use]
-pub fn background_formatting(
-    node: &super::BackgroundFormatting,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BACKGROUND_FORMATTING_SHAPE, &node.unknown);
     writer.child(&node.fill_properties_content);
     writer.child(&node.effect_properties_content);
@@ -285,10 +283,7 @@ pub fn background_formatting(
 
 /// Write a `BodyProperties` as its element, `wp:bodyPr`.
 #[must_use]
-pub fn body_properties(
-    node: &super::BodyProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn body_properties(node: &super::BodyProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BODY_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
@@ -321,8 +316,8 @@ pub fn body_properties(
 #[must_use]
 pub fn common_drawing_ml_non_visual_properties(
     node: &super::CommonDrawingMLNonVisualProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE,
@@ -335,7 +330,7 @@ pub fn common_drawing_ml_non_visual_properties(
 
 /// Write a `ContentPart` as its element, `wp:contentPart`.
 #[must_use]
-pub fn content_part(node: &super::ContentPart, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.attribute(1, &node.id);
@@ -354,8 +349,8 @@ pub fn drawing_canvas(node: &super::DrawingCanvasContent, writer: &mut markup::W
 #[must_use]
 pub fn drawing_object_non_visual_properties(
     node: &super::DrawingObjectNonVisualProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE,
@@ -374,10 +369,7 @@ pub fn drawing_object_non_visual_properties(
 
 /// Write a `DrawingObjectSize` as its element, `wp:extent`.
 #[must_use]
-pub fn drawing_object_size(
-    node: &super::DrawingObjectSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn drawing_object_size(node: &super::DrawingObjectSize, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DRAWING_OBJECT_SIZE_SHAPE, &node.unknown);
     writer.attribute(0, &node.cx);
     writer.attribute(1, &node.cy);
@@ -386,10 +378,7 @@ pub fn drawing_object_size(
 
 /// Write a `ExtensionList` as its element, `wp:extLst`.
 #[must_use]
-pub fn extension_list(
-    node: &super::ExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXTENSION_LIST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -399,8 +388,8 @@ pub fn extension_list(
 #[must_use]
 pub fn graphical_object_container(
     node: &super::GraphicalObjectContainer,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::GRAPHICAL_OBJECT_CONTAINER_SHAPE,
@@ -416,7 +405,7 @@ pub fn graphical_object_container(
 
 /// Write a `GroupShape` as its element, `wp:grpSp`.
 #[must_use]
-pub fn group_shape(node: &super::GroupShape, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_group_shape_drawing_properties);
@@ -433,10 +422,7 @@ pub fn group_shape_content(node: &super::GroupShapeContent, writer: &mut markup:
 
 /// Write a `GroupShapeProperties` as its element, `wp:grpSpPr`.
 #[must_use]
-pub fn group_shape_properties(
-    node: &super::GroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GROUP_SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -450,10 +436,7 @@ pub fn group_shape_properties(
 
 /// Write a `HorizontalPositioning` as its element, `wp:positionH`.
 #[must_use]
-pub fn horizontal_positioning(
-    node: &super::HorizontalPositioning,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn horizontal_positioning(node: &super::HorizontalPositioning, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::HORIZONTAL_POSITIONING_SHAPE, &node.unknown);
     writer.attribute(0, &node.relative_from);
@@ -472,10 +455,7 @@ pub fn horizontal_positioning_content(
 
 /// Write a `InlineDrawingMLObject` as its element, `wp:inline`.
 #[must_use]
-pub fn inline_drawing_ml_object(
-    node: &super::InlineDrawingMLObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn inline_drawing_ml_object(node: &super::InlineDrawingMLObject, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::INLINE_DRAWING_ML_OBJECT_SHAPE, &node.unknown);
     writer.attribute(0, &node.dist_t);
@@ -494,10 +474,7 @@ pub fn inline_drawing_ml_object(
 
 /// Write a `NoTextWrapping` as its element, `wp:wrapNone`.
 #[must_use]
-pub fn no_text_wrapping(
-    node: &super::NoTextWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_text_wrapping(node: &super::NoTextWrapping, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_TEXT_WRAPPING_SHAPE, &node.unknown).finish()
 }
 
@@ -505,8 +482,8 @@ pub fn no_text_wrapping(
 #[must_use]
 pub fn non_visual_connector_shape_drawing_properties(
     node: &super::NonVisualConnectorShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -523,8 +500,8 @@ pub fn non_visual_connector_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_content_part_drawing_properties(
     node: &super::NonVisualContentPartDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE,
@@ -540,8 +517,8 @@ pub fn non_visual_content_part_drawing_properties(
 #[must_use]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -562,8 +539,8 @@ pub fn non_visual_drawing_properties(
 #[must_use]
 pub fn non_visual_drawing_properties_for_a_shape(
     node: &super::NonVisualDrawingPropertiesForAShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
@@ -579,8 +556,8 @@ pub fn non_visual_drawing_properties_for_a_shape(
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
     node: &super::NonVisualGraphicFrameDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -595,8 +572,8 @@ pub fn non_visual_graphic_frame_drawing_properties(
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
     node: &super::NonVisualGroupShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -609,10 +586,7 @@ pub fn non_visual_group_shape_drawing_properties(
 
 /// Write a `NvContentPartPr` as its element, `wp:nvContentPartPr`.
 #[must_use]
-pub fn nv_content_part_pr(
-    node: &super::NvContentPartPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_content_part_drawing_properties);
@@ -623,8 +597,8 @@ pub fn nv_content_part_pr(
 #[must_use]
 pub fn object_extents_including_effects(
     node: &super::ObjectExtentsIncludingEffects,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE,
@@ -641,8 +615,8 @@ pub fn object_extents_including_effects(
 #[must_use]
 pub fn relative_horizontal_alignment(
     node: &super::RelativeHorizontalAlignment,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE,
@@ -656,8 +630,8 @@ pub fn relative_horizontal_alignment(
 #[must_use]
 pub fn relative_vertical_alignment(
     node: &super::RelativeVerticalAlignment,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::RELATIVE_VERTICAL_ALIGNMENT_SHAPE,
@@ -671,8 +645,8 @@ pub fn relative_vertical_alignment(
 #[must_use]
 pub fn rich_text_box_content_container(
     node: &super::RichTextBoxContentContainer,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
@@ -693,10 +667,7 @@ pub fn shape_non_visual_properties(
 
 /// Write a `ShapeProperties` as its element, `wp:spPr`.
 #[must_use]
-pub fn shape_properties(
-    node: &super::ShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -712,7 +683,7 @@ pub fn shape_properties(
 
 /// Write a `ShapeStyle` as its element, `wp:style`.
 #[must_use]
-pub fn shape_style(node: &super::ShapeStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
@@ -730,8 +701,8 @@ pub fn shape_text(node: &super::ShapeTextContent, writer: &mut markup::Writer<'_
 #[must_use]
 pub fn simple_positioning_coordinates(
     node: &super::SimplePositioningCoordinates,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SIMPLE_POSITIONING_COORDINATES_SHAPE,
@@ -744,10 +715,7 @@ pub fn simple_positioning_coordinates(
 
 /// Write a `SquareWrapping` as its element, `wp:wrapSquare`.
 #[must_use]
-pub fn square_wrapping(
-    node: &super::SquareWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn square_wrapping(node: &super::SquareWrapping, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SQUARE_WRAPPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_t);
@@ -762,8 +730,8 @@ pub fn square_wrapping(
 #[must_use]
 pub fn textual_contents_of_shape_linked_txbx(
     node: &super::TextualContentsOfShapeLinkedTxbx,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE,
@@ -779,8 +747,8 @@ pub fn textual_contents_of_shape_linked_txbx(
 #[must_use]
 pub fn textual_contents_of_shape_txbx(
     node: &super::TextualContentsOfShapeTxbx,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE,
@@ -794,10 +762,7 @@ pub fn textual_contents_of_shape_txbx(
 
 /// Write a `ThroughWrapping` as its element, `wp:wrapThrough`.
 #[must_use]
-pub fn through_wrapping(
-    node: &super::ThroughWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn through_wrapping(node: &super::ThroughWrapping, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THROUGH_WRAPPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_l);
@@ -808,10 +773,7 @@ pub fn through_wrapping(
 
 /// Write a `TightWrapping` as its element, `wp:wrapTight`.
 #[must_use]
-pub fn tight_wrapping(
-    node: &super::TightWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn tight_wrapping(node: &super::TightWrapping, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TIGHT_WRAPPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_l);
@@ -822,10 +784,7 @@ pub fn tight_wrapping(
 
 /// Write a `TopAndBottomWrapping` as its element, `wp:wrapTopAndBottom`.
 #[must_use]
-pub fn top_and_bottom_wrapping(
-    node: &super::TopAndBottomWrapping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn top_and_bottom_wrapping(node: &super::TopAndBottomWrapping, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::TOP_AND_BOTTOM_WRAPPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.dist_t);
@@ -836,10 +795,7 @@ pub fn top_and_bottom_wrapping(
 
 /// Write a `VerticalPositioning` as its element, `wp:positionV`.
 #[must_use]
-pub fn vertical_positioning(
-    node: &super::VerticalPositioning,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn vertical_positioning(node: &super::VerticalPositioning, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VERTICAL_POSITIONING_SHAPE, &node.unknown);
     writer.attribute(0, &node.relative_from);
     writer.child(&node.content);
@@ -857,10 +813,7 @@ pub fn vertical_positioning_content(
 
 /// Write a `WholeE2OFormatting` as its element, `wp:whole`.
 #[must_use]
-pub fn whole_e2o_formatting(
-    node: &super::WholeE2OFormatting,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn whole_e2o_formatting(node: &super::WholeE2OFormatting, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WHOLE_E2O_FORMATTING_SHAPE, &node.unknown);
     writer.child(&node.outline);
     writer.child(&node.content);
@@ -871,8 +824,8 @@ pub fn whole_e2o_formatting(
 #[must_use]
 pub fn wordprocessing_ml_drawing_canvas(
     node: &super::WordprocessingMLDrawingCanvas,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE,
@@ -887,10 +840,7 @@ pub fn wordprocessing_ml_drawing_canvas(
 
 /// Write a `WordprocessingMLShape` as its element, `wp:wsp`.
 #[must_use]
-pub fn wordprocessing_ml_shape(
-    node: &super::WordprocessingMLShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn wordprocessing_ml_shape(node: &super::WordprocessingMLShape, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::WORDPROCESSING_ML_SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.normal_east_asian_flow);
@@ -908,8 +858,8 @@ pub fn wordprocessing_ml_shape(
 #[must_use]
 pub fn wordprocessing_ml_shape_group(
     node: &super::WordprocessingMLShapeGroup,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE,
@@ -925,10 +875,7 @@ pub fn wordprocessing_ml_shape_group(
 
 /// Write a `WrappingPolygon` as its element, `wp:wrapPolygon`.
 #[must_use]
-pub fn wrapping_polygon(
-    node: &super::WrappingPolygon,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn wrapping_polygon(node: &super::WrappingPolygon, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WRAPPING_POLYGON_SHAPE, &node.unknown);
     writer.attribute(0, &node.edited);
     writer.child(&node.start);
@@ -940,8 +887,8 @@ pub fn wrapping_polygon(
 #[must_use]
 pub fn wrapping_polygon_line_end_position(
     node: &super::WrappingPolygonLineEndPosition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE,
@@ -954,10 +901,7 @@ pub fn wrapping_polygon_line_end_position(
 
 /// Write a `WrappingPolygonStart` as its element, `wp:start`.
 #[must_use]
-pub fn wrapping_polygon_start(
-    node: &super::WrappingPolygonStart,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn wrapping_polygon_start(node: &super::WrappingPolygonStart, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::WRAPPING_POLYGON_START_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
@@ -967,7 +911,7 @@ pub fn wrapping_polygon_start(
 
 /// Write a `Xfrm` as its element, `wp:xfrm`.
 #[must_use]
-pub fn xfrm(node: &super::Xfrm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

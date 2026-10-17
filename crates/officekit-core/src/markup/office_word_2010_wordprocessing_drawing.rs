@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_WP14: Option<NamespaceId> = Some(113);
@@ -486,7 +486,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for PctHeight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pct_height(element)
     }
 }
@@ -499,7 +499,7 @@ impl markup::Write for PctHeight {
 }
 
 impl markup::Read for PctPosHOffset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pct_pos_h_offset(element)
     }
 }
@@ -512,7 +512,7 @@ impl markup::Write for PctPosHOffset {
 }
 
 impl markup::Read for PctPosVOffset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pct_pos_v_offset(element)
     }
 }
@@ -525,7 +525,7 @@ impl markup::Write for PctPosVOffset {
 }
 
 impl markup::Read for PctWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pct_width(element)
     }
 }
@@ -676,7 +676,7 @@ impl SizeRelFromV {
 }
 
 impl markup::Read for SizeRelH {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::size_rel_h(element)
     }
 }
@@ -689,7 +689,7 @@ impl markup::Write for SizeRelH {
 }
 
 impl markup::Read for SizeRelV {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::size_rel_v(element)
     }
 }

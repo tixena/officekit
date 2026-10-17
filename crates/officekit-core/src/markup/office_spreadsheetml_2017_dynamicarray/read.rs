@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xda:dynamicArrayProperties` into a `DynamicArrayProperties`.
 #[must_use]
-pub fn dynamic_array_properties(element: &xml::element::Element) -> super::DynamicArrayProperties {
+pub fn dynamic_array_properties(element: &Element) -> super::DynamicArrayProperties {
     let mut node = super::DynamicArrayProperties::default();
     let mut reader = markup::Reader::new(element, &super::DYNAMIC_ARRAY_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -234,7 +234,7 @@ pub fn dynamic_array_properties(element: &xml::element::Element) -> super::Dynam
 
 /// Read `xda:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {

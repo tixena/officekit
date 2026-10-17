@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `ask:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `ask:lineSketchCurved` into a `LineSketchCurved`.
 #[must_use]
-pub fn line_sketch_curved(element: &xml::element::Element) -> super::LineSketchCurved {
+pub fn line_sketch_curved(element: &Element) -> super::LineSketchCurved {
     let reader = markup::Reader::new(element, &super::LINE_SKETCH_CURVED_SHAPE);
     super::LineSketchCurved {
         unknown: reader.finish(),
@@ -240,7 +240,7 @@ pub fn line_sketch_curved(element: &xml::element::Element) -> super::LineSketchC
 
 /// Read `ask:lineSketchFreehand` into a `LineSketchFreehand`.
 #[must_use]
-pub fn line_sketch_freehand(element: &xml::element::Element) -> super::LineSketchFreehand {
+pub fn line_sketch_freehand(element: &Element) -> super::LineSketchFreehand {
     let reader = markup::Reader::new(element, &super::LINE_SKETCH_FREEHAND_SHAPE);
     super::LineSketchFreehand {
         unknown: reader.finish(),
@@ -249,7 +249,7 @@ pub fn line_sketch_freehand(element: &xml::element::Element) -> super::LineSketc
 
 /// Read `ask:lineSketchNone` into a `LineSketchNone`.
 #[must_use]
-pub fn line_sketch_none(element: &xml::element::Element) -> super::LineSketchNone {
+pub fn line_sketch_none(element: &Element) -> super::LineSketchNone {
     let reader = markup::Reader::new(element, &super::LINE_SKETCH_NONE_SHAPE);
     super::LineSketchNone {
         unknown: reader.finish(),
@@ -258,7 +258,7 @@ pub fn line_sketch_none(element: &xml::element::Element) -> super::LineSketchNon
 
 /// Read `ask:lineSketchScribble` into a `LineSketchScribble`.
 #[must_use]
-pub fn line_sketch_scribble(element: &xml::element::Element) -> super::LineSketchScribble {
+pub fn line_sketch_scribble(element: &Element) -> super::LineSketchScribble {
     let reader = markup::Reader::new(element, &super::LINE_SKETCH_SCRIBBLE_SHAPE);
     super::LineSketchScribble {
         unknown: reader.finish(),
@@ -267,7 +267,7 @@ pub fn line_sketch_scribble(element: &xml::element::Element) -> super::LineSketc
 
 /// Read `ask:lineSketchStyleProps` into a `LineSketchStyleProps`.
 #[must_use]
-pub fn line_sketch_style_props(element: &xml::element::Element) -> super::LineSketchStyleProps {
+pub fn line_sketch_style_props(element: &Element) -> super::LineSketchStyleProps {
     let mut node = super::LineSketchStyleProps::default();
     let mut reader = markup::Reader::new(element, &super::LINE_SKETCH_STYLE_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -287,15 +287,13 @@ pub fn line_sketch_style_props(element: &xml::element::Element) -> super::LineSk
 /// Read one item of `LineSketchTypePropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn line_sketch_type_properties(
-    element: &xml::element::Element,
-) -> super::LineSketchTypePropertiesContent {
+pub fn line_sketch_type_properties(element: &Element) -> super::LineSketchTypePropertiesContent {
     markup::read(element)
 }
 
 /// Read `ask:seed` into a `Seed`.
 #[must_use]
-pub fn seed(element: &xml::element::Element) -> super::Seed {
+pub fn seed(element: &Element) -> super::Seed {
     let mut node = super::Seed::default();
     let mut reader = markup::Reader::new(element, &super::SEED_SHAPE);
     for (index, field) in &mut reader {
@@ -309,7 +307,7 @@ pub fn seed(element: &xml::element::Element) -> super::Seed {
 
 /// Read `ask:type` into a `Type`.
 #[must_use]
-pub fn r#type(element: &xml::element::Element) -> super::Type {
+pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = markup::Reader::new(element, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {

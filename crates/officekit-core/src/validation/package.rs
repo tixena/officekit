@@ -6,6 +6,8 @@ use alloc::collections::BTreeSet;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_xml::name::OfficeVersion;
+
 use super::error::{ErrorCode, Errors, ValidationError};
 use super::generated::PART_RULES;
 use super::schema::types::{ChildKind, ChildPart, PartRule};
@@ -13,7 +15,6 @@ use super::validator::{document_parts, document_rule, part_rule, transitional_ty
 use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::Target;
-use crate::xml::name::OfficeVersion;
 
 #[cfg(test)]
 mod tests;

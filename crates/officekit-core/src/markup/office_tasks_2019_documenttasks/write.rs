@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Anchor` as its element, `t:Anchor`.
 #[must_use]
-pub fn anchor(node: &super::Anchor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANCHOR_SHAPE, &node.unknown);
     writer.child(&node.comment);
     writer.child(&node.ext_lst);
@@ -227,19 +228,19 @@ pub fn anchor(node: &super::Anchor, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Assign` as its element, `t:Assign`.
 #[must_use]
-pub fn assign(node: &super::Assign, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn assign(node: &super::Assign, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ASSIGN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Attribution` as its element, `t:Attribution`.
 #[must_use]
-pub fn attribution(node: &super::Attribution, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn attribution(node: &super::Attribution, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ATTRIBUTION_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Comment` as its element, `t:Comment`.
 #[must_use]
-pub fn comment(node: &super::Comment, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comment(node: &super::Comment, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -247,19 +248,19 @@ pub fn comment(node: &super::Comment, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Create` as its element, `t:Create`.
 #[must_use]
-pub fn create(node: &super::Create, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn create(node: &super::Create, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::CREATE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Delete` as its element, `t:Delete`.
 #[must_use]
-pub fn delete(node: &super::Delete, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn delete(node: &super::Delete, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DELETE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Event` as its element, `t:Event`.
 #[must_use]
-pub fn event(node: &super::Event, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn event(node: &super::Event, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EVENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.time);
     writer.attribute(1, &node.id);
@@ -272,7 +273,7 @@ pub fn event(node: &super::Event, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ExtLst` as its element, `t:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.ext);
     writer.finish()
@@ -280,7 +281,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `History` as its element, `t:History`.
 #[must_use]
-pub fn history(node: &super::History, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn history(node: &super::History, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HISTORY_SHAPE, &node.unknown);
     writer.child(&node.event);
     writer.finish()
@@ -288,7 +289,7 @@ pub fn history(node: &super::History, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Priority` as its element, `t:Priority`.
 #[must_use]
-pub fn priority(node: &super::Priority, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn priority(node: &super::Priority, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PRIORITY_SHAPE, &node.unknown);
     writer.attribute(0, &node.value);
     writer.finish()
@@ -296,7 +297,7 @@ pub fn priority(node: &super::Priority, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Progress` as its element, `t:Progress`.
 #[must_use]
-pub fn progress(node: &super::Progress, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn progress(node: &super::Progress, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROGRESS_SHAPE, &node.unknown);
     writer.attribute(0, &node.percent_complete);
     writer.finish()
@@ -304,7 +305,7 @@ pub fn progress(node: &super::Progress, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Schedule` as its element, `t:Schedule`.
 #[must_use]
-pub fn schedule(node: &super::Schedule, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn schedule(node: &super::Schedule, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SCHEDULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.start_date);
     writer.attribute(1, &node.due_date);
@@ -313,7 +314,7 @@ pub fn schedule(node: &super::Schedule, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `SetTitle` as its element, `t:SetTitle`.
 #[must_use]
-pub fn set_title(node: &super::SetTitle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn set_title(node: &super::SetTitle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SET_TITLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.title);
     writer.finish()
@@ -321,7 +322,7 @@ pub fn set_title(node: &super::SetTitle, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `Task` as its element, `t:Task`.
 #[must_use]
-pub fn task(node: &super::Task, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn task(node: &super::Task, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.child(&node.anchor);
@@ -340,7 +341,7 @@ pub fn task_history_event(
 
 /// Write a `Tasks` as its element, `t:Tasks`.
 #[must_use]
-pub fn tasks(node: &super::Tasks, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tasks(node: &super::Tasks, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASKS_SHAPE, &node.unknown);
     writer.child(&node.task);
     writer.child(&node.ext_lst);
@@ -349,25 +350,25 @@ pub fn tasks(node: &super::Tasks, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Unassign` as its element, `t:Unassign`.
 #[must_use]
-pub fn unassign(node: &super::Unassign, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn unassign(node: &super::Unassign, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNASSIGN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `UnassignAll` as its element, `t:UnassignAll`.
 #[must_use]
-pub fn unassign_all(node: &super::UnassignAll, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn unassign_all(node: &super::UnassignAll, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNASSIGN_ALL_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Undelete` as its element, `t:Undelete`.
 #[must_use]
-pub fn undelete(node: &super::Undelete, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn undelete(node: &super::Undelete, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNDELETE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Undo` as its element, `t:Undo`.
 #[must_use]
-pub fn undo(node: &super::Undo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn undo(node: &super::Undo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UNDO_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()

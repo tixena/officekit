@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `BodyPr` as its element, `wps:bodyPr`.
 #[must_use]
-pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
@@ -249,7 +250,7 @@ pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `CNvCnPr` as its element, `wps:cNvCnPr`.
 #[must_use]
-pub fn c_nv_cn_pr(node: &super::CNvCnPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_cn_pr(node: &super::CNvCnPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_CN_PR_SHAPE, &node.unknown);
     writer.child(&node.connection_shape_locks);
     writer.child(&node.connection_start);
@@ -260,7 +261,7 @@ pub fn c_nv_cn_pr(node: &super::CNvCnPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `CNvPr` as its element, `wps:cNvPr`.
 #[must_use]
-pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -275,7 +276,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `CNvSpPr` as its element, `wps:cNvSpPr`.
 #[must_use]
-pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.tx_box);
     writer.child(&node.shape_locks);
@@ -285,7 +286,7 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `ExtLst` as its element, `wps:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -293,7 +294,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `LinkedTxbx` as its element, `wps:linkedTxbx`.
 #[must_use]
-pub fn linked_txbx(node: &super::LinkedTxbx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn linked_txbx(node: &super::LinkedTxbx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINKED_TXBX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.seq);
@@ -317,7 +318,7 @@ pub fn shape_text(node: &super::ShapeTextContent, writer: &mut markup::Writer<'_
 
 /// Write a `SpPr` as its element, `wps:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -333,7 +334,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `Style` as its element, `wps:style`.
 #[must_use]
-pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
@@ -344,7 +345,7 @@ pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Txbx` as its element, `wps:txbx`.
 #[must_use]
-pub fn txbx(node: &super::Txbx, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn txbx(node: &super::Txbx, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TXBX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.child(&node.rich_text_box_content_container);
@@ -354,7 +355,7 @@ pub fn txbx(node: &super::Txbx, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Wsp` as its element, `wps:wsp`.
 #[must_use]
-pub fn wsp(node: &super::Wsp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn wsp(node: &super::Wsp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WSP_SHAPE, &node.unknown);
     writer.attribute(0, &node.normal_east_asian_flow);
     writer.child(&node.c_nv_pr);

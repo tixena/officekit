@@ -344,9 +344,7 @@
 //! The module holds its content type, its relationship type, and the load and store of its root,
 //! `w:styles`.
 
-use crate::error::{PackageError, WriteError};
-#[cfg(not(all(feature = "strict", feature = "transitional")))]
-use crate::markup::Scope;
+use crate::error::PackageError;
 use crate::markup::wordprocessing;
 use crate::packaging::package::{OpenOptions, Package, PartRoot};
 use crate::packaging::part_name::PartName;
@@ -355,10 +353,13 @@ use crate::packaging::relationship::RelationshipType;
 use crate::strict::Strict as _;
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::Element;
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::Element;
+use officekit_xml::error::WriteError;
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
+use officekit_xml::write::Scope;
 #[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::xml::write::WriteOptions;
+use officekit_xml::write::WriteOptions;
 
 /// The content type Part 1 lists.
 pub const CONTENT_TYPE: &str =
@@ -376,16 +377,15 @@ impl PartRoot for wordprocessing::StyleDefinitions {
     }
 
     fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
-        match class {
-            #[cfg(feature = "strict")]
-            ConformanceClass::Strict => self.to_strict(),
-            #[cfg(not(feature = "strict"))]
-            ConformanceClass::Strict => Ok(shared_tree(self)),
-            #[cfg(feature = "transitional")]
-            ConformanceClass::Transitional => self.to_transitional(),
-            #[cfg(not(feature = "transitional"))]
-            ConformanceClass::Transitional => Ok(shared_tree(self)),
-        }
+        #[cfg(feature = "strict")]
+        let strict = Self::to_strict;
+        #[cfg(not(feature = "strict"))]
+        let strict = |root: &Self| Ok(shared_tree(root));
+        #[cfg(feature = "transitional")]
+        let transitional = Self::to_transitional;
+        #[cfg(not(feature = "transitional"))]
+        let transitional = |root: &Self| Ok(shared_tree(root));
+        super::tree_in_class(self, class, strict, transitional)
     }
 }
 

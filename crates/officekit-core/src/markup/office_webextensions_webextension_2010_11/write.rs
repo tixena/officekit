@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AlternateReferences` as its element, `we:alternateReferences`.
 #[must_use]
-pub fn alternate_references(
-    node: &super::AlternateReferences,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn alternate_references(node: &super::AlternateReferences, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ALTERNATE_REFERENCES_SHAPE, &node.unknown);
     writer.child(&node.reference);
     writer.finish()
@@ -228,7 +226,7 @@ pub fn alternate_references(
 
 /// Write a `Binding` as its element, `we:binding`.
 #[must_use]
-pub fn binding(node: &super::Binding, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn binding(node: &super::Binding, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BINDING_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.r#type);
@@ -239,7 +237,7 @@ pub fn binding(node: &super::Binding, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Bindings` as its element, `we:bindings`.
 #[must_use]
-pub fn bindings(node: &super::Bindings, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bindings(node: &super::Bindings, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BINDINGS_SHAPE, &node.unknown);
     writer.child(&node.binding);
     writer.finish()
@@ -247,7 +245,7 @@ pub fn bindings(node: &super::Bindings, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `ExtLst` as its element, `we:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -255,7 +253,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Properties` as its element, `we:properties`.
 #[must_use]
-pub fn properties(node: &super::Properties, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn properties(node: &super::Properties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.property);
     writer.finish()
@@ -263,7 +261,7 @@ pub fn properties(node: &super::Properties, scope: &mut markup::Scope) -> xml::e
 
 /// Write a `Property` as its element, `we:property`.
 #[must_use]
-pub fn property(node: &super::Property, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn property(node: &super::Property, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROPERTY_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.value);
@@ -272,7 +270,7 @@ pub fn property(node: &super::Property, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Reference` as its element, `we:reference`.
 #[must_use]
-pub fn reference(node: &super::Reference, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn reference(node: &super::Reference, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REFERENCE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.version);
@@ -284,7 +282,7 @@ pub fn reference(node: &super::Reference, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Snapshot` as its element, `we:snapshot`.
 #[must_use]
-pub fn snapshot(node: &super::Snapshot, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn snapshot(node: &super::Snapshot, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SNAPSHOT_SHAPE, &node.unknown);
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);
@@ -296,10 +294,7 @@ pub fn snapshot(node: &super::Snapshot, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Webextension` as its element, `we:webextension`.
 #[must_use]
-pub fn webextension(
-    node: &super::Webextension,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn webextension(node: &super::Webextension, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEBEXTENSION_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.frozen);
@@ -314,10 +309,7 @@ pub fn webextension(
 
 /// Write a `Webextensionref` as its element, `we:webextensionref`.
 #[must_use]
-pub fn webextensionref(
-    node: &super::Webextensionref,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()

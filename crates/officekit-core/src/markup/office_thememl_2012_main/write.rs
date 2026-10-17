@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `thm15:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `ThemeFamily` as its element, `thm15:themeFamily`.
 #[must_use]
-pub fn theme_family(node: &super::ThemeFamily, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn theme_family(node: &super::ThemeFamily, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THEME_FAMILY_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.id);
@@ -236,10 +237,7 @@ pub fn theme_family(node: &super::ThemeFamily, scope: &mut markup::Scope) -> xml
 
 /// Write a `ThemeVariant` as its element, `thm15:themeVariant`.
 #[must_use]
-pub fn theme_variant(
-    node: &super::ThemeVariant,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn theme_variant(node: &super::ThemeVariant, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THEME_VARIANT_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.vid);
@@ -252,10 +250,7 @@ pub fn theme_variant(
 
 /// Write a `ThemeVariantLst` as its element, `thm15:themeVariantLst`.
 #[must_use]
-pub fn theme_variant_lst(
-    node: &super::ThemeVariantLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn theme_variant_lst(node: &super::ThemeVariantLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::THEME_VARIANT_LST_SHAPE, &node.unknown);
     writer.child(&node.theme_variant);
     writer.finish()

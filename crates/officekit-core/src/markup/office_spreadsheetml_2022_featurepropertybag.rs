@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -539,7 +539,7 @@ pub enum ArrayFeaturePropertyContent {
     BagIdUnsignedInt(BagIdUnsignedInt),
     DDouble(DDouble),
     IInteger(IInteger),
-    Other(xml::element::Node),
+    Other(Node),
     RelString(RelString),
     SString(SString),
 }
@@ -1238,7 +1238,7 @@ pub enum FeaturePropertyBagContent {
     BagIdBagFeatureProperty(BagIdBagFeatureProperty),
     DDecimalFeatureProperty(DDecimalFeatureProperty),
     IIntFeatureProperty(IIntFeatureProperty),
-    Other(xml::element::Node),
+    Other(Node),
     RelRelFeatureProperty(RelRelFeatureProperty),
     SStringFeatureProperty(SStringFeatureProperty),
 }
@@ -1517,7 +1517,7 @@ pub struct XfComplement {
 }
 
 impl markup::Read for A {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::a(element)
     }
 }
@@ -1530,11 +1530,11 @@ impl markup::Write for A {
 }
 
 impl markup::Read for ArrayFeaturePropertyContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XFPB, "b")) => Self::BBoolean(markup::read(element)),
             Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(markup::read(element)),
@@ -1542,7 +1542,7 @@ impl markup::Read for ArrayFeaturePropertyContent {
             Some((NS_XFPB, "i")) => Self::IInteger(markup::read(element)),
             Some((NS_XFPB, "rel")) => Self::RelString(markup::read(element)),
             Some((NS_XFPB, "s")) => Self::SString(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1562,7 +1562,7 @@ impl markup::Write for ArrayFeaturePropertyContent {
 }
 
 impl markup::Read for BBoolFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::b_bool_feature_property(element)
     }
 }
@@ -1575,7 +1575,7 @@ impl markup::Write for BBoolFeatureProperty {
 }
 
 impl markup::Read for BBoolean {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::b_boolean(element)
     }
 }
@@ -1588,7 +1588,7 @@ impl markup::Write for BBoolean {
 }
 
 impl markup::Read for Bag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bag(element)
     }
 }
@@ -1601,7 +1601,7 @@ impl markup::Write for Bag {
 }
 
 impl markup::Read for BagExt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bag_ext(element)
     }
 }
@@ -1614,7 +1614,7 @@ impl markup::Write for BagExt {
 }
 
 impl markup::Read for BagIdBagFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bag_id_bag_feature_property(element)
     }
 }
@@ -1627,7 +1627,7 @@ impl markup::Write for BagIdBagFeatureProperty {
 }
 
 impl markup::Read for BagIdUnsignedInt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bag_id_unsigned_int(element)
     }
 }
@@ -1640,7 +1640,7 @@ impl markup::Write for BagIdUnsignedInt {
 }
 
 impl markup::Read for ColumnBodyRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_body_rev_dxf(element)
     }
 }
@@ -1653,7 +1653,7 @@ impl markup::Write for ColumnBodyRevDxf {
 }
 
 impl markup::Read for ColumnHeaderRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_header_rev_dxf(element)
     }
 }
@@ -1666,7 +1666,7 @@ impl markup::Write for ColumnHeaderRevDxf {
 }
 
 impl markup::Read for ColumnTotalsRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_totals_rev_dxf(element)
     }
 }
@@ -1679,7 +1679,7 @@ impl markup::Write for ColumnTotalsRevDxf {
 }
 
 impl markup::Read for DDecimalFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::d_decimal_feature_property(element)
     }
 }
@@ -1692,7 +1692,7 @@ impl markup::Write for DDecimalFeatureProperty {
 }
 
 impl markup::Read for DDouble {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::d_double(element)
     }
 }
@@ -1705,7 +1705,7 @@ impl markup::Write for DDouble {
 }
 
 impl markup::Read for DXFComplement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxf_complement(element)
     }
 }
@@ -1718,7 +1718,7 @@ impl markup::Write for DXFComplement {
 }
 
 impl markup::Read for DataRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_rev_dxf(element)
     }
 }
@@ -1731,7 +1731,7 @@ impl markup::Write for DataRevDxf {
 }
 
 impl markup::Read for Dxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxf(element)
     }
 }
@@ -1744,7 +1744,7 @@ impl markup::Write for Dxf {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -1757,11 +1757,11 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for FeaturePropertyBagContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XFPB, "a")) => Self::A(markup::read(element)),
             Some((NS_XFPB, "b")) => Self::BBoolFeatureProperty(markup::read(element)),
@@ -1770,7 +1770,7 @@ impl markup::Read for FeaturePropertyBagContent {
             Some((NS_XFPB, "i")) => Self::IIntFeatureProperty(markup::read(element)),
             Some((NS_XFPB, "rel")) => Self::RelRelFeatureProperty(markup::read(element)),
             Some((NS_XFPB, "s")) => Self::SStringFeatureProperty(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1791,7 +1791,7 @@ impl markup::Write for FeaturePropertyBagContent {
 }
 
 impl markup::Read for FeaturePropertyBags {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::feature_property_bags(element)
     }
 }
@@ -1804,7 +1804,7 @@ impl markup::Write for FeaturePropertyBags {
 }
 
 impl markup::Read for Fpbs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fpbs(element)
     }
 }
@@ -1817,7 +1817,7 @@ impl markup::Write for Fpbs {
 }
 
 impl markup::Read for HeaderRowBorderRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_row_border_rev_dxf(element)
     }
 }
@@ -1830,7 +1830,7 @@ impl markup::Write for HeaderRowBorderRevDxf {
 }
 
 impl markup::Read for HeaderRowRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::header_row_rev_dxf(element)
     }
 }
@@ -1843,7 +1843,7 @@ impl markup::Write for HeaderRowRevDxf {
 }
 
 impl markup::Read for IIntFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i_int_feature_property(element)
     }
 }
@@ -1856,7 +1856,7 @@ impl markup::Write for IIntFeatureProperty {
 }
 
 impl markup::Read for IInteger {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i_integer(element)
     }
 }
@@ -1869,7 +1869,7 @@ impl markup::Write for IInteger {
 }
 
 impl markup::Read for RelRelFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rel_rel_feature_property(element)
     }
 }
@@ -1882,7 +1882,7 @@ impl markup::Write for RelRelFeatureProperty {
 }
 
 impl markup::Read for RelString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rel_string(element)
     }
 }
@@ -1895,7 +1895,7 @@ impl markup::Write for RelString {
 }
 
 impl markup::Read for Revdxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revdxf(element)
     }
 }
@@ -1908,7 +1908,7 @@ impl markup::Write for Revdxf {
 }
 
 impl markup::Read for SString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::s_string(element)
     }
 }
@@ -1921,7 +1921,7 @@ impl markup::Write for SString {
 }
 
 impl markup::Read for SStringFeatureProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::s_string_feature_property(element)
     }
 }
@@ -1934,7 +1934,7 @@ impl markup::Write for SStringFeatureProperty {
 }
 
 impl markup::Read for TableBorderRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::table_border_rev_dxf(element)
     }
 }
@@ -1947,7 +1947,7 @@ impl markup::Write for TableBorderRevDxf {
 }
 
 impl markup::Read for TotalsRowBorderRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::totals_row_border_rev_dxf(element)
     }
 }
@@ -1960,7 +1960,7 @@ impl markup::Write for TotalsRowBorderRevDxf {
 }
 
 impl markup::Read for TotalsRowRevDxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::totals_row_rev_dxf(element)
     }
 }
@@ -1973,7 +1973,7 @@ impl markup::Write for TotalsRowRevDxf {
 }
 
 impl markup::Read for XfComplement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xf_complement(element)
     }
 }

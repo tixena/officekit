@@ -219,8 +219,8 @@ pub mod read;
 pub mod write;
 
 use crate::markup;
-use crate::xml::name::OfficeVersion;
-use crate::xml::values::{Measure, ValueError};
+use officekit_xml::name::OfficeVersion;
+use officekit_xml::values::{Measure, ValueError};
 
 static UNIVERSAL_MEASUREMENT_PATTERNS: &[&str] = &["-?[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)"];
 

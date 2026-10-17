@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlrvr:refreshInterval` into a `RefreshInterval`.
 #[must_use]
-pub fn refresh_interval(element: &xml::element::Element) -> super::RefreshInterval {
+pub fn refresh_interval(element: &Element) -> super::RefreshInterval {
     let mut node = super::RefreshInterval::default();
     let mut reader = markup::Reader::new(element, &super::REFRESH_INTERVAL_SHAPE);
     for (index, field) in &mut reader {
@@ -234,7 +234,7 @@ pub fn refresh_interval(element: &xml::element::Element) -> super::RefreshInterv
 
 /// Read `xlrvr:refreshIntervals` into a `RefreshIntervals`.
 #[must_use]
-pub fn refresh_intervals(element: &xml::element::Element) -> super::RefreshIntervals {
+pub fn refresh_intervals(element: &Element) -> super::RefreshIntervals {
     let mut node = super::RefreshIntervals::default();
     let mut reader = markup::Reader::new(element, &super::REFRESH_INTERVALS_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `mso14:backstage` into a `Backstage`.
 #[must_use]
-pub fn backstage(element: &xml::element::Element) -> super::Backstage {
+pub fn backstage(element: &Element) -> super::Backstage {
     let mut node = super::Backstage::default();
     let mut reader = markup::Reader::new(element, &super::BACKSTAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -234,25 +234,25 @@ pub fn backstage(element: &xml::element::Element) -> super::Backstage {
 
 /// Read one item of `BackstageContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn backstage_content(element: &xml::element::Element) -> super::BackstageContent {
+pub fn backstage_content(element: &Element) -> super::BackstageContent {
     markup::read(element)
 }
 
 /// Read one item of `BackstageGroupsContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn backstage_groups(element: &xml::element::Element) -> super::BackstageGroupsContent {
+pub fn backstage_groups(element: &Element) -> super::BackstageGroupsContent {
     markup::read(element)
 }
 
 /// Read one item of `BackstageMenuGroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn backstage_menu_group(element: &xml::element::Element) -> super::BackstageMenuGroupContent {
+pub fn backstage_menu_group(element: &Element) -> super::BackstageMenuGroupContent {
     markup::read(element)
 }
 
 /// Read `mso14:bottomItems` into a `BottomItems`.
 #[must_use]
-pub fn bottom_items(element: &xml::element::Element) -> super::BottomItems {
+pub fn bottom_items(element: &Element) -> super::BottomItems {
     let mut node = super::BottomItems::default();
     let mut reader = markup::Reader::new(element, &super::BOTTOM_ITEMS_SHAPE);
     for (index, field) in &mut reader {
@@ -266,13 +266,13 @@ pub fn bottom_items(element: &xml::element::Element) -> super::BottomItems {
 
 /// Read one item of `BoxContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn r#box(element: &xml::element::Element) -> super::BoxContent {
+pub fn r#box(element: &Element) -> super::BoxContent {
     markup::read(element)
 }
 
 /// Read `mso14:box` into a `BoxBox`.
 #[must_use]
-pub fn box_box(element: &xml::element::Element) -> super::BoxBox {
+pub fn box_box(element: &Element) -> super::BoxBox {
     let mut node = super::BoxBox::default();
     let mut reader = markup::Reader::new(element, &super::BOX_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -298,7 +298,7 @@ pub fn box_box(element: &xml::element::Element) -> super::BoxBox {
 /// Read `mso14:button` into a `ButtonBackstageFastCommandButton`.
 #[must_use]
 pub fn button_backstage_fast_command_button(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ButtonBackstageFastCommandButton {
     let mut node = super::ButtonBackstageFastCommandButton::default();
     let mut reader =
@@ -335,9 +335,7 @@ pub fn button_backstage_fast_command_button(
 
 /// Read `mso14:button` into a `ButtonBackstageGroupButton`.
 #[must_use]
-pub fn button_backstage_group_button(
-    element: &xml::element::Element,
-) -> super::ButtonBackstageGroupButton {
+pub fn button_backstage_group_button(element: &Element) -> super::ButtonBackstageGroupButton {
     let mut node = super::ButtonBackstageGroupButton::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -373,9 +371,7 @@ pub fn button_backstage_group_button(
 
 /// Read `mso14:button` into a `ButtonBackstageMenuButton`.
 #[must_use]
-pub fn button_backstage_menu_button(
-    element: &xml::element::Element,
-) -> super::ButtonBackstageMenuButton {
+pub fn button_backstage_menu_button(element: &Element) -> super::ButtonBackstageMenuButton {
     let mut node = super::ButtonBackstageMenuButton::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -407,9 +403,7 @@ pub fn button_backstage_menu_button(
 
 /// Read `mso14:button` into a `ButtonBackstageRegularButton`.
 #[must_use]
-pub fn button_backstage_regular_button(
-    element: &xml::element::Element,
-) -> super::ButtonBackstageRegularButton {
+pub fn button_backstage_regular_button(element: &Element) -> super::ButtonBackstageRegularButton {
     let mut node = super::ButtonBackstageRegularButton::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -443,7 +437,7 @@ pub fn button_backstage_regular_button(
 
 /// Read `mso14:button` into a `ButtonButton`.
 #[must_use]
-pub fn button_button(element: &xml::element::Element) -> super::ButtonButton {
+pub fn button_button(element: &Element) -> super::ButtonButton {
     let mut node = super::ButtonButton::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -489,7 +483,7 @@ pub fn button_button(element: &xml::element::Element) -> super::ButtonButton {
 
 /// Read `mso14:button` into a `ButtonButtonRegular`.
 #[must_use]
-pub fn button_button_regular(element: &xml::element::Element) -> super::ButtonButtonRegular {
+pub fn button_button_regular(element: &Element) -> super::ButtonButtonRegular {
     let mut node = super::ButtonButtonRegular::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_BUTTON_REGULAR_SHAPE);
     for (index, field) in &mut reader {
@@ -533,7 +527,7 @@ pub fn button_button_regular(element: &xml::element::Element) -> super::ButtonBu
 
 /// Read `mso14:buttonGroup` into a `ButtonGroup`.
 #[must_use]
-pub fn button_group(element: &xml::element::Element) -> super::ButtonGroup {
+pub fn button_group(element: &Element) -> super::ButtonGroup {
     let mut node = super::ButtonGroup::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -557,13 +551,13 @@ pub fn button_group(element: &xml::element::Element) -> super::ButtonGroup {
 
 /// Read one item of `ButtonGroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn button_group_content(element: &xml::element::Element) -> super::ButtonGroupContent {
+pub fn button_group_content(element: &Element) -> super::ButtonGroupContent {
     markup::read(element)
 }
 
 /// Read `mso14:button` into a `ButtonVisibleButton`.
 #[must_use]
-pub fn button_visible_button(element: &xml::element::Element) -> super::ButtonVisibleButton {
+pub fn button_visible_button(element: &Element) -> super::ButtonVisibleButton {
     let mut node = super::ButtonVisibleButton::default();
     let mut reader = markup::Reader::new(element, &super::BUTTON_VISIBLE_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -606,7 +600,7 @@ pub fn button_visible_button(element: &xml::element::Element) -> super::ButtonVi
 /// Read `mso14:category` into a `CategoryTaskFormGroupCategory`.
 #[must_use]
 pub fn category_task_form_group_category(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CategoryTaskFormGroupCategory {
     let mut node = super::CategoryTaskFormGroupCategory::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE);
@@ -634,9 +628,7 @@ pub fn category_task_form_group_category(
 
 /// Read `mso14:category` into a `CategoryTaskGroupCategory`.
 #[must_use]
-pub fn category_task_group_category(
-    element: &xml::element::Element,
-) -> super::CategoryTaskGroupCategory {
+pub fn category_task_group_category(element: &Element) -> super::CategoryTaskGroupCategory {
     let mut node = super::CategoryTaskGroupCategory::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_TASK_GROUP_CATEGORY_SHAPE);
     for (index, field) in &mut reader {
@@ -663,9 +655,7 @@ pub fn category_task_group_category(
 
 /// Read `mso14:checkBox` into a `CheckBoxBackstageCheckBox`.
 #[must_use]
-pub fn check_box_backstage_check_box(
-    element: &xml::element::Element,
-) -> super::CheckBoxBackstageCheckBox {
+pub fn check_box_backstage_check_box(element: &Element) -> super::CheckBoxBackstageCheckBox {
     let mut node = super::CheckBoxBackstageCheckBox::default();
     let mut reader = markup::Reader::new(element, &super::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -700,7 +690,7 @@ pub fn check_box_backstage_check_box(
 /// Read `mso14:checkBox` into a `CheckBoxBackstageMenuCheckBox`.
 #[must_use]
 pub fn check_box_backstage_menu_check_box(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CheckBoxBackstageMenuCheckBox {
     let mut node = super::CheckBoxBackstageMenuCheckBox::default();
     let mut reader = markup::Reader::new(element, &super::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE);
@@ -730,7 +720,7 @@ pub fn check_box_backstage_menu_check_box(
 
 /// Read `mso14:checkBox` into a `CheckBoxCheckBox`.
 #[must_use]
-pub fn check_box_check_box(element: &xml::element::Element) -> super::CheckBoxCheckBox {
+pub fn check_box_check_box(element: &Element) -> super::CheckBoxCheckBox {
     let mut node = super::CheckBoxCheckBox::default();
     let mut reader = markup::Reader::new(element, &super::CHECK_BOX_CHECK_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -768,9 +758,7 @@ pub fn check_box_check_box(element: &xml::element::Element) -> super::CheckBoxCh
 
 /// Read `mso14:comboBox` into a `ComboBoxBackstageComboBox`.
 #[must_use]
-pub fn combo_box_backstage_combo_box(
-    element: &xml::element::Element,
-) -> super::ComboBoxBackstageComboBox {
+pub fn combo_box_backstage_combo_box(element: &Element) -> super::ComboBoxBackstageComboBox {
     let mut node = super::ComboBoxBackstageComboBox::default();
     let mut reader = markup::Reader::new(element, &super::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -804,7 +792,7 @@ pub fn combo_box_backstage_combo_box(
 
 /// Read `mso14:comboBox` into a `ComboBoxComboBox`.
 #[must_use]
-pub fn combo_box_combo_box(element: &xml::element::Element) -> super::ComboBoxComboBox {
+pub fn combo_box_combo_box(element: &Element) -> super::ComboBoxComboBox {
     let mut node = super::ComboBoxComboBox::default();
     let mut reader = markup::Reader::new(element, &super::COMBO_BOX_COMBO_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -858,7 +846,7 @@ pub fn combo_box_combo_box(element: &xml::element::Element) -> super::ComboBoxCo
 
 /// Read `mso14:command` into a `Command`.
 #[must_use]
-pub fn command(element: &xml::element::Element) -> super::Command {
+pub fn command(element: &Element) -> super::Command {
     let mut node = super::Command::default();
     let mut reader = markup::Reader::new(element, &super::COMMAND_SHAPE);
     for (index, field) in &mut reader {
@@ -876,7 +864,7 @@ pub fn command(element: &xml::element::Element) -> super::Command {
 
 /// Read `mso14:commands` into a `Commands`.
 #[must_use]
-pub fn commands(element: &xml::element::Element) -> super::Commands {
+pub fn commands(element: &Element) -> super::Commands {
     let mut node = super::Commands::default();
     let mut reader = markup::Reader::new(element, &super::COMMANDS_SHAPE);
     for (index, field) in &mut reader {
@@ -890,7 +878,7 @@ pub fn commands(element: &xml::element::Element) -> super::Commands {
 
 /// Read `mso14:contextMenu` into a `ContextMenu`.
 #[must_use]
-pub fn context_menu(element: &xml::element::Element) -> super::ContextMenu {
+pub fn context_menu(element: &Element) -> super::ContextMenu {
     let mut node = super::ContextMenu::default();
     let mut reader = markup::Reader::new(element, &super::CONTEXT_MENU_SHAPE);
     for (index, field) in &mut reader {
@@ -906,13 +894,13 @@ pub fn context_menu(element: &xml::element::Element) -> super::ContextMenu {
 
 /// Read one item of `ContextMenuContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn context_menu_content(element: &xml::element::Element) -> super::ContextMenuContent {
+pub fn context_menu_content(element: &Element) -> super::ContextMenuContent {
     markup::read(element)
 }
 
 /// Read `mso14:contextMenus` into a `ContextMenus`.
 #[must_use]
-pub fn context_menus(element: &xml::element::Element) -> super::ContextMenus {
+pub fn context_menus(element: &Element) -> super::ContextMenus {
     let mut node = super::ContextMenus::default();
     let mut reader = markup::Reader::new(element, &super::CONTEXT_MENUS_SHAPE);
     for (index, field) in &mut reader {
@@ -926,7 +914,7 @@ pub fn context_menus(element: &xml::element::Element) -> super::ContextMenus {
 
 /// Read `mso14:contextualTabs` into a `ContextualTabs`.
 #[must_use]
-pub fn contextual_tabs(element: &xml::element::Element) -> super::ContextualTabs {
+pub fn contextual_tabs(element: &Element) -> super::ContextualTabs {
     let mut node = super::ContextualTabs::default();
     let mut reader = markup::Reader::new(element, &super::CONTEXTUAL_TABS_SHAPE);
     for (index, field) in &mut reader {
@@ -940,7 +928,7 @@ pub fn contextual_tabs(element: &xml::element::Element) -> super::ContextualTabs
 
 /// Read `mso14:control` into a `ControlControlClone`.
 #[must_use]
-pub fn control_control_clone(element: &xml::element::Element) -> super::ControlControlClone {
+pub fn control_control_clone(element: &Element) -> super::ControlControlClone {
     let mut node = super::ControlControlClone::default();
     let mut reader = markup::Reader::new(element, &super::CONTROL_CONTROL_CLONE_SHAPE);
     for (index, field) in &mut reader {
@@ -984,7 +972,7 @@ pub fn control_control_clone(element: &xml::element::Element) -> super::ControlC
 
 /// Read `mso14:control` into a `ControlControlCloneQat`.
 #[must_use]
-pub fn control_control_clone_qat(element: &xml::element::Element) -> super::ControlControlCloneQat {
+pub fn control_control_clone_qat(element: &Element) -> super::ControlControlCloneQat {
     let mut node = super::ControlControlCloneQat::default();
     let mut reader = markup::Reader::new(element, &super::CONTROL_CONTROL_CLONE_QAT_SHAPE);
     for (index, field) in &mut reader {
@@ -1028,9 +1016,7 @@ pub fn control_control_clone_qat(element: &xml::element::Element) -> super::Cont
 
 /// Read `mso14:control` into a `ControlControlCloneRegular`.
 #[must_use]
-pub fn control_control_clone_regular(
-    element: &xml::element::Element,
-) -> super::ControlControlCloneRegular {
+pub fn control_control_clone_regular(element: &Element) -> super::ControlControlCloneRegular {
     let mut node = super::ControlControlCloneRegular::default();
     let mut reader = markup::Reader::new(element, &super::CONTROL_CONTROL_CLONE_REGULAR_SHAPE);
     for (index, field) in &mut reader {
@@ -1070,7 +1056,7 @@ pub fn control_control_clone_regular(
 
 /// Read `mso14:customUI` into a `CustomUI`.
 #[must_use]
-pub fn custom_ui(element: &xml::element::Element) -> super::CustomUI {
+pub fn custom_ui(element: &Element) -> super::CustomUI {
     let mut node = super::CustomUI::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_UI_SHAPE);
     for (index, field) in &mut reader {
@@ -1090,7 +1076,7 @@ pub fn custom_ui(element: &xml::element::Element) -> super::CustomUI {
 
 /// Read `mso14:dialogBoxLauncher` into a `DialogBoxLauncher`.
 #[must_use]
-pub fn dialog_box_launcher(element: &xml::element::Element) -> super::DialogBoxLauncher {
+pub fn dialog_box_launcher(element: &Element) -> super::DialogBoxLauncher {
     let mut node = super::DialogBoxLauncher::default();
     let mut reader = markup::Reader::new(element, &super::DIALOG_BOX_LAUNCHER_SHAPE);
     for (index, field) in &mut reader {
@@ -1104,7 +1090,7 @@ pub fn dialog_box_launcher(element: &xml::element::Element) -> super::DialogBoxL
 
 /// Read `mso14:documentControls` into a `DocumentControls`.
 #[must_use]
-pub fn document_controls(element: &xml::element::Element) -> super::DocumentControls {
+pub fn document_controls(element: &Element) -> super::DocumentControls {
     let mut node = super::DocumentControls::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
@@ -1118,9 +1104,7 @@ pub fn document_controls(element: &xml::element::Element) -> super::DocumentCont
 
 /// Read `mso14:dropDown` into a `DropDownBackstageDropDown`.
 #[must_use]
-pub fn drop_down_backstage_drop_down(
-    element: &xml::element::Element,
-) -> super::DropDownBackstageDropDown {
+pub fn drop_down_backstage_drop_down(element: &Element) -> super::DropDownBackstageDropDown {
     let mut node = super::DropDownBackstageDropDown::default();
     let mut reader = markup::Reader::new(element, &super::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE);
     for (index, field) in &mut reader {
@@ -1158,9 +1142,7 @@ pub fn drop_down_backstage_drop_down(
 
 /// Read `mso14:dropDown` into a `DropDownDropDownRegular`.
 #[must_use]
-pub fn drop_down_drop_down_regular(
-    element: &xml::element::Element,
-) -> super::DropDownDropDownRegular {
+pub fn drop_down_drop_down_regular(element: &Element) -> super::DropDownDropDownRegular {
     let mut node = super::DropDownDropDownRegular::default();
     let mut reader = markup::Reader::new(element, &super::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE);
     for (index, field) in &mut reader {
@@ -1215,7 +1197,7 @@ pub fn drop_down_drop_down_regular(
 
 /// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenu`.
 #[must_use]
-pub fn dynamic_menu_dynamic_menu(element: &xml::element::Element) -> super::DynamicMenuDynamicMenu {
+pub fn dynamic_menu_dynamic_menu(element: &Element) -> super::DynamicMenuDynamicMenu {
     let mut node = super::DynamicMenuDynamicMenu::default();
     let mut reader = markup::Reader::new(element, &super::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE);
     for (index, field) in &mut reader {
@@ -1263,7 +1245,7 @@ pub fn dynamic_menu_dynamic_menu(element: &xml::element::Element) -> super::Dyna
 /// Read `mso14:dynamicMenu` into a `DynamicMenuDynamicMenuRegular`.
 #[must_use]
 pub fn dynamic_menu_dynamic_menu_regular(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DynamicMenuDynamicMenuRegular {
     let mut node = super::DynamicMenuDynamicMenuRegular::default();
     let mut reader = markup::Reader::new(element, &super::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE);
@@ -1309,9 +1291,7 @@ pub fn dynamic_menu_dynamic_menu_regular(
 
 /// Read `mso14:editBox` into a `EditBoxBackstageEditBox`.
 #[must_use]
-pub fn edit_box_backstage_edit_box(
-    element: &xml::element::Element,
-) -> super::EditBoxBackstageEditBox {
+pub fn edit_box_backstage_edit_box(element: &Element) -> super::EditBoxBackstageEditBox {
     let mut node = super::EditBoxBackstageEditBox::default();
     let mut reader = markup::Reader::new(element, &super::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -1342,7 +1322,7 @@ pub fn edit_box_backstage_edit_box(
 
 /// Read `mso14:editBox` into a `EditBoxEditBox`.
 #[must_use]
-pub fn edit_box_edit_box(element: &xml::element::Element) -> super::EditBoxEditBox {
+pub fn edit_box_edit_box(element: &Element) -> super::EditBoxEditBox {
     let mut node = super::EditBoxEditBox::default();
     let mut reader = markup::Reader::new(element, &super::EDIT_BOX_EDIT_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -1387,7 +1367,7 @@ pub fn edit_box_edit_box(element: &xml::element::Element) -> super::EditBoxEditB
 
 /// Read `mso14:firstColumn` into a `FirstColumn`.
 #[must_use]
-pub fn first_column(element: &xml::element::Element) -> super::FirstColumn {
+pub fn first_column(element: &Element) -> super::FirstColumn {
     let mut node = super::FirstColumn::default();
     let mut reader = markup::Reader::new(element, &super::FIRST_COLUMN_SHAPE);
     for (index, field) in &mut reader {
@@ -1401,7 +1381,7 @@ pub fn first_column(element: &xml::element::Element) -> super::FirstColumn {
 
 /// Read `mso14:gallery` into a `GalleryGallery`.
 #[must_use]
-pub fn gallery_gallery(element: &xml::element::Element) -> super::GalleryGallery {
+pub fn gallery_gallery(element: &Element) -> super::GalleryGallery {
     let mut node = super::GalleryGallery::default();
     let mut reader = markup::Reader::new(element, &super::GALLERY_GALLERY_SHAPE);
     for (index, field) in &mut reader {
@@ -1468,7 +1448,7 @@ pub fn gallery_gallery(element: &xml::element::Element) -> super::GalleryGallery
 
 /// Read `mso14:gallery` into a `GalleryGalleryRegular`.
 #[must_use]
-pub fn gallery_gallery_regular(element: &xml::element::Element) -> super::GalleryGalleryRegular {
+pub fn gallery_gallery_regular(element: &Element) -> super::GalleryGalleryRegular {
     let mut node = super::GalleryGalleryRegular::default();
     let mut reader = markup::Reader::new(element, &super::GALLERY_GALLERY_REGULAR_SHAPE);
     for (index, field) in &mut reader {
@@ -1533,13 +1513,13 @@ pub fn gallery_gallery_regular(element: &xml::element::Element) -> super::Galler
 
 /// Read one item of `GroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn group(element: &xml::element::Element) -> super::GroupContent {
+pub fn group(element: &Element) -> super::GroupContent {
     markup::read(element)
 }
 
 /// Read `mso14:group` into a `GroupBackstageGroup`.
 #[must_use]
-pub fn group_backstage_group(element: &xml::element::Element) -> super::GroupBackstageGroup {
+pub fn group_backstage_group(element: &Element) -> super::GroupBackstageGroup {
     let mut node = super::GroupBackstageGroup::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_BACKSTAGE_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -1574,7 +1554,7 @@ pub fn group_backstage_group(element: &xml::element::Element) -> super::GroupBac
 
 /// Read `mso14:groupBox` into a `GroupBox`.
 #[must_use]
-pub fn group_box(element: &xml::element::Element) -> super::GroupBox {
+pub fn group_box(element: &Element) -> super::GroupBox {
     let mut node = super::GroupBox::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -1595,13 +1575,13 @@ pub fn group_box(element: &xml::element::Element) -> super::GroupBox {
 
 /// Read one item of `GroupControlsContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn group_controls(element: &xml::element::Element) -> super::GroupControlsContent {
+pub fn group_controls(element: &Element) -> super::GroupControlsContent {
     markup::read(element)
 }
 
 /// Read `mso14:group` into a `GroupGroup`.
 #[must_use]
-pub fn group_group(element: &xml::element::Element) -> super::GroupGroup {
+pub fn group_group(element: &Element) -> super::GroupGroup {
     let mut node = super::GroupGroup::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -1640,7 +1620,7 @@ pub fn group_group(element: &xml::element::Element) -> super::GroupGroup {
 
 /// Read `mso14:hyperlink` into a `Hyperlink`.
 #[must_use]
-pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
+pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {
@@ -1677,7 +1657,7 @@ pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
 
 /// Read `mso14:imageControl` into a `ImageControl`.
 #[must_use]
-pub fn image_control(element: &xml::element::Element) -> super::ImageControl {
+pub fn image_control(element: &Element) -> super::ImageControl {
     let mut node = super::ImageControl::default();
     let mut reader = markup::Reader::new(element, &super::IMAGE_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -1703,7 +1683,7 @@ pub fn image_control(element: &xml::element::Element) -> super::ImageControl {
 
 /// Read `mso14:item` into a `ItemBackstageItem`.
 #[must_use]
-pub fn item_backstage_item(element: &xml::element::Element) -> super::ItemBackstageItem {
+pub fn item_backstage_item(element: &Element) -> super::ItemBackstageItem {
     let reader = markup::Reader::new(element, &super::ITEM_BACKSTAGE_ITEM_SHAPE);
     super::ItemBackstageItem {
         unknown: reader.finish(),
@@ -1712,7 +1692,7 @@ pub fn item_backstage_item(element: &xml::element::Element) -> super::ItemBackst
 
 /// Read `mso14:item` into a `ItemItem`.
 #[must_use]
-pub fn item_item(element: &xml::element::Element) -> super::ItemItem {
+pub fn item_item(element: &Element) -> super::ItemItem {
     let mut node = super::ItemItem::default();
     let mut reader = markup::Reader::new(element, &super::ITEM_ITEM_SHAPE);
     for (index, field) in &mut reader {
@@ -1733,7 +1713,7 @@ pub fn item_item(element: &xml::element::Element) -> super::ItemItem {
 /// Read `mso14:labelControl` into a `LabelControlBackstageLabelControl`.
 #[must_use]
 pub fn label_control_backstage_label_control(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::LabelControlBackstageLabelControl {
     let mut node = super::LabelControlBackstageLabelControl::default();
     let mut reader =
@@ -1761,9 +1741,7 @@ pub fn label_control_backstage_label_control(
 
 /// Read `mso14:labelControl` into a `LabelControlLabelControl`.
 #[must_use]
-pub fn label_control_label_control(
-    element: &xml::element::Element,
-) -> super::LabelControlLabelControl {
+pub fn label_control_label_control(element: &Element) -> super::LabelControlLabelControl {
     let mut node = super::LabelControlLabelControl::default();
     let mut reader = markup::Reader::new(element, &super::LABEL_CONTROL_LABEL_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -1797,7 +1775,7 @@ pub fn label_control_label_control(
 
 /// Read `mso14:layoutContainer` into a `LayoutContainer`.
 #[must_use]
-pub fn layout_container(element: &xml::element::Element) -> super::LayoutContainer {
+pub fn layout_container(element: &Element) -> super::LayoutContainer {
     let mut node = super::LayoutContainer::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
@@ -1818,15 +1796,13 @@ pub fn layout_container(element: &xml::element::Element) -> super::LayoutContain
 
 /// Read one item of `MenuContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn menu(element: &xml::element::Element) -> super::MenuContent {
+pub fn menu(element: &Element) -> super::MenuContent {
     markup::read(element)
 }
 
 /// Read `mso14:menu` into a `MenuBackstagePrimaryMenu`.
 #[must_use]
-pub fn menu_backstage_primary_menu(
-    element: &xml::element::Element,
-) -> super::MenuBackstagePrimaryMenu {
+pub fn menu_backstage_primary_menu(element: &Element) -> super::MenuBackstagePrimaryMenu {
     let mut node = super::MenuBackstagePrimaryMenu::default();
     let mut reader = markup::Reader::new(element, &super::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE);
     for (index, field) in &mut reader {
@@ -1859,7 +1835,7 @@ pub fn menu_backstage_primary_menu(
 
 /// Read `mso14:menu` into a `MenuBackstageSubMenu`.
 #[must_use]
-pub fn menu_backstage_sub_menu(element: &xml::element::Element) -> super::MenuBackstageSubMenu {
+pub fn menu_backstage_sub_menu(element: &Element) -> super::MenuBackstageSubMenu {
     let mut node = super::MenuBackstageSubMenu::default();
     let mut reader = markup::Reader::new(element, &super::MENU_BACKSTAGE_SUB_MENU_SHAPE);
     for (index, field) in &mut reader {
@@ -1890,7 +1866,7 @@ pub fn menu_backstage_sub_menu(element: &xml::element::Element) -> super::MenuBa
 
 /// Read `mso14:menuGroup` into a `MenuGroup`.
 #[must_use]
-pub fn menu_group(element: &xml::element::Element) -> super::MenuGroup {
+pub fn menu_group(element: &Element) -> super::MenuGroup {
     let mut node = super::MenuGroup::default();
     let mut reader = markup::Reader::new(element, &super::MENU_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -1911,7 +1887,7 @@ pub fn menu_group(element: &xml::element::Element) -> super::MenuGroup {
 
 /// Read `mso14:menu` into a `MenuMenu`.
 #[must_use]
-pub fn menu_menu(element: &xml::element::Element) -> super::MenuMenu {
+pub fn menu_menu(element: &Element) -> super::MenuMenu {
     let mut node = super::MenuMenu::default();
     let mut reader = markup::Reader::new(element, &super::MENU_MENU_SHAPE);
     for (index, field) in &mut reader {
@@ -1958,7 +1934,7 @@ pub fn menu_menu(element: &xml::element::Element) -> super::MenuMenu {
 
 /// Read `mso14:menu` into a `MenuMenuRegular`.
 #[must_use]
-pub fn menu_menu_regular(element: &xml::element::Element) -> super::MenuMenuRegular {
+pub fn menu_menu_regular(element: &Element) -> super::MenuMenuRegular {
     let mut node = super::MenuMenuRegular::default();
     let mut reader = markup::Reader::new(element, &super::MENU_MENU_REGULAR_SHAPE);
     for (index, field) in &mut reader {
@@ -2003,7 +1979,7 @@ pub fn menu_menu_regular(element: &xml::element::Element) -> super::MenuMenuRegu
 
 /// Read `mso14:menu` into a `MenuMenuRoot`.
 #[must_use]
-pub fn menu_menu_root(element: &xml::element::Element) -> super::MenuMenuRoot {
+pub fn menu_menu_root(element: &Element) -> super::MenuMenuRoot {
     let mut node = super::MenuMenuRoot::default();
     let mut reader = markup::Reader::new(element, &super::MENU_MENU_ROOT_SHAPE);
     for (index, field) in &mut reader {
@@ -2021,7 +1997,7 @@ pub fn menu_menu_root(element: &xml::element::Element) -> super::MenuMenuRoot {
 
 /// Read `mso14:menu` into a `MenuMenuWithTitle`.
 #[must_use]
-pub fn menu_menu_with_title(element: &xml::element::Element) -> super::MenuMenuWithTitle {
+pub fn menu_menu_with_title(element: &Element) -> super::MenuMenuWithTitle {
     let mut node = super::MenuMenuWithTitle::default();
     let mut reader = markup::Reader::new(element, &super::MENU_MENU_WITH_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -2066,9 +2042,7 @@ pub fn menu_menu_with_title(element: &xml::element::Element) -> super::MenuMenuW
 
 /// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparator`.
 #[must_use]
-pub fn menu_separator_menu_separator(
-    element: &xml::element::Element,
-) -> super::MenuSeparatorMenuSeparator {
+pub fn menu_separator_menu_separator(element: &Element) -> super::MenuSeparatorMenuSeparator {
     let mut node = super::MenuSeparatorMenuSeparator::default();
     let mut reader = markup::Reader::new(element, &super::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -2092,7 +2066,7 @@ pub fn menu_separator_menu_separator(
 /// Read `mso14:menuSeparator` into a `MenuSeparatorMenuSeparatorNoTitle`.
 #[must_use]
 pub fn menu_separator_menu_separator_no_title(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MenuSeparatorMenuSeparatorNoTitle {
     let mut node = super::MenuSeparatorMenuSeparatorNoTitle::default();
     let mut reader = markup::Reader::new(
@@ -2117,13 +2091,13 @@ pub fn menu_separator_menu_separator_no_title(
 
 /// Read one item of `MenuWithTitleContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn menu_with_title(element: &xml::element::Element) -> super::MenuWithTitleContent {
+pub fn menu_with_title(element: &Element) -> super::MenuWithTitleContent {
     markup::read(element)
 }
 
 /// Read `mso14:primaryItem` into a `PrimaryItem`.
 #[must_use]
-pub fn primary_item(element: &xml::element::Element) -> super::PrimaryItem {
+pub fn primary_item(element: &Element) -> super::PrimaryItem {
     let mut node = super::PrimaryItem::default();
     let mut reader = markup::Reader::new(element, &super::PRIMARY_ITEM_SHAPE);
     for (index, field) in &mut reader {
@@ -2137,13 +2111,13 @@ pub fn primary_item(element: &xml::element::Element) -> super::PrimaryItem {
 
 /// Read one item of `PrimaryItemContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn primary_item_content(element: &xml::element::Element) -> super::PrimaryItemContent {
+pub fn primary_item_content(element: &Element) -> super::PrimaryItemContent {
     markup::read(element)
 }
 
 /// Read `mso14:qat` into a `Qat`.
 #[must_use]
-pub fn qat(element: &xml::element::Element) -> super::Qat {
+pub fn qat(element: &Element) -> super::Qat {
     let mut node = super::Qat::default();
     let mut reader = markup::Reader::new(element, &super::QAT_SHAPE);
     for (index, field) in &mut reader {
@@ -2160,15 +2134,13 @@ pub fn qat(element: &xml::element::Element) -> super::Qat {
 /// Read one item of `QuickAccessToolbarItemsContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn quick_access_toolbar_items(
-    element: &xml::element::Element,
-) -> super::QuickAccessToolbarItemsContent {
+pub fn quick_access_toolbar_items(element: &Element) -> super::QuickAccessToolbarItemsContent {
     markup::read(element)
 }
 
 /// Read `mso14:radioButton` into a `RadioButton`.
 #[must_use]
-pub fn radio_button(element: &xml::element::Element) -> super::RadioButton {
+pub fn radio_button(element: &Element) -> super::RadioButton {
     let reader = markup::Reader::new(element, &super::RADIO_BUTTON_SHAPE);
     super::RadioButton {
         unknown: reader.finish(),
@@ -2177,7 +2149,7 @@ pub fn radio_button(element: &xml::element::Element) -> super::RadioButton {
 
 /// Read `mso14:radioGroup` into a `RadioGroup`.
 #[must_use]
-pub fn radio_group(element: &xml::element::Element) -> super::RadioGroup {
+pub fn radio_group(element: &Element) -> super::RadioGroup {
     let mut node = super::RadioGroup::default();
     let mut reader = markup::Reader::new(element, &super::RADIO_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -2210,7 +2182,7 @@ pub fn radio_group(element: &xml::element::Element) -> super::RadioGroup {
 
 /// Read `mso14:ribbon` into a `Ribbon`.
 #[must_use]
-pub fn ribbon(element: &xml::element::Element) -> super::Ribbon {
+pub fn ribbon(element: &Element) -> super::Ribbon {
     let mut node = super::Ribbon::default();
     let mut reader = markup::Reader::new(element, &super::RIBBON_SHAPE);
     for (index, field) in &mut reader {
@@ -2226,13 +2198,13 @@ pub fn ribbon(element: &xml::element::Element) -> super::Ribbon {
 
 /// Read one item of `RibbonContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn ribbon_content(element: &xml::element::Element) -> super::RibbonContent {
+pub fn ribbon_content(element: &Element) -> super::RibbonContent {
     markup::read(element)
 }
 
 /// Read `mso14:secondColumn` into a `SecondColumn`.
 #[must_use]
-pub fn second_column(element: &xml::element::Element) -> super::SecondColumn {
+pub fn second_column(element: &Element) -> super::SecondColumn {
     let mut node = super::SecondColumn::default();
     let mut reader = markup::Reader::new(element, &super::SECOND_COLUMN_SHAPE);
     for (index, field) in &mut reader {
@@ -2246,7 +2218,7 @@ pub fn second_column(element: &xml::element::Element) -> super::SecondColumn {
 
 /// Read `mso14:separator` into a `Separator`.
 #[must_use]
-pub fn separator(element: &xml::element::Element) -> super::Separator {
+pub fn separator(element: &Element) -> super::Separator {
     let mut node = super::Separator::default();
     let mut reader = markup::Reader::new(element, &super::SEPARATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -2269,7 +2241,7 @@ pub fn separator(element: &xml::element::Element) -> super::Separator {
 
 /// Read `mso14:sharedControls` into a `SharedControls`.
 #[must_use]
-pub fn shared_controls(element: &xml::element::Element) -> super::SharedControls {
+pub fn shared_controls(element: &Element) -> super::SharedControls {
     let mut node = super::SharedControls::default();
     let mut reader = markup::Reader::new(element, &super::SHARED_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
@@ -2283,19 +2255,19 @@ pub fn shared_controls(element: &xml::element::Element) -> super::SharedControls
 
 /// Read one item of `SimpleGroupsContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn simple_groups(element: &xml::element::Element) -> super::SimpleGroupsContent {
+pub fn simple_groups(element: &Element) -> super::SimpleGroupsContent {
     markup::read(element)
 }
 
 /// Read one item of `SplitButtonContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn split_button(element: &xml::element::Element) -> super::SplitButtonContent {
+pub fn split_button(element: &Element) -> super::SplitButtonContent {
     markup::read(element)
 }
 
 /// Read `mso14:splitButton` into a `SplitButtonSplitButton`.
 #[must_use]
-pub fn split_button_split_button(element: &xml::element::Element) -> super::SplitButtonSplitButton {
+pub fn split_button_split_button(element: &Element) -> super::SplitButtonSplitButton {
     let mut node = super::SplitButtonSplitButton::default();
     let mut reader = markup::Reader::new(element, &super::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -2330,7 +2302,7 @@ pub fn split_button_split_button(element: &xml::element::Element) -> super::Spli
 /// Read `mso14:splitButton` into a `SplitButtonSplitButtonRegular`.
 #[must_use]
 pub fn split_button_split_button_regular(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SplitButtonSplitButtonRegular {
     let mut node = super::SplitButtonSplitButtonRegular::default();
     let mut reader = markup::Reader::new(element, &super::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE);
@@ -2364,7 +2336,7 @@ pub fn split_button_split_button_regular(
 /// Read `mso14:splitButton` into a `SplitButtonSplitButtonWithTitle`.
 #[must_use]
 pub fn split_button_split_button_with_title(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SplitButtonSplitButtonWithTitle {
     let mut node = super::SplitButtonSplitButtonWithTitle::default();
     let mut reader =
@@ -2398,7 +2370,7 @@ pub fn split_button_split_button_with_title(
 
 /// Read `mso14:tab` into a `TabBackstageTab`.
 #[must_use]
-pub fn tab_backstage_tab(element: &xml::element::Element) -> super::TabBackstageTab {
+pub fn tab_backstage_tab(element: &Element) -> super::TabBackstageTab {
     let mut node = super::TabBackstageTab::default();
     let mut reader = markup::Reader::new(element, &super::TAB_BACKSTAGE_TAB_SHAPE);
     for (index, field) in &mut reader {
@@ -2437,7 +2409,7 @@ pub fn tab_backstage_tab(element: &xml::element::Element) -> super::TabBackstage
 
 /// Read `mso14:tabSet` into a `TabSet`.
 #[must_use]
-pub fn tab_set(element: &xml::element::Element) -> super::TabSet {
+pub fn tab_set(element: &Element) -> super::TabSet {
     let mut node = super::TabSet::default();
     let mut reader = markup::Reader::new(element, &super::TAB_SET_SHAPE);
     for (index, field) in &mut reader {
@@ -2455,7 +2427,7 @@ pub fn tab_set(element: &xml::element::Element) -> super::TabSet {
 
 /// Read `mso14:tab` into a `TabTab`.
 #[must_use]
-pub fn tab_tab(element: &xml::element::Element) -> super::TabTab {
+pub fn tab_tab(element: &Element) -> super::TabTab {
     let mut node = super::TabTab::default();
     let mut reader = markup::Reader::new(element, &super::TAB_TAB_SHAPE);
     for (index, field) in &mut reader {
@@ -2484,7 +2456,7 @@ pub fn tab_tab(element: &xml::element::Element) -> super::TabTab {
 
 /// Read `mso14:tabs` into a `Tabs`.
 #[must_use]
-pub fn tabs(element: &xml::element::Element) -> super::Tabs {
+pub fn tabs(element: &Element) -> super::Tabs {
     let mut node = super::Tabs::default();
     let mut reader = markup::Reader::new(element, &super::TABS_SHAPE);
     for (index, field) in &mut reader {
@@ -2498,7 +2470,7 @@ pub fn tabs(element: &xml::element::Element) -> super::Tabs {
 
 /// Read `mso14:taskFormGroup` into a `TaskFormGroup`.
 #[must_use]
-pub fn task_form_group(element: &xml::element::Element) -> super::TaskFormGroup {
+pub fn task_form_group(element: &Element) -> super::TaskFormGroup {
     let mut node = super::TaskFormGroup::default();
     let mut reader = markup::Reader::new(element, &super::TASK_FORM_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -2526,7 +2498,7 @@ pub fn task_form_group(element: &xml::element::Element) -> super::TaskFormGroup 
 
 /// Read `mso14:taskGroup` into a `TaskGroup`.
 #[must_use]
-pub fn task_group(element: &xml::element::Element) -> super::TaskGroup {
+pub fn task_group(element: &Element) -> super::TaskGroup {
     let mut node = super::TaskGroup::default();
     let mut reader = markup::Reader::new(element, &super::TASK_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -2558,7 +2530,7 @@ pub fn task_group(element: &xml::element::Element) -> super::TaskGroup {
 
 /// Read `mso14:task` into a `TaskTaskFormGroupTask`.
 #[must_use]
-pub fn task_task_form_group_task(element: &xml::element::Element) -> super::TaskTaskFormGroupTask {
+pub fn task_task_form_group_task(element: &Element) -> super::TaskTaskFormGroupTask {
     let mut node = super::TaskTaskFormGroupTask::default();
     let mut reader = markup::Reader::new(element, &super::TASK_TASK_FORM_GROUP_TASK_SHAPE);
     for (index, field) in &mut reader {
@@ -2594,7 +2566,7 @@ pub fn task_task_form_group_task(element: &xml::element::Element) -> super::Task
 
 /// Read `mso14:task` into a `TaskTaskGroupTask`.
 #[must_use]
-pub fn task_task_group_task(element: &xml::element::Element) -> super::TaskTaskGroupTask {
+pub fn task_task_group_task(element: &Element) -> super::TaskTaskGroupTask {
     let mut node = super::TaskTaskGroupTask::default();
     let mut reader = markup::Reader::new(element, &super::TASK_TASK_GROUP_TASK_SHAPE);
     for (index, field) in &mut reader {
@@ -2632,7 +2604,7 @@ pub fn task_task_group_task(element: &xml::element::Element) -> super::TaskTaskG
 /// Read `mso14:toggleButton` into a `ToggleButtonBackstageMenuToggleButton`.
 #[must_use]
 pub fn toggle_button_backstage_menu_toggle_button(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ToggleButtonBackstageMenuToggleButton {
     let mut node = super::ToggleButtonBackstageMenuToggleButton::default();
     let mut reader = markup::Reader::new(
@@ -2668,9 +2640,7 @@ pub fn toggle_button_backstage_menu_toggle_button(
 
 /// Read `mso14:toggleButton` into a `ToggleButtonToggleButton`.
 #[must_use]
-pub fn toggle_button_toggle_button(
-    element: &xml::element::Element,
-) -> super::ToggleButtonToggleButton {
+pub fn toggle_button_toggle_button(element: &Element) -> super::ToggleButtonToggleButton {
     let mut node = super::ToggleButtonToggleButton::default();
     let mut reader = markup::Reader::new(element, &super::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -2718,7 +2688,7 @@ pub fn toggle_button_toggle_button(
 /// Read `mso14:toggleButton` into a `ToggleButtonToggleButtonRegular`.
 #[must_use]
 pub fn toggle_button_toggle_button_regular(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ToggleButtonToggleButtonRegular {
     let mut node = super::ToggleButtonToggleButtonRegular::default();
     let mut reader =
@@ -2766,7 +2736,7 @@ pub fn toggle_button_toggle_button_regular(
 /// Read `mso14:toggleButton` into a `ToggleButtonVisibleToggleButton`.
 #[must_use]
 pub fn toggle_button_visible_toggle_button(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ToggleButtonVisibleToggleButton {
     let mut node = super::ToggleButtonVisibleToggleButton::default();
     let mut reader =
@@ -2811,7 +2781,7 @@ pub fn toggle_button_visible_toggle_button(
 
 /// Read `mso14:topItems` into a `TopItems`.
 #[must_use]
-pub fn top_items(element: &xml::element::Element) -> super::TopItems {
+pub fn top_items(element: &Element) -> super::TopItems {
     let mut node = super::TopItems::default();
     let mut reader = markup::Reader::new(element, &super::TOP_ITEMS_SHAPE);
     for (index, field) in &mut reader {

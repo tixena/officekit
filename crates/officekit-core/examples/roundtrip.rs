@@ -23,11 +23,11 @@ use std::io::{Cursor, Read as _, Write, stdout};
 use std::path::{Path, PathBuf};
 
 use clap::Parser;
-use officekit_core::xml::element::Document;
-use officekit_core::xml::mc::MarkupCompatibility;
-use officekit_core::xml::name::OfficeVersion;
-use officekit_core::xml::parse::parse;
-use officekit_core::xml::write::{Layout, WriteOptions};
+use officekit_xml::element::Document;
+use officekit_xml::mc::MarkupCompatibility;
+use officekit_xml::name::OfficeVersion;
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 use os_shim::real::RealSystem;

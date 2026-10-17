@@ -214,14 +214,15 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `BlipFillBlipFillProperties` as its element, `oac:blipFill`.
 #[must_use]
 pub fn blip_fill_blip_fill_properties(
     node: &super::BlipFillBlipFillProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE,
@@ -239,8 +240,8 @@ pub fn blip_fill_blip_fill_properties(
 #[must_use]
 pub fn blip_fill_reset_blip_fill_properties(
     node: &super::BlipFillResetBlipFillProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BLIP_FILL_RESET_BLIP_FILL_PROPERTIES_SHAPE,
@@ -255,7 +256,7 @@ pub fn blip_fill_reset_blip_fill_properties(
 
 /// Write a `BodyPr` as its element, `oac:bodyPr`.
 #[must_use]
-pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
@@ -286,7 +287,7 @@ pub fn body_pr(node: &super::BodyPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Bounds` as its element, `oac:bounds`.
 #[must_use]
-pub fn bounds(node: &super::Bounds, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bounds(node: &super::Bounds, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BOUNDS_SHAPE, &node.unknown);
     writer.attribute(0, &node.l);
     writer.attribute(1, &node.t);
@@ -297,7 +298,7 @@ pub fn bounds(node: &super::Bounds, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `BwMode` as its element, `oac:bwMode`.
 #[must_use]
-pub fn bw_mode(node: &super::BwMode, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bw_mode(node: &super::BwMode, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::BW_MODE_SHAPE, &node.unknown).finish()
 }
 
@@ -305,8 +306,8 @@ pub fn bw_mode(node: &super::BwMode, scope: &mut markup::Scope) -> xml::element:
 #[must_use]
 pub fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
     node: &super::CNvCxnSpPrModifyNonVisualConnectorProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_CXN_SP_PR_MODIFY_NON_VISUAL_CONNECTOR_PROPS_SHAPE,
@@ -331,8 +332,8 @@ pub fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
 #[must_use]
 pub fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
     node: &super::CNvCxnSpPrResetNonVisualConnectorProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_CXN_SP_PR_RESET_NON_VISUAL_CONNECTOR_PROPS_SHAPE,
@@ -355,10 +356,7 @@ pub fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
 
 /// Write a `CNvGraphicFramePr` as its element, `oac:cNvGraphicFramePr`.
 #[must_use]
-pub fn c_nv_graphic_frame_pr(
-    node: &super::CNvGraphicFramePr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn c_nv_graphic_frame_pr(node: &super::CNvGraphicFramePr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_GRAPHIC_FRAME_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_drilldown);
@@ -373,8 +371,8 @@ pub fn c_nv_graphic_frame_pr(
 #[must_use]
 pub fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
     node: &super::CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_GRP_SP_PR_MODIFY_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE,
@@ -394,8 +392,8 @@ pub fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
 #[must_use]
 pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
     node: &super::CNvGrpSpPrNonVisualGroupDrawingShapeProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_GRP_SP_PR_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE,
@@ -408,7 +406,7 @@ pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
 
 /// Write a `CNvInkPr` as its element, `oac:cNvInkPr`.
 #[must_use]
-pub fn c_nv_ink_pr(node: &super::CNvInkPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_ink_pr(node: &super::CNvInkPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_INK_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
@@ -428,8 +426,8 @@ pub fn c_nv_ink_pr(node: &super::CNvInkPr, scope: &mut markup::Scope) -> xml::el
 #[must_use]
 pub fn c_nv_pic_pr_modify_non_visual_picture_props(
     node: &super::CNvPicPrModifyNonVisualPictureProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_PIC_PR_MODIFY_NON_VISUAL_PICTURE_PROPS_SHAPE,
@@ -454,8 +452,8 @@ pub fn c_nv_pic_pr_modify_non_visual_picture_props(
 #[must_use]
 pub fn c_nv_pic_pr_reset_non_visual_picture_props(
     node: &super::CNvPicPrResetNonVisualPictureProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_PIC_PR_RESET_NON_VISUAL_PICTURE_PROPS_SHAPE,
@@ -469,8 +467,8 @@ pub fn c_nv_pic_pr_reset_non_visual_picture_props(
 #[must_use]
 pub fn c_nv_pr_modify_non_visual_drawing_props(
     node: &super::CNvPrModifyNonVisualDrawingProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_PR_MODIFY_NON_VISUAL_DRAWING_PROPS_SHAPE,
@@ -489,8 +487,8 @@ pub fn c_nv_pr_modify_non_visual_drawing_props(
 #[must_use]
 pub fn c_nv_pr_non_visual_drawing_props(
     node: &super::CNvPrNonVisualDrawingProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE,
@@ -509,7 +507,7 @@ pub fn c_nv_pr_non_visual_drawing_props(
 
 /// Write a `CNvSpPr` as its element, `oac:cNvSpPr`.
 #[must_use]
-pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
@@ -528,10 +526,7 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `CompressPicPr` as its element, `oac:compressPicPr`.
 #[must_use]
-pub fn compress_pic_pr(
-    node: &super::CompressPicPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn compress_pic_pr(node: &super::CompressPicPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMPRESS_PIC_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.remove_crop);
     writer.attribute(1, &node.use_local_dpi);
@@ -543,8 +538,8 @@ pub fn compress_pic_pr(
 #[must_use]
 pub fn context_text_char_range_context(
     node: &super::ContextTextCharRangeContext,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE,
@@ -557,7 +552,7 @@ pub fn context_text_char_range_context(
 
 /// Write a `CxnSpMk` as its element, `oac:cxnSpMk`.
 #[must_use]
-pub fn cxn_sp_mk(node: &super::CxnSpMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cxn_sp_mk(node: &super::CxnSpMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CXN_SP_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -566,7 +561,7 @@ pub fn cxn_sp_mk(node: &super::CxnSpMk, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `CxnSpMkLst` as its element, `oac:cxnSpMkLst`.
 #[must_use]
-pub fn cxn_sp_mk_lst(node: &super::CxnSpMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cxn_sp_mk_lst(node: &super::CxnSpMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CXN_SP_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -574,7 +569,7 @@ pub fn cxn_sp_mk_lst(node: &super::CxnSpMkLst, scope: &mut markup::Scope) -> xml
 
 /// Write a `DcMkLst` as its element, `oac:dcMkLst`.
 #[must_use]
-pub fn dc_mk_lst(node: &super::DcMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dc_mk_lst(node: &super::DcMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -582,10 +577,7 @@ pub fn dc_mk_lst(node: &super::DcMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `DeMasterMkLst` as its element, `oac:deMasterMkLst`.
 #[must_use]
-pub fn de_master_mk_lst(
-    node: &super::DeMasterMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn de_master_mk_lst(node: &super::DeMasterMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DE_MASTER_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -593,7 +585,7 @@ pub fn de_master_mk_lst(
 
 /// Write a `DeMkLst` as its element, `oac:deMkLst`.
 #[must_use]
-pub fn de_mk_lst(node: &super::DeMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn de_mk_lst(node: &super::DeMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DE_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -601,13 +593,13 @@ pub fn de_mk_lst(node: &super::DeMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `DePkg` as its element, `oac:dePkg`.
 #[must_use]
-pub fn de_pkg(node: &super::DePkg, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn de_pkg(node: &super::DePkg, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DE_PKG_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DeSrcMkLst` as its element, `oac:deSrcMkLst`.
 #[must_use]
-pub fn de_src_mk_lst(node: &super::DeSrcMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn de_src_mk_lst(node: &super::DeSrcMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DE_SRC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -615,7 +607,7 @@ pub fn de_src_mk_lst(node: &super::DeSrcMkLst, scope: &mut markup::Scope) -> xml
 
 /// Write a `DeTgtMkLst` as its element, `oac:deTgtMkLst`.
 #[must_use]
-pub fn de_tgt_mk_lst(node: &super::DeTgtMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn de_tgt_mk_lst(node: &super::DeTgtMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DE_TGT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -623,7 +615,7 @@ pub fn de_tgt_mk_lst(node: &super::DeTgtMkLst, scope: &mut markup::Scope) -> xml
 
 /// Write a `DgMkLst` as its element, `oac:dgMkLst`.
 #[must_use]
-pub fn dg_mk_lst(node: &super::DgMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dg_mk_lst(node: &super::DgMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DG_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -631,13 +623,13 @@ pub fn dg_mk_lst(node: &super::DgMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Dpi` as its element, `oac:dpi`.
 #[must_use]
-pub fn dpi(node: &super::Dpi, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dpi(node: &super::Dpi, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::DPI_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `DrSelLst` as its element, `oac:drSelLst`.
 #[must_use]
-pub fn dr_sel_lst(node: &super::DrSelLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dr_sel_lst(node: &super::DrSelLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DR_SEL_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -645,10 +637,7 @@ pub fn dr_sel_lst(node: &super::DrSelLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `EditorSelLst` as its element, `oac:editorSelLst`.
 #[must_use]
-pub fn editor_sel_lst(
-    node: &super::EditorSelLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn editor_sel_lst(node: &super::EditorSelLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EDITOR_SEL_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -656,13 +645,13 @@ pub fn editor_sel_lst(
 
 /// Write a `Effect` as its element, `oac:effect`.
 #[must_use]
-pub fn effect(node: &super::Effect, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn effect(node: &super::Effect, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::EFFECT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `EffectRef` as its element, `oac:effectRef`.
 #[must_use]
-pub fn effect_ref(node: &super::EffectRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EFFECT_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
@@ -671,10 +660,7 @@ pub fn effect_ref(node: &super::EffectRef, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `EndCxnConnection` as its element, `oac:endCxn`.
 #[must_use]
-pub fn end_cxn_connection(
-    node: &super::EndCxnConnection,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn end_cxn_connection(node: &super::EndCxnConnection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::END_CXN_CONNECTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.idx);
@@ -683,40 +669,37 @@ pub fn end_cxn_connection(
 
 /// Write a `EndCxnEmpty` as its element, `oac:endCxn`.
 #[must_use]
-pub fn end_cxn_empty(
-    node: &super::EndCxnEmpty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn end_cxn_empty(node: &super::EndCxnEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::END_CXN_EMPTY_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ExtLst` as its element, `oac:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Fill` as its element, `oac:fill`.
 #[must_use]
-pub fn fill(node: &super::Fill, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill(node: &super::Fill, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::FILL_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `FillMode` as its element, `oac:fillMode`.
 #[must_use]
-pub fn fill_mode(node: &super::FillMode, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill_mode(node: &super::FillMode, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::FILL_MODE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `FillRect` as its element, `oac:fillRect`.
 #[must_use]
-pub fn fill_rect(node: &super::FillRect, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill_rect(node: &super::FillRect, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::FILL_RECT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `FillRef` as its element, `oac:fillRef`.
 #[must_use]
-pub fn fill_ref(node: &super::FillRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILL_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
@@ -725,7 +708,7 @@ pub fn fill_ref(node: &super::FillRef, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `FontRef` as its element, `oac:fontRef`.
 #[must_use]
-pub fn font_ref(node: &super::FontRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FONT_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
@@ -734,16 +717,13 @@ pub fn font_ref(node: &super::FontRef, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Geom` as its element, `oac:geom`.
 #[must_use]
-pub fn geom(node: &super::Geom, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn geom(node: &super::Geom, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::GEOM_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `GraphicFrameMk` as its element, `oac:graphicFrameMk`.
 #[must_use]
-pub fn graphic_frame_mk(
-    node: &super::GraphicFrameMk,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame_mk(node: &super::GraphicFrameMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -752,10 +732,7 @@ pub fn graphic_frame_mk(
 
 /// Write a `GraphicFrameMkLst` as its element, `oac:graphicFrameMkLst`.
 #[must_use]
-pub fn graphic_frame_mk_lst(
-    node: &super::GraphicFrameMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame_mk_lst(node: &super::GraphicFrameMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -763,10 +740,7 @@ pub fn graphic_frame_mk_lst(
 
 /// Write a `GraphicParentMkLst` as its element, `oac:graphicParentMkLst`.
 #[must_use]
-pub fn graphic_parent_mk_lst(
-    node: &super::GraphicParentMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_parent_mk_lst(node: &super::GraphicParentMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_PARENT_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -774,10 +748,7 @@ pub fn graphic_parent_mk_lst(
 
 /// Write a `GridColMkLst` as its element, `oac:gridColMkLst`.
 #[must_use]
-pub fn grid_col_mk_lst(
-    node: &super::GridColMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn grid_col_mk_lst(node: &super::GridColMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRID_COL_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -790,7 +761,7 @@ pub fn group_command(node: &super::GroupCommandContent, writer: &mut markup::Wri
 
 /// Write a `GrpCmd` as its element, `oac:grpCmd`.
 #[must_use]
-pub fn grp_cmd(node: &super::GrpCmd, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_cmd(node: &super::GrpCmd, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_CMD_SHAPE, &node.unknown);
     writer.attribute(0, &node.ver_id);
     writer.attribute(1, &node.prevent_regroup);
@@ -805,7 +776,7 @@ pub fn grp_cmd(node: &super::GrpCmd, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `GrpSpMk` as its element, `oac:grpSpMk`.
 #[must_use]
-pub fn grp_sp_mk(node: &super::GrpSpMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp_mk(node: &super::GrpSpMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -814,7 +785,7 @@ pub fn grp_sp_mk(node: &super::GrpSpMk, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `GrpSpMkLst` as its element, `oac:grpSpMkLst`.
 #[must_use]
-pub fn grp_sp_mk_lst(node: &super::GrpSpMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp_mk_lst(node: &super::GrpSpMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -824,8 +795,8 @@ pub fn grp_sp_mk_lst(node: &super::GrpSpMkLst, scope: &mut markup::Scope) -> xml
 #[must_use]
 pub fn grp_sp_pr_group_shape_properties(
     node: &super::GrpSpPrGroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -844,8 +815,8 @@ pub fn grp_sp_pr_group_shape_properties(
 #[must_use]
 pub fn grp_sp_pr_reset_group_shape_properties(
     node: &super::GrpSpPrResetGroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::GRP_SP_PR_RESET_GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -862,10 +833,7 @@ pub fn grp_sp_pr_reset_group_shape_properties(
 
 /// Write a `HlinkClickEmpty` as its element, `oac:hlinkClick`.
 #[must_use]
-pub fn hlink_click_empty(
-    node: &super::HlinkClickEmpty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hlink_click_empty(node: &super::HlinkClickEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::HLINK_CLICK_EMPTY_SHAPE, &node.unknown).finish()
 }
 
@@ -873,8 +841,8 @@ pub fn hlink_click_empty(
 #[must_use]
 pub fn hlink_click_hyperlink_props(
     node: &super::HlinkClickHyperlinkProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HLINK_CLICK_HYPERLINK_PROPS_SHAPE,
@@ -886,10 +854,7 @@ pub fn hlink_click_hyperlink_props(
 
 /// Write a `HlinkHoverEmpty` as its element, `oac:hlinkHover`.
 #[must_use]
-pub fn hlink_hover_empty(
-    node: &super::HlinkHoverEmpty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn hlink_hover_empty(node: &super::HlinkHoverEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::HLINK_HOVER_EMPTY_SHAPE, &node.unknown).finish()
 }
 
@@ -897,8 +862,8 @@ pub fn hlink_hover_empty(
 #[must_use]
 pub fn hlink_hover_hyperlink_props(
     node: &super::HlinkHoverHyperlinkProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HLINK_HOVER_HYPERLINK_PROPS_SHAPE,
@@ -910,7 +875,7 @@ pub fn hlink_hover_hyperlink_props(
 
 /// Write a `HlinkMkLst` as its element, `oac:hlinkMkLst`.
 #[must_use]
-pub fn hlink_mk_lst(node: &super::HlinkMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn hlink_mk_lst(node: &super::HlinkMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HLINK_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -920,8 +885,8 @@ pub fn hlink_mk_lst(node: &super::HlinkMkLst, scope: &mut markup::Scope) -> xml:
 #[must_use]
 pub fn hlink_modify_hyperlink_props(
     node: &super::HlinkModifyHyperlinkProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HLINK_MODIFY_HYPERLINK_PROPS_SHAPE,
@@ -936,8 +901,8 @@ pub fn hlink_modify_hyperlink_props(
 #[must_use]
 pub fn hlink_reset_hyperlink_props(
     node: &super::HlinkResetHyperlinkProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HLINK_RESET_HYPERLINK_PROPS_SHAPE,
@@ -950,7 +915,7 @@ pub fn hlink_reset_hyperlink_props(
 
 /// Write a `ImgData` as its element, `oac:imgData`.
 #[must_use]
-pub fn img_data(node: &super::ImgData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn img_data(node: &super::ImgData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMG_DATA_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -958,7 +923,7 @@ pub fn img_data(node: &super::ImgData, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `ImgLink` as its element, `oac:imgLink`.
 #[must_use]
-pub fn img_link(node: &super::ImgLink, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn img_link(node: &super::ImgLink, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMG_LINK_SHAPE, &node.unknown);
     writer.attribute(0, &node.tgt);
     writer.finish()
@@ -966,7 +931,7 @@ pub fn img_link(node: &super::ImgLink, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `ImgUrl` as its element, `oac:imgUrl`.
 #[must_use]
-pub fn img_url(node: &super::ImgUrl, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn img_url(node: &super::ImgUrl, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMG_URL_SHAPE, &node.unknown);
     writer.attribute(0, &node.src);
     writer.attribute(1, &node.linkage);
@@ -975,7 +940,7 @@ pub fn img_url(node: &super::ImgUrl, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `InkMk` as its element, `oac:inkMk`.
 #[must_use]
-pub fn ink_mk(node: &super::InkMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ink_mk(node: &super::InkMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::INK_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -984,7 +949,7 @@ pub fn ink_mk(node: &super::InkMk, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `InkMkLst` as its element, `oac:inkMkLst`.
 #[must_use]
-pub fn ink_mk_lst(node: &super::InkMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ink_mk_lst(node: &super::InkMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::INK_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -992,13 +957,13 @@ pub fn ink_mk_lst(node: &super::InkMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `LfPr` as its element, `oac:lfPr`.
 #[must_use]
-pub fn lf_pr(node: &super::LfPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn lf_pr(node: &super::LfPr, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LF_PR_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LineProps` as its element, `oac:lineProps`.
 #[must_use]
-pub fn line_props(node: &super::LineProps, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn line_props(node: &super::LineProps, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINE_PROPS_SHAPE, &node.unknown);
     writer.attribute(0, &node.w);
     writer.attribute(1, &node.cap);
@@ -1015,13 +980,13 @@ pub fn line_props(node: &super::LineProps, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Ln` as its element, `oac:ln`.
 #[must_use]
-pub fn ln(node: &super::Ln, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ln(node: &super::Ln, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LnRef` as its element, `oac:lnRef`.
 #[must_use]
-pub fn ln_ref(node: &super::LnRef, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LN_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
@@ -1030,10 +995,7 @@ pub fn ln_ref(node: &super::LnRef, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `Model3DMkLst` as its element, `oac:model3DMkLst`.
 #[must_use]
-pub fn model3d_mk_lst(
-    node: &super::Model3DMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn model3d_mk_lst(node: &super::Model3DMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MODEL3D_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1041,82 +1003,67 @@ pub fn model3d_mk_lst(
 
 /// Write a `NoAdjustHandles` as its element, `oac:noAdjustHandles`.
 #[must_use]
-pub fn no_adjust_handles(
-    node: &super::NoAdjustHandles,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_adjust_handles(node: &super::NoAdjustHandles, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_ADJUST_HANDLES_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoChangeArrowheads` as its element, `oac:noChangeArrowheads`.
 #[must_use]
-pub fn no_change_arrowheads(
-    node: &super::NoChangeArrowheads,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_change_arrowheads(node: &super::NoChangeArrowheads, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_CHANGE_ARROWHEADS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoChangeAspect` as its element, `oac:noChangeAspect`.
 #[must_use]
-pub fn no_change_aspect(
-    node: &super::NoChangeAspect,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_change_aspect(node: &super::NoChangeAspect, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_CHANGE_ASPECT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoChangeShapeType` as its element, `oac:noChangeShapeType`.
 #[must_use]
-pub fn no_change_shape_type(
-    node: &super::NoChangeShapeType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_change_shape_type(node: &super::NoChangeShapeType, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_CHANGE_SHAPE_TYPE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoEditPoints` as its element, `oac:noEditPoints`.
 #[must_use]
-pub fn no_edit_points(
-    node: &super::NoEditPoints,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn no_edit_points(node: &super::NoEditPoints, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_EDIT_POINTS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoGrp` as its element, `oac:noGrp`.
 #[must_use]
-pub fn no_grp(node: &super::NoGrp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_grp(node: &super::NoGrp, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_GRP_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoMove` as its element, `oac:noMove`.
 #[must_use]
-pub fn no_move(node: &super::NoMove, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_move(node: &super::NoMove, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_MOVE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoResize` as its element, `oac:noResize`.
 #[must_use]
-pub fn no_resize(node: &super::NoResize, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_resize(node: &super::NoResize, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_RESIZE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoRot` as its element, `oac:noRot`.
 #[must_use]
-pub fn no_rot(node: &super::NoRot, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_rot(node: &super::NoRot, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_ROT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `NoSelect` as its element, `oac:noSelect`.
 #[must_use]
-pub fn no_select(node: &super::NoSelect, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn no_select(node: &super::NoSelect, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::NO_SELECT_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Off` as its element, `oac:off`.
 #[must_use]
-pub fn off(node: &super::Off, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn off(node: &super::Off, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OFF_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -1125,10 +1072,7 @@ pub fn off(node: &super::Off, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `OrigImgData` as its element, `oac:origImgData`.
 #[must_use]
-pub fn orig_img_data(
-    node: &super::OrigImgData,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn orig_img_data(node: &super::OrigImgData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ORIG_IMG_DATA_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -1136,7 +1080,7 @@ pub fn orig_img_data(
 
 /// Write a `PPr` as its element, `oac:pPr`.
 #[must_use]
-pub fn p_pr(node: &super::PPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn p_pr(node: &super::PPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::P_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.mar_l);
     writer.attribute(1, &node.mar_r);
@@ -1164,7 +1108,7 @@ pub fn p_pr(node: &super::PPr, scope: &mut markup::Scope) -> xml::element::Eleme
 
 /// Write a `PicMk` as its element, `oac:picMk`.
 #[must_use]
-pub fn pic_mk(node: &super::PicMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pic_mk(node: &super::PicMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIC_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -1173,7 +1117,7 @@ pub fn pic_mk(node: &super::PicMk, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `PicMkLst` as its element, `oac:picMkLst`.
 #[must_use]
-pub fn pic_mk_lst(node: &super::PicMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pic_mk_lst(node: &super::PicMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1181,7 +1125,7 @@ pub fn pic_mk_lst(node: &super::PicMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Reset` as its element, `oac:reset`.
 #[must_use]
-pub fn reset(node: &super::Reset, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn reset(node: &super::Reset, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RESET_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -1189,22 +1133,19 @@ pub fn reset(node: &super::Reset, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `RotWithShape` as its element, `oac:rotWithShape`.
 #[must_use]
-pub fn rot_with_shape(
-    node: &super::RotWithShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rot_with_shape(node: &super::RotWithShape, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ROT_WITH_SHAPE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Scene3d` as its element, `oac:scene3d`.
 #[must_use]
-pub fn scene3d(node: &super::Scene3d, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn scene3d(node: &super::Scene3d, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SCENE3D_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `SndData` as its element, `oac:sndData`.
 #[must_use]
-pub fn snd_data(node: &super::SndData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn snd_data(node: &super::SndData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SND_DATA_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -1212,13 +1153,13 @@ pub fn snd_data(node: &super::SndData, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Sp3d` as its element, `oac:sp3d`.
 #[must_use]
-pub fn sp3d(node: &super::Sp3d, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp3d(node: &super::Sp3d, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SP3D_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `SpMk` as its element, `oac:spMk`.
 #[must_use]
-pub fn sp_mk(node: &super::SpMk, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_mk(node: &super::SpMk, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_MK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
@@ -1229,8 +1170,8 @@ pub fn sp_mk(node: &super::SpMk, scope: &mut markup::Scope) -> xml::element::Ele
 #[must_use]
 pub fn sp_mk_lst_shape_moniker_list(
     node: &super::SpMkLstShapeMonikerList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE,
@@ -1244,8 +1185,8 @@ pub fn sp_mk_lst_shape_moniker_list(
 #[must_use]
 pub fn sp_mk_lst_shape_props_moniker_list(
     node: &super::SpMkLstShapePropsMonikerList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE,
@@ -1259,8 +1200,8 @@ pub fn sp_mk_lst_shape_props_moniker_list(
 #[must_use]
 pub fn sp_pr_reset_shape_properties(
     node: &super::SpPrResetShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SP_PR_RESET_SHAPE_PROPERTIES_SHAPE,
@@ -1280,10 +1221,7 @@ pub fn sp_pr_reset_shape_properties(
 
 /// Write a `SpPrShapeProperties` as its element, `oac:spPr`.
 #[must_use]
-pub fn sp_pr_shape_properties(
-    node: &super::SpPrShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sp_pr_shape_properties(node: &super::SpPrShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SP_PR_SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -1300,10 +1238,7 @@ pub fn sp_pr_shape_properties(
 
 /// Write a `SrcRectEmpty` as its element, `oac:srcRect`.
 #[must_use]
-pub fn src_rect_empty(
-    node: &super::SrcRectEmpty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn src_rect_empty(node: &super::SrcRectEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SRC_RECT_EMPTY_SHAPE, &node.unknown).finish()
 }
 
@@ -1311,8 +1246,8 @@ pub fn src_rect_empty(
 #[must_use]
 pub fn src_rect_relative_rect_props(
     node: &super::SrcRectRelativeRectProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let writer = markup::Writer::new(
         scope,
         &super::SRC_RECT_RELATIVE_RECT_PROPS_SHAPE,
@@ -1323,10 +1258,7 @@ pub fn src_rect_relative_rect_props(
 
 /// Write a `StCxnConnection` as its element, `oac:stCxn`.
 #[must_use]
-pub fn st_cxn_connection(
-    node: &super::StCxnConnection,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn st_cxn_connection(node: &super::StCxnConnection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ST_CXN_CONNECTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.idx);
@@ -1335,13 +1267,13 @@ pub fn st_cxn_connection(
 
 /// Write a `StCxnEmpty` as its element, `oac:stCxn`.
 #[must_use]
-pub fn st_cxn_empty(node: &super::StCxnEmpty, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn st_cxn_empty(node: &super::StCxnEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ST_CXN_EMPTY_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Style` as its element, `oac:style`.
 #[must_use]
-pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.child(&node.ln_ref);
     writer.child(&node.fill_ref);
@@ -1352,10 +1284,7 @@ pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `SvgBlipMkLst` as its element, `oac:svgBlipMkLst`.
 #[must_use]
-pub fn svg_blip_mk_lst(
-    node: &super::SvgBlipMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn svg_blip_mk_lst(node: &super::SvgBlipMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SVG_BLIP_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1363,7 +1292,7 @@ pub fn svg_blip_mk_lst(
 
 /// Write a `TblMkLst` as its element, `oac:tblMkLst`.
 #[must_use]
-pub fn tbl_mk_lst(node: &super::TblMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tbl_mk_lst(node: &super::TblMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TBL_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1371,7 +1300,7 @@ pub fn tbl_mk_lst(node: &super::TblMkLst, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `TcMkLst` as its element, `oac:tcMkLst`.
 #[must_use]
-pub fn tc_mk_lst(node: &super::TcMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tc_mk_lst(node: &super::TcMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TC_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1379,7 +1308,7 @@ pub fn tc_mk_lst(node: &super::TcMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `TrMkLst` as its element, `oac:trMkLst`.
 #[must_use]
-pub fn tr_mk_lst(node: &super::TrMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tr_mk_lst(node: &super::TrMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TR_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1387,10 +1316,7 @@ pub fn tr_mk_lst(node: &super::TrMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `TxBodyMkLst` as its element, `oac:txBodyMkLst`.
 #[must_use]
-pub fn tx_body_mk_lst(
-    node: &super::TxBodyMkLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn tx_body_mk_lst(node: &super::TxBodyMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TX_BODY_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1398,13 +1324,13 @@ pub fn tx_body_mk_lst(
 
 /// Write a `TxBodyPkg` as its element, `oac:txBodyPkg`.
 #[must_use]
-pub fn tx_body_pkg(node: &super::TxBodyPkg, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tx_body_pkg(node: &super::TxBodyPkg, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::TX_BODY_PKG_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `TxMkLst` as its element, `oac:txMkLst`.
 #[must_use]
-pub fn tx_mk_lst(node: &super::TxMkLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tx_mk_lst(node: &super::TxMkLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TX_MK_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1412,7 +1338,7 @@ pub fn tx_mk_lst(node: &super::TxMkLst, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `UseBounds` as its element, `oac:useBounds`.
 #[must_use]
-pub fn use_bounds(node: &super::UseBounds, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn use_bounds(node: &super::UseBounds, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::USE_BOUNDS_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -1420,7 +1346,7 @@ pub fn use_bounds(node: &super::UseBounds, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ViewSelLst` as its element, `oac:viewSelLst`.
 #[must_use]
-pub fn view_sel_lst(node: &super::ViewSelLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn view_sel_lst(node: &super::ViewSelLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VIEW_SEL_LST_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1428,7 +1354,7 @@ pub fn view_sel_lst(node: &super::ViewSelLst, scope: &mut markup::Scope) -> xml:
 
 /// Write a `XfrmEmpty` as its element, `oac:xfrm`.
 #[must_use]
-pub fn xfrm_empty(node: &super::XfrmEmpty, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn xfrm_empty(node: &super::XfrmEmpty, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::XFRM_EMPTY_SHAPE, &node.unknown).finish()
 }
 
@@ -1436,8 +1362,8 @@ pub fn xfrm_empty(node: &super::XfrmEmpty, scope: &mut markup::Scope) -> xml::el
 #[must_use]
 pub fn xfrm_modify_transform_props(
     node: &super::XfrmModifyTransformProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::XFRM_MODIFY_TRANSFORM_PROPS_SHAPE,
@@ -1455,10 +1381,7 @@ pub fn xfrm_modify_transform_props(
 
 /// Write a `XfrmTransform2D` as its element, `oac:xfrm`.
 #[must_use]
-pub fn xfrm_transform2d(
-    node: &super::XfrmTransform2D,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn xfrm_transform2d(node: &super::XfrmTransform2D, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XFRM_TRANSFORM2D_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

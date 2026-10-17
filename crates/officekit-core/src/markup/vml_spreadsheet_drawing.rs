@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_XVML: Option<NamespaceId> = Some(162);
@@ -844,7 +844,7 @@ pub enum AttachedObjectDataContent {
     MultiLine(MultiLine),
     MultipleSelections(MultipleSelections),
     NonLinkedListItem(NonLinkedListItem),
-    Other(xml::element::Node),
+    Other(Node),
     PasswordEdit(PasswordEdit),
     PrimaryKeyboardAccelerator(PrimaryKeyboardAccelerator),
     PrintToggle(PrintToggle),
@@ -2857,7 +2857,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Anchor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor(element)
     }
 }
@@ -2870,7 +2870,7 @@ impl markup::Write for Anchor {
 }
 
 impl markup::Read for AttachedObjectData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attached_object_data(element)
     }
 }
@@ -2883,11 +2883,11 @@ impl markup::Write for AttachedObjectData {
 }
 
 impl markup::Read for AttachedObjectDataContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XVML, "Anchor")) => Self::Anchor(markup::read(element)),
             Some((NS_XVML, "AutoFill")) => Self::AutoFill(markup::read(element)),
@@ -2956,7 +2956,7 @@ impl markup::Read for AttachedObjectDataContent {
             Some((NS_XVML, "VTEdit")) => Self::ValidationType(markup::read(element)),
             Some((NS_XVML, "VScroll")) => Self::VerticalScroll(markup::read(element)),
             Some((NS_XVML, "TextVAlign")) => Self::VerticalTextAlignment(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3037,7 +3037,7 @@ impl markup::Write for AttachedObjectDataContent {
 }
 
 impl markup::Read for AutoFill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_fill(element)
     }
 }
@@ -3050,7 +3050,7 @@ impl markup::Write for AutoFill {
 }
 
 impl markup::Read for AutoLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_line(element)
     }
 }
@@ -3063,7 +3063,7 @@ impl markup::Write for AutoLine {
 }
 
 impl markup::Read for AutomaticallySize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::automatically_size(element)
     }
 }
@@ -3076,7 +3076,7 @@ impl markup::Write for AutomaticallySize {
 }
 
 impl markup::Read for CallbackType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::callback_type(element)
     }
 }
@@ -3089,7 +3089,7 @@ impl markup::Write for CallbackType {
 }
 
 impl markup::Read for CameraSourceRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::camera_source_range(element)
     }
 }
@@ -3102,7 +3102,7 @@ impl markup::Write for CameraSourceRange {
 }
 
 impl markup::Read for CameraTool {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::camera_tool(element)
     }
 }
@@ -3115,7 +3115,7 @@ impl markup::Write for CameraTool {
 }
 
 impl markup::Read for CancelButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cancel_button(element)
     }
 }
@@ -3128,7 +3128,7 @@ impl markup::Write for CancelButton {
 }
 
 impl markup::Read for Checked {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::checked(element)
     }
 }
@@ -3141,7 +3141,7 @@ impl markup::Write for Checked {
 }
 
 impl markup::Read for ClipboardFormat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::clipboard_format(element)
     }
 }
@@ -3154,7 +3154,7 @@ impl markup::Write for ClipboardFormat {
 }
 
 impl markup::Read for CommentColumnTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_column_target(element)
     }
 }
@@ -3167,7 +3167,7 @@ impl markup::Write for CommentColumnTarget {
 }
 
 impl markup::Read for CommentRowTarget {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_row_target(element)
     }
 }
@@ -3180,7 +3180,7 @@ impl markup::Write for CommentRowTarget {
 }
 
 impl markup::Read for CommentVisibilityToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_visibility_toggle(element)
     }
 }
@@ -3193,7 +3193,7 @@ impl markup::Write for CommentVisibilityToggle {
 }
 
 impl markup::Read for CommentsColumnIsHidden {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments_column_is_hidden(element)
     }
 }
@@ -3206,7 +3206,7 @@ impl markup::Write for CommentsColumnIsHidden {
 }
 
 impl markup::Read for CommentsRowIsHidden {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments_row_is_hidden(element)
     }
 }
@@ -3219,7 +3219,7 @@ impl markup::Write for CommentsRowIsHidden {
 }
 
 impl markup::Read for DefaultButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_button(element)
     }
 }
@@ -3232,7 +3232,7 @@ impl markup::Write for DefaultButton {
 }
 
 impl markup::Read for DefaultSizeToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_size_toggle(element)
     }
 }
@@ -3245,7 +3245,7 @@ impl markup::Write for DefaultSizeToggle {
 }
 
 impl markup::Read for Disable3DNoThreeD {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::disable3d_no_three_d(element)
     }
 }
@@ -3258,7 +3258,7 @@ impl markup::Write for Disable3DNoThreeD {
 }
 
 impl markup::Read for Disable3DNoThreeD2 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::disable3d_no_three_d2(element)
     }
 }
@@ -3271,7 +3271,7 @@ impl markup::Write for Disable3DNoThreeD2 {
 }
 
 impl markup::Read for DismissButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dismiss_button(element)
     }
 }
@@ -3284,7 +3284,7 @@ impl markup::Write for DismissButton {
 }
 
 impl markup::Read for DropdownColorToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dropdown_color_toggle(element)
     }
 }
@@ -3297,7 +3297,7 @@ impl markup::Write for DropdownColorToggle {
 }
 
 impl markup::Read for DropdownMaximumLines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dropdown_maximum_lines(element)
     }
 }
@@ -3310,7 +3310,7 @@ impl markup::Write for DropdownMaximumLines {
 }
 
 impl markup::Read for DropdownStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dropdown_style(element)
     }
 }
@@ -3323,7 +3323,7 @@ impl markup::Write for DropdownStyle {
 }
 
 impl markup::Read for DynamicDataExchange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dynamic_data_exchange(element)
     }
 }
@@ -3336,7 +3336,7 @@ impl markup::Write for DynamicDataExchange {
 }
 
 impl markup::Read for EmbeddedControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_control(element)
     }
 }
@@ -3349,7 +3349,7 @@ impl markup::Write for EmbeddedControl {
 }
 
 impl markup::Read for FarEastAlignmentToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::far_east_alignment_toggle(element)
     }
 }
@@ -3362,7 +3362,7 @@ impl markup::Write for FarEastAlignmentToggle {
 }
 
 impl markup::Read for FirstRadioButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::first_radio_button(element)
     }
 }
@@ -3375,7 +3375,7 @@ impl markup::Write for FirstRadioButton {
 }
 
 impl markup::Read for FontAutoScale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_auto_scale(element)
     }
 }
@@ -3388,7 +3388,7 @@ impl markup::Write for FontAutoScale {
 }
 
 impl markup::Read for HTMLScriptAttributes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::html_script_attributes(element)
     }
 }
@@ -3401,7 +3401,7 @@ impl markup::Write for HTMLScriptAttributes {
 }
 
 impl markup::Read for HTMLScriptLanguage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::html_script_language(element)
     }
 }
@@ -3414,7 +3414,7 @@ impl markup::Write for HTMLScriptLanguage {
 }
 
 impl markup::Read for HTMLScriptLocation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::html_script_location(element)
     }
 }
@@ -3427,7 +3427,7 @@ impl markup::Write for HTMLScriptLocation {
 }
 
 impl markup::Read for HTMLScriptText {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::html_script_text(element)
     }
 }
@@ -3440,7 +3440,7 @@ impl markup::Write for HTMLScriptText {
 }
 
 impl markup::Read for HelpButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::help_button(element)
     }
 }
@@ -3453,7 +3453,7 @@ impl markup::Write for HelpButton {
 }
 
 impl markup::Read for HorizontalTextAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::horizontal_text_alignment(element)
     }
 }
@@ -3466,7 +3466,7 @@ impl markup::Write for HorizontalTextAlignment {
 }
 
 impl markup::Read for LinkedFormula {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_formula(element)
     }
 }
@@ -3479,7 +3479,7 @@ impl markup::Write for LinkedFormula {
 }
 
 impl markup::Read for LinkedFormulaGroupBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::linked_formula_group_box(element)
     }
 }
@@ -3492,7 +3492,7 @@ impl markup::Write for LinkedFormulaGroupBox {
 }
 
 impl markup::Read for ListItemsSourceRange {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_items_source_range(element)
     }
 }
@@ -3505,7 +3505,7 @@ impl markup::Write for ListItemsSourceRange {
 }
 
 impl markup::Read for LockToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lock_toggle(element)
     }
 }
@@ -3518,7 +3518,7 @@ impl markup::Write for LockToggle {
 }
 
 impl markup::Read for MacroDisableToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::macro_disable_toggle(element)
     }
 }
@@ -3531,7 +3531,7 @@ impl markup::Write for MacroDisableToggle {
 }
 
 impl markup::Read for MinimumWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::minimum_width(element)
     }
 }
@@ -3544,7 +3544,7 @@ impl markup::Write for MinimumWidth {
 }
 
 impl markup::Read for MoveWithCells {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::move_with_cells(element)
     }
 }
@@ -3557,7 +3557,7 @@ impl markup::Write for MoveWithCells {
 }
 
 impl markup::Read for MultiLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::multi_line(element)
     }
 }
@@ -3570,7 +3570,7 @@ impl markup::Write for MultiLine {
 }
 
 impl markup::Read for MultipleSelections {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::multiple_selections(element)
     }
 }
@@ -3583,7 +3583,7 @@ impl markup::Write for MultipleSelections {
 }
 
 impl markup::Read for NonLinkedListItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_linked_list_item(element)
     }
 }
@@ -3662,7 +3662,7 @@ impl ObjectType {
 }
 
 impl markup::Read for PasswordEdit {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::password_edit(element)
     }
 }
@@ -3675,7 +3675,7 @@ impl markup::Write for PasswordEdit {
 }
 
 impl markup::Read for PrimaryKeyboardAccelerator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::primary_keyboard_accelerator(element)
     }
 }
@@ -3688,7 +3688,7 @@ impl markup::Write for PrimaryKeyboardAccelerator {
 }
 
 impl markup::Read for PrintToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::print_toggle(element)
     }
 }
@@ -3701,7 +3701,7 @@ impl markup::Write for PrintToggle {
 }
 
 impl markup::Read for RecalculationToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::recalculation_toggle(element)
     }
 }
@@ -3714,7 +3714,7 @@ impl markup::Write for RecalculationToggle {
 }
 
 impl markup::Read for ReferenceToCustomFunction {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reference_to_custom_function(element)
     }
 }
@@ -3727,7 +3727,7 @@ impl markup::Write for ReferenceToCustomFunction {
 }
 
 impl markup::Read for ResizeWithCells {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::resize_with_cells(element)
     }
 }
@@ -3740,7 +3740,7 @@ impl markup::Write for ResizeWithCells {
 }
 
 impl markup::Read for ScrollBarIncrement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_increment(element)
     }
 }
@@ -3753,7 +3753,7 @@ impl markup::Write for ScrollBarIncrement {
 }
 
 impl markup::Read for ScrollBarMaximum {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_maximum(element)
     }
 }
@@ -3766,7 +3766,7 @@ impl markup::Write for ScrollBarMaximum {
 }
 
 impl markup::Read for ScrollBarMinimum {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_minimum(element)
     }
 }
@@ -3779,7 +3779,7 @@ impl markup::Write for ScrollBarMinimum {
 }
 
 impl markup::Read for ScrollBarOrientation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_orientation(element)
     }
 }
@@ -3792,7 +3792,7 @@ impl markup::Write for ScrollBarOrientation {
 }
 
 impl markup::Read for ScrollBarPageIncrement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_page_increment(element)
     }
 }
@@ -3805,7 +3805,7 @@ impl markup::Write for ScrollBarPageIncrement {
 }
 
 impl markup::Read for ScrollBarPosition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_position(element)
     }
 }
@@ -3818,7 +3818,7 @@ impl markup::Write for ScrollBarPosition {
 }
 
 impl markup::Read for ScrollBarWidth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scroll_bar_width(element)
     }
 }
@@ -3831,7 +3831,7 @@ impl markup::Write for ScrollBarWidth {
 }
 
 impl markup::Read for SecondaryKeyboardAccelerator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::secondary_keyboard_accelerator(element)
     }
 }
@@ -3844,7 +3844,7 @@ impl markup::Write for SecondaryKeyboardAccelerator {
 }
 
 impl markup::Read for SelectedEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::selected_entry(element)
     }
 }
@@ -3857,7 +3857,7 @@ impl markup::Write for SelectedEntry {
 }
 
 impl markup::Read for SelectionType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::selection_type(element)
     }
 }
@@ -3870,7 +3870,7 @@ impl markup::Write for SelectionType {
 }
 
 impl markup::Read for TextFormula {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_formula(element)
     }
 }
@@ -3883,7 +3883,7 @@ impl markup::Write for TextFormula {
 }
 
 impl markup::Read for TextLock {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_lock(element)
     }
 }
@@ -3896,7 +3896,7 @@ impl markup::Write for TextLock {
 }
 
 impl markup::Read for UIObjectToggle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui_object_toggle(element)
     }
 }
@@ -3909,7 +3909,7 @@ impl markup::Write for UIObjectToggle {
 }
 
 impl markup::Read for ValidID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::valid_id(element)
     }
 }
@@ -3922,7 +3922,7 @@ impl markup::Write for ValidID {
 }
 
 impl markup::Read for ValidationType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::validation_type(element)
     }
 }
@@ -3935,7 +3935,7 @@ impl markup::Write for ValidationType {
 }
 
 impl markup::Read for VerticalScroll {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertical_scroll(element)
     }
 }
@@ -3948,7 +3948,7 @@ impl markup::Write for VerticalScroll {
 }
 
 impl markup::Read for VerticalTextAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertical_text_alignment(element)
     }
 }

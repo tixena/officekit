@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A15: Option<NamespaceId> = Some(2);
@@ -441,7 +441,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for BackgroundPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_pr(element)
     }
 }
@@ -454,7 +454,7 @@ impl markup::Write for BackgroundPr {
 }
 
 impl markup::Read for NonVisualGroupProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_group_props(element)
     }
 }
@@ -467,7 +467,7 @@ impl markup::Write for NonVisualGroupProps {
 }
 
 impl markup::Read for ObjectPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::object_pr(element)
     }
 }
@@ -480,7 +480,7 @@ impl markup::Write for ObjectPr {
 }
 
 impl markup::Read for SignatureLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::signature_line(element)
     }
 }

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CompatSp` as its element, `com14:compatSp`.
 #[must_use]
-pub fn compat_sp(node: &super::CompatSp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn compat_sp(node: &super::CompatSp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMPAT_SP_SHAPE, &node.unknown);
     writer.attribute(0, &node.spid);
     writer.finish()

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xpdl:pivotTableDefinition16` into a `PivotTableDefinition16`.
 #[must_use]
-pub fn pivot_table_definition16(element: &xml::element::Element) -> super::PivotTableDefinition16 {
+pub fn pivot_table_definition16(element: &Element) -> super::PivotTableDefinition16 {
     let mut node = super::PivotTableDefinition16::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_TABLE_DEFINITION16_SHAPE);
     for (index, field) in &mut reader {

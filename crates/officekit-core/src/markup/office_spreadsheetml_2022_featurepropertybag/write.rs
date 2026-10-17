@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `A` as its element, `xfpb:a`.
 #[must_use]
-pub fn a(node: &super::A, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn a(node: &super::A, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::A_SHAPE, &node.unknown);
     writer.attribute(0, &node.k);
     writer.child(&node.content);
@@ -236,10 +237,7 @@ pub fn array_feature_property(
 
 /// Write a `BBoolFeatureProperty` as its element, `xfpb:b`.
 #[must_use]
-pub fn b_bool_feature_property(
-    node: &super::BBoolFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn b_bool_feature_property(node: &super::BBoolFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::B_BOOL_FEATURE_PROPERTY_SHAPE, &node.unknown);
     writer.attribute(0, &node.k);
@@ -249,7 +247,7 @@ pub fn b_bool_feature_property(
 
 /// Write a `BBoolean` as its element, `xfpb:b`.
 #[must_use]
-pub fn b_boolean(node: &super::BBoolean, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn b_boolean(node: &super::BBoolean, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::B_BOOLEAN_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -257,7 +255,7 @@ pub fn b_boolean(node: &super::BBoolean, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `Bag` as its element, `xfpb:bag`.
 #[must_use]
-pub fn bag(node: &super::Bag, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bag(node: &super::Bag, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BAG_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.ext_ref);
@@ -269,7 +267,7 @@ pub fn bag(node: &super::Bag, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `BagExt` as its element, `xfpb:bagExt`.
 #[must_use]
-pub fn bag_ext(node: &super::BagExt, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bag_ext(node: &super::BagExt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BAG_EXT_SHAPE, &node.unknown);
     writer.child(&node.lst);
     writer.finish()
@@ -279,8 +277,8 @@ pub fn bag_ext(node: &super::BagExt, scope: &mut markup::Scope) -> xml::element:
 #[must_use]
 pub fn bag_id_bag_feature_property(
     node: &super::BagIdBagFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE,
@@ -293,10 +291,7 @@ pub fn bag_id_bag_feature_property(
 
 /// Write a `BagIdUnsignedInt` as its element, `xfpb:bagId`.
 #[must_use]
-pub fn bag_id_unsigned_int(
-    node: &super::BagIdUnsignedInt,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn bag_id_unsigned_int(node: &super::BagIdUnsignedInt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BAG_ID_UNSIGNED_INT_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -304,10 +299,7 @@ pub fn bag_id_unsigned_int(
 
 /// Write a `ColumnBodyRevDxf` as its element, `xfpb:columnBodyRevDxf`.
 #[must_use]
-pub fn column_body_rev_dxf(
-    node: &super::ColumnBodyRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn column_body_rev_dxf(node: &super::ColumnBodyRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLUMN_BODY_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -316,10 +308,7 @@ pub fn column_body_rev_dxf(
 
 /// Write a `ColumnHeaderRevDxf` as its element, `xfpb:columnHeaderRevDxf`.
 #[must_use]
-pub fn column_header_rev_dxf(
-    node: &super::ColumnHeaderRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn column_header_rev_dxf(node: &super::ColumnHeaderRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLUMN_HEADER_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -328,10 +317,7 @@ pub fn column_header_rev_dxf(
 
 /// Write a `ColumnTotalsRevDxf` as its element, `xfpb:columnTotalsRevDxf`.
 #[must_use]
-pub fn column_totals_rev_dxf(
-    node: &super::ColumnTotalsRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn column_totals_rev_dxf(node: &super::ColumnTotalsRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLUMN_TOTALS_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -342,8 +328,8 @@ pub fn column_totals_rev_dxf(
 #[must_use]
 pub fn d_decimal_feature_property(
     node: &super::DDecimalFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::D_DECIMAL_FEATURE_PROPERTY_SHAPE,
@@ -356,7 +342,7 @@ pub fn d_decimal_feature_property(
 
 /// Write a `DDouble` as its element, `xfpb:d`.
 #[must_use]
-pub fn d_double(node: &super::DDouble, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn d_double(node: &super::DDouble, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::D_DOUBLE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -364,7 +350,7 @@ pub fn d_double(node: &super::DDouble, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `DataRevDxf` as its element, `xfpb:dataRevDxf`.
 #[must_use]
-pub fn data_rev_dxf(node: &super::DataRevDxf, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_rev_dxf(node: &super::DataRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -373,7 +359,7 @@ pub fn data_rev_dxf(node: &super::DataRevDxf, scope: &mut markup::Scope) -> xml:
 
 /// Write a `Dxf` as its element, `xfpb:dxf`.
 #[must_use]
-pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXF_SHAPE, &node.unknown);
     writer.child(&node.font);
     writer.child(&node.number_format);
@@ -387,10 +373,7 @@ pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `DXFComplement` as its element, `xfpb:DXFComplement`.
 #[must_use]
-pub fn dxf_complement(
-    node: &super::DXFComplement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn dxf_complement(node: &super::DXFComplement, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXF_COMPLEMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
     writer.finish()
@@ -398,7 +381,7 @@ pub fn dxf_complement(
 
 /// Write a `ExtLst` as its element, `xfpb:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -415,10 +398,7 @@ pub fn feature_property_bag(
 
 /// Write a `FeaturePropertyBags` as its element, `xfpb:FeaturePropertyBags`.
 #[must_use]
-pub fn feature_property_bags(
-    node: &super::FeaturePropertyBags,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn feature_property_bags(node: &super::FeaturePropertyBags, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FEATURE_PROPERTY_BAGS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.bag_ext);
@@ -429,7 +409,7 @@ pub fn feature_property_bags(
 
 /// Write a `Fpbs` as its element, `xfpb:fpbs`.
 #[must_use]
-pub fn fpbs(node: &super::Fpbs, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fpbs(node: &super::Fpbs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FPBS_SHAPE, &node.unknown);
     writer.child(&node.bag_ext);
     writer.child(&node.bag);
@@ -441,8 +421,8 @@ pub fn fpbs(node: &super::Fpbs, scope: &mut markup::Scope) -> xml::element::Elem
 #[must_use]
 pub fn header_row_border_rev_dxf(
     node: &super::HeaderRowBorderRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::HEADER_ROW_BORDER_REV_DXF_SHAPE,
@@ -455,10 +435,7 @@ pub fn header_row_border_rev_dxf(
 
 /// Write a `HeaderRowRevDxf` as its element, `xfpb:headerRowRevDxf`.
 #[must_use]
-pub fn header_row_rev_dxf(
-    node: &super::HeaderRowRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn header_row_rev_dxf(node: &super::HeaderRowRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HEADER_ROW_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -467,10 +444,7 @@ pub fn header_row_rev_dxf(
 
 /// Write a `IIntFeatureProperty` as its element, `xfpb:i`.
 #[must_use]
-pub fn i_int_feature_property(
-    node: &super::IIntFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn i_int_feature_property(node: &super::IIntFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::I_INT_FEATURE_PROPERTY_SHAPE, &node.unknown);
     writer.attribute(0, &node.k);
@@ -480,7 +454,7 @@ pub fn i_int_feature_property(
 
 /// Write a `IInteger` as its element, `xfpb:i`.
 #[must_use]
-pub fn i_integer(node: &super::IInteger, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn i_integer(node: &super::IInteger, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::I_INTEGER_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -488,10 +462,7 @@ pub fn i_integer(node: &super::IInteger, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `RelRelFeatureProperty` as its element, `xfpb:rel`.
 #[must_use]
-pub fn rel_rel_feature_property(
-    node: &super::RelRelFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rel_rel_feature_property(node: &super::RelRelFeatureProperty, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::REL_REL_FEATURE_PROPERTY_SHAPE, &node.unknown);
     writer.attribute(0, &node.k);
@@ -501,7 +472,7 @@ pub fn rel_rel_feature_property(
 
 /// Write a `RelString` as its element, `xfpb:rel`.
 #[must_use]
-pub fn rel_string(node: &super::RelString, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rel_string(node: &super::RelString, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REL_STRING_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -509,7 +480,7 @@ pub fn rel_string(node: &super::RelString, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Revdxf` as its element, `xfpb:revdxf`.
 #[must_use]
-pub fn revdxf(node: &super::Revdxf, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn revdxf(node: &super::Revdxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REVDXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -518,7 +489,7 @@ pub fn revdxf(node: &super::Revdxf, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `SString` as its element, `xfpb:s`.
 #[must_use]
-pub fn s_string(node: &super::SString, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn s_string(node: &super::SString, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::S_STRING_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -528,8 +499,8 @@ pub fn s_string(node: &super::SString, scope: &mut markup::Scope) -> xml::elemen
 #[must_use]
 pub fn s_string_feature_property(
     node: &super::SStringFeatureProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::S_STRING_FEATURE_PROPERTY_SHAPE,
@@ -542,10 +513,7 @@ pub fn s_string_feature_property(
 
 /// Write a `TableBorderRevDxf` as its element, `xfpb:tableBorderRevDxf`.
 #[must_use]
-pub fn table_border_rev_dxf(
-    node: &super::TableBorderRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn table_border_rev_dxf(node: &super::TableBorderRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TABLE_BORDER_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -556,8 +524,8 @@ pub fn table_border_rev_dxf(
 #[must_use]
 pub fn totals_row_border_rev_dxf(
     node: &super::TotalsRowBorderRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::TOTALS_ROW_BORDER_REV_DXF_SHAPE,
@@ -570,10 +538,7 @@ pub fn totals_row_border_rev_dxf(
 
 /// Write a `TotalsRowRevDxf` as its element, `xfpb:totalsRowRevDxf`.
 #[must_use]
-pub fn totals_row_rev_dxf(
-    node: &super::TotalsRowRevDxf,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn totals_row_rev_dxf(node: &super::TotalsRowRevDxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TOTALS_ROW_REV_DXF_SHAPE, &node.unknown);
     writer.child(&node.fpbs);
     writer.child(&node.dxf);
@@ -582,10 +547,7 @@ pub fn totals_row_rev_dxf(
 
 /// Write a `XfComplement` as its element, `xfpb:xfComplement`.
 #[must_use]
-pub fn xf_complement(
-    node: &super::XfComplement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn xf_complement(node: &super::XfComplement, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::XF_COMPLEMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
     writer.finish()

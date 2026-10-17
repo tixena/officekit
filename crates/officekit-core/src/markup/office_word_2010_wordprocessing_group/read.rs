@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wpg:cNvFrPr` into a `CNvFrPr`.
 #[must_use]
-pub fn c_nv_fr_pr(element: &xml::element::Element) -> super::CNvFrPr {
+pub fn c_nv_fr_pr(element: &Element) -> super::CNvFrPr {
     let mut node = super::CNvFrPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_FR_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn c_nv_fr_pr(element: &xml::element::Element) -> super::CNvFrPr {
 
 /// Read `wpg:cNvGrpSpPr` into a `CNvGrpSpPr`.
 #[must_use]
-pub fn c_nv_grp_sp_pr(element: &xml::element::Element) -> super::CNvGrpSpPr {
+pub fn c_nv_grp_sp_pr(element: &Element) -> super::CNvGrpSpPr {
     let mut node = super::CNvGrpSpPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_GRP_SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn c_nv_grp_sp_pr(element: &xml::element::Element) -> super::CNvGrpSpPr {
 
 /// Read `wpg:cNvPr` into a `CNvPr`.
 #[must_use]
-pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
+pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -271,7 +271,7 @@ pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
 
 /// Read `wpg:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -285,7 +285,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `wpg:graphicFrame` into a `GraphicFrame`.
 #[must_use]
-pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
+pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -304,7 +304,7 @@ pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
 
 /// Read `wpg:grpSp` into a `GrpSp`.
 #[must_use]
-pub fn grp_sp(element: &xml::element::Element) -> super::GrpSp {
+pub fn grp_sp(element: &Element) -> super::GrpSp {
     let mut node = super::GrpSp::default();
     let mut reader = markup::Reader::new(element, &super::GRP_SP_SHAPE);
     for (index, field) in &mut reader {
@@ -323,7 +323,7 @@ pub fn grp_sp(element: &xml::element::Element) -> super::GrpSp {
 
 /// Read `wpg:grpSpPr` into a `GrpSpPr`.
 #[must_use]
-pub fn grp_sp_pr(element: &xml::element::Element) -> super::GrpSpPr {
+pub fn grp_sp_pr(element: &Element) -> super::GrpSpPr {
     let mut node = super::GrpSpPr::default();
     let mut reader = markup::Reader::new(element, &super::GRP_SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -343,7 +343,7 @@ pub fn grp_sp_pr(element: &xml::element::Element) -> super::GrpSpPr {
 
 /// Read `wpg:wgp` into a `Wgp`.
 #[must_use]
-pub fn wgp(element: &xml::element::Element) -> super::Wgp {
+pub fn wgp(element: &Element) -> super::Wgp {
     let mut node = super::Wgp::default();
     let mut reader = markup::Reader::new(element, &super::WGP_SHAPE);
     for (index, field) in &mut reader {
@@ -362,13 +362,13 @@ pub fn wgp(element: &xml::element::Element) -> super::Wgp {
 
 /// Read one item of `WordprocessingGroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn wordprocessing_group(element: &xml::element::Element) -> super::WordprocessingGroupContent {
+pub fn wordprocessing_group(element: &Element) -> super::WordprocessingGroupContent {
     markup::read(element)
 }
 
 /// Read `wpg:xfrm` into a `Xfrm`.
 #[must_use]
-pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
+pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {

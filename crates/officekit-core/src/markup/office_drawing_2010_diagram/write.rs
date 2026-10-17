@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CNvPr` as its element, `dgm14:cNvPr`.
 #[must_use]
-pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -232,7 +233,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `RecolorImg` as its element, `dgm14:recolorImg`.
 #[must_use]
-pub fn recolor_img(node: &super::RecolorImg, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn recolor_img(node: &super::RecolorImg, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RECOLOR_IMG_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

@@ -8,6 +8,7 @@ in either conformance class, Transitional or Strict.
 
 ```
 crates/officekit-core   library: packaging, element trees, validation, file types
+crates/officekit-xml    library: element tree, names, values, part reader and writer
 crates/officekit        CLI binary
 crates/xtask            dev tooling (`cargo xtask <subcommand>`), never installed
 crates/xtask/data/      the generator's hand-written inputs
@@ -20,13 +21,12 @@ is:
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
 markup             the typed tree, one module per namespace, with transforms and visitors
 parts              one module per part type: content type, relationship types, load and store
-stream             parts and packages read and written as events, without the whole tree
+stream             a transform written through as it is made, and a package written part by part
 image              image parts: format, bytes, pixel size
 embedded           a document stored in a part of another
 transitional       the Transitional class: read and write of every node (feature `transitional`)
 strict             the Strict class: read and write of every node (feature `strict`)
 validation         schema, markup compatibility, package, and semantic checks
-xml                the generic element tree, names, the namespace table, value parsing
 packaging          the Open Packaging Conventions container
 ```
 
@@ -47,9 +47,9 @@ packaging          the Open Packaging Conventions container
   it.
 - **Generated files are never edited by hand**: everything under `markup/`,
   `transitional/`, `strict/`, `parts/`, and `validation/generated/` of
-  `officekit-core/src`, and `xml/name/table.rs`. Change the generator in
-  `crates/xtask` (its hand-written inputs live in `crates/xtask/data/`) and run
-  `cargo xtask generate-schema`.
+  `officekit-core/src`, and `crates/officekit-xml/src/name/table.rs`. Change
+  the generator in `crates/xtask` (its hand-written inputs live in
+  `crates/xtask/data/`) and run `cargo xtask generate-schema`.
 - **Module files, not `mod.rs`**: `foo.rs` next to `foo/`. Unit tests live in
   `foo/tests.rs` behind `#[cfg(test)] mod tests;`. Integration tests are
   `tests/<name>.rs` stubs that `#[path]`-include `tests/<name>/tests.rs`.

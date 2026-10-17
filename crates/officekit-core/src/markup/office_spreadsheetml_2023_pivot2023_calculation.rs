@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_XLPCALC: Option<NamespaceId> = Some(137);
@@ -563,7 +563,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AggregationInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::aggregation_info(element)
     }
 }
@@ -648,7 +648,7 @@ impl AggregationType {
 }
 
 impl markup::Read for FeatureSupportInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::feature_support_info(element)
     }
 }
@@ -661,7 +661,7 @@ impl markup::Write for FeatureSupportInfo {
 }
 
 impl markup::Read for PivotAreaReferenceSubtotals {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_area_reference_subtotals(element)
     }
 }
@@ -674,7 +674,7 @@ impl markup::Write for PivotAreaReferenceSubtotals {
 }
 
 impl markup::Read for PivotFieldSubtotalLineItems {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_field_subtotal_line_items(element)
     }
 }
@@ -687,7 +687,7 @@ impl markup::Write for PivotFieldSubtotalLineItems {
 }
 
 impl markup::Read for PivotFieldSubtotals {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_field_subtotals(element)
     }
 }
@@ -700,7 +700,7 @@ impl markup::Write for PivotFieldSubtotals {
 }
 
 impl markup::Read for SubtotalLineItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subtotal_line_item(element)
     }
 }
@@ -713,7 +713,7 @@ impl markup::Write for SubtotalLineItem {
 }
 
 impl markup::Read for SubtotalPivotItemSubtotal {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subtotal_pivot_item_subtotal(element)
     }
 }
@@ -726,7 +726,7 @@ impl markup::Write for SubtotalPivotItemSubtotal {
 }
 
 impl markup::Read for SubtotalPivotSubtotalType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::subtotal_pivot_subtotal_type(element)
     }
 }

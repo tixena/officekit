@@ -1,8 +1,8 @@
 use super::PartWriter;
+use crate::element::{NamespaceDeclaration, Node};
+use crate::parse::parse;
 use crate::stream::reader::PartReader;
-use crate::xml::element::{NamespaceDeclaration, Node};
-use crate::xml::parse::parse;
-use crate::xml::write::Layout;
+use crate::write::Layout;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";

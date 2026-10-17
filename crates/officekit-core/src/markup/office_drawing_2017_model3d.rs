@@ -222,9 +222,9 @@ pub mod write;
 use crate::markup;
 use crate::markup::Write as _;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1437,7 +1437,7 @@ pub struct MeterPerModelUnit {
 #[non_exhaustive]
 pub enum Model3DCameraContent {
     Orthographic(Orthographic),
-    Other(xml::element::Node),
+    Other(Node),
     Perspective(Perspective),
 }
 
@@ -1545,7 +1545,7 @@ pub enum Model3DExtensionContent {
     NumberingDefinitions(super::wordprocessing::NumberingDefinitions),
     OfficeMath(super::math::OfficeMath),
     OfficeMathParagraph(super::math::OfficeMathParagraph),
-    Other(xml::element::Node),
+    Other(Node),
     Oval(super::vml::Oval),
     Picture(super::picture::Picture),
     PivotCacheDefinition(super::spreadsheet::PivotCacheDefinition),
@@ -1637,7 +1637,7 @@ pub enum Model3DExtensionContent {
 #[non_exhaustive]
 pub enum Model3DLightContent {
     DirLight(DirLight),
-    Other(xml::element::Node),
+    Other(Node),
     PtLight(PtLight),
     SpotLight(SpotLight),
     UnkLight(UnkLight),
@@ -1648,7 +1648,7 @@ pub enum Model3DLightContent {
 #[non_exhaustive]
 pub enum Model3DViewportContent {
     ObjViewport(ObjViewport),
-    Other(xml::element::Node),
+    Other(Node),
     WinViewport(WinViewport),
 }
 
@@ -2039,7 +2039,7 @@ pub struct WinViewport {
 }
 
 impl markup::Read for AmbientLight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ambient_light(element)
     }
 }
@@ -2052,7 +2052,7 @@ impl markup::Write for AmbientLight {
 }
 
 impl markup::Read for AttrSrcUrl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::attr_src_url(element)
     }
 }
@@ -2065,7 +2065,7 @@ impl markup::Write for AttrSrcUrl {
 }
 
 impl markup::Read for Blip {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blip(element)
     }
 }
@@ -2078,7 +2078,7 @@ impl markup::Write for Blip {
 }
 
 impl markup::Read for Camera {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::camera(element)
     }
 }
@@ -2091,7 +2091,7 @@ impl markup::Write for Camera {
 }
 
 impl markup::Read for Clr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::clr(element)
     }
 }
@@ -2104,7 +2104,7 @@ impl markup::Write for Clr {
 }
 
 impl markup::Read for DirLight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dir_light(element)
     }
 }
@@ -2117,7 +2117,7 @@ impl markup::Write for DirLight {
 }
 
 impl markup::Read for Ext {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext(element)
     }
 }
@@ -2130,7 +2130,7 @@ impl markup::Write for Ext {
 }
 
 impl markup::Read for ExtLstModel3DExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_model3d_extension_list(element)
     }
 }
@@ -2143,7 +2143,7 @@ impl markup::Write for ExtLstModel3DExtensionList {
 }
 
 impl markup::Read for ExtLstOfficeArtExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_office_art_extension_list(element)
     }
 }
@@ -2156,7 +2156,7 @@ impl markup::Write for ExtLstOfficeArtExtensionList {
 }
 
 impl markup::Read for Illuminance {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::illuminance(element)
     }
 }
@@ -2169,7 +2169,7 @@ impl markup::Write for Illuminance {
 }
 
 impl markup::Read for Intensity {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::intensity(element)
     }
 }
@@ -2182,7 +2182,7 @@ impl markup::Write for Intensity {
 }
 
 impl markup::Read for LookAt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::look_at(element)
     }
 }
@@ -2195,7 +2195,7 @@ impl markup::Write for LookAt {
 }
 
 impl markup::Read for MeterPerModelUnit {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::meter_per_model_unit(element)
     }
 }
@@ -2214,15 +2214,15 @@ impl Default for Model3DCameraContent {
 }
 
 impl markup::Read for Model3DCameraContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_AM3D, "orthographic")) => Self::Orthographic(markup::read(element)),
             Some((NS_AM3D, "perspective")) => Self::Perspective(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2246,17 +2246,17 @@ impl Default for Model3DExtensionContent {
 }
 
 impl markup::Read for Model3DExtensionContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read_model3d_extension_1(element)
             .or_else(|| read_model3d_extension_2(element))
             .or_else(|| read_model3d_extension_3(element))
             .or_else(|| read_model3d_extension_4(element))
             .or_else(|| read_model3d_extension_5(element))
-            .unwrap_or_else(|| Self::Other(xml::element::Node::Element(element.clone())))
+            .unwrap_or_else(|| Self::Other(Node::Element(element.clone())))
     }
 }
 
@@ -2980,17 +2980,17 @@ impl TryFrom<Model3DExtensionContent> for super::wordprocessing::VmlOfficeDrawin
 }
 
 impl markup::Read for Model3DLightContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_AM3D, "dirLight")) => Self::DirLight(markup::read(element)),
             Some((NS_AM3D, "ptLight")) => Self::PtLight(markup::read(element)),
             Some((NS_AM3D, "spotLight")) => Self::SpotLight(markup::read(element)),
             Some((NS_AM3D, "unkLight")) => Self::UnkLight(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3014,15 +3014,15 @@ impl Default for Model3DViewportContent {
 }
 
 impl markup::Read for Model3DViewportContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_AM3D, "objViewport")) => Self::ObjViewport(markup::read(element)),
             Some((NS_AM3D, "winViewport")) => Self::WinViewport(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3038,7 +3038,7 @@ impl markup::Write for Model3DViewportContent {
 }
 
 impl markup::Read for Model3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model3d(element)
     }
 }
@@ -3051,7 +3051,7 @@ impl markup::Write for Model3d {
 }
 
 impl markup::Read for ObjViewport {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::obj_viewport(element)
     }
 }
@@ -3064,7 +3064,7 @@ impl markup::Write for ObjViewport {
 }
 
 impl markup::Read for Orthographic {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::orthographic(element)
     }
 }
@@ -3077,7 +3077,7 @@ impl markup::Write for Orthographic {
 }
 
 impl markup::Read for Perspective {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::perspective(element)
     }
 }
@@ -3090,7 +3090,7 @@ impl markup::Write for Perspective {
 }
 
 impl markup::Read for Pos {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pos(element)
     }
 }
@@ -3103,7 +3103,7 @@ impl markup::Write for Pos {
 }
 
 impl markup::Read for PostTrans {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::post_trans(element)
     }
 }
@@ -3116,7 +3116,7 @@ impl markup::Write for PostTrans {
 }
 
 impl markup::Read for PreTrans {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pre_trans(element)
     }
 }
@@ -3129,7 +3129,7 @@ impl markup::Write for PreTrans {
 }
 
 impl markup::Read for PtLight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pt_light(element)
     }
 }
@@ -3142,7 +3142,7 @@ impl markup::Write for PtLight {
 }
 
 impl markup::Read for Raster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::raster(element)
     }
 }
@@ -3155,7 +3155,7 @@ impl markup::Write for Raster {
 }
 
 impl markup::Read for Rot {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rot(element)
     }
 }
@@ -3168,7 +3168,7 @@ impl markup::Write for Rot {
 }
 
 impl markup::Read for Scale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scale(element)
     }
 }
@@ -3181,7 +3181,7 @@ impl markup::Write for Scale {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -3194,7 +3194,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for SpotLight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::spot_light(element)
     }
 }
@@ -3207,7 +3207,7 @@ impl markup::Write for SpotLight {
 }
 
 impl markup::Read for Sx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sx(element)
     }
 }
@@ -3220,7 +3220,7 @@ impl markup::Write for Sx {
 }
 
 impl markup::Read for Sy {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sy(element)
     }
 }
@@ -3233,7 +3233,7 @@ impl markup::Write for Sy {
 }
 
 impl markup::Read for SzPositiveRatio {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sz_positive_ratio(element)
     }
 }
@@ -3246,7 +3246,7 @@ impl markup::Write for SzPositiveRatio {
 }
 
 impl markup::Read for SzRatio {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sz_ratio(element)
     }
 }
@@ -3259,7 +3259,7 @@ impl markup::Write for SzRatio {
 }
 
 impl markup::Read for Trans {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trans(element)
     }
 }
@@ -3272,7 +3272,7 @@ impl markup::Write for Trans {
 }
 
 impl markup::Read for UnkLight {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unk_light(element)
     }
 }
@@ -3285,7 +3285,7 @@ impl markup::Write for UnkLight {
 }
 
 impl markup::Read for Up {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::up(element)
     }
 }
@@ -3298,7 +3298,7 @@ impl markup::Write for Up {
 }
 
 impl markup::Read for WinViewport {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::win_viewport(element)
     }
 }
@@ -3310,7 +3310,7 @@ impl markup::Write for WinViewport {
     }
 }
 
-fn read_model3d_extension_1(element: &xml::element::Element) -> Option<Model3DExtensionContent> {
+fn read_model3d_extension_1(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match markup::name(element) {
         Some((NS_WP, "anchor")) => {
             Model3DExtensionContent::AnchorForFloatingDrawingMLObject(markup::read(element))
@@ -3391,7 +3391,7 @@ fn read_model3d_extension_1(element: &xml::element::Element) -> Option<Model3DEx
     Some(item)
 }
 
-fn read_model3d_extension_2(element: &xml::element::Element) -> Option<Model3DExtensionContent> {
+fn read_model3d_extension_2(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match markup::name(element) {
         Some((NS_W, "document")) => Model3DExtensionContent::Document(markup::read(element)),
         Some((NS_V, "background")) => {
@@ -3474,7 +3474,7 @@ fn read_model3d_extension_2(element: &xml::element::Element) -> Option<Model3DEx
     Some(item)
 }
 
-fn read_model3d_extension_3(element: &xml::element::Element) -> Option<Model3DExtensionContent> {
+fn read_model3d_extension_3(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match markup::name(element) {
         Some((NS_V, "stroke")) => {
             Model3DExtensionContent::LineStrokeSettings(markup::read(element))
@@ -3567,7 +3567,7 @@ fn read_model3d_extension_3(element: &xml::element::Element) -> Option<Model3DEx
     Some(item)
 }
 
-fn read_model3d_extension_4(element: &xml::element::Element) -> Option<Model3DExtensionContent> {
+fn read_model3d_extension_4(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match markup::name(element) {
         Some((NS_V, "shape")) => Model3DExtensionContent::ShapeDefinition(markup::read(element)),
         Some((NS_O, "fill")) => {
@@ -3640,7 +3640,7 @@ fn read_model3d_extension_4(element: &xml::element::Element) -> Option<Model3DEx
     Some(item)
 }
 
-fn read_model3d_extension_5(element: &xml::element::Element) -> Option<Model3DExtensionContent> {
+fn read_model3d_extension_5(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match markup::name(element) {
         Some((NS_X, "users")) => Model3DExtensionContent::UserList(markup::read(element)),
         Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(markup::read(element)),

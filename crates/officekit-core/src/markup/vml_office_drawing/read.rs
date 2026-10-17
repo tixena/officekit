@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `o:callout` into a `Callout`.
 #[must_use]
-pub fn callout(element: &xml::element::Element) -> super::Callout {
+pub fn callout(element: &Element) -> super::Callout {
     let mut node = super::Callout::default();
     let mut reader = markup::Reader::new(element, &super::CALLOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn callout(element: &xml::element::Element) -> super::Callout {
 
 /// Read `o:complex` into a `Complex`.
 #[must_use]
-pub fn complex(element: &xml::element::Element) -> super::Complex {
+pub fn complex(element: &Element) -> super::Complex {
     let mut node = super::Complex::default();
     let mut reader = markup::Reader::new(element, &super::COMPLEX_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn complex(element: &xml::element::Element) -> super::Complex {
 
 /// Read `o:rel` into a `DiagramRelationship`.
 #[must_use]
-pub fn diagram_relationship(element: &xml::element::Element) -> super::DiagramRelationship {
+pub fn diagram_relationship(element: &Element) -> super::DiagramRelationship {
     let mut node = super::DiagramRelationship::default();
     let mut reader = markup::Reader::new(element, &super::DIAGRAM_RELATIONSHIP_SHAPE);
     for (index, field) in &mut reader {
@@ -277,9 +277,7 @@ pub fn diagram_relationship(element: &xml::element::Element) -> super::DiagramRe
 
 /// Read `o:relationtable` into a `DiagramRelationshipTable`.
 #[must_use]
-pub fn diagram_relationship_table(
-    element: &xml::element::Element,
-) -> super::DiagramRelationshipTable {
+pub fn diagram_relationship_table(element: &Element) -> super::DiagramRelationshipTable {
     let mut node = super::DiagramRelationshipTable::default();
     let mut reader = markup::Reader::new(element, &super::DIAGRAM_RELATIONSHIP_TABLE_SHAPE);
     for (index, field) in &mut reader {
@@ -295,7 +293,7 @@ pub fn diagram_relationship_table(
 
 /// Read `o:signatureline` into a `DigitalSignatureLine`.
 #[must_use]
-pub fn digital_signature_line(element: &xml::element::Element) -> super::DigitalSignatureLine {
+pub fn digital_signature_line(element: &Element) -> super::DigitalSignatureLine {
     let mut node = super::DigitalSignatureLine::default();
     let mut reader = markup::Reader::new(element, &super::DIGITAL_SIGNATURE_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -323,7 +321,7 @@ pub fn digital_signature_line(element: &xml::element::Element) -> super::Digital
 /// Read `o:LinkType` into a `EmbeddedObjectAlternateImageRequest`.
 #[must_use]
 pub fn embedded_object_alternate_image_request(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::EmbeddedObjectAlternateImageRequest {
     let mut node = super::EmbeddedObjectAlternateImageRequest::default();
     let mut reader = markup::Reader::new(
@@ -342,7 +340,7 @@ pub fn embedded_object_alternate_image_request(
 /// Read `o:LockedField` into a `EmbeddedObjectCannotBeRefreshed`.
 #[must_use]
 pub fn embedded_object_cannot_be_refreshed(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::EmbeddedObjectCannotBeRefreshed {
     let mut node = super::EmbeddedObjectCannotBeRefreshed::default();
     let mut reader =
@@ -358,7 +356,7 @@ pub fn embedded_object_cannot_be_refreshed(
 
 /// Read `o:OLEObject` into a `EmbeddedOLEObject`.
 #[must_use]
-pub fn embedded_ole_object(element: &xml::element::Element) -> super::EmbeddedOLEObject {
+pub fn embedded_ole_object(element: &Element) -> super::EmbeddedOLEObject {
     let mut node = super::EmbeddedOLEObject::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_OLE_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -382,7 +380,7 @@ pub fn embedded_ole_object(element: &xml::element::Element) -> super::EmbeddedOL
 
 /// Read `o:extrusion` into a `Extrusion`.
 #[must_use]
-pub fn extrusion(element: &xml::element::Element) -> super::Extrusion {
+pub fn extrusion(element: &Element) -> super::Extrusion {
     let mut node = super::Extrusion::default();
     let mut reader = markup::Reader::new(element, &super::EXTRUSION_SHAPE);
     for (index, field) in &mut reader {
@@ -429,7 +427,7 @@ pub fn extrusion(element: &xml::element::Element) -> super::Extrusion {
 
 /// Read `o:ink` into a `Ink`.
 #[must_use]
-pub fn ink(element: &xml::element::Element) -> super::Ink {
+pub fn ink(element: &Element) -> super::Ink {
     let mut node = super::Ink::default();
     let mut reader = markup::Reader::new(element, &super::INK_SHAPE);
     for (index, field) in &mut reader {
@@ -446,7 +444,7 @@ pub fn ink(element: &xml::element::Element) -> super::Ink {
 
 /// Read `o:colormru` into a `MostRecentlyUsedColors`.
 #[must_use]
-pub fn most_recently_used_colors(element: &xml::element::Element) -> super::MostRecentlyUsedColors {
+pub fn most_recently_used_colors(element: &Element) -> super::MostRecentlyUsedColors {
     let mut node = super::MostRecentlyUsedColors::default();
     let mut reader = markup::Reader::new(element, &super::MOST_RECENTLY_USED_COLORS_SHAPE);
     for (index, field) in &mut reader {
@@ -462,7 +460,7 @@ pub fn most_recently_used_colors(element: &xml::element::Element) -> super::Most
 
 /// Read `o:shapedefaults` into a `NewShapeDefaults`.
 #[must_use]
-pub fn new_shape_defaults(element: &xml::element::Element) -> super::NewShapeDefaults {
+pub fn new_shape_defaults(element: &Element) -> super::NewShapeDefaults {
     let mut node = super::NewShapeDefaults::default();
     let mut reader = markup::Reader::new(element, &super::NEW_SHAPE_DEFAULTS_SHAPE);
     for (index, field) in &mut reader {
@@ -485,15 +483,13 @@ pub fn new_shape_defaults(element: &xml::element::Element) -> super::NewShapeDef
 
 /// Read one item of `NewShapeDefaultsContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn new_shape_defaults_content(
-    element: &xml::element::Element,
-) -> super::NewShapeDefaultsContent {
+pub fn new_shape_defaults_content(element: &Element) -> super::NewShapeDefaultsContent {
     markup::read(element)
 }
 
 /// Read `o:entry` into a `RegroupEntry`.
 #[must_use]
-pub fn regroup_entry(element: &xml::element::Element) -> super::RegroupEntry {
+pub fn regroup_entry(element: &Element) -> super::RegroupEntry {
     let mut node = super::RegroupEntry::default();
     let mut reader = markup::Reader::new(element, &super::REGROUP_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -509,7 +505,7 @@ pub fn regroup_entry(element: &xml::element::Element) -> super::RegroupEntry {
 
 /// Read `o:r` into a `Rule`.
 #[must_use]
-pub fn rule(element: &xml::element::Element) -> super::Rule {
+pub fn rule(element: &Element) -> super::Rule {
     let mut node = super::Rule::default();
     let mut reader = markup::Reader::new(element, &super::RULE_SHAPE);
     for (index, field) in &mut reader {
@@ -528,7 +524,7 @@ pub fn rule(element: &xml::element::Element) -> super::Rule {
 
 /// Read `o:rules` into a `RuleSet`.
 #[must_use]
-pub fn rule_set(element: &xml::element::Element) -> super::RuleSet {
+pub fn rule_set(element: &Element) -> super::RuleSet {
     let mut node = super::RuleSet::default();
     let mut reader = markup::Reader::new(element, &super::RULE_SET_SHAPE);
     for (index, field) in &mut reader {
@@ -544,7 +540,7 @@ pub fn rule_set(element: &xml::element::Element) -> super::RuleSet {
 
 /// Read `o:clippath` into a `ShapeClippingPath`.
 #[must_use]
-pub fn shape_clipping_path(element: &xml::element::Element) -> super::ShapeClippingPath {
+pub fn shape_clipping_path(element: &Element) -> super::ShapeClippingPath {
     let mut node = super::ShapeClippingPath::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_CLIPPING_PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -558,9 +554,7 @@ pub fn shape_clipping_path(element: &xml::element::Element) -> super::ShapeClipp
 
 /// Read `o:fill` into a `ShapeFillExtendedProperties`.
 #[must_use]
-pub fn shape_fill_extended_properties(
-    element: &xml::element::Element,
-) -> super::ShapeFillExtendedProperties {
+pub fn shape_fill_extended_properties(element: &Element) -> super::ShapeFillExtendedProperties {
     let mut node = super::ShapeFillExtendedProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -576,7 +570,7 @@ pub fn shape_fill_extended_properties(
 
 /// Read `o:regrouptable` into a `ShapeGroupingHistory`.
 #[must_use]
-pub fn shape_grouping_history(element: &xml::element::Element) -> super::ShapeGroupingHistory {
+pub fn shape_grouping_history(element: &Element) -> super::ShapeGroupingHistory {
     let mut node = super::ShapeGroupingHistory::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_GROUPING_HISTORY_SHAPE);
     for (index, field) in &mut reader {
@@ -592,7 +586,7 @@ pub fn shape_grouping_history(element: &xml::element::Element) -> super::ShapeGr
 
 /// Read `o:idmap` into a `ShapeIDMap`.
 #[must_use]
-pub fn shape_id_map(element: &xml::element::Element) -> super::ShapeIDMap {
+pub fn shape_id_map(element: &Element) -> super::ShapeIDMap {
     let mut node = super::ShapeIDMap::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_ID_MAP_SHAPE);
     for (index, field) in &mut reader {
@@ -608,7 +602,7 @@ pub fn shape_id_map(element: &xml::element::Element) -> super::ShapeIDMap {
 
 /// Read `o:shapelayout` into a `ShapeLayoutProperties`.
 #[must_use]
-pub fn shape_layout_properties(element: &xml::element::Element) -> super::ShapeLayoutProperties {
+pub fn shape_layout_properties(element: &Element) -> super::ShapeLayoutProperties {
     let mut node = super::ShapeLayoutProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_LAYOUT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -625,15 +619,13 @@ pub fn shape_layout_properties(element: &xml::element::Element) -> super::ShapeL
 /// Read one item of `ShapeLayoutPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn shape_layout_properties_content(
-    element: &xml::element::Element,
-) -> super::ShapeLayoutPropertiesContent {
+pub fn shape_layout_properties_content(element: &Element) -> super::ShapeLayoutPropertiesContent {
     markup::read(element)
 }
 
 /// Read `o:lock` into a `ShapeProtections`.
 #[must_use]
-pub fn shape_protections(element: &xml::element::Element) -> super::ShapeProtections {
+pub fn shape_protections(element: &Element) -> super::ShapeProtections {
     let mut node = super::ShapeProtections::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROTECTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -659,7 +651,7 @@ pub fn shape_protections(element: &xml::element::Element) -> super::ShapeProtect
 
 /// Read `o:proxy` into a `ShapeReference`.
 #[must_use]
-pub fn shape_reference(element: &xml::element::Element) -> super::ShapeReference {
+pub fn shape_reference(element: &Element) -> super::ShapeReference {
     let mut node = super::ShapeReference::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -677,7 +669,7 @@ pub fn shape_reference(element: &xml::element::Element) -> super::ShapeReference
 
 /// Read `o:skew` into a `SkewTransform`.
 #[must_use]
-pub fn skew_transform(element: &xml::element::Element) -> super::SkewTransform {
+pub fn skew_transform(element: &Element) -> super::SkewTransform {
     let mut node = super::SkewTransform::default();
     let mut reader = markup::Reader::new(element, &super::SKEW_TRANSFORM_SHAPE);
     for (index, field) in &mut reader {
@@ -698,7 +690,7 @@ pub fn skew_transform(element: &xml::element::Element) -> super::SkewTransform {
 /// Read `o:equationxml` into a `StorageForAlternateMathContent`.
 #[must_use]
 pub fn storage_for_alternate_math_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StorageForAlternateMathContent {
     let mut node = super::StorageForAlternateMathContent::default();
     let mut reader = markup::Reader::new(element, &super::STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE);
@@ -715,7 +707,7 @@ pub fn storage_for_alternate_math_content(
 
 /// Read `o:bottom` into a `TextBoxBottomStroke`.
 #[must_use]
-pub fn text_box_bottom_stroke(element: &xml::element::Element) -> super::TextBoxBottomStroke {
+pub fn text_box_bottom_stroke(element: &Element) -> super::TextBoxBottomStroke {
     let mut node = super::TextBoxBottomStroke::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_BOTTOM_STROKE_SHAPE);
     for (index, field) in &mut reader {
@@ -756,7 +748,7 @@ pub fn text_box_bottom_stroke(element: &xml::element::Element) -> super::TextBox
 
 /// Read `o:column` into a `TextBoxInteriorStroke`.
 #[must_use]
-pub fn text_box_interior_stroke(element: &xml::element::Element) -> super::TextBoxInteriorStroke {
+pub fn text_box_interior_stroke(element: &Element) -> super::TextBoxInteriorStroke {
     let mut node = super::TextBoxInteriorStroke::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_INTERIOR_STROKE_SHAPE);
     for (index, field) in &mut reader {
@@ -797,7 +789,7 @@ pub fn text_box_interior_stroke(element: &xml::element::Element) -> super::TextB
 
 /// Read `o:left` into a `TextBoxLeftStroke`.
 #[must_use]
-pub fn text_box_left_stroke(element: &xml::element::Element) -> super::TextBoxLeftStroke {
+pub fn text_box_left_stroke(element: &Element) -> super::TextBoxLeftStroke {
     let mut node = super::TextBoxLeftStroke::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_LEFT_STROKE_SHAPE);
     for (index, field) in &mut reader {
@@ -838,7 +830,7 @@ pub fn text_box_left_stroke(element: &xml::element::Element) -> super::TextBoxLe
 
 /// Read `o:right` into a `TextBoxRightStroke`.
 #[must_use]
-pub fn text_box_right_stroke(element: &xml::element::Element) -> super::TextBoxRightStroke {
+pub fn text_box_right_stroke(element: &Element) -> super::TextBoxRightStroke {
     let mut node = super::TextBoxRightStroke::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_RIGHT_STROKE_SHAPE);
     for (index, field) in &mut reader {
@@ -879,7 +871,7 @@ pub fn text_box_right_stroke(element: &xml::element::Element) -> super::TextBoxR
 
 /// Read `o:top` into a `TextBoxTopStroke`.
 #[must_use]
-pub fn text_box_top_stroke(element: &xml::element::Element) -> super::TextBoxTopStroke {
+pub fn text_box_top_stroke(element: &Element) -> super::TextBoxTopStroke {
     let mut node = super::TextBoxTopStroke::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_TOP_STROKE_SHAPE);
     for (index, field) in &mut reader {
@@ -920,7 +912,7 @@ pub fn text_box_top_stroke(element: &xml::element::Element) -> super::TextBoxTop
 
 /// Read `o:colormenu` into a `UIDefaultColors`.
 #[must_use]
-pub fn ui_default_colors(element: &xml::element::Element) -> super::UIDefaultColors {
+pub fn ui_default_colors(element: &Element) -> super::UIDefaultColors {
     let mut node = super::UIDefaultColors::default();
     let mut reader = markup::Reader::new(element, &super::UI_DEFAULT_COLORS_SHAPE);
     for (index, field) in &mut reader {
@@ -939,7 +931,7 @@ pub fn ui_default_colors(element: &xml::element::Element) -> super::UIDefaultCol
 
 /// Read `o:diagram` into a `VMLDiagram`.
 #[must_use]
-pub fn vml_diagram(element: &xml::element::Element) -> super::VMLDiagram {
+pub fn vml_diagram(element: &Element) -> super::VMLDiagram {
     let mut node = super::VMLDiagram::default();
     let mut reader = markup::Reader::new(element, &super::VML_DIAGRAM_SHAPE);
     for (index, field) in &mut reader {
@@ -964,9 +956,7 @@ pub fn vml_diagram(element: &xml::element::Element) -> super::VMLDiagram {
 
 /// Read `o:FieldCodes` into a `WordprocessingMLFieldSwitches`.
 #[must_use]
-pub fn wordprocessing_ml_field_switches(
-    element: &xml::element::Element,
-) -> super::WordprocessingMLFieldSwitches {
+pub fn wordprocessing_ml_field_switches(element: &Element) -> super::WordprocessingMLFieldSwitches {
     let mut node = super::WordprocessingMLFieldSwitches::default();
     let mut reader = markup::Reader::new(element, &super::WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE);
     for (index, field) in &mut reader {

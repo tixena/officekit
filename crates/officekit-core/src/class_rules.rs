@@ -5,11 +5,12 @@
 
 use core::cmp::Ordering;
 
-use crate::error::ReadError;
+use officekit_xml::element::Element;
+use officekit_xml::error::ReadError;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{NamespaceId, QName, tag_of};
+
 use crate::markup::{self, Tag};
-use crate::xml::element::Element;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, NamespaceId, QName};
 
 /// Days from 1970-01-01 to the 1900 date system's base date, 1899-12-30.
 pub const BASE_1900: i64 = -25_569;
@@ -45,15 +46,4 @@ pub fn read<T>(element: &Element, tag: Tag, reader: fn(&Element) -> T) -> Result
         format!("{}:{}", element.name.prefix, element.name.local)
     };
     Err(ReadError::UnexpectedTag { expected, found })
-}
-
-/// The tag of a name in the namespace table; `None` for a namespace the table
-/// does not know.
-pub const fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
-    let local = name.local.as_str();
-    match name.namespace {
-        Namespace::Known(id) => Some((Some(id), local)),
-        Namespace::None => Some((None, local)),
-        Namespace::Other(_) => None,
-    }
 }

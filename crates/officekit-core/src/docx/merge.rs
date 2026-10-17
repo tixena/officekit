@@ -7,9 +7,12 @@ mod tests;
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
+use officekit_xml::element::{Attribute, Document as Part, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::write::Scope;
+
 use super::Docx;
 use crate::error::PackageError;
-use crate::markup::Scope;
 use crate::markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
 use crate::packaging::package::{DECLARATION, OpenOptions, Package};
 use crate::packaging::part_name::PartName;
@@ -17,9 +20,6 @@ use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
-use crate::xml;
-use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
-use crate::xml::name::{Namespace, QName};
 
 /// The `w` elements whose attribute names an entry of an id space.
 const ENTRY_REFERENCES: [(&str, &str, Space); 8] = [
@@ -104,10 +104,10 @@ struct Entries {
     /// Whether an entry went in: only then is this file's part written back.
     changed: bool,
     source: PartName,
-    source_tree: xml::element::Document,
+    source_tree: Part,
     /// This file's part; `None` until the part the import makes for this file is added.
     target: Option<PartName>,
-    tree: xml::element::Document,
+    tree: Part,
 }
 
 /// One import: the counters and maps each id space keeps, and the parts copied so far.
@@ -792,12 +792,12 @@ fn merge_declarations(
 
 /// The root of a part of `kind` the import makes for this file: the source root's name and
 /// declarations, and the separator entries of the source's footnotes or endnotes.
-fn new_tree(kind: Kind, source_root: &Element) -> xml::element::Document {
-    let mut root = Element::new(QName {
-        local: kind.root().to_owned(),
-        namespace: source_root.name.namespace.clone(),
-        prefix: source_root.name.prefix.clone(),
-    });
+fn new_tree(kind: Kind, source_root: &Element) -> Part {
+    let mut root = Element::new(QName::new(
+        source_root.name.prefix.clone(),
+        kind.root().to_owned(),
+        source_root.name.namespace.clone(),
+    ));
     root.namespace_declarations
         .clone_from(&source_root.namespace_declarations);
     if let Some(separators) = kind.separators() {
@@ -811,7 +811,7 @@ fn new_tree(kind: Kind, source_root: &Element) -> xml::element::Document {
                 .map(Node::Element),
         );
     }
-    xml::element::Document::new(DECLARATION, root)
+    Part::new(DECLARATION, root)
 }
 
 /// The template a copy of `part` is named by: its file's trailing digits replaced by `{}`,

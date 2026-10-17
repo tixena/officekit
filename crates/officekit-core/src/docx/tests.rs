@@ -2,6 +2,17 @@ use core::slice;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use officekit_xml::error::WriteError;
+#[cfg(feature = "transitional")]
+use officekit_xml::mc::MarkupCompatibility;
+#[cfg(feature = "transitional")]
+use officekit_xml::name::OfficeVersion;
+#[cfg(feature = "strict")]
+use officekit_xml::parse::parse;
+#[cfg(feature = "strict")]
+use officekit_xml::write::{Layout, WriteOptions};
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use os_shim::System as _;
 #[cfg(feature = "transitional")]
@@ -10,8 +21,6 @@ use os_shim::mock::MemorySystem;
 use super::Docx;
 use crate::compact::Comments;
 use crate::error::PackageError;
-#[cfg(all(feature = "strict", feature = "transitional"))]
-use crate::error::WriteError;
 #[cfg(feature = "strict")]
 use crate::markup::wordprocessing;
 use crate::packaging::package::{OpenOptions, Package};
@@ -22,15 +31,6 @@ use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;
 #[cfg(feature = "transitional")]
 use crate::parts::{document_settings, font_table};
-use crate::xml::conformance::ConformanceClass;
-#[cfg(feature = "transitional")]
-use crate::xml::mc::MarkupCompatibility;
-#[cfg(feature = "transitional")]
-use crate::xml::name::OfficeVersion;
-#[cfg(feature = "strict")]
-use crate::xml::parse::parse;
-#[cfg(feature = "strict")]
-use crate::xml::write::{Layout, WriteOptions};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 #[cfg(feature = "strict")]
@@ -429,10 +429,7 @@ fn a_strict_save_rewrites_known_custom_xml_and_carries_other_parts_as_they_are()
 #[test]
 fn the_write_options_apply_to_every_store_the_save_included() {
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    docx.set_write_options(WriteOptions {
-        layout: Layout::Pretty,
-        namespace_cleanup: true,
-    });
+    docx.set_write_options(WriteOptions::new(Layout::Pretty, true));
     let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
     let main = text(&strict, &name("/word/document.xml"));
     assert!(main.contains("\n  <w:body>"), "{main}");

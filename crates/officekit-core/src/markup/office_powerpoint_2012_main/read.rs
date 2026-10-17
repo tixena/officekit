@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p15:chartTrackingRefBased` into a `ChartTrackingRefBased`.
 #[must_use]
-pub fn chart_tracking_ref_based(element: &xml::element::Element) -> super::ChartTrackingRefBased {
+pub fn chart_tracking_ref_based(element: &Element) -> super::ChartTrackingRefBased {
     let mut node = super::ChartTrackingRefBased::default();
     let mut reader = markup::Reader::new(element, &super::CHART_TRACKING_REF_BASED_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn chart_tracking_ref_based(element: &xml::element::Element) -> super::Chart
 
 /// Read `p15:clr` into a `Clr`.
 #[must_use]
-pub fn clr(element: &xml::element::Element) -> super::Clr {
+pub fn clr(element: &Element) -> super::Clr {
     let mut node = super::Clr::default();
     let mut reader = markup::Reader::new(element, &super::CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn clr(element: &xml::element::Element) -> super::Clr {
 
 /// Read `p15:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `p15:guide` into a `Guide`.
 #[must_use]
-pub fn guide(element: &xml::element::Element) -> super::Guide {
+pub fn guide(element: &Element) -> super::Guide {
     let mut node = super::Guide::default();
     let mut reader = markup::Reader::new(element, &super::GUIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -280,7 +280,7 @@ pub fn guide(element: &xml::element::Element) -> super::Guide {
 
 /// Read `p15:notesGuideLst` into a `NotesGuideLst`.
 #[must_use]
-pub fn notes_guide_lst(element: &xml::element::Element) -> super::NotesGuideLst {
+pub fn notes_guide_lst(element: &Element) -> super::NotesGuideLst {
     let mut node = super::NotesGuideLst::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_GUIDE_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -296,7 +296,7 @@ pub fn notes_guide_lst(element: &xml::element::Element) -> super::NotesGuideLst 
 
 /// Read `p15:parentCm` into a `ParentCm`.
 #[must_use]
-pub fn parent_cm(element: &xml::element::Element) -> super::ParentCm {
+pub fn parent_cm(element: &Element) -> super::ParentCm {
     let mut node = super::ParentCm::default();
     let mut reader = markup::Reader::new(element, &super::PARENT_CM_SHAPE);
     for (index, field) in &mut reader {
@@ -312,7 +312,7 @@ pub fn parent_cm(element: &xml::element::Element) -> super::ParentCm {
 
 /// Read `p15:presenceInfo` into a `PresenceInfo`.
 #[must_use]
-pub fn presence_info(element: &xml::element::Element) -> super::PresenceInfo {
+pub fn presence_info(element: &Element) -> super::PresenceInfo {
     let mut node = super::PresenceInfo::default();
     let mut reader = markup::Reader::new(element, &super::PRESENCE_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -328,7 +328,7 @@ pub fn presence_info(element: &xml::element::Element) -> super::PresenceInfo {
 
 /// Read `p15:prstTrans` into a `PrstTrans`.
 #[must_use]
-pub fn prst_trans(element: &xml::element::Element) -> super::PrstTrans {
+pub fn prst_trans(element: &Element) -> super::PrstTrans {
     let mut node = super::PrstTrans::default();
     let mut reader = markup::Reader::new(element, &super::PRST_TRANS_SHAPE);
     for (index, field) in &mut reader {
@@ -345,7 +345,7 @@ pub fn prst_trans(element: &xml::element::Element) -> super::PrstTrans {
 
 /// Read `p15:sldGuideLst` into a `SldGuideLst`.
 #[must_use]
-pub fn sld_guide_lst(element: &xml::element::Element) -> super::SldGuideLst {
+pub fn sld_guide_lst(element: &Element) -> super::SldGuideLst {
     let mut node = super::SldGuideLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_GUIDE_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -361,7 +361,7 @@ pub fn sld_guide_lst(element: &xml::element::Element) -> super::SldGuideLst {
 
 /// Read `p15:threadingInfo` into a `ThreadingInfo`.
 #[must_use]
-pub fn threading_info(element: &xml::element::Element) -> super::ThreadingInfo {
+pub fn threading_info(element: &Element) -> super::ThreadingInfo {
     let mut node = super::ThreadingInfo::default();
     let mut reader = markup::Reader::new(element, &super::THREADING_INFO_SHAPE);
     for (index, field) in &mut reader {

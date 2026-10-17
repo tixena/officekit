@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -3423,7 +3423,7 @@ pub enum GroupCommandContent {
     GraphicFrameMk(GraphicFrameMk),
     GrpSpMk(GrpSpMk),
     InkMk(InkMk),
-    Other(xml::element::Node),
+    Other(Node),
     PicMk(PicMk),
     SpMk(SpMk),
 }
@@ -4503,7 +4503,7 @@ pub struct XfrmTransform2D {
 }
 
 impl markup::Read for BlipFillBlipFillProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blip_fill_blip_fill_properties(element)
     }
 }
@@ -4516,7 +4516,7 @@ impl markup::Write for BlipFillBlipFillProperties {
 }
 
 impl markup::Read for BlipFillResetBlipFillProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blip_fill_reset_blip_fill_properties(element)
     }
 }
@@ -4529,7 +4529,7 @@ impl markup::Write for BlipFillResetBlipFillProperties {
 }
 
 impl markup::Read for BodyPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::body_pr(element)
     }
 }
@@ -4542,7 +4542,7 @@ impl markup::Write for BodyPr {
 }
 
 impl markup::Read for Bounds {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bounds(element)
     }
 }
@@ -4555,7 +4555,7 @@ impl markup::Write for Bounds {
 }
 
 impl markup::Read for BwMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bw_mode(element)
     }
 }
@@ -4568,7 +4568,7 @@ impl markup::Write for BwMode {
 }
 
 impl markup::Read for CNvCxnSpPrModifyNonVisualConnectorProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_cxn_sp_pr_modify_non_visual_connector_props(element)
     }
 }
@@ -4581,7 +4581,7 @@ impl markup::Write for CNvCxnSpPrModifyNonVisualConnectorProps {
 }
 
 impl markup::Read for CNvCxnSpPrResetNonVisualConnectorProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_cxn_sp_pr_reset_non_visual_connector_props(element)
     }
 }
@@ -4594,7 +4594,7 @@ impl markup::Write for CNvCxnSpPrResetNonVisualConnectorProps {
 }
 
 impl markup::Read for CNvGraphicFramePr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_graphic_frame_pr(element)
     }
 }
@@ -4607,7 +4607,7 @@ impl markup::Write for CNvGraphicFramePr {
 }
 
 impl markup::Read for CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(element)
     }
 }
@@ -4621,7 +4621,7 @@ impl markup::Write for CNvGrpSpPrModifyNonVisualGroupDrawingShapeProps {
 }
 
 impl markup::Read for CNvGrpSpPrNonVisualGroupDrawingShapeProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(element)
     }
 }
@@ -4635,7 +4635,7 @@ impl markup::Write for CNvGrpSpPrNonVisualGroupDrawingShapeProps {
 }
 
 impl markup::Read for CNvInkPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_ink_pr(element)
     }
 }
@@ -4648,7 +4648,7 @@ impl markup::Write for CNvInkPr {
 }
 
 impl markup::Read for CNvPicPrModifyNonVisualPictureProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pic_pr_modify_non_visual_picture_props(element)
     }
 }
@@ -4661,7 +4661,7 @@ impl markup::Write for CNvPicPrModifyNonVisualPictureProps {
 }
 
 impl markup::Read for CNvPicPrResetNonVisualPictureProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pic_pr_reset_non_visual_picture_props(element)
     }
 }
@@ -4674,7 +4674,7 @@ impl markup::Write for CNvPicPrResetNonVisualPictureProps {
 }
 
 impl markup::Read for CNvPrModifyNonVisualDrawingProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr_modify_non_visual_drawing_props(element)
     }
 }
@@ -4687,7 +4687,7 @@ impl markup::Write for CNvPrModifyNonVisualDrawingProps {
 }
 
 impl markup::Read for CNvPrNonVisualDrawingProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr_non_visual_drawing_props(element)
     }
 }
@@ -4700,7 +4700,7 @@ impl markup::Write for CNvPrNonVisualDrawingProps {
 }
 
 impl markup::Read for CNvSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_sp_pr(element)
     }
 }
@@ -4771,7 +4771,7 @@ impl CTResourceLinkage {
 }
 
 impl markup::Read for CompressPicPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::compress_pic_pr(element)
     }
 }
@@ -4784,7 +4784,7 @@ impl markup::Write for CompressPicPr {
 }
 
 impl markup::Read for ContextTextCharRangeContext {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::context_text_char_range_context(element)
     }
 }
@@ -4797,7 +4797,7 @@ impl markup::Write for ContextTextCharRangeContext {
 }
 
 impl markup::Read for CxnSpMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cxn_sp_mk(element)
     }
 }
@@ -4810,7 +4810,7 @@ impl markup::Write for CxnSpMk {
 }
 
 impl markup::Read for CxnSpMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cxn_sp_mk_lst(element)
     }
 }
@@ -4823,7 +4823,7 @@ impl markup::Write for CxnSpMkLst {
 }
 
 impl markup::Read for DcMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dc_mk_lst(element)
     }
 }
@@ -4836,7 +4836,7 @@ impl markup::Write for DcMkLst {
 }
 
 impl markup::Read for DeMasterMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::de_master_mk_lst(element)
     }
 }
@@ -4849,7 +4849,7 @@ impl markup::Write for DeMasterMkLst {
 }
 
 impl markup::Read for DeMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::de_mk_lst(element)
     }
 }
@@ -4862,7 +4862,7 @@ impl markup::Write for DeMkLst {
 }
 
 impl markup::Read for DePkg {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::de_pkg(element)
     }
 }
@@ -4875,7 +4875,7 @@ impl markup::Write for DePkg {
 }
 
 impl markup::Read for DeSrcMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::de_src_mk_lst(element)
     }
 }
@@ -4888,7 +4888,7 @@ impl markup::Write for DeSrcMkLst {
 }
 
 impl markup::Read for DeTgtMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::de_tgt_mk_lst(element)
     }
 }
@@ -4901,7 +4901,7 @@ impl markup::Write for DeTgtMkLst {
 }
 
 impl markup::Read for DgMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dg_mk_lst(element)
     }
 }
@@ -4914,7 +4914,7 @@ impl markup::Write for DgMkLst {
 }
 
 impl markup::Read for Dpi {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dpi(element)
     }
 }
@@ -4927,7 +4927,7 @@ impl markup::Write for Dpi {
 }
 
 impl markup::Read for DrSelLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dr_sel_lst(element)
     }
 }
@@ -4940,7 +4940,7 @@ impl markup::Write for DrSelLst {
 }
 
 impl markup::Read for EditorSelLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::editor_sel_lst(element)
     }
 }
@@ -4953,7 +4953,7 @@ impl markup::Write for EditorSelLst {
 }
 
 impl markup::Read for Effect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::effect(element)
     }
 }
@@ -4966,7 +4966,7 @@ impl markup::Write for Effect {
 }
 
 impl markup::Read for EffectRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::effect_ref(element)
     }
 }
@@ -4979,7 +4979,7 @@ impl markup::Write for EffectRef {
 }
 
 impl markup::Read for EndCxnConnection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::end_cxn_connection(element)
     }
 }
@@ -4992,7 +4992,7 @@ impl markup::Write for EndCxnConnection {
 }
 
 impl markup::Read for EndCxnEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::end_cxn_empty(element)
     }
 }
@@ -5005,7 +5005,7 @@ impl markup::Write for EndCxnEmpty {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -5018,7 +5018,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Fill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill(element)
     }
 }
@@ -5031,7 +5031,7 @@ impl markup::Write for Fill {
 }
 
 impl markup::Read for FillMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill_mode(element)
     }
 }
@@ -5044,7 +5044,7 @@ impl markup::Write for FillMode {
 }
 
 impl markup::Read for FillRect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill_rect(element)
     }
 }
@@ -5057,7 +5057,7 @@ impl markup::Write for FillRect {
 }
 
 impl markup::Read for FillRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill_ref(element)
     }
 }
@@ -5070,7 +5070,7 @@ impl markup::Write for FillRef {
 }
 
 impl markup::Read for FontRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::font_ref(element)
     }
 }
@@ -5083,7 +5083,7 @@ impl markup::Write for FontRef {
 }
 
 impl markup::Read for Geom {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::geom(element)
     }
 }
@@ -5096,7 +5096,7 @@ impl markup::Write for Geom {
 }
 
 impl markup::Read for GraphicFrameMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame_mk(element)
     }
 }
@@ -5109,7 +5109,7 @@ impl markup::Write for GraphicFrameMk {
 }
 
 impl markup::Read for GraphicFrameMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame_mk_lst(element)
     }
 }
@@ -5122,7 +5122,7 @@ impl markup::Write for GraphicFrameMkLst {
 }
 
 impl markup::Read for GraphicParentMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_parent_mk_lst(element)
     }
 }
@@ -5135,7 +5135,7 @@ impl markup::Write for GraphicParentMkLst {
 }
 
 impl markup::Read for GridColMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grid_col_mk_lst(element)
     }
 }
@@ -5148,11 +5148,11 @@ impl markup::Write for GridColMkLst {
 }
 
 impl markup::Read for GroupCommandContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_OAC, "cxnSpMk")) => Self::CxnSpMk(markup::read(element)),
             Some((NS_OAC, "graphicFrameMk")) => Self::GraphicFrameMk(markup::read(element)),
@@ -5160,7 +5160,7 @@ impl markup::Read for GroupCommandContent {
             Some((NS_OAC, "inkMk")) => Self::InkMk(markup::read(element)),
             Some((NS_OAC, "picMk")) => Self::PicMk(markup::read(element)),
             Some((NS_OAC, "spMk")) => Self::SpMk(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -5180,7 +5180,7 @@ impl markup::Write for GroupCommandContent {
 }
 
 impl markup::Read for GrpCmd {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_cmd(element)
     }
 }
@@ -5193,7 +5193,7 @@ impl markup::Write for GrpCmd {
 }
 
 impl markup::Read for GrpSpMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_mk(element)
     }
 }
@@ -5206,7 +5206,7 @@ impl markup::Write for GrpSpMk {
 }
 
 impl markup::Read for GrpSpMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_mk_lst(element)
     }
 }
@@ -5219,7 +5219,7 @@ impl markup::Write for GrpSpMkLst {
 }
 
 impl markup::Read for GrpSpPrGroupShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_pr_group_shape_properties(element)
     }
 }
@@ -5232,7 +5232,7 @@ impl markup::Write for GrpSpPrGroupShapeProperties {
 }
 
 impl markup::Read for GrpSpPrResetGroupShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_pr_reset_group_shape_properties(element)
     }
 }
@@ -5245,7 +5245,7 @@ impl markup::Write for GrpSpPrResetGroupShapeProperties {
 }
 
 impl markup::Read for HlinkClickEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_click_empty(element)
     }
 }
@@ -5258,7 +5258,7 @@ impl markup::Write for HlinkClickEmpty {
 }
 
 impl markup::Read for HlinkClickHyperlinkProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_click_hyperlink_props(element)
     }
 }
@@ -5271,7 +5271,7 @@ impl markup::Write for HlinkClickHyperlinkProps {
 }
 
 impl markup::Read for HlinkHoverEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_hover_empty(element)
     }
 }
@@ -5284,7 +5284,7 @@ impl markup::Write for HlinkHoverEmpty {
 }
 
 impl markup::Read for HlinkHoverHyperlinkProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_hover_hyperlink_props(element)
     }
 }
@@ -5297,7 +5297,7 @@ impl markup::Write for HlinkHoverHyperlinkProps {
 }
 
 impl markup::Read for HlinkMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_mk_lst(element)
     }
 }
@@ -5310,7 +5310,7 @@ impl markup::Write for HlinkMkLst {
 }
 
 impl markup::Read for HlinkModifyHyperlinkProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_modify_hyperlink_props(element)
     }
 }
@@ -5323,7 +5323,7 @@ impl markup::Write for HlinkModifyHyperlinkProps {
 }
 
 impl markup::Read for HlinkResetHyperlinkProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hlink_reset_hyperlink_props(element)
     }
 }
@@ -5336,7 +5336,7 @@ impl markup::Write for HlinkResetHyperlinkProps {
 }
 
 impl markup::Read for ImgData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_data(element)
     }
 }
@@ -5349,7 +5349,7 @@ impl markup::Write for ImgData {
 }
 
 impl markup::Read for ImgLink {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_link(element)
     }
 }
@@ -5362,7 +5362,7 @@ impl markup::Write for ImgLink {
 }
 
 impl markup::Read for ImgUrl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_url(element)
     }
 }
@@ -5375,7 +5375,7 @@ impl markup::Write for ImgUrl {
 }
 
 impl markup::Read for InkMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ink_mk(element)
     }
 }
@@ -5388,7 +5388,7 @@ impl markup::Write for InkMk {
 }
 
 impl markup::Read for InkMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ink_mk_lst(element)
     }
 }
@@ -5401,7 +5401,7 @@ impl markup::Write for InkMkLst {
 }
 
 impl markup::Read for LfPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lf_pr(element)
     }
 }
@@ -5414,7 +5414,7 @@ impl markup::Write for LfPr {
 }
 
 impl markup::Read for LineProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_props(element)
     }
 }
@@ -5427,7 +5427,7 @@ impl markup::Write for LineProps {
 }
 
 impl markup::Read for Ln {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ln(element)
     }
 }
@@ -5440,7 +5440,7 @@ impl markup::Write for Ln {
 }
 
 impl markup::Read for LnRef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ln_ref(element)
     }
 }
@@ -5453,7 +5453,7 @@ impl markup::Write for LnRef {
 }
 
 impl markup::Read for Model3DMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model3d_mk_lst(element)
     }
 }
@@ -5466,7 +5466,7 @@ impl markup::Write for Model3DMkLst {
 }
 
 impl markup::Read for NoAdjustHandles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_adjust_handles(element)
     }
 }
@@ -5479,7 +5479,7 @@ impl markup::Write for NoAdjustHandles {
 }
 
 impl markup::Read for NoChangeArrowheads {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_change_arrowheads(element)
     }
 }
@@ -5492,7 +5492,7 @@ impl markup::Write for NoChangeArrowheads {
 }
 
 impl markup::Read for NoChangeAspect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_change_aspect(element)
     }
 }
@@ -5505,7 +5505,7 @@ impl markup::Write for NoChangeAspect {
 }
 
 impl markup::Read for NoChangeShapeType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_change_shape_type(element)
     }
 }
@@ -5518,7 +5518,7 @@ impl markup::Write for NoChangeShapeType {
 }
 
 impl markup::Read for NoEditPoints {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_edit_points(element)
     }
 }
@@ -5531,7 +5531,7 @@ impl markup::Write for NoEditPoints {
 }
 
 impl markup::Read for NoGrp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_grp(element)
     }
 }
@@ -5544,7 +5544,7 @@ impl markup::Write for NoGrp {
 }
 
 impl markup::Read for NoMove {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_move(element)
     }
 }
@@ -5557,7 +5557,7 @@ impl markup::Write for NoMove {
 }
 
 impl markup::Read for NoResize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_resize(element)
     }
 }
@@ -5570,7 +5570,7 @@ impl markup::Write for NoResize {
 }
 
 impl markup::Read for NoRot {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_rot(element)
     }
 }
@@ -5583,7 +5583,7 @@ impl markup::Write for NoRot {
 }
 
 impl markup::Read for NoSelect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_select(element)
     }
 }
@@ -5596,7 +5596,7 @@ impl markup::Write for NoSelect {
 }
 
 impl markup::Read for Off {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::off(element)
     }
 }
@@ -5609,7 +5609,7 @@ impl markup::Write for Off {
 }
 
 impl markup::Read for OrigImgData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::orig_img_data(element)
     }
 }
@@ -5622,7 +5622,7 @@ impl markup::Write for OrigImgData {
 }
 
 impl markup::Read for PPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::p_pr(element)
     }
 }
@@ -5635,7 +5635,7 @@ impl markup::Write for PPr {
 }
 
 impl markup::Read for PicMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pic_mk(element)
     }
 }
@@ -5648,7 +5648,7 @@ impl markup::Write for PicMk {
 }
 
 impl markup::Read for PicMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pic_mk_lst(element)
     }
 }
@@ -5661,7 +5661,7 @@ impl markup::Write for PicMkLst {
 }
 
 impl markup::Read for Reset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reset(element)
     }
 }
@@ -5674,7 +5674,7 @@ impl markup::Write for Reset {
 }
 
 impl markup::Read for RotWithShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rot_with_shape(element)
     }
 }
@@ -5687,7 +5687,7 @@ impl markup::Write for RotWithShape {
 }
 
 impl markup::Read for Scene3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scene3d(element)
     }
 }
@@ -5700,7 +5700,7 @@ impl markup::Write for Scene3d {
 }
 
 impl markup::Read for SndData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::snd_data(element)
     }
 }
@@ -5713,7 +5713,7 @@ impl markup::Write for SndData {
 }
 
 impl markup::Read for Sp3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp3d(element)
     }
 }
@@ -5726,7 +5726,7 @@ impl markup::Write for Sp3d {
 }
 
 impl markup::Read for SpMk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_mk(element)
     }
 }
@@ -5739,7 +5739,7 @@ impl markup::Write for SpMk {
 }
 
 impl markup::Read for SpMkLstShapeMonikerList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_mk_lst_shape_moniker_list(element)
     }
 }
@@ -5752,7 +5752,7 @@ impl markup::Write for SpMkLstShapeMonikerList {
 }
 
 impl markup::Read for SpMkLstShapePropsMonikerList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_mk_lst_shape_props_moniker_list(element)
     }
 }
@@ -5765,7 +5765,7 @@ impl markup::Write for SpMkLstShapePropsMonikerList {
 }
 
 impl markup::Read for SpPrResetShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr_reset_shape_properties(element)
     }
 }
@@ -5778,7 +5778,7 @@ impl markup::Write for SpPrResetShapeProperties {
 }
 
 impl markup::Read for SpPrShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr_shape_properties(element)
     }
 }
@@ -5791,7 +5791,7 @@ impl markup::Write for SpPrShapeProperties {
 }
 
 impl markup::Read for SrcRectEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::src_rect_empty(element)
     }
 }
@@ -5804,7 +5804,7 @@ impl markup::Write for SrcRectEmpty {
 }
 
 impl markup::Read for SrcRectRelativeRectProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::src_rect_relative_rect_props(element)
     }
 }
@@ -5817,7 +5817,7 @@ impl markup::Write for SrcRectRelativeRectProps {
 }
 
 impl markup::Read for StCxnConnection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::st_cxn_connection(element)
     }
 }
@@ -5830,7 +5830,7 @@ impl markup::Write for StCxnConnection {
 }
 
 impl markup::Read for StCxnEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::st_cxn_empty(element)
     }
 }
@@ -5843,7 +5843,7 @@ impl markup::Write for StCxnEmpty {
 }
 
 impl markup::Read for Style {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style(element)
     }
 }
@@ -5856,7 +5856,7 @@ impl markup::Write for Style {
 }
 
 impl markup::Read for SvgBlipMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::svg_blip_mk_lst(element)
     }
 }
@@ -5869,7 +5869,7 @@ impl markup::Write for SvgBlipMkLst {
 }
 
 impl markup::Read for TblMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tbl_mk_lst(element)
     }
 }
@@ -5882,7 +5882,7 @@ impl markup::Write for TblMkLst {
 }
 
 impl markup::Read for TcMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tc_mk_lst(element)
     }
 }
@@ -5895,7 +5895,7 @@ impl markup::Write for TcMkLst {
 }
 
 impl markup::Read for TrMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tr_mk_lst(element)
     }
 }
@@ -5908,7 +5908,7 @@ impl markup::Write for TrMkLst {
 }
 
 impl markup::Read for TxBodyMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_body_mk_lst(element)
     }
 }
@@ -5921,7 +5921,7 @@ impl markup::Write for TxBodyMkLst {
 }
 
 impl markup::Read for TxBodyPkg {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_body_pkg(element)
     }
 }
@@ -5934,7 +5934,7 @@ impl markup::Write for TxBodyPkg {
 }
 
 impl markup::Read for TxMkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_mk_lst(element)
     }
 }
@@ -5947,7 +5947,7 @@ impl markup::Write for TxMkLst {
 }
 
 impl markup::Read for UseBounds {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_bounds(element)
     }
 }
@@ -5960,7 +5960,7 @@ impl markup::Write for UseBounds {
 }
 
 impl markup::Read for ViewSelLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::view_sel_lst(element)
     }
 }
@@ -5973,7 +5973,7 @@ impl markup::Write for ViewSelLst {
 }
 
 impl markup::Read for XfrmEmpty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm_empty(element)
     }
 }
@@ -5986,7 +5986,7 @@ impl markup::Write for XfrmEmpty {
 }
 
 impl markup::Read for XfrmModifyTransformProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm_modify_transform_props(element)
     }
 }
@@ -5999,7 +5999,7 @@ impl markup::Write for XfrmModifyTransformProps {
 }
 
 impl markup::Read for XfrmTransform2D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm_transform2d(element)
     }
 }

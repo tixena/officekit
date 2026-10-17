@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -572,7 +572,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -585,7 +585,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Fb {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fb(element)
     }
 }
@@ -598,7 +598,7 @@ impl markup::Write for Fb {
 }
 
 impl markup::Read for K {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::k(element)
     }
 }
@@ -725,7 +725,7 @@ impl RichValueValueType {
 }
 
 impl markup::Read for Rv {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rv(element)
     }
 }
@@ -738,7 +738,7 @@ impl markup::Write for Rv {
 }
 
 impl markup::Read for RvData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rv_data(element)
     }
 }
@@ -751,7 +751,7 @@ impl markup::Write for RvData {
 }
 
 impl markup::Read for RvStructures {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rv_structures(element)
     }
 }
@@ -764,7 +764,7 @@ impl markup::Write for RvStructures {
 }
 
 impl markup::Read for Rvb {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rvb(element)
     }
 }
@@ -777,7 +777,7 @@ impl markup::Write for Rvb {
 }
 
 impl markup::Read for S {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::s(element)
     }
 }
@@ -790,7 +790,7 @@ impl markup::Write for S {
 }
 
 impl markup::Read for V {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v(element)
     }
 }

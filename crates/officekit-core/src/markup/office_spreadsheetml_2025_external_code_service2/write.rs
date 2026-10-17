@@ -213,15 +213,16 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExternalCodeServiceImageAsInput` as its element,
 /// `xlecs2:externalCodeServiceImageAsInput`.
 #[must_use]
 pub fn external_code_service_image_as_input(
     node: &super::ExternalCodeServiceImageAsInput,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE,

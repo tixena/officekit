@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AbsPath` as its element, `x15ac:absPath`.
 #[must_use]
-pub fn abs_path(node: &super::AbsPath, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn abs_path(node: &super::AbsPath, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ABS_PATH_SHAPE, &node.unknown);
     writer.attribute(0, &node.url);
     writer.finish()

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p:guide` into a `AGuide`.
 #[must_use]
-pub fn a_guide(element: &xml::element::Element) -> super::AGuide {
+pub fn a_guide(element: &Element) -> super::AGuide {
     let mut node = super::AGuide::default();
     let mut reader = markup::Reader::new(element, &super::A_GUIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn a_guide(element: &xml::element::Element) -> super::AGuide {
 
 /// Read `p:sldAll` into a `AllSlides`.
 #[must_use]
-pub fn all_slides(element: &xml::element::Element) -> super::AllSlides {
+pub fn all_slides(element: &Element) -> super::AllSlides {
     let reader = markup::Reader::new(element, &super::ALL_SLIDES_SHAPE);
     super::AllSlides {
         unknown: reader.finish(),
@@ -242,7 +242,7 @@ pub fn all_slides(element: &xml::element::Element) -> super::AllSlides {
 
 /// Read `p:anim` into a `Animate`.
 #[must_use]
-pub fn animate(element: &xml::element::Element) -> super::Animate {
+pub fn animate(element: &Element) -> super::Animate {
     let mut node = super::Animate::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_SHAPE);
     for (index, field) in &mut reader {
@@ -264,7 +264,7 @@ pub fn animate(element: &xml::element::Element) -> super::Animate {
 
 /// Read `p:animClr` into a `AnimateColorBehavior`.
 #[must_use]
-pub fn animate_color_behavior(element: &xml::element::Element) -> super::AnimateColorBehavior {
+pub fn animate_color_behavior(element: &Element) -> super::AnimateColorBehavior {
     let mut node = super::AnimateColorBehavior::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_COLOR_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
@@ -284,13 +284,13 @@ pub fn animate_color_behavior(element: &xml::element::Element) -> super::Animate
 
 /// Read one item of `AnimateColorByContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn animate_color_by(element: &xml::element::Element) -> super::AnimateColorByContent {
+pub fn animate_color_by(element: &Element) -> super::AnimateColorByContent {
     markup::read(element)
 }
 
 /// Read `p:animEffect` into a `AnimateEffect`.
 #[must_use]
-pub fn animate_effect(element: &xml::element::Element) -> super::AnimateEffect {
+pub fn animate_effect(element: &Element) -> super::AnimateEffect {
     let mut node = super::AnimateEffect::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_EFFECT_SHAPE);
     for (index, field) in &mut reader {
@@ -309,7 +309,7 @@ pub fn animate_effect(element: &xml::element::Element) -> super::AnimateEffect {
 
 /// Read `p:animMotion` into a `AnimateMotion`.
 #[must_use]
-pub fn animate_motion(element: &xml::element::Element) -> super::AnimateMotion {
+pub fn animate_motion(element: &Element) -> super::AnimateMotion {
     let mut node = super::AnimateMotion::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_MOTION_SHAPE);
     for (index, field) in &mut reader {
@@ -334,7 +334,7 @@ pub fn animate_motion(element: &xml::element::Element) -> super::AnimateMotion {
 
 /// Read `p:animRot` into a `AnimateRotation`.
 #[must_use]
-pub fn animate_rotation(element: &xml::element::Element) -> super::AnimateRotation {
+pub fn animate_rotation(element: &Element) -> super::AnimateRotation {
     let mut node = super::AnimateRotation::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_ROTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -353,7 +353,7 @@ pub fn animate_rotation(element: &xml::element::Element) -> super::AnimateRotati
 
 /// Read `p:animScale` into a `AnimateScale`.
 #[must_use]
-pub fn animate_scale(element: &xml::element::Element) -> super::AnimateScale {
+pub fn animate_scale(element: &Element) -> super::AnimateScale {
     let mut node = super::AnimateScale::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATE_SCALE_SHAPE);
     for (index, field) in &mut reader {
@@ -373,13 +373,13 @@ pub fn animate_scale(element: &xml::element::Element) -> super::AnimateScale {
 
 /// Read one item of `AnimationVariantContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn animation_variant(element: &xml::element::Element) -> super::AnimationVariantContent {
+pub fn animation_variant(element: &Element) -> super::AnimationVariantContent {
     markup::read(element)
 }
 
 /// Read `p:attrName` into a `AttributeName`.
 #[must_use]
-pub fn attribute_name(element: &xml::element::Element) -> super::AttributeName {
+pub fn attribute_name(element: &Element) -> super::AttributeName {
     let mut node = super::AttributeName::default();
     let mut reader = markup::Reader::new(element, &super::ATTRIBUTE_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -393,7 +393,7 @@ pub fn attribute_name(element: &xml::element::Element) -> super::AttributeName {
 
 /// Read `p:attrNameLst` into a `AttributeNameList`.
 #[must_use]
-pub fn attribute_name_list(element: &xml::element::Element) -> super::AttributeNameList {
+pub fn attribute_name_list(element: &Element) -> super::AttributeNameList {
     let mut node = super::AttributeNameList::default();
     let mut reader = markup::Reader::new(element, &super::ATTRIBUTE_NAME_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -407,7 +407,7 @@ pub fn attribute_name_list(element: &xml::element::Element) -> super::AttributeN
 
 /// Read `p:audio` into a `Audio`.
 #[must_use]
-pub fn audio(element: &xml::element::Element) -> super::Audio {
+pub fn audio(element: &Element) -> super::Audio {
     let mut node = super::Audio::default();
     let mut reader = markup::Reader::new(element, &super::AUDIO_SHAPE);
     for (index, field) in &mut reader {
@@ -423,7 +423,7 @@ pub fn audio(element: &xml::element::Element) -> super::Audio {
 
 /// Read `p:bg` into a `Background`.
 #[must_use]
-pub fn background(element: &xml::element::Element) -> super::Background {
+pub fn background(element: &Element) -> super::Background {
     let reader = markup::Reader::new(element, &super::BACKGROUND_SHAPE);
     super::Background {
         unknown: reader.finish(),
@@ -432,7 +432,7 @@ pub fn background(element: &xml::element::Element) -> super::Background {
 
 /// Read `p:bgPr` into a `BackgroundProperties`.
 #[must_use]
-pub fn background_properties(element: &xml::element::Element) -> super::BackgroundProperties {
+pub fn background_properties(element: &Element) -> super::BackgroundProperties {
     let mut node = super::BackgroundProperties::default();
     let mut reader = markup::Reader::new(element, &super::BACKGROUND_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -450,9 +450,7 @@ pub fn background_properties(element: &xml::element::Element) -> super::Backgrou
 
 /// Read `p:bgRef` into a `BackgroundStyleReference`.
 #[must_use]
-pub fn background_style_reference(
-    element: &xml::element::Element,
-) -> super::BackgroundStyleReference {
+pub fn background_style_reference(element: &Element) -> super::BackgroundStyleReference {
     let mut node = super::BackgroundStyleReference::default();
     let mut reader = markup::Reader::new(element, &super::BACKGROUND_STYLE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -468,7 +466,7 @@ pub fn background_style_reference(
 
 /// Read `p:blinds` into a `BlindsSlideTransition`.
 #[must_use]
-pub fn blinds_slide_transition(element: &xml::element::Element) -> super::BlindsSlideTransition {
+pub fn blinds_slide_transition(element: &Element) -> super::BlindsSlideTransition {
     let mut node = super::BlindsSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::BLINDS_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -482,7 +480,7 @@ pub fn blinds_slide_transition(element: &xml::element::Element) -> super::Blinds
 
 /// Read `p:bold` into a `BoldEmbeddedFont`.
 #[must_use]
-pub fn bold_embedded_font(element: &xml::element::Element) -> super::BoldEmbeddedFont {
+pub fn bold_embedded_font(element: &Element) -> super::BoldEmbeddedFont {
     let mut node = super::BoldEmbeddedFont::default();
     let mut reader = markup::Reader::new(element, &super::BOLD_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -496,7 +494,7 @@ pub fn bold_embedded_font(element: &xml::element::Element) -> super::BoldEmbedde
 
 /// Read `p:boldItalic` into a `BoldItalicEmbeddedFont`.
 #[must_use]
-pub fn bold_italic_embedded_font(element: &xml::element::Element) -> super::BoldItalicEmbeddedFont {
+pub fn bold_italic_embedded_font(element: &Element) -> super::BoldItalicEmbeddedFont {
     let mut node = super::BoldItalicEmbeddedFont::default();
     let mut reader = markup::Reader::new(element, &super::BOLD_ITALIC_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -510,7 +508,7 @@ pub fn bold_italic_embedded_font(element: &xml::element::Element) -> super::Bold
 
 /// Read `p:boolVal` into a `BooleanVariant`.
 #[must_use]
-pub fn boolean_variant(element: &xml::element::Element) -> super::BooleanVariant {
+pub fn boolean_variant(element: &Element) -> super::BooleanVariant {
     let mut node = super::BooleanVariant::default();
     let mut reader = markup::Reader::new(element, &super::BOOLEAN_VARIANT_SHAPE);
     for (index, field) in &mut reader {
@@ -524,7 +522,7 @@ pub fn boolean_variant(element: &xml::element::Element) -> super::BooleanVariant
 
 /// Read `p:browse` into a `BrowseSlideShowMode`.
 #[must_use]
-pub fn browse_slide_show_mode(element: &xml::element::Element) -> super::BrowseSlideShowMode {
+pub fn browse_slide_show_mode(element: &Element) -> super::BrowseSlideShowMode {
     let mut node = super::BrowseSlideShowMode::default();
     let mut reader = markup::Reader::new(element, &super::BROWSE_SLIDE_SHOW_MODE_SHAPE);
     for (index, field) in &mut reader {
@@ -538,7 +536,7 @@ pub fn browse_slide_show_mode(element: &xml::element::Element) -> super::BrowseS
 
 /// Read `p:bldAsOne` into a `BuildAsOne`.
 #[must_use]
-pub fn build_as_one(element: &xml::element::Element) -> super::BuildAsOne {
+pub fn build_as_one(element: &Element) -> super::BuildAsOne {
     let reader = markup::Reader::new(element, &super::BUILD_AS_ONE_SHAPE);
     super::BuildAsOne {
         unknown: reader.finish(),
@@ -547,7 +545,7 @@ pub fn build_as_one(element: &xml::element::Element) -> super::BuildAsOne {
 
 /// Read `p:bldDgm` into a `BuildDiagram`.
 #[must_use]
-pub fn build_diagram(element: &xml::element::Element) -> super::BuildDiagram {
+pub fn build_diagram(element: &Element) -> super::BuildDiagram {
     let mut node = super::BuildDiagram::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_DIAGRAM_SHAPE);
     for (index, field) in &mut reader {
@@ -565,7 +563,7 @@ pub fn build_diagram(element: &xml::element::Element) -> super::BuildDiagram {
 
 /// Read `p:bldOleChart` into a `BuildEmbeddedChart`.
 #[must_use]
-pub fn build_embedded_chart(element: &xml::element::Element) -> super::BuildEmbeddedChart {
+pub fn build_embedded_chart(element: &Element) -> super::BuildEmbeddedChart {
     let mut node = super::BuildEmbeddedChart::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_EMBEDDED_CHART_SHAPE);
     for (index, field) in &mut reader {
@@ -584,7 +582,7 @@ pub fn build_embedded_chart(element: &xml::element::Element) -> super::BuildEmbe
 
 /// Read `p:bldGraphic` into a `BuildGraphics`.
 #[must_use]
-pub fn build_graphics(element: &xml::element::Element) -> super::BuildGraphics {
+pub fn build_graphics(element: &Element) -> super::BuildGraphics {
     let mut node = super::BuildGraphics::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_GRAPHICS_SHAPE);
     for (index, field) in &mut reader {
@@ -602,13 +600,13 @@ pub fn build_graphics(element: &xml::element::Element) -> super::BuildGraphics {
 
 /// Read one item of `BuildGraphicsContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn build_graphics_content(element: &xml::element::Element) -> super::BuildGraphicsContent {
+pub fn build_graphics_content(element: &Element) -> super::BuildGraphicsContent {
     markup::read(element)
 }
 
 /// Read `p:bldLst` into a `BuildList`.
 #[must_use]
-pub fn build_list(element: &xml::element::Element) -> super::BuildList {
+pub fn build_list(element: &Element) -> super::BuildList {
     let mut node = super::BuildList::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -622,13 +620,13 @@ pub fn build_list(element: &xml::element::Element) -> super::BuildList {
 
 /// Read one item of `BuildListContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn build_list_content(element: &xml::element::Element) -> super::BuildListContent {
+pub fn build_list_content(element: &Element) -> super::BuildListContent {
     markup::read(element)
 }
 
 /// Read `p:bldP` into a `BuildParagraph`.
 #[must_use]
-pub fn build_paragraph(element: &xml::element::Element) -> super::BuildParagraph {
+pub fn build_paragraph(element: &Element) -> super::BuildParagraph {
     let mut node = super::BuildParagraph::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
@@ -652,7 +650,7 @@ pub fn build_paragraph(element: &xml::element::Element) -> super::BuildParagraph
 
 /// Read `p:bldSub` into a `BuildSubElements`.
 #[must_use]
-pub fn build_sub_elements(element: &xml::element::Element) -> super::BuildSubElements {
+pub fn build_sub_elements(element: &Element) -> super::BuildSubElements {
     let mut node = super::BuildSubElements::default();
     let mut reader = markup::Reader::new(element, &super::BUILD_SUB_ELEMENTS_SHAPE);
     for (index, field) in &mut reader {
@@ -666,7 +664,7 @@ pub fn build_sub_elements(element: &xml::element::Element) -> super::BuildSubEle
 
 /// Read `p:by` into a `By`.
 #[must_use]
-pub fn by(element: &xml::element::Element) -> super::By {
+pub fn by(element: &Element) -> super::By {
     let mut node = super::By::default();
     let mut reader = markup::Reader::new(element, &super::BY_SHAPE);
     for (index, field) in &mut reader {
@@ -680,7 +678,7 @@ pub fn by(element: &xml::element::Element) -> super::By {
 
 /// Read `p:by` into a `ByTLPoint`.
 #[must_use]
-pub fn by_tl_point(element: &xml::element::Element) -> super::ByTLPoint {
+pub fn by_tl_point(element: &Element) -> super::ByTLPoint {
     let mut node = super::ByTLPoint::default();
     let mut reader = markup::Reader::new(element, &super::BY_TL_POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -696,7 +694,7 @@ pub fn by_tl_point(element: &xml::element::Element) -> super::ByTLPoint {
 
 /// Read `p:charRg` into a `CharacterRange`.
 #[must_use]
-pub fn character_range(element: &xml::element::Element) -> super::CharacterRange {
+pub fn character_range(element: &Element) -> super::CharacterRange {
     let mut node = super::CharacterRange::default();
     let mut reader = markup::Reader::new(element, &super::CHARACTER_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -712,7 +710,7 @@ pub fn character_range(element: &xml::element::Element) -> super::CharacterRange
 
 /// Read `p:checker` into a `CheckerSlideTransition`.
 #[must_use]
-pub fn checker_slide_transition(element: &xml::element::Element) -> super::CheckerSlideTransition {
+pub fn checker_slide_transition(element: &Element) -> super::CheckerSlideTransition {
     let mut node = super::CheckerSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::CHECKER_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -726,7 +724,7 @@ pub fn checker_slide_transition(element: &xml::element::Element) -> super::Check
 
 /// Read `p:childTnLst` into a `ChildrenTimeNodeList`.
 #[must_use]
-pub fn children_time_node_list(element: &xml::element::Element) -> super::ChildrenTimeNodeList {
+pub fn children_time_node_list(element: &Element) -> super::ChildrenTimeNodeList {
     let mut node = super::ChildrenTimeNodeList::default();
     let mut reader = markup::Reader::new(element, &super::CHILDREN_TIME_NODE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -740,7 +738,7 @@ pub fn children_time_node_list(element: &xml::element::Element) -> super::Childr
 
 /// Read `p:circle` into a `CircleSlideTransition`.
 #[must_use]
-pub fn circle_slide_transition(element: &xml::element::Element) -> super::CircleSlideTransition {
+pub fn circle_slide_transition(element: &Element) -> super::CircleSlideTransition {
     let reader = markup::Reader::new(element, &super::CIRCLE_SLIDE_TRANSITION_SHAPE);
     super::CircleSlideTransition {
         unknown: reader.finish(),
@@ -749,7 +747,7 @@ pub fn circle_slide_transition(element: &xml::element::Element) -> super::Circle
 
 /// Read `p:clrMru` into a `ColorMRU`.
 #[must_use]
-pub fn color_mru(element: &xml::element::Element) -> super::ColorMRU {
+pub fn color_mru(element: &Element) -> super::ColorMRU {
     let mut node = super::ColorMRU::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_MRU_SHAPE);
     for (index, field) in &mut reader {
@@ -763,7 +761,7 @@ pub fn color_mru(element: &xml::element::Element) -> super::ColorMRU {
 
 /// Read `p:clrMap` into a `ColorSchemeMap`.
 #[must_use]
-pub fn color_scheme_map(element: &xml::element::Element) -> super::ColorSchemeMap {
+pub fn color_scheme_map(element: &Element) -> super::ColorSchemeMap {
     let mut node = super::ColorSchemeMap::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_SCHEME_MAP_SHAPE);
     for (index, field) in &mut reader {
@@ -790,7 +788,7 @@ pub fn color_scheme_map(element: &xml::element::Element) -> super::ColorSchemeMa
 
 /// Read `p:clrMapOvr` into a `ColorSchemeMapOverride`.
 #[must_use]
-pub fn color_scheme_map_override(element: &xml::element::Element) -> super::ColorSchemeMapOverride {
+pub fn color_scheme_map_override(element: &Element) -> super::ColorSchemeMapOverride {
     let mut node = super::ColorSchemeMapOverride::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_SCHEME_MAP_OVERRIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -804,7 +802,7 @@ pub fn color_scheme_map_override(element: &xml::element::Element) -> super::Colo
 
 /// Read `p:clrVal` into a `ColorValue`.
 #[must_use]
-pub fn color_value(element: &xml::element::Element) -> super::ColorValue {
+pub fn color_value(element: &Element) -> super::ColorValue {
     let mut node = super::ColorValue::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -818,7 +816,7 @@ pub fn color_value(element: &xml::element::Element) -> super::ColorValue {
 
 /// Read `p:comb` into a `CombSlideTransition`.
 #[must_use]
-pub fn comb_slide_transition(element: &xml::element::Element) -> super::CombSlideTransition {
+pub fn comb_slide_transition(element: &Element) -> super::CombSlideTransition {
     let mut node = super::CombSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::COMB_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -832,7 +830,7 @@ pub fn comb_slide_transition(element: &xml::element::Element) -> super::CombSlid
 
 /// Read `p:cmd` into a `Command`.
 #[must_use]
-pub fn command(element: &xml::element::Element) -> super::Command {
+pub fn command(element: &Element) -> super::Command {
     let mut node = super::Command::default();
     let mut reader = markup::Reader::new(element, &super::COMMAND_SHAPE);
     for (index, field) in &mut reader {
@@ -849,7 +847,7 @@ pub fn command(element: &xml::element::Element) -> super::Command {
 
 /// Read `p:cm` into a `Comment`.
 #[must_use]
-pub fn comment(element: &xml::element::Element) -> super::Comment {
+pub fn comment(element: &Element) -> super::Comment {
     let mut node = super::Comment::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -869,7 +867,7 @@ pub fn comment(element: &xml::element::Element) -> super::Comment {
 
 /// Read `p:cmAuthor` into a `CommentAuthor`.
 #[must_use]
-pub fn comment_author(element: &xml::element::Element) -> super::CommentAuthor {
+pub fn comment_author(element: &Element) -> super::CommentAuthor {
     let mut node = super::CommentAuthor::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -889,7 +887,7 @@ pub fn comment_author(element: &xml::element::Element) -> super::CommentAuthor {
 
 /// Read `p:cmLst` into a `CommentList`.
 #[must_use]
-pub fn comment_list(element: &xml::element::Element) -> super::CommentList {
+pub fn comment_list(element: &Element) -> super::CommentList {
     let mut node = super::CommentList::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -903,7 +901,7 @@ pub fn comment_list(element: &xml::element::Element) -> super::CommentList {
 
 /// Read `p:pos` into a `CommentPosition`.
 #[must_use]
-pub fn comment_position(element: &xml::element::Element) -> super::CommentPosition {
+pub fn comment_position(element: &Element) -> super::CommentPosition {
     let mut node = super::CommentPosition::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_POSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -919,7 +917,7 @@ pub fn comment_position(element: &xml::element::Element) -> super::CommentPositi
 
 /// Read `p:text` into a `CommentsTextContent`.
 #[must_use]
-pub fn comments_text_content(element: &xml::element::Element) -> super::CommentsTextContent {
+pub fn comments_text_content(element: &Element) -> super::CommentsTextContent {
     let mut node = super::CommentsTextContent::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_TEXT_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -933,7 +931,7 @@ pub fn comments_text_content(element: &xml::element::Element) -> super::Comments
 
 /// Read `p:cBhvr` into a `CommonBehavior`.
 #[must_use]
-pub fn common_behavior(element: &xml::element::Element) -> super::CommonBehavior {
+pub fn common_behavior(element: &Element) -> super::CommonBehavior {
     let mut node = super::CommonBehavior::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
@@ -958,9 +956,7 @@ pub fn common_behavior(element: &xml::element::Element) -> super::CommonBehavior
 
 /// Read `p:cMediaNode` into a `CommonMediaNodeProperties`.
 #[must_use]
-pub fn common_media_node_properties(
-    element: &xml::element::Element,
-) -> super::CommonMediaNodeProperties {
+pub fn common_media_node_properties(element: &Element) -> super::CommonMediaNodeProperties {
     let mut node = super::CommonMediaNodeProperties::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_MEDIA_NODE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -980,7 +976,7 @@ pub fn common_media_node_properties(
 
 /// Read `p:cSld` into a `CommonSlideData`.
 #[must_use]
-pub fn common_slide_data(element: &xml::element::Element) -> super::CommonSlideData {
+pub fn common_slide_data(element: &Element) -> super::CommonSlideData {
     let mut node = super::CommonSlideData::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_SLIDE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1000,9 +996,7 @@ pub fn common_slide_data(element: &xml::element::Element) -> super::CommonSlideD
 
 /// Read `p:cSldViewPr` into a `CommonSlideViewProperties`.
 #[must_use]
-pub fn common_slide_view_properties(
-    element: &xml::element::Element,
-) -> super::CommonSlideViewProperties {
+pub fn common_slide_view_properties(element: &Element) -> super::CommonSlideViewProperties {
     let mut node = super::CommonSlideViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_SLIDE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1021,9 +1015,7 @@ pub fn common_slide_view_properties(
 
 /// Read `p:cTn` into a `CommonTimeNodeProperties`.
 #[must_use]
-pub fn common_time_node_properties(
-    element: &xml::element::Element,
-) -> super::CommonTimeNodeProperties {
+pub fn common_time_node_properties(element: &Element) -> super::CommonTimeNodeProperties {
     let mut node = super::CommonTimeNodeProperties::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_TIME_NODE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1067,7 +1059,7 @@ pub fn common_time_node_properties(
 
 /// Read `p:cViewPr` into a `CommonViewProperties`.
 #[must_use]
-pub fn common_view_properties(element: &xml::element::Element) -> super::CommonViewProperties {
+pub fn common_view_properties(element: &Element) -> super::CommonViewProperties {
     let mut node = super::CommonViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::COMMON_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1084,7 +1076,7 @@ pub fn common_view_properties(element: &xml::element::Element) -> super::CommonV
 
 /// Read `p:cond` into a `Condition`.
 #[must_use]
-pub fn condition(element: &xml::element::Element) -> super::Condition {
+pub fn condition(element: &Element) -> super::Condition {
     let mut node = super::Condition::default();
     let mut reader = markup::Reader::new(element, &super::CONDITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1101,7 +1093,7 @@ pub fn condition(element: &xml::element::Element) -> super::Condition {
 
 /// Read `p:cxnSp` into a `ConnectionShape`.
 #[must_use]
-pub fn connection_shape(element: &xml::element::Element) -> super::ConnectionShape {
+pub fn connection_shape(element: &Element) -> super::ConnectionShape {
     let mut node = super::ConnectionShape::default();
     let mut reader = markup::Reader::new(element, &super::CONNECTION_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1119,7 +1111,7 @@ pub fn connection_shape(element: &xml::element::Element) -> super::ConnectionSha
 
 /// Read `p:contentPart` into a `ContentPart`.
 #[must_use]
-pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
+pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = markup::Reader::new(element, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -1133,7 +1125,7 @@ pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
 
 /// Read `p:cover` into a `CoverSlideTransition`.
 #[must_use]
-pub fn cover_slide_transition(element: &xml::element::Element) -> super::CoverSlideTransition {
+pub fn cover_slide_transition(element: &Element) -> super::CoverSlideTransition {
     let mut node = super::CoverSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::COVER_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1147,7 +1139,7 @@ pub fn cover_slide_transition(element: &xml::element::Element) -> super::CoverSl
 
 /// Read `p:custShow` into a `CustomShow`.
 #[must_use]
-pub fn custom_show(element: &xml::element::Element) -> super::CustomShow {
+pub fn custom_show(element: &Element) -> super::CustomShow {
     let mut node = super::CustomShow::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_SHOW_SHAPE);
     for (index, field) in &mut reader {
@@ -1161,7 +1153,7 @@ pub fn custom_show(element: &xml::element::Element) -> super::CustomShow {
 
 /// Read `p:custShow` into a `CustomShowCustomShow`.
 #[must_use]
-pub fn custom_show_custom_show(element: &xml::element::Element) -> super::CustomShowCustomShow {
+pub fn custom_show_custom_show(element: &Element) -> super::CustomShowCustomShow {
     let mut node = super::CustomShowCustomShow::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_SHOW_CUSTOM_SHOW_SHAPE);
     for (index, field) in &mut reader {
@@ -1179,7 +1171,7 @@ pub fn custom_show_custom_show(element: &xml::element::Element) -> super::Custom
 
 /// Read `p:custData` into a `CustomerData`.
 #[must_use]
-pub fn customer_data(element: &xml::element::Element) -> super::CustomerData {
+pub fn customer_data(element: &Element) -> super::CustomerData {
     let mut node = super::CustomerData::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOMER_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1193,7 +1185,7 @@ pub fn customer_data(element: &xml::element::Element) -> super::CustomerData {
 
 /// Read `p:custDataLst` into a `CustomerDataList`.
 #[must_use]
-pub fn customer_data_list(element: &xml::element::Element) -> super::CustomerDataList {
+pub fn customer_data_list(element: &Element) -> super::CustomerDataList {
     let mut node = super::CustomerDataList::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOMER_DATA_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1209,7 +1201,7 @@ pub fn customer_data_list(element: &xml::element::Element) -> super::CustomerDat
 
 /// Read `p:tags` into a `CustomerDataTags`.
 #[must_use]
-pub fn customer_data_tags(element: &xml::element::Element) -> super::CustomerDataTags {
+pub fn customer_data_tags(element: &Element) -> super::CustomerDataTags {
     let mut node = super::CustomerDataTags::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOMER_DATA_TAGS_SHAPE);
     for (index, field) in &mut reader {
@@ -1223,7 +1215,7 @@ pub fn customer_data_tags(element: &xml::element::Element) -> super::CustomerDat
 
 /// Read `p:cut` into a `CutSlideTransition`.
 #[must_use]
-pub fn cut_slide_transition(element: &xml::element::Element) -> super::CutSlideTransition {
+pub fn cut_slide_transition(element: &Element) -> super::CutSlideTransition {
     let mut node = super::CutSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::CUT_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1237,7 +1229,7 @@ pub fn cut_slide_transition(element: &xml::element::Element) -> super::CutSlideT
 
 /// Read `p:diamond` into a `DiamondSlideTransition`.
 #[must_use]
-pub fn diamond_slide_transition(element: &xml::element::Element) -> super::DiamondSlideTransition {
+pub fn diamond_slide_transition(element: &Element) -> super::DiamondSlideTransition {
     let reader = markup::Reader::new(element, &super::DIAMOND_SLIDE_TRANSITION_SHAPE);
     super::DiamondSlideTransition {
         unknown: reader.finish(),
@@ -1246,9 +1238,7 @@ pub fn diamond_slide_transition(element: &xml::element::Element) -> super::Diamo
 
 /// Read `p:dissolve` into a `DissolveSlideTransition`.
 #[must_use]
-pub fn dissolve_slide_transition(
-    element: &xml::element::Element,
-) -> super::DissolveSlideTransition {
+pub fn dissolve_slide_transition(element: &Element) -> super::DissolveSlideTransition {
     let reader = markup::Reader::new(element, &super::DISSOLVE_SLIDE_TRANSITION_SHAPE);
     super::DissolveSlideTransition {
         unknown: reader.finish(),
@@ -1257,7 +1247,7 @@ pub fn dissolve_slide_transition(
 
 /// Read `p:oleChartEl` into a `EmbeddedChartElement`.
 #[must_use]
-pub fn embedded_chart_element(element: &xml::element::Element) -> super::EmbeddedChartElement {
+pub fn embedded_chart_element(element: &Element) -> super::EmbeddedChartElement {
     let mut node = super::EmbeddedChartElement::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_CHART_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1273,7 +1263,7 @@ pub fn embedded_chart_element(element: &xml::element::Element) -> super::Embedde
 
 /// Read `p:control` into a `EmbeddedControl`.
 #[must_use]
-pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedControl {
+pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -1295,7 +1285,7 @@ pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedContr
 
 /// Read `p:embeddedFont` into a `EmbeddedFont`.
 #[must_use]
-pub fn embedded_font(element: &xml::element::Element) -> super::EmbeddedFont {
+pub fn embedded_font(element: &Element) -> super::EmbeddedFont {
     let mut node = super::EmbeddedFont::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -1314,7 +1304,7 @@ pub fn embedded_font(element: &xml::element::Element) -> super::EmbeddedFont {
 
 /// Read `p:embeddedFontLst` into a `EmbeddedFontList`.
 #[must_use]
-pub fn embedded_font_list(element: &xml::element::Element) -> super::EmbeddedFontList {
+pub fn embedded_font_list(element: &Element) -> super::EmbeddedFontList {
     let mut node = super::EmbeddedFontList::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_FONT_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1328,7 +1318,7 @@ pub fn embedded_font_list(element: &xml::element::Element) -> super::EmbeddedFon
 
 /// Read `p:font` into a `EmbeddedFontName`.
 #[must_use]
-pub fn embedded_font_name(element: &xml::element::Element) -> super::EmbeddedFontName {
+pub fn embedded_font_name(element: &Element) -> super::EmbeddedFontName {
     let mut node = super::EmbeddedFontName::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_FONT_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -1346,15 +1336,13 @@ pub fn embedded_font_name(element: &xml::element::Element) -> super::EmbeddedFon
 
 /// Read one item of `EmbeddedObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn embedded_object(element: &xml::element::Element) -> super::EmbeddedObjectContent {
+pub fn embedded_object(element: &Element) -> super::EmbeddedObjectContent {
     markup::read(element)
 }
 
 /// Read `p:embed` into a `EmbeddedObjectOrControl`.
 #[must_use]
-pub fn embedded_object_or_control(
-    element: &xml::element::Element,
-) -> super::EmbeddedObjectOrControl {
+pub fn embedded_object_or_control(element: &Element) -> super::EmbeddedObjectOrControl {
     let mut node = super::EmbeddedObjectOrControl::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_OBJECT_OR_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -1370,9 +1358,7 @@ pub fn embedded_object_or_control(
 
 /// Read `p:oleObj` into a `EmbeddedObjectsAndControls`.
 #[must_use]
-pub fn embedded_objects_and_controls(
-    element: &xml::element::Element,
-) -> super::EmbeddedObjectsAndControls {
+pub fn embedded_objects_and_controls(element: &Element) -> super::EmbeddedObjectsAndControls {
     let mut node = super::EmbeddedObjectsAndControls::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
@@ -1395,7 +1381,7 @@ pub fn embedded_objects_and_controls(
 
 /// Read `p:endCondLst` into a `EndConditionsList`.
 #[must_use]
-pub fn end_conditions_list(element: &xml::element::Element) -> super::EndConditionsList {
+pub fn end_conditions_list(element: &Element) -> super::EndConditionsList {
     let mut node = super::EndConditionsList::default();
     let mut reader = markup::Reader::new(element, &super::END_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1409,7 +1395,7 @@ pub fn end_conditions_list(element: &xml::element::Element) -> super::EndConditi
 
 /// Read `p:endSync` into a `EndSync`.
 #[must_use]
-pub fn end_sync(element: &xml::element::Element) -> super::EndSync {
+pub fn end_sync(element: &Element) -> super::EndSync {
     let mut node = super::EndSync::default();
     let mut reader = markup::Reader::new(element, &super::END_SYNC_SHAPE);
     for (index, field) in &mut reader {
@@ -1426,7 +1412,7 @@ pub fn end_sync(element: &xml::element::Element) -> super::EndSync {
 
 /// Read `p:excl` into a `Exclusive`.
 #[must_use]
-pub fn exclusive(element: &xml::element::Element) -> super::Exclusive {
+pub fn exclusive(element: &Element) -> super::Exclusive {
     let mut node = super::Exclusive::default();
     let mut reader = markup::Reader::new(element, &super::EXCLUSIVE_SHAPE);
     for (index, field) in &mut reader {
@@ -1440,7 +1426,7 @@ pub fn exclusive(element: &xml::element::Element) -> super::Exclusive {
 
 /// Read `p:ext` into a `Extension`.
 #[must_use]
-pub fn extension(element: &xml::element::Element) -> super::Extension {
+pub fn extension(element: &Element) -> super::Extension {
     let mut node = super::Extension::default();
     let mut reader = markup::Reader::new(element, &super::EXTENSION_SHAPE);
     for (index, field) in &mut reader {
@@ -1456,7 +1442,7 @@ pub fn extension(element: &xml::element::Element) -> super::Extension {
 
 /// Read `p:extLst` into a `ExtensionList`.
 #[must_use]
-pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
+pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1471,7 +1457,7 @@ pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
 /// Read `p:extLst` into a `ExtensionListWithModificationFlag`.
 #[must_use]
 pub fn extension_list_with_modification_flag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExtensionListWithModificationFlag {
     let mut node = super::ExtensionListWithModificationFlag::default();
     let mut reader =
@@ -1489,7 +1475,7 @@ pub fn extension_list_with_modification_flag(
 
 /// Read `p:fade` into a `FadeSlideTransition`.
 #[must_use]
-pub fn fade_slide_transition(element: &xml::element::Element) -> super::FadeSlideTransition {
+pub fn fade_slide_transition(element: &Element) -> super::FadeSlideTransition {
     let mut node = super::FadeSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::FADE_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1503,7 +1489,7 @@ pub fn fade_slide_transition(element: &xml::element::Element) -> super::FadeSlid
 
 /// Read `p:fltVal` into a `FloatValue`.
 #[must_use]
-pub fn float_value(element: &xml::element::Element) -> super::FloatValue {
+pub fn float_value(element: &Element) -> super::FloatValue {
     let mut node = super::FloatValue::default();
     let mut reader = markup::Reader::new(element, &super::FLOAT_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -1517,7 +1503,7 @@ pub fn float_value(element: &xml::element::Element) -> super::FloatValue {
 
 /// Read `p:from` into a `FromColor`.
 #[must_use]
-pub fn from_color(element: &xml::element::Element) -> super::FromColor {
+pub fn from_color(element: &Element) -> super::FromColor {
     let mut node = super::FromColor::default();
     let mut reader = markup::Reader::new(element, &super::FROM_COLOR_SHAPE);
     for (index, field) in &mut reader {
@@ -1531,7 +1517,7 @@ pub fn from_color(element: &xml::element::Element) -> super::FromColor {
 
 /// Read `p:from` into a `FromTLPoint`.
 #[must_use]
-pub fn from_tl_point(element: &xml::element::Element) -> super::FromTLPoint {
+pub fn from_tl_point(element: &Element) -> super::FromTLPoint {
     let mut node = super::FromTLPoint::default();
     let mut reader = markup::Reader::new(element, &super::FROM_TL_POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -1547,7 +1533,7 @@ pub fn from_tl_point(element: &xml::element::Element) -> super::FromTLPoint {
 
 /// Read `p:graphicEl` into a `GraphicElement`.
 #[must_use]
-pub fn graphic_element(element: &xml::element::Element) -> super::GraphicElement {
+pub fn graphic_element(element: &Element) -> super::GraphicElement {
     let mut node = super::GraphicElement::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1561,7 +1547,7 @@ pub fn graphic_element(element: &xml::element::Element) -> super::GraphicElement
 
 /// Read `p:graphicFrame` into a `GraphicFrame`.
 #[must_use]
-pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
+pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -1580,7 +1566,7 @@ pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
 
 /// Read `p:gridSpacing` into a `GridSpacing`.
 #[must_use]
-pub fn grid_spacing(element: &xml::element::Element) -> super::GridSpacing {
+pub fn grid_spacing(element: &Element) -> super::GridSpacing {
     let mut node = super::GridSpacing::default();
     let mut reader = markup::Reader::new(element, &super::GRID_SPACING_SHAPE);
     for (index, field) in &mut reader {
@@ -1596,7 +1582,7 @@ pub fn grid_spacing(element: &xml::element::Element) -> super::GridSpacing {
 
 /// Read `p:grpSp` into a `GroupShape`.
 #[must_use]
-pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
+pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1614,13 +1600,13 @@ pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
 
 /// Read one item of `GroupShapeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn group_shape_content(element: &xml::element::Element) -> super::GroupShapeContent {
+pub fn group_shape_content(element: &Element) -> super::GroupShapeContent {
     markup::read(element)
 }
 
 /// Read `p:grpSpPr` into a `GroupShapeProperties`.
 #[must_use]
-pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupShapeProperties {
+pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1640,7 +1626,7 @@ pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupSh
 
 /// Read `p:handoutMaster` into a `HandoutMaster`.
 #[must_use]
-pub fn handout_master(element: &xml::element::Element) -> super::HandoutMaster {
+pub fn handout_master(element: &Element) -> super::HandoutMaster {
     let mut node = super::HandoutMaster::default();
     let mut reader = markup::Reader::new(element, &super::HANDOUT_MASTER_SHAPE);
     for (index, field) in &mut reader {
@@ -1658,7 +1644,7 @@ pub fn handout_master(element: &xml::element::Element) -> super::HandoutMaster {
 
 /// Read `p:handoutMasterId` into a `HandoutMasterID`.
 #[must_use]
-pub fn handout_master_id(element: &xml::element::Element) -> super::HandoutMasterID {
+pub fn handout_master_id(element: &Element) -> super::HandoutMasterID {
     let mut node = super::HandoutMasterID::default();
     let mut reader = markup::Reader::new(element, &super::HANDOUT_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -1675,7 +1661,7 @@ pub fn handout_master_id(element: &xml::element::Element) -> super::HandoutMaste
 /// Read `p:hf` into a `HeaderFooterInformationForASlideMaster`.
 #[must_use]
 pub fn header_footer_information_for_a_slide_master(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::HeaderFooterInformationForASlideMaster {
     let mut node = super::HeaderFooterInformationForASlideMaster::default();
     let mut reader = markup::Reader::new(
@@ -1698,7 +1684,7 @@ pub fn header_footer_information_for_a_slide_master(
 
 /// Read `p:hsl` into a `HSL`.
 #[must_use]
-pub fn hsl(element: &xml::element::Element) -> super::HSL {
+pub fn hsl(element: &Element) -> super::HSL {
     let mut node = super::HSL::default();
     let mut reader = markup::Reader::new(element, &super::HSL_SHAPE);
     for (index, field) in &mut reader {
@@ -1715,9 +1701,7 @@ pub fn hsl(element: &xml::element::Element) -> super::HSL {
 
 /// Read `p:htmlPubPr` into a `HTMLPublishingProperties`.
 #[must_use]
-pub fn html_publishing_properties(
-    element: &xml::element::Element,
-) -> super::HTMLPublishingProperties {
+pub fn html_publishing_properties(element: &Element) -> super::HTMLPublishingProperties {
     let mut node = super::HTMLPublishingProperties::default();
     let mut reader = markup::Reader::new(element, &super::HTML_PUBLISHING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1737,7 +1721,7 @@ pub fn html_publishing_properties(
 
 /// Read `p:inkTgt` into a `InkTarget`.
 #[must_use]
-pub fn ink_target(element: &xml::element::Element) -> super::InkTarget {
+pub fn ink_target(element: &Element) -> super::InkTarget {
     let mut node = super::InkTarget::default();
     let mut reader = markup::Reader::new(element, &super::INK_TARGET_SHAPE);
     for (index, field) in &mut reader {
@@ -1751,7 +1735,7 @@ pub fn ink_target(element: &xml::element::Element) -> super::InkTarget {
 
 /// Read `p:intVal` into a `Integer`.
 #[must_use]
-pub fn integer(element: &xml::element::Element) -> super::Integer {
+pub fn integer(element: &Element) -> super::Integer {
     let mut node = super::Integer::default();
     let mut reader = markup::Reader::new(element, &super::INTEGER_SHAPE);
     for (index, field) in &mut reader {
@@ -1765,7 +1749,7 @@ pub fn integer(element: &xml::element::Element) -> super::Integer {
 
 /// Read `p:italic` into a `ItalicEmbeddedFont`.
 #[must_use]
-pub fn italic_embedded_font(element: &xml::element::Element) -> super::ItalicEmbeddedFont {
+pub fn italic_embedded_font(element: &Element) -> super::ItalicEmbeddedFont {
     let mut node = super::ItalicEmbeddedFont::default();
     let mut reader = markup::Reader::new(element, &super::ITALIC_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -1779,7 +1763,7 @@ pub fn italic_embedded_font(element: &xml::element::Element) -> super::ItalicEmb
 
 /// Read `p:iterate` into a `Iterate`.
 #[must_use]
-pub fn iterate(element: &xml::element::Element) -> super::Iterate {
+pub fn iterate(element: &Element) -> super::Iterate {
     let mut node = super::Iterate::default();
     let mut reader = markup::Reader::new(element, &super::ITERATE_SHAPE);
     for (index, field) in &mut reader {
@@ -1796,13 +1780,13 @@ pub fn iterate(element: &xml::element::Element) -> super::Iterate {
 
 /// Read one item of `IterateContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn iterate_content(element: &xml::element::Element) -> super::IterateContent {
+pub fn iterate_content(element: &Element) -> super::IterateContent {
     markup::read(element)
 }
 
 /// Read `p:kinsoku` into a `KinsokuSettings`.
 #[must_use]
-pub fn kinsoku_settings(element: &xml::element::Element) -> super::KinsokuSettings {
+pub fn kinsoku_settings(element: &Element) -> super::KinsokuSettings {
     let mut node = super::KinsokuSettings::default();
     let mut reader = markup::Reader::new(element, &super::KINSOKU_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -1819,7 +1803,7 @@ pub fn kinsoku_settings(element: &xml::element::Element) -> super::KinsokuSettin
 
 /// Read `p:kiosk` into a `KioskSlideShowMode`.
 #[must_use]
-pub fn kiosk_slide_show_mode(element: &xml::element::Element) -> super::KioskSlideShowMode {
+pub fn kiosk_slide_show_mode(element: &Element) -> super::KioskSlideShowMode {
     let mut node = super::KioskSlideShowMode::default();
     let mut reader = markup::Reader::new(element, &super::KIOSK_SLIDE_SHOW_MODE_SHAPE);
     for (index, field) in &mut reader {
@@ -1833,7 +1817,7 @@ pub fn kiosk_slide_show_mode(element: &xml::element::Element) -> super::KioskSli
 
 /// Read `p:link` into a `LinkedObjectOrControl`.
 #[must_use]
-pub fn linked_object_or_control(element: &xml::element::Element) -> super::LinkedObjectOrControl {
+pub fn linked_object_or_control(element: &Element) -> super::LinkedObjectOrControl {
     let mut node = super::LinkedObjectOrControl::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_OBJECT_OR_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -1849,7 +1833,7 @@ pub fn linked_object_or_control(element: &xml::element::Element) -> super::Linke
 
 /// Read `p:cmAuthorLst` into a `ListOfCommentAuthors`.
 #[must_use]
-pub fn list_of_comment_authors(element: &xml::element::Element) -> super::ListOfCommentAuthors {
+pub fn list_of_comment_authors(element: &Element) -> super::ListOfCommentAuthors {
     let mut node = super::ListOfCommentAuthors::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_COMMENT_AUTHORS_SHAPE);
     for (index, field) in &mut reader {
@@ -1863,7 +1847,7 @@ pub fn list_of_comment_authors(element: &xml::element::Element) -> super::ListOf
 
 /// Read `p:controls` into a `ListOfControls`.
 #[must_use]
-pub fn list_of_controls(element: &xml::element::Element) -> super::ListOfControls {
+pub fn list_of_controls(element: &Element) -> super::ListOfControls {
     let mut node = super::ListOfControls::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_CONTROLS_SHAPE);
     for (index, field) in &mut reader {
@@ -1877,7 +1861,7 @@ pub fn list_of_controls(element: &xml::element::Element) -> super::ListOfControl
 
 /// Read `p:custShowLst` into a `ListOfCustomShows`.
 #[must_use]
-pub fn list_of_custom_shows(element: &xml::element::Element) -> super::ListOfCustomShows {
+pub fn list_of_custom_shows(element: &Element) -> super::ListOfCustomShows {
     let mut node = super::ListOfCustomShows::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_CUSTOM_SHOWS_SHAPE);
     for (index, field) in &mut reader {
@@ -1891,7 +1875,7 @@ pub fn list_of_custom_shows(element: &xml::element::Element) -> super::ListOfCus
 
 /// Read `p:guideLst` into a `ListOfGuides`.
 #[must_use]
-pub fn list_of_guides(element: &xml::element::Element) -> super::ListOfGuides {
+pub fn list_of_guides(element: &Element) -> super::ListOfGuides {
     let mut node = super::ListOfGuides::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_GUIDES_SHAPE);
     for (index, field) in &mut reader {
@@ -1905,9 +1889,7 @@ pub fn list_of_guides(element: &xml::element::Element) -> super::ListOfGuides {
 
 /// Read `p:handoutMasterIdLst` into a `ListOfHandoutMasterIDs`.
 #[must_use]
-pub fn list_of_handout_master_i_ds(
-    element: &xml::element::Element,
-) -> super::ListOfHandoutMasterIDs {
+pub fn list_of_handout_master_i_ds(element: &Element) -> super::ListOfHandoutMasterIDs {
     let mut node = super::ListOfHandoutMasterIDs::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_HANDOUT_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
@@ -1921,7 +1903,7 @@ pub fn list_of_handout_master_i_ds(
 
 /// Read `p:notesMasterIdLst` into a `ListOfNotesMasterIDs`.
 #[must_use]
-pub fn list_of_notes_master_i_ds(element: &xml::element::Element) -> super::ListOfNotesMasterIDs {
+pub fn list_of_notes_master_i_ds(element: &Element) -> super::ListOfNotesMasterIDs {
     let mut node = super::ListOfNotesMasterIDs::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_NOTES_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
@@ -1935,9 +1917,7 @@ pub fn list_of_notes_master_i_ds(element: &xml::element::Element) -> super::List
 
 /// Read `p:sldLst` into a `ListOfPresentationSlides`.
 #[must_use]
-pub fn list_of_presentation_slides(
-    element: &xml::element::Element,
-) -> super::ListOfPresentationSlides {
+pub fn list_of_presentation_slides(element: &Element) -> super::ListOfPresentationSlides {
     let mut node = super::ListOfPresentationSlides::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_PRESENTATION_SLIDES_SHAPE);
     for (index, field) in &mut reader {
@@ -1952,7 +1932,7 @@ pub fn list_of_presentation_slides(
 /// Read `p:sldLst` into a `ListOfPresentationSlidesOutlineViewSlideList`.
 #[must_use]
 pub fn list_of_presentation_slides_outline_view_slide_list(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ListOfPresentationSlidesOutlineViewSlideList {
     let mut node = super::ListOfPresentationSlidesOutlineViewSlideList::default();
     let mut reader = markup::Reader::new(
@@ -1970,7 +1950,7 @@ pub fn list_of_presentation_slides_outline_view_slide_list(
 
 /// Read `p:sldIdLst` into a `ListOfSlideIDs`.
 #[must_use]
-pub fn list_of_slide_i_ds(element: &xml::element::Element) -> super::ListOfSlideIDs {
+pub fn list_of_slide_i_ds(element: &Element) -> super::ListOfSlideIDs {
     let mut node = super::ListOfSlideIDs::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_SLIDE_I_DS_SHAPE);
     for (index, field) in &mut reader {
@@ -1984,7 +1964,7 @@ pub fn list_of_slide_i_ds(element: &xml::element::Element) -> super::ListOfSlide
 
 /// Read `p:sldLayoutIdLst` into a `ListOfSlideLayouts`.
 #[must_use]
-pub fn list_of_slide_layouts(element: &xml::element::Element) -> super::ListOfSlideLayouts {
+pub fn list_of_slide_layouts(element: &Element) -> super::ListOfSlideLayouts {
     let mut node = super::ListOfSlideLayouts::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_SLIDE_LAYOUTS_SHAPE);
     for (index, field) in &mut reader {
@@ -1998,7 +1978,7 @@ pub fn list_of_slide_layouts(element: &xml::element::Element) -> super::ListOfSl
 
 /// Read `p:sldMasterIdLst` into a `ListOfSlideMasterIDs`.
 #[must_use]
-pub fn list_of_slide_master_i_ds(element: &xml::element::Element) -> super::ListOfSlideMasterIDs {
+pub fn list_of_slide_master_i_ds(element: &Element) -> super::ListOfSlideMasterIDs {
     let mut node = super::ListOfSlideMasterIDs::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_SLIDE_MASTER_I_DS_SHAPE);
     for (index, field) in &mut reader {
@@ -2012,7 +1992,7 @@ pub fn list_of_slide_master_i_ds(element: &xml::element::Element) -> super::List
 
 /// Read `p:modifyVerifier` into a `ModificationVerifier`.
 #[must_use]
-pub fn modification_verifier(element: &xml::element::Element) -> super::ModificationVerifier {
+pub fn modification_verifier(element: &Element) -> super::ModificationVerifier {
     let mut node = super::ModificationVerifier::default();
     let mut reader = markup::Reader::new(element, &super::MODIFICATION_VERIFIER_SHAPE);
     for (index, field) in &mut reader {
@@ -2042,9 +2022,7 @@ pub fn modification_verifier(element: &xml::element::Element) -> super::Modifica
 
 /// Read `p:newsflash` into a `NewsflashSlideTransition`.
 #[must_use]
-pub fn newsflash_slide_transition(
-    element: &xml::element::Element,
-) -> super::NewsflashSlideTransition {
+pub fn newsflash_slide_transition(element: &Element) -> super::NewsflashSlideTransition {
     let reader = markup::Reader::new(element, &super::NEWSFLASH_SLIDE_TRANSITION_SHAPE);
     super::NewsflashSlideTransition {
         unknown: reader.finish(),
@@ -2053,7 +2031,7 @@ pub fn newsflash_slide_transition(
 
 /// Read `p:nextCondLst` into a `NextConditionsList`.
 #[must_use]
-pub fn next_conditions_list(element: &xml::element::Element) -> super::NextConditionsList {
+pub fn next_conditions_list(element: &Element) -> super::NextConditionsList {
     let mut node = super::NextConditionsList::default();
     let mut reader = markup::Reader::new(element, &super::NEXT_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -2068,7 +2046,7 @@ pub fn next_conditions_list(element: &xml::element::Element) -> super::NextCondi
 /// Read `p:cNvCxnSpPr` into a `NonVisualConnectorShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_connector_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualConnectorShapeDrawingProperties {
     let mut node = super::NonVisualConnectorShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -2090,9 +2068,7 @@ pub fn non_visual_connector_shape_drawing_properties(
 
 /// Read `p:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use]
-pub fn non_visual_drawing_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualDrawingProperties {
+pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2115,7 +2091,7 @@ pub fn non_visual_drawing_properties(
 /// Read `p:cNvSpPr` into a `NonVisualDrawingPropertiesForAShape`.
 #[must_use]
 pub fn non_visual_drawing_properties_for_a_shape(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualDrawingPropertiesForAShape {
     let mut node = super::NonVisualDrawingPropertiesForAShape::default();
     let mut reader = markup::Reader::new(
@@ -2137,7 +2113,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
 /// Read `p:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties`.
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
     let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -2158,7 +2134,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 /// Read `p:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
     let mut node = super::NonVisualGroupShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -2179,7 +2155,7 @@ pub fn non_visual_group_shape_drawing_properties(
 /// Read `p:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
     let mut node = super::NonVisualPictureDrawingProperties::default();
     let mut reader =
@@ -2198,7 +2174,7 @@ pub fn non_visual_picture_drawing_properties(
 
 /// Read `p:nvPr` into a `NonVisualProperties`.
 #[must_use]
-pub fn non_visual_properties(element: &xml::element::Element) -> super::NonVisualProperties {
+pub fn non_visual_properties(element: &Element) -> super::NonVisualProperties {
     let mut node = super::NonVisualProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2218,16 +2194,14 @@ pub fn non_visual_properties(element: &xml::element::Element) -> super::NonVisua
 
 /// Read one item of `NonVisualPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn non_visual_properties_content(
-    element: &xml::element::Element,
-) -> super::NonVisualPropertiesContent {
+pub fn non_visual_properties_content(element: &Element) -> super::NonVisualPropertiesContent {
     markup::read(element)
 }
 
 /// Read `p:nvCxnSpPr` into a `NonVisualPropertiesForAConnectionShape`.
 #[must_use]
 pub fn non_visual_properties_for_a_connection_shape(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPropertiesForAConnectionShape {
     let mut node = super::NonVisualPropertiesForAConnectionShape::default();
     let mut reader = markup::Reader::new(
@@ -2249,7 +2223,7 @@ pub fn non_visual_properties_for_a_connection_shape(
 /// Read `p:nvGraphicFramePr` into a `NonVisualPropertiesForAGraphicFrame`.
 #[must_use]
 pub fn non_visual_properties_for_a_graphic_frame(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPropertiesForAGraphicFrame {
     let mut node = super::NonVisualPropertiesForAGraphicFrame::default();
     let mut reader = markup::Reader::new(
@@ -2271,7 +2245,7 @@ pub fn non_visual_properties_for_a_graphic_frame(
 /// Read `p:nvGrpSpPr` into a `NonVisualPropertiesForAGroupShape`.
 #[must_use]
 pub fn non_visual_properties_for_a_group_shape(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPropertiesForAGroupShape {
     let mut node = super::NonVisualPropertiesForAGroupShape::default();
     let mut reader = markup::Reader::new(
@@ -2293,7 +2267,7 @@ pub fn non_visual_properties_for_a_group_shape(
 /// Read `p:nvPicPr` into a `NonVisualPropertiesForAPicture`.
 #[must_use]
 pub fn non_visual_properties_for_a_picture(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPropertiesForAPicture {
     let mut node = super::NonVisualPropertiesForAPicture::default();
     let mut reader =
@@ -2312,9 +2286,7 @@ pub fn non_visual_properties_for_a_picture(
 
 /// Read `p:nvSpPr` into a `NonVisualPropertiesForAShape`.
 #[must_use]
-pub fn non_visual_properties_for_a_shape(
-    element: &xml::element::Element,
-) -> super::NonVisualPropertiesForAShape {
+pub fn non_visual_properties_for_a_shape(element: &Element) -> super::NonVisualPropertiesForAShape {
     let mut node = super::NonVisualPropertiesForAShape::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -2331,7 +2303,7 @@ pub fn non_visual_properties_for_a_shape(
 
 /// Read `p:normalViewPr` into a `NormalViewProperties`.
 #[must_use]
-pub fn normal_view_properties(element: &xml::element::Element) -> super::NormalViewProperties {
+pub fn normal_view_properties(element: &Element) -> super::NormalViewProperties {
     let mut node = super::NormalViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::NORMAL_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2354,7 +2326,7 @@ pub fn normal_view_properties(element: &xml::element::Element) -> super::NormalV
 /// Read `p:restoredLeft` into a `NormalViewRestoredLeftProperties`.
 #[must_use]
 pub fn normal_view_restored_left_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NormalViewRestoredLeftProperties {
     let mut node = super::NormalViewRestoredLeftProperties::default();
     let mut reader =
@@ -2373,7 +2345,7 @@ pub fn normal_view_restored_left_properties(
 /// Read `p:restoredTop` into a `NormalViewRestoredTopProperties`.
 #[must_use]
 pub fn normal_view_restored_top_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NormalViewRestoredTopProperties {
     let mut node = super::NormalViewRestoredTopProperties::default();
     let mut reader =
@@ -2391,7 +2363,7 @@ pub fn normal_view_restored_top_properties(
 
 /// Read `p:notesMaster` into a `NotesMaster`.
 #[must_use]
-pub fn notes_master(element: &xml::element::Element) -> super::NotesMaster {
+pub fn notes_master(element: &Element) -> super::NotesMaster {
     let mut node = super::NotesMaster::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_MASTER_SHAPE);
     for (index, field) in &mut reader {
@@ -2410,7 +2382,7 @@ pub fn notes_master(element: &xml::element::Element) -> super::NotesMaster {
 
 /// Read `p:notesMasterId` into a `NotesMasterID`.
 #[must_use]
-pub fn notes_master_id(element: &xml::element::Element) -> super::NotesMasterID {
+pub fn notes_master_id(element: &Element) -> super::NotesMasterID {
     let mut node = super::NotesMasterID::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -2426,7 +2398,7 @@ pub fn notes_master_id(element: &xml::element::Element) -> super::NotesMasterID 
 
 /// Read `p:notes` into a `NotesSlide`.
 #[must_use]
-pub fn notes_slide(element: &xml::element::Element) -> super::NotesSlide {
+pub fn notes_slide(element: &Element) -> super::NotesSlide {
     let mut node = super::NotesSlide::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_SLIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -2445,7 +2417,7 @@ pub fn notes_slide(element: &xml::element::Element) -> super::NotesSlide {
 
 /// Read `p:notesSz` into a `NotesSlideSize`.
 #[must_use]
-pub fn notes_slide_size(element: &xml::element::Element) -> super::NotesSlideSize {
+pub fn notes_slide_size(element: &Element) -> super::NotesSlideSize {
     let mut node = super::NotesSlideSize::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_SLIDE_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -2461,7 +2433,7 @@ pub fn notes_slide_size(element: &xml::element::Element) -> super::NotesSlideSiz
 
 /// Read `p:notesStyle` into a `NotesTextStyle`.
 #[must_use]
-pub fn notes_text_style(element: &xml::element::Element) -> super::NotesTextStyle {
+pub fn notes_text_style(element: &Element) -> super::NotesTextStyle {
     let mut node = super::NotesTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -2486,9 +2458,7 @@ pub fn notes_text_style(element: &xml::element::Element) -> super::NotesTextStyl
 
 /// Read `p:notesTextViewPr` into a `NotesTextViewProperties`.
 #[must_use]
-pub fn notes_text_view_properties(
-    element: &xml::element::Element,
-) -> super::NotesTextViewProperties {
+pub fn notes_text_view_properties(element: &Element) -> super::NotesTextViewProperties {
     let mut node = super::NotesTextViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_TEXT_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2504,7 +2474,7 @@ pub fn notes_text_view_properties(
 
 /// Read `p:notesViewPr` into a `NotesViewProperties`.
 #[must_use]
-pub fn notes_view_properties(element: &xml::element::Element) -> super::NotesViewProperties {
+pub fn notes_view_properties(element: &Element) -> super::NotesViewProperties {
     let mut node = super::NotesViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2520,7 +2490,7 @@ pub fn notes_view_properties(element: &xml::element::Element) -> super::NotesVie
 
 /// Read `p:outlineViewPr` into a `OutlineViewProperties`.
 #[must_use]
-pub fn outline_view_properties(element: &xml::element::Element) -> super::OutlineViewProperties {
+pub fn outline_view_properties(element: &Element) -> super::OutlineViewProperties {
     let mut node = super::OutlineViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::OUTLINE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2537,7 +2507,7 @@ pub fn outline_view_properties(element: &xml::element::Element) -> super::Outlin
 
 /// Read `p:pRg` into a `ParagraphTextRange`.
 #[must_use]
-pub fn paragraph_text_range(element: &xml::element::Element) -> super::ParagraphTextRange {
+pub fn paragraph_text_range(element: &Element) -> super::ParagraphTextRange {
     let mut node = super::ParagraphTextRange::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_TEXT_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -2553,7 +2523,7 @@ pub fn paragraph_text_range(element: &xml::element::Element) -> super::Paragraph
 
 /// Read `p:par` into a `ParallelTimeNode`.
 #[must_use]
-pub fn parallel_time_node(element: &xml::element::Element) -> super::ParallelTimeNode {
+pub fn parallel_time_node(element: &Element) -> super::ParallelTimeNode {
     let mut node = super::ParallelTimeNode::default();
     let mut reader = markup::Reader::new(element, &super::PARALLEL_TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
@@ -2567,7 +2537,7 @@ pub fn parallel_time_node(element: &xml::element::Element) -> super::ParallelTim
 
 /// Read `p:penClr` into a `PenColorForSlideShow`.
 #[must_use]
-pub fn pen_color_for_slide_show(element: &xml::element::Element) -> super::PenColorForSlideShow {
+pub fn pen_color_for_slide_show(element: &Element) -> super::PenColorForSlideShow {
     let mut node = super::PenColorForSlideShow::default();
     let mut reader = markup::Reader::new(element, &super::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE);
     for (index, field) in &mut reader {
@@ -2581,7 +2551,7 @@ pub fn pen_color_for_slide_show(element: &xml::element::Element) -> super::PenCo
 
 /// Read `p:photoAlbum` into a `PhotoAlbumInformation`.
 #[must_use]
-pub fn photo_album_information(element: &xml::element::Element) -> super::PhotoAlbumInformation {
+pub fn photo_album_information(element: &Element) -> super::PhotoAlbumInformation {
     let mut node = super::PhotoAlbumInformation::default();
     let mut reader = markup::Reader::new(element, &super::PHOTO_ALBUM_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -2600,7 +2570,7 @@ pub fn photo_album_information(element: &xml::element::Element) -> super::PhotoA
 
 /// Read `p:pic` into a `Picture`.
 #[must_use]
-pub fn picture(element: &xml::element::Element) -> super::Picture {
+pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_SHAPE);
     for (index, field) in &mut reader {
@@ -2619,7 +2589,7 @@ pub fn picture(element: &xml::element::Element) -> super::Picture {
 
 /// Read `p:blipFill` into a `PictureFill`.
 #[must_use]
-pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
+pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -2638,7 +2608,7 @@ pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
 
 /// Read `p:ph` into a `PlaceholderShape`.
 #[must_use]
-pub fn placeholder_shape(element: &xml::element::Element) -> super::PlaceholderShape {
+pub fn placeholder_shape(element: &Element) -> super::PlaceholderShape {
     let mut node = super::PlaceholderShape::default();
     let mut reader = markup::Reader::new(element, &super::PLACEHOLDER_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -2658,7 +2628,7 @@ pub fn placeholder_shape(element: &xml::element::Element) -> super::PlaceholderS
 
 /// Read `p:plus` into a `PlusSlideTransition`.
 #[must_use]
-pub fn plus_slide_transition(element: &xml::element::Element) -> super::PlusSlideTransition {
+pub fn plus_slide_transition(element: &Element) -> super::PlusSlideTransition {
     let reader = markup::Reader::new(element, &super::PLUS_SLIDE_TRANSITION_SHAPE);
     super::PlusSlideTransition {
         unknown: reader.finish(),
@@ -2667,7 +2637,7 @@ pub fn plus_slide_transition(element: &xml::element::Element) -> super::PlusSlid
 
 /// Read `p:presentation` into a `Presentation`.
 #[must_use]
-pub fn presentation(element: &xml::element::Element) -> super::Presentation {
+pub fn presentation(element: &Element) -> super::Presentation {
     let mut node = super::Presentation::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -2708,9 +2678,7 @@ pub fn presentation(element: &xml::element::Element) -> super::Presentation {
 
 /// Read `p:defaultTextStyle` into a `PresentationDefaultTextStyle`.
 #[must_use]
-pub fn presentation_default_text_style(
-    element: &xml::element::Element,
-) -> super::PresentationDefaultTextStyle {
+pub fn presentation_default_text_style(element: &Element) -> super::PresentationDefaultTextStyle {
     let mut node = super::PresentationDefaultTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -2735,7 +2703,7 @@ pub fn presentation_default_text_style(
 
 /// Read `p:sld` into a `PresentationSlide`.
 #[must_use]
-pub fn presentation_slide(element: &xml::element::Element) -> super::PresentationSlide {
+pub fn presentation_slide(element: &Element) -> super::PresentationSlide {
     let mut node = super::PresentationSlide::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_SLIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -2750,7 +2718,7 @@ pub fn presentation_slide(element: &xml::element::Element) -> super::Presentatio
 /// Read `p:sld` into a `PresentationSlideOutlineViewSlideEntry`.
 #[must_use]
 pub fn presentation_slide_outline_view_slide_entry(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PresentationSlideOutlineViewSlideEntry {
     let mut node = super::PresentationSlideOutlineViewSlideEntry::default();
     let mut reader = markup::Reader::new(
@@ -2770,7 +2738,7 @@ pub fn presentation_slide_outline_view_slide_entry(
 
 /// Read `p:sldSz` into a `PresentationSlideSize`.
 #[must_use]
-pub fn presentation_slide_size(element: &xml::element::Element) -> super::PresentationSlideSize {
+pub fn presentation_slide_size(element: &Element) -> super::PresentationSlideSize {
     let mut node = super::PresentationSlideSize::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_SLIDE_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -2787,7 +2755,7 @@ pub fn presentation_slide_size(element: &xml::element::Element) -> super::Presen
 
 /// Read `p:sld` into a `PresentationSlideSlide`.
 #[must_use]
-pub fn presentation_slide_slide(element: &xml::element::Element) -> super::PresentationSlideSlide {
+pub fn presentation_slide_slide(element: &Element) -> super::PresentationSlideSlide {
     let mut node = super::PresentationSlideSlide::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_SLIDE_SLIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -2809,9 +2777,7 @@ pub fn presentation_slide_slide(element: &xml::element::Element) -> super::Prese
 
 /// Read `p:presentationPr` into a `PresentationWideProperties`.
 #[must_use]
-pub fn presentation_wide_properties(
-    element: &xml::element::Element,
-) -> super::PresentationWideProperties {
+pub fn presentation_wide_properties(element: &Element) -> super::PresentationWideProperties {
     let mut node = super::PresentationWideProperties::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_WIDE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2832,7 +2798,7 @@ pub fn presentation_wide_properties(
 /// Read `p:showPr` into a `PresentationWideShowProperties`.
 #[must_use]
 pub fn presentation_wide_show_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PresentationWideShowProperties {
     let mut node = super::PresentationWideShowProperties::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE);
@@ -2856,7 +2822,7 @@ pub fn presentation_wide_show_properties(
 /// Read `p:viewPr` into a `PresentationWideViewProperties`.
 #[must_use]
 pub fn presentation_wide_view_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PresentationWideViewProperties {
     let mut node = super::PresentationWideViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE);
@@ -2881,7 +2847,7 @@ pub fn presentation_wide_view_properties(
 
 /// Read `p:present` into a `PresenterSlideShowMode`.
 #[must_use]
-pub fn presenter_slide_show_mode(element: &xml::element::Element) -> super::PresenterSlideShowMode {
+pub fn presenter_slide_show_mode(element: &Element) -> super::PresenterSlideShowMode {
     let reader = markup::Reader::new(element, &super::PRESENTER_SLIDE_SHOW_MODE_SHAPE);
     super::PresenterSlideShowMode {
         unknown: reader.finish(),
@@ -2890,7 +2856,7 @@ pub fn presenter_slide_show_mode(element: &xml::element::Element) -> super::Pres
 
 /// Read `p:prevCondLst` into a `PreviousConditionsList`.
 #[must_use]
-pub fn previous_conditions_list(element: &xml::element::Element) -> super::PreviousConditionsList {
+pub fn previous_conditions_list(element: &Element) -> super::PreviousConditionsList {
     let mut node = super::PreviousConditionsList::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -2904,7 +2870,7 @@ pub fn previous_conditions_list(element: &xml::element::Element) -> super::Previ
 
 /// Read `p:prnPr` into a `PrintingProperties`.
 #[must_use]
-pub fn printing_properties(element: &xml::element::Element) -> super::PrintingProperties {
+pub fn printing_properties(element: &Element) -> super::PrintingProperties {
     let mut node = super::PrintingProperties::default();
     let mut reader = markup::Reader::new(element, &super::PRINTING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2924,9 +2890,7 @@ pub fn printing_properties(element: &xml::element::Element) -> super::PrintingPr
 
 /// Read `p:tag` into a `ProgrammableExtensibilityTag`.
 #[must_use]
-pub fn programmable_extensibility_tag(
-    element: &xml::element::Element,
-) -> super::ProgrammableExtensibilityTag {
+pub fn programmable_extensibility_tag(element: &Element) -> super::ProgrammableExtensibilityTag {
     let mut node = super::ProgrammableExtensibilityTag::default();
     let mut reader = markup::Reader::new(element, &super::PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE);
     for (index, field) in &mut reader {
@@ -2942,7 +2906,7 @@ pub fn programmable_extensibility_tag(
 
 /// Read `p:tagLst` into a `ProgrammableTabList`.
 #[must_use]
-pub fn programmable_tab_list(element: &xml::element::Element) -> super::ProgrammableTabList {
+pub fn programmable_tab_list(element: &Element) -> super::ProgrammableTabList {
     let mut node = super::ProgrammableTabList::default();
     let mut reader = markup::Reader::new(element, &super::PROGRAMMABLE_TAB_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -2956,7 +2920,7 @@ pub fn programmable_tab_list(element: &xml::element::Element) -> super::Programm
 
 /// Read `p:progress` into a `Progress`.
 #[must_use]
-pub fn progress(element: &xml::element::Element) -> super::Progress {
+pub fn progress(element: &Element) -> super::Progress {
     let mut node = super::Progress::default();
     let mut reader = markup::Reader::new(element, &super::PROGRESS_SHAPE);
     for (index, field) in &mut reader {
@@ -2970,7 +2934,7 @@ pub fn progress(element: &xml::element::Element) -> super::Progress {
 
 /// Read `p:pull` into a `PullSlideTransition`.
 #[must_use]
-pub fn pull_slide_transition(element: &xml::element::Element) -> super::PullSlideTransition {
+pub fn pull_slide_transition(element: &Element) -> super::PullSlideTransition {
     let mut node = super::PullSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::PULL_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -2984,7 +2948,7 @@ pub fn pull_slide_transition(element: &xml::element::Element) -> super::PullSlid
 
 /// Read `p:push` into a `PushSlideTransition`.
 #[must_use]
-pub fn push_slide_transition(element: &xml::element::Element) -> super::PushSlideTransition {
+pub fn push_slide_transition(element: &Element) -> super::PushSlideTransition {
     let mut node = super::PushSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::PUSH_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -2998,9 +2962,7 @@ pub fn push_slide_transition(element: &xml::element::Element) -> super::PushSlid
 
 /// Read `p:randomBar` into a `RandomBarSlideTransition`.
 #[must_use]
-pub fn random_bar_slide_transition(
-    element: &xml::element::Element,
-) -> super::RandomBarSlideTransition {
+pub fn random_bar_slide_transition(element: &Element) -> super::RandomBarSlideTransition {
     let mut node = super::RandomBarSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::RANDOM_BAR_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -3014,7 +2976,7 @@ pub fn random_bar_slide_transition(
 
 /// Read `p:random` into a `RandomSlideTransition`.
 #[must_use]
-pub fn random_slide_transition(element: &xml::element::Element) -> super::RandomSlideTransition {
+pub fn random_slide_transition(element: &Element) -> super::RandomSlideTransition {
     let reader = markup::Reader::new(element, &super::RANDOM_SLIDE_TRANSITION_SHAPE);
     super::RandomSlideTransition {
         unknown: reader.finish(),
@@ -3023,7 +2985,7 @@ pub fn random_slide_transition(element: &xml::element::Element) -> super::Random
 
 /// Read `p:regular` into a `RegularEmbeddedFont`.
 #[must_use]
-pub fn regular_embedded_font(element: &xml::element::Element) -> super::RegularEmbeddedFont {
+pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
     let mut node = super::RegularEmbeddedFont::default();
     let mut reader = markup::Reader::new(element, &super::REGULAR_EMBEDDED_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -3037,7 +2999,7 @@ pub fn regular_embedded_font(element: &xml::element::Element) -> super::RegularE
 
 /// Read `p:rgb` into a `RGB`.
 #[must_use]
-pub fn rgb(element: &xml::element::Element) -> super::RGB {
+pub fn rgb(element: &Element) -> super::RGB {
     let mut node = super::RGB::default();
     let mut reader = markup::Reader::new(element, &super::RGB_SHAPE);
     for (index, field) in &mut reader {
@@ -3054,7 +3016,7 @@ pub fn rgb(element: &xml::element::Element) -> super::RGB {
 
 /// Read `p:rCtr` into a `RotationCenter`.
 #[must_use]
-pub fn rotation_center(element: &xml::element::Element) -> super::RotationCenter {
+pub fn rotation_center(element: &Element) -> super::RotationCenter {
     let mut node = super::RotationCenter::default();
     let mut reader = markup::Reader::new(element, &super::ROTATION_CENTER_SHAPE);
     for (index, field) in &mut reader {
@@ -3070,9 +3032,7 @@ pub fn rotation_center(element: &xml::element::Element) -> super::RotationCenter
 
 /// Read `p:rtn` into a `RuntimeNodeTriggerChoice`.
 #[must_use]
-pub fn runtime_node_trigger_choice(
-    element: &xml::element::Element,
-) -> super::RuntimeNodeTriggerChoice {
+pub fn runtime_node_trigger_choice(element: &Element) -> super::RuntimeNodeTriggerChoice {
     let mut node = super::RuntimeNodeTriggerChoice::default();
     let mut reader = markup::Reader::new(element, &super::RUNTIME_NODE_TRIGGER_CHOICE_SHAPE);
     for (index, field) in &mut reader {
@@ -3086,7 +3046,7 @@ pub fn runtime_node_trigger_choice(
 
 /// Read `p:seq` into a `SequenceTimeNode`.
 #[must_use]
-pub fn sequence_time_node(element: &xml::element::Element) -> super::SequenceTimeNode {
+pub fn sequence_time_node(element: &Element) -> super::SequenceTimeNode {
     let mut node = super::SequenceTimeNode::default();
     let mut reader = markup::Reader::new(element, &super::SEQUENCE_TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
@@ -3106,7 +3066,7 @@ pub fn sequence_time_node(element: &xml::element::Element) -> super::SequenceTim
 
 /// Read `p:set` into a `SetTimeNodeBehavior`.
 #[must_use]
-pub fn set_time_node_behavior(element: &xml::element::Element) -> super::SetTimeNodeBehavior {
+pub fn set_time_node_behavior(element: &Element) -> super::SetTimeNodeBehavior {
     let mut node = super::SetTimeNodeBehavior::default();
     let mut reader = markup::Reader::new(element, &super::SET_TIME_NODE_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
@@ -3122,7 +3082,7 @@ pub fn set_time_node_behavior(element: &xml::element::Element) -> super::SetTime
 
 /// Read `p:sp` into a `Shape`.
 #[must_use]
-pub fn shape(element: &xml::element::Element) -> super::Shape {
+pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -3142,7 +3102,7 @@ pub fn shape(element: &xml::element::Element) -> super::Shape {
 
 /// Read `p:spPr` into a `ShapeProperties`.
 #[must_use]
-pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperties {
+pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -3165,7 +3125,7 @@ pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperti
 
 /// Read `p:style` into a `ShapeStyle`.
 #[must_use]
-pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
+pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -3183,7 +3143,7 @@ pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
 
 /// Read `p:spTgt` into a `ShapeTarget`.
 #[must_use]
-pub fn shape_target(element: &xml::element::Element) -> super::ShapeTarget {
+pub fn shape_target(element: &Element) -> super::ShapeTarget {
     let mut node = super::ShapeTarget::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_TARGET_SHAPE);
     for (index, field) in &mut reader {
@@ -3199,13 +3159,13 @@ pub fn shape_target(element: &xml::element::Element) -> super::ShapeTarget {
 
 /// Read one item of `ShapeTargetContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_target_content(element: &xml::element::Element) -> super::ShapeTargetContent {
+pub fn shape_target_content(element: &Element) -> super::ShapeTargetContent {
     markup::read(element)
 }
 
 /// Read `p:txBody` into a `ShapeTextBody`.
 #[must_use]
-pub fn shape_text_body(element: &xml::element::Element) -> super::ShapeTextBody {
+pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
     let mut node = super::ShapeTextBody::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_TEXT_BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -3222,7 +3182,7 @@ pub fn shape_text_body(element: &xml::element::Element) -> super::ShapeTextBody 
 
 /// Read `p:spTree` into a `ShapeTree`.
 #[must_use]
-pub fn shape_tree(element: &xml::element::Element) -> super::ShapeTree {
+pub fn shape_tree(element: &Element) -> super::ShapeTree {
     let mut node = super::ShapeTree::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_TREE_SHAPE);
     for (index, field) in &mut reader {
@@ -3240,13 +3200,13 @@ pub fn shape_tree(element: &xml::element::Element) -> super::ShapeTree {
 
 /// Read one item of `ShowTypeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn show_type(element: &xml::element::Element) -> super::ShowTypeContent {
+pub fn show_type(element: &Element) -> super::ShowTypeContent {
     markup::read(element)
 }
 
 /// Read `p:bg` into a `SlideBackground`.
 #[must_use]
-pub fn slide_background(element: &xml::element::Element) -> super::SlideBackground {
+pub fn slide_background(element: &Element) -> super::SlideBackground {
     let mut node = super::SlideBackground::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_BACKGROUND_SHAPE);
     for (index, field) in &mut reader {
@@ -3262,13 +3222,13 @@ pub fn slide_background(element: &xml::element::Element) -> super::SlideBackgrou
 
 /// Read one item of `SlideBackgroundContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn slide_background_content(element: &xml::element::Element) -> super::SlideBackgroundContent {
+pub fn slide_background_content(element: &Element) -> super::SlideBackgroundContent {
     markup::read(element)
 }
 
 /// Read `p:sldId` into a `SlideID`.
 #[must_use]
-pub fn slide_id(element: &xml::element::Element) -> super::SlideID {
+pub fn slide_id(element: &Element) -> super::SlideID {
     let mut node = super::SlideID::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -3285,7 +3245,7 @@ pub fn slide_id(element: &xml::element::Element) -> super::SlideID {
 
 /// Read `p:sldLayout` into a `SlideLayout`.
 #[must_use]
-pub fn slide_layout(element: &xml::element::Element) -> super::SlideLayout {
+pub fn slide_layout(element: &Element) -> super::SlideLayout {
     let mut node = super::SlideLayout::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -3311,7 +3271,7 @@ pub fn slide_layout(element: &xml::element::Element) -> super::SlideLayout {
 
 /// Read `p:sldLayoutId` into a `SlideLayoutId`.
 #[must_use]
-pub fn slide_layout_id(element: &xml::element::Element) -> super::SlideLayoutId {
+pub fn slide_layout_id(element: &Element) -> super::SlideLayoutId {
     let mut node = super::SlideLayoutId::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_LAYOUT_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -3328,13 +3288,13 @@ pub fn slide_layout_id(element: &xml::element::Element) -> super::SlideLayoutId 
 
 /// Read one item of `SlideListContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn slide_list(element: &xml::element::Element) -> super::SlideListContent {
+pub fn slide_list(element: &Element) -> super::SlideListContent {
     markup::read(element)
 }
 
 /// Read `p:sldMaster` into a `SlideMaster`.
 #[must_use]
-pub fn slide_master(element: &xml::element::Element) -> super::SlideMaster {
+pub fn slide_master(element: &Element) -> super::SlideMaster {
     let mut node = super::SlideMaster::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_SHAPE);
     for (index, field) in &mut reader {
@@ -3357,9 +3317,7 @@ pub fn slide_master(element: &xml::element::Element) -> super::SlideMaster {
 
 /// Read `p:bodyStyle` into a `SlideMasterBodyTextStyle`.
 #[must_use]
-pub fn slide_master_body_text_style(
-    element: &xml::element::Element,
-) -> super::SlideMasterBodyTextStyle {
+pub fn slide_master_body_text_style(element: &Element) -> super::SlideMasterBodyTextStyle {
     let mut node = super::SlideMasterBodyTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -3384,7 +3342,7 @@ pub fn slide_master_body_text_style(
 
 /// Read `p:sldMasterId` into a `SlideMasterID`.
 #[must_use]
-pub fn slide_master_id(element: &xml::element::Element) -> super::SlideMasterID {
+pub fn slide_master_id(element: &Element) -> super::SlideMasterID {
     let mut node = super::SlideMasterID::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -3401,9 +3359,7 @@ pub fn slide_master_id(element: &xml::element::Element) -> super::SlideMasterID 
 
 /// Read `p:otherStyle` into a `SlideMasterOtherTextStyle`.
 #[must_use]
-pub fn slide_master_other_text_style(
-    element: &xml::element::Element,
-) -> super::SlideMasterOtherTextStyle {
+pub fn slide_master_other_text_style(element: &Element) -> super::SlideMasterOtherTextStyle {
     let mut node = super::SlideMasterOtherTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -3428,7 +3384,7 @@ pub fn slide_master_other_text_style(
 
 /// Read `p:txStyles` into a `SlideMasterTextStyles`.
 #[must_use]
-pub fn slide_master_text_styles(element: &xml::element::Element) -> super::SlideMasterTextStyles {
+pub fn slide_master_text_styles(element: &Element) -> super::SlideMasterTextStyles {
     let mut node = super::SlideMasterTextStyles::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_TEXT_STYLES_SHAPE);
     for (index, field) in &mut reader {
@@ -3446,9 +3402,7 @@ pub fn slide_master_text_styles(element: &xml::element::Element) -> super::Slide
 
 /// Read `p:titleStyle` into a `SlideMasterTitleTextStyle`.
 #[must_use]
-pub fn slide_master_title_text_style(
-    element: &xml::element::Element,
-) -> super::SlideMasterTitleTextStyle {
+pub fn slide_master_title_text_style(element: &Element) -> super::SlideMasterTitleTextStyle {
     let mut node = super::SlideMasterTitleTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -3473,7 +3427,7 @@ pub fn slide_master_title_text_style(
 
 /// Read `p:sldRg` into a `SlideRange`.
 #[must_use]
-pub fn slide_range(element: &xml::element::Element) -> super::SlideRange {
+pub fn slide_range(element: &Element) -> super::SlideRange {
     let mut node = super::SlideRange::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -3489,9 +3443,7 @@ pub fn slide_range(element: &xml::element::Element) -> super::SlideRange {
 
 /// Read `p:sorterViewPr` into a `SlideSorterViewProperties`.
 #[must_use]
-pub fn slide_sorter_view_properties(
-    element: &xml::element::Element,
-) -> super::SlideSorterViewProperties {
+pub fn slide_sorter_view_properties(element: &Element) -> super::SlideSorterViewProperties {
     let mut node = super::SlideSorterViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_SORTER_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -3509,7 +3461,7 @@ pub fn slide_sorter_view_properties(
 /// Read `p:sldSyncPr` into a `SlideSynchronizationProperties`.
 #[must_use]
 pub fn slide_synchronization_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SlideSynchronizationProperties {
     let mut node = super::SlideSynchronizationProperties::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE);
@@ -3528,7 +3480,7 @@ pub fn slide_synchronization_properties(
 
 /// Read `p:sldTgt` into a `SlideTarget`.
 #[must_use]
-pub fn slide_target(element: &xml::element::Element) -> super::SlideTarget {
+pub fn slide_target(element: &Element) -> super::SlideTarget {
     let reader = markup::Reader::new(element, &super::SLIDE_TARGET_SHAPE);
     super::SlideTarget {
         unknown: reader.finish(),
@@ -3537,7 +3489,7 @@ pub fn slide_target(element: &xml::element::Element) -> super::SlideTarget {
 
 /// Read `p:timing` into a `SlideTimingInformation`.
 #[must_use]
-pub fn slide_timing_information(element: &xml::element::Element) -> super::SlideTimingInformation {
+pub fn slide_timing_information(element: &Element) -> super::SlideTimingInformation {
     let mut node = super::SlideTimingInformation::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_TIMING_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -3554,14 +3506,14 @@ pub fn slide_timing_information(element: &xml::element::Element) -> super::Slide
 
 /// Read one item of `SlideTransitionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn slide_transition(element: &xml::element::Element) -> super::SlideTransitionContent {
+pub fn slide_transition(element: &Element) -> super::SlideTransitionContent {
     markup::read(element)
 }
 
 /// Read `p:transition` into a `SlideTransitionForASlideLayout`.
 #[must_use]
 pub fn slide_transition_for_a_slide_layout(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SlideTransitionForASlideLayout {
     let mut node = super::SlideTransitionForASlideLayout::default();
     let mut reader =
@@ -3584,7 +3536,7 @@ pub fn slide_transition_for_a_slide_layout(
 
 /// Read `p:slideViewPr` into a `SlideViewProperties`.
 #[must_use]
-pub fn slide_view_properties(element: &xml::element::Element) -> super::SlideViewProperties {
+pub fn slide_view_properties(element: &Element) -> super::SlideViewProperties {
     let mut node = super::SlideViewProperties::default();
     let mut reader = markup::Reader::new(element, &super::SLIDE_VIEW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -3600,7 +3552,7 @@ pub fn slide_view_properties(element: &xml::element::Element) -> super::SlideVie
 
 /// Read `p:smartTags` into a `SmartTags`.
 #[must_use]
-pub fn smart_tags(element: &xml::element::Element) -> super::SmartTags {
+pub fn smart_tags(element: &Element) -> super::SmartTags {
     let mut node = super::SmartTags::default();
     let mut reader = markup::Reader::new(element, &super::SMART_TAGS_SHAPE);
     for (index, field) in &mut reader {
@@ -3614,7 +3566,7 @@ pub fn smart_tags(element: &xml::element::Element) -> super::SmartTags {
 
 /// Read `p:snd` into a `Sound`.
 #[must_use]
-pub fn sound(element: &xml::element::Element) -> super::Sound {
+pub fn sound(element: &Element) -> super::Sound {
     let mut node = super::Sound::default();
     let mut reader = markup::Reader::new(element, &super::SOUND_SHAPE);
     for (index, field) in &mut reader {
@@ -3630,7 +3582,7 @@ pub fn sound(element: &xml::element::Element) -> super::Sound {
 
 /// Read `p:sndAc` into a `SoundAction`.
 #[must_use]
-pub fn sound_action(element: &xml::element::Element) -> super::SoundAction {
+pub fn sound_action(element: &Element) -> super::SoundAction {
     let mut node = super::SoundAction::default();
     let mut reader = markup::Reader::new(element, &super::SOUND_ACTION_SHAPE);
     for (index, field) in &mut reader {
@@ -3644,13 +3596,13 @@ pub fn sound_action(element: &xml::element::Element) -> super::SoundAction {
 
 /// Read one item of `SoundActionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn sound_action_content(element: &xml::element::Element) -> super::SoundActionContent {
+pub fn sound_action_content(element: &Element) -> super::SoundActionContent {
     markup::read(element)
 }
 
 /// Read `p:sndTgt` into a `SoundTarget`.
 #[must_use]
-pub fn sound_target(element: &xml::element::Element) -> super::SoundTarget {
+pub fn sound_target(element: &Element) -> super::SoundTarget {
     let mut node = super::SoundTarget::default();
     let mut reader = markup::Reader::new(element, &super::SOUND_TARGET_SHAPE);
     for (index, field) in &mut reader {
@@ -3666,7 +3618,7 @@ pub fn sound_target(element: &xml::element::Element) -> super::SoundTarget {
 
 /// Read `p:split` into a `SplitSlideTransition`.
 #[must_use]
-pub fn split_slide_transition(element: &xml::element::Element) -> super::SplitSlideTransition {
+pub fn split_slide_transition(element: &Element) -> super::SplitSlideTransition {
     let mut node = super::SplitSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::SPLIT_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -3682,7 +3634,7 @@ pub fn split_slide_transition(element: &xml::element::Element) -> super::SplitSl
 
 /// Read `p:stCondLst` into a `StartConditionsList`.
 #[must_use]
-pub fn start_conditions_list(element: &xml::element::Element) -> super::StartConditionsList {
+pub fn start_conditions_list(element: &Element) -> super::StartConditionsList {
     let mut node = super::StartConditionsList::default();
     let mut reader = markup::Reader::new(element, &super::START_CONDITIONS_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -3696,7 +3648,7 @@ pub fn start_conditions_list(element: &xml::element::Element) -> super::StartCon
 
 /// Read `p:stSnd` into a `StartSoundAction`.
 #[must_use]
-pub fn start_sound_action(element: &xml::element::Element) -> super::StartSoundAction {
+pub fn start_sound_action(element: &Element) -> super::StartSoundAction {
     let mut node = super::StartSoundAction::default();
     let mut reader = markup::Reader::new(element, &super::START_SOUND_ACTION_SHAPE);
     for (index, field) in &mut reader {
@@ -3712,7 +3664,7 @@ pub fn start_sound_action(element: &xml::element::Element) -> super::StartSoundA
 
 /// Read `p:endSnd` into a `StopSoundAction`.
 #[must_use]
-pub fn stop_sound_action(element: &xml::element::Element) -> super::StopSoundAction {
+pub fn stop_sound_action(element: &Element) -> super::StopSoundAction {
     let reader = markup::Reader::new(element, &super::STOP_SOUND_ACTION_SHAPE);
     super::StopSoundAction {
         unknown: reader.finish(),
@@ -3721,7 +3673,7 @@ pub fn stop_sound_action(element: &xml::element::Element) -> super::StopSoundAct
 
 /// Read `p:strVal` into a `StringValue`.
 #[must_use]
-pub fn string_value(element: &xml::element::Element) -> super::StringValue {
+pub fn string_value(element: &Element) -> super::StringValue {
     let mut node = super::StringValue::default();
     let mut reader = markup::Reader::new(element, &super::STRING_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -3735,7 +3687,7 @@ pub fn string_value(element: &xml::element::Element) -> super::StringValue {
 
 /// Read `p:strips` into a `StripsSlideTransition`.
 #[must_use]
-pub fn strips_slide_transition(element: &xml::element::Element) -> super::StripsSlideTransition {
+pub fn strips_slide_transition(element: &Element) -> super::StripsSlideTransition {
     let mut node = super::StripsSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::STRIPS_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -3749,7 +3701,7 @@ pub fn strips_slide_transition(element: &xml::element::Element) -> super::Strips
 
 /// Read `p:subTnLst` into a `SubTimeNodesList`.
 #[must_use]
-pub fn sub_time_nodes_list(element: &xml::element::Element) -> super::SubTimeNodesList {
+pub fn sub_time_nodes_list(element: &Element) -> super::SubTimeNodesList {
     let mut node = super::SubTimeNodesList::default();
     let mut reader = markup::Reader::new(element, &super::SUB_TIME_NODES_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -3763,7 +3715,7 @@ pub fn sub_time_nodes_list(element: &xml::element::Element) -> super::SubTimeNod
 
 /// Read `p:subSp` into a `Subshape`.
 #[must_use]
-pub fn subshape(element: &xml::element::Element) -> super::Subshape {
+pub fn subshape(element: &Element) -> super::Subshape {
     let mut node = super::Subshape::default();
     let mut reader = markup::Reader::new(element, &super::SUBSHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -3777,7 +3729,7 @@ pub fn subshape(element: &xml::element::Element) -> super::Subshape {
 
 /// Read `p:tgtEl` into a `TargetElement`.
 #[must_use]
-pub fn target_element(element: &xml::element::Element) -> super::TargetElement {
+pub fn target_element(element: &Element) -> super::TargetElement {
     let mut node = super::TargetElement::default();
     let mut reader = markup::Reader::new(element, &super::TARGET_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -3791,13 +3743,13 @@ pub fn target_element(element: &xml::element::Element) -> super::TargetElement {
 
 /// Read one item of `TargetElementContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn target_element_content(element: &xml::element::Element) -> super::TargetElementContent {
+pub fn target_element_content(element: &Element) -> super::TargetElementContent {
     markup::read(element)
 }
 
 /// Read `p:tmpl` into a `TemplateEffectsTmpl`.
 #[must_use]
-pub fn template_effects_tmpl(element: &xml::element::Element) -> super::TemplateEffectsTmpl {
+pub fn template_effects_tmpl(element: &Element) -> super::TemplateEffectsTmpl {
     let mut node = super::TemplateEffectsTmpl::default();
     let mut reader = markup::Reader::new(element, &super::TEMPLATE_EFFECTS_TMPL_SHAPE);
     for (index, field) in &mut reader {
@@ -3813,7 +3765,7 @@ pub fn template_effects_tmpl(element: &xml::element::Element) -> super::Template
 
 /// Read `p:tmplLst` into a `TemplateEffectsTmplLst`.
 #[must_use]
-pub fn template_effects_tmpl_lst(element: &xml::element::Element) -> super::TemplateEffectsTmplLst {
+pub fn template_effects_tmpl_lst(element: &Element) -> super::TemplateEffectsTmplLst {
     let mut node = super::TemplateEffectsTmplLst::default();
     let mut reader = markup::Reader::new(element, &super::TEMPLATE_EFFECTS_TMPL_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -3827,7 +3779,7 @@ pub fn template_effects_tmpl_lst(element: &xml::element::Element) -> super::Temp
 
 /// Read `p:txEl` into a `TextElement`.
 #[must_use]
-pub fn text_element(element: &xml::element::Element) -> super::TextElement {
+pub fn text_element(element: &Element) -> super::TextElement {
     let mut node = super::TextElement::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -3841,13 +3793,13 @@ pub fn text_element(element: &xml::element::Element) -> super::TextElement {
 
 /// Read one item of `TextElementContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn text_element_content(element: &xml::element::Element) -> super::TextElementContent {
+pub fn text_element_content(element: &Element) -> super::TextElementContent {
     markup::read(element)
 }
 
 /// Read `p:tmAbs` into a `TimeAbsolute`.
 #[must_use]
-pub fn time_absolute(element: &xml::element::Element) -> super::TimeAbsolute {
+pub fn time_absolute(element: &Element) -> super::TimeAbsolute {
     let mut node = super::TimeAbsolute::default();
     let mut reader = markup::Reader::new(element, &super::TIME_ABSOLUTE_SHAPE);
     for (index, field) in &mut reader {
@@ -3861,7 +3813,7 @@ pub fn time_absolute(element: &xml::element::Element) -> super::TimeAbsolute {
 
 /// Read `p:tav` into a `TimeAnimateValue`.
 #[must_use]
-pub fn time_animate_value(element: &xml::element::Element) -> super::TimeAnimateValue {
+pub fn time_animate_value(element: &Element) -> super::TimeAnimateValue {
     let mut node = super::TimeAnimateValue::default();
     let mut reader = markup::Reader::new(element, &super::TIME_ANIMATE_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -3878,7 +3830,7 @@ pub fn time_animate_value(element: &xml::element::Element) -> super::TimeAnimate
 
 /// Read `p:tavLst` into a `TimeAnimatedValueList`.
 #[must_use]
-pub fn time_animated_value_list(element: &xml::element::Element) -> super::TimeAnimatedValueList {
+pub fn time_animated_value_list(element: &Element) -> super::TimeAnimatedValueList {
     let mut node = super::TimeAnimatedValueList::default();
     let mut reader = markup::Reader::new(element, &super::TIME_ANIMATED_VALUE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -3892,13 +3844,13 @@ pub fn time_animated_value_list(element: &xml::element::Element) -> super::TimeA
 
 /// Read one item of `TimeConditionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn time_condition(element: &xml::element::Element) -> super::TimeConditionContent {
+pub fn time_condition(element: &Element) -> super::TimeConditionContent {
     markup::read(element)
 }
 
 /// Read `p:tn` into a `TimeNode`.
 #[must_use]
-pub fn time_node(element: &xml::element::Element) -> super::TimeNode {
+pub fn time_node(element: &Element) -> super::TimeNode {
     let mut node = super::TimeNode::default();
     let mut reader = markup::Reader::new(element, &super::TIME_NODE_SHAPE);
     for (index, field) in &mut reader {
@@ -3912,7 +3864,7 @@ pub fn time_node(element: &xml::element::Element) -> super::TimeNode {
 
 /// Read `p:tnLst` into a `TimeNodeList`.
 #[must_use]
-pub fn time_node_list(element: &xml::element::Element) -> super::TimeNodeList {
+pub fn time_node_list(element: &Element) -> super::TimeNodeList {
     let mut node = super::TimeNodeList::default();
     let mut reader = markup::Reader::new(element, &super::TIME_NODE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -3926,13 +3878,13 @@ pub fn time_node_list(element: &xml::element::Element) -> super::TimeNodeList {
 
 /// Read one item of `TimeNodeListContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn time_node_list_content(element: &xml::element::Element) -> super::TimeNodeListContent {
+pub fn time_node_list_content(element: &Element) -> super::TimeNodeListContent {
     markup::read(element)
 }
 
 /// Read `p:tmPct` into a `TimePercentage`.
 #[must_use]
-pub fn time_percentage(element: &xml::element::Element) -> super::TimePercentage {
+pub fn time_percentage(element: &Element) -> super::TimePercentage {
     let mut node = super::TimePercentage::default();
     let mut reader = markup::Reader::new(element, &super::TIME_PERCENTAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -3946,7 +3898,7 @@ pub fn time_percentage(element: &xml::element::Element) -> super::TimePercentage
 
 /// Read `p:to` into a `To`.
 #[must_use]
-pub fn to(element: &xml::element::Element) -> super::To {
+pub fn to(element: &Element) -> super::To {
     let mut node = super::To::default();
     let mut reader = markup::Reader::new(element, &super::TO_SHAPE);
     for (index, field) in &mut reader {
@@ -3962,7 +3914,7 @@ pub fn to(element: &xml::element::Element) -> super::To {
 
 /// Read `p:to` into a `ToColor`.
 #[must_use]
-pub fn to_color(element: &xml::element::Element) -> super::ToColor {
+pub fn to_color(element: &Element) -> super::ToColor {
     let mut node = super::ToColor::default();
     let mut reader = markup::Reader::new(element, &super::TO_COLOR_SHAPE);
     for (index, field) in &mut reader {
@@ -3976,7 +3928,7 @@ pub fn to_color(element: &xml::element::Element) -> super::ToColor {
 
 /// Read `p:to` into a `ToTLAnimVariant`.
 #[must_use]
-pub fn to_tl_anim_variant(element: &xml::element::Element) -> super::ToTLAnimVariant {
+pub fn to_tl_anim_variant(element: &Element) -> super::ToTLAnimVariant {
     let mut node = super::ToTLAnimVariant::default();
     let mut reader = markup::Reader::new(element, &super::TO_TL_ANIM_VARIANT_SHAPE);
     for (index, field) in &mut reader {
@@ -3990,7 +3942,7 @@ pub fn to_tl_anim_variant(element: &xml::element::Element) -> super::ToTLAnimVar
 
 /// Read `p:val` into a `Value`.
 #[must_use]
-pub fn value(element: &xml::element::Element) -> super::Value {
+pub fn value(element: &Element) -> super::Value {
     let mut node = super::Value::default();
     let mut reader = markup::Reader::new(element, &super::VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -4004,7 +3956,7 @@ pub fn value(element: &xml::element::Element) -> super::Value {
 
 /// Read `p:video` into a `Video`.
 #[must_use]
-pub fn video(element: &xml::element::Element) -> super::Video {
+pub fn video(element: &Element) -> super::Video {
     let mut node = super::Video::default();
     let mut reader = markup::Reader::new(element, &super::VIDEO_SHAPE);
     for (index, field) in &mut reader {
@@ -4020,7 +3972,7 @@ pub fn video(element: &xml::element::Element) -> super::Video {
 
 /// Read `p:origin` into a `ViewOrigin`.
 #[must_use]
-pub fn view_origin(element: &xml::element::Element) -> super::ViewOrigin {
+pub fn view_origin(element: &Element) -> super::ViewOrigin {
     let mut node = super::ViewOrigin::default();
     let mut reader = markup::Reader::new(element, &super::VIEW_ORIGIN_SHAPE);
     for (index, field) in &mut reader {
@@ -4036,7 +3988,7 @@ pub fn view_origin(element: &xml::element::Element) -> super::ViewOrigin {
 
 /// Read `p:scale` into a `ViewScale`.
 #[must_use]
-pub fn view_scale(element: &xml::element::Element) -> super::ViewScale {
+pub fn view_scale(element: &Element) -> super::ViewScale {
     let mut node = super::ViewScale::default();
     let mut reader = markup::Reader::new(element, &super::VIEW_SCALE_SHAPE);
     for (index, field) in &mut reader {
@@ -4052,7 +4004,7 @@ pub fn view_scale(element: &xml::element::Element) -> super::ViewScale {
 
 /// Read `p:webPr` into a `WebProperties`.
 #[must_use]
-pub fn web_properties(element: &xml::element::Element) -> super::WebProperties {
+pub fn web_properties(element: &Element) -> super::WebProperties {
     let mut node = super::WebProperties::default();
     let mut reader = markup::Reader::new(element, &super::WEB_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -4076,7 +4028,7 @@ pub fn web_properties(element: &xml::element::Element) -> super::WebProperties {
 
 /// Read `p:wedge` into a `WedgeSlideTransition`.
 #[must_use]
-pub fn wedge_slide_transition(element: &xml::element::Element) -> super::WedgeSlideTransition {
+pub fn wedge_slide_transition(element: &Element) -> super::WedgeSlideTransition {
     let reader = markup::Reader::new(element, &super::WEDGE_SLIDE_TRANSITION_SHAPE);
     super::WedgeSlideTransition {
         unknown: reader.finish(),
@@ -4085,7 +4037,7 @@ pub fn wedge_slide_transition(element: &xml::element::Element) -> super::WedgeSl
 
 /// Read `p:wheel` into a `WheelSlideTransition`.
 #[must_use]
-pub fn wheel_slide_transition(element: &xml::element::Element) -> super::WheelSlideTransition {
+pub fn wheel_slide_transition(element: &Element) -> super::WheelSlideTransition {
     let mut node = super::WheelSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::WHEEL_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -4099,7 +4051,7 @@ pub fn wheel_slide_transition(element: &xml::element::Element) -> super::WheelSl
 
 /// Read `p:wipe` into a `WipeSlideTransition`.
 #[must_use]
-pub fn wipe_slide_transition(element: &xml::element::Element) -> super::WipeSlideTransition {
+pub fn wipe_slide_transition(element: &Element) -> super::WipeSlideTransition {
     let mut node = super::WipeSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::WIPE_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -4113,7 +4065,7 @@ pub fn wipe_slide_transition(element: &xml::element::Element) -> super::WipeSlid
 
 /// Read `p:xfrm` into a `Xfrm`.
 #[must_use]
-pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
+pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {
@@ -4132,7 +4084,7 @@ pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
 
 /// Read `p:zoom` into a `ZoomSlideTransition`.
 #[must_use]
-pub fn zoom_slide_transition(element: &xml::element::Element) -> super::ZoomSlideTransition {
+pub fn zoom_slide_transition(element: &Element) -> super::ZoomSlideTransition {
     let mut node = super::ZoomSlideTransition::default();
     let mut reader = markup::Reader::new(element, &super::ZOOM_SLIDE_TRANSITION_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `SvgBlip` as its element, `asvg:svgBlip`.
 #[must_use]
-pub fn svg_blip(node: &super::SvgBlip, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn svg_blip(node: &super::SvgBlip, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SVG_BLIP_SHAPE, &node.unknown);
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);

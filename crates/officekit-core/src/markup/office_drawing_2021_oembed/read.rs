@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `aoe:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `aoe:oembedShared` into a `OembedShared`.
 #[must_use]
-pub fn oembed_shared(element: &xml::element::Element) -> super::OembedShared {
+pub fn oembed_shared(element: &Element) -> super::OembedShared {
     let mut node = super::OembedShared::default();
     let mut reader = markup::Reader::new(element, &super::OEMBED_SHARED_SHAPE);
     for (index, field) in &mut reader {

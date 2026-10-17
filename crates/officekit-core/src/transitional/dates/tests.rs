@@ -1,19 +1,17 @@
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::Document as Part;
+use officekit_xml::error::WriteError;
+use officekit_xml::parse::parse;
+use officekit_xml::values::DateTime;
+use officekit_xml::write::{Layout, WriteOptions};
+
 use super::{SaveWarning, cell_date, convert_date_cells, serial_date_time};
-use crate::error::WriteError;
 use crate::markup::spreadsheet::Worksheet;
 use crate::packaging::part_name::PartName;
 use crate::transitional::Transitional as _;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::Document as Part;
-use crate::xml::parse::parse;
-use crate::xml::values::DateTime;
-use crate::xml::write::{Layout, WriteOptions};
 
 const X: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-const KEEP: WriteOptions = WriteOptions {
-    layout: Layout::Compact,
-    namespace_cleanup: false,
-};
+const KEEP: WriteOptions = WriteOptions::new(Layout::Compact, false);
 
 /// The serial date-time of a date cell's text, as Rust writes the `f64`.
 fn serial(text: &str, date1904: bool) -> Option<String> {
@@ -110,16 +108,7 @@ fn text_that_is_no_date_has_no_serial() {
     ] {
         assert_eq!(serial(text, false), None, "{text}");
     }
-    let out_of_range = DateTime {
-        day: 1,
-        hour: 0,
-        minute: 0,
-        month: 1,
-        nanosecond: 0,
-        offset_minutes: None,
-        second: 0,
-        year: 10_000,
-    };
+    let out_of_range = DateTime::new((10_000_i32, 1, 1), (0, 0, 0, 0), None);
     assert_eq!(serial_date_time(&out_of_range, false), None);
 }
 
@@ -151,16 +140,10 @@ fn each_date_cell_becomes_a_number_cell_with_one_warning() {
         ]
     );
     let root = sheet.to_transitional().unwrap();
-    let written = String::from_utf8(
-        Part {
-            declaration: None,
-            epilog: Vec::new(),
-            prolog: Vec::new(),
-            root,
-        }
-        .to_xml(KEEP),
-    )
-    .unwrap();
+    let mut tree = Part::new("", root);
+    tree.declaration = None;
+    tree.prolog.clear();
+    let written = String::from_utf8(tree.to_xml(KEEP)).unwrap();
     assert!(
         written.contains(
             "<x:c r=\"A1\" s=\"3\"><x:v>46309</x:v></x:c><x:c r=\"B1\"><x:v>7</x:v></x:c>"

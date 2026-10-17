@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `a15:backgroundPr` into a `BackgroundPr`.
 #[must_use]
-pub fn background_pr(element: &xml::element::Element) -> super::BackgroundPr {
+pub fn background_pr(element: &Element) -> super::BackgroundPr {
     let mut node = super::BackgroundPr::default();
     let mut reader = markup::Reader::new(element, &super::BACKGROUND_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -235,7 +235,7 @@ pub fn background_pr(element: &xml::element::Element) -> super::BackgroundPr {
 
 /// Read `a15:nonVisualGroupProps` into a `NonVisualGroupProps`.
 #[must_use]
-pub fn non_visual_group_props(element: &xml::element::Element) -> super::NonVisualGroupProps {
+pub fn non_visual_group_props(element: &Element) -> super::NonVisualGroupProps {
     let mut node = super::NonVisualGroupProps::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_GROUP_PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn non_visual_group_props(element: &xml::element::Element) -> super::NonVisu
 
 /// Read `a15:objectPr` into a `ObjectPr`.
 #[must_use]
-pub fn object_pr(element: &xml::element::Element) -> super::ObjectPr {
+pub fn object_pr(element: &Element) -> super::ObjectPr {
     let mut node = super::ObjectPr::default();
     let mut reader = markup::Reader::new(element, &super::OBJECT_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -266,7 +266,7 @@ pub fn object_pr(element: &xml::element::Element) -> super::ObjectPr {
 
 /// Read `a15:signatureLine` into a `SignatureLine`.
 #[must_use]
-pub fn signature_line(element: &xml::element::Element) -> super::SignatureLine {
+pub fn signature_line(element: &Element) -> super::SignatureLine {
     let mut node = super::SignatureLine::default();
     let mut reader = markup::Reader::new(element, &super::SIGNATURE_LINE_SHAPE);
     for (index, field) in &mut reader {

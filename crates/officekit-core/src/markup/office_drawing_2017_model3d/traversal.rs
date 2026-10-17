@@ -217,7 +217,7 @@ use std::io;
 
 use crate::markup::{self, Transform as _, Visit as _};
 use crate::stream::transform::{Unchanged, WriteThrough, Written};
-use crate::stream::writer::PartWriter;
+use officekit_xml::stream::writer::PartWriter;
 
 impl markup::Transform for super::AmbientLight {
     fn transform(&self, ctx: &mut dyn markup::Context) -> Self {

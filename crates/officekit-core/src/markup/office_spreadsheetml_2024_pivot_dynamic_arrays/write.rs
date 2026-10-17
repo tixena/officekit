@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `PivotCacheDynamicArray` as its element, `xlpda:pivotCacheDynamicArray`.
 #[must_use]
 pub fn pivot_cache_dynamic_array(
     node: &super::PivotCacheDynamicArray,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,

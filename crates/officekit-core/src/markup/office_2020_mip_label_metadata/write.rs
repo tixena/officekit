@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Ext` as its element, `clbl:ext`.
 #[must_use]
-pub fn ext(node: &super::Ext, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
     writer.child(&node.content);
@@ -226,7 +227,7 @@ pub fn ext(node: &super::Ext, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `ExtLst` as its element, `clbl:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.ext);
     writer.finish()
@@ -234,7 +235,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Label` as its element, `clbl:label`.
 #[must_use]
-pub fn label(node: &super::Label, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn label(node: &super::Label, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LABEL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.enabled);
@@ -250,7 +251,7 @@ pub fn label(node: &super::Label, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `LabelList` as its element, `clbl:labelList`.
 #[must_use]
-pub fn label_list(node: &super::LabelList, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn label_list(node: &super::LabelList, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LABEL_LIST_SHAPE, &node.unknown);
     writer.child(&node.label);
     writer.child(&node.ext_lst);

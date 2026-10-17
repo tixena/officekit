@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ArgumentDescription` as its element, `x14:argumentDescription`.
 #[must_use]
-pub fn argument_description(
-    node: &super::ArgumentDescription,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn argument_description(node: &super::ArgumentDescription, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARGUMENT_DESCRIPTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.index);
     writer.text(&node.value);
@@ -230,10 +228,7 @@ pub fn argument_description(
 
 /// Write a `ArgumentDescriptions` as its element, `x14:argumentDescriptions`.
 #[must_use]
-pub fn argument_descriptions(
-    node: &super::ArgumentDescriptions,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn argument_descriptions(node: &super::ArgumentDescriptions, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARGUMENT_DESCRIPTIONS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.argument_description);
@@ -242,7 +237,7 @@ pub fn argument_descriptions(
 
 /// Write a `AxisColor` as its element, `x14:axisColor`.
 #[must_use]
-pub fn axis_color(node: &super::AxisColor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn axis_color(node: &super::AxisColor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AXIS_COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -254,7 +249,7 @@ pub fn axis_color(node: &super::AxisColor, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `BorderColor` as its element, `x14:borderColor`.
 #[must_use]
-pub fn border_color(node: &super::BorderColor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn border_color(node: &super::BorderColor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BORDER_COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -266,7 +261,7 @@ pub fn border_color(node: &super::BorderColor, scope: &mut markup::Scope) -> xml
 
 /// Write a `CacheField` as its element, `x14:cacheField`.
 #[must_use]
-pub fn cache_field(node: &super::CacheField, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cache_field(node: &super::CacheField, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CACHE_FIELD_SHAPE, &node.unknown);
     writer.attribute(0, &node.ignore);
     writer.finish()
@@ -274,10 +269,7 @@ pub fn cache_field(node: &super::CacheField, scope: &mut markup::Scope) -> xml::
 
 /// Write a `CacheHierarchy` as its element, `x14:cacheHierarchy`.
 #[must_use]
-pub fn cache_hierarchy(
-    node: &super::CacheHierarchy,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn cache_hierarchy(node: &super::CacheHierarchy, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CACHE_HIERARCHY_SHAPE, &node.unknown);
     writer.attribute(0, &node.flatten_hierarchies);
     writer.attribute(1, &node.measures_set);
@@ -289,10 +281,7 @@ pub fn cache_hierarchy(
 
 /// Write a `CalculatedMember` as its element, `x14:calculatedMember`.
 #[must_use]
-pub fn calculated_member(
-    node: &super::CalculatedMember,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn calculated_member(node: &super::CalculatedMember, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CALCULATED_MEMBER_SHAPE, &node.unknown);
     writer.attribute(0, &node.display_folder);
     writer.attribute(1, &node.flatten_hierarchies);
@@ -305,10 +294,7 @@ pub fn calculated_member(
 
 /// Write a `CalculatedMembers` as its element, `x14:calculatedMembers`.
 #[must_use]
-pub fn calculated_members(
-    node: &super::CalculatedMembers,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn calculated_members(node: &super::CalculatedMembers, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CALCULATED_MEMBERS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.calculated_member);
@@ -317,7 +303,7 @@ pub fn calculated_members(
 
 /// Write a `CfIcon` as its element, `x14:cfIcon`.
 #[must_use]
-pub fn cf_icon(node: &super::CfIcon, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cf_icon(node: &super::CfIcon, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CF_ICON_SHAPE, &node.unknown);
     writer.attribute(0, &node.icon_set);
     writer.attribute(1, &node.icon_id);
@@ -326,7 +312,7 @@ pub fn cf_icon(node: &super::CfIcon, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `CfRule` as its element, `x14:cfRule`.
 #[must_use]
-pub fn cf_rule(node: &super::CfRule, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cf_rule(node: &super::CfRule, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CF_RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.priority);
@@ -353,7 +339,7 @@ pub fn cf_rule(node: &super::CfRule, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Cfvo` as its element, `x14:cfvo`.
 #[must_use]
-pub fn cfvo(node: &super::Cfvo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cfvo(node: &super::Cfvo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CFVO_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.gte);
@@ -364,7 +350,7 @@ pub fn cfvo(node: &super::Cfvo, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Color` as its element, `x14:color`.
 #[must_use]
-pub fn color(node: &super::Color, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color(node: &super::Color, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -376,7 +362,7 @@ pub fn color(node: &super::Color, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ColorAxis` as its element, `x14:colorAxis`.
 #[must_use]
-pub fn color_axis(node: &super::ColorAxis, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_axis(node: &super::ColorAxis, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_AXIS_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -388,7 +374,7 @@ pub fn color_axis(node: &super::ColorAxis, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ColorFirst` as its element, `x14:colorFirst`.
 #[must_use]
-pub fn color_first(node: &super::ColorFirst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_first(node: &super::ColorFirst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_FIRST_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -400,7 +386,7 @@ pub fn color_first(node: &super::ColorFirst, scope: &mut markup::Scope) -> xml::
 
 /// Write a `ColorHigh` as its element, `x14:colorHigh`.
 #[must_use]
-pub fn color_high(node: &super::ColorHigh, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_high(node: &super::ColorHigh, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_HIGH_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -412,7 +398,7 @@ pub fn color_high(node: &super::ColorHigh, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ColorLast` as its element, `x14:colorLast`.
 #[must_use]
-pub fn color_last(node: &super::ColorLast, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_last(node: &super::ColorLast, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_LAST_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -424,7 +410,7 @@ pub fn color_last(node: &super::ColorLast, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ColorLow` as its element, `x14:colorLow`.
 #[must_use]
-pub fn color_low(node: &super::ColorLow, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_low(node: &super::ColorLow, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_LOW_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -436,10 +422,7 @@ pub fn color_low(node: &super::ColorLow, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `ColorMarkers` as its element, `x14:colorMarkers`.
 #[must_use]
-pub fn color_markers(
-    node: &super::ColorMarkers,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn color_markers(node: &super::ColorMarkers, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_MARKERS_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -451,10 +434,7 @@ pub fn color_markers(
 
 /// Write a `ColorNegative` as its element, `x14:colorNegative`.
 #[must_use]
-pub fn color_negative(
-    node: &super::ColorNegative,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn color_negative(node: &super::ColorNegative, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_NEGATIVE_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -466,7 +446,7 @@ pub fn color_negative(
 
 /// Write a `ColorScale` as its element, `x14:colorScale`.
 #[must_use]
-pub fn color_scale(node: &super::ColorScale, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_scale(node: &super::ColorScale, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_SCALE_SHAPE, &node.unknown);
     writer.child(&node.cfvo);
     writer.child(&node.color);
@@ -475,7 +455,7 @@ pub fn color_scale(node: &super::ColorScale, scope: &mut markup::Scope) -> xml::
 
 /// Write a `ColorSeries` as its element, `x14:colorSeries`.
 #[must_use]
-pub fn color_series(node: &super::ColorSeries, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn color_series(node: &super::ColorSeries, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLOR_SERIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -487,10 +467,7 @@ pub fn color_series(node: &super::ColorSeries, scope: &mut markup::Scope) -> xml
 
 /// Write a `ConditionalFormat` as its element, `x14:conditionalFormat`.
 #[must_use]
-pub fn conditional_format(
-    node: &super::ConditionalFormat,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn conditional_format(node: &super::ConditionalFormat, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONDITIONAL_FORMAT_SHAPE, &node.unknown);
     writer.attribute(0, &node.scope);
     writer.attribute(1, &node.r#type);
@@ -503,10 +480,7 @@ pub fn conditional_format(
 
 /// Write a `ConditionalFormats` as its element, `x14:conditionalFormats`.
 #[must_use]
-pub fn conditional_formats(
-    node: &super::ConditionalFormats,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn conditional_formats(node: &super::ConditionalFormats, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONDITIONAL_FORMATS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.conditional_format);
@@ -515,10 +489,7 @@ pub fn conditional_formats(
 
 /// Write a `ConditionalFormatting` as its element, `x14:conditionalFormatting`.
 #[must_use]
-pub fn conditional_formatting(
-    node: &super::ConditionalFormatting,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn conditional_formatting(node: &super::ConditionalFormatting, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CONDITIONAL_FORMATTING_SHAPE, &node.unknown);
     writer.attribute(0, &node.pivot);
@@ -530,10 +501,7 @@ pub fn conditional_formatting(
 
 /// Write a `ConditionalFormattings` as its element, `x14:conditionalFormattings`.
 #[must_use]
-pub fn conditional_formattings(
-    node: &super::ConditionalFormattings,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn conditional_formattings(node: &super::ConditionalFormattings, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CONDITIONAL_FORMATTINGS_SHAPE, &node.unknown);
     writer.child(&node.conditional_formatting);
@@ -542,7 +510,7 @@ pub fn conditional_formattings(
 
 /// Write a `Connection` as its element, `x14:connection`.
 #[must_use]
-pub fn connection(node: &super::Connection, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn connection(node: &super::Connection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONNECTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.culture);
     writer.attribute(1, &node.embedded_data_id);
@@ -552,10 +520,7 @@ pub fn connection(node: &super::Connection, scope: &mut markup::Scope) -> xml::e
 
 /// Write a `CustomFilter` as its element, `x14:customFilter`.
 #[must_use]
-pub fn custom_filter(
-    node: &super::CustomFilter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_filter(node: &super::CustomFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.operator);
     writer.attribute(1, &node.val);
@@ -564,10 +529,7 @@ pub fn custom_filter(
 
 /// Write a `CustomFilters` as its element, `x14:customFilters`.
 #[must_use]
-pub fn custom_filters(
-    node: &super::CustomFilters,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_filters(node: &super::CustomFilters, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_FILTERS_SHAPE, &node.unknown);
     writer.attribute(0, &node.and);
     writer.child(&node.custom_filter);
@@ -576,7 +538,7 @@ pub fn custom_filters(
 
 /// Write a `Data` as its element, `x14:data`.
 #[must_use]
-pub fn data(node: &super::Data, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data(node: &super::Data, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -584,7 +546,7 @@ pub fn data(node: &super::Data, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `DataBar` as its element, `x14:dataBar`.
 #[must_use]
-pub fn data_bar(node: &super::DataBar, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_bar(node: &super::DataBar, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_BAR_SHAPE, &node.unknown);
     writer.attribute(0, &node.min_length);
     writer.attribute(1, &node.max_length);
@@ -606,7 +568,7 @@ pub fn data_bar(node: &super::DataBar, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `DataField` as its element, `x14:dataField`.
 #[must_use]
-pub fn data_field(node: &super::DataField, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn data_field(node: &super::DataField, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_FIELD_SHAPE, &node.unknown);
     writer.attribute(0, &node.pivot_show_as);
     writer.attribute(1, &node.source_field);
@@ -616,10 +578,7 @@ pub fn data_field(node: &super::DataField, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `DataValidation` as its element, `x14:dataValidation`.
 #[must_use]
-pub fn data_validation(
-    node: &super::DataValidation,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_validation(node: &super::DataValidation, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_VALIDATION_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.error_style);
@@ -641,10 +600,7 @@ pub fn data_validation(
 
 /// Write a `DataValidations` as its element, `x14:dataValidations`.
 #[must_use]
-pub fn data_validations(
-    node: &super::DataValidations,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_validations(node: &super::DataValidations, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_VALIDATIONS_SHAPE, &node.unknown);
     writer.attribute(0, &node.disable_prompts);
     writer.attribute(1, &node.x_window);
@@ -656,10 +612,7 @@ pub fn data_validations(
 
 /// Write a `DatastoreItem` as its element, `x14:datastoreItem`.
 #[must_use]
-pub fn datastore_item(
-    node: &super::DatastoreItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn datastore_item(node: &super::DatastoreItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATASTORE_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.child(&node.ext_lst_extension_list);
@@ -668,7 +621,7 @@ pub fn datastore_item(
 
 /// Write a `DefinedName` as its element, `x14:definedName`.
 #[must_use]
-pub fn defined_name(node: &super::DefinedName, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn defined_name(node: &super::DefinedName, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEFINED_NAME_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.child(&node.argument_descriptions);
@@ -677,10 +630,7 @@ pub fn defined_name(node: &super::DefinedName, scope: &mut markup::Scope) -> xml
 
 /// Write a `DefinedNames` as its element, `x14:definedNames`.
 #[must_use]
-pub fn defined_names(
-    node: &super::DefinedNames,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn defined_names(node: &super::DefinedNames, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DEFINED_NAMES_SHAPE, &node.unknown);
     writer.child(&node.defined_name);
     writer.finish()
@@ -688,7 +638,7 @@ pub fn defined_names(
 
 /// Write a `Dxf` as its element, `x14:dxf`.
 #[must_use]
-pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXF_SHAPE, &node.unknown);
     writer.child(&node.font);
     writer.child(&node.number_format);
@@ -702,7 +652,7 @@ pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `Dxfs` as its element, `x14:dxfs`.
 #[must_use]
-pub fn dxfs(node: &super::Dxfs, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dxfs(node: &super::Dxfs, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXFS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.formatting);
@@ -711,7 +661,7 @@ pub fn dxfs(node: &super::Dxfs, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `EditValue` as its element, `x14:editValue`.
 #[must_use]
-pub fn edit_value(node: &super::EditValue, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn edit_value(node: &super::EditValue, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EDIT_VALUE_SHAPE, &node.unknown);
     writer.attribute(0, &node.value_type);
     writer.text(&node.value);
@@ -720,10 +670,7 @@ pub fn edit_value(node: &super::EditValue, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ExtLstExtensionList` as its element, `x14:extLst`.
 #[must_use]
-pub fn ext_lst_extension_list(
-    node: &super::ExtLstExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ext_lst_extension_list(node: &super::ExtLstExtensionList, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::EXT_LST_EXTENSION_LIST_SHAPE, &node.unknown);
     writer.child(&node.extension);
@@ -734,8 +681,8 @@ pub fn ext_lst_extension_list(
 #[must_use]
 pub fn ext_lst_slicer_cache_definition_extension_list(
     node: &super::ExtLstSlicerCacheDefinitionExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EXT_LST_SLICER_CACHE_DEFINITION_EXTENSION_LIST_SHAPE,
@@ -747,7 +694,7 @@ pub fn ext_lst_slicer_cache_definition_extension_list(
 
 /// Write a `FillColor` as its element, `x14:fillColor`.
 #[must_use]
-pub fn fill_color(node: &super::FillColor, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fill_color(node: &super::FillColor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILL_COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -759,7 +706,7 @@ pub fn fill_color(node: &super::FillColor, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Filter` as its element, `x14:filter`.
 #[must_use]
-pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn filter(node: &super::Filter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -767,10 +714,7 @@ pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `FormControlPr` as its element, `x14:formControlPr`.
 #[must_use]
-pub fn form_control_pr(
-    node: &super::FormControlPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn form_control_pr(node: &super::FormControlPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FORM_CONTROL_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.object_type);
     writer.attribute(1, &node.checked);
@@ -810,7 +754,7 @@ pub fn form_control_pr(
 
 /// Write a `Formula1` as its element, `x14:formula1`.
 #[must_use]
-pub fn formula1(node: &super::Formula1, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn formula1(node: &super::Formula1, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FORMULA1_SHAPE, &node.unknown);
     writer.child(&node.f);
     writer.finish()
@@ -818,7 +762,7 @@ pub fn formula1(node: &super::Formula1, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Formula2` as its element, `x14:formula2`.
 #[must_use]
-pub fn formula2(node: &super::Formula2, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn formula2(node: &super::Formula2, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FORMULA2_SHAPE, &node.unknown);
     writer.child(&node.f);
     writer.finish()
@@ -826,7 +770,7 @@ pub fn formula2(node: &super::Formula2, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Header` as its element, `x14:header`.
 #[must_use]
-pub fn header(node: &super::Header, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn header(node: &super::Header, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HEADER_SHAPE, &node.unknown);
     writer.attribute(0, &node.unique_name);
     writer.attribute(1, &node.hierarchy_name);
@@ -835,7 +779,7 @@ pub fn header(node: &super::Header, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Headers` as its element, `x14:headers`.
 #[must_use]
-pub fn headers(node: &super::Headers, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn headers(node: &super::Headers, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HEADERS_SHAPE, &node.unknown);
     writer.child(&node.header);
     writer.finish()
@@ -843,10 +787,7 @@ pub fn headers(node: &super::Headers, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `IOlapSlicerCacheItem` as its element, `x14:i`.
 #[must_use]
-pub fn i_olap_slicer_cache_item(
-    node: &super::IOlapSlicerCacheItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn i_olap_slicer_cache_item(node: &super::IOlapSlicerCacheItem, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::I_OLAP_SLICER_CACHE_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
@@ -860,8 +801,8 @@ pub fn i_olap_slicer_cache_item(
 #[must_use]
 pub fn i_tabular_slicer_cache_item(
     node: &super::ITabularSlicerCacheItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::I_TABULAR_SLICER_CACHE_ITEM_SHAPE,
@@ -875,7 +816,7 @@ pub fn i_tabular_slicer_cache_item(
 
 /// Write a `IconFilter` as its element, `x14:iconFilter`.
 #[must_use]
-pub fn icon_filter(node: &super::IconFilter, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn icon_filter(node: &super::IconFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ICON_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.icon_set);
     writer.attribute(1, &node.icon_id);
@@ -884,7 +825,7 @@ pub fn icon_filter(node: &super::IconFilter, scope: &mut markup::Scope) -> xml::
 
 /// Write a `IconSet` as its element, `x14:iconSet`.
 #[must_use]
-pub fn icon_set(node: &super::IconSet, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn icon_set(node: &super::IconSet, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ICON_SET_SHAPE, &node.unknown);
     writer.attribute(0, &node.icon_set);
     writer.attribute(1, &node.show_value);
@@ -898,7 +839,7 @@ pub fn icon_set(node: &super::IconSet, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Id` as its element, `x14:id`.
 #[must_use]
-pub fn id(node: &super::Id, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn id(node: &super::Id, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ID_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -906,10 +847,7 @@ pub fn id(node: &super::Id, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `IgnoredError` as its element, `x14:ignoredError`.
 #[must_use]
-pub fn ignored_error(
-    node: &super::IgnoredError,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ignored_error(node: &super::IgnoredError, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IGNORED_ERROR_SHAPE, &node.unknown);
     writer.attribute(0, &node.eval_error);
     writer.attribute(1, &node.two_digit_text_year);
@@ -926,10 +864,7 @@ pub fn ignored_error(
 
 /// Write a `IgnoredErrors` as its element, `x14:ignoredErrors`.
 #[must_use]
-pub fn ignored_errors(
-    node: &super::IgnoredErrors,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ignored_errors(node: &super::IgnoredErrors, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IGNORED_ERRORS_SHAPE, &node.unknown);
     writer.child(&node.ignored_error);
     writer.child(&node.ext_lst_extension_list);
@@ -938,7 +873,7 @@ pub fn ignored_errors(
 
 /// Write a `Item` as its element, `x14:item`.
 #[must_use]
-pub fn item(node: &super::Item, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn item(node: &super::Item, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -946,7 +881,7 @@ pub fn item(node: &super::Item, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `ItemLst` as its element, `x14:itemLst`.
 #[must_use]
-pub fn item_lst(node: &super::ItemLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn item_lst(node: &super::ItemLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ITEM_LST_SHAPE, &node.unknown);
     writer.child(&node.item);
     writer.child(&node.ext_lst_extension_list);
@@ -955,7 +890,7 @@ pub fn item_lst(node: &super::ItemLst, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Items` as its element, `x14:items`.
 #[must_use]
-pub fn items(node: &super::Items, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn items(node: &super::Items, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ITEMS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.i_tabular_slicer_cache_item);
@@ -964,7 +899,7 @@ pub fn items(node: &super::Items, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Level` as its element, `x14:level`.
 #[must_use]
-pub fn level(node: &super::Level, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn level(node: &super::Level, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEVEL_SHAPE, &node.unknown);
     writer.attribute(0, &node.unique_name);
     writer.attribute(1, &node.source_caption);
@@ -977,7 +912,7 @@ pub fn level(node: &super::Level, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Levels` as its element, `x14:levels`.
 #[must_use]
-pub fn levels(node: &super::Levels, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn levels(node: &super::Levels, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LEVELS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.level);
@@ -986,10 +921,7 @@ pub fn levels(node: &super::Levels, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `NegativeBorderColor` as its element, `x14:negativeBorderColor`.
 #[must_use]
-pub fn negative_border_color(
-    node: &super::NegativeBorderColor,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn negative_border_color(node: &super::NegativeBorderColor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NEGATIVE_BORDER_COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -1001,10 +933,7 @@ pub fn negative_border_color(
 
 /// Write a `NegativeFillColor` as its element, `x14:negativeFillColor`.
 #[must_use]
-pub fn negative_fill_color(
-    node: &super::NegativeFillColor,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn negative_fill_color(node: &super::NegativeFillColor, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NEGATIVE_FILL_COLOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto);
     writer.attribute(1, &node.indexed);
@@ -1016,7 +945,7 @@ pub fn negative_fill_color(
 
 /// Write a `Olap` as its element, `x14:olap`.
 #[must_use]
-pub fn olap(node: &super::Olap, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn olap(node: &super::Olap, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OLAP_SHAPE, &node.unknown);
     writer.attribute(0, &node.pivot_cache_id);
     writer.child(&node.levels);
@@ -1027,7 +956,7 @@ pub fn olap(node: &super::Olap, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `OleItem` as its element, `x14:oleItem`.
 #[must_use]
-pub fn ole_item(node: &super::OleItem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ole_item(node: &super::OleItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OLE_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.icon);
@@ -1039,7 +968,7 @@ pub fn ole_item(node: &super::OleItem, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `P` as its element, `x14:p`.
 #[must_use]
-pub fn p(node: &super::P, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn p(node: &super::P, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::P_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.finish()
@@ -1047,7 +976,7 @@ pub fn p(node: &super::P, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `PivotArea` as its element, `x14:pivotArea`.
 #[must_use]
-pub fn pivot_area(node: &super::PivotArea, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_area(node: &super::PivotArea, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_AREA_SHAPE, &node.unknown);
     writer.attribute(0, &node.field);
     writer.attribute(1, &node.r#type);
@@ -1068,7 +997,7 @@ pub fn pivot_area(node: &super::PivotArea, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `PivotAreas` as its element, `x14:pivotAreas`.
 #[must_use]
-pub fn pivot_areas(node: &super::PivotAreas, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_areas(node: &super::PivotAreas, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_AREAS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.pivot_area);
@@ -1077,10 +1006,7 @@ pub fn pivot_areas(node: &super::PivotAreas, scope: &mut markup::Scope) -> xml::
 
 /// Write a `PivotCacheDefinition` as its element, `x14:pivotCacheDefinition`.
 #[must_use]
-pub fn pivot_cache_definition(
-    node: &super::PivotCacheDefinition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_cache_definition(node: &super::PivotCacheDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::PIVOT_CACHE_DEFINITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.slicer_data);
@@ -1093,7 +1019,7 @@ pub fn pivot_cache_definition(
 
 /// Write a `PivotCaches` as its element, `x14:pivotCaches`.
 #[must_use]
-pub fn pivot_caches(node: &super::PivotCaches, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_caches(node: &super::PivotCaches, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_CACHES_SHAPE, &node.unknown);
     writer.child(&node.pivotcache);
     writer.finish()
@@ -1101,7 +1027,7 @@ pub fn pivot_caches(node: &super::PivotCaches, scope: &mut markup::Scope) -> xml
 
 /// Write a `PivotChange` as its element, `x14:pivotChange`.
 #[must_use]
-pub fn pivot_change(node: &super::PivotChange, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_change(node: &super::PivotChange, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_CHANGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.allocation_method);
     writer.attribute(1, &node.weight_expression);
@@ -1113,10 +1039,7 @@ pub fn pivot_change(node: &super::PivotChange, scope: &mut markup::Scope) -> xml
 
 /// Write a `PivotChanges` as its element, `x14:pivotChanges`.
 #[must_use]
-pub fn pivot_changes(
-    node: &super::PivotChanges,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_changes(node: &super::PivotChanges, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_CHANGES_SHAPE, &node.unknown);
     writer.child(&node.pivot_change);
     writer.finish()
@@ -1124,7 +1047,7 @@ pub fn pivot_changes(
 
 /// Write a `PivotEdit` as its element, `x14:pivotEdit`.
 #[must_use]
-pub fn pivot_edit(node: &super::PivotEdit, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_edit(node: &super::PivotEdit, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_EDIT_SHAPE, &node.unknown);
     writer.child(&node.user_edit);
     writer.child(&node.tuple_items);
@@ -1135,7 +1058,7 @@ pub fn pivot_edit(node: &super::PivotEdit, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `PivotEdits` as its element, `x14:pivotEdits`.
 #[must_use]
-pub fn pivot_edits(node: &super::PivotEdits, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_edits(node: &super::PivotEdits, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_EDITS_SHAPE, &node.unknown);
     writer.child(&node.pivot_edit);
     writer.finish()
@@ -1143,7 +1066,7 @@ pub fn pivot_edits(node: &super::PivotEdits, scope: &mut markup::Scope) -> xml::
 
 /// Write a `PivotField` as its element, `x14:pivotField`.
 #[must_use]
-pub fn pivot_field(node: &super::PivotField, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_field(node: &super::PivotField, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_FIELD_SHAPE, &node.unknown);
     writer.attribute(0, &node.fill_down_labels);
     writer.attribute(1, &node.ignore);
@@ -1152,10 +1075,7 @@ pub fn pivot_field(node: &super::PivotField, scope: &mut markup::Scope) -> xml::
 
 /// Write a `PivotHierarchy` as its element, `x14:pivotHierarchy`.
 #[must_use]
-pub fn pivot_hierarchy(
-    node: &super::PivotHierarchy,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_hierarchy(node: &super::PivotHierarchy, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_HIERARCHY_SHAPE, &node.unknown);
     writer.attribute(0, &node.ignore);
     writer.finish()
@@ -1163,7 +1083,7 @@ pub fn pivot_hierarchy(
 
 /// Write a `PivotTable` as its element, `x14:pivotTable`.
 #[must_use]
-pub fn pivot_table(node: &super::PivotTable, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_table(node: &super::PivotTable, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_TABLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.tab_id);
     writer.attribute(1, &node.name);
@@ -1172,10 +1092,7 @@ pub fn pivot_table(node: &super::PivotTable, scope: &mut markup::Scope) -> xml::
 
 /// Write a `PivotTableDefinition` as its element, `x14:pivotTableDefinition`.
 #[must_use]
-pub fn pivot_table_definition(
-    node: &super::PivotTableDefinition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_table_definition(node: &super::PivotTableDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::PIVOT_TABLE_DEFINITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.fill_down_labels_default);
@@ -1196,7 +1113,7 @@ pub fn pivot_table_definition(
 
 /// Write a `PivotTables` as its element, `x14:pivotTables`.
 #[must_use]
-pub fn pivot_tables(node: &super::PivotTables, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pivot_tables(node: &super::PivotTables, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_TABLES_SHAPE, &node.unknown);
     writer.child(&node.pivot_table);
     writer.finish()
@@ -1209,10 +1126,7 @@ pub fn pivot_user_edit(node: &super::PivotUserEditContent, writer: &mut markup::
 
 /// Write a `ProtectedRange` as its element, `x14:protectedRange`.
 #[must_use]
-pub fn protected_range(
-    node: &super::ProtectedRange,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn protected_range(node: &super::ProtectedRange, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROTECTED_RANGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.password);
     writer.attribute(1, &node.algorithm_name);
@@ -1227,10 +1141,7 @@ pub fn protected_range(
 
 /// Write a `ProtectedRanges` as its element, `x14:protectedRanges`.
 #[must_use]
-pub fn protected_ranges(
-    node: &super::ProtectedRanges,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn protected_ranges(node: &super::ProtectedRanges, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PROTECTED_RANGES_SHAPE, &node.unknown);
     writer.child(&node.protected_range);
     writer.finish()
@@ -1238,7 +1149,7 @@ pub fn protected_ranges(
 
 /// Write a `Range` as its element, `x14:range`.
 #[must_use]
-pub fn range(node: &super::Range, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn range(node: &super::Range, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RANGE_SHAPE, &node.unknown);
     writer.attribute(0, &node.start_item);
     writer.child(&node.i_olap_slicer_cache_item);
@@ -1247,7 +1158,7 @@ pub fn range(node: &super::Range, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Ranges` as its element, `x14:ranges`.
 #[must_use]
-pub fn ranges(node: &super::Ranges, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ranges(node: &super::Ranges, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RANGES_SHAPE, &node.unknown);
     writer.child(&node.range);
     writer.finish()
@@ -1255,7 +1166,7 @@ pub fn ranges(node: &super::Ranges, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `Row` as its element, `x14:row`.
 #[must_use]
-pub fn row(node: &super::Row, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn row(node: &super::Row, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROW_SHAPE, &node.unknown);
     writer.child(&node.item);
     writer.finish()
@@ -1263,7 +1174,7 @@ pub fn row(node: &super::Row, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `RowItem` as its element, `x14:rowItem`.
 #[must_use]
-pub fn row_item(node: &super::RowItem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn row_item(node: &super::RowItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROW_ITEM_SHAPE, &node.unknown);
     writer.attribute(0, &node.u);
     writer.attribute(1, &node.d);
@@ -1272,7 +1183,7 @@ pub fn row_item(node: &super::RowItem, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `Rows` as its element, `x14:rows`.
 #[must_use]
-pub fn rows(node: &super::Rows, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rows(node: &super::Rows, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROWS_SHAPE, &node.unknown);
     writer.child(&node.row);
     writer.finish()
@@ -1280,7 +1191,7 @@ pub fn rows(node: &super::Rows, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Selection` as its element, `x14:selection`.
 #[must_use]
-pub fn selection(node: &super::Selection, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn selection(node: &super::Selection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SELECTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.child(&node.p);
@@ -1289,7 +1200,7 @@ pub fn selection(node: &super::Selection, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Selections` as its element, `x14:selections`.
 #[must_use]
-pub fn selections(node: &super::Selections, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn selections(node: &super::Selections, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SELECTIONS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.selection);
@@ -1298,7 +1209,7 @@ pub fn selections(node: &super::Selections, scope: &mut markup::Scope) -> xml::e
 
 /// Write a `SetLevel` as its element, `x14:setLevel`.
 #[must_use]
-pub fn set_level(node: &super::SetLevel, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn set_level(node: &super::SetLevel, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SET_LEVEL_SHAPE, &node.unknown);
     writer.attribute(0, &node.hierarchy);
     writer.finish()
@@ -1306,7 +1217,7 @@ pub fn set_level(node: &super::SetLevel, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `SetLevels` as its element, `x14:setLevels`.
 #[must_use]
-pub fn set_levels(node: &super::SetLevels, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn set_levels(node: &super::SetLevels, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SET_LEVELS_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.set_level);
@@ -1315,7 +1226,7 @@ pub fn set_levels(node: &super::SetLevels, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `SlicerCache` as its element, `x14:slicerCache`.
 #[must_use]
-pub fn slicer_cache(node: &super::SlicerCache, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn slicer_cache(node: &super::SlicerCache, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_CACHE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -1331,10 +1242,7 @@ pub fn slicer_cache_data(
 
 /// Write a `SlicerCacheDefinition` as its element, `x14:slicerCacheDefinition`.
 #[must_use]
-pub fn slicer_cache_definition(
-    node: &super::SlicerCacheDefinition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_cache_definition(node: &super::SlicerCacheDefinition, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SLICER_CACHE_DEFINITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
@@ -1347,10 +1255,7 @@ pub fn slicer_cache_definition(
 
 /// Write a `SlicerCaches` as its element, `x14:slicerCaches`.
 #[must_use]
-pub fn slicer_caches(
-    node: &super::SlicerCaches,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_caches(node: &super::SlicerCaches, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_CACHES_SHAPE, &node.unknown);
     writer.child(&node.slicer_cache);
     writer.finish()
@@ -1358,7 +1263,7 @@ pub fn slicer_caches(
 
 /// Write a `SlicerList` as its element, `x14:slicerList`.
 #[must_use]
-pub fn slicer_list(node: &super::SlicerList, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn slicer_list(node: &super::SlicerList, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_LIST_SHAPE, &node.unknown);
     writer.child(&node.slicer_slicer_ref);
     writer.finish()
@@ -1366,10 +1271,7 @@ pub fn slicer_list(node: &super::SlicerList, scope: &mut markup::Scope) -> xml::
 
 /// Write a `SlicerSlicer` as its element, `x14:slicer`.
 #[must_use]
-pub fn slicer_slicer(
-    node: &super::SlicerSlicer,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_slicer(node: &super::SlicerSlicer, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_SLICER_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.cache);
@@ -1387,10 +1289,7 @@ pub fn slicer_slicer(
 
 /// Write a `SlicerSlicerRef` as its element, `x14:slicer`.
 #[must_use]
-pub fn slicer_slicer_ref(
-    node: &super::SlicerSlicerRef,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_slicer_ref(node: &super::SlicerSlicerRef, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_SLICER_REF_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -1398,7 +1297,7 @@ pub fn slicer_slicer_ref(
 
 /// Write a `SlicerStyle` as its element, `x14:slicerStyle`.
 #[must_use]
-pub fn slicer_style(node: &super::SlicerStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn slicer_style(node: &super::SlicerStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_STYLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.child(&node.elements);
@@ -1407,10 +1306,7 @@ pub fn slicer_style(node: &super::SlicerStyle, scope: &mut markup::Scope) -> xml
 
 /// Write a `SlicerStyleElement` as its element, `x14:slicerStyleElement`.
 #[must_use]
-pub fn slicer_style_element(
-    node: &super::SlicerStyleElement,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_style_element(node: &super::SlicerStyleElement, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_STYLE_ELEMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.dxf_id);
@@ -1419,10 +1315,7 @@ pub fn slicer_style_element(
 
 /// Write a `SlicerStyleElements` as its element, `x14:slicerStyleElements`.
 #[must_use]
-pub fn slicer_style_elements(
-    node: &super::SlicerStyleElements,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_style_elements(node: &super::SlicerStyleElements, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_STYLE_ELEMENTS_SHAPE, &node.unknown);
     writer.child(&node.slicer_style_element);
     writer.finish()
@@ -1430,10 +1323,7 @@ pub fn slicer_style_elements(
 
 /// Write a `SlicerStyles` as its element, `x14:slicerStyles`.
 #[must_use]
-pub fn slicer_styles(
-    node: &super::SlicerStyles,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn slicer_styles(node: &super::SlicerStyles, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICER_STYLES_SHAPE, &node.unknown);
     writer.attribute(0, &node.default_slicer_style);
     writer.child(&node.slicer_style);
@@ -1442,7 +1332,7 @@ pub fn slicer_styles(
 
 /// Write a `Slicers` as its element, `x14:slicers`.
 #[must_use]
-pub fn slicers(node: &super::Slicers, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn slicers(node: &super::Slicers, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SLICERS_SHAPE, &node.unknown);
     writer.child(&node.slicer_slicer);
     writer.finish()
@@ -1450,10 +1340,7 @@ pub fn slicers(node: &super::Slicers, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `SortCondition` as its element, `x14:sortCondition`.
 #[must_use]
-pub fn sort_condition(
-    node: &super::SortCondition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sort_condition(node: &super::SortCondition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SORT_CONDITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.descending);
     writer.attribute(1, &node.sort_by);
@@ -1467,10 +1354,7 @@ pub fn sort_condition(
 
 /// Write a `SourceConnection` as its element, `x14:sourceConnection`.
 #[must_use]
-pub fn source_connection(
-    node: &super::SourceConnection,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn source_connection(node: &super::SourceConnection, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SOURCE_CONNECTION_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.finish()
@@ -1478,7 +1362,7 @@ pub fn source_connection(
 
 /// Write a `Sparkline` as its element, `x14:sparkline`.
 #[must_use]
-pub fn sparkline(node: &super::Sparkline, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sparkline(node: &super::Sparkline, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPARKLINE_SHAPE, &node.unknown);
     writer.child(&node.f);
     writer.child(&node.sqref);
@@ -1487,10 +1371,7 @@ pub fn sparkline(node: &super::Sparkline, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `SparklineGroup` as its element, `x14:sparklineGroup`.
 #[must_use]
-pub fn sparkline_group(
-    node: &super::SparklineGroup,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sparkline_group(node: &super::SparklineGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPARKLINE_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.manual_max);
     writer.attribute(1, &node.manual_min);
@@ -1524,10 +1405,7 @@ pub fn sparkline_group(
 
 /// Write a `SparklineGroups` as its element, `x14:sparklineGroups`.
 #[must_use]
-pub fn sparkline_groups(
-    node: &super::SparklineGroups,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sparkline_groups(node: &super::SparklineGroups, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPARKLINE_GROUPS_SHAPE, &node.unknown);
     writer.child(&node.sparkline_group);
     writer.finish()
@@ -1535,7 +1413,7 @@ pub fn sparkline_groups(
 
 /// Write a `Sparklines` as its element, `x14:sparklines`.
 #[must_use]
-pub fn sparklines(node: &super::Sparklines, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sparklines(node: &super::Sparklines, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SPARKLINES_SHAPE, &node.unknown);
     writer.child(&node.sparkline);
     writer.finish()
@@ -1543,7 +1421,7 @@ pub fn sparklines(node: &super::Sparklines, scope: &mut markup::Scope) -> xml::e
 
 /// Write a `Table` as its element, `x14:table`.
 #[must_use]
-pub fn table(node: &super::Table, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn table(node: &super::Table, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TABLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.alt_text);
     writer.attribute(1, &node.alt_text_summary);
@@ -1552,7 +1430,7 @@ pub fn table(node: &super::Table, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Tabular` as its element, `x14:tabular`.
 #[must_use]
-pub fn tabular(node: &super::Tabular, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tabular(node: &super::Tabular, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TABULAR_SHAPE, &node.unknown);
     writer.attribute(0, &node.pivot_cache_id);
     writer.attribute(1, &node.sort_order);
@@ -1566,7 +1444,7 @@ pub fn tabular(node: &super::Tabular, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `TupleItem` as its element, `x14:tupleItem`.
 #[must_use]
-pub fn tuple_item(node: &super::TupleItem, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tuple_item(node: &super::TupleItem, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TUPLE_ITEM_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -1574,7 +1452,7 @@ pub fn tuple_item(node: &super::TupleItem, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `TupleItems` as its element, `x14:tupleItems`.
 #[must_use]
-pub fn tuple_items(node: &super::TupleItems, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tuple_items(node: &super::TupleItems, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TUPLE_ITEMS_SHAPE, &node.unknown);
     writer.child(&node.tuple_item);
     writer.finish()
@@ -1582,7 +1460,7 @@ pub fn tuple_items(node: &super::TupleItems, scope: &mut markup::Scope) -> xml::
 
 /// Write a `TupleSet` as its element, `x14:tupleSet`.
 #[must_use]
-pub fn tuple_set(node: &super::TupleSet, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tuple_set(node: &super::TupleSet, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TUPLE_SET_SHAPE, &node.unknown);
     writer.attribute(0, &node.row_count);
     writer.attribute(1, &node.column_count);
@@ -1593,7 +1471,7 @@ pub fn tuple_set(node: &super::TupleSet, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `UserEdit` as its element, `x14:userEdit`.
 #[must_use]
-pub fn user_edit(node: &super::UserEdit, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn user_edit(node: &super::UserEdit, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::USER_EDIT_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()
@@ -1601,7 +1479,7 @@ pub fn user_edit(node: &super::UserEdit, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `Values` as its element, `x14:values`.
 #[must_use]
-pub fn values(node: &super::Values, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn values(node: &super::Values, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VALUES_SHAPE, &node.unknown);
     writer.attribute(0, &node.rows);
     writer.attribute(1, &node.cols);
@@ -1611,7 +1489,7 @@ pub fn values(node: &super::Values, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `WorkbookPr` as its element, `x14:workbookPr`.
 #[must_use]
-pub fn workbook_pr(node: &super::WorkbookPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn workbook_pr(node: &super::WorkbookPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WORKBOOK_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.default_image_dpi);
     writer.attribute(1, &node.discard_image_edit_data);

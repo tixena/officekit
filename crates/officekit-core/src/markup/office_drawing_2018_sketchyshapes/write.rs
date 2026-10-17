@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `ask:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -226,46 +227,31 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `LineSketchCurved` as its element, `ask:lineSketchCurved`.
 #[must_use]
-pub fn line_sketch_curved(
-    node: &super::LineSketchCurved,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_sketch_curved(node: &super::LineSketchCurved, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LINE_SKETCH_CURVED_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LineSketchFreehand` as its element, `ask:lineSketchFreehand`.
 #[must_use]
-pub fn line_sketch_freehand(
-    node: &super::LineSketchFreehand,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_sketch_freehand(node: &super::LineSketchFreehand, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LINE_SKETCH_FREEHAND_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LineSketchNone` as its element, `ask:lineSketchNone`.
 #[must_use]
-pub fn line_sketch_none(
-    node: &super::LineSketchNone,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_sketch_none(node: &super::LineSketchNone, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LINE_SKETCH_NONE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LineSketchScribble` as its element, `ask:lineSketchScribble`.
 #[must_use]
-pub fn line_sketch_scribble(
-    node: &super::LineSketchScribble,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_sketch_scribble(node: &super::LineSketchScribble, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::LINE_SKETCH_SCRIBBLE_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `LineSketchStyleProps` as its element, `ask:lineSketchStyleProps`.
 #[must_use]
-pub fn line_sketch_style_props(
-    node: &super::LineSketchStyleProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_sketch_style_props(node: &super::LineSketchStyleProps, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::LINE_SKETCH_STYLE_PROPS_SHAPE, &node.unknown);
     writer.attribute(0, &node.sd);
@@ -287,7 +273,7 @@ pub fn line_sketch_type_properties(
 
 /// Write a `Seed` as its element, `ask:seed`.
 #[must_use]
-pub fn seed(node: &super::Seed, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn seed(node: &super::Seed, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SEED_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -295,7 +281,7 @@ pub fn seed(node: &super::Seed, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Type` as its element, `ask:type`.
 #[must_use]
-pub fn r#type(node: &super::Type, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn r#type(node: &super::Type, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TYPE_SHAPE, &node.unknown);
     writer.child(&node.content);
     writer.finish()

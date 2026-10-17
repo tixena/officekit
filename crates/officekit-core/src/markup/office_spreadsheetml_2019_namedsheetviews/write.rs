@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ColumnFilter` as its element, `xnsv:columnFilter`.
 #[must_use]
-pub fn column_filter(
-    node: &super::ColumnFilter,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn column_filter(node: &super::ColumnFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COLUMN_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.id);
@@ -233,7 +231,7 @@ pub fn column_filter(
 
 /// Write a `Dxf` as its element, `xnsv:dxf`.
 #[must_use]
-pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DXF_SHAPE, &node.unknown);
     writer.child(&node.font);
     writer.child(&node.number_format);
@@ -247,7 +245,7 @@ pub fn dxf(node: &super::Dxf, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `ExtLst` as its element, `xnsv:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -255,7 +253,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Filter` as its element, `xnsv:filter`.
 #[must_use]
-pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn filter(node: &super::Filter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.hidden_button);
@@ -266,10 +264,7 @@ pub fn filter(node: &super::Filter, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `NamedSheetView` as its element, `xnsv:namedSheetView`.
 #[must_use]
-pub fn named_sheet_view(
-    node: &super::NamedSheetView,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn named_sheet_view(node: &super::NamedSheetView, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NAMED_SHEET_VIEW_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.id);
@@ -280,10 +275,7 @@ pub fn named_sheet_view(
 
 /// Write a `NamedSheetViews` as its element, `xnsv:namedSheetViews`.
 #[must_use]
-pub fn named_sheet_views(
-    node: &super::NamedSheetViews,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn named_sheet_views(node: &super::NamedSheetViews, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NAMED_SHEET_VIEWS_SHAPE, &node.unknown);
     writer.child(&node.named_sheet_view);
     writer.child(&node.ext_lst);
@@ -292,7 +284,7 @@ pub fn named_sheet_views(
 
 /// Write a `NsvFilter` as its element, `xnsv:nsvFilter`.
 #[must_use]
-pub fn nsv_filter(node: &super::NsvFilter, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nsv_filter(node: &super::NsvFilter, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NSV_FILTER_SHAPE, &node.unknown);
     writer.attribute(0, &node.filter_id);
     writer.attribute(1, &node.r#ref);
@@ -305,10 +297,7 @@ pub fn nsv_filter(node: &super::NsvFilter, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `RichSortCondition` as its element, `xnsv:richSortCondition`.
 #[must_use]
-pub fn rich_sort_condition(
-    node: &super::RichSortCondition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rich_sort_condition(node: &super::RichSortCondition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RICH_SORT_CONDITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.rich_sort_key);
     writer.attribute(1, &node.descending);
@@ -323,10 +312,7 @@ pub fn rich_sort_condition(
 
 /// Write a `SortCondition` as its element, `xnsv:sortCondition`.
 #[must_use]
-pub fn sort_condition(
-    node: &super::SortCondition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn sort_condition(node: &super::SortCondition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SORT_CONDITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.descending);
     writer.attribute(1, &node.sort_by);
@@ -340,7 +326,7 @@ pub fn sort_condition(
 
 /// Write a `SortRule` as its element, `xnsv:sortRule`.
 #[must_use]
-pub fn sort_rule(node: &super::SortRule, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sort_rule(node: &super::SortRule, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SORT_RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.id);
@@ -356,7 +342,7 @@ pub fn sort_rule_content(node: &super::SortRuleContent, writer: &mut markup::Wri
 
 /// Write a `SortRules` as its element, `xnsv:sortRules`.
 #[must_use]
-pub fn sort_rules(node: &super::SortRules, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sort_rules(node: &super::SortRules, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SORT_RULES_SHAPE, &node.unknown);
     writer.attribute(0, &node.sort_method);
     writer.attribute(1, &node.case_sensitive);

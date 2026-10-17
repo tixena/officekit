@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wpc:bg` into a `Bg`.
 #[must_use]
-pub fn bg(element: &xml::element::Element) -> super::Bg {
+pub fn bg(element: &Element) -> super::Bg {
     let mut node = super::Bg::default();
     let mut reader = markup::Reader::new(element, &super::BG_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn bg(element: &xml::element::Element) -> super::Bg {
 
 /// Read `wpc:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -247,7 +247,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `wpc:graphicFrame` into a `GraphicFrame`.
 #[must_use]
-pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
+pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -266,7 +266,7 @@ pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
 
 /// Read `wpc:whole` into a `Whole`.
 #[must_use]
-pub fn whole(element: &xml::element::Element) -> super::Whole {
+pub fn whole(element: &Element) -> super::Whole {
     let mut node = super::Whole::default();
     let mut reader = markup::Reader::new(element, &super::WHOLE_SHAPE);
     for (index, field) in &mut reader {
@@ -282,15 +282,13 @@ pub fn whole(element: &xml::element::Element) -> super::Whole {
 
 /// Read one item of `WordprocessingCanvasContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn wordprocessing_canvas(
-    element: &xml::element::Element,
-) -> super::WordprocessingCanvasContent {
+pub fn wordprocessing_canvas(element: &Element) -> super::WordprocessingCanvasContent {
     markup::read(element)
 }
 
 /// Read `wpc:wpc` into a `Wpc`.
 #[must_use]
-pub fn wpc(element: &xml::element::Element) -> super::Wpc {
+pub fn wpc(element: &Element) -> super::Wpc {
     let mut node = super::Wpc::default();
     let mut reader = markup::Reader::new(element, &super::WPC_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `c14:dropZoneCategories` into a `DropZoneCategories`.
 #[must_use]
-pub fn drop_zone_categories(element: &xml::element::Element) -> super::DropZoneCategories {
+pub fn drop_zone_categories(element: &Element) -> super::DropZoneCategories {
     let reader = markup::Reader::new(element, &super::DROP_ZONE_CATEGORIES_SHAPE);
     super::DropZoneCategories {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn drop_zone_categories(element: &xml::element::Element) -> super::DropZoneC
 
 /// Read `c14:dropZoneData` into a `DropZoneData`.
 #[must_use]
-pub fn drop_zone_data(element: &xml::element::Element) -> super::DropZoneData {
+pub fn drop_zone_data(element: &Element) -> super::DropZoneData {
     let reader = markup::Reader::new(element, &super::DROP_ZONE_DATA_SHAPE);
     super::DropZoneData {
         unknown: reader.finish(),
@@ -235,7 +235,7 @@ pub fn drop_zone_data(element: &xml::element::Element) -> super::DropZoneData {
 
 /// Read `c14:dropZoneFilter` into a `DropZoneFilter`.
 #[must_use]
-pub fn drop_zone_filter(element: &xml::element::Element) -> super::DropZoneFilter {
+pub fn drop_zone_filter(element: &Element) -> super::DropZoneFilter {
     let reader = markup::Reader::new(element, &super::DROP_ZONE_FILTER_SHAPE);
     super::DropZoneFilter {
         unknown: reader.finish(),
@@ -244,7 +244,7 @@ pub fn drop_zone_filter(element: &xml::element::Element) -> super::DropZoneFilte
 
 /// Read `c14:dropZoneSeries` into a `DropZoneSeries`.
 #[must_use]
-pub fn drop_zone_series(element: &xml::element::Element) -> super::DropZoneSeries {
+pub fn drop_zone_series(element: &Element) -> super::DropZoneSeries {
     let reader = markup::Reader::new(element, &super::DROP_ZONE_SERIES_SHAPE);
     super::DropZoneSeries {
         unknown: reader.finish(),
@@ -253,7 +253,7 @@ pub fn drop_zone_series(element: &xml::element::Element) -> super::DropZoneSerie
 
 /// Read `c14:dropZonesVisible` into a `DropZonesVisible`.
 #[must_use]
-pub fn drop_zones_visible(element: &xml::element::Element) -> super::DropZonesVisible {
+pub fn drop_zones_visible(element: &Element) -> super::DropZonesVisible {
     let reader = markup::Reader::new(element, &super::DROP_ZONES_VISIBLE_SHAPE);
     super::DropZonesVisible {
         unknown: reader.finish(),
@@ -262,7 +262,7 @@ pub fn drop_zones_visible(element: &xml::element::Element) -> super::DropZonesVi
 
 /// Read `c14:inSketchMode` into a `InSketchMode`.
 #[must_use]
-pub fn in_sketch_mode(element: &xml::element::Element) -> super::InSketchMode {
+pub fn in_sketch_mode(element: &Element) -> super::InSketchMode {
     let reader = markup::Reader::new(element, &super::IN_SKETCH_MODE_SHAPE);
     super::InSketchMode {
         unknown: reader.finish(),
@@ -271,7 +271,7 @@ pub fn in_sketch_mode(element: &xml::element::Element) -> super::InSketchMode {
 
 /// Read `c14:invertSolidFillFmt` into a `InvertSolidFillFmt`.
 #[must_use]
-pub fn invert_solid_fill_fmt(element: &xml::element::Element) -> super::InvertSolidFillFmt {
+pub fn invert_solid_fill_fmt(element: &Element) -> super::InvertSolidFillFmt {
     let mut node = super::InvertSolidFillFmt::default();
     let mut reader = markup::Reader::new(element, &super::INVERT_SOLID_FILL_FMT_SHAPE);
     for (index, field) in &mut reader {
@@ -285,7 +285,7 @@ pub fn invert_solid_fill_fmt(element: &xml::element::Element) -> super::InvertSo
 
 /// Read `c14:pivotOptions` into a `PivotOptions`.
 #[must_use]
-pub fn pivot_options(element: &xml::element::Element) -> super::PivotOptions {
+pub fn pivot_options(element: &Element) -> super::PivotOptions {
     let mut node = super::PivotOptions::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_OPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -304,7 +304,7 @@ pub fn pivot_options(element: &xml::element::Element) -> super::PivotOptions {
 
 /// Read `c14:showSketchBtn` into a `ShowSketchBtn`.
 #[must_use]
-pub fn show_sketch_btn(element: &xml::element::Element) -> super::ShowSketchBtn {
+pub fn show_sketch_btn(element: &Element) -> super::ShowSketchBtn {
     let mut node = super::ShowSketchBtn::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_SKETCH_BTN_SHAPE);
     for (index, field) in &mut reader {
@@ -318,7 +318,7 @@ pub fn show_sketch_btn(element: &xml::element::Element) -> super::ShowSketchBtn 
 
 /// Read `c14:sketchOptions` into a `SketchOptions`.
 #[must_use]
-pub fn sketch_options(element: &xml::element::Element) -> super::SketchOptions {
+pub fn sketch_options(element: &Element) -> super::SketchOptions {
     let mut node = super::SketchOptions::default();
     let mut reader = markup::Reader::new(element, &super::SKETCH_OPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -334,7 +334,7 @@ pub fn sketch_options(element: &xml::element::Element) -> super::SketchOptions {
 
 /// Read `c14:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -357,7 +357,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `c14:style` into a `Style`.
 #[must_use]
-pub fn style(element: &xml::element::Element) -> super::Style {
+pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {

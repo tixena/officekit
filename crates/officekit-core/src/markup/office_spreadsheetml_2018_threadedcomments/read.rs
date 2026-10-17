@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xltc:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xltc:mention` into a `Mention`.
 #[must_use]
-pub fn mention(element: &xml::element::Element) -> super::Mention {
+pub fn mention(element: &Element) -> super::Mention {
     let mut node = super::Mention::default();
     let mut reader = markup::Reader::new(element, &super::MENTION_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn mention(element: &xml::element::Element) -> super::Mention {
 
 /// Read `xltc:mentions` into a `Mentions`.
 #[must_use]
-pub fn mentions(element: &xml::element::Element) -> super::Mentions {
+pub fn mentions(element: &Element) -> super::Mentions {
     let mut node = super::Mentions::default();
     let mut reader = markup::Reader::new(element, &super::MENTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -263,7 +263,7 @@ pub fn mentions(element: &xml::element::Element) -> super::Mentions {
 
 /// Read `xltc:person` into a `Person`.
 #[must_use]
-pub fn person(element: &xml::element::Element) -> super::Person {
+pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = markup::Reader::new(element, &super::PERSON_SHAPE);
     for (index, field) in &mut reader {
@@ -282,7 +282,7 @@ pub fn person(element: &xml::element::Element) -> super::Person {
 
 /// Read `xltc:personList` into a `PersonList`.
 #[must_use]
-pub fn person_list(element: &xml::element::Element) -> super::PersonList {
+pub fn person_list(element: &Element) -> super::PersonList {
     let mut node = super::PersonList::default();
     let mut reader = markup::Reader::new(element, &super::PERSON_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -298,7 +298,7 @@ pub fn person_list(element: &xml::element::Element) -> super::PersonList {
 
 /// Read `xltc:text` into a `Text`.
 #[must_use]
-pub fn text(element: &xml::element::Element) -> super::Text {
+pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -312,7 +312,7 @@ pub fn text(element: &xml::element::Element) -> super::Text {
 
 /// Read `xltc:threadedComment` into a `ThreadedComment`.
 #[must_use]
-pub fn threaded_comment(element: &xml::element::Element) -> super::ThreadedComment {
+pub fn threaded_comment(element: &Element) -> super::ThreadedComment {
     let mut node = super::ThreadedComment::default();
     let mut reader = markup::Reader::new(element, &super::THREADED_COMMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -335,7 +335,7 @@ pub fn threaded_comment(element: &xml::element::Element) -> super::ThreadedComme
 
 /// Read `xltc:ThreadedComments` into a `ThreadedComments`.
 #[must_use]
-pub fn threaded_comments(element: &xml::element::Element) -> super::ThreadedComments {
+pub fn threaded_comments(element: &Element) -> super::ThreadedComments {
     let mut node = super::ThreadedComments::default();
     let mut reader = markup::Reader::new(element, &super::THREADED_COMMENTS_SHAPE);
     for (index, field) in &mut reader {

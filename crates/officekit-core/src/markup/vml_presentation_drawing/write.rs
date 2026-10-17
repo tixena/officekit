@@ -213,23 +213,18 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `InkAnnotationFlag` as its element, `pvml:iscomment`.
 #[must_use]
-pub fn ink_annotation_flag(
-    node: &super::InkAnnotationFlag,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ink_annotation_flag(node: &super::InkAnnotationFlag, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::INK_ANNOTATION_FLAG_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `VMLDiagramText` as its element, `pvml:textdata`.
 #[must_use]
-pub fn vml_diagram_text(
-    node: &super::VMLDiagramText,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn vml_diagram_text(node: &super::VMLDiagramText, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VML_DIAGRAM_TEXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()

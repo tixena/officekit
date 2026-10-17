@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `a16:colId` into a `ColId`.
 #[must_use]
-pub fn col_id(element: &xml::element::Element) -> super::ColId {
+pub fn col_id(element: &Element) -> super::ColId {
     let reader = markup::Reader::new(element, &super::COL_ID_SHAPE);
     super::ColId {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn col_id(element: &xml::element::Element) -> super::ColId {
 
 /// Read `a16:creationId` into a `CreationId`.
 #[must_use]
-pub fn creation_id(element: &xml::element::Element) -> super::CreationId {
+pub fn creation_id(element: &Element) -> super::CreationId {
     let mut node = super::CreationId::default();
     let mut reader = markup::Reader::new(element, &super::CREATION_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -240,7 +240,7 @@ pub fn creation_id(element: &xml::element::Element) -> super::CreationId {
 
 /// Read `a16:cxnDERefs` into a `CxnDERefs`.
 #[must_use]
-pub fn cxn_de_refs(element: &xml::element::Element) -> super::CxnDERefs {
+pub fn cxn_de_refs(element: &Element) -> super::CxnDERefs {
     let mut node = super::CxnDERefs::default();
     let mut reader = markup::Reader::new(element, &super::CXN_DE_REFS_SHAPE);
     for (index, field) in &mut reader {
@@ -256,7 +256,7 @@ pub fn cxn_de_refs(element: &xml::element::Element) -> super::CxnDERefs {
 
 /// Read `a16:predDERef` into a `PredDERef`.
 #[must_use]
-pub fn pred_de_ref(element: &xml::element::Element) -> super::PredDERef {
+pub fn pred_de_ref(element: &Element) -> super::PredDERef {
     let mut node = super::PredDERef::default();
     let mut reader = markup::Reader::new(element, &super::PRED_DE_REF_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +270,7 @@ pub fn pred_de_ref(element: &xml::element::Element) -> super::PredDERef {
 
 /// Read `a16:rowId` into a `RowId`.
 #[must_use]
-pub fn row_id(element: &xml::element::Element) -> super::RowId {
+pub fn row_id(element: &Element) -> super::RowId {
     let reader = markup::Reader::new(element, &super::ROW_ID_SHAPE);
     super::RowId {
         unknown: reader.finish(),

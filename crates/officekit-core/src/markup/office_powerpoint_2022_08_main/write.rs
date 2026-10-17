@@ -214,17 +214,18 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Add` as its element, `p228:add`.
 #[must_use]
-pub fn add(node: &super::Add, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn add(node: &super::Add, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ADD_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Anchr` as its element, `p228:anchr`.
 #[must_use]
-pub fn anchr(node: &super::Anchr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn anchr(node: &super::Anchr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANCHR_SHAPE, &node.unknown);
     writer.child(&node.comment);
     writer.child(&node.ext_lst);
@@ -233,19 +234,19 @@ pub fn anchr(node: &super::Anchr, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `Asgn` as its element, `p228:asgn`.
 #[must_use]
-pub fn asgn(node: &super::Asgn, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn asgn(node: &super::Asgn, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ASGN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Atrbtn` as its element, `p228:atrbtn`.
 #[must_use]
-pub fn atrbtn(node: &super::Atrbtn, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn atrbtn(node: &super::Atrbtn, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ATRBTN_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Comment` as its element, `p228:comment`.
 #[must_use]
-pub fn comment(node: &super::Comment, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comment(node: &super::Comment, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -253,7 +254,7 @@ pub fn comment(node: &super::Comment, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Date` as its element, `p228:date`.
 #[must_use]
-pub fn date(node: &super::Date, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn date(node: &super::Date, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATE_SHAPE, &node.unknown);
     writer.attribute(0, &node.st_dt);
     writer.attribute(1, &node.end_dt);
@@ -262,7 +263,7 @@ pub fn date(node: &super::Date, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Event` as its element, `p228:event`.
 #[must_use]
-pub fn event(node: &super::Event, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn event(node: &super::Event, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EVENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.time);
     writer.attribute(1, &node.id);
@@ -275,7 +276,7 @@ pub fn event(node: &super::Event, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ExtLst` as its element, `p228:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -283,7 +284,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `History` as its element, `p228:history`.
 #[must_use]
-pub fn history(node: &super::History, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn history(node: &super::History, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::HISTORY_SHAPE, &node.unknown);
     writer.child(&node.event);
     writer.finish()
@@ -291,7 +292,7 @@ pub fn history(node: &super::History, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `PcntCmplt` as its element, `p228:pcntCmplt`.
 #[must_use]
-pub fn pcnt_cmplt(node: &super::PcntCmplt, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pcnt_cmplt(node: &super::PcntCmplt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PCNT_CMPLT_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -299,7 +300,7 @@ pub fn pcnt_cmplt(node: &super::PcntCmplt, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `TaskDetails` as its element, `p228:taskDetails`.
 #[must_use]
-pub fn task_details(node: &super::TaskDetails, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn task_details(node: &super::TaskDetails, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASK_DETAILS_SHAPE, &node.unknown);
     writer.attribute(0, &node.deleted);
     writer.attribute(1, &node.inactive);
@@ -318,7 +319,7 @@ pub fn task_history_event(
 
 /// Write a `Title` as its element, `p228:title`.
 #[must_use]
-pub fn title(node: &super::Title, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn title(node: &super::Title, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TITLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()
@@ -326,13 +327,13 @@ pub fn title(node: &super::Title, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `UnasgnAll` as its element, `p228:unasgnAll`.
 #[must_use]
-pub fn unasgn_all(node: &super::UnasgnAll, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn unasgn_all(node: &super::UnasgnAll, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNASGN_ALL_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Undo` as its element, `p228:undo`.
 #[must_use]
-pub fn undo(node: &super::Undo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn undo(node: &super::Undo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UNDO_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -340,6 +341,6 @@ pub fn undo(node: &super::Undo, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Unknown` as its element, `p228:unknown`.
 #[must_use]
-pub fn unknown(node: &super::Unknown, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn unknown(node: &super::Unknown, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNKNOWN_SHAPE, &node.unknown).finish()
 }

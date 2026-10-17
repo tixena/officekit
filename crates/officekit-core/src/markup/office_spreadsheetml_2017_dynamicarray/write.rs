@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DynamicArrayProperties` as its element, `xda:dynamicArrayProperties`.
 #[must_use]
 pub fn dynamic_array_properties(
     node: &super::DynamicArrayProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DYNAMIC_ARRAY_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.f_dynamic);
@@ -231,7 +232,7 @@ pub fn dynamic_array_properties(
 
 /// Write a `ExtLst` as its element, `xda:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()

@@ -1,15 +1,16 @@
 //! The parts a new file of each type starts with: the fewest a Word, Excel, or `PowerPoint` file
 //! needs to open, written Transitional.
 
+use officekit_xml::element::Document;
+use officekit_xml::parse::parse;
+use officekit_xml::write::WriteOptions;
+
 use crate::error::PackageError;
 use crate::packaging::package::{DECLARATION, Package};
 use crate::packaging::part_name::PartName;
 use crate::parts::{
     main_document, presentation, slide_layout, slide_master, theme, workbook, worksheet,
 };
-use crate::xml::element::Document;
-use crate::xml::parse::parse;
-use crate::xml::write::WriteOptions;
 
 /// The namespace declarations of every `PresentationML` part a new presentation holds.
 macro_rules! presentation_namespaces {

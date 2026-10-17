@@ -16,12 +16,13 @@ pub mod dates;
 
 use core::cmp::Ordering;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::Element;
+use officekit_xml::error::{ReadError, WriteError};
+use officekit_xml::name::NamespaceId;
+
 use crate::class_rules::{is, order};
-use crate::error::{ReadError, WriteError};
 use crate::markup::{self, Tag};
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::Element;
-use crate::xml::name::NamespaceId;
 
 #[cfg(test)]
 mod tests;

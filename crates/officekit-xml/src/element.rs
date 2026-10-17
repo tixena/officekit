@@ -75,6 +75,13 @@ pub enum XmlError {
     UndeclaredPrefix(String),
 }
 
+impl Attribute {
+    #[must_use]
+    pub const fn new(name: QName, value: String) -> Self {
+        Self { name, value }
+    }
+}
+
 impl Document {
     /// A part with `declaration` and a `\r\n` after it, as Office writes it.
     #[must_use]
@@ -151,5 +158,12 @@ impl Element {
                 element.set_class(class);
             }
         }
+    }
+}
+
+impl NamespaceDeclaration {
+    #[must_use]
+    pub const fn new(prefix: String, uri: String) -> Self {
+        Self { prefix, uri }
     }
 }

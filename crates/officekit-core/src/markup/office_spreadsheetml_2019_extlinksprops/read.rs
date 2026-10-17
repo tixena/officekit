@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xxlnp:externalLinksPr` into a `ExternalLinksPr`.
 #[must_use]
-pub fn external_links_pr(element: &xml::element::Element) -> super::ExternalLinksPr {
+pub fn external_links_pr(element: &Element) -> super::ExternalLinksPr {
     let mut node = super::ExternalLinksPr::default();
     let mut reader = markup::Reader::new(element, &super::EXTERNAL_LINKS_PR_SHAPE);
     for (index, field) in &mut reader {

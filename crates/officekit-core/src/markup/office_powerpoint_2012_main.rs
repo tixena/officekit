@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_P: Option<NamespaceId> = Some(64);
@@ -608,7 +608,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ChartTrackingRefBased {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_tracking_ref_based(element)
     }
 }
@@ -621,7 +621,7 @@ impl markup::Write for ChartTrackingRefBased {
 }
 
 impl markup::Read for Clr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::clr(element)
     }
 }
@@ -634,7 +634,7 @@ impl markup::Write for Clr {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -647,7 +647,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Guide {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::guide(element)
     }
 }
@@ -660,7 +660,7 @@ impl markup::Write for Guide {
 }
 
 impl markup::Read for NotesGuideLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::notes_guide_lst(element)
     }
 }
@@ -673,7 +673,7 @@ impl markup::Write for NotesGuideLst {
 }
 
 impl markup::Read for ParentCm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::parent_cm(element)
     }
 }
@@ -686,7 +686,7 @@ impl markup::Write for ParentCm {
 }
 
 impl markup::Read for PresenceInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presence_info(element)
     }
 }
@@ -699,7 +699,7 @@ impl markup::Write for PresenceInfo {
 }
 
 impl markup::Read for PrstTrans {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::prst_trans(element)
     }
 }
@@ -712,7 +712,7 @@ impl markup::Write for PrstTrans {
 }
 
 impl markup::Read for SldGuideLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_guide_lst(element)
     }
 }
@@ -725,7 +725,7 @@ impl markup::Write for SldGuideLst {
 }
 
 impl markup::Read for ThreadingInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::threading_info(element)
     }
 }

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XNE: Option<NamespaceId> = Some(149);
@@ -306,7 +306,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for F {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::f(element)
     }
 }
@@ -319,7 +319,7 @@ impl markup::Write for F {
 }
 
 impl markup::Read for Sqref {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sqref(element)
     }
 }

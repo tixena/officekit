@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `xlrd:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Fb` as its element, `xlrd:fb`.
 #[must_use]
-pub fn fb(node: &super::Fb, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn fb(node: &super::Fb, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FB_SHAPE, &node.unknown);
     writer.attribute(0, &node.t);
     writer.text(&node.value);
@@ -234,7 +235,7 @@ pub fn fb(node: &super::Fb, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `K` as its element, `xlrd:k`.
 #[must_use]
-pub fn k(node: &super::K, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn k(node: &super::K, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::K_SHAPE, &node.unknown);
     writer.attribute(0, &node.n);
     writer.attribute(1, &node.t);
@@ -243,7 +244,7 @@ pub fn k(node: &super::K, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `Rv` as its element, `xlrd:rv`.
 #[must_use]
-pub fn rv(node: &super::Rv, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rv(node: &super::Rv, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RV_SHAPE, &node.unknown);
     writer.attribute(0, &node.s);
     writer.child(&node.fb);
@@ -253,7 +254,7 @@ pub fn rv(node: &super::Rv, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `RvData` as its element, `xlrd:rvData`.
 #[must_use]
-pub fn rv_data(node: &super::RvData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rv_data(node: &super::RvData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RV_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.rv);
@@ -263,10 +264,7 @@ pub fn rv_data(node: &super::RvData, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `RvStructures` as its element, `xlrd:rvStructures`.
 #[must_use]
-pub fn rv_structures(
-    node: &super::RvStructures,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rv_structures(node: &super::RvStructures, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RV_STRUCTURES_SHAPE, &node.unknown);
     writer.attribute(0, &node.count);
     writer.child(&node.s);
@@ -276,7 +274,7 @@ pub fn rv_structures(
 
 /// Write a `Rvb` as its element, `xlrd:rvb`.
 #[must_use]
-pub fn rvb(node: &super::Rvb, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rvb(node: &super::Rvb, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RVB_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
     writer.finish()
@@ -284,7 +282,7 @@ pub fn rvb(node: &super::Rvb, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `S` as its element, `xlrd:s`.
 #[must_use]
-pub fn s(node: &super::S, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn s(node: &super::S, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::S_SHAPE, &node.unknown);
     writer.attribute(0, &node.t);
     writer.child(&node.k);
@@ -293,7 +291,7 @@ pub fn s(node: &super::S, scope: &mut markup::Scope) -> xml::element::Element {
 
 /// Write a `V` as its element, `xlrd:v`.
 #[must_use]
-pub fn v(node: &super::V, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn v(node: &super::V, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::V_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

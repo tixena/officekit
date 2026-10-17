@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AutoBuNodeInfo` as its element, `dgm1611:autoBuNodeInfo`.
 #[must_use]
-pub fn auto_bu_node_info(
-    node: &super::AutoBuNodeInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn auto_bu_node_info(node: &super::AutoBuNodeInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTO_BU_NODE_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.lvl);
     writer.attribute(1, &node.pt_type);
@@ -230,10 +228,7 @@ pub fn auto_bu_node_info(
 
 /// Write a `AutoBuNodeInfoLst` as its element, `dgm1611:autoBuNodeInfoLst`.
 #[must_use]
-pub fn auto_bu_node_info_lst(
-    node: &super::AutoBuNodeInfoLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn auto_bu_node_info_lst(node: &super::AutoBuNodeInfoLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTO_BU_NODE_INFO_LST_SHAPE, &node.unknown);
     writer.child(&node.auto_bu_node_info);
     writer.finish()
@@ -241,7 +236,7 @@ pub fn auto_bu_node_info_lst(
 
 /// Write a `BuPr` as its element, `dgm1611:buPr`.
 #[must_use]
-pub fn bu_pr(node: &super::BuPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bu_pr(node: &super::BuPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BU_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.prefix);
     writer.attribute(1, &node.lead_zeros);

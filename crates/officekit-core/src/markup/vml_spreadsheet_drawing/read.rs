@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xvml:Anchor` into a `Anchor`.
 #[must_use]
-pub fn anchor(element: &xml::element::Element) -> super::Anchor {
+pub fn anchor(element: &Element) -> super::Anchor {
     let mut node = super::Anchor::default();
     let mut reader = markup::Reader::new(element, &super::ANCHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn anchor(element: &xml::element::Element) -> super::Anchor {
 
 /// Read `xvml:ClientData` into a `AttachedObjectData`.
 #[must_use]
-pub fn attached_object_data(element: &xml::element::Element) -> super::AttachedObjectData {
+pub fn attached_object_data(element: &Element) -> super::AttachedObjectData {
     let mut node = super::AttachedObjectData::default();
     let mut reader = markup::Reader::new(element, &super::ATTACHED_OBJECT_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -247,15 +247,13 @@ pub fn attached_object_data(element: &xml::element::Element) -> super::AttachedO
 
 /// Read one item of `AttachedObjectDataContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn attached_object_data_content(
-    element: &xml::element::Element,
-) -> super::AttachedObjectDataContent {
+pub fn attached_object_data_content(element: &Element) -> super::AttachedObjectDataContent {
     markup::read(element)
 }
 
 /// Read `xvml:AutoFill` into a `AutoFill`.
 #[must_use]
-pub fn auto_fill(element: &xml::element::Element) -> super::AutoFill {
+pub fn auto_fill(element: &Element) -> super::AutoFill {
     let mut node = super::AutoFill::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -269,7 +267,7 @@ pub fn auto_fill(element: &xml::element::Element) -> super::AutoFill {
 
 /// Read `xvml:AutoLine` into a `AutoLine`.
 #[must_use]
-pub fn auto_line(element: &xml::element::Element) -> super::AutoLine {
+pub fn auto_line(element: &Element) -> super::AutoLine {
     let mut node = super::AutoLine::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -283,7 +281,7 @@ pub fn auto_line(element: &xml::element::Element) -> super::AutoLine {
 
 /// Read `xvml:AutoPict` into a `AutomaticallySize`.
 #[must_use]
-pub fn automatically_size(element: &xml::element::Element) -> super::AutomaticallySize {
+pub fn automatically_size(element: &Element) -> super::AutomaticallySize {
     let mut node = super::AutomaticallySize::default();
     let mut reader = markup::Reader::new(element, &super::AUTOMATICALLY_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -297,7 +295,7 @@ pub fn automatically_size(element: &xml::element::Element) -> super::Automatical
 
 /// Read `xvml:LCT` into a `CallbackType`.
 #[must_use]
-pub fn callback_type(element: &xml::element::Element) -> super::CallbackType {
+pub fn callback_type(element: &Element) -> super::CallbackType {
     let mut node = super::CallbackType::default();
     let mut reader = markup::Reader::new(element, &super::CALLBACK_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -311,7 +309,7 @@ pub fn callback_type(element: &xml::element::Element) -> super::CallbackType {
 
 /// Read `xvml:FmlaPict` into a `CameraSourceRange`.
 #[must_use]
-pub fn camera_source_range(element: &xml::element::Element) -> super::CameraSourceRange {
+pub fn camera_source_range(element: &Element) -> super::CameraSourceRange {
     let mut node = super::CameraSourceRange::default();
     let mut reader = markup::Reader::new(element, &super::CAMERA_SOURCE_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -325,7 +323,7 @@ pub fn camera_source_range(element: &xml::element::Element) -> super::CameraSour
 
 /// Read `xvml:Camera` into a `CameraTool`.
 #[must_use]
-pub fn camera_tool(element: &xml::element::Element) -> super::CameraTool {
+pub fn camera_tool(element: &Element) -> super::CameraTool {
     let mut node = super::CameraTool::default();
     let mut reader = markup::Reader::new(element, &super::CAMERA_TOOL_SHAPE);
     for (index, field) in &mut reader {
@@ -339,7 +337,7 @@ pub fn camera_tool(element: &xml::element::Element) -> super::CameraTool {
 
 /// Read `xvml:Cancel` into a `CancelButton`.
 #[must_use]
-pub fn cancel_button(element: &xml::element::Element) -> super::CancelButton {
+pub fn cancel_button(element: &Element) -> super::CancelButton {
     let mut node = super::CancelButton::default();
     let mut reader = markup::Reader::new(element, &super::CANCEL_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -353,7 +351,7 @@ pub fn cancel_button(element: &xml::element::Element) -> super::CancelButton {
 
 /// Read `xvml:Checked` into a `Checked`.
 #[must_use]
-pub fn checked(element: &xml::element::Element) -> super::Checked {
+pub fn checked(element: &Element) -> super::Checked {
     let mut node = super::Checked::default();
     let mut reader = markup::Reader::new(element, &super::CHECKED_SHAPE);
     for (index, field) in &mut reader {
@@ -367,7 +365,7 @@ pub fn checked(element: &xml::element::Element) -> super::Checked {
 
 /// Read `xvml:CF` into a `ClipboardFormat`.
 #[must_use]
-pub fn clipboard_format(element: &xml::element::Element) -> super::ClipboardFormat {
+pub fn clipboard_format(element: &Element) -> super::ClipboardFormat {
     let mut node = super::ClipboardFormat::default();
     let mut reader = markup::Reader::new(element, &super::CLIPBOARD_FORMAT_SHAPE);
     for (index, field) in &mut reader {
@@ -381,7 +379,7 @@ pub fn clipboard_format(element: &xml::element::Element) -> super::ClipboardForm
 
 /// Read `xvml:Column` into a `CommentColumnTarget`.
 #[must_use]
-pub fn comment_column_target(element: &xml::element::Element) -> super::CommentColumnTarget {
+pub fn comment_column_target(element: &Element) -> super::CommentColumnTarget {
     let mut node = super::CommentColumnTarget::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_COLUMN_TARGET_SHAPE);
     for (index, field) in &mut reader {
@@ -395,7 +393,7 @@ pub fn comment_column_target(element: &xml::element::Element) -> super::CommentC
 
 /// Read `xvml:Row` into a `CommentRowTarget`.
 #[must_use]
-pub fn comment_row_target(element: &xml::element::Element) -> super::CommentRowTarget {
+pub fn comment_row_target(element: &Element) -> super::CommentRowTarget {
     let mut node = super::CommentRowTarget::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_ROW_TARGET_SHAPE);
     for (index, field) in &mut reader {
@@ -409,9 +407,7 @@ pub fn comment_row_target(element: &xml::element::Element) -> super::CommentRowT
 
 /// Read `xvml:Visible` into a `CommentVisibilityToggle`.
 #[must_use]
-pub fn comment_visibility_toggle(
-    element: &xml::element::Element,
-) -> super::CommentVisibilityToggle {
+pub fn comment_visibility_toggle(element: &Element) -> super::CommentVisibilityToggle {
     let mut node = super::CommentVisibilityToggle::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_VISIBILITY_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -425,7 +421,7 @@ pub fn comment_visibility_toggle(
 
 /// Read `xvml:ColHidden` into a `CommentsColumnIsHidden`.
 #[must_use]
-pub fn comments_column_is_hidden(element: &xml::element::Element) -> super::CommentsColumnIsHidden {
+pub fn comments_column_is_hidden(element: &Element) -> super::CommentsColumnIsHidden {
     let mut node = super::CommentsColumnIsHidden::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_COLUMN_IS_HIDDEN_SHAPE);
     for (index, field) in &mut reader {
@@ -439,7 +435,7 @@ pub fn comments_column_is_hidden(element: &xml::element::Element) -> super::Comm
 
 /// Read `xvml:RowHidden` into a `CommentsRowIsHidden`.
 #[must_use]
-pub fn comments_row_is_hidden(element: &xml::element::Element) -> super::CommentsRowIsHidden {
+pub fn comments_row_is_hidden(element: &Element) -> super::CommentsRowIsHidden {
     let mut node = super::CommentsRowIsHidden::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_ROW_IS_HIDDEN_SHAPE);
     for (index, field) in &mut reader {
@@ -453,7 +449,7 @@ pub fn comments_row_is_hidden(element: &xml::element::Element) -> super::Comment
 
 /// Read `xvml:Default` into a `DefaultButton`.
 #[must_use]
-pub fn default_button(element: &xml::element::Element) -> super::DefaultButton {
+pub fn default_button(element: &Element) -> super::DefaultButton {
     let mut node = super::DefaultButton::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -467,7 +463,7 @@ pub fn default_button(element: &xml::element::Element) -> super::DefaultButton {
 
 /// Read `xvml:DefaultSize` into a `DefaultSizeToggle`.
 #[must_use]
-pub fn default_size_toggle(element: &xml::element::Element) -> super::DefaultSizeToggle {
+pub fn default_size_toggle(element: &Element) -> super::DefaultSizeToggle {
     let mut node = super::DefaultSizeToggle::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_SIZE_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -481,7 +477,7 @@ pub fn default_size_toggle(element: &xml::element::Element) -> super::DefaultSiz
 
 /// Read `xvml:NoThreeD` into a `Disable3DNoThreeD`.
 #[must_use]
-pub fn disable3d_no_three_d(element: &xml::element::Element) -> super::Disable3DNoThreeD {
+pub fn disable3d_no_three_d(element: &Element) -> super::Disable3DNoThreeD {
     let mut node = super::Disable3DNoThreeD::default();
     let mut reader = markup::Reader::new(element, &super::DISABLE3D_NO_THREE_D_SHAPE);
     for (index, field) in &mut reader {
@@ -495,7 +491,7 @@ pub fn disable3d_no_three_d(element: &xml::element::Element) -> super::Disable3D
 
 /// Read `xvml:NoThreeD2` into a `Disable3DNoThreeD2`.
 #[must_use]
-pub fn disable3d_no_three_d2(element: &xml::element::Element) -> super::Disable3DNoThreeD2 {
+pub fn disable3d_no_three_d2(element: &Element) -> super::Disable3DNoThreeD2 {
     let mut node = super::Disable3DNoThreeD2::default();
     let mut reader = markup::Reader::new(element, &super::DISABLE3D_NO_THREE_D2_SHAPE);
     for (index, field) in &mut reader {
@@ -509,7 +505,7 @@ pub fn disable3d_no_three_d2(element: &xml::element::Element) -> super::Disable3
 
 /// Read `xvml:Dismiss` into a `DismissButton`.
 #[must_use]
-pub fn dismiss_button(element: &xml::element::Element) -> super::DismissButton {
+pub fn dismiss_button(element: &Element) -> super::DismissButton {
     let mut node = super::DismissButton::default();
     let mut reader = markup::Reader::new(element, &super::DISMISS_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -523,7 +519,7 @@ pub fn dismiss_button(element: &xml::element::Element) -> super::DismissButton {
 
 /// Read `xvml:Colored` into a `DropdownColorToggle`.
 #[must_use]
-pub fn dropdown_color_toggle(element: &xml::element::Element) -> super::DropdownColorToggle {
+pub fn dropdown_color_toggle(element: &Element) -> super::DropdownColorToggle {
     let mut node = super::DropdownColorToggle::default();
     let mut reader = markup::Reader::new(element, &super::DROPDOWN_COLOR_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -537,7 +533,7 @@ pub fn dropdown_color_toggle(element: &xml::element::Element) -> super::Dropdown
 
 /// Read `xvml:DropLines` into a `DropdownMaximumLines`.
 #[must_use]
-pub fn dropdown_maximum_lines(element: &xml::element::Element) -> super::DropdownMaximumLines {
+pub fn dropdown_maximum_lines(element: &Element) -> super::DropdownMaximumLines {
     let mut node = super::DropdownMaximumLines::default();
     let mut reader = markup::Reader::new(element, &super::DROPDOWN_MAXIMUM_LINES_SHAPE);
     for (index, field) in &mut reader {
@@ -551,7 +547,7 @@ pub fn dropdown_maximum_lines(element: &xml::element::Element) -> super::Dropdow
 
 /// Read `xvml:DropStyle` into a `DropdownStyle`.
 #[must_use]
-pub fn dropdown_style(element: &xml::element::Element) -> super::DropdownStyle {
+pub fn dropdown_style(element: &Element) -> super::DropdownStyle {
     let mut node = super::DropdownStyle::default();
     let mut reader = markup::Reader::new(element, &super::DROPDOWN_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -565,7 +561,7 @@ pub fn dropdown_style(element: &xml::element::Element) -> super::DropdownStyle {
 
 /// Read `xvml:DDE` into a `DynamicDataExchange`.
 #[must_use]
-pub fn dynamic_data_exchange(element: &xml::element::Element) -> super::DynamicDataExchange {
+pub fn dynamic_data_exchange(element: &Element) -> super::DynamicDataExchange {
     let mut node = super::DynamicDataExchange::default();
     let mut reader = markup::Reader::new(element, &super::DYNAMIC_DATA_EXCHANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -579,7 +575,7 @@ pub fn dynamic_data_exchange(element: &xml::element::Element) -> super::DynamicD
 
 /// Read `xvml:MapOCX` into a `EmbeddedControl`.
 #[must_use]
-pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedControl {
+pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -593,7 +589,7 @@ pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedContr
 
 /// Read `xvml:JustLastX` into a `FarEastAlignmentToggle`.
 #[must_use]
-pub fn far_east_alignment_toggle(element: &xml::element::Element) -> super::FarEastAlignmentToggle {
+pub fn far_east_alignment_toggle(element: &Element) -> super::FarEastAlignmentToggle {
     let mut node = super::FarEastAlignmentToggle::default();
     let mut reader = markup::Reader::new(element, &super::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -607,7 +603,7 @@ pub fn far_east_alignment_toggle(element: &xml::element::Element) -> super::FarE
 
 /// Read `xvml:FirstButton` into a `FirstRadioButton`.
 #[must_use]
-pub fn first_radio_button(element: &xml::element::Element) -> super::FirstRadioButton {
+pub fn first_radio_button(element: &Element) -> super::FirstRadioButton {
     let mut node = super::FirstRadioButton::default();
     let mut reader = markup::Reader::new(element, &super::FIRST_RADIO_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -621,7 +617,7 @@ pub fn first_radio_button(element: &xml::element::Element) -> super::FirstRadioB
 
 /// Read `xvml:AutoScale` into a `FontAutoScale`.
 #[must_use]
-pub fn font_auto_scale(element: &xml::element::Element) -> super::FontAutoScale {
+pub fn font_auto_scale(element: &Element) -> super::FontAutoScale {
     let mut node = super::FontAutoScale::default();
     let mut reader = markup::Reader::new(element, &super::FONT_AUTO_SCALE_SHAPE);
     for (index, field) in &mut reader {
@@ -635,7 +631,7 @@ pub fn font_auto_scale(element: &xml::element::Element) -> super::FontAutoScale 
 
 /// Read `xvml:Help` into a `HelpButton`.
 #[must_use]
-pub fn help_button(element: &xml::element::Element) -> super::HelpButton {
+pub fn help_button(element: &Element) -> super::HelpButton {
     let mut node = super::HelpButton::default();
     let mut reader = markup::Reader::new(element, &super::HELP_BUTTON_SHAPE);
     for (index, field) in &mut reader {
@@ -649,9 +645,7 @@ pub fn help_button(element: &xml::element::Element) -> super::HelpButton {
 
 /// Read `xvml:TextHAlign` into a `HorizontalTextAlignment`.
 #[must_use]
-pub fn horizontal_text_alignment(
-    element: &xml::element::Element,
-) -> super::HorizontalTextAlignment {
+pub fn horizontal_text_alignment(element: &Element) -> super::HorizontalTextAlignment {
     let mut node = super::HorizontalTextAlignment::default();
     let mut reader = markup::Reader::new(element, &super::HORIZONTAL_TEXT_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -665,7 +659,7 @@ pub fn horizontal_text_alignment(
 
 /// Read `xvml:ScriptExtended` into a `HTMLScriptAttributes`.
 #[must_use]
-pub fn html_script_attributes(element: &xml::element::Element) -> super::HTMLScriptAttributes {
+pub fn html_script_attributes(element: &Element) -> super::HTMLScriptAttributes {
     let mut node = super::HTMLScriptAttributes::default();
     let mut reader = markup::Reader::new(element, &super::HTML_SCRIPT_ATTRIBUTES_SHAPE);
     for (index, field) in &mut reader {
@@ -679,7 +673,7 @@ pub fn html_script_attributes(element: &xml::element::Element) -> super::HTMLScr
 
 /// Read `xvml:ScriptLanguage` into a `HTMLScriptLanguage`.
 #[must_use]
-pub fn html_script_language(element: &xml::element::Element) -> super::HTMLScriptLanguage {
+pub fn html_script_language(element: &Element) -> super::HTMLScriptLanguage {
     let mut node = super::HTMLScriptLanguage::default();
     let mut reader = markup::Reader::new(element, &super::HTML_SCRIPT_LANGUAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -693,7 +687,7 @@ pub fn html_script_language(element: &xml::element::Element) -> super::HTMLScrip
 
 /// Read `xvml:ScriptLocation` into a `HTMLScriptLocation`.
 #[must_use]
-pub fn html_script_location(element: &xml::element::Element) -> super::HTMLScriptLocation {
+pub fn html_script_location(element: &Element) -> super::HTMLScriptLocation {
     let mut node = super::HTMLScriptLocation::default();
     let mut reader = markup::Reader::new(element, &super::HTML_SCRIPT_LOCATION_SHAPE);
     for (index, field) in &mut reader {
@@ -707,7 +701,7 @@ pub fn html_script_location(element: &xml::element::Element) -> super::HTMLScrip
 
 /// Read `xvml:ScriptText` into a `HTMLScriptText`.
 #[must_use]
-pub fn html_script_text(element: &xml::element::Element) -> super::HTMLScriptText {
+pub fn html_script_text(element: &Element) -> super::HTMLScriptText {
     let mut node = super::HTMLScriptText::default();
     let mut reader = markup::Reader::new(element, &super::HTML_SCRIPT_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -721,7 +715,7 @@ pub fn html_script_text(element: &xml::element::Element) -> super::HTMLScriptTex
 
 /// Read `xvml:FmlaLink` into a `LinkedFormula`.
 #[must_use]
-pub fn linked_formula(element: &xml::element::Element) -> super::LinkedFormula {
+pub fn linked_formula(element: &Element) -> super::LinkedFormula {
     let mut node = super::LinkedFormula::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_FORMULA_SHAPE);
     for (index, field) in &mut reader {
@@ -735,7 +729,7 @@ pub fn linked_formula(element: &xml::element::Element) -> super::LinkedFormula {
 
 /// Read `xvml:FmlaGroup` into a `LinkedFormulaGroupBox`.
 #[must_use]
-pub fn linked_formula_group_box(element: &xml::element::Element) -> super::LinkedFormulaGroupBox {
+pub fn linked_formula_group_box(element: &Element) -> super::LinkedFormulaGroupBox {
     let mut node = super::LinkedFormulaGroupBox::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_FORMULA_GROUP_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -749,7 +743,7 @@ pub fn linked_formula_group_box(element: &xml::element::Element) -> super::Linke
 
 /// Read `xvml:FmlaRange` into a `ListItemsSourceRange`.
 #[must_use]
-pub fn list_items_source_range(element: &xml::element::Element) -> super::ListItemsSourceRange {
+pub fn list_items_source_range(element: &Element) -> super::ListItemsSourceRange {
     let mut node = super::ListItemsSourceRange::default();
     let mut reader = markup::Reader::new(element, &super::LIST_ITEMS_SOURCE_RANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -763,7 +757,7 @@ pub fn list_items_source_range(element: &xml::element::Element) -> super::ListIt
 
 /// Read `xvml:Locked` into a `LockToggle`.
 #[must_use]
-pub fn lock_toggle(element: &xml::element::Element) -> super::LockToggle {
+pub fn lock_toggle(element: &Element) -> super::LockToggle {
     let mut node = super::LockToggle::default();
     let mut reader = markup::Reader::new(element, &super::LOCK_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -777,7 +771,7 @@ pub fn lock_toggle(element: &xml::element::Element) -> super::LockToggle {
 
 /// Read `xvml:Disabled` into a `MacroDisableToggle`.
 #[must_use]
-pub fn macro_disable_toggle(element: &xml::element::Element) -> super::MacroDisableToggle {
+pub fn macro_disable_toggle(element: &Element) -> super::MacroDisableToggle {
     let mut node = super::MacroDisableToggle::default();
     let mut reader = markup::Reader::new(element, &super::MACRO_DISABLE_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -791,7 +785,7 @@ pub fn macro_disable_toggle(element: &xml::element::Element) -> super::MacroDisa
 
 /// Read `xvml:WidthMin` into a `MinimumWidth`.
 #[must_use]
-pub fn minimum_width(element: &xml::element::Element) -> super::MinimumWidth {
+pub fn minimum_width(element: &Element) -> super::MinimumWidth {
     let mut node = super::MinimumWidth::default();
     let mut reader = markup::Reader::new(element, &super::MINIMUM_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -805,7 +799,7 @@ pub fn minimum_width(element: &xml::element::Element) -> super::MinimumWidth {
 
 /// Read `xvml:MoveWithCells` into a `MoveWithCells`.
 #[must_use]
-pub fn move_with_cells(element: &xml::element::Element) -> super::MoveWithCells {
+pub fn move_with_cells(element: &Element) -> super::MoveWithCells {
     let mut node = super::MoveWithCells::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_WITH_CELLS_SHAPE);
     for (index, field) in &mut reader {
@@ -819,7 +813,7 @@ pub fn move_with_cells(element: &xml::element::Element) -> super::MoveWithCells 
 
 /// Read `xvml:MultiLine` into a `MultiLine`.
 #[must_use]
-pub fn multi_line(element: &xml::element::Element) -> super::MultiLine {
+pub fn multi_line(element: &Element) -> super::MultiLine {
     let mut node = super::MultiLine::default();
     let mut reader = markup::Reader::new(element, &super::MULTI_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -833,7 +827,7 @@ pub fn multi_line(element: &xml::element::Element) -> super::MultiLine {
 
 /// Read `xvml:MultiSel` into a `MultipleSelections`.
 #[must_use]
-pub fn multiple_selections(element: &xml::element::Element) -> super::MultipleSelections {
+pub fn multiple_selections(element: &Element) -> super::MultipleSelections {
     let mut node = super::MultipleSelections::default();
     let mut reader = markup::Reader::new(element, &super::MULTIPLE_SELECTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -847,7 +841,7 @@ pub fn multiple_selections(element: &xml::element::Element) -> super::MultipleSe
 
 /// Read `xvml:ListItem` into a `NonLinkedListItem`.
 #[must_use]
-pub fn non_linked_list_item(element: &xml::element::Element) -> super::NonLinkedListItem {
+pub fn non_linked_list_item(element: &Element) -> super::NonLinkedListItem {
     let mut node = super::NonLinkedListItem::default();
     let mut reader = markup::Reader::new(element, &super::NON_LINKED_LIST_ITEM_SHAPE);
     for (index, field) in &mut reader {
@@ -861,7 +855,7 @@ pub fn non_linked_list_item(element: &xml::element::Element) -> super::NonLinked
 
 /// Read `xvml:SecretEdit` into a `PasswordEdit`.
 #[must_use]
-pub fn password_edit(element: &xml::element::Element) -> super::PasswordEdit {
+pub fn password_edit(element: &Element) -> super::PasswordEdit {
     let mut node = super::PasswordEdit::default();
     let mut reader = markup::Reader::new(element, &super::PASSWORD_EDIT_SHAPE);
     for (index, field) in &mut reader {
@@ -875,9 +869,7 @@ pub fn password_edit(element: &xml::element::Element) -> super::PasswordEdit {
 
 /// Read `xvml:Accel` into a `PrimaryKeyboardAccelerator`.
 #[must_use]
-pub fn primary_keyboard_accelerator(
-    element: &xml::element::Element,
-) -> super::PrimaryKeyboardAccelerator {
+pub fn primary_keyboard_accelerator(element: &Element) -> super::PrimaryKeyboardAccelerator {
     let mut node = super::PrimaryKeyboardAccelerator::default();
     let mut reader = markup::Reader::new(element, &super::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -891,7 +883,7 @@ pub fn primary_keyboard_accelerator(
 
 /// Read `xvml:PrintObject` into a `PrintToggle`.
 #[must_use]
-pub fn print_toggle(element: &xml::element::Element) -> super::PrintToggle {
+pub fn print_toggle(element: &Element) -> super::PrintToggle {
     let mut node = super::PrintToggle::default();
     let mut reader = markup::Reader::new(element, &super::PRINT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -905,7 +897,7 @@ pub fn print_toggle(element: &xml::element::Element) -> super::PrintToggle {
 
 /// Read `xvml:RecalcAlways` into a `RecalculationToggle`.
 #[must_use]
-pub fn recalculation_toggle(element: &xml::element::Element) -> super::RecalculationToggle {
+pub fn recalculation_toggle(element: &Element) -> super::RecalculationToggle {
     let mut node = super::RecalculationToggle::default();
     let mut reader = markup::Reader::new(element, &super::RECALCULATION_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -919,9 +911,7 @@ pub fn recalculation_toggle(element: &xml::element::Element) -> super::Recalcula
 
 /// Read `xvml:FmlaMacro` into a `ReferenceToCustomFunction`.
 #[must_use]
-pub fn reference_to_custom_function(
-    element: &xml::element::Element,
-) -> super::ReferenceToCustomFunction {
+pub fn reference_to_custom_function(element: &Element) -> super::ReferenceToCustomFunction {
     let mut node = super::ReferenceToCustomFunction::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE);
     for (index, field) in &mut reader {
@@ -935,7 +925,7 @@ pub fn reference_to_custom_function(
 
 /// Read `xvml:SizeWithCells` into a `ResizeWithCells`.
 #[must_use]
-pub fn resize_with_cells(element: &xml::element::Element) -> super::ResizeWithCells {
+pub fn resize_with_cells(element: &Element) -> super::ResizeWithCells {
     let mut node = super::ResizeWithCells::default();
     let mut reader = markup::Reader::new(element, &super::RESIZE_WITH_CELLS_SHAPE);
     for (index, field) in &mut reader {
@@ -949,7 +939,7 @@ pub fn resize_with_cells(element: &xml::element::Element) -> super::ResizeWithCe
 
 /// Read `xvml:Inc` into a `ScrollBarIncrement`.
 #[must_use]
-pub fn scroll_bar_increment(element: &xml::element::Element) -> super::ScrollBarIncrement {
+pub fn scroll_bar_increment(element: &Element) -> super::ScrollBarIncrement {
     let mut node = super::ScrollBarIncrement::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_INCREMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -963,7 +953,7 @@ pub fn scroll_bar_increment(element: &xml::element::Element) -> super::ScrollBar
 
 /// Read `xvml:Max` into a `ScrollBarMaximum`.
 #[must_use]
-pub fn scroll_bar_maximum(element: &xml::element::Element) -> super::ScrollBarMaximum {
+pub fn scroll_bar_maximum(element: &Element) -> super::ScrollBarMaximum {
     let mut node = super::ScrollBarMaximum::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_MAXIMUM_SHAPE);
     for (index, field) in &mut reader {
@@ -977,7 +967,7 @@ pub fn scroll_bar_maximum(element: &xml::element::Element) -> super::ScrollBarMa
 
 /// Read `xvml:Min` into a `ScrollBarMinimum`.
 #[must_use]
-pub fn scroll_bar_minimum(element: &xml::element::Element) -> super::ScrollBarMinimum {
+pub fn scroll_bar_minimum(element: &Element) -> super::ScrollBarMinimum {
     let mut node = super::ScrollBarMinimum::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_MINIMUM_SHAPE);
     for (index, field) in &mut reader {
@@ -991,7 +981,7 @@ pub fn scroll_bar_minimum(element: &xml::element::Element) -> super::ScrollBarMi
 
 /// Read `xvml:Horiz` into a `ScrollBarOrientation`.
 #[must_use]
-pub fn scroll_bar_orientation(element: &xml::element::Element) -> super::ScrollBarOrientation {
+pub fn scroll_bar_orientation(element: &Element) -> super::ScrollBarOrientation {
     let mut node = super::ScrollBarOrientation::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_ORIENTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -1005,7 +995,7 @@ pub fn scroll_bar_orientation(element: &xml::element::Element) -> super::ScrollB
 
 /// Read `xvml:Page` into a `ScrollBarPageIncrement`.
 #[must_use]
-pub fn scroll_bar_page_increment(element: &xml::element::Element) -> super::ScrollBarPageIncrement {
+pub fn scroll_bar_page_increment(element: &Element) -> super::ScrollBarPageIncrement {
     let mut node = super::ScrollBarPageIncrement::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_PAGE_INCREMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1019,7 +1009,7 @@ pub fn scroll_bar_page_increment(element: &xml::element::Element) -> super::Scro
 
 /// Read `xvml:Val` into a `ScrollBarPosition`.
 #[must_use]
-pub fn scroll_bar_position(element: &xml::element::Element) -> super::ScrollBarPosition {
+pub fn scroll_bar_position(element: &Element) -> super::ScrollBarPosition {
     let mut node = super::ScrollBarPosition::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_POSITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1033,7 +1023,7 @@ pub fn scroll_bar_position(element: &xml::element::Element) -> super::ScrollBarP
 
 /// Read `xvml:Dx` into a `ScrollBarWidth`.
 #[must_use]
-pub fn scroll_bar_width(element: &xml::element::Element) -> super::ScrollBarWidth {
+pub fn scroll_bar_width(element: &Element) -> super::ScrollBarWidth {
     let mut node = super::ScrollBarWidth::default();
     let mut reader = markup::Reader::new(element, &super::SCROLL_BAR_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -1047,9 +1037,7 @@ pub fn scroll_bar_width(element: &xml::element::Element) -> super::ScrollBarWidt
 
 /// Read `xvml:Accel2` into a `SecondaryKeyboardAccelerator`.
 #[must_use]
-pub fn secondary_keyboard_accelerator(
-    element: &xml::element::Element,
-) -> super::SecondaryKeyboardAccelerator {
+pub fn secondary_keyboard_accelerator(element: &Element) -> super::SecondaryKeyboardAccelerator {
     let mut node = super::SecondaryKeyboardAccelerator::default();
     let mut reader = markup::Reader::new(element, &super::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -1063,7 +1051,7 @@ pub fn secondary_keyboard_accelerator(
 
 /// Read `xvml:Sel` into a `SelectedEntry`.
 #[must_use]
-pub fn selected_entry(element: &xml::element::Element) -> super::SelectedEntry {
+pub fn selected_entry(element: &Element) -> super::SelectedEntry {
     let mut node = super::SelectedEntry::default();
     let mut reader = markup::Reader::new(element, &super::SELECTED_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -1077,7 +1065,7 @@ pub fn selected_entry(element: &xml::element::Element) -> super::SelectedEntry {
 
 /// Read `xvml:SelType` into a `SelectionType`.
 #[must_use]
-pub fn selection_type(element: &xml::element::Element) -> super::SelectionType {
+pub fn selection_type(element: &Element) -> super::SelectionType {
     let mut node = super::SelectionType::default();
     let mut reader = markup::Reader::new(element, &super::SELECTION_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1091,7 +1079,7 @@ pub fn selection_type(element: &xml::element::Element) -> super::SelectionType {
 
 /// Read `xvml:FmlaTxbx` into a `TextFormula`.
 #[must_use]
-pub fn text_formula(element: &xml::element::Element) -> super::TextFormula {
+pub fn text_formula(element: &Element) -> super::TextFormula {
     let mut node = super::TextFormula::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_FORMULA_SHAPE);
     for (index, field) in &mut reader {
@@ -1105,7 +1093,7 @@ pub fn text_formula(element: &xml::element::Element) -> super::TextFormula {
 
 /// Read `xvml:LockText` into a `TextLock`.
 #[must_use]
-pub fn text_lock(element: &xml::element::Element) -> super::TextLock {
+pub fn text_lock(element: &Element) -> super::TextLock {
     let mut node = super::TextLock::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_LOCK_SHAPE);
     for (index, field) in &mut reader {
@@ -1119,7 +1107,7 @@ pub fn text_lock(element: &xml::element::Element) -> super::TextLock {
 
 /// Read `xvml:UIObj` into a `UIObjectToggle`.
 #[must_use]
-pub fn ui_object_toggle(element: &xml::element::Element) -> super::UIObjectToggle {
+pub fn ui_object_toggle(element: &Element) -> super::UIObjectToggle {
     let mut node = super::UIObjectToggle::default();
     let mut reader = markup::Reader::new(element, &super::UI_OBJECT_TOGGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1133,7 +1121,7 @@ pub fn ui_object_toggle(element: &xml::element::Element) -> super::UIObjectToggl
 
 /// Read `xvml:ValidIds` into a `ValidID`.
 #[must_use]
-pub fn valid_id(element: &xml::element::Element) -> super::ValidID {
+pub fn valid_id(element: &Element) -> super::ValidID {
     let mut node = super::ValidID::default();
     let mut reader = markup::Reader::new(element, &super::VALID_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -1147,7 +1135,7 @@ pub fn valid_id(element: &xml::element::Element) -> super::ValidID {
 
 /// Read `xvml:VTEdit` into a `ValidationType`.
 #[must_use]
-pub fn validation_type(element: &xml::element::Element) -> super::ValidationType {
+pub fn validation_type(element: &Element) -> super::ValidationType {
     let mut node = super::ValidationType::default();
     let mut reader = markup::Reader::new(element, &super::VALIDATION_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1161,7 +1149,7 @@ pub fn validation_type(element: &xml::element::Element) -> super::ValidationType
 
 /// Read `xvml:VScroll` into a `VerticalScroll`.
 #[must_use]
-pub fn vertical_scroll(element: &xml::element::Element) -> super::VerticalScroll {
+pub fn vertical_scroll(element: &Element) -> super::VerticalScroll {
     let mut node = super::VerticalScroll::default();
     let mut reader = markup::Reader::new(element, &super::VERTICAL_SCROLL_SHAPE);
     for (index, field) in &mut reader {
@@ -1175,7 +1163,7 @@ pub fn vertical_scroll(element: &xml::element::Element) -> super::VerticalScroll
 
 /// Read `xvml:TextVAlign` into a `VerticalTextAlignment`.
 #[must_use]
-pub fn vertical_text_alignment(element: &xml::element::Element) -> super::VerticalTextAlignment {
+pub fn vertical_text_alignment(element: &Element) -> super::VerticalTextAlignment {
     let mut node = super::VerticalTextAlignment::default();
     let mut reader = markup::Reader::new(element, &super::VERTICAL_TEXT_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -616,7 +616,7 @@ pub struct Webextensionref {
 }
 
 impl markup::Read for AlternateReferences {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::alternate_references(element)
     }
 }
@@ -629,7 +629,7 @@ impl markup::Write for AlternateReferences {
 }
 
 impl markup::Read for Binding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binding(element)
     }
 }
@@ -642,7 +642,7 @@ impl markup::Write for Binding {
 }
 
 impl markup::Read for Bindings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bindings(element)
     }
 }
@@ -655,7 +655,7 @@ impl markup::Write for Bindings {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -668,7 +668,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for Properties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::properties(element)
     }
 }
@@ -681,7 +681,7 @@ impl markup::Write for Properties {
 }
 
 impl markup::Read for Property {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::property(element)
     }
 }
@@ -694,7 +694,7 @@ impl markup::Write for Property {
 }
 
 impl markup::Read for Reference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reference(element)
     }
 }
@@ -707,7 +707,7 @@ impl markup::Write for Reference {
 }
 
 impl markup::Read for Snapshot {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::snapshot(element)
     }
 }
@@ -720,7 +720,7 @@ impl markup::Write for Snapshot {
 }
 
 impl markup::Read for Webextension {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::webextension(element)
     }
 }
@@ -733,7 +733,7 @@ impl markup::Write for Webextension {
 }
 
 impl markup::Read for Webextensionref {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::webextensionref(element)
     }
 }

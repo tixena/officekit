@@ -10,14 +10,15 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_xml::element::{Attribute, Element};
+use officekit_xml::mc::is_mc;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
+
 use super::simple_types::{enumeration, failures, has_value};
 use super::types::{AttributeConstraint, Check, SchemaType, ValueCheck, ValueClass};
 use crate::validation::error::ErrorCode;
 use crate::validation::generated::TRANSITIONAL_ONLY_NAMESPACES;
-use crate::xml::element::{Attribute, Element};
-use crate::xml::mc::is_mc;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 
 #[cfg(test)]
 mod tests;
@@ -178,12 +179,10 @@ fn declared_name(constraint: &AttributeConstraint) -> String {
 /// Whether `constraint` is the attribute `name`.
 fn declares(constraint: &AttributeConstraint, name: &QName) -> bool {
     constraint.name == name.local
-        && match (constraint.namespace, &name.namespace) {
-            (None, &Namespace::None) => true,
-            (Some(own), &Namespace::Known(found)) => own == found,
-            (None, &(Namespace::Known(_) | Namespace::Other(_)))
-            | (Some(_), &(Namespace::None | Namespace::Other(_))) => false,
-        }
+        && name.namespace
+            == constraint
+                .namespace
+                .map_or(Namespace::None, Namespace::Known)
 }
 
 /// Whether `namespace` is the `xml` namespace.

@@ -1,7 +1,7 @@
 //! The types of the validation tables: what each schema type, attribute,
 //! value, content model, and part allows, and at which Office versions.
 
-use crate::xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
 
 /// Index into `PART_RULES`.
 pub type PartRuleId = u8;

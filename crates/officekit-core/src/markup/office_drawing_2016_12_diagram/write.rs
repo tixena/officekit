@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `LstStyle` as its element, `dgm1612:lstStyle`.
 #[must_use]
-pub fn lst_style(node: &super::LstStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn lst_style(node: &super::LstStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LST_STYLE_SHAPE, &node.unknown);
     writer.child(&node.default_paragraph_style);
     writer.child(&node.list_level_1_text_style);
@@ -235,7 +236,7 @@ pub fn lst_style(node: &super::LstStyle, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `SpPr` as its element, `dgm1612:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);

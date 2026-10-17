@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `asvg:svgBlip` into a `SvgBlip`.
 #[must_use]
-pub fn svg_blip(element: &xml::element::Element) -> super::SvgBlip {
+pub fn svg_blip(element: &Element) -> super::SvgBlip {
     let mut node = super::SvgBlip::default();
     let mut reader = markup::Reader::new(element, &super::SVG_BLIP_SHAPE);
     for (index, field) in &mut reader {

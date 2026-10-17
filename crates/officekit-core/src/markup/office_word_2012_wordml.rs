@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_W: Option<NamespaceId> = Some(97);
@@ -897,7 +897,7 @@ pub struct WebExtensionLinked {
 }
 
 impl markup::Read for Appearance {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::appearance(element)
     }
 }
@@ -910,7 +910,7 @@ impl markup::Write for Appearance {
 }
 
 impl markup::Read for ChartTrackingRefBased {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chart_tracking_ref_based(element)
     }
 }
@@ -923,7 +923,7 @@ impl markup::Write for ChartTrackingRefBased {
 }
 
 impl markup::Read for Collapsed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::collapsed(element)
     }
 }
@@ -936,7 +936,7 @@ impl markup::Write for Collapsed {
 }
 
 impl markup::Read for Color {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color(element)
     }
 }
@@ -949,7 +949,7 @@ impl markup::Write for Color {
 }
 
 impl markup::Read for CommentEx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_ex(element)
     }
 }
@@ -962,7 +962,7 @@ impl markup::Write for CommentEx {
 }
 
 impl markup::Read for CommentsEx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments_ex(element)
     }
 }
@@ -975,7 +975,7 @@ impl markup::Write for CommentsEx {
 }
 
 impl markup::Read for DataBinding {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_binding(element)
     }
 }
@@ -988,7 +988,7 @@ impl markup::Write for DataBinding {
 }
 
 impl markup::Read for DoNotAllowInsertDeleteSection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::do_not_allow_insert_delete_section(element)
     }
 }
@@ -1001,7 +1001,7 @@ impl markup::Write for DoNotAllowInsertDeleteSection {
 }
 
 impl markup::Read for DocId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::doc_id(element)
     }
 }
@@ -1014,7 +1014,7 @@ impl markup::Write for DocId {
 }
 
 impl markup::Read for FootnoteColumns {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::footnote_columns(element)
     }
 }
@@ -1027,7 +1027,7 @@ impl markup::Write for FootnoteColumns {
 }
 
 impl markup::Read for People {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::people(element)
     }
 }
@@ -1040,7 +1040,7 @@ impl markup::Write for People {
 }
 
 impl markup::Read for Person {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::person(element)
     }
 }
@@ -1053,7 +1053,7 @@ impl markup::Write for Person {
 }
 
 impl markup::Read for PresenceInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presence_info(element)
     }
 }
@@ -1066,7 +1066,7 @@ impl markup::Write for PresenceInfo {
 }
 
 impl markup::Read for RepeatingSection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::repeating_section(element)
     }
 }
@@ -1079,7 +1079,7 @@ impl markup::Write for RepeatingSection {
 }
 
 impl markup::Read for RepeatingSectionItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::repeating_section_item(element)
     }
 }
@@ -1146,7 +1146,7 @@ impl SdtAppearance {
 }
 
 impl markup::Read for SectionTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_title(element)
     }
 }
@@ -1159,7 +1159,7 @@ impl markup::Write for SectionTitle {
 }
 
 impl markup::Read for WebExtensionCreated {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_extension_created(element)
     }
 }
@@ -1172,7 +1172,7 @@ impl markup::Write for WebExtensionCreated {
 }
 
 impl markup::Read for WebExtensionLinked {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::web_extension_linked(element)
     }
 }

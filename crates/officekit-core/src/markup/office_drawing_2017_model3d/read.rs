@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `am3d:ambientLight` into a `AmbientLight`.
 #[must_use]
-pub fn ambient_light(element: &xml::element::Element) -> super::AmbientLight {
+pub fn ambient_light(element: &Element) -> super::AmbientLight {
     let mut node = super::AmbientLight::default();
     let mut reader = markup::Reader::new(element, &super::AMBIENT_LIGHT_SHAPE);
     for (index, field) in &mut reader {
@@ -235,7 +235,7 @@ pub fn ambient_light(element: &xml::element::Element) -> super::AmbientLight {
 
 /// Read `am3d:attrSrcUrl` into a `AttrSrcUrl`.
 #[must_use]
-pub fn attr_src_url(element: &xml::element::Element) -> super::AttrSrcUrl {
+pub fn attr_src_url(element: &Element) -> super::AttrSrcUrl {
     let mut node = super::AttrSrcUrl::default();
     let mut reader = markup::Reader::new(element, &super::ATTR_SRC_URL_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn attr_src_url(element: &xml::element::Element) -> super::AttrSrcUrl {
 
 /// Read `am3d:blip` into a `Blip`.
 #[must_use]
-pub fn blip(element: &xml::element::Element) -> super::Blip {
+pub fn blip(element: &Element) -> super::Blip {
     let mut node = super::Blip::default();
     let mut reader = markup::Reader::new(element, &super::BLIP_SHAPE);
     for (index, field) in &mut reader {
@@ -268,7 +268,7 @@ pub fn blip(element: &xml::element::Element) -> super::Blip {
 
 /// Read `am3d:camera` into a `Camera`.
 #[must_use]
-pub fn camera(element: &xml::element::Element) -> super::Camera {
+pub fn camera(element: &Element) -> super::Camera {
     let mut node = super::Camera::default();
     let mut reader = markup::Reader::new(element, &super::CAMERA_SHAPE);
     for (index, field) in &mut reader {
@@ -287,7 +287,7 @@ pub fn camera(element: &xml::element::Element) -> super::Camera {
 
 /// Read `am3d:clr` into a `Clr`.
 #[must_use]
-pub fn clr(element: &xml::element::Element) -> super::Clr {
+pub fn clr(element: &Element) -> super::Clr {
     let mut node = super::Clr::default();
     let mut reader = markup::Reader::new(element, &super::CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -301,7 +301,7 @@ pub fn clr(element: &xml::element::Element) -> super::Clr {
 
 /// Read `am3d:dirLight` into a `DirLight`.
 #[must_use]
-pub fn dir_light(element: &xml::element::Element) -> super::DirLight {
+pub fn dir_light(element: &Element) -> super::DirLight {
     let mut node = super::DirLight::default();
     let mut reader = markup::Reader::new(element, &super::DIR_LIGHT_SHAPE);
     for (index, field) in &mut reader {
@@ -322,7 +322,7 @@ pub fn dir_light(element: &xml::element::Element) -> super::DirLight {
 
 /// Read `am3d:ext` into a `Ext`.
 #[must_use]
-pub fn ext(element: &xml::element::Element) -> super::Ext {
+pub fn ext(element: &Element) -> super::Ext {
     let mut node = super::Ext::default();
     let mut reader = markup::Reader::new(element, &super::EXT_SHAPE);
     for (index, field) in &mut reader {
@@ -338,9 +338,7 @@ pub fn ext(element: &xml::element::Element) -> super::Ext {
 
 /// Read `am3d:extLst` into a `ExtLstModel3DExtensionList`.
 #[must_use]
-pub fn ext_lst_model3d_extension_list(
-    element: &xml::element::Element,
-) -> super::ExtLstModel3DExtensionList {
+pub fn ext_lst_model3d_extension_list(element: &Element) -> super::ExtLstModel3DExtensionList {
     let mut node = super::ExtLstModel3DExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -354,9 +352,7 @@ pub fn ext_lst_model3d_extension_list(
 
 /// Read `am3d:extLst` into a `ExtLstOfficeArtExtensionList`.
 #[must_use]
-pub fn ext_lst_office_art_extension_list(
-    element: &xml::element::Element,
-) -> super::ExtLstOfficeArtExtensionList {
+pub fn ext_lst_office_art_extension_list(element: &Element) -> super::ExtLstOfficeArtExtensionList {
     let mut node = super::ExtLstOfficeArtExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -370,7 +366,7 @@ pub fn ext_lst_office_art_extension_list(
 
 /// Read `am3d:illuminance` into a `Illuminance`.
 #[must_use]
-pub fn illuminance(element: &xml::element::Element) -> super::Illuminance {
+pub fn illuminance(element: &Element) -> super::Illuminance {
     let reader = markup::Reader::new(element, &super::ILLUMINANCE_SHAPE);
     super::Illuminance {
         unknown: reader.finish(),
@@ -379,7 +375,7 @@ pub fn illuminance(element: &xml::element::Element) -> super::Illuminance {
 
 /// Read `am3d:intensity` into a `Intensity`.
 #[must_use]
-pub fn intensity(element: &xml::element::Element) -> super::Intensity {
+pub fn intensity(element: &Element) -> super::Intensity {
     let reader = markup::Reader::new(element, &super::INTENSITY_SHAPE);
     super::Intensity {
         unknown: reader.finish(),
@@ -388,7 +384,7 @@ pub fn intensity(element: &xml::element::Element) -> super::Intensity {
 
 /// Read `am3d:lookAt` into a `LookAt`.
 #[must_use]
-pub fn look_at(element: &xml::element::Element) -> super::LookAt {
+pub fn look_at(element: &Element) -> super::LookAt {
     let mut node = super::LookAt::default();
     let mut reader = markup::Reader::new(element, &super::LOOK_AT_SHAPE);
     for (index, field) in &mut reader {
@@ -405,7 +401,7 @@ pub fn look_at(element: &xml::element::Element) -> super::LookAt {
 
 /// Read `am3d:meterPerModelUnit` into a `MeterPerModelUnit`.
 #[must_use]
-pub fn meter_per_model_unit(element: &xml::element::Element) -> super::MeterPerModelUnit {
+pub fn meter_per_model_unit(element: &Element) -> super::MeterPerModelUnit {
     let reader = markup::Reader::new(element, &super::METER_PER_MODEL_UNIT_SHAPE);
     super::MeterPerModelUnit {
         unknown: reader.finish(),
@@ -414,7 +410,7 @@ pub fn meter_per_model_unit(element: &xml::element::Element) -> super::MeterPerM
 
 /// Read `am3d:model3d` into a `Model3d`.
 #[must_use]
-pub fn model3d(element: &xml::element::Element) -> super::Model3d {
+pub fn model3d(element: &Element) -> super::Model3d {
     let mut node = super::Model3d::default();
     let mut reader = markup::Reader::new(element, &super::MODEL3D_SHAPE);
     for (index, field) in &mut reader {
@@ -439,31 +435,31 @@ pub fn model3d(element: &xml::element::Element) -> super::Model3d {
 
 /// Read one item of `Model3DCameraContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn model3d_camera(element: &xml::element::Element) -> super::Model3DCameraContent {
+pub fn model3d_camera(element: &Element) -> super::Model3DCameraContent {
     markup::read(element)
 }
 
 /// Read one item of `Model3DExtensionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn model3d_extension(element: &xml::element::Element) -> super::Model3DExtensionContent {
+pub fn model3d_extension(element: &Element) -> super::Model3DExtensionContent {
     markup::read(element)
 }
 
 /// Read one item of `Model3DLightContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn model3d_light(element: &xml::element::Element) -> super::Model3DLightContent {
+pub fn model3d_light(element: &Element) -> super::Model3DLightContent {
     markup::read(element)
 }
 
 /// Read one item of `Model3DViewportContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn model3d_viewport(element: &xml::element::Element) -> super::Model3DViewportContent {
+pub fn model3d_viewport(element: &Element) -> super::Model3DViewportContent {
     markup::read(element)
 }
 
 /// Read `am3d:objViewport` into a `ObjViewport`.
 #[must_use]
-pub fn obj_viewport(element: &xml::element::Element) -> super::ObjViewport {
+pub fn obj_viewport(element: &Element) -> super::ObjViewport {
     let mut node = super::ObjViewport::default();
     let mut reader = markup::Reader::new(element, &super::OBJ_VIEWPORT_SHAPE);
     for (index, field) in &mut reader {
@@ -479,7 +475,7 @@ pub fn obj_viewport(element: &xml::element::Element) -> super::ObjViewport {
 
 /// Read `am3d:orthographic` into a `Orthographic`.
 #[must_use]
-pub fn orthographic(element: &xml::element::Element) -> super::Orthographic {
+pub fn orthographic(element: &Element) -> super::Orthographic {
     let mut node = super::Orthographic::default();
     let mut reader = markup::Reader::new(element, &super::ORTHOGRAPHIC_SHAPE);
     for (index, field) in &mut reader {
@@ -495,7 +491,7 @@ pub fn orthographic(element: &xml::element::Element) -> super::Orthographic {
 
 /// Read `am3d:perspective` into a `Perspective`.
 #[must_use]
-pub fn perspective(element: &xml::element::Element) -> super::Perspective {
+pub fn perspective(element: &Element) -> super::Perspective {
     let mut node = super::Perspective::default();
     let mut reader = markup::Reader::new(element, &super::PERSPECTIVE_SHAPE);
     for (index, field) in &mut reader {
@@ -511,7 +507,7 @@ pub fn perspective(element: &xml::element::Element) -> super::Perspective {
 
 /// Read `am3d:pos` into a `Pos`.
 #[must_use]
-pub fn pos(element: &xml::element::Element) -> super::Pos {
+pub fn pos(element: &Element) -> super::Pos {
     let mut node = super::Pos::default();
     let mut reader = markup::Reader::new(element, &super::POS_SHAPE);
     for (index, field) in &mut reader {
@@ -528,7 +524,7 @@ pub fn pos(element: &xml::element::Element) -> super::Pos {
 
 /// Read `am3d:postTrans` into a `PostTrans`.
 #[must_use]
-pub fn post_trans(element: &xml::element::Element) -> super::PostTrans {
+pub fn post_trans(element: &Element) -> super::PostTrans {
     let mut node = super::PostTrans::default();
     let mut reader = markup::Reader::new(element, &super::POST_TRANS_SHAPE);
     for (index, field) in &mut reader {
@@ -545,7 +541,7 @@ pub fn post_trans(element: &xml::element::Element) -> super::PostTrans {
 
 /// Read `am3d:preTrans` into a `PreTrans`.
 #[must_use]
-pub fn pre_trans(element: &xml::element::Element) -> super::PreTrans {
+pub fn pre_trans(element: &Element) -> super::PreTrans {
     let mut node = super::PreTrans::default();
     let mut reader = markup::Reader::new(element, &super::PRE_TRANS_SHAPE);
     for (index, field) in &mut reader {
@@ -562,7 +558,7 @@ pub fn pre_trans(element: &xml::element::Element) -> super::PreTrans {
 
 /// Read `am3d:ptLight` into a `PtLight`.
 #[must_use]
-pub fn pt_light(element: &xml::element::Element) -> super::PtLight {
+pub fn pt_light(element: &Element) -> super::PtLight {
     let mut node = super::PtLight::default();
     let mut reader = markup::Reader::new(element, &super::PT_LIGHT_SHAPE);
     for (index, field) in &mut reader {
@@ -582,7 +578,7 @@ pub fn pt_light(element: &xml::element::Element) -> super::PtLight {
 
 /// Read `am3d:raster` into a `Raster`.
 #[must_use]
-pub fn raster(element: &xml::element::Element) -> super::Raster {
+pub fn raster(element: &Element) -> super::Raster {
     let mut node = super::Raster::default();
     let mut reader = markup::Reader::new(element, &super::RASTER_SHAPE);
     for (index, field) in &mut reader {
@@ -599,7 +595,7 @@ pub fn raster(element: &xml::element::Element) -> super::Raster {
 
 /// Read `am3d:rot` into a `Rot`.
 #[must_use]
-pub fn rot(element: &xml::element::Element) -> super::Rot {
+pub fn rot(element: &Element) -> super::Rot {
     let mut node = super::Rot::default();
     let mut reader = markup::Reader::new(element, &super::ROT_SHAPE);
     for (index, field) in &mut reader {
@@ -616,7 +612,7 @@ pub fn rot(element: &xml::element::Element) -> super::Rot {
 
 /// Read `am3d:scale` into a `Scale`.
 #[must_use]
-pub fn scale(element: &xml::element::Element) -> super::Scale {
+pub fn scale(element: &Element) -> super::Scale {
     let mut node = super::Scale::default();
     let mut reader = markup::Reader::new(element, &super::SCALE_SHAPE);
     for (index, field) in &mut reader {
@@ -633,7 +629,7 @@ pub fn scale(element: &xml::element::Element) -> super::Scale {
 
 /// Read `am3d:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -656,7 +652,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `am3d:spotLight` into a `SpotLight`.
 #[must_use]
-pub fn spot_light(element: &xml::element::Element) -> super::SpotLight {
+pub fn spot_light(element: &Element) -> super::SpotLight {
     let mut node = super::SpotLight::default();
     let mut reader = markup::Reader::new(element, &super::SPOT_LIGHT_SHAPE);
     for (index, field) in &mut reader {
@@ -678,7 +674,7 @@ pub fn spot_light(element: &xml::element::Element) -> super::SpotLight {
 
 /// Read `am3d:sx` into a `Sx`.
 #[must_use]
-pub fn sx(element: &xml::element::Element) -> super::Sx {
+pub fn sx(element: &Element) -> super::Sx {
     let mut node = super::Sx::default();
     let mut reader = markup::Reader::new(element, &super::SX_SHAPE);
     for (index, field) in &mut reader {
@@ -694,7 +690,7 @@ pub fn sx(element: &xml::element::Element) -> super::Sx {
 
 /// Read `am3d:sy` into a `Sy`.
 #[must_use]
-pub fn sy(element: &xml::element::Element) -> super::Sy {
+pub fn sy(element: &Element) -> super::Sy {
     let mut node = super::Sy::default();
     let mut reader = markup::Reader::new(element, &super::SY_SHAPE);
     for (index, field) in &mut reader {
@@ -710,7 +706,7 @@ pub fn sy(element: &xml::element::Element) -> super::Sy {
 
 /// Read `am3d:sz` into a `SzPositiveRatio`.
 #[must_use]
-pub fn sz_positive_ratio(element: &xml::element::Element) -> super::SzPositiveRatio {
+pub fn sz_positive_ratio(element: &Element) -> super::SzPositiveRatio {
     let reader = markup::Reader::new(element, &super::SZ_POSITIVE_RATIO_SHAPE);
     super::SzPositiveRatio {
         unknown: reader.finish(),
@@ -719,7 +715,7 @@ pub fn sz_positive_ratio(element: &xml::element::Element) -> super::SzPositiveRa
 
 /// Read `am3d:sz` into a `SzRatio`.
 #[must_use]
-pub fn sz_ratio(element: &xml::element::Element) -> super::SzRatio {
+pub fn sz_ratio(element: &Element) -> super::SzRatio {
     let mut node = super::SzRatio::default();
     let mut reader = markup::Reader::new(element, &super::SZ_RATIO_SHAPE);
     for (index, field) in &mut reader {
@@ -735,7 +731,7 @@ pub fn sz_ratio(element: &xml::element::Element) -> super::SzRatio {
 
 /// Read `am3d:trans` into a `Trans`.
 #[must_use]
-pub fn trans(element: &xml::element::Element) -> super::Trans {
+pub fn trans(element: &Element) -> super::Trans {
     let mut node = super::Trans::default();
     let mut reader = markup::Reader::new(element, &super::TRANS_SHAPE);
     for (index, field) in &mut reader {
@@ -755,7 +751,7 @@ pub fn trans(element: &xml::element::Element) -> super::Trans {
 
 /// Read `am3d:unkLight` into a `UnkLight`.
 #[must_use]
-pub fn unk_light(element: &xml::element::Element) -> super::UnkLight {
+pub fn unk_light(element: &Element) -> super::UnkLight {
     let reader = markup::Reader::new(element, &super::UNK_LIGHT_SHAPE);
     super::UnkLight {
         unknown: reader.finish(),
@@ -764,7 +760,7 @@ pub fn unk_light(element: &xml::element::Element) -> super::UnkLight {
 
 /// Read `am3d:up` into a `Up`.
 #[must_use]
-pub fn up(element: &xml::element::Element) -> super::Up {
+pub fn up(element: &Element) -> super::Up {
     let mut node = super::Up::default();
     let mut reader = markup::Reader::new(element, &super::UP_SHAPE);
     for (index, field) in &mut reader {
@@ -781,7 +777,7 @@ pub fn up(element: &xml::element::Element) -> super::Up {
 
 /// Read `am3d:winViewport` into a `WinViewport`.
 #[must_use]
-pub fn win_viewport(element: &xml::element::Element) -> super::WinViewport {
+pub fn win_viewport(element: &Element) -> super::WinViewport {
     let mut node = super::WinViewport::default();
     let mut reader = markup::Reader::new(element, &super::WIN_VIEWPORT_SHAPE);
     for (index, field) in &mut reader {

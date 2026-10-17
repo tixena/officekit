@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `LastEditFeature` as its element, `xxdsv:lastEditFeature`.
 #[must_use]
-pub fn last_edit_feature(
-    node: &super::LastEditFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn last_edit_feature(node: &super::LastEditFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LAST_EDIT_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -228,10 +226,7 @@ pub fn last_edit_feature(
 
 /// Write a `LastRefreshFeature` as its element, `xxdsv:lastRefreshFeature`.
 #[must_use]
-pub fn last_refresh_feature(
-    node: &super::LastRefreshFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn last_refresh_feature(node: &super::LastRefreshFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LAST_REFRESH_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -239,10 +234,7 @@ pub fn last_refresh_feature(
 
 /// Write a `RequiredFeature` as its element, `xxdsv:requiredFeature`.
 #[must_use]
-pub fn required_feature(
-    node: &super::RequiredFeature,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn required_feature(node: &super::RequiredFeature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REQUIRED_FEATURE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -250,7 +242,7 @@ pub fn required_feature(
 
 /// Write a `VersionInfo` as its element, `xxdsv:versionInfo`.
 #[must_use]
-pub fn version_info(node: &super::VersionInfo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn version_info(node: &super::VersionInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VERSION_INFO_SHAPE, &node.unknown);
     writer.child(&node.required_feature);
     writer.child(&node.last_refresh_feature);

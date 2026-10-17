@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xxpim:dataFieldFutureData` into a `DataFieldFutureData`.
 #[must_use]
-pub fn data_field_future_data(element: &xml::element::Element) -> super::DataFieldFutureData {
+pub fn data_field_future_data(element: &Element) -> super::DataFieldFutureData {
     let mut node = super::DataFieldFutureData::default();
     let mut reader = markup::Reader::new(element, &super::DATA_FIELD_FUTURE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn data_field_future_data(element: &xml::element::Element) -> super::DataFie
 
 /// Read `xxpim:ignorableAfterVersion` into a `IgnorableAfterVersion`.
 #[must_use]
-pub fn ignorable_after_version(element: &xml::element::Element) -> super::IgnorableAfterVersion {
+pub fn ignorable_after_version(element: &Element) -> super::IgnorableAfterVersion {
     let mut node = super::IgnorableAfterVersion::default();
     let mut reader = markup::Reader::new(element, &super::IGNORABLE_AFTER_VERSION_SHAPE);
     for (index, field) in &mut reader {
@@ -247,7 +247,7 @@ pub fn ignorable_after_version(element: &xml::element::Element) -> super::Ignora
 
 /// Read `xxpim:implicitMeasureSupport` into a `ImplicitMeasureSupport`.
 #[must_use]
-pub fn implicit_measure_support(element: &xml::element::Element) -> super::ImplicitMeasureSupport {
+pub fn implicit_measure_support(element: &Element) -> super::ImplicitMeasureSupport {
     let mut node = super::ImplicitMeasureSupport::default();
     let mut reader = markup::Reader::new(element, &super::IMPLICIT_MEASURE_SUPPORT_SHAPE);
     for (index, field) in &mut reader {

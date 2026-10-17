@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlpar:autoRefresh` into a `AutoRefresh`.
 #[must_use]
-pub fn auto_refresh(element: &xml::element::Element) -> super::AutoRefresh {
+pub fn auto_refresh(element: &Element) -> super::AutoRefresh {
     let mut node = super::AutoRefresh::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_REFRESH_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `asl:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `asl:scriptLink` into a `ScriptLink`.
 #[must_use]
-pub fn script_link(element: &xml::element::Element) -> super::ScriptLink {
+pub fn script_link(element: &Element) -> super::ScriptLink {
     let mut node = super::ScriptLink::default();
     let mut reader = markup::Reader::new(element, &super::SCRIPT_LINK_SHAPE);
     for (index, field) in &mut reader {

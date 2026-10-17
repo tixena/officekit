@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ArcSegment` as its element, `v:arc`.
 #[must_use]
-pub fn arc_segment(node: &super::ArcSegment, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn arc_segment(node: &super::ArcSegment, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ARC_SEGMENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -281,7 +282,7 @@ pub fn arc_segment(node: &super::ArcSegment, scope: &mut markup::Scope) -> xml::
 
 /// Write a `BezierCurve` as its element, `v:curve`.
 #[must_use]
-pub fn bezier_curve(node: &super::BezierCurve, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn bezier_curve(node: &super::BezierCurve, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BEZIER_CURVE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -346,10 +347,7 @@ pub fn bezier_curve(node: &super::BezierCurve, scope: &mut markup::Scope) -> xml
 
 /// Write a `DocumentBackground` as its element, `v:background`.
 #[must_use]
-pub fn document_background(
-    node: &super::DocumentBackground,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn document_background(node: &super::DocumentBackground, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DOCUMENT_BACKGROUND_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.filled);
@@ -364,7 +362,7 @@ pub fn document_background(
 
 /// Write a `ImageData` as its element, `v:imagedata`.
 #[must_use]
-pub fn image_data(node: &super::ImageData, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn image_data(node: &super::ImageData, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMAGE_DATA_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.src);
@@ -395,7 +393,7 @@ pub fn image_data(node: &super::ImageData, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ImageFile` as its element, `v:image`.
 #[must_use]
-pub fn image_file(node: &super::ImageFile, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn image_file(node: &super::ImageFile, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMAGE_FILE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -466,7 +464,7 @@ pub fn image_file(node: &super::ImageFile, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Line` as its element, `v:line`.
 #[must_use]
-pub fn line(node: &super::Line, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn line(node: &super::Line, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -529,10 +527,7 @@ pub fn line(node: &super::Line, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `LineStrokeSettings` as its element, `v:stroke`.
 #[must_use]
-pub fn line_stroke_settings(
-    node: &super::LineStrokeSettings,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn line_stroke_settings(node: &super::LineStrokeSettings, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::LINE_STROKE_SETTINGS_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.on);
@@ -573,10 +568,7 @@ pub fn line_stroke_settings(
 
 /// Write a `MultiplePathLine` as its element, `v:polyline`.
 #[must_use]
-pub fn multiple_path_line(
-    node: &super::MultiplePathLine,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn multiple_path_line(node: &super::MultiplePathLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MULTIPLE_PATH_LINE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -646,7 +638,7 @@ pub fn multiple_path_line_content(
 
 /// Write a `Oval` as its element, `v:oval`.
 #[must_use]
-pub fn oval(node: &super::Oval, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn oval(node: &super::Oval, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OVAL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -707,7 +699,7 @@ pub fn oval(node: &super::Oval, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `Rectangle` as its element, `v:rect`.
 #[must_use]
-pub fn rectangle(node: &super::Rectangle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rectangle(node: &super::Rectangle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RECTANGLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -768,10 +760,7 @@ pub fn rectangle(node: &super::Rectangle, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `RoundedRectangle` as its element, `v:roundrect`.
 #[must_use]
-pub fn rounded_rectangle(
-    node: &super::RoundedRectangle,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn rounded_rectangle(node: &super::RoundedRectangle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ROUNDED_RECTANGLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -833,10 +822,7 @@ pub fn rounded_rectangle(
 
 /// Write a `SetOfFormulas` as its element, `v:formulas`.
 #[must_use]
-pub fn set_of_formulas(
-    node: &super::SetOfFormulas,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn set_of_formulas(node: &super::SetOfFormulas, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SET_OF_FORMULAS_SHAPE, &node.unknown);
     writer.child(&node.single_formula);
     writer.finish()
@@ -844,10 +830,7 @@ pub fn set_of_formulas(
 
 /// Write a `SetOfHandles` as its element, `v:handles`.
 #[must_use]
-pub fn set_of_handles(
-    node: &super::SetOfHandles,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn set_of_handles(node: &super::SetOfHandles, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SET_OF_HANDLES_SHAPE, &node.unknown);
     writer.child(&node.shape_handle);
     writer.finish()
@@ -855,10 +838,7 @@ pub fn set_of_handles(
 
 /// Write a `ShadowEffect` as its element, `v:shadow`.
 #[must_use]
-pub fn shadow_effect(
-    node: &super::ShadowEffect,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shadow_effect(node: &super::ShadowEffect, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHADOW_EFFECT_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.on);
@@ -876,10 +856,7 @@ pub fn shadow_effect(
 
 /// Write a `ShapeDefinition` as its element, `v:shape`.
 #[must_use]
-pub fn shape_definition(
-    node: &super::ShapeDefinition,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_definition(node: &super::ShapeDefinition, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_DEFINITION_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -958,10 +935,7 @@ pub fn shape_element(node: &super::ShapeElementContent, writer: &mut markup::Wri
 
 /// Write a `ShapeFillProperties` as its element, `v:fill`.
 #[must_use]
-pub fn shape_fill_properties(
-    node: &super::ShapeFillProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_fill_properties(node: &super::ShapeFillProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_FILL_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.r#type);
@@ -996,7 +970,7 @@ pub fn shape_fill_properties(
 
 /// Write a `ShapeGroup` as its element, `v:group`.
 #[must_use]
-pub fn shape_group(node: &super::ShapeGroup, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_group(node: &super::ShapeGroup, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_GROUP_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -1048,7 +1022,7 @@ pub fn shape_group_content(node: &super::ShapeGroupContent, writer: &mut markup:
 
 /// Write a `ShapeHandle` as its element, `v:h`.
 #[must_use]
-pub fn shape_handle(node: &super::ShapeHandle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_handle(node: &super::ShapeHandle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_HANDLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.position);
     writer.attribute(1, &node.polar);
@@ -1064,7 +1038,7 @@ pub fn shape_handle(node: &super::ShapeHandle, scope: &mut markup::Scope) -> xml
 
 /// Write a `ShapePath` as its element, `v:path`.
 #[must_use]
-pub fn shape_path(node: &super::ShapePath, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_path(node: &super::ShapePath, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PATH_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.v);
@@ -1086,10 +1060,7 @@ pub fn shape_path(node: &super::ShapePath, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ShapeTemplate` as its element, `v:shapetype`.
 #[must_use]
-pub fn shape_template(
-    node: &super::ShapeTemplate,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_template(node: &super::ShapeTemplate, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_TEMPLATE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -1154,10 +1125,7 @@ pub fn shape_template(
 
 /// Write a `SingleFormula` as its element, `v:f`.
 #[must_use]
-pub fn single_formula(
-    node: &super::SingleFormula,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn single_formula(node: &super::SingleFormula, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SINGLE_FORMULA_SHAPE, &node.unknown);
     writer.attribute(0, &node.eqn);
     writer.finish()
@@ -1165,7 +1133,7 @@ pub fn single_formula(
 
 /// Write a `TextBox` as its element, `v:textbox`.
 #[must_use]
-pub fn text_box(node: &super::TextBox, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn text_box(node: &super::TextBox, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_BOX_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);
@@ -1183,10 +1151,7 @@ pub fn text_box_content(node: &super::TextBoxContent, writer: &mut markup::Write
 
 /// Write a `TextLayoutPath` as its element, `v:textpath`.
 #[must_use]
-pub fn text_layout_path(
-    node: &super::TextLayoutPath,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_layout_path(node: &super::TextLayoutPath, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_LAYOUT_PATH_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.style);

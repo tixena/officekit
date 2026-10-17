@@ -4,12 +4,13 @@
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
+use officekit_xml::element::{Element, Node};
+
 use super::{STORE, is, prefix};
 use crate::error::PackageError;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
-use crate::xml::element::{Element, Node};
 
 #[cfg(test)]
 mod tests;

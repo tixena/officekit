@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlmsforms:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xlmsforms:msForm` into a `MsForm`.
 #[must_use]
-pub fn ms_form(element: &xml::element::Element) -> super::MsForm {
+pub fn ms_form(element: &Element) -> super::MsForm {
     let mut node = super::MsForm::default();
     let mut reader = markup::Reader::new(element, &super::MS_FORM_SHAPE);
     for (index, field) in &mut reader {
@@ -251,7 +251,7 @@ pub fn ms_form(element: &xml::element::Element) -> super::MsForm {
 
 /// Read `xlmsforms:question` into a `Question`.
 #[must_use]
-pub fn question(element: &xml::element::Element) -> super::Question {
+pub fn question(element: &Element) -> super::Question {
     let mut node = super::Question::default();
     let mut reader = markup::Reader::new(element, &super::QUESTION_SHAPE);
     for (index, field) in &mut reader {
@@ -267,7 +267,7 @@ pub fn question(element: &xml::element::Element) -> super::Question {
 
 /// Read `xlmsforms:syncedQuestionId` into a `SyncedQuestionId`.
 #[must_use]
-pub fn synced_question_id(element: &xml::element::Element) -> super::SyncedQuestionId {
+pub fn synced_question_id(element: &Element) -> super::SyncedQuestionId {
     let mut node = super::SyncedQuestionId::default();
     let mut reader = markup::Reader::new(element, &super::SYNCED_QUESTION_ID_SHAPE);
     for (index, field) in &mut reader {

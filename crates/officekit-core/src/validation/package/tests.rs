@@ -1,5 +1,6 @@
 use std::path::Path;
 
+use officekit_xml::name::OfficeVersion;
 use os_shim::mock::MemorySystem;
 
 use super::check;
@@ -7,7 +8,6 @@ use crate::packaging::package::Package;
 use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Errors, Finding, ValidationError};
 use crate::validation::validator::Validator;
-use crate::xml::name::OfficeVersion;
 
 const DOCUMENT: &str = r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body/></w:document>"#;
 const MAIN: &str =

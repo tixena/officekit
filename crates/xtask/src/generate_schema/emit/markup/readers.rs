@@ -42,7 +42,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
         text.push_str(&layout::signature(
             0,
             &format!("pub fn {function}"),
-            &["element: &xml::element::Element".to_owned()],
+            &["element: &Element".to_owned()],
             &format!("super::{}", found.name),
         ));
         text.push_str("    markup::read(element)\n}\n");
@@ -94,7 +94,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
     out.push_str(&layout::signature(
         0,
         &format!("pub fn {function}"),
-        &["element: &xml::element::Element".to_owned()],
+        &["element: &Element".to_owned()],
         &format!("super::{}", node.name),
     ));
     let new_reader = Expr::call(

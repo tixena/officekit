@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlrdwi:address` into a `Address`.
 #[must_use]
-pub fn address(element: &xml::element::Element) -> super::Address {
+pub fn address(element: &Element) -> super::Address {
     let reader = markup::Reader::new(element, &super::ADDRESS_SHAPE);
     super::Address {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn address(element: &xml::element::Element) -> super::Address {
 
 /// Read `xlrdwi:blip` into a `Blip`.
 #[must_use]
-pub fn blip(element: &xml::element::Element) -> super::Blip {
+pub fn blip(element: &Element) -> super::Blip {
     let reader = markup::Reader::new(element, &super::BLIP_SHAPE);
     super::Blip {
         unknown: reader.finish(),
@@ -235,7 +235,7 @@ pub fn blip(element: &xml::element::Element) -> super::Blip {
 
 /// Read `xlrdwi:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xlrdwi:moreImagesAddress` into a `MoreImagesAddress`.
 #[must_use]
-pub fn more_images_address(element: &xml::element::Element) -> super::MoreImagesAddress {
+pub fn more_images_address(element: &Element) -> super::MoreImagesAddress {
     let reader = markup::Reader::new(element, &super::MORE_IMAGES_ADDRESS_SHAPE);
     super::MoreImagesAddress {
         unknown: reader.finish(),
@@ -258,7 +258,7 @@ pub fn more_images_address(element: &xml::element::Element) -> super::MoreImages
 
 /// Read `xlrdwi:webImageSrd` into a `WebImageSrd`.
 #[must_use]
-pub fn web_image_srd(element: &xml::element::Element) -> super::WebImageSrd {
+pub fn web_image_srd(element: &Element) -> super::WebImageSrd {
     let mut node = super::WebImageSrd::default();
     let mut reader = markup::Reader::new(element, &super::WEB_IMAGE_SRD_SHAPE);
     for (index, field) in &mut reader {
@@ -275,7 +275,7 @@ pub fn web_image_srd(element: &xml::element::Element) -> super::WebImageSrd {
 
 /// Read `xlrdwi:webImagesSrd` into a `WebImagesSrd`.
 #[must_use]
-pub fn web_images_srd(element: &xml::element::Element) -> super::WebImagesSrd {
+pub fn web_images_srd(element: &Element) -> super::WebImagesSrd {
     let mut node = super::WebImagesSrd::default();
     let mut reader = markup::Reader::new(element, &super::WEB_IMAGES_SRD_SHAPE);
     for (index, field) in &mut reader {

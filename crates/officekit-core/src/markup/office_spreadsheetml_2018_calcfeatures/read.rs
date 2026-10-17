@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xcalcf:calcFeatures` into a `CalcFeatures`.
 #[must_use]
-pub fn calc_features(element: &xml::element::Element) -> super::CalcFeatures {
+pub fn calc_features(element: &Element) -> super::CalcFeatures {
     let mut node = super::CalcFeatures::default();
     let mut reader = markup::Reader::new(element, &super::CALC_FEATURES_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn calc_features(element: &xml::element::Element) -> super::CalcFeatures {
 
 /// Read `xcalcf:feature` into a `Feature`.
 #[must_use]
-pub fn feature(element: &xml::element::Element) -> super::Feature {
+pub fn feature(element: &Element) -> super::Feature {
     let mut node = super::Feature::default();
     let mut reader = markup::Reader::new(element, &super::FEATURE_SHAPE);
     for (index, field) in &mut reader {

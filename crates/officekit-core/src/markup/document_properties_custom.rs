@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_OP: Option<NamespaceId> = Some(63);
@@ -400,7 +400,7 @@ pub enum CustomFilePropertyContent {
     LPSTR(super::document_properties_variant_types::LPSTR),
     LPWSTR(super::document_properties_variant_types::LPWSTR),
     Null(super::document_properties_variant_types::Null),
-    Other(xml::element::Node),
+    Other(Node),
     R4(super::document_properties_variant_types::R4),
     R8(super::document_properties_variant_types::R8),
     Ui1(super::document_properties_variant_types::Ui1),
@@ -434,7 +434,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CustomFileProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_file_properties(element)
     }
 }
@@ -447,7 +447,7 @@ impl markup::Write for CustomFileProperties {
 }
 
 impl markup::Read for CustomFileProperty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_file_property(element)
     }
 }
@@ -466,11 +466,11 @@ impl Default for CustomFilePropertyContent {
 }
 
 impl markup::Read for CustomFilePropertyContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_VT, "array")) => Self::Array(markup::read(element)),
             Some((NS_VT, "bstr")) => Self::BasicString(markup::read(element)),
@@ -505,7 +505,7 @@ impl markup::Read for CustomFilePropertyContent {
             Some((NS_VT, "ui8")) => Self::Ui8(markup::read(element)),
             Some((NS_VT, "uint")) => Self::UnsignedInteger(markup::read(element)),
             Some((NS_VT, "vector")) => Self::Vector(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }

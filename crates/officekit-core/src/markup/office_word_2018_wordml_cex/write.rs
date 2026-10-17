@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CommentExtensible` as its element, `w16cex:commentExtensible`.
 #[must_use]
-pub fn comment_extensible(
-    node: &super::CommentExtensible,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn comment_extensible(node: &super::CommentExtensible, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_EXTENSIBLE_SHAPE, &node.unknown);
     writer.attribute(0, &node.durable_id);
     writer.attribute(1, &node.date_utc);
@@ -231,10 +229,7 @@ pub fn comment_extensible(
 
 /// Write a `CommentsExtensible` as its element, `w16cex:commentsExtensible`.
 #[must_use]
-pub fn comments_extensible(
-    node: &super::CommentsExtensible,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn comments_extensible(node: &super::CommentsExtensible, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENTS_EXTENSIBLE_SHAPE, &node.unknown);
     writer.child(&node.comment_extensible);
     writer.child(&node.ext_lst);
@@ -243,7 +238,7 @@ pub fn comments_extensible(
 
 /// Write a `ExtLst` as its element, `w16cex:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.ext);
     writer.finish()

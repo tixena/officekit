@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_O: Option<NamespaceId> = Some(60);
@@ -1654,7 +1654,7 @@ pub enum NewShapeDefaultsContent {
     Extrusion(Extrusion),
     LineStrokeSettings(super::vml::LineStrokeSettings),
     MostRecentlyUsedColors(MostRecentlyUsedColors),
-    Other(xml::element::Node),
+    Other(Node),
     ShadowEffect(super::vml::ShadowEffect),
     ShapeFillProperties(super::vml::ShapeFillProperties),
     ShapeProtections(ShapeProtections),
@@ -1828,7 +1828,7 @@ pub struct ShapeLayoutProperties {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeLayoutPropertiesContent {
-    Other(xml::element::Node),
+    Other(Node),
     RuleSet(RuleSet),
     ShapeGroupingHistory(ShapeGroupingHistory),
     ShapeIDMap(ShapeIDMap),
@@ -2346,7 +2346,7 @@ impl BlackAndWhiteModes {
 }
 
 impl markup::Read for Callout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::callout(element)
     }
 }
@@ -2412,7 +2412,7 @@ impl CalloutAngles {
 }
 
 impl markup::Read for Complex {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::complex(element)
     }
 }
@@ -2554,7 +2554,7 @@ impl DiagramLayoutType {
 }
 
 impl markup::Read for DiagramRelationship {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::diagram_relationship(element)
     }
 }
@@ -2567,7 +2567,7 @@ impl markup::Write for DiagramRelationship {
 }
 
 impl markup::Read for DiagramRelationshipTable {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::diagram_relationship_table(element)
     }
 }
@@ -2580,7 +2580,7 @@ impl markup::Write for DiagramRelationshipTable {
 }
 
 impl markup::Read for DigitalSignatureLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::digital_signature_line(element)
     }
 }
@@ -2593,7 +2593,7 @@ impl markup::Write for DigitalSignatureLine {
 }
 
 impl markup::Read for EmbeddedOLEObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_ole_object(element)
     }
 }
@@ -2606,7 +2606,7 @@ impl markup::Write for EmbeddedOLEObject {
 }
 
 impl markup::Read for EmbeddedObjectAlternateImageRequest {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_object_alternate_image_request(element)
     }
 }
@@ -2619,7 +2619,7 @@ impl markup::Write for EmbeddedObjectAlternateImageRequest {
 }
 
 impl markup::Read for EmbeddedObjectCannotBeRefreshed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::embedded_object_cannot_be_refreshed(element)
     }
 }
@@ -2632,7 +2632,7 @@ impl markup::Write for EmbeddedObjectCannotBeRefreshed {
 }
 
 impl markup::Read for Extrusion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extrusion(element)
     }
 }
@@ -2845,7 +2845,7 @@ impl ExtrusionType {
 }
 
 impl markup::Read for Ink {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ink(element)
     }
 }
@@ -2905,7 +2905,7 @@ impl InsetMarginType {
 }
 
 impl markup::Read for MostRecentlyUsedColors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::most_recently_used_colors(element)
     }
 }
@@ -2918,7 +2918,7 @@ impl markup::Write for MostRecentlyUsedColors {
 }
 
 impl markup::Read for NewShapeDefaults {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::new_shape_defaults(element)
     }
 }
@@ -2931,11 +2931,11 @@ impl markup::Write for NewShapeDefaults {
 }
 
 impl markup::Read for NewShapeDefaultsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_O, "callout")) => Self::Callout(markup::read(element)),
             Some((NS_O, "extrusion")) => Self::Extrusion(markup::read(element)),
@@ -2947,7 +2947,7 @@ impl markup::Read for NewShapeDefaultsContent {
             Some((NS_O, "skew")) => Self::SkewTransform(markup::read(element)),
             Some((NS_V, "textbox")) => Self::TextBox(markup::read(element)),
             Some((NS_O, "colormenu")) => Self::UIDefaultColors(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3114,7 +3114,7 @@ impl OLEUpdateMode {
 }
 
 impl markup::Read for RegroupEntry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::regroup_entry(element)
     }
 }
@@ -3127,7 +3127,7 @@ impl markup::Write for RegroupEntry {
 }
 
 impl markup::Read for Rule {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rule(element)
     }
 }
@@ -3140,7 +3140,7 @@ impl markup::Write for Rule {
 }
 
 impl markup::Read for RuleSet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rule_set(element)
     }
 }
@@ -3257,7 +3257,7 @@ impl ScreenSizesType {
 }
 
 impl markup::Read for ShapeClippingPath {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_clipping_path(element)
     }
 }
@@ -3270,7 +3270,7 @@ impl markup::Write for ShapeClippingPath {
 }
 
 impl markup::Read for ShapeFillExtendedProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_fill_extended_properties(element)
     }
 }
@@ -3339,7 +3339,7 @@ impl ShapeFillType {
 }
 
 impl markup::Read for ShapeGroupingHistory {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_grouping_history(element)
     }
 }
@@ -3352,7 +3352,7 @@ impl markup::Write for ShapeGroupingHistory {
 }
 
 impl markup::Read for ShapeIDMap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_id_map(element)
     }
 }
@@ -3365,7 +3365,7 @@ impl markup::Write for ShapeIDMap {
 }
 
 impl markup::Read for ShapeLayoutProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_layout_properties(element)
     }
 }
@@ -3378,16 +3378,16 @@ impl markup::Write for ShapeLayoutProperties {
 }
 
 impl markup::Read for ShapeLayoutPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_O, "rules")) => Self::RuleSet(markup::read(element)),
             Some((NS_O, "regrouptable")) => Self::ShapeGroupingHistory(markup::read(element)),
             Some((NS_O, "idmap")) => Self::ShapeIDMap(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3404,7 +3404,7 @@ impl markup::Write for ShapeLayoutPropertiesContent {
 }
 
 impl markup::Read for ShapeProtections {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_protections(element)
     }
 }
@@ -3417,7 +3417,7 @@ impl markup::Write for ShapeProtections {
 }
 
 impl markup::Read for ShapeReference {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_reference(element)
     }
 }
@@ -3430,7 +3430,7 @@ impl markup::Write for ShapeReference {
 }
 
 impl markup::Read for SkewTransform {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::skew_transform(element)
     }
 }
@@ -3546,7 +3546,7 @@ impl StHrAlign {
 }
 
 impl markup::Read for StorageForAlternateMathContent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::storage_for_alternate_math_content(element)
     }
 }
@@ -3559,7 +3559,7 @@ impl markup::Write for StorageForAlternateMathContent {
 }
 
 impl markup::Read for TextBoxBottomStroke {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_bottom_stroke(element)
     }
 }
@@ -3572,7 +3572,7 @@ impl markup::Write for TextBoxBottomStroke {
 }
 
 impl markup::Read for TextBoxInteriorStroke {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_interior_stroke(element)
     }
 }
@@ -3585,7 +3585,7 @@ impl markup::Write for TextBoxInteriorStroke {
 }
 
 impl markup::Read for TextBoxLeftStroke {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_left_stroke(element)
     }
 }
@@ -3598,7 +3598,7 @@ impl markup::Write for TextBoxLeftStroke {
 }
 
 impl markup::Read for TextBoxRightStroke {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_right_stroke(element)
     }
 }
@@ -3611,7 +3611,7 @@ impl markup::Write for TextBoxRightStroke {
 }
 
 impl markup::Read for TextBoxTopStroke {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_box_top_stroke(element)
     }
 }
@@ -3624,7 +3624,7 @@ impl markup::Write for TextBoxTopStroke {
 }
 
 impl markup::Read for UIDefaultColors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui_default_colors(element)
     }
 }
@@ -3637,7 +3637,7 @@ impl markup::Write for UIDefaultColors {
 }
 
 impl markup::Read for VMLDiagram {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vml_diagram(element)
     }
 }
@@ -3650,7 +3650,7 @@ impl markup::Write for VMLDiagram {
 }
 
 impl markup::Read for WordprocessingMLFieldSwitches {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wordprocessing_ml_field_switches(element)
     }
 }

@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Version` as its element, `xlwcv:version`.
 #[must_use]
-pub fn version(node: &super::Version, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn version(node: &super::Version, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VERSION_SHAPE, &node.unknown);
     writer.attribute(0, &node.warn_below_version);
     writer.attribute(1, &node.set_version);

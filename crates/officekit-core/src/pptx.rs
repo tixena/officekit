@@ -5,6 +5,8 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::compact::{self, Comments};
@@ -18,8 +20,6 @@ use crate::parts::kinds::PresentationKind;
 use crate::parts::presentation;
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::write::WriteOptions;
 
 /// A `.pptx`-family file: its package, its presentation part, and the class and kind they give.
 #[derive(Debug)]

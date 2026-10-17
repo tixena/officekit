@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `ds:schemaRef` into a `AssociatedXMLSchema`.
 #[must_use]
-pub fn associated_xml_schema(element: &xml::element::Element) -> super::AssociatedXMLSchema {
+pub fn associated_xml_schema(element: &Element) -> super::AssociatedXMLSchema {
     let mut node = super::AssociatedXMLSchema::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_XML_SCHEMA_SHAPE);
     for (index, field) in &mut reader {
@@ -231,9 +231,7 @@ pub fn associated_xml_schema(element: &xml::element::Element) -> super::Associat
 
 /// Read `ds:datastoreItem` into a `CustomXMLDataProperties`.
 #[must_use]
-pub fn custom_xml_data_properties(
-    element: &xml::element::Element,
-) -> super::CustomXMLDataProperties {
+pub fn custom_xml_data_properties(element: &Element) -> super::CustomXMLDataProperties {
     let mut node = super::CustomXMLDataProperties::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -249,9 +247,7 @@ pub fn custom_xml_data_properties(
 
 /// Read `ds:schemaRefs` into a `SetOfAssociatedXMLSchemas`.
 #[must_use]
-pub fn set_of_associated_xml_schemas(
-    element: &xml::element::Element,
-) -> super::SetOfAssociatedXMLSchemas {
+pub fn set_of_associated_xml_schemas(element: &Element) -> super::SetOfAssociatedXMLSchemas {
     let mut node = super::SetOfAssociatedXMLSchemas::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE);
     for (index, field) in &mut reader {

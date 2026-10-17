@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `b:AbbreviatedCaseNumber` into a `AbbreviatedCaseNumber`.
 #[must_use]
-pub fn abbreviated_case_number(element: &xml::element::Element) -> super::AbbreviatedCaseNumber {
+pub fn abbreviated_case_number(element: &Element) -> super::AbbreviatedCaseNumber {
     let mut node = super::AbbreviatedCaseNumber::default();
     let mut reader = markup::Reader::new(element, &super::ABBREVIATED_CASE_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn abbreviated_case_number(element: &xml::element::Element) -> super::Abbrev
 
 /// Read `b:AlbumTitle` into a `AlbumTitle`.
 #[must_use]
-pub fn album_title(element: &xml::element::Element) -> super::AlbumTitle {
+pub fn album_title(element: &Element) -> super::AlbumTitle {
     let mut node = super::AlbumTitle::default();
     let mut reader = markup::Reader::new(element, &super::ALBUM_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn album_title(element: &xml::element::Element) -> super::AlbumTitle {
 
 /// Read `b:Artist` into a `Artist`.
 #[must_use]
-pub fn artist(element: &xml::element::Element) -> super::Artist {
+pub fn artist(element: &Element) -> super::Artist {
     let mut node = super::Artist::default();
     let mut reader = markup::Reader::new(element, &super::ARTIST_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn artist(element: &xml::element::Element) -> super::Artist {
 
 /// Read `b:Author` into a `Author`.
 #[must_use]
-pub fn author(element: &xml::element::Element) -> super::Author {
+pub fn author(element: &Element) -> super::Author {
     let mut node = super::Author::default();
     let mut reader = markup::Reader::new(element, &super::AUTHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -273,7 +273,7 @@ pub fn author(element: &xml::element::Element) -> super::Author {
 
 /// Read `b:BookAuthor` into a `BookAuthor`.
 #[must_use]
-pub fn book_author(element: &xml::element::Element) -> super::BookAuthor {
+pub fn book_author(element: &Element) -> super::BookAuthor {
     let mut node = super::BookAuthor::default();
     let mut reader = markup::Reader::new(element, &super::BOOK_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -287,7 +287,7 @@ pub fn book_author(element: &xml::element::Element) -> super::BookAuthor {
 
 /// Read `b:BookTitle` into a `BookTitle`.
 #[must_use]
-pub fn book_title(element: &xml::element::Element) -> super::BookTitle {
+pub fn book_title(element: &Element) -> super::BookTitle {
     let mut node = super::BookTitle::default();
     let mut reader = markup::Reader::new(element, &super::BOOK_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -301,7 +301,7 @@ pub fn book_title(element: &xml::element::Element) -> super::BookTitle {
 
 /// Read `b:BroadcastTitle` into a `BroadcastTitle`.
 #[must_use]
-pub fn broadcast_title(element: &xml::element::Element) -> super::BroadcastTitle {
+pub fn broadcast_title(element: &Element) -> super::BroadcastTitle {
     let mut node = super::BroadcastTitle::default();
     let mut reader = markup::Reader::new(element, &super::BROADCAST_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -315,7 +315,7 @@ pub fn broadcast_title(element: &xml::element::Element) -> super::BroadcastTitle
 
 /// Read `b:Broadcaster` into a `Broadcaster`.
 #[must_use]
-pub fn broadcaster(element: &xml::element::Element) -> super::Broadcaster {
+pub fn broadcaster(element: &Element) -> super::Broadcaster {
     let mut node = super::Broadcaster::default();
     let mut reader = markup::Reader::new(element, &super::BROADCASTER_SHAPE);
     for (index, field) in &mut reader {
@@ -329,7 +329,7 @@ pub fn broadcaster(element: &xml::element::Element) -> super::Broadcaster {
 
 /// Read `b:CaseNumber` into a `CaseNumber`.
 #[must_use]
-pub fn case_number(element: &xml::element::Element) -> super::CaseNumber {
+pub fn case_number(element: &Element) -> super::CaseNumber {
     let mut node = super::CaseNumber::default();
     let mut reader = markup::Reader::new(element, &super::CASE_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -343,7 +343,7 @@ pub fn case_number(element: &xml::element::Element) -> super::CaseNumber {
 
 /// Read `b:ChapterNumber` into a `ChapterNumber`.
 #[must_use]
-pub fn chapter_number(element: &xml::element::Element) -> super::ChapterNumber {
+pub fn chapter_number(element: &Element) -> super::ChapterNumber {
     let mut node = super::ChapterNumber::default();
     let mut reader = markup::Reader::new(element, &super::CHAPTER_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -357,7 +357,7 @@ pub fn chapter_number(element: &xml::element::Element) -> super::ChapterNumber {
 
 /// Read `b:City` into a `City`.
 #[must_use]
-pub fn city(element: &xml::element::Element) -> super::City {
+pub fn city(element: &Element) -> super::City {
     let mut node = super::City::default();
     let mut reader = markup::Reader::new(element, &super::CITY_SHAPE);
     for (index, field) in &mut reader {
@@ -371,7 +371,7 @@ pub fn city(element: &xml::element::Element) -> super::City {
 
 /// Read `b:Comments` into a `Comments`.
 #[must_use]
-pub fn comments(element: &xml::element::Element) -> super::Comments {
+pub fn comments(element: &Element) -> super::Comments {
     let mut node = super::Comments::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_SHAPE);
     for (index, field) in &mut reader {
@@ -385,7 +385,7 @@ pub fn comments(element: &xml::element::Element) -> super::Comments {
 
 /// Read `b:Compiler` into a `Compiler`.
 #[must_use]
-pub fn compiler(element: &xml::element::Element) -> super::Compiler {
+pub fn compiler(element: &Element) -> super::Compiler {
     let mut node = super::Compiler::default();
     let mut reader = markup::Reader::new(element, &super::COMPILER_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +399,7 @@ pub fn compiler(element: &xml::element::Element) -> super::Compiler {
 
 /// Read `b:Composer` into a `Composer`.
 #[must_use]
-pub fn composer(element: &xml::element::Element) -> super::Composer {
+pub fn composer(element: &Element) -> super::Composer {
     let mut node = super::Composer::default();
     let mut reader = markup::Reader::new(element, &super::COMPOSER_SHAPE);
     for (index, field) in &mut reader {
@@ -413,7 +413,7 @@ pub fn composer(element: &xml::element::Element) -> super::Composer {
 
 /// Read `b:Conductor` into a `Conductor`.
 #[must_use]
-pub fn conductor(element: &xml::element::Element) -> super::Conductor {
+pub fn conductor(element: &Element) -> super::Conductor {
     let mut node = super::Conductor::default();
     let mut reader = markup::Reader::new(element, &super::CONDUCTOR_SHAPE);
     for (index, field) in &mut reader {
@@ -427,9 +427,7 @@ pub fn conductor(element: &xml::element::Element) -> super::Conductor {
 
 /// Read `b:ConferenceName` into a `ConferenceOrProceedingsName`.
 #[must_use]
-pub fn conference_or_proceedings_name(
-    element: &xml::element::Element,
-) -> super::ConferenceOrProceedingsName {
+pub fn conference_or_proceedings_name(element: &Element) -> super::ConferenceOrProceedingsName {
     let mut node = super::ConferenceOrProceedingsName::default();
     let mut reader = markup::Reader::new(element, &super::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -443,7 +441,7 @@ pub fn conference_or_proceedings_name(
 
 /// Read `b:Author` into a `ContributorsList`.
 #[must_use]
-pub fn contributors_list(element: &xml::element::Element) -> super::ContributorsList {
+pub fn contributors_list(element: &Element) -> super::ContributorsList {
     let mut node = super::ContributorsList::default();
     let mut reader = markup::Reader::new(element, &super::CONTRIBUTORS_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -457,15 +455,13 @@ pub fn contributors_list(element: &xml::element::Element) -> super::Contributors
 
 /// Read one item of `ContributorsListContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn contributors_list_content(
-    element: &xml::element::Element,
-) -> super::ContributorsListContent {
+pub fn contributors_list_content(element: &Element) -> super::ContributorsListContent {
     markup::read(element)
 }
 
 /// Read `b:Corporate` into a `CorporateAuthor`.
 #[must_use]
-pub fn corporate_author(element: &xml::element::Element) -> super::CorporateAuthor {
+pub fn corporate_author(element: &Element) -> super::CorporateAuthor {
     let mut node = super::CorporateAuthor::default();
     let mut reader = markup::Reader::new(element, &super::CORPORATE_AUTHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -479,7 +475,7 @@ pub fn corporate_author(element: &xml::element::Element) -> super::CorporateAuth
 
 /// Read `b:Counsel` into a `Counsel`.
 #[must_use]
-pub fn counsel(element: &xml::element::Element) -> super::Counsel {
+pub fn counsel(element: &Element) -> super::Counsel {
     let mut node = super::Counsel::default();
     let mut reader = markup::Reader::new(element, &super::COUNSEL_SHAPE);
     for (index, field) in &mut reader {
@@ -493,7 +489,7 @@ pub fn counsel(element: &xml::element::Element) -> super::Counsel {
 
 /// Read `b:CountryRegion` into a `CountryOrRegion`.
 #[must_use]
-pub fn country_or_region(element: &xml::element::Element) -> super::CountryOrRegion {
+pub fn country_or_region(element: &Element) -> super::CountryOrRegion {
     let mut node = super::CountryOrRegion::default();
     let mut reader = markup::Reader::new(element, &super::COUNTRY_OR_REGION_SHAPE);
     for (index, field) in &mut reader {
@@ -507,7 +503,7 @@ pub fn country_or_region(element: &xml::element::Element) -> super::CountryOrReg
 
 /// Read `b:Court` into a `Court`.
 #[must_use]
-pub fn court(element: &xml::element::Element) -> super::Court {
+pub fn court(element: &Element) -> super::Court {
     let mut node = super::Court::default();
     let mut reader = markup::Reader::new(element, &super::COURT_SHAPE);
     for (index, field) in &mut reader {
@@ -521,7 +517,7 @@ pub fn court(element: &xml::element::Element) -> super::Court {
 
 /// Read `b:Day` into a `Day`.
 #[must_use]
-pub fn day(element: &xml::element::Element) -> super::Day {
+pub fn day(element: &Element) -> super::Day {
     let mut node = super::Day::default();
     let mut reader = markup::Reader::new(element, &super::DAY_SHAPE);
     for (index, field) in &mut reader {
@@ -535,7 +531,7 @@ pub fn day(element: &xml::element::Element) -> super::Day {
 
 /// Read `b:DayAccessed` into a `DayAccessed`.
 #[must_use]
-pub fn day_accessed(element: &xml::element::Element) -> super::DayAccessed {
+pub fn day_accessed(element: &Element) -> super::DayAccessed {
     let mut node = super::DayAccessed::default();
     let mut reader = markup::Reader::new(element, &super::DAY_ACCESSED_SHAPE);
     for (index, field) in &mut reader {
@@ -549,7 +545,7 @@ pub fn day_accessed(element: &xml::element::Element) -> super::DayAccessed {
 
 /// Read `b:Department` into a `Department`.
 #[must_use]
-pub fn department(element: &xml::element::Element) -> super::Department {
+pub fn department(element: &Element) -> super::Department {
     let mut node = super::Department::default();
     let mut reader = markup::Reader::new(element, &super::DEPARTMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -563,7 +559,7 @@ pub fn department(element: &xml::element::Element) -> super::Department {
 
 /// Read `b:Director` into a `Director`.
 #[must_use]
-pub fn director(element: &xml::element::Element) -> super::Director {
+pub fn director(element: &Element) -> super::Director {
     let mut node = super::Director::default();
     let mut reader = markup::Reader::new(element, &super::DIRECTOR_SHAPE);
     for (index, field) in &mut reader {
@@ -577,7 +573,7 @@ pub fn director(element: &xml::element::Element) -> super::Director {
 
 /// Read `b:Distributor` into a `Distributor`.
 #[must_use]
-pub fn distributor(element: &xml::element::Element) -> super::Distributor {
+pub fn distributor(element: &Element) -> super::Distributor {
     let mut node = super::Distributor::default();
     let mut reader = markup::Reader::new(element, &super::DISTRIBUTOR_SHAPE);
     for (index, field) in &mut reader {
@@ -591,7 +587,7 @@ pub fn distributor(element: &xml::element::Element) -> super::Distributor {
 
 /// Read `b:Editor` into a `Editor`.
 #[must_use]
-pub fn editor(element: &xml::element::Element) -> super::Editor {
+pub fn editor(element: &Element) -> super::Editor {
     let mut node = super::Editor::default();
     let mut reader = markup::Reader::new(element, &super::EDITOR_SHAPE);
     for (index, field) in &mut reader {
@@ -605,7 +601,7 @@ pub fn editor(element: &xml::element::Element) -> super::Editor {
 
 /// Read `b:Edition` into a `EditorEdition`.
 #[must_use]
-pub fn editor_edition(element: &xml::element::Element) -> super::EditorEdition {
+pub fn editor_edition(element: &Element) -> super::EditorEdition {
     let mut node = super::EditorEdition::default();
     let mut reader = markup::Reader::new(element, &super::EDITOR_EDITION_SHAPE);
     for (index, field) in &mut reader {
@@ -619,7 +615,7 @@ pub fn editor_edition(element: &xml::element::Element) -> super::EditorEdition {
 
 /// Read `b:Guid` into a `GUID`.
 #[must_use]
-pub fn guid(element: &xml::element::Element) -> super::GUID {
+pub fn guid(element: &Element) -> super::GUID {
     let mut node = super::GUID::default();
     let mut reader = markup::Reader::new(element, &super::GUID_SHAPE);
     for (index, field) in &mut reader {
@@ -633,7 +629,7 @@ pub fn guid(element: &xml::element::Element) -> super::GUID {
 
 /// Read `b:Institution` into a `Institution`.
 #[must_use]
-pub fn institution(element: &xml::element::Element) -> super::Institution {
+pub fn institution(element: &Element) -> super::Institution {
     let mut node = super::Institution::default();
     let mut reader = markup::Reader::new(element, &super::INSTITUTION_SHAPE);
     for (index, field) in &mut reader {
@@ -647,7 +643,7 @@ pub fn institution(element: &xml::element::Element) -> super::Institution {
 
 /// Read `b:InternetSiteTitle` into a `InternetSiteTitle`.
 #[must_use]
-pub fn internet_site_title(element: &xml::element::Element) -> super::InternetSiteTitle {
+pub fn internet_site_title(element: &Element) -> super::InternetSiteTitle {
     let mut node = super::InternetSiteTitle::default();
     let mut reader = markup::Reader::new(element, &super::INTERNET_SITE_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -661,7 +657,7 @@ pub fn internet_site_title(element: &xml::element::Element) -> super::InternetSi
 
 /// Read `b:Interviewee` into a `Interviewee`.
 #[must_use]
-pub fn interviewee(element: &xml::element::Element) -> super::Interviewee {
+pub fn interviewee(element: &Element) -> super::Interviewee {
     let mut node = super::Interviewee::default();
     let mut reader = markup::Reader::new(element, &super::INTERVIEWEE_SHAPE);
     for (index, field) in &mut reader {
@@ -675,7 +671,7 @@ pub fn interviewee(element: &xml::element::Element) -> super::Interviewee {
 
 /// Read `b:Interviewer` into a `Interviewer`.
 #[must_use]
-pub fn interviewer(element: &xml::element::Element) -> super::Interviewer {
+pub fn interviewer(element: &Element) -> super::Interviewer {
     let mut node = super::Interviewer::default();
     let mut reader = markup::Reader::new(element, &super::INTERVIEWER_SHAPE);
     for (index, field) in &mut reader {
@@ -689,7 +685,7 @@ pub fn interviewer(element: &xml::element::Element) -> super::Interviewer {
 
 /// Read `b:Inventor` into a `Inventor`.
 #[must_use]
-pub fn inventor(element: &xml::element::Element) -> super::Inventor {
+pub fn inventor(element: &Element) -> super::Inventor {
     let mut node = super::Inventor::default();
     let mut reader = markup::Reader::new(element, &super::INVENTOR_SHAPE);
     for (index, field) in &mut reader {
@@ -703,7 +699,7 @@ pub fn inventor(element: &xml::element::Element) -> super::Inventor {
 
 /// Read `b:Issue` into a `Issue`.
 #[must_use]
-pub fn issue(element: &xml::element::Element) -> super::Issue {
+pub fn issue(element: &Element) -> super::Issue {
     let mut node = super::Issue::default();
     let mut reader = markup::Reader::new(element, &super::ISSUE_SHAPE);
     for (index, field) in &mut reader {
@@ -717,7 +713,7 @@ pub fn issue(element: &xml::element::Element) -> super::Issue {
 
 /// Read `b:JournalName` into a `JournalName`.
 #[must_use]
-pub fn journal_name(element: &xml::element::Element) -> super::JournalName {
+pub fn journal_name(element: &Element) -> super::JournalName {
     let mut node = super::JournalName::default();
     let mut reader = markup::Reader::new(element, &super::JOURNAL_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -731,7 +727,7 @@ pub fn journal_name(element: &xml::element::Element) -> super::JournalName {
 
 /// Read `b:LCID` into a `LocaleID`.
 #[must_use]
-pub fn locale_id(element: &xml::element::Element) -> super::LocaleID {
+pub fn locale_id(element: &Element) -> super::LocaleID {
     let mut node = super::LocaleID::default();
     let mut reader = markup::Reader::new(element, &super::LOCALE_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -745,7 +741,7 @@ pub fn locale_id(element: &xml::element::Element) -> super::LocaleID {
 
 /// Read `b:Medium` into a `Medium`.
 #[must_use]
-pub fn medium(element: &xml::element::Element) -> super::Medium {
+pub fn medium(element: &Element) -> super::Medium {
     let mut node = super::Medium::default();
     let mut reader = markup::Reader::new(element, &super::MEDIUM_SHAPE);
     for (index, field) in &mut reader {
@@ -759,7 +755,7 @@ pub fn medium(element: &xml::element::Element) -> super::Medium {
 
 /// Read `b:Month` into a `Month`.
 #[must_use]
-pub fn month(element: &xml::element::Element) -> super::Month {
+pub fn month(element: &Element) -> super::Month {
     let mut node = super::Month::default();
     let mut reader = markup::Reader::new(element, &super::MONTH_SHAPE);
     for (index, field) in &mut reader {
@@ -773,7 +769,7 @@ pub fn month(element: &xml::element::Element) -> super::Month {
 
 /// Read `b:MonthAccessed` into a `MonthAccessed`.
 #[must_use]
-pub fn month_accessed(element: &xml::element::Element) -> super::MonthAccessed {
+pub fn month_accessed(element: &Element) -> super::MonthAccessed {
     let mut node = super::MonthAccessed::default();
     let mut reader = markup::Reader::new(element, &super::MONTH_ACCESSED_SHAPE);
     for (index, field) in &mut reader {
@@ -787,7 +783,7 @@ pub fn month_accessed(element: &xml::element::Element) -> super::MonthAccessed {
 
 /// Read `b:NameList` into a `NameList`.
 #[must_use]
-pub fn name_list(element: &xml::element::Element) -> super::NameList {
+pub fn name_list(element: &Element) -> super::NameList {
     let mut node = super::NameList::default();
     let mut reader = markup::Reader::new(element, &super::NAME_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -801,13 +797,13 @@ pub fn name_list(element: &xml::element::Element) -> super::NameList {
 
 /// Read one item of `NameOrCorporateContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn name_or_corporate(element: &xml::element::Element) -> super::NameOrCorporateContent {
+pub fn name_or_corporate(element: &Element) -> super::NameOrCorporateContent {
     markup::read(element)
 }
 
 /// Read `b:NumberVolumes` into a `NumberOfVolumes`.
 #[must_use]
-pub fn number_of_volumes(element: &xml::element::Element) -> super::NumberOfVolumes {
+pub fn number_of_volumes(element: &Element) -> super::NumberOfVolumes {
     let mut node = super::NumberOfVolumes::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_VOLUMES_SHAPE);
     for (index, field) in &mut reader {
@@ -821,7 +817,7 @@ pub fn number_of_volumes(element: &xml::element::Element) -> super::NumberOfVolu
 
 /// Read `b:Pages` into a `Pages`.
 #[must_use]
-pub fn pages(element: &xml::element::Element) -> super::Pages {
+pub fn pages(element: &Element) -> super::Pages {
     let mut node = super::Pages::default();
     let mut reader = markup::Reader::new(element, &super::PAGES_SHAPE);
     for (index, field) in &mut reader {
@@ -835,7 +831,7 @@ pub fn pages(element: &xml::element::Element) -> super::Pages {
 
 /// Read `b:PatentNumber` into a `PatentNumber`.
 #[must_use]
-pub fn patent_number(element: &xml::element::Element) -> super::PatentNumber {
+pub fn patent_number(element: &Element) -> super::PatentNumber {
     let mut node = super::PatentNumber::default();
     let mut reader = markup::Reader::new(element, &super::PATENT_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -849,7 +845,7 @@ pub fn patent_number(element: &xml::element::Element) -> super::PatentNumber {
 
 /// Read `b:Type` into a `PatentType`.
 #[must_use]
-pub fn patent_type(element: &xml::element::Element) -> super::PatentType {
+pub fn patent_type(element: &Element) -> super::PatentType {
     let mut node = super::PatentType::default();
     let mut reader = markup::Reader::new(element, &super::PATENT_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -863,7 +859,7 @@ pub fn patent_type(element: &xml::element::Element) -> super::PatentType {
 
 /// Read `b:Performer` into a `Performer`.
 #[must_use]
-pub fn performer(element: &xml::element::Element) -> super::Performer {
+pub fn performer(element: &Element) -> super::Performer {
     let mut node = super::Performer::default();
     let mut reader = markup::Reader::new(element, &super::PERFORMER_SHAPE);
     for (index, field) in &mut reader {
@@ -877,7 +873,7 @@ pub fn performer(element: &xml::element::Element) -> super::Performer {
 
 /// Read `b:PeriodicalTitle` into a `PeriodicalTitle`.
 #[must_use]
-pub fn periodical_title(element: &xml::element::Element) -> super::PeriodicalTitle {
+pub fn periodical_title(element: &Element) -> super::PeriodicalTitle {
     let mut node = super::PeriodicalTitle::default();
     let mut reader = markup::Reader::new(element, &super::PERIODICAL_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -891,7 +887,7 @@ pub fn periodical_title(element: &xml::element::Element) -> super::PeriodicalTit
 
 /// Read `b:Person` into a `Person`.
 #[must_use]
-pub fn person(element: &xml::element::Element) -> super::Person {
+pub fn person(element: &Element) -> super::Person {
     let mut node = super::Person::default();
     let mut reader = markup::Reader::new(element, &super::PERSON_SHAPE);
     for (index, field) in &mut reader {
@@ -908,9 +904,7 @@ pub fn person(element: &xml::element::Element) -> super::Person {
 
 /// Read `b:First` into a `PersonsFirstOrGivenName`.
 #[must_use]
-pub fn persons_first_or_given_name(
-    element: &xml::element::Element,
-) -> super::PersonsFirstOrGivenName {
+pub fn persons_first_or_given_name(element: &Element) -> super::PersonsFirstOrGivenName {
     let mut node = super::PersonsFirstOrGivenName::default();
     let mut reader = markup::Reader::new(element, &super::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -924,9 +918,7 @@ pub fn persons_first_or_given_name(
 
 /// Read `b:Last` into a `PersonsLastOrFamilyName`.
 #[must_use]
-pub fn persons_last_or_family_name(
-    element: &xml::element::Element,
-) -> super::PersonsLastOrFamilyName {
+pub fn persons_last_or_family_name(element: &Element) -> super::PersonsLastOrFamilyName {
     let mut node = super::PersonsLastOrFamilyName::default();
     let mut reader = markup::Reader::new(element, &super::PERSONS_LAST_OR_FAMILY_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -940,9 +932,7 @@ pub fn persons_last_or_family_name(
 
 /// Read `b:Middle` into a `PersonsMiddleOrOtherName`.
 #[must_use]
-pub fn persons_middle_or_other_name(
-    element: &xml::element::Element,
-) -> super::PersonsMiddleOrOtherName {
+pub fn persons_middle_or_other_name(element: &Element) -> super::PersonsMiddleOrOtherName {
     let mut node = super::PersonsMiddleOrOtherName::default();
     let mut reader = markup::Reader::new(element, &super::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -956,7 +946,7 @@ pub fn persons_middle_or_other_name(
 
 /// Read `b:ProducerName` into a `ProducerName`.
 #[must_use]
-pub fn producer_name(element: &xml::element::Element) -> super::ProducerName {
+pub fn producer_name(element: &Element) -> super::ProducerName {
     let mut node = super::ProducerName::default();
     let mut reader = markup::Reader::new(element, &super::PRODUCER_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -970,7 +960,7 @@ pub fn producer_name(element: &xml::element::Element) -> super::ProducerName {
 
 /// Read `b:ProductionCompany` into a `ProductionCompany`.
 #[must_use]
-pub fn production_company(element: &xml::element::Element) -> super::ProductionCompany {
+pub fn production_company(element: &Element) -> super::ProductionCompany {
     let mut node = super::ProductionCompany::default();
     let mut reader = markup::Reader::new(element, &super::PRODUCTION_COMPANY_SHAPE);
     for (index, field) in &mut reader {
@@ -984,7 +974,7 @@ pub fn production_company(element: &xml::element::Element) -> super::ProductionC
 
 /// Read `b:PublicationTitle` into a `PublicationTitle`.
 #[must_use]
-pub fn publication_title(element: &xml::element::Element) -> super::PublicationTitle {
+pub fn publication_title(element: &Element) -> super::PublicationTitle {
     let mut node = super::PublicationTitle::default();
     let mut reader = markup::Reader::new(element, &super::PUBLICATION_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -998,7 +988,7 @@ pub fn publication_title(element: &xml::element::Element) -> super::PublicationT
 
 /// Read `b:Publisher` into a `Publisher`.
 #[must_use]
-pub fn publisher(element: &xml::element::Element) -> super::Publisher {
+pub fn publisher(element: &Element) -> super::Publisher {
     let mut node = super::Publisher::default();
     let mut reader = markup::Reader::new(element, &super::PUBLISHER_SHAPE);
     for (index, field) in &mut reader {
@@ -1012,7 +1002,7 @@ pub fn publisher(element: &xml::element::Element) -> super::Publisher {
 
 /// Read `b:RecordingNumber` into a `RecordingNumber`.
 #[must_use]
-pub fn recording_number(element: &xml::element::Element) -> super::RecordingNumber {
+pub fn recording_number(element: &Element) -> super::RecordingNumber {
     let mut node = super::RecordingNumber::default();
     let mut reader = markup::Reader::new(element, &super::RECORDING_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -1026,7 +1016,7 @@ pub fn recording_number(element: &xml::element::Element) -> super::RecordingNumb
 
 /// Read `b:RefOrder` into a `ReferenceOrder`.
 #[must_use]
-pub fn reference_order(element: &xml::element::Element) -> super::ReferenceOrder {
+pub fn reference_order(element: &Element) -> super::ReferenceOrder {
     let mut node = super::ReferenceOrder::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCE_ORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -1040,7 +1030,7 @@ pub fn reference_order(element: &xml::element::Element) -> super::ReferenceOrder
 
 /// Read `b:Reporter` into a `Reporter`.
 #[must_use]
-pub fn reporter(element: &xml::element::Element) -> super::Reporter {
+pub fn reporter(element: &Element) -> super::Reporter {
     let mut node = super::Reporter::default();
     let mut reader = markup::Reader::new(element, &super::REPORTER_SHAPE);
     for (index, field) in &mut reader {
@@ -1054,7 +1044,7 @@ pub fn reporter(element: &xml::element::Element) -> super::Reporter {
 
 /// Read `b:ShortTitle` into a `ShortTitle`.
 #[must_use]
-pub fn short_title(element: &xml::element::Element) -> super::ShortTitle {
+pub fn short_title(element: &Element) -> super::ShortTitle {
     let mut node = super::ShortTitle::default();
     let mut reader = markup::Reader::new(element, &super::SHORT_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1068,7 +1058,7 @@ pub fn short_title(element: &xml::element::Element) -> super::ShortTitle {
 
 /// Read `b:Source` into a `Source`.
 #[must_use]
-pub fn source(element: &xml::element::Element) -> super::Source {
+pub fn source(element: &Element) -> super::Source {
     let mut node = super::Source::default();
     let mut reader = markup::Reader::new(element, &super::SOURCE_SHAPE);
     for (index, field) in &mut reader {
@@ -1082,13 +1072,13 @@ pub fn source(element: &xml::element::Element) -> super::Source {
 
 /// Read one item of `SourceContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn source_content(element: &xml::element::Element) -> super::SourceContent {
+pub fn source_content(element: &Element) -> super::SourceContent {
     markup::read(element)
 }
 
 /// Read `b:SourceType` into a `SourceType`.
 #[must_use]
-pub fn source_type(element: &xml::element::Element) -> super::SourceType {
+pub fn source_type(element: &Element) -> super::SourceType {
     let mut node = super::SourceType::default();
     let mut reader = markup::Reader::new(element, &super::SOURCE_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1102,7 +1092,7 @@ pub fn source_type(element: &xml::element::Element) -> super::SourceType {
 
 /// Read `b:Sources` into a `Sources`.
 #[must_use]
-pub fn sources(element: &xml::element::Element) -> super::Sources {
+pub fn sources(element: &Element) -> super::Sources {
     let mut node = super::Sources::default();
     let mut reader = markup::Reader::new(element, &super::SOURCES_SHAPE);
     for (index, field) in &mut reader {
@@ -1120,7 +1110,7 @@ pub fn sources(element: &xml::element::Element) -> super::Sources {
 
 /// Read `b:StandardNumber` into a `StandardNumber`.
 #[must_use]
-pub fn standard_number(element: &xml::element::Element) -> super::StandardNumber {
+pub fn standard_number(element: &Element) -> super::StandardNumber {
     let mut node = super::StandardNumber::default();
     let mut reader = markup::Reader::new(element, &super::STANDARD_NUMBER_SHAPE);
     for (index, field) in &mut reader {
@@ -1134,7 +1124,7 @@ pub fn standard_number(element: &xml::element::Element) -> super::StandardNumber
 
 /// Read `b:StateProvince` into a `StateOrProvince`.
 #[must_use]
-pub fn state_or_province(element: &xml::element::Element) -> super::StateOrProvince {
+pub fn state_or_province(element: &Element) -> super::StateOrProvince {
     let mut node = super::StateOrProvince::default();
     let mut reader = markup::Reader::new(element, &super::STATE_OR_PROVINCE_SHAPE);
     for (index, field) in &mut reader {
@@ -1148,7 +1138,7 @@ pub fn state_or_province(element: &xml::element::Element) -> super::StateOrProvi
 
 /// Read `b:Station` into a `Station`.
 #[must_use]
-pub fn station(element: &xml::element::Element) -> super::Station {
+pub fn station(element: &Element) -> super::Station {
     let mut node = super::Station::default();
     let mut reader = markup::Reader::new(element, &super::STATION_SHAPE);
     for (index, field) in &mut reader {
@@ -1162,7 +1152,7 @@ pub fn station(element: &xml::element::Element) -> super::Station {
 
 /// Read `b:Tag` into a `Tag`.
 #[must_use]
-pub fn tag(element: &xml::element::Element) -> super::Tag {
+pub fn tag(element: &Element) -> super::Tag {
     let mut node = super::Tag::default();
     let mut reader = markup::Reader::new(element, &super::TAG_SHAPE);
     for (index, field) in &mut reader {
@@ -1176,7 +1166,7 @@ pub fn tag(element: &xml::element::Element) -> super::Tag {
 
 /// Read `b:Theater` into a `Theater`.
 #[must_use]
-pub fn theater(element: &xml::element::Element) -> super::Theater {
+pub fn theater(element: &Element) -> super::Theater {
     let mut node = super::Theater::default();
     let mut reader = markup::Reader::new(element, &super::THEATER_SHAPE);
     for (index, field) in &mut reader {
@@ -1190,7 +1180,7 @@ pub fn theater(element: &xml::element::Element) -> super::Theater {
 
 /// Read `b:ThesisType` into a `ThesisType`.
 #[must_use]
-pub fn thesis_type(element: &xml::element::Element) -> super::ThesisType {
+pub fn thesis_type(element: &Element) -> super::ThesisType {
     let mut node = super::ThesisType::default();
     let mut reader = markup::Reader::new(element, &super::THESIS_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1204,7 +1194,7 @@ pub fn thesis_type(element: &xml::element::Element) -> super::ThesisType {
 
 /// Read `b:Title` into a `Title`.
 #[must_use]
-pub fn title(element: &xml::element::Element) -> super::Title {
+pub fn title(element: &Element) -> super::Title {
     let mut node = super::Title::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1218,7 +1208,7 @@ pub fn title(element: &xml::element::Element) -> super::Title {
 
 /// Read `b:Translator` into a `Translator`.
 #[must_use]
-pub fn translator(element: &xml::element::Element) -> super::Translator {
+pub fn translator(element: &Element) -> super::Translator {
     let mut node = super::Translator::default();
     let mut reader = markup::Reader::new(element, &super::TRANSLATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -1232,7 +1222,7 @@ pub fn translator(element: &xml::element::Element) -> super::Translator {
 
 /// Read `b:URL` into a `URL`.
 #[must_use]
-pub fn url(element: &xml::element::Element) -> super::URL {
+pub fn url(element: &Element) -> super::URL {
     let mut node = super::URL::default();
     let mut reader = markup::Reader::new(element, &super::URL_SHAPE);
     for (index, field) in &mut reader {
@@ -1246,7 +1236,7 @@ pub fn url(element: &xml::element::Element) -> super::URL {
 
 /// Read `b:Version` into a `Version`.
 #[must_use]
-pub fn version(element: &xml::element::Element) -> super::Version {
+pub fn version(element: &Element) -> super::Version {
     let mut node = super::Version::default();
     let mut reader = markup::Reader::new(element, &super::VERSION_SHAPE);
     for (index, field) in &mut reader {
@@ -1260,7 +1250,7 @@ pub fn version(element: &xml::element::Element) -> super::Version {
 
 /// Read `b:Volume` into a `Volume`.
 #[must_use]
-pub fn volume(element: &xml::element::Element) -> super::Volume {
+pub fn volume(element: &Element) -> super::Volume {
     let mut node = super::Volume::default();
     let mut reader = markup::Reader::new(element, &super::VOLUME_SHAPE);
     for (index, field) in &mut reader {
@@ -1274,7 +1264,7 @@ pub fn volume(element: &xml::element::Element) -> super::Volume {
 
 /// Read `b:Writer` into a `Writer`.
 #[must_use]
-pub fn writer(element: &xml::element::Element) -> super::Writer {
+pub fn writer(element: &Element) -> super::Writer {
     let mut node = super::Writer::default();
     let mut reader = markup::Reader::new(element, &super::WRITER_SHAPE);
     for (index, field) in &mut reader {
@@ -1288,7 +1278,7 @@ pub fn writer(element: &xml::element::Element) -> super::Writer {
 
 /// Read `b:Year` into a `Year`.
 #[must_use]
-pub fn year(element: &xml::element::Element) -> super::Year {
+pub fn year(element: &Element) -> super::Year {
     let mut node = super::Year::default();
     let mut reader = markup::Reader::new(element, &super::YEAR_SHAPE);
     for (index, field) in &mut reader {
@@ -1302,7 +1292,7 @@ pub fn year(element: &xml::element::Element) -> super::Year {
 
 /// Read `b:YearAccessed` into a `YearAccessed`.
 #[must_use]
-pub fn year_accessed(element: &xml::element::Element) -> super::YearAccessed {
+pub fn year_accessed(element: &Element) -> super::YearAccessed {
     let mut node = super::YearAccessed::default();
     let mut reader = markup::Reader::new(element, &super::YEAR_ACCESSED_SHAPE);
     for (index, field) in &mut reader {

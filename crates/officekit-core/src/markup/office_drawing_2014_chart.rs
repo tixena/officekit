@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1084,7 +1084,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Bubble3D {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bubble3d(element)
     }
 }
@@ -1097,7 +1097,7 @@ impl markup::Write for Bubble3D {
 }
 
 impl markup::Read for CategoryFilterException {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_filter_exception(element)
     }
 }
@@ -1110,7 +1110,7 @@ impl markup::Write for CategoryFilterException {
 }
 
 impl markup::Read for CategoryFilterExceptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_filter_exceptions(element)
     }
 }
@@ -1123,7 +1123,7 @@ impl markup::Write for CategoryFilterExceptions {
 }
 
 impl markup::Read for DLbl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::d_lbl(element)
     }
 }
@@ -1136,7 +1136,7 @@ impl markup::Write for DLbl {
 }
 
 impl markup::Read for Datapointuniqueidmap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::datapointuniqueidmap(element)
     }
 }
@@ -1149,7 +1149,7 @@ impl markup::Write for Datapointuniqueidmap {
 }
 
 impl markup::Read for Explosion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::explosion(element)
     }
 }
@@ -1162,7 +1162,7 @@ impl markup::Write for Explosion {
 }
 
 impl markup::Read for FilteredLitCacheMultiLvlStrFilteredLiteralCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_lit_cache_multi_lvl_str_filtered_literal_cache(element)
     }
 }
@@ -1176,7 +1176,7 @@ impl markup::Write for FilteredLitCacheMultiLvlStrFilteredLiteralCache {
 }
 
 impl markup::Read for FilteredLitCacheNumFilteredLiteralCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_lit_cache_num_filtered_literal_cache(element)
     }
 }
@@ -1189,7 +1189,7 @@ impl markup::Write for FilteredLitCacheNumFilteredLiteralCache {
 }
 
 impl markup::Read for FilteredLitCacheStrFilteredLiteralCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::filtered_lit_cache_str_filtered_literal_cache(element)
     }
 }
@@ -1202,7 +1202,7 @@ impl markup::Write for FilteredLitCacheStrFilteredLiteralCache {
 }
 
 impl markup::Read for InvertIfNegative {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::invert_if_negative(element)
     }
 }
@@ -1215,7 +1215,7 @@ impl markup::Write for InvertIfNegative {
 }
 
 impl markup::Read for LiteralDataChart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::literal_data_chart(element)
     }
 }
@@ -1228,7 +1228,7 @@ impl markup::Write for LiteralDataChart {
 }
 
 impl markup::Read for Marker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::marker(element)
     }
 }
@@ -1241,7 +1241,7 @@ impl markup::Write for Marker {
 }
 
 impl markup::Read for MultiLvlStrCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::multi_lvl_str_cache(element)
     }
 }
@@ -1254,7 +1254,7 @@ impl markup::Write for MultiLvlStrCache {
 }
 
 impl markup::Read for NumCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::num_cache(element)
     }
 }
@@ -1267,7 +1267,7 @@ impl markup::Write for NumCache {
 }
 
 impl markup::Read for PivotOptions16 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_options16(element)
     }
 }
@@ -1280,7 +1280,7 @@ impl markup::Write for PivotOptions16 {
 }
 
 impl markup::Read for Ptentry {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ptentry(element)
     }
 }
@@ -1293,7 +1293,7 @@ impl markup::Write for Ptentry {
 }
 
 impl markup::Read for Ptidx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ptidx(element)
     }
 }
@@ -1306,7 +1306,7 @@ impl markup::Write for Ptidx {
 }
 
 impl markup::Read for ShowExpandCollapseFieldButtons {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_expand_collapse_field_buttons(element)
     }
 }
@@ -1319,7 +1319,7 @@ impl markup::Write for ShowExpandCollapseFieldButtons {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -1332,7 +1332,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for StrCache {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::str_cache(element)
     }
 }
@@ -1345,7 +1345,7 @@ impl markup::Write for StrCache {
 }
 
 impl markup::Read for UniqueID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unique_id(element)
     }
 }
@@ -1358,7 +1358,7 @@ impl markup::Write for UniqueID {
 }
 
 impl markup::Read for UniqueId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unique_id_2(element)
     }
 }

@@ -19,11 +19,11 @@ use std::path::{Path, PathBuf};
 
 use clap::Parser;
 use officekit_core::compact::{Comments, compact_tree};
-use officekit_core::xml::conformance::ConformanceClass;
-use officekit_core::xml::element::{Element, Node};
-use officekit_core::xml::name::table::NAMESPACES;
-use officekit_core::xml::name::{Namespace, QName};
-use officekit_core::xml::parse::parse;
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::parse::parse;
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 use os_shim::real::RealSystem;

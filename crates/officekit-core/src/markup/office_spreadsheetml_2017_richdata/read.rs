@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlrd:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xlrd:fb` into a `Fb`.
 #[must_use]
-pub fn fb(element: &xml::element::Element) -> super::Fb {
+pub fn fb(element: &Element) -> super::Fb {
     let mut node = super::Fb::default();
     let mut reader = markup::Reader::new(element, &super::FB_SHAPE);
     for (index, field) in &mut reader {
@@ -247,7 +247,7 @@ pub fn fb(element: &xml::element::Element) -> super::Fb {
 
 /// Read `xlrd:k` into a `K`.
 #[must_use]
-pub fn k(element: &xml::element::Element) -> super::K {
+pub fn k(element: &Element) -> super::K {
     let mut node = super::K::default();
     let mut reader = markup::Reader::new(element, &super::K_SHAPE);
     for (index, field) in &mut reader {
@@ -263,7 +263,7 @@ pub fn k(element: &xml::element::Element) -> super::K {
 
 /// Read `xlrd:rv` into a `Rv`.
 #[must_use]
-pub fn rv(element: &xml::element::Element) -> super::Rv {
+pub fn rv(element: &Element) -> super::Rv {
     let mut node = super::Rv::default();
     let mut reader = markup::Reader::new(element, &super::RV_SHAPE);
     for (index, field) in &mut reader {
@@ -280,7 +280,7 @@ pub fn rv(element: &xml::element::Element) -> super::Rv {
 
 /// Read `xlrd:rvData` into a `RvData`.
 #[must_use]
-pub fn rv_data(element: &xml::element::Element) -> super::RvData {
+pub fn rv_data(element: &Element) -> super::RvData {
     let mut node = super::RvData::default();
     let mut reader = markup::Reader::new(element, &super::RV_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -297,7 +297,7 @@ pub fn rv_data(element: &xml::element::Element) -> super::RvData {
 
 /// Read `xlrd:rvStructures` into a `RvStructures`.
 #[must_use]
-pub fn rv_structures(element: &xml::element::Element) -> super::RvStructures {
+pub fn rv_structures(element: &Element) -> super::RvStructures {
     let mut node = super::RvStructures::default();
     let mut reader = markup::Reader::new(element, &super::RV_STRUCTURES_SHAPE);
     for (index, field) in &mut reader {
@@ -314,7 +314,7 @@ pub fn rv_structures(element: &xml::element::Element) -> super::RvStructures {
 
 /// Read `xlrd:rvb` into a `Rvb`.
 #[must_use]
-pub fn rvb(element: &xml::element::Element) -> super::Rvb {
+pub fn rvb(element: &Element) -> super::Rvb {
     let mut node = super::Rvb::default();
     let mut reader = markup::Reader::new(element, &super::RVB_SHAPE);
     for (index, field) in &mut reader {
@@ -328,7 +328,7 @@ pub fn rvb(element: &xml::element::Element) -> super::Rvb {
 
 /// Read `xlrd:s` into a `S`.
 #[must_use]
-pub fn s(element: &xml::element::Element) -> super::S {
+pub fn s(element: &Element) -> super::S {
     let mut node = super::S::default();
     let mut reader = markup::Reader::new(element, &super::S_SHAPE);
     for (index, field) in &mut reader {
@@ -344,7 +344,7 @@ pub fn s(element: &xml::element::Element) -> super::S {
 
 /// Read `xlrd:v` into a `V`.
 #[must_use]
-pub fn v(element: &xml::element::Element) -> super::V {
+pub fn v(element: &Element) -> super::V {
     let mut node = super::V::default();
     let mut reader = markup::Reader::new(element, &super::V_SHAPE);
     for (index, field) in &mut reader {

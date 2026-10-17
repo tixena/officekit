@@ -213,13 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `cdr:absSizeAnchor` into a `AbsoluteAnchorShapeSize`.
 #[must_use]
-pub fn absolute_anchor_shape_size(
-    element: &xml::element::Element,
-) -> super::AbsoluteAnchorShapeSize {
+pub fn absolute_anchor_shape_size(element: &Element) -> super::AbsoluteAnchorShapeSize {
     let mut node = super::AbsoluteAnchorShapeSize::default();
     let mut reader = markup::Reader::new(element, &super::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -236,7 +234,7 @@ pub fn absolute_anchor_shape_size(
 
 /// Read `cdr:cxnSp` into a `ConnectionShape`.
 #[must_use]
-pub fn connection_shape(element: &xml::element::Element) -> super::ConnectionShape {
+pub fn connection_shape(element: &Element) -> super::ConnectionShape {
     let mut node = super::ConnectionShape::default();
     let mut reader = markup::Reader::new(element, &super::CONNECTION_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -255,9 +253,7 @@ pub fn connection_shape(element: &xml::element::Element) -> super::ConnectionSha
 
 /// Read `cdr:nvCxnSpPr` into a `ConnectorNonVisualProperties`.
 #[must_use]
-pub fn connector_non_visual_properties(
-    element: &xml::element::Element,
-) -> super::ConnectorNonVisualProperties {
+pub fn connector_non_visual_properties(element: &Element) -> super::ConnectorNonVisualProperties {
     let mut node = super::ConnectorNonVisualProperties::default();
     let mut reader = markup::Reader::new(element, &super::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -273,7 +269,7 @@ pub fn connector_non_visual_properties(
 
 /// Read `cdr:to` into a `EndingAnchorPoint`.
 #[must_use]
-pub fn ending_anchor_point(element: &xml::element::Element) -> super::EndingAnchorPoint {
+pub fn ending_anchor_point(element: &Element) -> super::EndingAnchorPoint {
     let mut node = super::EndingAnchorPoint::default();
     let mut reader = markup::Reader::new(element, &super::ENDING_ANCHOR_POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -289,7 +285,7 @@ pub fn ending_anchor_point(element: &xml::element::Element) -> super::EndingAnch
 
 /// Read `cdr:graphicFrame` into a `GraphicFrame`.
 #[must_use]
-pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
+pub fn graphic_frame(element: &Element) -> super::GraphicFrame {
     let mut node = super::GraphicFrame::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -308,7 +304,7 @@ pub fn graphic_frame(element: &xml::element::Element) -> super::GraphicFrame {
 
 /// Read `cdr:xfrm` into a `GraphicFrameTransform`.
 #[must_use]
-pub fn graphic_frame_transform(element: &xml::element::Element) -> super::GraphicFrameTransform {
+pub fn graphic_frame_transform(element: &Element) -> super::GraphicFrameTransform {
     let mut node = super::GraphicFrameTransform::default();
     let mut reader = markup::Reader::new(element, &super::GRAPHIC_FRAME_TRANSFORM_SHAPE);
     for (index, field) in &mut reader {
@@ -327,7 +323,7 @@ pub fn graphic_frame_transform(element: &xml::element::Element) -> super::Graphi
 
 /// Read `cdr:grpSp` into a `GroupShape`.
 #[must_use]
-pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
+pub fn group_shape(element: &Element) -> super::GroupShape {
     let mut node = super::GroupShape::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -344,7 +340,7 @@ pub fn group_shape(element: &xml::element::Element) -> super::GroupShape {
 
 /// Read `cdr:grpSpPr` into a `GroupShapeProperties`.
 #[must_use]
-pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupShapeProperties {
+pub fn group_shape_properties(element: &Element) -> super::GroupShapeProperties {
     let mut node = super::GroupShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::GROUP_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -365,7 +361,7 @@ pub fn group_shape_properties(element: &xml::element::Element) -> super::GroupSh
 /// Read `cdr:cNvCxnSpPr` into a `NonVisualConnectionShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_connection_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualConnectionShapeDrawingProperties {
     let mut node = super::NonVisualConnectionShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -387,9 +383,7 @@ pub fn non_visual_connection_shape_drawing_properties(
 
 /// Read `cdr:cNvPr` into a `NonVisualDrawingProperties`.
 #[must_use]
-pub fn non_visual_drawing_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualDrawingProperties {
+pub fn non_visual_drawing_properties(element: &Element) -> super::NonVisualDrawingProperties {
     let mut node = super::NonVisualDrawingProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -412,7 +406,7 @@ pub fn non_visual_drawing_properties(
 /// Read `cdr:cNvGraphicFramePr` into a `NonVisualGraphicFrameDrawingProperties`.
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGraphicFrameDrawingProperties {
     let mut node = super::NonVisualGraphicFrameDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -433,7 +427,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
 /// Read `cdr:nvGraphicFramePr` into a `NonVisualGraphicFrameProperties`.
 #[must_use]
 pub fn non_visual_graphic_frame_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGraphicFrameProperties {
     let mut node = super::NonVisualGraphicFrameProperties::default();
     let mut reader =
@@ -452,7 +446,7 @@ pub fn non_visual_graphic_frame_properties(
 /// Read `cdr:cNvGrpSpPr` into a `NonVisualGroupShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGroupShapeDrawingProperties {
     let mut node = super::NonVisualGroupShapeDrawingProperties::default();
     let mut reader = markup::Reader::new(
@@ -473,7 +467,7 @@ pub fn non_visual_group_shape_drawing_properties(
 /// Read `cdr:nvGrpSpPr` into a `NonVisualGroupShapeProperties`.
 #[must_use]
 pub fn non_visual_group_shape_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualGroupShapeProperties {
     let mut node = super::NonVisualGroupShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE);
@@ -491,7 +485,7 @@ pub fn non_visual_group_shape_properties(
 /// Read `cdr:cNvPicPr` into a `NonVisualPictureDrawingProperties`.
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualPictureDrawingProperties {
     let mut node = super::NonVisualPictureDrawingProperties::default();
     let mut reader =
@@ -510,9 +504,7 @@ pub fn non_visual_picture_drawing_properties(
 
 /// Read `cdr:nvPicPr` into a `NonVisualPictureProperties`.
 #[must_use]
-pub fn non_visual_picture_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualPictureProperties {
+pub fn non_visual_picture_properties(element: &Element) -> super::NonVisualPictureProperties {
     let mut node = super::NonVisualPictureProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -529,7 +521,7 @@ pub fn non_visual_picture_properties(
 /// Read `cdr:cNvSpPr` into a `NonVisualShapeDrawingProperties`.
 #[must_use]
 pub fn non_visual_shape_drawing_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NonVisualShapeDrawingProperties {
     let mut node = super::NonVisualShapeDrawingProperties::default();
     let mut reader =
@@ -548,9 +540,7 @@ pub fn non_visual_shape_drawing_properties(
 
 /// Read `cdr:nvSpPr` into a `NonVisualShapeProperties`.
 #[must_use]
-pub fn non_visual_shape_properties(
-    element: &xml::element::Element,
-) -> super::NonVisualShapeProperties {
+pub fn non_visual_shape_properties(element: &Element) -> super::NonVisualShapeProperties {
     let mut node = super::NonVisualShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::NON_VISUAL_SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -566,13 +556,13 @@ pub fn non_visual_shape_properties(
 
 /// Read one item of `ObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn object(element: &xml::element::Element) -> super::ObjectContent {
+pub fn object(element: &Element) -> super::ObjectContent {
     markup::read(element)
 }
 
 /// Read `cdr:pic` into a `Picture`.
 #[must_use]
-pub fn picture(element: &xml::element::Element) -> super::Picture {
+pub fn picture(element: &Element) -> super::Picture {
     let mut node = super::Picture::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_SHAPE);
     for (index, field) in &mut reader {
@@ -592,7 +582,7 @@ pub fn picture(element: &xml::element::Element) -> super::Picture {
 
 /// Read `cdr:blipFill` into a `PictureFill`.
 #[must_use]
-pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
+pub fn picture_fill(element: &Element) -> super::PictureFill {
     let mut node = super::PictureFill::default();
     let mut reader = markup::Reader::new(element, &super::PICTURE_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -611,9 +601,7 @@ pub fn picture_fill(element: &xml::element::Element) -> super::PictureFill {
 
 /// Read `cdr:relSizeAnchor` into a `RelativeAnchorShapeSize`.
 #[must_use]
-pub fn relative_anchor_shape_size(
-    element: &xml::element::Element,
-) -> super::RelativeAnchorShapeSize {
+pub fn relative_anchor_shape_size(element: &Element) -> super::RelativeAnchorShapeSize {
     let mut node = super::RelativeAnchorShapeSize::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -630,7 +618,7 @@ pub fn relative_anchor_shape_size(
 
 /// Read `cdr:x` into a `RelativeXCoordinate`.
 #[must_use]
-pub fn relative_x_coordinate(element: &xml::element::Element) -> super::RelativeXCoordinate {
+pub fn relative_x_coordinate(element: &Element) -> super::RelativeXCoordinate {
     let mut node = super::RelativeXCoordinate::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_X_COORDINATE_SHAPE);
     for (index, field) in &mut reader {
@@ -644,7 +632,7 @@ pub fn relative_x_coordinate(element: &xml::element::Element) -> super::Relative
 
 /// Read `cdr:y` into a `RelativeYCoordinate`.
 #[must_use]
-pub fn relative_y_coordinate(element: &xml::element::Element) -> super::RelativeYCoordinate {
+pub fn relative_y_coordinate(element: &Element) -> super::RelativeYCoordinate {
     let mut node = super::RelativeYCoordinate::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_Y_COORDINATE_SHAPE);
     for (index, field) in &mut reader {
@@ -658,7 +646,7 @@ pub fn relative_y_coordinate(element: &xml::element::Element) -> super::Relative
 
 /// Read `cdr:sp` into a `Shape`.
 #[must_use]
-pub fn shape(element: &xml::element::Element) -> super::Shape {
+pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -680,7 +668,7 @@ pub fn shape(element: &xml::element::Element) -> super::Shape {
 
 /// Read `cdr:ext` into a `ShapeExtent`.
 #[must_use]
-pub fn shape_extent(element: &xml::element::Element) -> super::ShapeExtent {
+pub fn shape_extent(element: &Element) -> super::ShapeExtent {
     let mut node = super::ShapeExtent::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_EXTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -696,7 +684,7 @@ pub fn shape_extent(element: &xml::element::Element) -> super::ShapeExtent {
 
 /// Read `cdr:spPr` into a `ShapeProperties`.
 #[must_use]
-pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperties {
+pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -719,7 +707,7 @@ pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperti
 
 /// Read `cdr:style` into a `ShapeStyle`.
 #[must_use]
-pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
+pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -737,7 +725,7 @@ pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
 
 /// Read `cdr:txBody` into a `ShapeTextBody`.
 #[must_use]
-pub fn shape_text_body(element: &xml::element::Element) -> super::ShapeTextBody {
+pub fn shape_text_body(element: &Element) -> super::ShapeTextBody {
     let mut node = super::ShapeTextBody::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_TEXT_BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -754,7 +742,7 @@ pub fn shape_text_body(element: &xml::element::Element) -> super::ShapeTextBody 
 
 /// Read `cdr:from` into a `StartingAnchorPoint`.
 #[must_use]
-pub fn starting_anchor_point(element: &xml::element::Element) -> super::StartingAnchorPoint {
+pub fn starting_anchor_point(element: &Element) -> super::StartingAnchorPoint {
     let mut node = super::StartingAnchorPoint::default();
     let mut reader = markup::Reader::new(element, &super::STARTING_ANCHOR_POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -770,6 +758,6 @@ pub fn starting_anchor_point(element: &xml::element::Element) -> super::Starting
 
 /// Read one item of `UserShapesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn user_shapes(element: &xml::element::Element) -> super::UserShapesContent {
+pub fn user_shapes(element: &Element) -> super::UserShapesContent {
     markup::read(element)
 }

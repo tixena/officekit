@@ -213,23 +213,24 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Address` as its element, `xlrdwi:address`.
 #[must_use]
-pub fn address(node: &super::Address, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn address(node: &super::Address, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ADDRESS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `Blip` as its element, `xlrdwi:blip`.
 #[must_use]
-pub fn blip(node: &super::Blip, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn blip(node: &super::Blip, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::BLIP_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `ExtLst` as its element, `xlrdwi:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -237,19 +238,13 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `MoreImagesAddress` as its element, `xlrdwi:moreImagesAddress`.
 #[must_use]
-pub fn more_images_address(
-    node: &super::MoreImagesAddress,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn more_images_address(node: &super::MoreImagesAddress, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::MORE_IMAGES_ADDRESS_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `WebImageSrd` as its element, `xlrdwi:webImageSrd`.
 #[must_use]
-pub fn web_image_srd(
-    node: &super::WebImageSrd,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn web_image_srd(node: &super::WebImageSrd, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEB_IMAGE_SRD_SHAPE, &node.unknown);
     writer.child(&node.address);
     writer.child(&node.more_images_address);
@@ -259,10 +254,7 @@ pub fn web_image_srd(
 
 /// Write a `WebImagesSrd` as its element, `xlrdwi:webImagesSrd`.
 #[must_use]
-pub fn web_images_srd(
-    node: &super::WebImagesSrd,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn web_images_srd(node: &super::WebImagesSrd, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEB_IMAGES_SRD_SHAPE, &node.unknown);
     writer.child(&node.web_image_srd);
     writer.child(&node.ext_lst);

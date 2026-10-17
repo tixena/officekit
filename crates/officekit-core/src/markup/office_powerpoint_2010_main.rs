@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1818,7 +1818,7 @@ pub struct SeekEvt {
 #[non_exhaustive]
 pub enum ShowEventRecordListContent {
     NullEvt(NullEvt),
-    Other(xml::element::Node),
+    Other(Node),
     PauseEvt(PauseEvt),
     PlayEvt(PlayEvt),
     ResumeEvt(ResumeEvt),
@@ -2238,7 +2238,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for Bmk {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bmk(element)
     }
 }
@@ -2251,7 +2251,7 @@ impl markup::Write for Bmk {
 }
 
 impl markup::Read for BmkLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bmk_lst(element)
     }
 }
@@ -2264,7 +2264,7 @@ impl markup::Write for BmkLst {
 }
 
 impl markup::Read for BmkTgt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bmk_tgt(element)
     }
 }
@@ -2277,7 +2277,7 @@ impl markup::Write for BmkTgt {
 }
 
 impl markup::Read for BrowseMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::browse_mode(element)
     }
 }
@@ -2290,7 +2290,7 @@ impl markup::Write for BrowseMode {
 }
 
 impl markup::Read for CNvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_content_part_pr(element)
     }
 }
@@ -2303,7 +2303,7 @@ impl markup::Write for CNvContentPartPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -2316,7 +2316,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for Conveyor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::conveyor(element)
     }
 }
@@ -2329,7 +2329,7 @@ impl markup::Write for Conveyor {
 }
 
 impl markup::Read for CreationId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::creation_id(element)
     }
 }
@@ -2342,7 +2342,7 @@ impl markup::Write for CreationId {
 }
 
 impl markup::Read for DefaultImageDpi {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::default_image_dpi(element)
     }
 }
@@ -2355,7 +2355,7 @@ impl markup::Write for DefaultImageDpi {
 }
 
 impl markup::Read for DiscardImageEditData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::discard_image_edit_data(element)
     }
 }
@@ -2368,7 +2368,7 @@ impl markup::Write for DiscardImageEditData {
 }
 
 impl markup::Read for Doors {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::doors(element)
     }
 }
@@ -2381,7 +2381,7 @@ impl markup::Write for Doors {
 }
 
 impl markup::Read for ExtLstExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_extension_list(element)
     }
 }
@@ -2394,7 +2394,7 @@ impl markup::Write for ExtLstExtensionList {
 }
 
 impl markup::Read for ExtLstExtensionListModify {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_extension_list_modify(element)
     }
 }
@@ -2407,7 +2407,7 @@ impl markup::Write for ExtLstExtensionListModify {
 }
 
 impl markup::Read for Fade {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fade(element)
     }
 }
@@ -2420,7 +2420,7 @@ impl markup::Write for Fade {
 }
 
 impl markup::Read for Ferris {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ferris(element)
     }
 }
@@ -2433,7 +2433,7 @@ impl markup::Write for Ferris {
 }
 
 impl markup::Read for Flash {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::flash(element)
     }
 }
@@ -2446,7 +2446,7 @@ impl markup::Write for Flash {
 }
 
 impl markup::Read for Flip {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::flip(element)
     }
 }
@@ -2459,7 +2459,7 @@ impl markup::Write for Flip {
 }
 
 impl markup::Read for Flythrough {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::flythrough(element)
     }
 }
@@ -2472,7 +2472,7 @@ impl markup::Write for Flythrough {
 }
 
 impl markup::Read for Gallery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gallery(element)
     }
 }
@@ -2485,7 +2485,7 @@ impl markup::Write for Gallery {
 }
 
 impl markup::Read for Glitter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::glitter(element)
     }
 }
@@ -2498,7 +2498,7 @@ impl markup::Write for Glitter {
 }
 
 impl markup::Read for Honeycomb {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::honeycomb(element)
     }
 }
@@ -2511,7 +2511,7 @@ impl markup::Write for Honeycomb {
 }
 
 impl markup::Read for LaserClr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::laser_clr(element)
     }
 }
@@ -2524,7 +2524,7 @@ impl markup::Write for LaserClr {
 }
 
 impl markup::Read for LaserTraceLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::laser_trace_lst(element)
     }
 }
@@ -2537,7 +2537,7 @@ impl markup::Write for LaserTraceLst {
 }
 
 impl markup::Read for Media {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::media(element)
     }
 }
@@ -2550,7 +2550,7 @@ impl markup::Write for Media {
 }
 
 impl markup::Read for ModId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::mod_id(element)
     }
 }
@@ -2563,7 +2563,7 @@ impl markup::Write for ModId {
 }
 
 impl markup::Read for NullEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::null_evt(element)
     }
 }
@@ -2576,7 +2576,7 @@ impl markup::Write for NullEvt {
 }
 
 impl markup::Read for NvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_content_part_pr(element)
     }
 }
@@ -2589,7 +2589,7 @@ impl markup::Write for NvContentPartPr {
 }
 
 impl markup::Read for NvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_pr(element)
     }
 }
@@ -2602,7 +2602,7 @@ impl markup::Write for NvPr {
 }
 
 impl markup::Read for Pan {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pan(element)
     }
 }
@@ -2615,7 +2615,7 @@ impl markup::Write for Pan {
 }
 
 impl markup::Read for PauseEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pause_evt(element)
     }
 }
@@ -2628,7 +2628,7 @@ impl markup::Write for PauseEvt {
 }
 
 impl markup::Read for PlayEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::play_evt(element)
     }
 }
@@ -2641,7 +2641,7 @@ impl markup::Write for PlayEvt {
 }
 
 impl markup::Read for Prism {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::prism(element)
     }
 }
@@ -2654,7 +2654,7 @@ impl markup::Write for Prism {
 }
 
 impl markup::Read for ResumeEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::resume_evt(element)
     }
 }
@@ -2667,7 +2667,7 @@ impl markup::Write for ResumeEvt {
 }
 
 impl markup::Read for Reveal {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reveal(element)
     }
 }
@@ -2680,7 +2680,7 @@ impl markup::Write for Reveal {
 }
 
 impl markup::Read for Ripple {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ripple(element)
     }
 }
@@ -2693,7 +2693,7 @@ impl markup::Write for Ripple {
 }
 
 impl markup::Read for SectionLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_lst(element)
     }
 }
@@ -2706,7 +2706,7 @@ impl markup::Write for SectionLst {
 }
 
 impl markup::Read for SectionPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_pr(element)
     }
 }
@@ -2719,7 +2719,7 @@ impl markup::Write for SectionPr {
 }
 
 impl markup::Read for SectionSection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_section(element)
     }
 }
@@ -2732,7 +2732,7 @@ impl markup::Write for SectionSection {
 }
 
 impl markup::Read for SectionSectionOld {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::section_section_old(element)
     }
 }
@@ -2745,7 +2745,7 @@ impl markup::Write for SectionSectionOld {
 }
 
 impl markup::Read for SeekEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::seek_evt(element)
     }
 }
@@ -2758,11 +2758,11 @@ impl markup::Write for SeekEvt {
 }
 
 impl markup::Read for ShowEventRecordListContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_P14, "nullEvt")) => Self::NullEvt(markup::read(element)),
             Some((NS_P14, "pauseEvt")) => Self::PauseEvt(markup::read(element)),
@@ -2771,7 +2771,7 @@ impl markup::Read for ShowEventRecordListContent {
             Some((NS_P14, "seekEvt")) => Self::SeekEvt(markup::read(element)),
             Some((NS_P14, "stopEvt")) => Self::StopEvt(markup::read(element)),
             Some((NS_P14, "triggerEvt")) => Self::TriggerEvt(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2792,7 +2792,7 @@ impl markup::Write for ShowEventRecordListContent {
 }
 
 impl markup::Read for ShowEvtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_evt_lst(element)
     }
 }
@@ -2805,7 +2805,7 @@ impl markup::Write for ShowEvtLst {
 }
 
 impl markup::Read for ShowMediaCtrls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_media_ctrls(element)
     }
 }
@@ -2818,7 +2818,7 @@ impl markup::Write for ShowMediaCtrls {
 }
 
 impl markup::Read for Shred {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shred(element)
     }
 }
@@ -2831,7 +2831,7 @@ impl markup::Write for Shred {
 }
 
 impl markup::Read for SldId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_id(element)
     }
 }
@@ -2844,7 +2844,7 @@ impl markup::Write for SldId {
 }
 
 impl markup::Read for SldIdLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sld_id_lst(element)
     }
 }
@@ -2857,7 +2857,7 @@ impl markup::Write for SldIdLst {
 }
 
 impl markup::Read for StopEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::stop_evt(element)
     }
 }
@@ -2870,7 +2870,7 @@ impl markup::Write for StopEvt {
 }
 
 impl markup::Read for Switch {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::switch(element)
     }
 }
@@ -2883,7 +2883,7 @@ impl markup::Write for Switch {
 }
 
 impl markup::Read for TracePt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trace_pt(element)
     }
 }
@@ -2896,7 +2896,7 @@ impl markup::Write for TracePt {
 }
 
 impl markup::Read for TracePtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trace_pt_lst(element)
     }
 }
@@ -3072,7 +3072,7 @@ impl TransitionShredPattern {
 }
 
 impl markup::Read for TriggerEvt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trigger_evt(element)
     }
 }
@@ -3085,7 +3085,7 @@ impl markup::Write for TriggerEvt {
 }
 
 impl markup::Read for Trim {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::trim(element)
     }
 }
@@ -3098,7 +3098,7 @@ impl markup::Write for Trim {
 }
 
 impl markup::Read for Vortex {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vortex(element)
     }
 }
@@ -3111,7 +3111,7 @@ impl markup::Write for Vortex {
 }
 
 impl markup::Read for Warp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::warp(element)
     }
 }
@@ -3124,7 +3124,7 @@ impl markup::Write for Warp {
 }
 
 impl markup::Read for WheelReverse {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wheel_reverse(element)
     }
 }
@@ -3137,7 +3137,7 @@ impl markup::Write for WheelReverse {
 }
 
 impl markup::Read for Window {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::window(element)
     }
 }
@@ -3150,7 +3150,7 @@ impl markup::Write for Window {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

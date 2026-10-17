@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Ext` as its element, `w16cur:ext`.
 #[must_use]
-pub fn ext(node: &super::Ext, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.uri);
     writer.child(&node.content);

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1958,7 +1958,7 @@ pub enum PictureEffectContent {
     BackgroundRemoval(BackgroundRemoval),
     BrightnessContrast(BrightnessContrast),
     ColorTemperature(ColorTemperature),
-    Other(xml::element::Node),
+    Other(Node),
     Saturation(Saturation),
     SharpenSoften(SharpenSoften),
 }
@@ -2222,7 +2222,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for ArtisticBlur {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_blur(element)
     }
 }
@@ -2235,7 +2235,7 @@ impl markup::Write for ArtisticBlur {
 }
 
 impl markup::Read for ArtisticCement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_cement(element)
     }
 }
@@ -2248,7 +2248,7 @@ impl markup::Write for ArtisticCement {
 }
 
 impl markup::Read for ArtisticChalkSketch {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_chalk_sketch(element)
     }
 }
@@ -2261,7 +2261,7 @@ impl markup::Write for ArtisticChalkSketch {
 }
 
 impl markup::Read for ArtisticCrisscrossEtching {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_crisscross_etching(element)
     }
 }
@@ -2274,7 +2274,7 @@ impl markup::Write for ArtisticCrisscrossEtching {
 }
 
 impl markup::Read for ArtisticCutout {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_cutout(element)
     }
 }
@@ -2287,7 +2287,7 @@ impl markup::Write for ArtisticCutout {
 }
 
 impl markup::Read for ArtisticFilmGrain {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_film_grain(element)
     }
 }
@@ -2300,7 +2300,7 @@ impl markup::Write for ArtisticFilmGrain {
 }
 
 impl markup::Read for ArtisticGlass {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_glass(element)
     }
 }
@@ -2313,7 +2313,7 @@ impl markup::Write for ArtisticGlass {
 }
 
 impl markup::Read for ArtisticGlowDiffused {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_glow_diffused(element)
     }
 }
@@ -2326,7 +2326,7 @@ impl markup::Write for ArtisticGlowDiffused {
 }
 
 impl markup::Read for ArtisticGlowEdges {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_glow_edges(element)
     }
 }
@@ -2339,7 +2339,7 @@ impl markup::Write for ArtisticGlowEdges {
 }
 
 impl markup::Read for ArtisticLightScreen {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_light_screen(element)
     }
 }
@@ -2352,7 +2352,7 @@ impl markup::Write for ArtisticLightScreen {
 }
 
 impl markup::Read for ArtisticLineDrawing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_line_drawing(element)
     }
 }
@@ -2365,7 +2365,7 @@ impl markup::Write for ArtisticLineDrawing {
 }
 
 impl markup::Read for ArtisticMarker {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_marker(element)
     }
 }
@@ -2378,7 +2378,7 @@ impl markup::Write for ArtisticMarker {
 }
 
 impl markup::Read for ArtisticMosiaicBubbles {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_mosiaic_bubbles(element)
     }
 }
@@ -2391,7 +2391,7 @@ impl markup::Write for ArtisticMosiaicBubbles {
 }
 
 impl markup::Read for ArtisticPaintBrush {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_paint_brush(element)
     }
 }
@@ -2404,7 +2404,7 @@ impl markup::Write for ArtisticPaintBrush {
 }
 
 impl markup::Read for ArtisticPaintStrokes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_paint_strokes(element)
     }
 }
@@ -2417,7 +2417,7 @@ impl markup::Write for ArtisticPaintStrokes {
 }
 
 impl markup::Read for ArtisticPastelsSmooth {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_pastels_smooth(element)
     }
 }
@@ -2430,7 +2430,7 @@ impl markup::Write for ArtisticPastelsSmooth {
 }
 
 impl markup::Read for ArtisticPencilGrayscale {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_pencil_grayscale(element)
     }
 }
@@ -2443,7 +2443,7 @@ impl markup::Write for ArtisticPencilGrayscale {
 }
 
 impl markup::Read for ArtisticPencilSketch {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_pencil_sketch(element)
     }
 }
@@ -2456,7 +2456,7 @@ impl markup::Write for ArtisticPencilSketch {
 }
 
 impl markup::Read for ArtisticPhotocopy {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_photocopy(element)
     }
 }
@@ -2469,7 +2469,7 @@ impl markup::Write for ArtisticPhotocopy {
 }
 
 impl markup::Read for ArtisticPlasticWrap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_plastic_wrap(element)
     }
 }
@@ -2482,7 +2482,7 @@ impl markup::Write for ArtisticPlasticWrap {
 }
 
 impl markup::Read for ArtisticTexturizer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_texturizer(element)
     }
 }
@@ -2495,7 +2495,7 @@ impl markup::Write for ArtisticTexturizer {
 }
 
 impl markup::Read for ArtisticWatercolorSponge {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artistic_watercolor_sponge(element)
     }
 }
@@ -2508,7 +2508,7 @@ impl markup::Write for ArtisticWatercolorSponge {
 }
 
 impl markup::Read for BackgroundMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_mark(element)
     }
 }
@@ -2521,7 +2521,7 @@ impl markup::Write for BackgroundMark {
 }
 
 impl markup::Read for BackgroundRemoval {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_removal(element)
     }
 }
@@ -2534,7 +2534,7 @@ impl markup::Write for BackgroundRemoval {
 }
 
 impl markup::Read for BrightnessContrast {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::brightness_contrast(element)
     }
 }
@@ -2547,7 +2547,7 @@ impl markup::Write for BrightnessContrast {
 }
 
 impl markup::Read for CNvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_content_part_pr(element)
     }
 }
@@ -2560,7 +2560,7 @@ impl markup::Write for CNvContentPartPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -2573,7 +2573,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for CameraTool {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::camera_tool(element)
     }
 }
@@ -2586,7 +2586,7 @@ impl markup::Write for CameraTool {
 }
 
 impl markup::Read for ColorTemperature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_temperature(element)
     }
 }
@@ -2599,7 +2599,7 @@ impl markup::Write for ColorTemperature {
 }
 
 impl markup::Read for CompatExt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::compat_ext(element)
     }
 }
@@ -2612,7 +2612,7 @@ impl markup::Write for CompatExt {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -2625,7 +2625,7 @@ impl markup::Write for ContentPart {
 }
 
 impl markup::Read for CpLocks {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cp_locks(element)
     }
 }
@@ -2638,7 +2638,7 @@ impl markup::Write for CpLocks {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -2651,7 +2651,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for ForegroundMark {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::foreground_mark(element)
     }
 }
@@ -2664,7 +2664,7 @@ impl markup::Write for ForegroundMark {
 }
 
 impl markup::Read for HiddenEffects {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_effects(element)
     }
 }
@@ -2677,7 +2677,7 @@ impl markup::Write for HiddenEffects {
 }
 
 impl markup::Read for HiddenFill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_fill(element)
     }
 }
@@ -2690,7 +2690,7 @@ impl markup::Write for HiddenFill {
 }
 
 impl markup::Read for HiddenLine {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_line(element)
     }
 }
@@ -2703,7 +2703,7 @@ impl markup::Write for HiddenLine {
 }
 
 impl markup::Read for HiddenScene3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_scene3d(element)
     }
 }
@@ -2716,7 +2716,7 @@ impl markup::Write for HiddenScene3d {
 }
 
 impl markup::Read for HiddenSp3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hidden_sp3d(element)
     }
 }
@@ -2729,7 +2729,7 @@ impl markup::Write for HiddenSp3d {
 }
 
 impl markup::Read for ImgEffect {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_effect(element)
     }
 }
@@ -2742,7 +2742,7 @@ impl markup::Write for ImgEffect {
 }
 
 impl markup::Read for ImgLayer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_layer(element)
     }
 }
@@ -2755,7 +2755,7 @@ impl markup::Write for ImgLayer {
 }
 
 impl markup::Read for ImgProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::img_props(element)
     }
 }
@@ -2768,7 +2768,7 @@ impl markup::Write for ImgProps {
 }
 
 impl markup::Read for IsCanvas {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::is_canvas(element)
     }
 }
@@ -2781,7 +2781,7 @@ impl markup::Write for IsCanvas {
 }
 
 impl markup::Read for M {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::m(element)
     }
 }
@@ -2794,7 +2794,7 @@ impl markup::Write for M {
 }
 
 impl markup::Read for NvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_content_part_pr(element)
     }
 }
@@ -2813,11 +2813,11 @@ impl Default for PictureEffectContent {
 }
 
 impl markup::Read for PictureEffectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(markup::read(element)),
             Some((NS_A14, "artisticCement")) => Self::ArtisticCement(markup::read(element)),
@@ -2870,7 +2870,7 @@ impl markup::Read for PictureEffectContent {
             Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(markup::read(element)),
             Some((NS_A14, "saturation")) => Self::Saturation(markup::read(element)),
             Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2911,7 +2911,7 @@ impl markup::Write for PictureEffectContent {
 }
 
 impl markup::Read for Saturation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::saturation(element)
     }
 }
@@ -2924,7 +2924,7 @@ impl markup::Write for Saturation {
 }
 
 impl markup::Read for ShadowObscured {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shadow_obscured(element)
     }
 }
@@ -2937,7 +2937,7 @@ impl markup::Write for ShadowObscured {
 }
 
 impl markup::Read for SharpenSoften {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sharpen_soften(element)
     }
 }
@@ -2950,7 +2950,7 @@ impl markup::Write for SharpenSoften {
 }
 
 impl markup::Read for UseLocalDpi {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::use_local_dpi(element)
     }
 }
@@ -2963,7 +2963,7 @@ impl markup::Write for UseLocalDpi {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

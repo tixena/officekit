@@ -1,12 +1,14 @@
 use core::slice;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::parse::parse as parse_xml;
+use officekit_xml::write::WriteOptions;
+
 use super::{
-    Relationship, RelationshipType, Target, TargetMode, parse, relative, resolve, to_document,
+    Relationship, RelationshipType, Target, TargetMode, class_of_office_document, parse, relative,
+    resolve, to_document,
 };
 use crate::packaging::part_name::PartName;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::parse::parse as parse_xml;
-use crate::xml::write::WriteOptions;
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
@@ -143,4 +145,26 @@ fn every_written_field_is_kept() {
     };
     let document = to_document(slice::from_ref(&relationship));
     assert_eq!(parse(&document).unwrap(), [relationship]);
+}
+
+#[test]
+fn the_office_document_relationship_names_the_class() {
+    assert_eq!(
+        class_of_office_document(
+            "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument"
+        ),
+        Some(ConformanceClass::Strict)
+    );
+    assert_eq!(
+        class_of_office_document(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+        ),
+        Some(ConformanceClass::Transitional)
+    );
+    assert_eq!(
+        class_of_office_document(
+            "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
+        ),
+        None
+    );
 }

@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CalcFeatures` as its element, `xcalcf:calcFeatures`.
 #[must_use]
-pub fn calc_features(
-    node: &super::CalcFeatures,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn calc_features(node: &super::CalcFeatures, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CALC_FEATURES_SHAPE, &node.unknown);
     writer.child(&node.feature);
     writer.finish()
@@ -228,7 +226,7 @@ pub fn calc_features(
 
 /// Write a `Feature` as its element, `xcalcf:feature`.
 #[must_use]
-pub fn feature(node: &super::Feature, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn feature(node: &super::Feature, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FEATURE_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.finish()

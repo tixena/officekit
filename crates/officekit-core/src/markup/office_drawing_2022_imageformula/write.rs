@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ImageFormula` as its element, `aif:imageFormula`.
 #[must_use]
-pub fn image_formula(
-    node: &super::ImageFormula,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn image_formula(node: &super::ImageFormula, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::IMAGE_FORMULA_SHAPE, &node.unknown);
     writer.attribute(0, &node.formula);
     writer.finish()

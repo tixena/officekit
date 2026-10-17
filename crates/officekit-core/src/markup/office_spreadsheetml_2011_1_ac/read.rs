@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `x12ac:list` into a `List`.
 #[must_use]
-pub fn list(element: &xml::element::Element) -> super::List {
+pub fn list(element: &Element) -> super::List {
     let mut node = super::List::default();
     let mut reader = markup::Reader::new(element, &super::LIST_SHAPE);
     for (index, field) in &mut reader {

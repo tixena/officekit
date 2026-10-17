@@ -1,6 +1,9 @@
 //! Writing the generic element tree, over `quick-xml`'s `Writer`: the
 //! escaping officekit does itself, the compact and pretty layouts, and the
 //! namespace cleanup.
+//!
+//! `Scope` holds the namespace declarations in scope while a typed tree is
+//! written.
 
 use alloc::borrow::Cow;
 use alloc::collections::{BTreeMap, BTreeSet};
@@ -9,19 +12,26 @@ use std::io;
 use quick_xml::Writer;
 use quick_xml::events::{BytesCData, BytesDecl, BytesEnd, BytesPI, BytesStart, BytesText, Event};
 
-use super::element::{Attribute, Document, Element, Node};
+use super::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use super::mc::{is_mc, requires};
-use super::name::QName;
+use super::name::table::NAMESPACES;
+use super::name::{Namespace, QName};
 use super::parse::split_qualified;
 
 #[cfg(test)]
 mod tests;
+
+/// The prefix declared for a namespace the table does not know.
+const OTHER_PREFIX: &str = "ns";
 
 /// The `mc` lists whose items are prefixes.
 const PREFIX_LISTS: [&str; 2] = ["Ignorable", "MustUnderstand"];
 
 /// The `mc` lists whose items are qualified names.
 const QUALIFIED_LISTS: [&str; 3] = ["PreserveAttributes", "PreserveElements", "ProcessContent"];
+
+/// The namespace the `xml` prefix is bound to without a declaration.
+const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
 
 /// How a part is laid out when written.
 ///
@@ -38,6 +48,14 @@ pub enum Layout {
     Pretty,
 }
 
+/// The namespace declarations in scope while a typed tree is written: an
+/// element takes a prefix bound to its namespace in either class's URI, or
+/// declares the table's prefix where none is bound.
+#[derive(Debug, Default)]
+pub struct Scope {
+    frames: Vec<Vec<NamespaceDeclaration>>,
+}
+
 /// The two options of writing a part from a tree.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
@@ -52,6 +70,122 @@ pub struct WriteOptions {
 /// index in document order.
 type Removed = BTreeMap<usize, BTreeSet<String>>;
 
+impl Scope {
+    /// An attribute of `element` in the namespace `uri` (`None`: unqualified),
+    /// with a prefix in scope, else the table's prefix declared on `element`.
+    /// Called between `element` and `end`.
+    pub fn attribute(
+        &mut self,
+        element: &mut Element,
+        uri: Option<&str>,
+        local: &str,
+        value: &str,
+    ) {
+        let declared = uri.unwrap_or_default();
+        let namespace = Namespace::from_uri(declared);
+        let prefix = if namespace == Namespace::None {
+            String::new()
+        } else {
+            self.bound(&namespace, false)
+                .unwrap_or_else(|| self.declare(element, &namespace, declared))
+        };
+        element.attributes.push(Attribute {
+            name: QName {
+                local: local.to_owned(),
+                namespace,
+                prefix,
+            },
+            value: value.to_owned(),
+        });
+    }
+
+    /// The innermost prefix bound to `namespace` that no inner declaration
+    /// rebinds; `xml` is bound without a declaration. For an element, the
+    /// empty prefix of a default namespace counts.
+    fn bound(&self, namespace: &Namespace, element: bool) -> Option<String> {
+        if binds(XML_NAMESPACE, namespace) {
+            return Some("xml".to_owned());
+        }
+        let mut seen: Vec<&str> = Vec::new();
+        for declaration in self.frames.iter().rev().flatten() {
+            let prefix = declaration.prefix.as_str();
+            if seen.contains(&prefix) {
+                continue;
+            }
+            if (element || !prefix.is_empty()) && binds(&declaration.uri, namespace) {
+                return Some(prefix.to_owned());
+            }
+            seen.push(prefix);
+        }
+        None
+    }
+
+    /// Declare the table's prefix for `namespace`, as `uri`, on `element` and
+    /// in the innermost frame; returns the prefix.
+    fn declare(&mut self, element: &mut Element, namespace: &Namespace, uri: &str) -> String {
+        let prefix = match namespace {
+            Namespace::Known(id) => NAMESPACES
+                .get(usize::from(*id))
+                .map_or(OTHER_PREFIX, |row| row.prefix),
+            Namespace::None => "",
+            Namespace::Other(_) => OTHER_PREFIX,
+        };
+        let declaration = NamespaceDeclaration {
+            prefix: prefix.to_owned(),
+            uri: uri.to_owned(),
+        };
+        if let Some(frame) = self.frames.last_mut() {
+            frame.push(declaration.clone());
+        }
+        element.namespace_declarations.push(declaration);
+        prefix.to_owned()
+    }
+
+    /// An element of the namespace `uri` named `local`, with the node's own
+    /// `declarations`, and the prefix in scope for its namespace, else the
+    /// table's prefix declared on it. Opens a frame `end` closes.
+    pub fn element(
+        &mut self,
+        uri: &str,
+        local: &str,
+        declarations: &[NamespaceDeclaration],
+    ) -> Element {
+        self.frames.push(declarations.to_vec());
+        let namespace = Namespace::from_uri(uri);
+        let mut element = Element::new(QName {
+            local: local.to_owned(),
+            namespace: namespace.clone(),
+            prefix: String::new(),
+        });
+        element.namespace_declarations = declarations.to_vec();
+        element.name.prefix = self
+            .bound(&namespace, true)
+            .unwrap_or_else(|| self.declare(&mut element, &namespace, uri));
+        element
+    }
+
+    /// Close the frame the last `element` or `start` opened.
+    pub fn end(&mut self) {
+        self.frames.pop();
+    }
+
+    /// Open a frame with an element's own declarations, for an element
+    /// written by its name; `end` closes it.
+    pub fn start(&mut self, declarations: &[NamespaceDeclaration]) {
+        self.frames.push(declarations.to_vec());
+    }
+}
+
+impl WriteOptions {
+    #[must_use]
+    pub const fn new(layout: Layout, namespace_cleanup: bool) -> Self {
+        Self {
+            layout,
+            namespace_cleanup,
+        }
+    }
+}
+
 impl Default for WriteOptions {
     /// Compact, with the cleanup on.
     fn default() -> Self {
@@ -59,6 +193,18 @@ impl Default for WriteOptions {
             layout: Layout::Compact,
             namespace_cleanup: true,
         }
+    }
+}
+
+/// Whether a declaration of `uri` binds `namespace`: either class's URI of a
+/// namespace the table knows, else the URI itself.
+fn binds(uri: &str, namespace: &Namespace) -> bool {
+    match namespace {
+        Namespace::Known(id) => NAMESPACES
+            .get(usize::from(*id))
+            .is_some_and(|row| row.uri == uri || row.strict_uri == Some(uri)),
+        Namespace::None => uri.is_empty(),
+        Namespace::Other(other) => **other == *uri,
     }
 }
 
@@ -165,7 +311,8 @@ pub(crate) fn is_whitespace(text: &str) -> bool {
 }
 
 /// Whether a node is text of whitespace only.
-pub(crate) fn is_whitespace_text(node: &Node) -> bool {
+#[must_use]
+pub fn is_whitespace_text(node: &Node) -> bool {
     if let Node::Text(text) = node {
         is_whitespace(text)
     } else {
@@ -206,7 +353,8 @@ fn keep_list(attribute: &mut Attribute, scope: &[Vec<(String, bool)>]) -> bool {
 
 /// Whether whitespace is preserved inside `element`, given whether it is
 /// around it.
-pub(crate) fn preserves_space(element: &Element, around: bool) -> bool {
+#[must_use]
+pub fn preserves_space(element: &Element, around: bool) -> bool {
     element
         .attributes
         .iter()
@@ -215,7 +363,8 @@ pub(crate) fn preserves_space(element: &Element, around: bool) -> bool {
 }
 
 /// A name as written: `prefix:local`, or `local` with no prefix.
-pub(crate) fn qualified(name: &QName) -> String {
+#[must_use]
+pub fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
         name.local.clone()
     } else {

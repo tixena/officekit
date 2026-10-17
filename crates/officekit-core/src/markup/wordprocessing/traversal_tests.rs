@@ -4,6 +4,12 @@
 use core::mem;
 use std::io;
 
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::QName;
+use officekit_xml::parse::parse;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{Layout, Scope};
+
 use super::super::{
     BlockContent, BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent,
     ContentBlockContent, ContentCellContent, ContentRowContent, Document, DocumentBody,
@@ -13,15 +19,8 @@ use super::super::{
 };
 use crate::markup::drawing::{AnyElementContent, GraphicObjectData};
 use crate::markup::picture::{self, Picture};
-use crate::markup::{
-    self, Descend, Extra, Scope, Transform as _, Unknown, Visit, math, wordprocessing,
-};
+use crate::markup::{self, Descend, Extra, Transform as _, Unknown, Visit, math, wordprocessing};
 use crate::stream::transform::{Unchanged, WriteThrough, Written};
-use crate::stream::writer::PartWriter;
-use crate::xml::element::{Element, Node};
-use crate::xml::name::QName;
-use crate::xml::parse::parse;
-use crate::xml::write::Layout;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

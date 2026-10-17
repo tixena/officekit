@@ -485,11 +485,12 @@ use crate::error::PackageError;
 use crate::packaging::package::{OpenOptions, Package, PartRoot};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::RelationshipType;
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::Element;
-use crate::xml::name::{Namespace, NamespaceId};
-use crate::xml::parse::parse;
-use crate::xml::write::WriteOptions;
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::Element;
+use officekit_xml::error::WriteError;
+use officekit_xml::name::{Namespace, NamespaceId};
+use officekit_xml::parse::parse;
+use officekit_xml::write::WriteOptions;
 
 /// Every part module: Part 1's definitions in the standard's order, then the parts of Microsoft's
 /// extensions by name.
@@ -1661,4 +1662,22 @@ pub fn restore_through_module(
         package,
         write,
     })
+}
+
+/// The tree of `root` in `class`, from `strict` or `transitional`, the writer of that class.
+///
+/// # Errors
+///
+/// The writer's.
+fn tree_in_class<R>(
+    root: &R,
+    class: ConformanceClass,
+    strict: fn(&R) -> Result<Element, WriteError>,
+    transitional: fn(&R) -> Result<Element, WriteError>,
+) -> Result<Element, WriteError> {
+    if class == ConformanceClass::Strict {
+        strict(root)
+    } else {
+        transitional(root)
+    }
 }

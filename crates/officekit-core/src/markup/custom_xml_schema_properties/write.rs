@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CustomXMLSchemaReference` as its element, `sl:schema`.
 #[must_use]
 pub fn custom_xml_schema_reference(
     node: &super::CustomXMLSchemaReference,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
@@ -237,8 +238,8 @@ pub fn custom_xml_schema_reference(
 #[must_use]
 pub fn embedded_custom_xml_schema_supplementary_data(
     node: &super::EmbeddedCustomXMLSchemaSupplementaryData,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,

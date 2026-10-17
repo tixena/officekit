@@ -12,7 +12,7 @@ use officekit_core::packaging::package::Package;
 use officekit_core::packaging::part_name::PartName;
 use officekit_core::validation::error::ValidationError;
 use officekit_core::validation::validator::Validator;
-use officekit_core::xml::name::OfficeVersion;
+use officekit_xml::name::OfficeVersion;
 
 use crate::cli::{CatArgs, DownArgs, FormatArgs, PartsArgs, UpArgs, ValidateArgs};
 use crate::dispatch::EXIT_ERROR;

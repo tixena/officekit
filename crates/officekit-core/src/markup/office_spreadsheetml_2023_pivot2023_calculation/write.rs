@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AggregationInfo` as its element, `xlpcalc:aggregationInfo`.
 #[must_use]
-pub fn aggregation_info(
-    node: &super::AggregationInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn aggregation_info(node: &super::AggregationInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AGGREGATION_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.aggregation_type);
     writer.attribute(1, &node.source_field);
@@ -229,10 +227,7 @@ pub fn aggregation_info(
 
 /// Write a `FeatureSupportInfo` as its element, `xlpcalc:featureSupportInfo`.
 #[must_use]
-pub fn feature_support_info(
-    node: &super::FeatureSupportInfo,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn feature_support_info(node: &super::FeatureSupportInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::FEATURE_SUPPORT_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.feature_name);
     writer.finish()
@@ -242,8 +237,8 @@ pub fn feature_support_info(
 #[must_use]
 pub fn pivot_area_reference_subtotals(
     node: &super::PivotAreaReferenceSubtotals,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
@@ -257,8 +252,8 @@ pub fn pivot_area_reference_subtotals(
 #[must_use]
 pub fn pivot_field_subtotal_line_items(
     node: &super::PivotFieldSubtotalLineItems,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
@@ -270,10 +265,7 @@ pub fn pivot_field_subtotal_line_items(
 
 /// Write a `PivotFieldSubtotals` as its element, `xlpcalc:pivotFieldSubtotals`.
 #[must_use]
-pub fn pivot_field_subtotals(
-    node: &super::PivotFieldSubtotals,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pivot_field_subtotals(node: &super::PivotFieldSubtotals, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIVOT_FIELD_SUBTOTALS_SHAPE, &node.unknown);
     writer.child(&node.subtotal_pivot_item_subtotal);
     writer.finish()
@@ -281,10 +273,7 @@ pub fn pivot_field_subtotals(
 
 /// Write a `SubtotalLineItem` as its element, `xlpcalc:subtotalLineItem`.
 #[must_use]
-pub fn subtotal_line_item(
-    node: &super::SubtotalLineItem,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn subtotal_line_item(node: &super::SubtotalLineItem, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::SUBTOTAL_LINE_ITEM_SHAPE, &node.unknown).finish()
 }
 
@@ -292,8 +281,8 @@ pub fn subtotal_line_item(
 #[must_use]
 pub fn subtotal_pivot_item_subtotal(
     node: &super::SubtotalPivotItemSubtotal,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let writer = markup::Writer::new(
         scope,
         &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
@@ -306,8 +295,8 @@ pub fn subtotal_pivot_item_subtotal(
 #[must_use]
 pub fn subtotal_pivot_subtotal_type(
     node: &super::SubtotalPivotSubtotalType,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,

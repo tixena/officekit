@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -672,7 +672,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for DropZoneCategories {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_zone_categories(element)
     }
 }
@@ -685,7 +685,7 @@ impl markup::Write for DropZoneCategories {
 }
 
 impl markup::Read for DropZoneData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_zone_data(element)
     }
 }
@@ -698,7 +698,7 @@ impl markup::Write for DropZoneData {
 }
 
 impl markup::Read for DropZoneFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_zone_filter(element)
     }
 }
@@ -711,7 +711,7 @@ impl markup::Write for DropZoneFilter {
 }
 
 impl markup::Read for DropZoneSeries {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_zone_series(element)
     }
 }
@@ -724,7 +724,7 @@ impl markup::Write for DropZoneSeries {
 }
 
 impl markup::Read for DropZonesVisible {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_zones_visible(element)
     }
 }
@@ -737,7 +737,7 @@ impl markup::Write for DropZonesVisible {
 }
 
 impl markup::Read for InSketchMode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::in_sketch_mode(element)
     }
 }
@@ -750,7 +750,7 @@ impl markup::Write for InSketchMode {
 }
 
 impl markup::Read for InvertSolidFillFmt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::invert_solid_fill_fmt(element)
     }
 }
@@ -763,7 +763,7 @@ impl markup::Write for InvertSolidFillFmt {
 }
 
 impl markup::Read for PivotOptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_options(element)
     }
 }
@@ -776,7 +776,7 @@ impl markup::Write for PivotOptions {
 }
 
 impl markup::Read for ShowSketchBtn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_sketch_btn(element)
     }
 }
@@ -789,7 +789,7 @@ impl markup::Write for ShowSketchBtn {
 }
 
 impl markup::Read for SketchOptions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sketch_options(element)
     }
 }
@@ -802,7 +802,7 @@ impl markup::Write for SketchOptions {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -815,7 +815,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for Style {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style(element)
     }
 }

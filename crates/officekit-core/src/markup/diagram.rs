@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::{ValueError, parse};
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -3187,7 +3187,7 @@ pub enum LayoutElementContent {
     ExtensionList(ExtensionList),
     ForEach(ForEach),
     LayoutNode(LayoutNode),
-    Other(xml::element::Node),
+    Other(Node),
     PresentationOf(PresentationOf),
     RuleList(RuleList),
     Shape(Shape),
@@ -3215,7 +3215,7 @@ pub enum LayoutNodeContent {
     ExtensionList(ExtensionList),
     ForEach(ForEach),
     LayoutNode(LayoutNode),
-    Other(xml::element::Node),
+    Other(Node),
     PresentationOf(PresentationOf),
     RuleList(RuleList),
     Shape(Shape),
@@ -4489,7 +4489,7 @@ pub struct WholeE2OFormatting {
 }
 
 impl markup::Read for Algorithm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::algorithm(element)
     }
 }
@@ -4796,7 +4796,7 @@ impl AxisTypeList {
     /// `ValueError` when the text is no value of `ST_AxisTypes`; the text stays stored.
     pub fn value(&self) -> Result<Vec<AxisType>, ValueError> {
         let mut items = Vec::new();
-        for item in xml::values::parse::list(&self.0) {
+        for item in parse::list(&self.0) {
             let found = AxisType(item.to_owned());
             found.value()?;
             items.push(found);
@@ -4806,7 +4806,7 @@ impl AxisTypeList {
 }
 
 impl markup::Read for BackgroundFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_formatting(element)
     }
 }
@@ -4938,9 +4938,7 @@ impl BooleanList {
     ///
     /// `ValueError` when the text is no value of `ST_Booleans`; the text stays stored.
     pub fn value(&self) -> Result<Vec<String>, ValueError> {
-        Ok(xml::values::parse::list(&self.0)
-            .map(str::to_owned)
-            .collect())
+        Ok(parse::list(&self.0).map(str::to_owned).collect())
     }
 }
 
@@ -4995,7 +4993,7 @@ impl Breakpoint {
 }
 
 impl markup::Read for Category {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category(element)
     }
 }
@@ -5008,7 +5006,7 @@ impl markup::Write for Category {
 }
 
 impl markup::Read for CategoryList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_list(element)
     }
 }
@@ -5021,7 +5019,7 @@ impl markup::Write for CategoryList {
 }
 
 impl markup::Read for CategoryListSDCategories {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_list_sd_categories(element)
     }
 }
@@ -5034,7 +5032,7 @@ impl markup::Write for CategoryListSDCategories {
 }
 
 impl markup::Read for CategorySDCategory {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_sd_category(element)
     }
 }
@@ -5242,7 +5240,7 @@ impl ChildOrder {
 }
 
 impl markup::Read for ChooseElement {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::choose_element(element)
     }
 }
@@ -5309,7 +5307,7 @@ impl ColorApplicationMethodType {
 }
 
 impl markup::Read for ColorTransformCategory {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_category(element)
     }
 }
@@ -5322,7 +5320,7 @@ impl markup::Write for ColorTransformCategory {
 }
 
 impl markup::Read for ColorTransformCategoryList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_category_list(element)
     }
 }
@@ -5335,7 +5333,7 @@ impl markup::Write for ColorTransformCategoryList {
 }
 
 impl markup::Read for ColorTransformDefinitionHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_definition_header(element)
     }
 }
@@ -5348,7 +5346,7 @@ impl markup::Write for ColorTransformDefinitionHeader {
 }
 
 impl markup::Read for ColorTransformDefinitions {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_definitions(element)
     }
 }
@@ -5361,7 +5359,7 @@ impl markup::Write for ColorTransformDefinitions {
 }
 
 impl markup::Read for ColorTransformHeaderList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_header_list(element)
     }
 }
@@ -5374,7 +5372,7 @@ impl markup::Write for ColorTransformHeaderList {
 }
 
 impl markup::Read for ColorTransformSampleData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::color_transform_sample_data(element)
     }
 }
@@ -5387,7 +5385,7 @@ impl markup::Write for ColorTransformSampleData {
 }
 
 impl markup::Read for Connection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection(element)
     }
 }
@@ -5400,7 +5398,7 @@ impl markup::Write for Connection {
 }
 
 impl markup::Read for ConnectionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection_list(element)
     }
 }
@@ -5631,7 +5629,7 @@ impl ConnectorRouting {
 }
 
 impl markup::Read for Constraint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::constraint(element)
     }
 }
@@ -5644,7 +5642,7 @@ impl markup::Write for Constraint {
 }
 
 impl markup::Read for ConstraintList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::constraint_list(element)
     }
 }
@@ -5875,7 +5873,7 @@ impl ContinueDirection {
 }
 
 impl markup::Read for DataModel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_model(element)
     }
 }
@@ -5945,7 +5943,7 @@ impl DataPointType {
 }
 
 impl markup::Read for Description {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::description(element)
     }
 }
@@ -5958,7 +5956,7 @@ impl markup::Write for Description {
 }
 
 impl markup::Read for DescriptionCTDescription {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::description_ct_description(element)
     }
 }
@@ -5971,7 +5969,7 @@ impl markup::Write for DescriptionCTDescription {
 }
 
 impl markup::Read for DiagramDirection {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::diagram_direction(element)
     }
 }
@@ -6034,7 +6032,7 @@ impl DiagramDirectionDefinition {
 }
 
 impl markup::Read for DiagramLayoutHeaderList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::diagram_layout_header_list(element)
     }
 }
@@ -6066,7 +6064,7 @@ impl DiagreamLayoutNodeTypeList {
     /// `ValueError` when the text is no value of `ST_ElementTypes`; the text stays stored.
     pub fn value(&self) -> Result<Vec<DataPointType>, ValueError> {
         let mut items = Vec::new();
-        for item in xml::values::parse::list(&self.0) {
+        for item in parse::list(&self.0) {
             let found = DataPointType(item.to_owned());
             found.value()?;
             items.push(found);
@@ -6076,7 +6074,7 @@ impl DiagreamLayoutNodeTypeList {
 }
 
 impl markup::Read for EffectColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::effect_color_list(element)
     }
 }
@@ -6089,7 +6087,7 @@ impl markup::Write for EffectColorList {
 }
 
 impl markup::Read for Else {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#else(element)
     }
 }
@@ -6102,7 +6100,7 @@ impl markup::Write for Else {
 }
 
 impl markup::Read for ExplicitRelationshipsToDiagramParts {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::explicit_relationships_to_diagram_parts(element)
     }
 }
@@ -6115,7 +6113,7 @@ impl markup::Write for ExplicitRelationshipsToDiagramParts {
 }
 
 impl markup::Read for ExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extension_list(element)
     }
 }
@@ -6179,7 +6177,7 @@ impl FallbackDimension {
 }
 
 impl markup::Read for FillColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::fill_color_list(element)
     }
 }
@@ -6238,7 +6236,7 @@ impl FlowDirection {
 }
 
 impl markup::Read for ForEach {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::for_each(element)
     }
 }
@@ -6716,7 +6714,7 @@ impl HueDirection {
 }
 
 impl markup::Read for If {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#if(element)
     }
 }
@@ -6770,14 +6768,12 @@ impl IntegerList {
     ///
     /// `ValueError` when the text is no value of `ST_Ints`; the text stays stored.
     pub fn value(&self) -> Result<Vec<String>, ValueError> {
-        Ok(xml::values::parse::list(&self.0)
-            .map(str::to_owned)
-            .collect())
+        Ok(parse::list(&self.0).map(str::to_owned).collect())
     }
 }
 
 impl markup::Read for LayoutDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_definition(element)
     }
 }
@@ -6790,7 +6786,7 @@ impl markup::Write for LayoutDefinition {
 }
 
 impl markup::Read for LayoutDefinitionHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_definition_header(element)
     }
 }
@@ -6803,11 +6799,11 @@ impl markup::Write for LayoutDefinitionHeader {
 }
 
 impl markup::Read for LayoutElementContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_DGM, "alg")) => Self::Algorithm(markup::read(element)),
             Some((NS_DGM, "choose")) => Self::ChooseElement(markup::read(element)),
@@ -6818,7 +6814,7 @@ impl markup::Read for LayoutElementContent {
             Some((NS_DGM, "presOf")) => Self::PresentationOf(markup::read(element)),
             Some((NS_DGM, "ruleLst")) => Self::RuleList(markup::read(element)),
             Some((NS_DGM, "shape")) => Self::Shape(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6841,7 +6837,7 @@ impl markup::Write for LayoutElementContent {
 }
 
 impl markup::Read for LayoutNode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_node(element)
     }
 }
@@ -6854,11 +6850,11 @@ impl markup::Write for LayoutNode {
 }
 
 impl markup::Read for LayoutNodeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_DGM, "alg")) => Self::Algorithm(markup::read(element)),
             Some((NS_DGM, "choose")) => Self::ChooseElement(markup::read(element)),
@@ -6870,7 +6866,7 @@ impl markup::Read for LayoutNodeContent {
             Some((NS_DGM, "ruleLst")) => Self::RuleList(markup::read(element)),
             Some((NS_DGM, "shape")) => Self::Shape(markup::read(element)),
             Some((NS_DGM, "varLst")) => Self::VariableList(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6962,7 +6958,7 @@ impl LayoutShapeType {
 }
 
 impl markup::Read for LevelAnimation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::level_animation(element)
     }
 }
@@ -6975,7 +6971,7 @@ impl markup::Write for LevelAnimation {
 }
 
 impl markup::Read for LineColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_color_list(element)
     }
 }
@@ -7043,7 +7039,7 @@ impl LinearDirection {
 }
 
 impl markup::Read for ListOfStyleDefinitionHeaders {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::list_of_style_definition_headers(element)
     }
 }
@@ -7056,7 +7052,7 @@ impl markup::Write for ListOfStyleDefinitionHeaders {
 }
 
 impl markup::Read for MaximumChildren {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::maximum_children(element)
     }
 }
@@ -7277,7 +7273,7 @@ impl Offset {
 }
 
 impl markup::Read for OneByOneAnimationString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::one_by_one_animation_string(element)
     }
 }
@@ -7344,7 +7340,7 @@ impl OneByOneAnimationValueDefinition {
 }
 
 impl markup::Read for OrganizationChartBranchStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::organization_chart_branch_style(element)
     }
 }
@@ -7408,7 +7404,7 @@ impl OutputShapeType {
 }
 
 impl markup::Read for Parameter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::parameter(element)
     }
 }
@@ -7704,7 +7700,7 @@ impl ParameterValues {
 }
 
 impl markup::Read for Point {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::point(element)
     }
 }
@@ -7717,7 +7713,7 @@ impl markup::Write for Point {
 }
 
 impl markup::Read for PointList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::point_list(element)
     }
 }
@@ -7783,7 +7779,7 @@ impl PointType {
 }
 
 impl markup::Read for PreferredNumberOfChildren {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::preferred_number_of_children(element)
     }
 }
@@ -7796,7 +7792,7 @@ impl markup::Write for PreferredNumberOfChildren {
 }
 
 impl markup::Read for PresentationLayoutVariables {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_layout_variables(element)
     }
 }
@@ -7809,7 +7805,7 @@ impl markup::Write for PresentationLayoutVariables {
 }
 
 impl markup::Read for PresentationOf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::presentation_of(element)
     }
 }
@@ -7822,7 +7818,7 @@ impl markup::Write for PresentationOf {
 }
 
 impl markup::Read for PropertySet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::property_set(element)
     }
 }
@@ -8065,7 +8061,7 @@ impl RotationPath {
 }
 
 impl markup::Read for Rule {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rule(element)
     }
 }
@@ -8078,7 +8074,7 @@ impl markup::Write for Rule {
 }
 
 impl markup::Read for RuleList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rule_list(element)
     }
 }
@@ -8091,7 +8087,7 @@ impl markup::Write for RuleList {
 }
 
 impl markup::Read for SampleData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sample_data(element)
     }
 }
@@ -8104,7 +8100,7 @@ impl markup::Write for SampleData {
 }
 
 impl markup::Read for Scene3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::scene3d(element)
     }
 }
@@ -8229,7 +8225,7 @@ impl SecondaryLinearDirection {
 }
 
 impl markup::Read for Shape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape(element)
     }
 }
@@ -8242,7 +8238,7 @@ impl markup::Write for Shape {
 }
 
 impl markup::Read for ShapeAdjust {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_adjust(element)
     }
 }
@@ -8255,7 +8251,7 @@ impl markup::Write for ShapeAdjust {
 }
 
 impl markup::Read for ShapeAdjustList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_adjust_list(element)
     }
 }
@@ -8268,7 +8264,7 @@ impl markup::Write for ShapeAdjustList {
 }
 
 impl markup::Read for ShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_properties(element)
     }
 }
@@ -8281,7 +8277,7 @@ impl markup::Write for ShapeProperties {
 }
 
 impl markup::Read for ShapeResizeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_resize_style(element)
     }
 }
@@ -8294,7 +8290,7 @@ impl markup::Write for ShapeResizeStyle {
 }
 
 impl markup::Read for ShapeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_style(element)
     }
 }
@@ -8307,7 +8303,7 @@ impl markup::Write for ShapeStyle {
 }
 
 impl markup::Read for ShowInsertNode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_insert_node(element)
     }
 }
@@ -8320,7 +8316,7 @@ impl markup::Write for ShowInsertNode {
 }
 
 impl markup::Read for ShowOrganizationChartUserInterface {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_organization_chart_user_interface(element)
     }
 }
@@ -8333,7 +8329,7 @@ impl markup::Write for ShowOrganizationChartUserInterface {
 }
 
 impl markup::Read for Sp3d {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp3d(element)
     }
 }
@@ -8397,7 +8393,7 @@ impl StartingElement {
 }
 
 impl markup::Read for StyleData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_data(element)
     }
 }
@@ -8410,7 +8406,7 @@ impl markup::Write for StyleData {
 }
 
 impl markup::Read for StyleDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_definition(element)
     }
 }
@@ -8423,7 +8419,7 @@ impl markup::Write for StyleDefinition {
 }
 
 impl markup::Read for StyleDefinitionHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_definition_header(element)
     }
 }
@@ -8436,7 +8432,7 @@ impl markup::Write for StyleDefinitionHeader {
 }
 
 impl markup::Read for StyleLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_label(element)
     }
 }
@@ -8449,7 +8445,7 @@ impl markup::Write for StyleLabel {
 }
 
 impl markup::Read for StyleLabelDescription {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_label_description(element)
     }
 }
@@ -8462,7 +8458,7 @@ impl markup::Write for StyleLabelDescription {
 }
 
 impl markup::Read for StyleLabelStyleLabel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style_label_style_label(element)
     }
 }
@@ -8684,7 +8680,7 @@ impl TextBlockDirection {
 }
 
 impl markup::Read for TextBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_body(element)
     }
 }
@@ -8744,7 +8740,7 @@ impl TextDirection {
 }
 
 impl markup::Read for TextEffectColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_effect_color_list(element)
     }
 }
@@ -8757,7 +8753,7 @@ impl markup::Write for TextEffectColorList {
 }
 
 impl markup::Read for TextFillColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_fill_color_list(element)
     }
 }
@@ -8770,7 +8766,7 @@ impl markup::Write for TextFillColorList {
 }
 
 impl markup::Read for TextLineColorList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_line_color_list(element)
     }
 }
@@ -8783,7 +8779,7 @@ impl markup::Write for TextLineColorList {
 }
 
 impl markup::Read for TextProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::text_properties(element)
     }
 }
@@ -8796,7 +8792,7 @@ impl markup::Write for TextProperties {
 }
 
 impl markup::Read for Title {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title(element)
     }
 }
@@ -8809,7 +8805,7 @@ impl markup::Write for Title {
 }
 
 impl markup::Read for TitleCTName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_ct_name(element)
     }
 }
@@ -8822,7 +8818,7 @@ impl markup::Write for TitleCTName {
 }
 
 impl markup::Read for TitleSDName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title_sd_name(element)
     }
 }
@@ -8853,14 +8849,12 @@ impl UnsignedIntegerList {
     ///
     /// `ValueError` when the text is no value of `ST_UnsignedInts`; the text stays stored.
     pub fn value(&self) -> Result<Vec<String>, ValueError> {
-        Ok(xml::values::parse::list(&self.0)
-            .map(str::to_owned)
-            .collect())
+        Ok(parse::list(&self.0).map(str::to_owned).collect())
     }
 }
 
 impl markup::Read for VariableList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::variable_list(element)
     }
 }
@@ -8985,7 +8979,7 @@ impl VerticalAlignment {
 }
 
 impl markup::Read for WholeE2OFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::whole_e2o_formatting(element)
     }
 }

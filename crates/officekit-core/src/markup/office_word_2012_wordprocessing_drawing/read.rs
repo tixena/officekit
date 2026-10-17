@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `wp15:webVideoPr` into a `WebVideoPr`.
 #[must_use]
-pub fn web_video_pr(element: &xml::element::Element) -> super::WebVideoPr {
+pub fn web_video_pr(element: &Element) -> super::WebVideoPr {
     let mut node = super::WebVideoPr::default();
     let mut reader = markup::Reader::new(element, &super::WEB_VIDEO_PR_SHAPE);
     for (index, field) in &mut reader {

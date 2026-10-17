@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `a1611:picAttrSrcUrl` into a `PicAttrSrcUrl`.
 #[must_use]
-pub fn pic_attr_src_url(element: &xml::element::Element) -> super::PicAttrSrcUrl {
+pub fn pic_attr_src_url(element: &Element) -> super::PicAttrSrcUrl {
     let mut node = super::PicAttrSrcUrl::default();
     let mut reader = markup::Reader::new(element, &super::PIC_ATTR_SRC_URL_SHAPE);
     for (index, field) in &mut reader {

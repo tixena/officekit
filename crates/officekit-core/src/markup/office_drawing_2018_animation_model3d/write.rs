@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AnimPr` as its element, `a3danim:animPr`.
 #[must_use]
-pub fn anim_pr(node: &super::AnimPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANIM_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.length);
@@ -232,7 +233,7 @@ pub fn anim_pr(node: &super::AnimPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `EmbedAnim` as its element, `a3danim:embedAnim`.
 #[must_use]
-pub fn embed_anim(node: &super::EmbedAnim, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn embed_anim(node: &super::EmbedAnim, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EMBED_ANIM_SHAPE, &node.unknown);
     writer.attribute(0, &node.anim_id);
     writer.child(&node.pr);
@@ -242,7 +243,7 @@ pub fn embed_anim(node: &super::EmbedAnim, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `ExtLst` as its element, `a3danim:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -250,7 +251,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `PosterFrame` as its element, `a3danim:posterFrame`.
 #[must_use]
-pub fn poster_frame(node: &super::PosterFrame, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn poster_frame(node: &super::PosterFrame, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POSTER_FRAME_SHAPE, &node.unknown);
     writer.attribute(0, &node.anim_id);
     writer.attribute(1, &node.frame);

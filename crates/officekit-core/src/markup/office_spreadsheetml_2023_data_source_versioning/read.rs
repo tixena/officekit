@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xxdsv:lastEditFeature` into a `LastEditFeature`.
 #[must_use]
-pub fn last_edit_feature(element: &xml::element::Element) -> super::LastEditFeature {
+pub fn last_edit_feature(element: &Element) -> super::LastEditFeature {
     let mut node = super::LastEditFeature::default();
     let mut reader = markup::Reader::new(element, &super::LAST_EDIT_FEATURE_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn last_edit_feature(element: &xml::element::Element) -> super::LastEditFeat
 
 /// Read `xxdsv:lastRefreshFeature` into a `LastRefreshFeature`.
 #[must_use]
-pub fn last_refresh_feature(element: &xml::element::Element) -> super::LastRefreshFeature {
+pub fn last_refresh_feature(element: &Element) -> super::LastRefreshFeature {
     let mut node = super::LastRefreshFeature::default();
     let mut reader = markup::Reader::new(element, &super::LAST_REFRESH_FEATURE_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn last_refresh_feature(element: &xml::element::Element) -> super::LastRefre
 
 /// Read `xxdsv:requiredFeature` into a `RequiredFeature`.
 #[must_use]
-pub fn required_feature(element: &xml::element::Element) -> super::RequiredFeature {
+pub fn required_feature(element: &Element) -> super::RequiredFeature {
     let mut node = super::RequiredFeature::default();
     let mut reader = markup::Reader::new(element, &super::REQUIRED_FEATURE_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn required_feature(element: &xml::element::Element) -> super::RequiredFeatu
 
 /// Read `xxdsv:versionInfo` into a `VersionInfo`.
 #[must_use]
-pub fn version_info(element: &xml::element::Element) -> super::VersionInfo {
+pub fn version_info(element: &Element) -> super::VersionInfo {
     let mut node = super::VersionInfo::default();
     let mut reader = markup::Reader::new(element, &super::VERSION_INFO_SHAPE);
     for (index, field) in &mut reader {

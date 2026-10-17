@@ -21,16 +21,17 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::mc::is_mc;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
+
 use super::attributes::{self, Failure, qualified, transitional_only_namespace};
 use super::particle::{self, Child};
 use super::types::{Particle, SchemaType, TypeId, ValueClass};
 use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Errors, Step, ValidationError};
 use crate::validation::generated::SCHEMA_TYPES;
-use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
-use crate::xml::mc::is_mc;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 
 #[cfg(test)]
 mod tests;
@@ -783,10 +784,12 @@ fn is_xml_lang_or_space(attribute: &Attribute) -> bool {
 /// The URI a step names: a known namespace's Transitional URI, as SDK 3.5.1
 /// reads Strict files.
 fn namespace_uri(namespace: &Namespace) -> &str {
-    match namespace {
-        Namespace::Known(id) => NAMESPACES.get(usize::from(*id)).map_or("", |row| row.uri),
-        Namespace::None => "",
-        Namespace::Other(uri) => uri,
+    if let Namespace::Known(id) = namespace {
+        NAMESPACES.get(usize::from(*id)).map_or("", |row| row.uri)
+    } else if let Namespace::Other(uri) = namespace {
+        uri
+    } else {
+        ""
     }
 }
 

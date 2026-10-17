@@ -1,5 +1,5 @@
 use super::{Layout, WriteOptions};
-use crate::xml::parse::parse;
+use crate::parse::parse;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const MC: &str = r#"xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006""#;

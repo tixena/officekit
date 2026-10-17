@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlpds:pivotCacheDataSource` into a `PivotCacheDataSource`.
 #[must_use]
-pub fn pivot_cache_data_source(element: &xml::element::Element) -> super::PivotCacheDataSource {
+pub fn pivot_cache_data_source(element: &Element) -> super::PivotCacheDataSource {
     let mut node = super::PivotCacheDataSource::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_CACHE_DATA_SOURCE_SHAPE);
     for (index, field) in &mut reader {

@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `PicAttrSrcUrl` as its element, `a1611:picAttrSrcUrl`.
 #[must_use]
-pub fn pic_attr_src_url(
-    node: &super::PicAttrSrcUrl,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn pic_attr_src_url(node: &super::PicAttrSrcUrl, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PIC_ATTR_SRC_URL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()

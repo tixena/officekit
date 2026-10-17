@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `a3danim:animPr` into a `AnimPr`.
 #[must_use]
-pub fn anim_pr(element: &xml::element::Element) -> super::AnimPr {
+pub fn anim_pr(element: &Element) -> super::AnimPr {
     let mut node = super::AnimPr::default();
     let mut reader = markup::Reader::new(element, &super::ANIM_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -239,7 +239,7 @@ pub fn anim_pr(element: &xml::element::Element) -> super::AnimPr {
 
 /// Read `a3danim:embedAnim` into a `EmbedAnim`.
 #[must_use]
-pub fn embed_anim(element: &xml::element::Element) -> super::EmbedAnim {
+pub fn embed_anim(element: &Element) -> super::EmbedAnim {
     let mut node = super::EmbedAnim::default();
     let mut reader = markup::Reader::new(element, &super::EMBED_ANIM_SHAPE);
     for (index, field) in &mut reader {
@@ -256,7 +256,7 @@ pub fn embed_anim(element: &xml::element::Element) -> super::EmbedAnim {
 
 /// Read `a3danim:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +270,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `a3danim:posterFrame` into a `PosterFrame`.
 #[must_use]
-pub fn poster_frame(element: &xml::element::Element) -> super::PosterFrame {
+pub fn poster_frame(element: &Element) -> super::PosterFrame {
     let mut node = super::PosterFrame::default();
     let mut reader = markup::Reader::new(element, &super::POSTER_FRAME_SHAPE);
     for (index, field) in &mut reader {

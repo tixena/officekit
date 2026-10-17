@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p188:author` into a `Author`.
 #[must_use]
-pub fn author(element: &xml::element::Element) -> super::Author {
+pub fn author(element: &Element) -> super::Author {
     let mut node = super::Author::default();
     let mut reader = markup::Reader::new(element, &super::AUTHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -237,7 +237,7 @@ pub fn author(element: &xml::element::Element) -> super::Author {
 
 /// Read `p188:authorLst` into a `AuthorLst`.
 #[must_use]
-pub fn author_lst(element: &xml::element::Element) -> super::AuthorLst {
+pub fn author_lst(element: &Element) -> super::AuthorLst {
     let mut node = super::AuthorLst::default();
     let mut reader = markup::Reader::new(element, &super::AUTHOR_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -251,7 +251,7 @@ pub fn author_lst(element: &xml::element::Element) -> super::AuthorLst {
 
 /// Read `p188:cm` into a `Cm`.
 #[must_use]
-pub fn cm(element: &xml::element::Element) -> super::Cm {
+pub fn cm(element: &Element) -> super::Cm {
     let mut node = super::Cm::default();
     let mut reader = markup::Reader::new(element, &super::CM_SHAPE);
     for (index, field) in &mut reader {
@@ -282,7 +282,7 @@ pub fn cm(element: &xml::element::Element) -> super::Cm {
 
 /// Read `p188:cmLst` into a `CmLst`.
 #[must_use]
-pub fn cm_lst(element: &xml::element::Element) -> super::CmLst {
+pub fn cm_lst(element: &Element) -> super::CmLst {
     let mut node = super::CmLst::default();
     let mut reader = markup::Reader::new(element, &super::CM_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -296,13 +296,13 @@ pub fn cm_lst(element: &xml::element::Element) -> super::CmLst {
 
 /// Read one item of `CommentContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn comment(element: &xml::element::Element) -> super::CommentContent {
+pub fn comment(element: &Element) -> super::CommentContent {
     markup::read(element)
 }
 
 /// Read `p188:commentRel` into a `CommentRel`.
 #[must_use]
-pub fn comment_rel(element: &xml::element::Element) -> super::CommentRel {
+pub fn comment_rel(element: &Element) -> super::CommentRel {
     let mut node = super::CommentRel::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_REL_SHAPE);
     for (index, field) in &mut reader {
@@ -317,7 +317,7 @@ pub fn comment_rel(element: &xml::element::Element) -> super::CommentRel {
 /// Read `p188:extLst` into a `ExtLstCommentPropertiesExtensionList`.
 #[must_use]
 pub fn ext_lst_comment_properties_extension_list(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExtLstCommentPropertiesExtensionList {
     let mut node = super::ExtLstCommentPropertiesExtensionList::default();
     let mut reader = markup::Reader::new(
@@ -335,7 +335,7 @@ pub fn ext_lst_comment_properties_extension_list(
 
 /// Read `p188:extLst` into a `ExtLstExtensionList`.
 #[must_use]
-pub fn ext_lst_extension_list(element: &xml::element::Element) -> super::ExtLstExtensionList {
+pub fn ext_lst_extension_list(element: &Element) -> super::ExtLstExtensionList {
     let mut node = super::ExtLstExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -349,7 +349,7 @@ pub fn ext_lst_extension_list(element: &xml::element::Element) -> super::ExtLstE
 
 /// Read `p188:pos` into a `Pos`.
 #[must_use]
-pub fn pos(element: &xml::element::Element) -> super::Pos {
+pub fn pos(element: &Element) -> super::Pos {
     let mut node = super::Pos::default();
     let mut reader = markup::Reader::new(element, &super::POS_SHAPE);
     for (index, field) in &mut reader {
@@ -365,7 +365,7 @@ pub fn pos(element: &xml::element::Element) -> super::Pos {
 
 /// Read `p188:reply` into a `Reply`.
 #[must_use]
-pub fn reply(element: &xml::element::Element) -> super::Reply {
+pub fn reply(element: &Element) -> super::Reply {
     let mut node = super::Reply::default();
     let mut reader = markup::Reader::new(element, &super::REPLY_SHAPE);
     for (index, field) in &mut reader {
@@ -387,7 +387,7 @@ pub fn reply(element: &xml::element::Element) -> super::Reply {
 
 /// Read `p188:replyLst` into a `ReplyLst`.
 #[must_use]
-pub fn reply_lst(element: &xml::element::Element) -> super::ReplyLst {
+pub fn reply_lst(element: &Element) -> super::ReplyLst {
     let mut node = super::ReplyLst::default();
     let mut reader = markup::Reader::new(element, &super::REPLY_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -401,7 +401,7 @@ pub fn reply_lst(element: &xml::element::Element) -> super::ReplyLst {
 
 /// Read `p188:txBody` into a `TxBody`.
 #[must_use]
-pub fn tx_body(element: &xml::element::Element) -> super::TxBody {
+pub fn tx_body(element: &Element) -> super::TxBody {
     let mut node = super::TxBody::default();
     let mut reader = markup::Reader::new(element, &super::TX_BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -418,7 +418,7 @@ pub fn tx_body(element: &xml::element::Element) -> super::TxBody {
 
 /// Read `p188:unknownAnchor` into a `UnknownAnchor`.
 #[must_use]
-pub fn unknown_anchor(element: &xml::element::Element) -> super::UnknownAnchor {
+pub fn unknown_anchor(element: &Element) -> super::UnknownAnchor {
     let reader = markup::Reader::new(element, &super::UNKNOWN_ANCHOR_SHAPE);
     super::UnknownAnchor {
         unknown: reader.finish(),

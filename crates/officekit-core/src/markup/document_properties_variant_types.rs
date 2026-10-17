@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_VT: Option<NamespaceId> = Some(96);
@@ -622,7 +622,7 @@ pub enum ArrayContent {
     I2(I2),
     I4(I4),
     Integer(Integer),
-    Other(xml::element::Node),
+    Other(Node),
     R4(R4),
     R8(R8),
     Ui1(Ui1),
@@ -1447,7 +1447,7 @@ pub enum VariantContent {
     LPSTR(LPSTR),
     LPWSTR(LPWSTR),
     Null(Null),
-    Other(xml::element::Node),
+    Other(Node),
     R4(R4),
     R8(R8),
     Ui1(Ui1),
@@ -1516,7 +1516,7 @@ pub enum VectorContent {
     I8(I8),
     LPSTR(LPSTR),
     LPWSTR(LPWSTR),
-    Other(xml::element::Node),
+    Other(Node),
     R4(R4),
     R8(R8),
     Ui1(Ui1),
@@ -1682,7 +1682,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Array {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::array(element)
     }
 }
@@ -1763,11 +1763,11 @@ impl ArrayBaseTypeSimpleType {
 }
 
 impl markup::Read for ArrayContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_VT, "bstr")) => Self::BasicString(markup::read(element)),
             Some((NS_VT, "bool")) => Self::Boolean(markup::read(element)),
@@ -1786,7 +1786,7 @@ impl markup::Read for ArrayContent {
             Some((NS_VT, "ui4")) => Self::Ui4(markup::read(element)),
             Some((NS_VT, "uint")) => Self::UnsignedInteger(markup::read(element)),
             Some((NS_VT, "variant")) => Self::Variant(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1817,7 +1817,7 @@ impl markup::Write for ArrayContent {
 }
 
 impl markup::Read for BasicString {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::basic_string(element)
     }
 }
@@ -1830,7 +1830,7 @@ impl markup::Write for BasicString {
 }
 
 impl markup::Read for BinaryBlob {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_blob(element)
     }
 }
@@ -1843,7 +1843,7 @@ impl markup::Write for BinaryBlob {
 }
 
 impl markup::Read for BinaryBlobObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_blob_object(element)
     }
 }
@@ -1856,7 +1856,7 @@ impl markup::Write for BinaryBlobObject {
 }
 
 impl markup::Read for BinaryStorage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_storage(element)
     }
 }
@@ -1869,7 +1869,7 @@ impl markup::Write for BinaryStorage {
 }
 
 impl markup::Read for BinaryStorageObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_storage_object(element)
     }
 }
@@ -1882,7 +1882,7 @@ impl markup::Write for BinaryStorageObject {
 }
 
 impl markup::Read for BinaryStream {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_stream(element)
     }
 }
@@ -1895,7 +1895,7 @@ impl markup::Write for BinaryStream {
 }
 
 impl markup::Read for BinaryStreamObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_stream_object(element)
     }
 }
@@ -1908,7 +1908,7 @@ impl markup::Write for BinaryStreamObject {
 }
 
 impl markup::Read for BinaryVersionedStream {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::binary_versioned_stream(element)
     }
 }
@@ -1921,7 +1921,7 @@ impl markup::Write for BinaryVersionedStream {
 }
 
 impl markup::Read for Boolean {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::boolean(element)
     }
 }
@@ -1934,7 +1934,7 @@ impl markup::Write for Boolean {
 }
 
 impl markup::Read for ClassID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::class_id(element)
     }
 }
@@ -1947,7 +1947,7 @@ impl markup::Write for ClassID {
 }
 
 impl markup::Read for Currency {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::currency(element)
     }
 }
@@ -1983,7 +1983,7 @@ impl CurrencySimpleType {
 }
 
 impl markup::Read for DateAndTime {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::date_and_time(element)
     }
 }
@@ -1996,7 +1996,7 @@ impl markup::Write for DateAndTime {
 }
 
 impl markup::Read for Decimal {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::decimal(element)
     }
 }
@@ -2009,7 +2009,7 @@ impl markup::Write for Decimal {
 }
 
 impl markup::Read for Empty {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::empty(element)
     }
 }
@@ -2022,7 +2022,7 @@ impl markup::Write for Empty {
 }
 
 impl markup::Read for ErrorStatusCode {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::error_status_code(element)
     }
 }
@@ -2058,7 +2058,7 @@ impl ErrorStatusCodeSimpleType {
 }
 
 impl markup::Read for FileTime {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::file_time(element)
     }
 }
@@ -2071,7 +2071,7 @@ impl markup::Write for FileTime {
 }
 
 impl markup::Read for I1 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i1(element)
     }
 }
@@ -2084,7 +2084,7 @@ impl markup::Write for I1 {
 }
 
 impl markup::Read for I2 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i2(element)
     }
 }
@@ -2097,7 +2097,7 @@ impl markup::Write for I2 {
 }
 
 impl markup::Read for I4 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i4(element)
     }
 }
@@ -2110,7 +2110,7 @@ impl markup::Write for I4 {
 }
 
 impl markup::Read for I8 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::i8(element)
     }
 }
@@ -2123,7 +2123,7 @@ impl markup::Write for I8 {
 }
 
 impl markup::Read for Integer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::integer(element)
     }
 }
@@ -2136,7 +2136,7 @@ impl markup::Write for Integer {
 }
 
 impl markup::Read for LPSTR {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lpstr(element)
     }
 }
@@ -2149,7 +2149,7 @@ impl markup::Write for LPSTR {
 }
 
 impl markup::Read for LPWSTR {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::lpwstr(element)
     }
 }
@@ -2162,7 +2162,7 @@ impl markup::Write for LPWSTR {
 }
 
 impl markup::Read for Null {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::null(element)
     }
 }
@@ -2175,7 +2175,7 @@ impl markup::Write for Null {
 }
 
 impl markup::Read for R4 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r4(element)
     }
 }
@@ -2188,7 +2188,7 @@ impl markup::Write for R4 {
 }
 
 impl markup::Read for R8 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r8(element)
     }
 }
@@ -2201,7 +2201,7 @@ impl markup::Write for R8 {
 }
 
 impl markup::Read for Ui1 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui1(element)
     }
 }
@@ -2214,7 +2214,7 @@ impl markup::Write for Ui1 {
 }
 
 impl markup::Read for Ui2 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui2(element)
     }
 }
@@ -2227,7 +2227,7 @@ impl markup::Write for Ui2 {
 }
 
 impl markup::Read for Ui4 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui4(element)
     }
 }
@@ -2240,7 +2240,7 @@ impl markup::Write for Ui4 {
 }
 
 impl markup::Read for Ui8 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ui8(element)
     }
 }
@@ -2253,7 +2253,7 @@ impl markup::Write for Ui8 {
 }
 
 impl markup::Read for UnsignedInteger {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unsigned_integer(element)
     }
 }
@@ -2266,7 +2266,7 @@ impl markup::Write for UnsignedInteger {
 }
 
 impl markup::Read for Variant {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::variant(element)
     }
 }
@@ -2285,11 +2285,11 @@ impl Default for VariantContent {
 }
 
 impl markup::Read for VariantContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_VT, "array")) => Self::Array(markup::read(element)),
             Some((NS_VT, "bstr")) => Self::BasicString(markup::read(element)),
@@ -2325,7 +2325,7 @@ impl markup::Read for VariantContent {
             Some((NS_VT, "uint")) => Self::UnsignedInteger(markup::read(element)),
             Some((NS_VT, "variant")) => Self::Variant(markup::read(element)),
             Some((NS_VT, "vector")) => Self::Vector(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2574,7 +2574,7 @@ impl TryFrom<VariantContent> for VectorContent {
 }
 
 impl markup::Read for Vector {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vector(element)
     }
 }
@@ -2658,11 +2658,11 @@ impl VectorBaseTypeSimpleType {
 }
 
 impl markup::Read for VectorContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_VT, "bstr")) => Self::BasicString(markup::read(element)),
             Some((NS_VT, "bool")) => Self::Boolean(markup::read(element)),
@@ -2684,7 +2684,7 @@ impl markup::Read for VectorContent {
             Some((NS_VT, "ui4")) => Self::Ui4(markup::read(element)),
             Some((NS_VT, "ui8")) => Self::Ui8(markup::read(element)),
             Some((NS_VT, "variant")) => Self::Variant(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }

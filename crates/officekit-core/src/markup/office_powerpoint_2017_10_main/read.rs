@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p1710:readonlyRecommended` into a `ReadonlyRecommended`.
 #[must_use]
-pub fn readonly_recommended(element: &xml::element::Element) -> super::ReadonlyRecommended {
+pub fn readonly_recommended(element: &Element) -> super::ReadonlyRecommended {
     let mut node = super::ReadonlyRecommended::default();
     let mut reader = markup::Reader::new(element, &super::READONLY_RECOMMENDED_SHAPE);
     for (index, field) in &mut reader {

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XXDSV: Option<NamespaceId> = Some(163);
@@ -389,7 +389,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for LastEditFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::last_edit_feature(element)
     }
 }
@@ -402,7 +402,7 @@ impl markup::Write for LastEditFeature {
 }
 
 impl markup::Read for LastRefreshFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::last_refresh_feature(element)
     }
 }
@@ -415,7 +415,7 @@ impl markup::Write for LastRefreshFeature {
 }
 
 impl markup::Read for RequiredFeature {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::required_feature(element)
     }
 }
@@ -428,7 +428,7 @@ impl markup::Write for RequiredFeature {
 }
 
 impl markup::Read for VersionInfo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::version_info(element)
     }
 }

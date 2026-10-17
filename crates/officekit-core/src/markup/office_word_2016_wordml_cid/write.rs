@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CommentId` as its element, `w16cid:commentId`.
 #[must_use]
-pub fn comment_id(node: &super::CommentId, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comment_id(node: &super::CommentId, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_ID_SHAPE, &node.unknown);
     writer.attribute(0, &node.para_id);
     writer.attribute(1, &node.durable_id);
@@ -226,7 +227,7 @@ pub fn comment_id(node: &super::CommentId, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `CommentsIds` as its element, `w16cid:commentsIds`.
 #[must_use]
-pub fn comments_ids(node: &super::CommentsIds, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comments_ids(node: &super::CommentsIds, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENTS_IDS_SHAPE, &node.unknown);
     writer.child(&node.comment_id);
     writer.finish()

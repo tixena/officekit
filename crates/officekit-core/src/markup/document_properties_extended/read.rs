@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `ap:Application` into a `ApplicationName`.
 #[must_use]
-pub fn application_name(element: &xml::element::Element) -> super::ApplicationName {
+pub fn application_name(element: &Element) -> super::ApplicationName {
     let mut node = super::ApplicationName::default();
     let mut reader = markup::Reader::new(element, &super::APPLICATION_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -232,7 +232,7 @@ pub fn application_name(element: &xml::element::Element) -> super::ApplicationNa
 /// Read `ap:Properties` into a `ApplicationSpecificFileProperties`.
 #[must_use]
 pub fn application_specific_file_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ApplicationSpecificFileProperties {
     let mut node = super::ApplicationSpecificFileProperties::default();
     let mut reader =
@@ -250,14 +250,14 @@ pub fn application_specific_file_properties(
 /// tag, or `Other`.
 #[must_use]
 pub fn application_specific_file_properties_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ApplicationSpecificFilePropertiesContent {
     markup::read(element)
 }
 
 /// Read `ap:AppVersion` into a `ApplicationVersion`.
 #[must_use]
-pub fn application_version(element: &xml::element::Element) -> super::ApplicationVersion {
+pub fn application_version(element: &Element) -> super::ApplicationVersion {
     let mut node = super::ApplicationVersion::default();
     let mut reader = markup::Reader::new(element, &super::APPLICATION_VERSION_SHAPE);
     for (index, field) in &mut reader {
@@ -271,7 +271,7 @@ pub fn application_version(element: &xml::element::Element) -> super::Applicatio
 
 /// Read `ap:CharactersWithSpaces` into a `CharactersWithSpaces`.
 #[must_use]
-pub fn characters_with_spaces(element: &xml::element::Element) -> super::CharactersWithSpaces {
+pub fn characters_with_spaces(element: &Element) -> super::CharactersWithSpaces {
     let mut node = super::CharactersWithSpaces::default();
     let mut reader = markup::Reader::new(element, &super::CHARACTERS_WITH_SPACES_SHAPE);
     for (index, field) in &mut reader {
@@ -285,7 +285,7 @@ pub fn characters_with_spaces(element: &xml::element::Element) -> super::Charact
 
 /// Read `ap:DigSig` into a `DigitalSignature`.
 #[must_use]
-pub fn digital_signature(element: &xml::element::Element) -> super::DigitalSignature {
+pub fn digital_signature(element: &Element) -> super::DigitalSignature {
     let mut node = super::DigitalSignature::default();
     let mut reader = markup::Reader::new(element, &super::DIGITAL_SIGNATURE_SHAPE);
     for (index, field) in &mut reader {
@@ -299,7 +299,7 @@ pub fn digital_signature(element: &xml::element::Element) -> super::DigitalSigna
 
 /// Read `ap:DocSecurity` into a `DocumentSecurity`.
 #[must_use]
-pub fn document_security(element: &xml::element::Element) -> super::DocumentSecurity {
+pub fn document_security(element: &Element) -> super::DocumentSecurity {
     let mut node = super::DocumentSecurity::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_SECURITY_SHAPE);
     for (index, field) in &mut reader {
@@ -313,7 +313,7 @@ pub fn document_security(element: &xml::element::Element) -> super::DocumentSecu
 
 /// Read `ap:HeadingPairs` into a `HeadingPairs`.
 #[must_use]
-pub fn heading_pairs(element: &xml::element::Element) -> super::HeadingPairs {
+pub fn heading_pairs(element: &Element) -> super::HeadingPairs {
     let mut node = super::HeadingPairs::default();
     let mut reader = markup::Reader::new(element, &super::HEADING_PAIRS_SHAPE);
     for (index, field) in &mut reader {
@@ -327,7 +327,7 @@ pub fn heading_pairs(element: &xml::element::Element) -> super::HeadingPairs {
 
 /// Read `ap:HLinks` into a `HyperlinkList`.
 #[must_use]
-pub fn hyperlink_list(element: &xml::element::Element) -> super::HyperlinkList {
+pub fn hyperlink_list(element: &Element) -> super::HyperlinkList {
     let mut node = super::HyperlinkList::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINK_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -341,7 +341,7 @@ pub fn hyperlink_list(element: &xml::element::Element) -> super::HyperlinkList {
 
 /// Read `ap:HyperlinksChanged` into a `HyperlinksChanged`.
 #[must_use]
-pub fn hyperlinks_changed(element: &xml::element::Element) -> super::HyperlinksChanged {
+pub fn hyperlinks_changed(element: &Element) -> super::HyperlinksChanged {
     let mut node = super::HyperlinksChanged::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINKS_CHANGED_SHAPE);
     for (index, field) in &mut reader {
@@ -355,9 +355,7 @@ pub fn hyperlinks_changed(element: &xml::element::Element) -> super::HyperlinksC
 
 /// Read `ap:PresentationFormat` into a `IntendedFormatOfPresentation`.
 #[must_use]
-pub fn intended_format_of_presentation(
-    element: &xml::element::Element,
-) -> super::IntendedFormatOfPresentation {
+pub fn intended_format_of_presentation(element: &Element) -> super::IntendedFormatOfPresentation {
     let mut node = super::IntendedFormatOfPresentation::default();
     let mut reader = markup::Reader::new(element, &super::INTENDED_FORMAT_OF_PRESENTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -371,7 +369,7 @@ pub fn intended_format_of_presentation(
 
 /// Read `ap:LinksUpToDate` into a `LinksUpToDate`.
 #[must_use]
-pub fn links_up_to_date(element: &xml::element::Element) -> super::LinksUpToDate {
+pub fn links_up_to_date(element: &Element) -> super::LinksUpToDate {
     let mut node = super::LinksUpToDate::default();
     let mut reader = markup::Reader::new(element, &super::LINKS_UP_TO_DATE_SHAPE);
     for (index, field) in &mut reader {
@@ -385,7 +383,7 @@ pub fn links_up_to_date(element: &xml::element::Element) -> super::LinksUpToDate
 
 /// Read `ap:Company` into a `NameOfCompany`.
 #[must_use]
-pub fn name_of_company(element: &xml::element::Element) -> super::NameOfCompany {
+pub fn name_of_company(element: &Element) -> super::NameOfCompany {
     let mut node = super::NameOfCompany::default();
     let mut reader = markup::Reader::new(element, &super::NAME_OF_COMPANY_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +397,7 @@ pub fn name_of_company(element: &xml::element::Element) -> super::NameOfCompany 
 
 /// Read `ap:Template` into a `NameOfDocumentTemplate`.
 #[must_use]
-pub fn name_of_document_template(element: &xml::element::Element) -> super::NameOfDocumentTemplate {
+pub fn name_of_document_template(element: &Element) -> super::NameOfDocumentTemplate {
     let mut node = super::NameOfDocumentTemplate::default();
     let mut reader = markup::Reader::new(element, &super::NAME_OF_DOCUMENT_TEMPLATE_SHAPE);
     for (index, field) in &mut reader {
@@ -413,7 +411,7 @@ pub fn name_of_document_template(element: &xml::element::Element) -> super::Name
 
 /// Read `ap:Manager` into a `NameOfManager`.
 #[must_use]
-pub fn name_of_manager(element: &xml::element::Element) -> super::NameOfManager {
+pub fn name_of_manager(element: &Element) -> super::NameOfManager {
     let mut node = super::NameOfManager::default();
     let mut reader = markup::Reader::new(element, &super::NAME_OF_MANAGER_SHAPE);
     for (index, field) in &mut reader {
@@ -427,7 +425,7 @@ pub fn name_of_manager(element: &xml::element::Element) -> super::NameOfManager 
 
 /// Read `ap:HiddenSlides` into a `NumberOfHiddenSlides`.
 #[must_use]
-pub fn number_of_hidden_slides(element: &xml::element::Element) -> super::NumberOfHiddenSlides {
+pub fn number_of_hidden_slides(element: &Element) -> super::NumberOfHiddenSlides {
     let mut node = super::NumberOfHiddenSlides::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_HIDDEN_SLIDES_SHAPE);
     for (index, field) in &mut reader {
@@ -441,7 +439,7 @@ pub fn number_of_hidden_slides(element: &xml::element::Element) -> super::Number
 
 /// Read `ap:Lines` into a `NumberOfLines`.
 #[must_use]
-pub fn number_of_lines(element: &xml::element::Element) -> super::NumberOfLines {
+pub fn number_of_lines(element: &Element) -> super::NumberOfLines {
     let mut node = super::NumberOfLines::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_LINES_SHAPE);
     for (index, field) in &mut reader {
@@ -456,7 +454,7 @@ pub fn number_of_lines(element: &xml::element::Element) -> super::NumberOfLines 
 /// Read `ap:Notes` into a `NumberOfSlidesContainingNotes`.
 #[must_use]
 pub fn number_of_slides_containing_notes(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberOfSlidesContainingNotes {
     let mut node = super::NumberOfSlidesContainingNotes::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE);
@@ -471,7 +469,7 @@ pub fn number_of_slides_containing_notes(
 
 /// Read `ap:TitlesOfParts` into a `PartTitles`.
 #[must_use]
-pub fn part_titles(element: &xml::element::Element) -> super::PartTitles {
+pub fn part_titles(element: &Element) -> super::PartTitles {
     let mut node = super::PartTitles::default();
     let mut reader = markup::Reader::new(element, &super::PART_TITLES_SHAPE);
     for (index, field) in &mut reader {
@@ -485,7 +483,7 @@ pub fn part_titles(element: &xml::element::Element) -> super::PartTitles {
 
 /// Read `ap:HyperlinkBase` into a `RelativeHyperlinkBase`.
 #[must_use]
-pub fn relative_hyperlink_base(element: &xml::element::Element) -> super::RelativeHyperlinkBase {
+pub fn relative_hyperlink_base(element: &Element) -> super::RelativeHyperlinkBase {
     let mut node = super::RelativeHyperlinkBase::default();
     let mut reader = markup::Reader::new(element, &super::RELATIVE_HYPERLINK_BASE_SHAPE);
     for (index, field) in &mut reader {
@@ -499,7 +497,7 @@ pub fn relative_hyperlink_base(element: &xml::element::Element) -> super::Relati
 
 /// Read `ap:SharedDoc` into a `SharedDocument`.
 #[must_use]
-pub fn shared_document(element: &xml::element::Element) -> super::SharedDocument {
+pub fn shared_document(element: &Element) -> super::SharedDocument {
     let mut node = super::SharedDocument::default();
     let mut reader = markup::Reader::new(element, &super::SHARED_DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -513,7 +511,7 @@ pub fn shared_document(element: &xml::element::Element) -> super::SharedDocument
 
 /// Read `ap:Slides` into a `SlidesMetadataElement`.
 #[must_use]
-pub fn slides_metadata_element(element: &xml::element::Element) -> super::SlidesMetadataElement {
+pub fn slides_metadata_element(element: &Element) -> super::SlidesMetadataElement {
     let mut node = super::SlidesMetadataElement::default();
     let mut reader = markup::Reader::new(element, &super::SLIDES_METADATA_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -527,7 +525,7 @@ pub fn slides_metadata_element(element: &xml::element::Element) -> super::Slides
 
 /// Read `ap:ScaleCrop` into a `ThumbnailDisplayMode`.
 #[must_use]
-pub fn thumbnail_display_mode(element: &xml::element::Element) -> super::ThumbnailDisplayMode {
+pub fn thumbnail_display_mode(element: &Element) -> super::ThumbnailDisplayMode {
     let mut node = super::ThumbnailDisplayMode::default();
     let mut reader = markup::Reader::new(element, &super::THUMBNAIL_DISPLAY_MODE_SHAPE);
     for (index, field) in &mut reader {
@@ -541,9 +539,7 @@ pub fn thumbnail_display_mode(element: &xml::element::Element) -> super::Thumbna
 
 /// Read `ap:TotalTime` into a `TotalEditTimeMetadataElement`.
 #[must_use]
-pub fn total_edit_time_metadata_element(
-    element: &xml::element::Element,
-) -> super::TotalEditTimeMetadataElement {
+pub fn total_edit_time_metadata_element(element: &Element) -> super::TotalEditTimeMetadataElement {
     let mut node = super::TotalEditTimeMetadataElement::default();
     let mut reader = markup::Reader::new(element, &super::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -557,9 +553,7 @@ pub fn total_edit_time_metadata_element(
 
 /// Read `ap:Characters` into a `TotalNumberOfCharacters`.
 #[must_use]
-pub fn total_number_of_characters(
-    element: &xml::element::Element,
-) -> super::TotalNumberOfCharacters {
+pub fn total_number_of_characters(element: &Element) -> super::TotalNumberOfCharacters {
     let mut node = super::TotalNumberOfCharacters::default();
     let mut reader = markup::Reader::new(element, &super::TOTAL_NUMBER_OF_CHARACTERS_SHAPE);
     for (index, field) in &mut reader {
@@ -573,9 +567,7 @@ pub fn total_number_of_characters(
 
 /// Read `ap:MMClips` into a `TotalNumberOfMultimediaClips`.
 #[must_use]
-pub fn total_number_of_multimedia_clips(
-    element: &xml::element::Element,
-) -> super::TotalNumberOfMultimediaClips {
+pub fn total_number_of_multimedia_clips(element: &Element) -> super::TotalNumberOfMultimediaClips {
     let mut node = super::TotalNumberOfMultimediaClips::default();
     let mut reader = markup::Reader::new(element, &super::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE);
     for (index, field) in &mut reader {
@@ -589,7 +581,7 @@ pub fn total_number_of_multimedia_clips(
 
 /// Read `ap:Pages` into a `TotalNumberOfPages`.
 #[must_use]
-pub fn total_number_of_pages(element: &xml::element::Element) -> super::TotalNumberOfPages {
+pub fn total_number_of_pages(element: &Element) -> super::TotalNumberOfPages {
     let mut node = super::TotalNumberOfPages::default();
     let mut reader = markup::Reader::new(element, &super::TOTAL_NUMBER_OF_PAGES_SHAPE);
     for (index, field) in &mut reader {
@@ -603,9 +595,7 @@ pub fn total_number_of_pages(element: &xml::element::Element) -> super::TotalNum
 
 /// Read `ap:Paragraphs` into a `TotalNumberOfParagraphs`.
 #[must_use]
-pub fn total_number_of_paragraphs(
-    element: &xml::element::Element,
-) -> super::TotalNumberOfParagraphs {
+pub fn total_number_of_paragraphs(element: &Element) -> super::TotalNumberOfParagraphs {
     let mut node = super::TotalNumberOfParagraphs::default();
     let mut reader = markup::Reader::new(element, &super::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE);
     for (index, field) in &mut reader {
@@ -619,7 +609,7 @@ pub fn total_number_of_paragraphs(
 
 /// Read `ap:Words` into a `WordCount`.
 #[must_use]
-pub fn word_count(element: &xml::element::Element) -> super::WordCount {
+pub fn word_count(element: &Element) -> super::WordCount {
     let mut node = super::WordCount::default();
     let mut reader = markup::Reader::new(element, &super::WORD_COUNT_SHAPE);
     for (index, field) in &mut reader {

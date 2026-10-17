@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `dgm1611:autoBuNodeInfo` into a `AutoBuNodeInfo`.
 #[must_use]
-pub fn auto_bu_node_info(element: &xml::element::Element) -> super::AutoBuNodeInfo {
+pub fn auto_bu_node_info(element: &Element) -> super::AutoBuNodeInfo {
     let mut node = super::AutoBuNodeInfo::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_BU_NODE_INFO_SHAPE);
     for (index, field) in &mut reader {
@@ -234,7 +234,7 @@ pub fn auto_bu_node_info(element: &xml::element::Element) -> super::AutoBuNodeIn
 
 /// Read `dgm1611:autoBuNodeInfoLst` into a `AutoBuNodeInfoLst`.
 #[must_use]
-pub fn auto_bu_node_info_lst(element: &xml::element::Element) -> super::AutoBuNodeInfoLst {
+pub fn auto_bu_node_info_lst(element: &Element) -> super::AutoBuNodeInfoLst {
     let mut node = super::AutoBuNodeInfoLst::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_BU_NODE_INFO_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -248,7 +248,7 @@ pub fn auto_bu_node_info_lst(element: &xml::element::Element) -> super::AutoBuNo
 
 /// Read `dgm1611:buPr` into a `BuPr`.
 #[must_use]
-pub fn bu_pr(element: &xml::element::Element) -> super::BuPr {
+pub fn bu_pr(element: &Element) -> super::BuPr {
     let mut node = super::BuPr::default();
     let mut reader = markup::Reader::new(element, &super::BU_PR_SHAPE);
     for (index, field) in &mut reader {

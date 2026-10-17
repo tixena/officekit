@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::Element;
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_X16: Option<NamespaceId> = Some(124);
@@ -386,7 +386,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CalculatedTimeColumn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::calculated_time_column(element)
     }
 }
@@ -399,7 +399,7 @@ impl markup::Write for CalculatedTimeColumn {
 }
 
 impl markup::Read for ModelTimeGrouping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_time_grouping(element)
     }
 }
@@ -480,7 +480,7 @@ impl ModelTimeGroupingContentType {
 }
 
 impl markup::Read for ModelTimeGroupings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::model_time_groupings(element)
     }
 }

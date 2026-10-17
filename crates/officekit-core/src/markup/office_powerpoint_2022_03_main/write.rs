@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `p223:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Instance` as its element, `p223:instance`.
 #[must_use]
-pub fn instance(node: &super::Instance, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn instance(node: &super::Instance, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::INSTANCE_SHAPE, &node.unknown);
     writer.attribute(0, &node.time);
     writer.attribute(1, &node.author_id);
@@ -235,7 +236,7 @@ pub fn instance(node: &super::Instance, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Reactions` as its element, `p223:reactions`.
 #[must_use]
-pub fn reactions(node: &super::Reactions, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn reactions(node: &super::Reactions, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REACTIONS_SHAPE, &node.unknown);
     writer.child(&node.rxn);
     writer.finish()
@@ -243,7 +244,7 @@ pub fn reactions(node: &super::Reactions, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Rxn` as its element, `p223:rxn`.
 #[must_use]
-pub fn rxn(node: &super::Rxn, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rxn(node: &super::Rxn, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RXN_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.child(&node.instance);

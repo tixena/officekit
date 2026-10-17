@@ -213,12 +213,12 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlecs2:externalCodeServiceImageAsInput` into a `ExternalCodeServiceImageAsInput`.
 #[must_use]
 pub fn external_code_service_image_as_input(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExternalCodeServiceImageAsInput {
     let mut node = super::ExternalCodeServiceImageAsInput::default();
     let mut reader =

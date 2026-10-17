@@ -213,13 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w:ptab` into a `AbsolutePositionTabCharacter`.
 #[must_use]
-pub fn absolute_position_tab_character(
-    element: &xml::element::Element,
-) -> super::AbsolutePositionTabCharacter {
+pub fn absolute_position_tab_character(element: &Element) -> super::AbsolutePositionTabCharacter {
     let mut node = super::AbsolutePositionTabCharacter::default();
     let mut reader = markup::Reader::new(element, &super::ABSOLUTE_POSITION_TAB_CHARACTER_SHAPE);
     for (index, field) in &mut reader {
@@ -236,9 +234,7 @@ pub fn absolute_position_tab_character(
 
 /// Read `w:abstractNum` into a `AbstractNumberingDefinition`.
 #[must_use]
-pub fn abstract_numbering_definition(
-    element: &xml::element::Element,
-) -> super::AbstractNumberingDefinition {
+pub fn abstract_numbering_definition(element: &Element) -> super::AbstractNumberingDefinition {
     let mut node = super::AbstractNumberingDefinition::default();
     let mut reader = markup::Reader::new(element, &super::ABSTRACT_NUMBERING_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -261,7 +257,7 @@ pub fn abstract_numbering_definition(
 /// Read `w:nsid` into a `AbstractNumberingDefinitionIdentifier`.
 #[must_use]
 pub fn abstract_numbering_definition_identifier(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AbstractNumberingDefinitionIdentifier {
     let mut node = super::AbstractNumberingDefinitionIdentifier::default();
     let mut reader = markup::Reader::new(
@@ -280,7 +276,7 @@ pub fn abstract_numbering_definition_identifier(
 /// Read `w:abstractNumId` into a `AbstractNumberingDefinitionReference`.
 #[must_use]
 pub fn abstract_numbering_definition_reference(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AbstractNumberingDefinitionReference {
     let mut node = super::AbstractNumberingDefinitionReference::default();
     let mut reader = markup::Reader::new(
@@ -299,7 +295,7 @@ pub fn abstract_numbering_definition_reference(
 /// Read `w:multiLevelType` into a `AbstractNumberingDefinitionType`.
 #[must_use]
 pub fn abstract_numbering_definition_type(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AbstractNumberingDefinitionType {
     let mut node = super::AbstractNumberingDefinitionType::default();
     let mut reader = markup::Reader::new(element, &super::ABSTRACT_NUMBERING_DEFINITION_TYPE_SHAPE);
@@ -314,9 +310,7 @@ pub fn abstract_numbering_definition_type(
 
 /// Read `w:adjustLineHeightInTable` into a `AddDocumentGridLinePitch`.
 #[must_use]
-pub fn add_document_grid_line_pitch(
-    element: &xml::element::Element,
-) -> super::AddDocumentGridLinePitch {
+pub fn add_document_grid_line_pitch(element: &Element) -> super::AddDocumentGridLinePitch {
     let mut node = super::AddDocumentGridLinePitch::default();
     let mut reader = markup::Reader::new(element, &super::ADD_DOCUMENT_GRID_LINE_PITCH_SHAPE);
     for (index, field) in &mut reader {
@@ -330,9 +324,7 @@ pub fn add_document_grid_line_pitch(
 
 /// Read `w:spaceForUL` into a `AddSpaceBelowUnderlinedText`.
 #[must_use]
-pub fn add_space_below_underlined_text(
-    element: &xml::element::Element,
-) -> super::AddSpaceBelowUnderlinedText {
+pub fn add_space_below_underlined_text(element: &Element) -> super::AddSpaceBelowUnderlinedText {
     let mut node = super::AddSpaceBelowUnderlinedText::default();
     let mut reader = markup::Reader::new(element, &super::ADD_SPACE_BELOW_UNDERLINED_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -347,7 +339,7 @@ pub fn add_space_below_underlined_text(
 /// Read `w:autoSpaceDN` into a `AdjustSpacingEastAsianTextNumbers`.
 #[must_use]
 pub fn adjust_spacing_east_asian_text_numbers(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AdjustSpacingEastAsianTextNumbers {
     let mut node = super::AdjustSpacingEastAsianTextNumbers::default();
     let mut reader = markup::Reader::new(
@@ -366,7 +358,7 @@ pub fn adjust_spacing_east_asian_text_numbers(
 /// Read `w:autoSpaceDE` into a `AdjustSpacingLatinEastAsianText`.
 #[must_use]
 pub fn adjust_spacing_latin_east_asian_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AdjustSpacingLatinEastAsianText {
     let mut node = super::AdjustSpacingLatinEastAsianText::default();
     let mut reader =
@@ -383,7 +375,7 @@ pub fn adjust_spacing_latin_east_asian_text(
 /// Read `w:alignBordersAndEdges` into a `AlignParagraphAndTableBorders`.
 #[must_use]
 pub fn align_paragraph_and_table_borders(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AlignParagraphAndTableBorders {
     let mut node = super::AlignParagraphAndTableBorders::default();
     let mut reader = markup::Reader::new(element, &super::ALIGN_PARAGRAPH_AND_TABLE_BORDERS_SHAPE);
@@ -398,9 +390,7 @@ pub fn align_paragraph_and_table_borders(
 
 /// Read `w:alignTablesRowByRow` into a `AlignTableRowsIndependently`.
 #[must_use]
-pub fn align_table_rows_independently(
-    element: &xml::element::Element,
-) -> super::AlignTableRowsIndependently {
+pub fn align_table_rows_independently(element: &Element) -> super::AlignTableRowsIndependently {
     let mut node = super::AlignTableRowsIndependently::default();
     let mut reader = markup::Reader::new(element, &super::ALIGN_TABLE_ROWS_INDEPENDENTLY_SHAPE);
     for (index, field) in &mut reader {
@@ -415,7 +405,7 @@ pub fn align_table_rows_independently(
 /// Read `w:autoFormatOverride` into a `AllowAutomaticFormattingOverride`.
 #[must_use]
 pub fn allow_automatic_formatting_override(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowAutomaticFormattingOverride {
     let mut node = super::AllowAutomaticFormattingOverride::default();
     let mut reader =
@@ -432,7 +422,7 @@ pub fn allow_automatic_formatting_override(
 /// Read `w:allowSpaceOfSameStyleInTable` into a `AllowContextualSpacingOfParagraphsInTables`.
 #[must_use]
 pub fn allow_contextual_spacing_of_paragraphs_in_tables(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowContextualSpacingOfParagraphsInTables {
     let mut node = super::AllowContextualSpacingOfParagraphsInTables::default();
     let mut reader = markup::Reader::new(
@@ -450,9 +440,7 @@ pub fn allow_contextual_spacing_of_paragraphs_in_tables(
 
 /// Read `w:widowControl` into a `AllowFirstLastLineDisplay`.
 #[must_use]
-pub fn allow_first_last_line_display(
-    element: &xml::element::Element,
-) -> super::AllowFirstLastLineDisplay {
+pub fn allow_first_last_line_display(element: &Element) -> super::AllowFirstLastLineDisplay {
     let mut node = super::AllowFirstLastLineDisplay::default();
     let mut reader = markup::Reader::new(element, &super::ALLOW_FIRST_LAST_LINE_DISPLAY_SHAPE);
     for (index, field) in &mut reader {
@@ -467,7 +455,7 @@ pub fn allow_first_last_line_display(
 /// Read `w:wordWrap` into a `AllowLineBreakingAtCharacterLevel`.
 #[must_use]
 pub fn allow_line_breaking_at_character_level(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowLineBreakingAtCharacterLevel {
     let mut node = super::AllowLineBreakingAtCharacterLevel::default();
     let mut reader = markup::Reader::new(
@@ -485,9 +473,7 @@ pub fn allow_line_breaking_at_character_level(
 
 /// Read `w:allowPNG` into a `AllowPNGAsGraphicFormat`.
 #[must_use]
-pub fn allow_png_as_graphic_format(
-    element: &xml::element::Element,
-) -> super::AllowPNGAsGraphicFormat {
+pub fn allow_png_as_graphic_format(element: &Element) -> super::AllowPNGAsGraphicFormat {
     let mut node = super::AllowPNGAsGraphicFormat::default();
     let mut reader = markup::Reader::new(element, &super::ALLOW_PNG_AS_GRAPHIC_FORMAT_SHAPE);
     for (index, field) in &mut reader {
@@ -502,7 +488,7 @@ pub fn allow_png_as_graphic_format(
 /// Read `w:overflowPunct` into a `AllowPunctuationExtendPastTextExtents`.
 #[must_use]
 pub fn allow_punctuation_extend_past_text_extents(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowPunctuationExtendPastTextExtents {
     let mut node = super::AllowPunctuationExtendPastTextExtents::default();
     let mut reader = markup::Reader::new(
@@ -520,9 +506,7 @@ pub fn allow_punctuation_extend_past_text_extents(
 
 /// Read `w:saveInvalidXml` into a `AllowSavingDocumentAsXMLFile`.
 #[must_use]
-pub fn allow_saving_document_as_xml_file(
-    element: &xml::element::Element,
-) -> super::AllowSavingDocumentAsXMLFile {
+pub fn allow_saving_document_as_xml_file(element: &Element) -> super::AllowSavingDocumentAsXMLFile {
     let mut node = super::AllowSavingDocumentAsXMLFile::default();
     let mut reader = markup::Reader::new(element, &super::ALLOW_SAVING_DOCUMENT_AS_XML_FILE_SHAPE);
     for (index, field) in &mut reader {
@@ -537,7 +521,7 @@ pub fn allow_saving_document_as_xml_file(
 /// Read `w:layoutTableRowsApart` into a `AllowTableRowsToWrapInlineObjectsIndependently`.
 #[must_use]
 pub fn allow_table_rows_to_wrap_inline_objects_independently(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowTableRowsToWrapInlineObjectsIndependently {
     let mut node = super::AllowTableRowsToWrapInlineObjectsIndependently::default();
     let mut reader = markup::Reader::new(
@@ -556,7 +540,7 @@ pub fn allow_table_rows_to_wrap_inline_objects_independently(
 /// Read `w:growAutofit` into a `AllowTablesToAutoFitIntoPageMargins`.
 #[must_use]
 pub fn allow_tables_to_auto_fit_into_page_margins(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AllowTablesToAutoFitIntoPageMargins {
     let mut node = super::AllowTablesToAutoFitIntoPageMargins::default();
     let mut reader = markup::Reader::new(
@@ -574,7 +558,7 @@ pub fn allow_tables_to_auto_fit_into_page_margins(
 
 /// Read `w:altName` into a `AlternateNamesForFont`.
 #[must_use]
-pub fn alternate_names_for_font(element: &xml::element::Element) -> super::AlternateNamesForFont {
+pub fn alternate_names_for_font(element: &Element) -> super::AlternateNamesForFont {
     let mut node = super::AlternateNamesForFont::default();
     let mut reader = markup::Reader::new(element, &super::ALTERNATE_NAMES_FOR_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -588,7 +572,7 @@ pub fn alternate_names_for_font(element: &xml::element::Element) -> super::Alter
 
 /// Read `w:aliases` into a `AlternateStyleNames`.
 #[must_use]
-pub fn alternate_style_names(element: &xml::element::Element) -> super::AlternateStyleNames {
+pub fn alternate_style_names(element: &Element) -> super::AlternateStyleNames {
     let mut node = super::AlternateStyleNames::default();
     let mut reader = markup::Reader::new(element, &super::ALTERNATE_STYLE_NAMES_SHAPE);
     for (index, field) in &mut reader {
@@ -602,9 +586,7 @@ pub fn alternate_style_names(element: &xml::element::Element) -> super::Alternat
 
 /// Read `w:alwaysMergeEmptyNamespace` into a `AlwaysMergeEmptyNamespace`.
 #[must_use]
-pub fn always_merge_empty_namespace(
-    element: &xml::element::Element,
-) -> super::AlwaysMergeEmptyNamespace {
+pub fn always_merge_empty_namespace(element: &Element) -> super::AlwaysMergeEmptyNamespace {
     let mut node = super::AlwaysMergeEmptyNamespace::default();
     let mut reader = markup::Reader::new(element, &super::ALWAYS_MERGE_EMPTY_NAMESPACE_SHAPE);
     for (index, field) in &mut reader {
@@ -618,9 +600,7 @@ pub fn always_merge_empty_namespace(
 
 /// Read `w:alwaysShowPlaceholderText` into a `AlwaysShowPlaceholderText`.
 #[must_use]
-pub fn always_show_placeholder_text(
-    element: &xml::element::Element,
-) -> super::AlwaysShowPlaceholderText {
+pub fn always_show_placeholder_text(element: &Element) -> super::AlwaysShowPlaceholderText {
     let mut node = super::AlwaysShowPlaceholderText::default();
     let mut reader = markup::Reader::new(element, &super::ALWAYS_SHOW_PLACEHOLDER_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -635,7 +615,7 @@ pub fn always_show_placeholder_text(
 /// Read `w:displayHangulFixedWidth` into a `AlwaysUseFixedWidthForHangulCharacters`.
 #[must_use]
 pub fn always_use_fixed_width_for_hangul_characters(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AlwaysUseFixedWidthForHangulCharacters {
     let mut node = super::AlwaysUseFixedWidthForHangulCharacters::default();
     let mut reader = markup::Reader::new(
@@ -654,7 +634,7 @@ pub fn always_use_fixed_width_for_hangul_characters(
 /// Read `w:altChunk` into a `AnchorForImportedExternalContent`.
 #[must_use]
 pub fn anchor_for_imported_external_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AnchorForImportedExternalContent {
     let mut node = super::AnchorForImportedExternalContent::default();
     let mut reader =
@@ -672,9 +652,7 @@ pub fn anchor_for_imported_external_content(
 
 /// Read `w:subDoc` into a `AnchorForSubdocumentLocation`.
 #[must_use]
-pub fn anchor_for_subdocument_location(
-    element: &xml::element::Element,
-) -> super::AnchorForSubdocumentLocation {
+pub fn anchor_for_subdocument_location(element: &Element) -> super::AnchorForSubdocumentLocation {
     let mut node = super::AnchorForSubdocumentLocation::default();
     let mut reader = markup::Reader::new(element, &super::ANCHOR_FOR_SUBDOCUMENT_LOCATION_SHAPE);
     for (index, field) in &mut reader {
@@ -688,7 +666,7 @@ pub fn anchor_for_subdocument_location(
 
 /// Read `w:effect` into a `AnimatedTextEffect`.
 #[must_use]
-pub fn animated_text_effect(element: &xml::element::Element) -> super::AnimatedTextEffect {
+pub fn animated_text_effect(element: &Element) -> super::AnimatedTextEffect {
     let mut node = super::AnimatedTextEffect::default();
     let mut reader = markup::Reader::new(element, &super::ANIMATED_TEXT_EFFECT_SHAPE);
     for (index, field) in &mut reader {
@@ -702,7 +680,7 @@ pub fn animated_text_effect(element: &xml::element::Element) -> super::AnimatedT
 
 /// Read `w:helpText` into a `AssociatedHelpText`.
 #[must_use]
-pub fn associated_help_text(element: &xml::element::Element) -> super::AssociatedHelpText {
+pub fn associated_help_text(element: &Element) -> super::AssociatedHelpText {
     let mut node = super::AssociatedHelpText::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_HELP_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -718,7 +696,7 @@ pub fn associated_help_text(element: &xml::element::Element) -> super::Associate
 
 /// Read `w:divId` into a `AssociatedHTMLDivID`.
 #[must_use]
-pub fn associated_html_div_id(element: &xml::element::Element) -> super::AssociatedHTMLDivID {
+pub fn associated_html_div_id(element: &Element) -> super::AssociatedHTMLDivID {
     let mut node = super::AssociatedHTMLDivID::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_HTML_DIV_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -732,7 +710,7 @@ pub fn associated_html_div_id(element: &xml::element::Element) -> super::Associa
 
 /// Read `w:outlineLvl` into a `AssociatedOutlineLevel`.
 #[must_use]
-pub fn associated_outline_level(element: &xml::element::Element) -> super::AssociatedOutlineLevel {
+pub fn associated_outline_level(element: &Element) -> super::AssociatedOutlineLevel {
     let mut node = super::AssociatedOutlineLevel::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_OUTLINE_LEVEL_SHAPE);
     for (index, field) in &mut reader {
@@ -746,9 +724,7 @@ pub fn associated_outline_level(element: &xml::element::Element) -> super::Assoc
 
 /// Read `w:style` into a `AssociatedParagraphStyleName`.
 #[must_use]
-pub fn associated_paragraph_style_name(
-    element: &xml::element::Element,
-) -> super::AssociatedParagraphStyleName {
+pub fn associated_paragraph_style_name(element: &Element) -> super::AssociatedParagraphStyleName {
     let mut node = super::AssociatedParagraphStyleName::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_PARAGRAPH_STYLE_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -762,7 +738,7 @@ pub fn associated_paragraph_style_name(
 
 /// Read `w:statusText` into a `AssociatedStatusText`.
 #[must_use]
-pub fn associated_status_text(element: &xml::element::Element) -> super::AssociatedStatusText {
+pub fn associated_status_text(element: &Element) -> super::AssociatedStatusText {
     let mut node = super::AssociatedStatusText::default();
     let mut reader = markup::Reader::new(element, &super::ASSOCIATED_STATUS_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -778,9 +754,7 @@ pub fn associated_status_text(element: &xml::element::Element) -> super::Associa
 
 /// Read `w:attachedSchema` into a `AttachedCustomXMLSchema`.
 #[must_use]
-pub fn attached_custom_xml_schema(
-    element: &xml::element::Element,
-) -> super::AttachedCustomXMLSchema {
+pub fn attached_custom_xml_schema(element: &Element) -> super::AttachedCustomXMLSchema {
     let mut node = super::AttachedCustomXMLSchema::default();
     let mut reader = markup::Reader::new(element, &super::ATTACHED_CUSTOM_XML_SCHEMA_SHAPE);
     for (index, field) in &mut reader {
@@ -794,9 +768,7 @@ pub fn attached_custom_xml_schema(
 
 /// Read `w:attachedTemplate` into a `AttachedDocumentTemplate`.
 #[must_use]
-pub fn attached_document_template(
-    element: &xml::element::Element,
-) -> super::AttachedDocumentTemplate {
+pub fn attached_document_template(element: &Element) -> super::AttachedDocumentTemplate {
     let mut node = super::AttachedDocumentTemplate::default();
     let mut reader = markup::Reader::new(element, &super::ATTACHED_DOCUMENT_TEMPLATE_SHAPE);
     for (index, field) in &mut reader {
@@ -810,7 +782,7 @@ pub fn attached_document_template(
 
 /// Read `w:autoSpaceLikeWord95` into a `AutoSpaceLikeWord95`.
 #[must_use]
-pub fn auto_space_like_word95(element: &xml::element::Element) -> super::AutoSpaceLikeWord95 {
+pub fn auto_space_like_word95(element: &Element) -> super::AutoSpaceLikeWord95 {
     let mut node = super::AutoSpaceLikeWord95::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_SPACE_LIKE_WORD95_SHAPE);
     for (index, field) in &mut reader {
@@ -824,9 +796,7 @@ pub fn auto_space_like_word95(element: &xml::element::Element) -> super::AutoSpa
 
 /// Read `w:autofitToFirstFixedWidthCell` into a `AutofitToFirstFixedWidthCell`.
 #[must_use]
-pub fn autofit_to_first_fixed_width_cell(
-    element: &xml::element::Element,
-) -> super::AutofitToFirstFixedWidthCell {
+pub fn autofit_to_first_fixed_width_cell(element: &Element) -> super::AutofitToFirstFixedWidthCell {
     let mut node = super::AutofitToFirstFixedWidthCell::default();
     let mut reader = markup::Reader::new(element, &super::AUTOFIT_TO_FIRST_FIXED_WIDTH_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -840,9 +810,7 @@ pub fn autofit_to_first_fixed_width_cell(
 
 /// Read `w:autoCaptions` into a `AutomaticCaptioningSettings`.
 #[must_use]
-pub fn automatic_captioning_settings(
-    element: &xml::element::Element,
-) -> super::AutomaticCaptioningSettings {
+pub fn automatic_captioning_settings(element: &Element) -> super::AutomaticCaptioningSettings {
     let mut node = super::AutomaticCaptioningSettings::default();
     let mut reader = markup::Reader::new(element, &super::AUTOMATIC_CAPTIONING_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -857,7 +825,7 @@ pub fn automatic_captioning_settings(
 /// Read `w:adjustRightInd` into a `AutomaticallyAdjustRightIndent`.
 #[must_use]
 pub fn automatically_adjust_right_indent(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AutomaticallyAdjustRightIndent {
     let mut node = super::AutomaticallyAdjustRightIndent::default();
     let mut reader = markup::Reader::new(element, &super::AUTOMATICALLY_ADJUST_RIGHT_INDENT_SHAPE);
@@ -873,7 +841,7 @@ pub fn automatically_adjust_right_indent(
 /// Read `w:autoHyphenation` into a `AutomaticallyHyphenateDocumentContentsWhenDisplayed`.
 #[must_use]
 pub fn automatically_hyphenate_document_contents_when_displayed(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AutomaticallyHyphenateDocumentContentsWhenDisplayed {
     let mut node = super::AutomaticallyHyphenateDocumentContentsWhenDisplayed::default();
     let mut reader = markup::Reader::new(
@@ -892,7 +860,7 @@ pub fn automatically_hyphenate_document_contents_when_displayed(
 /// Read `w:autoRedefine` into a `AutomaticallyMergeUserFormatting`.
 #[must_use]
 pub fn automatically_merge_user_formatting(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AutomaticallyMergeUserFormatting {
     let mut node = super::AutomaticallyMergeUserFormatting::default();
     let mut reader =
@@ -909,7 +877,7 @@ pub fn automatically_merge_user_formatting(
 /// Read `w:updateFields` into a `AutomaticallyRecalculateFieldsOnOpen`.
 #[must_use]
 pub fn automatically_recalculate_fields_on_open(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AutomaticallyRecalculateFieldsOnOpen {
     let mut node = super::AutomaticallyRecalculateFieldsOnOpen::default();
     let mut reader = markup::Reader::new(
@@ -927,9 +895,7 @@ pub fn automatically_recalculate_fields_on_open(
 
 /// Read `w:sizeAuto` into a `AutomaticallySizeFormField`.
 #[must_use]
-pub fn automatically_size_form_field(
-    element: &xml::element::Element,
-) -> super::AutomaticallySizeFormField {
+pub fn automatically_size_form_field(element: &Element) -> super::AutomaticallySizeFormField {
     let mut node = super::AutomaticallySizeFormField::default();
     let mut reader = markup::Reader::new(element, &super::AUTOMATICALLY_SIZE_FORM_FIELD_SHAPE);
     for (index, field) in &mut reader {
@@ -944,7 +910,7 @@ pub fn automatically_size_form_field(
 /// Read `w:linkStyles` into a `AutomaticallyUpdateStylesFromDocumentTemplate`.
 #[must_use]
 pub fn automatically_update_styles_from_document_template(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::AutomaticallyUpdateStylesFromDocumentTemplate {
     let mut node = super::AutomaticallyUpdateStylesFromDocumentTemplate::default();
     let mut reader = markup::Reader::new(
@@ -963,7 +929,7 @@ pub fn automatically_update_styles_from_document_template(
 /// Read `w:balanceSingleByteDoubleByteWidth` into a `BalanceSingleByteDoubleByteWidth`.
 #[must_use]
 pub fn balance_single_byte_double_byte_width(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BalanceSingleByteDoubleByteWidth {
     let mut node = super::BalanceSingleByteDoubleByteWidth::default();
     let mut reader =
@@ -980,7 +946,7 @@ pub fn balance_single_byte_double_byte_width(
 /// Read `w:bibliography` into a `BibliographyStructuredDocumentTag`.
 #[must_use]
 pub fn bibliography_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BibliographyStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::BIBLIOGRAPHY_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::BibliographyStructuredDocumentTag {
@@ -990,9 +956,7 @@ pub fn bibliography_structured_document_tag(
 
 /// Read `w:dir` into a `BidirectionalEmbeddingLevel`.
 #[must_use]
-pub fn bidirectional_embedding_level(
-    element: &xml::element::Element,
-) -> super::BidirectionalEmbeddingLevel {
+pub fn bidirectional_embedding_level(element: &Element) -> super::BidirectionalEmbeddingLevel {
     let mut node = super::BidirectionalEmbeddingLevel::default();
     let mut reader = markup::Reader::new(element, &super::BIDIRECTIONAL_EMBEDDING_LEVEL_SHAPE);
     for (index, field) in &mut reader {
@@ -1008,7 +972,7 @@ pub fn bidirectional_embedding_level(
 
 /// Read `w:bdo` into a `BidirectionalOverride`.
 #[must_use]
-pub fn bidirectional_override(element: &xml::element::Element) -> super::BidirectionalOverride {
+pub fn bidirectional_override(element: &Element) -> super::BidirectionalOverride {
     let mut node = super::BidirectionalOverride::default();
     let mut reader = markup::Reader::new(element, &super::BIDIRECTIONAL_OVERRIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -1024,15 +988,13 @@ pub fn bidirectional_override(element: &xml::element::Element) -> super::Bidirec
 
 /// Read one item of `BlockContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn block(element: &xml::element::Element) -> super::BlockContent {
+pub fn block(element: &Element) -> super::BlockContent {
     markup::read(element)
 }
 
 /// Read `w:customXml` into a `BlockLevelCustomXMLElement`.
 #[must_use]
-pub fn block_level_custom_xml_element(
-    element: &xml::element::Element,
-) -> super::BlockLevelCustomXMLElement {
+pub fn block_level_custom_xml_element(element: &Element) -> super::BlockLevelCustomXMLElement {
     let mut node = super::BlockLevelCustomXMLElement::default();
     let mut reader = markup::Reader::new(element, &super::BLOCK_LEVEL_CUSTOM_XML_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1051,7 +1013,7 @@ pub fn block_level_custom_xml_element(
 /// Read `w:sdt` into a `BlockLevelStructuredDocumentTag`.
 #[must_use]
 pub fn block_level_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BlockLevelStructuredDocumentTag {
     let mut node = super::BlockLevelStructuredDocumentTag::default();
     let mut reader =
@@ -1075,7 +1037,7 @@ pub fn block_level_structured_document_tag(
 /// Read `w:sdtContent` into a `BlockLevelStructuredDocumentTagContent`.
 #[must_use]
 pub fn block_level_structured_document_tag_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BlockLevelStructuredDocumentTagContent {
     let mut node = super::BlockLevelStructuredDocumentTagContent::default();
     let mut reader = markup::Reader::new(
@@ -1093,7 +1055,7 @@ pub fn block_level_structured_document_tag_content(
 
 /// Read `w:b` into a `Bold`.
 #[must_use]
-pub fn bold(element: &xml::element::Element) -> super::Bold {
+pub fn bold(element: &Element) -> super::Bold {
     let mut node = super::Bold::default();
     let mut reader = markup::Reader::new(element, &super::BOLD_SHAPE);
     for (index, field) in &mut reader {
@@ -1107,9 +1069,7 @@ pub fn bold(element: &xml::element::Element) -> super::Bold {
 
 /// Read `w:embedBoldItalic` into a `BoldItalicFontStyleEmbedding`.
 #[must_use]
-pub fn bold_italic_font_style_embedding(
-    element: &xml::element::Element,
-) -> super::BoldItalicFontStyleEmbedding {
+pub fn bold_italic_font_style_embedding(element: &Element) -> super::BoldItalicFontStyleEmbedding {
     let mut node = super::BoldItalicFontStyleEmbedding::default();
     let mut reader = markup::Reader::new(element, &super::BOLD_ITALIC_FONT_STYLE_EMBEDDING_SHAPE);
     for (index, field) in &mut reader {
@@ -1126,9 +1086,7 @@ pub fn bold_italic_font_style_embedding(
 
 /// Read `w:embedBold` into a `BoldStyleFontStyleEmbedding`.
 #[must_use]
-pub fn bold_style_font_style_embedding(
-    element: &xml::element::Element,
-) -> super::BoldStyleFontStyleEmbedding {
+pub fn bold_style_font_style_embedding(element: &Element) -> super::BoldStyleFontStyleEmbedding {
     let mut node = super::BoldStyleFontStyleEmbedding::default();
     let mut reader = markup::Reader::new(element, &super::BOLD_STYLE_FONT_STYLE_EMBEDDING_SHAPE);
     for (index, field) in &mut reader {
@@ -1145,7 +1103,7 @@ pub fn bold_style_font_style_embedding(
 
 /// Read `w:bookFoldPrinting` into a `BookFoldPrinting`.
 #[must_use]
-pub fn book_fold_printing(element: &xml::element::Element) -> super::BookFoldPrinting {
+pub fn book_fold_printing(element: &Element) -> super::BookFoldPrinting {
     let mut node = super::BookFoldPrinting::default();
     let mut reader = markup::Reader::new(element, &super::BOOK_FOLD_PRINTING_SHAPE);
     for (index, field) in &mut reader {
@@ -1159,7 +1117,7 @@ pub fn book_fold_printing(element: &xml::element::Element) -> super::BookFoldPri
 
 /// Read `w:bookmarkEnd` into a `BookmarkEnd`.
 #[must_use]
-pub fn bookmark_end(element: &xml::element::Element) -> super::BookmarkEnd {
+pub fn bookmark_end(element: &Element) -> super::BookmarkEnd {
     let mut node = super::BookmarkEnd::default();
     let mut reader = markup::Reader::new(element, &super::BOOKMARK_END_SHAPE);
     for (index, field) in &mut reader {
@@ -1175,7 +1133,7 @@ pub fn bookmark_end(element: &xml::element::Element) -> super::BookmarkEnd {
 
 /// Read `w:bookmarkStart` into a `BookmarkStart`.
 #[must_use]
-pub fn bookmark_start(element: &xml::element::Element) -> super::BookmarkStart {
+pub fn bookmark_start(element: &Element) -> super::BookmarkStart {
     let mut node = super::BookmarkStart::default();
     let mut reader = markup::Reader::new(element, &super::BOOKMARK_START_SHAPE);
     for (index, field) in &mut reader {
@@ -1194,7 +1152,7 @@ pub fn bookmark_start(element: &xml::element::Element) -> super::BookmarkStart {
 
 /// Read `w:bottom` into a `BottomBorder`.
 #[must_use]
-pub fn bottom_border(element: &xml::element::Element) -> super::BottomBorder {
+pub fn bottom_border(element: &Element) -> super::BottomBorder {
     let mut node = super::BottomBorder::default();
     let mut reader = markup::Reader::new(element, &super::BOTTOM_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -1220,9 +1178,7 @@ pub fn bottom_border(element: &xml::element::Element) -> super::BottomBorder {
 
 /// Read `w:marBottom` into a `BottomMarginForHTMLDiv`.
 #[must_use]
-pub fn bottom_margin_for_html_div(
-    element: &xml::element::Element,
-) -> super::BottomMarginForHTMLDiv {
+pub fn bottom_margin_for_html_div(element: &Element) -> super::BottomMarginForHTMLDiv {
     let mut node = super::BottomMarginForHTMLDiv::default();
     let mut reader = markup::Reader::new(element, &super::BOTTOM_MARGIN_FOR_HTML_DIV_SHAPE);
     for (index, field) in &mut reader {
@@ -1236,7 +1192,7 @@ pub fn bottom_margin_for_html_div(
 
 /// Read `w:br` into a `Break`.
 #[must_use]
-pub fn r#break(element: &xml::element::Element) -> super::Break {
+pub fn r#break(element: &Element) -> super::Break {
     let mut node = super::Break::default();
     let mut reader = markup::Reader::new(element, &super::BREAK_SHAPE);
     for (index, field) in &mut reader {
@@ -1252,7 +1208,7 @@ pub fn r#break(element: &xml::element::Element) -> super::Break {
 
 /// Read `w:docPartUnique` into a `BuiltInDocumentPart`.
 #[must_use]
-pub fn built_in_document_part(element: &xml::element::Element) -> super::BuiltInDocumentPart {
+pub fn built_in_document_part(element: &Element) -> super::BuiltInDocumentPart {
     let mut node = super::BuiltInDocumentPart::default();
     let mut reader = markup::Reader::new(element, &super::BUILT_IN_DOCUMENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -1267,7 +1223,7 @@ pub fn built_in_document_part(element: &xml::element::Element) -> super::BuiltIn
 /// Read `w:docPartObj` into a `BuiltInDocumentPartStructuredDocumentTag`.
 #[must_use]
 pub fn built_in_document_part_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::BuiltInDocumentPartStructuredDocumentTag {
     let mut node = super::BuiltInDocumentPartStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(
@@ -1288,7 +1244,7 @@ pub fn built_in_document_part_structured_document_tag(
 
 /// Read `w:captions` into a `CaptionSettings`.
 #[must_use]
-pub fn caption_settings(element: &xml::element::Element) -> super::CaptionSettings {
+pub fn caption_settings(element: &Element) -> super::CaptionSettings {
     let mut node = super::CaptionSettings::default();
     let mut reader = markup::Reader::new(element, &super::CAPTION_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -1304,7 +1260,7 @@ pub fn caption_settings(element: &xml::element::Element) -> super::CaptionSettin
 
 /// Read `w:cr` into a `CarriageReturn`.
 #[must_use]
-pub fn carriage_return(element: &xml::element::Element) -> super::CarriageReturn {
+pub fn carriage_return(element: &Element) -> super::CarriageReturn {
     let reader = markup::Reader::new(element, &super::CARRIAGE_RETURN_SHAPE);
     super::CarriageReturn {
         unknown: reader.finish(),
@@ -1313,9 +1269,7 @@ pub fn carriage_return(element: &xml::element::Element) -> super::CarriageReturn
 
 /// Read `w:customXml` into a `CellLevelCustomXMLElement`.
 #[must_use]
-pub fn cell_level_custom_xml_element(
-    element: &xml::element::Element,
-) -> super::CellLevelCustomXMLElement {
+pub fn cell_level_custom_xml_element(element: &Element) -> super::CellLevelCustomXMLElement {
     let mut node = super::CellLevelCustomXMLElement::default();
     let mut reader = markup::Reader::new(element, &super::CELL_LEVEL_CUSTOM_XML_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1334,7 +1288,7 @@ pub fn cell_level_custom_xml_element(
 /// Read `w:sdt` into a `CellLevelStructuredDocumentTag`.
 #[must_use]
 pub fn cell_level_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CellLevelStructuredDocumentTag {
     let mut node = super::CellLevelStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(element, &super::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -1357,7 +1311,7 @@ pub fn cell_level_structured_document_tag(
 /// Read `w:sdtContent` into a `CellLevelStructuredDocumentTagContent`.
 #[must_use]
 pub fn cell_level_structured_document_tag_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CellLevelStructuredDocumentTagContent {
     let mut node = super::CellLevelStructuredDocumentTagContent::default();
     let mut reader = markup::Reader::new(
@@ -1375,14 +1329,14 @@ pub fn cell_level_structured_document_tag_content(
 
 /// Read one item of `CellMarkupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn cell_markup(element: &xml::element::Element) -> super::CellMarkupContent {
+pub fn cell_markup(element: &Element) -> super::CellMarkupContent {
     markup::read(element)
 }
 
 /// Read `w:characterSpacingControl` into a `CharacterLevelWhitespaceCompression`.
 #[must_use]
 pub fn character_level_whitespace_compression(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CharacterLevelWhitespaceCompression {
     let mut node = super::CharacterLevelWhitespaceCompression::default();
     let mut reader = markup::Reader::new(
@@ -1400,9 +1354,7 @@ pub fn character_level_whitespace_compression(
 
 /// Read `w:charset` into a `CharacterSetSupportedByFont`.
 #[must_use]
-pub fn character_set_supported_by_font(
-    element: &xml::element::Element,
-) -> super::CharacterSetSupportedByFont {
+pub fn character_set_supported_by_font(element: &Element) -> super::CharacterSetSupportedByFont {
     let mut node = super::CharacterSetSupportedByFont::default();
     let mut reader = markup::Reader::new(element, &super::CHARACTER_SET_SUPPORTED_BY_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -1418,9 +1370,7 @@ pub fn character_set_supported_by_font(
 
 /// Read `w:spacing` into a `CharacterSpacingAdjustment`.
 #[must_use]
-pub fn character_spacing_adjustment(
-    element: &xml::element::Element,
-) -> super::CharacterSpacingAdjustment {
+pub fn character_spacing_adjustment(element: &Element) -> super::CharacterSpacingAdjustment {
     let mut node = super::CharacterSpacingAdjustment::default();
     let mut reader = markup::Reader::new(element, &super::CHARACTER_SPACING_ADJUSTMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1435,7 +1385,7 @@ pub fn character_spacing_adjustment(
 /// Read `w:noLineBreaksBefore` into a `CharactersWhichCannotBeginALine`.
 #[must_use]
 pub fn characters_which_cannot_begin_a_line(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CharactersWhichCannotBeginALine {
     let mut node = super::CharactersWhichCannotBeginALine::default();
     let mut reader =
@@ -1454,7 +1404,7 @@ pub fn characters_which_cannot_begin_a_line(
 /// Read `w:noLineBreaksAfter` into a `CharactersWhichCannotEndALine`.
 #[must_use]
 pub fn characters_which_cannot_end_a_line(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CharactersWhichCannotEndALine {
     let mut node = super::CharactersWhichCannotEndALine::default();
     let mut reader = markup::Reader::new(element, &super::CHARACTERS_WHICH_CANNOT_END_A_LINE_SHAPE);
@@ -1471,9 +1421,7 @@ pub fn characters_which_cannot_end_a_line(
 
 /// Read `w:checkBox` into a `CheckboxFormFieldProperties`.
 #[must_use]
-pub fn checkbox_form_field_properties(
-    element: &xml::element::Element,
-) -> super::CheckboxFormFieldProperties {
+pub fn checkbox_form_field_properties(element: &Element) -> super::CheckboxFormFieldProperties {
     let mut node = super::CheckboxFormFieldProperties::default();
     let mut reader = markup::Reader::new(element, &super::CHECKBOX_FORM_FIELD_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1492,14 +1440,14 @@ pub fn checkbox_form_field_properties(
 /// `Other`.
 #[must_use]
 pub fn checkbox_form_field_properties_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CheckboxFormFieldPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:size` into a `CheckboxFormFieldSize`.
 #[must_use]
-pub fn checkbox_form_field_size(element: &xml::element::Element) -> super::CheckboxFormFieldSize {
+pub fn checkbox_form_field_size(element: &Element) -> super::CheckboxFormFieldSize {
     let mut node = super::CheckboxFormFieldSize::default();
     let mut reader = markup::Reader::new(element, &super::CHECKBOX_FORM_FIELD_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -1513,7 +1461,7 @@ pub fn checkbox_form_field_size(element: &xml::element::Element) -> super::Check
 
 /// Read `w:checked` into a `CheckboxFormFieldState`.
 #[must_use]
-pub fn checkbox_form_field_state(element: &xml::element::Element) -> super::CheckboxFormFieldState {
+pub fn checkbox_form_field_state(element: &Element) -> super::CheckboxFormFieldState {
     let mut node = super::CheckboxFormFieldState::default();
     let mut reader = markup::Reader::new(element, &super::CHECKBOX_FORM_FIELD_STATE_SHAPE);
     for (index, field) in &mut reader {
@@ -1527,7 +1475,7 @@ pub fn checkbox_form_field_state(element: &xml::element::Element) -> super::Chec
 
 /// Read `w:divsChild` into a `ChildDivElements`.
 #[must_use]
-pub fn child_div_elements(element: &xml::element::Element) -> super::ChildDivElements {
+pub fn child_div_elements(element: &Element) -> super::ChildDivElements {
     let mut node = super::ChildDivElements::default();
     let mut reader = markup::Reader::new(element, &super::CHILD_DIV_ELEMENTS_SHAPE);
     for (index, field) in &mut reader {
@@ -1541,9 +1489,7 @@ pub fn child_div_elements(element: &xml::element::Element) -> super::ChildDivEle
 
 /// Read `w:citation` into a `CitationStructuredDocumentTag`.
 #[must_use]
-pub fn citation_structured_document_tag(
-    element: &xml::element::Element,
-) -> super::CitationStructuredDocumentTag {
+pub fn citation_structured_document_tag(element: &Element) -> super::CitationStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::CITATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::CitationStructuredDocumentTag {
         unknown: reader.finish(),
@@ -1552,7 +1498,7 @@ pub fn citation_structured_document_tag(
 
 /// Read `w:clickAndTypeStyle` into a `ClickAndTypeStyle`.
 #[must_use]
-pub fn click_and_type_style(element: &xml::element::Element) -> super::ClickAndTypeStyle {
+pub fn click_and_type_style(element: &Element) -> super::ClickAndTypeStyle {
     let mut node = super::ClickAndTypeStyle::default();
     let mut reader = markup::Reader::new(element, &super::CLICK_AND_TYPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1566,9 +1512,7 @@ pub fn click_and_type_style(element: &xml::element::Element) -> super::ClickAndT
 
 /// Read `w:addressFieldName` into a `ColumnContainingEMailAddress`.
 #[must_use]
-pub fn column_containing_e_mail_address(
-    element: &xml::element::Element,
-) -> super::ColumnContainingEMailAddress {
+pub fn column_containing_e_mail_address(element: &Element) -> super::ColumnContainingEMailAddress {
     let mut node = super::ColumnContainingEMailAddress::default();
     let mut reader = markup::Reader::new(element, &super::COLUMN_CONTAINING_E_MAIL_ADDRESS_SHAPE);
     for (index, field) in &mut reader {
@@ -1582,7 +1526,7 @@ pub fn column_containing_e_mail_address(
 
 /// Read `w:cols` into a `ColumnDefinitions`.
 #[must_use]
-pub fn column_definitions(element: &xml::element::Element) -> super::ColumnDefinitions {
+pub fn column_definitions(element: &Element) -> super::ColumnDefinitions {
     let mut node = super::ColumnDefinitions::default();
     let mut reader = markup::Reader::new(element, &super::COLUMN_DEFINITIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -1601,9 +1545,7 @@ pub fn column_definitions(element: &xml::element::Element) -> super::ColumnDefin
 
 /// Read `w:colDelim` into a `ColumnDelimiterForDataSource`.
 #[must_use]
-pub fn column_delimiter_for_data_source(
-    element: &xml::element::Element,
-) -> super::ColumnDelimiterForDataSource {
+pub fn column_delimiter_for_data_source(element: &Element) -> super::ColumnDelimiterForDataSource {
     let mut node = super::ColumnDelimiterForDataSource::default();
     let mut reader = markup::Reader::new(element, &super::COLUMN_DELIMITER_FOR_DATA_SOURCE_SHAPE);
     for (index, field) in &mut reader {
@@ -1617,7 +1559,7 @@ pub fn column_delimiter_for_data_source(
 
 /// Read `w:listItem` into a `ComboBoxListItem`.
 #[must_use]
-pub fn combo_box_list_item(element: &xml::element::Element) -> super::ComboBoxListItem {
+pub fn combo_box_list_item(element: &Element) -> super::ComboBoxListItem {
     let mut node = super::ComboBoxListItem::default();
     let mut reader = markup::Reader::new(element, &super::COMBO_BOX_LIST_ITEM_SHAPE);
     for (index, field) in &mut reader {
@@ -1634,7 +1576,7 @@ pub fn combo_box_list_item(element: &xml::element::Element) -> super::ComboBoxLi
 /// Read `w:comboBox` into a `ComboBoxStructuredDocumentTag`.
 #[must_use]
 pub fn combo_box_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ComboBoxStructuredDocumentTag {
     let mut node = super::ComboBoxStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(element, &super::COMBO_BOX_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -1651,7 +1593,7 @@ pub fn combo_box_structured_document_tag(
 
 /// Read `w:commentRangeEnd` into a `CommentAnchorRangeEnd`.
 #[must_use]
-pub fn comment_anchor_range_end(element: &xml::element::Element) -> super::CommentAnchorRangeEnd {
+pub fn comment_anchor_range_end(element: &Element) -> super::CommentAnchorRangeEnd {
     let mut node = super::CommentAnchorRangeEnd::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_ANCHOR_RANGE_END_SHAPE);
     for (index, field) in &mut reader {
@@ -1667,9 +1609,7 @@ pub fn comment_anchor_range_end(element: &xml::element::Element) -> super::Comme
 
 /// Read `w:commentRangeStart` into a `CommentAnchorRangeStart`.
 #[must_use]
-pub fn comment_anchor_range_start(
-    element: &xml::element::Element,
-) -> super::CommentAnchorRangeStart {
+pub fn comment_anchor_range_start(element: &Element) -> super::CommentAnchorRangeStart {
     let mut node = super::CommentAnchorRangeStart::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_ANCHOR_RANGE_START_SHAPE);
     for (index, field) in &mut reader {
@@ -1685,7 +1625,7 @@ pub fn comment_anchor_range_start(
 
 /// Read `w:comment` into a `CommentContent`.
 #[must_use]
-pub fn comment_content(element: &xml::element::Element) -> super::CommentContent {
+pub fn comment_content(element: &Element) -> super::CommentContent {
     let mut node = super::CommentContent::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -1705,9 +1645,7 @@ pub fn comment_content(element: &xml::element::Element) -> super::CommentContent
 
 /// Read `w:commentReference` into a `CommentContentReferenceMark`.
 #[must_use]
-pub fn comment_content_reference_mark(
-    element: &xml::element::Element,
-) -> super::CommentContentReferenceMark {
+pub fn comment_content_reference_mark(element: &Element) -> super::CommentContentReferenceMark {
     let mut node = super::CommentContentReferenceMark::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_CONTENT_REFERENCE_MARK_SHAPE);
     for (index, field) in &mut reader {
@@ -1721,9 +1659,7 @@ pub fn comment_content_reference_mark(
 
 /// Read `w:annotationRef` into a `CommentInformationBlock`.
 #[must_use]
-pub fn comment_information_block(
-    element: &xml::element::Element,
-) -> super::CommentInformationBlock {
+pub fn comment_information_block(element: &Element) -> super::CommentInformationBlock {
     let reader = markup::Reader::new(element, &super::COMMENT_INFORMATION_BLOCK_SHAPE);
     super::CommentInformationBlock {
         unknown: reader.finish(),
@@ -1732,7 +1668,7 @@ pub fn comment_information_block(
 
 /// Read `w:comments` into a `CommentsCollection`.
 #[must_use]
-pub fn comments_collection(element: &xml::element::Element) -> super::CommentsCollection {
+pub fn comments_collection(element: &Element) -> super::CommentsCollection {
     let mut node = super::CommentsCollection::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_COLLECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -1746,7 +1682,7 @@ pub fn comments_collection(element: &xml::element::Element) -> super::CommentsCo
 
 /// Read `w:compat` into a `CompatibilitySettings`.
 #[must_use]
-pub fn compatibility_settings(element: &xml::element::Element) -> super::CompatibilitySettings {
+pub fn compatibility_settings(element: &Element) -> super::CompatibilitySettings {
     let mut node = super::CompatibilitySettings::default();
     let mut reader = markup::Reader::new(element, &super::COMPATIBILITY_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -1826,7 +1762,7 @@ pub fn compatibility_settings(element: &xml::element::Element) -> super::Compati
 
 /// Read `w:fldChar` into a `ComplexFieldCharacter`.
 #[must_use]
-pub fn complex_field_character(element: &xml::element::Element) -> super::ComplexFieldCharacter {
+pub fn complex_field_character(element: &Element) -> super::ComplexFieldCharacter {
     let mut node = super::ComplexFieldCharacter::default();
     let mut reader = markup::Reader::new(element, &super::COMPLEX_FIELD_CHARACTER_SHAPE);
     for (index, field) in &mut reader {
@@ -1845,15 +1781,13 @@ pub fn complex_field_character(element: &xml::element::Element) -> super::Comple
 /// Read one item of `ComplexFieldCharacterContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn complex_field_character_content(
-    element: &xml::element::Element,
-) -> super::ComplexFieldCharacterContent {
+pub fn complex_field_character_content(element: &Element) -> super::ComplexFieldCharacterContent {
     markup::read(element)
 }
 
 /// Read `w:bCs` into a `ComplexScriptBold`.
 #[must_use]
-pub fn complex_script_bold(element: &xml::element::Element) -> super::ComplexScriptBold {
+pub fn complex_script_bold(element: &Element) -> super::ComplexScriptBold {
     let mut node = super::ComplexScriptBold::default();
     let mut reader = markup::Reader::new(element, &super::COMPLEX_SCRIPT_BOLD_SHAPE);
     for (index, field) in &mut reader {
@@ -1867,7 +1801,7 @@ pub fn complex_script_bold(element: &xml::element::Element) -> super::ComplexScr
 
 /// Read `w:szCs` into a `ComplexScriptFontSize`.
 #[must_use]
-pub fn complex_script_font_size(element: &xml::element::Element) -> super::ComplexScriptFontSize {
+pub fn complex_script_font_size(element: &Element) -> super::ComplexScriptFontSize {
     let mut node = super::ComplexScriptFontSize::default();
     let mut reader = markup::Reader::new(element, &super::COMPLEX_SCRIPT_FONT_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -1881,7 +1815,7 @@ pub fn complex_script_font_size(element: &xml::element::Element) -> super::Compl
 
 /// Read `w:iCs` into a `ComplexScriptItalics`.
 #[must_use]
-pub fn complex_script_italics(element: &xml::element::Element) -> super::ComplexScriptItalics {
+pub fn complex_script_italics(element: &Element) -> super::ComplexScriptItalics {
     let mut node = super::ComplexScriptItalics::default();
     let mut reader = markup::Reader::new(element, &super::COMPLEX_SCRIPT_ITALICS_SHAPE);
     for (index, field) in &mut reader {
@@ -1896,7 +1830,7 @@ pub fn complex_script_italics(element: &xml::element::Element) -> super::Complex
 /// Read `w:topLinePunct` into a `CompressPunctuationAtStartOfLine`.
 #[must_use]
 pub fn compress_punctuation_at_start_of_line(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CompressPunctuationAtStartOfLine {
     let mut node = super::CompressPunctuationAtStartOfLine::default();
     let mut reader =
@@ -1912,14 +1846,14 @@ pub fn compress_punctuation_at_start_of_line(
 
 /// Read one item of `ConflictChangeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn conflict_change(element: &xml::element::Element) -> super::ConflictChangeContent {
+pub fn conflict_change(element: &Element) -> super::ConflictChangeContent {
     markup::read(element)
 }
 
 /// Read `w:suff` into a `ContentBetweenNumberingSymbolAndText`.
 #[must_use]
 pub fn content_between_numbering_symbol_and_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ContentBetweenNumberingSymbolAndText {
     let mut node = super::ContentBetweenNumberingSymbolAndText::default();
     let mut reader = markup::Reader::new(
@@ -1937,19 +1871,19 @@ pub fn content_between_numbering_symbol_and_text(
 
 /// Read one item of `ContentBlockContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn content_block(element: &xml::element::Element) -> super::ContentBlockContent {
+pub fn content_block(element: &Element) -> super::ContentBlockContent {
     markup::read(element)
 }
 
 /// Read one item of `ContentCellContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn content_cell(element: &xml::element::Element) -> super::ContentCellContent {
+pub fn content_cell(element: &Element) -> super::ContentCellContent {
     markup::read(element)
 }
 
 /// Read `w:contentPart` into a `ContentPart`.
 #[must_use]
-pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
+pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = markup::Reader::new(element, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -1963,14 +1897,14 @@ pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
 
 /// Read one item of `ContentRowContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn content_row(element: &xml::element::Element) -> super::ContentRowContent {
+pub fn content_row(element: &Element) -> super::ContentRowContent {
     markup::read(element)
 }
 
 /// Read `w:docPartBody` into a `ContentsOfGlossaryDocumentEntry`.
 #[must_use]
 pub fn contents_of_glossary_document_entry(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ContentsOfGlossaryDocumentEntry {
     let mut node = super::ContentsOfGlossaryDocumentEntry::default();
     let mut reader =
@@ -1988,9 +1922,7 @@ pub fn contents_of_glossary_document_entry(
 
 /// Read `w:continuationSeparator` into a `ContinuationSeparatorMark`.
 #[must_use]
-pub fn continuation_separator_mark(
-    element: &xml::element::Element,
-) -> super::ContinuationSeparatorMark {
+pub fn continuation_separator_mark(element: &Element) -> super::ContinuationSeparatorMark {
     let reader = markup::Reader::new(element, &super::CONTINUATION_SEPARATOR_MARK_SHAPE);
     super::ContinuationSeparatorMark {
         unknown: reader.finish(),
@@ -2000,7 +1932,7 @@ pub fn continuation_separator_mark(
 /// Read `w:showingPlcHdr` into a `CurrentContentsArePlaceholderText`.
 #[must_use]
 pub fn current_contents_are_placeholder_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CurrentContentsArePlaceholderText {
     let mut node = super::CurrentContentsArePlaceholderText::default();
     let mut reader =
@@ -2016,9 +1948,7 @@ pub fn current_contents_are_placeholder_text(
 
 /// Read `w:compatSetting` into a `CustomCompatibilitySetting`.
 #[must_use]
-pub fn custom_compatibility_setting(
-    element: &xml::element::Element,
-) -> super::CustomCompatibilitySetting {
+pub fn custom_compatibility_setting(element: &Element) -> super::CustomCompatibilitySetting {
     let mut node = super::CustomCompatibilitySetting::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_COMPATIBILITY_SETTING_SHAPE);
     for (index, field) in &mut reader {
@@ -2035,7 +1965,7 @@ pub fn custom_compatibility_setting(
 
 /// Read `w:fldData` into a `CustomFieldData`.
 #[must_use]
-pub fn custom_field_data(element: &xml::element::Element) -> super::CustomFieldData {
+pub fn custom_field_data(element: &Element) -> super::CustomFieldData {
     let mut node = super::CustomFieldData::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_FIELD_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -2051,7 +1981,7 @@ pub fn custom_field_data(element: &xml::element::Element) -> super::CustomFieldD
 
 /// Read `w:tab` into a `CustomTabStop`.
 #[must_use]
-pub fn custom_tab_stop(element: &xml::element::Element) -> super::CustomTabStop {
+pub fn custom_tab_stop(element: &Element) -> super::CustomTabStop {
     let mut node = super::CustomTabStop::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_TAB_STOP_SHAPE);
     for (index, field) in &mut reader {
@@ -2068,7 +1998,7 @@ pub fn custom_tab_stop(element: &xml::element::Element) -> super::CustomTabStop 
 
 /// Read `w:attr` into a `CustomXMLAttribute`.
 #[must_use]
-pub fn custom_xml_attribute(element: &xml::element::Element) -> super::CustomXMLAttribute {
+pub fn custom_xml_attribute(element: &Element) -> super::CustomXMLAttribute {
     let mut node = super::CustomXMLAttribute::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_ATTRIBUTE_SHAPE);
     for (index, field) in &mut reader {
@@ -2086,7 +2016,7 @@ pub fn custom_xml_attribute(element: &xml::element::Element) -> super::CustomXML
 /// Read `w:storeMappedDataAs` into a `CustomXMLDataDateStorageFormat`.
 #[must_use]
 pub fn custom_xml_data_date_storage_format(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXMLDataDateStorageFormat {
     let mut node = super::CustomXMLDataDateStorageFormat::default();
     let mut reader =
@@ -2103,7 +2033,7 @@ pub fn custom_xml_data_date_storage_format(
 /// Read `w:placeholder` into a `CustomXMLElementPlaceholderText`.
 #[must_use]
 pub fn custom_xml_element_placeholder_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXMLElementPlaceholderText {
     let mut node = super::CustomXMLElementPlaceholderText::default();
     let mut reader =
@@ -2119,9 +2049,7 @@ pub fn custom_xml_element_placeholder_text(
 
 /// Read `w:customXmlPr` into a `CustomXMLElementProperties`.
 #[must_use]
-pub fn custom_xml_element_properties(
-    element: &xml::element::Element,
-) -> super::CustomXMLElementProperties {
+pub fn custom_xml_element_properties(element: &Element) -> super::CustomXMLElementProperties {
     let mut node = super::CustomXMLElementProperties::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_ELEMENT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2137,9 +2065,7 @@ pub fn custom_xml_element_properties(
 
 /// Read `w:customXmlDelRangeEnd` into a `CustomXMLMarkupDeletionEnd`.
 #[must_use]
-pub fn custom_xml_markup_deletion_end(
-    element: &xml::element::Element,
-) -> super::CustomXMLMarkupDeletionEnd {
+pub fn custom_xml_markup_deletion_end(element: &Element) -> super::CustomXMLMarkupDeletionEnd {
     let mut node = super::CustomXMLMarkupDeletionEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MARKUP_DELETION_END_SHAPE);
     for (index, field) in &mut reader {
@@ -2153,9 +2079,7 @@ pub fn custom_xml_markup_deletion_end(
 
 /// Read `w:customXmlDelRangeStart` into a `CustomXMLMarkupDeletionStart`.
 #[must_use]
-pub fn custom_xml_markup_deletion_start(
-    element: &xml::element::Element,
-) -> super::CustomXMLMarkupDeletionStart {
+pub fn custom_xml_markup_deletion_start(element: &Element) -> super::CustomXMLMarkupDeletionStart {
     let mut node = super::CustomXMLMarkupDeletionStart::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MARKUP_DELETION_START_SHAPE);
     for (index, field) in &mut reader {
@@ -2172,9 +2096,7 @@ pub fn custom_xml_markup_deletion_start(
 
 /// Read `w:customXmlInsRangeEnd` into a `CustomXMLMarkupInsertionEnd`.
 #[must_use]
-pub fn custom_xml_markup_insertion_end(
-    element: &xml::element::Element,
-) -> super::CustomXMLMarkupInsertionEnd {
+pub fn custom_xml_markup_insertion_end(element: &Element) -> super::CustomXMLMarkupInsertionEnd {
     let mut node = super::CustomXMLMarkupInsertionEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MARKUP_INSERTION_END_SHAPE);
     for (index, field) in &mut reader {
@@ -2189,7 +2111,7 @@ pub fn custom_xml_markup_insertion_end(
 /// Read `w:customXmlInsRangeStart` into a `CustomXMLMarkupInsertionStart`.
 #[must_use]
 pub fn custom_xml_markup_insertion_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXMLMarkupInsertionStart {
     let mut node = super::CustomXMLMarkupInsertionStart::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MARKUP_INSERTION_START_SHAPE);
@@ -2207,9 +2129,7 @@ pub fn custom_xml_markup_insertion_start(
 
 /// Read `w:customXmlMoveFromRangeEnd` into a `CustomXMLMarkupMoveSourceEnd`.
 #[must_use]
-pub fn custom_xml_markup_move_source_end(
-    element: &xml::element::Element,
-) -> super::CustomXMLMarkupMoveSourceEnd {
+pub fn custom_xml_markup_move_source_end(element: &Element) -> super::CustomXMLMarkupMoveSourceEnd {
     let mut node = super::CustomXMLMarkupMoveSourceEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MARKUP_MOVE_SOURCE_END_SHAPE);
     for (index, field) in &mut reader {
@@ -2224,7 +2144,7 @@ pub fn custom_xml_markup_move_source_end(
 /// Read `w:customXmlMoveFromRangeStart` into a `CustomXMLMarkupMoveSourceStart`.
 #[must_use]
 pub fn custom_xml_markup_move_source_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXMLMarkupMoveSourceStart {
     let mut node = super::CustomXMLMarkupMoveSourceStart::default();
     let mut reader =
@@ -2243,9 +2163,7 @@ pub fn custom_xml_markup_move_source_start(
 
 /// Read `w:customXmlMoveToRangeEnd` into a `CustomXmlMoveToRangeEnd`.
 #[must_use]
-pub fn custom_xml_move_to_range_end(
-    element: &xml::element::Element,
-) -> super::CustomXmlMoveToRangeEnd {
+pub fn custom_xml_move_to_range_end(element: &Element) -> super::CustomXmlMoveToRangeEnd {
     let mut node = super::CustomXmlMoveToRangeEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MOVE_TO_RANGE_END_SHAPE);
     for (index, field) in &mut reader {
@@ -2259,9 +2177,7 @@ pub fn custom_xml_move_to_range_end(
 
 /// Read `w:customXmlMoveToRangeStart` into a `CustomXmlMoveToRangeStart`.
 #[must_use]
-pub fn custom_xml_move_to_range_start(
-    element: &xml::element::Element,
-) -> super::CustomXmlMoveToRangeStart {
+pub fn custom_xml_move_to_range_start(element: &Element) -> super::CustomXmlMoveToRangeStart {
     let mut node = super::CustomXmlMoveToRangeStart::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_MOVE_TO_RANGE_START_SHAPE);
     for (index, field) in &mut reader {
@@ -2278,7 +2194,7 @@ pub fn custom_xml_move_to_range_start(
 
 /// Read `w:saveThroughXslt` into a `CustomXSLTransform`.
 #[must_use]
-pub fn custom_xsl_transform(element: &xml::element::Element) -> super::CustomXSLTransform {
+pub fn custom_xsl_transform(element: &Element) -> super::CustomXSLTransform {
     let mut node = super::CustomXSLTransform::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XSL_TRANSFORM_SHAPE);
     for (index, field) in &mut reader {
@@ -2295,7 +2211,7 @@ pub fn custom_xsl_transform(element: &xml::element::Element) -> super::CustomXSL
 /// Read `w:recipientData` into a `DataAboutSingleDataSourceRecord`.
 #[must_use]
 pub fn data_about_single_data_source_record(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DataAboutSingleDataSourceRecord {
     let mut node = super::DataAboutSingleDataSourceRecord::default();
     let mut reader =
@@ -2314,9 +2230,7 @@ pub fn data_about_single_data_source_record(
 
 /// Read `w:blockQuote` into a `DataForHTMLBlockquoteElement`.
 #[must_use]
-pub fn data_for_html_blockquote_element(
-    element: &xml::element::Element,
-) -> super::DataForHTMLBlockquoteElement {
+pub fn data_for_html_blockquote_element(element: &Element) -> super::DataForHTMLBlockquoteElement {
     let mut node = super::DataForHTMLBlockquoteElement::default();
     let mut reader = markup::Reader::new(element, &super::DATA_FOR_HTML_BLOCKQUOTE_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -2330,9 +2244,7 @@ pub fn data_for_html_blockquote_element(
 
 /// Read `w:bodyDiv` into a `DataForHTMLBodyElement`.
 #[must_use]
-pub fn data_for_html_body_element(
-    element: &xml::element::Element,
-) -> super::DataForHTMLBodyElement {
+pub fn data_for_html_body_element(element: &Element) -> super::DataForHTMLBodyElement {
     let mut node = super::DataForHTMLBodyElement::default();
     let mut reader = markup::Reader::new(element, &super::DATA_FOR_HTML_BODY_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -2346,9 +2258,7 @@ pub fn data_for_html_body_element(
 
 /// Read `w:connectString` into a `DataSourceConnectionString`.
 #[must_use]
-pub fn data_source_connection_string(
-    element: &xml::element::Element,
-) -> super::DataSourceConnectionString {
+pub fn data_source_connection_string(element: &Element) -> super::DataSourceConnectionString {
     let mut node = super::DataSourceConnectionString::default();
     let mut reader = markup::Reader::new(element, &super::DATA_SOURCE_CONNECTION_STRING_SHAPE);
     for (index, field) in &mut reader {
@@ -2362,7 +2272,7 @@ pub fn data_source_connection_string(
 
 /// Read `w:dataSource` into a `DataSourceFilePath`.
 #[must_use]
-pub fn data_source_file_path(element: &xml::element::Element) -> super::DataSourceFilePath {
+pub fn data_source_file_path(element: &Element) -> super::DataSourceFilePath {
     let mut node = super::DataSourceFilePath::default();
     let mut reader = markup::Reader::new(element, &super::DATA_SOURCE_FILE_PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -2376,7 +2286,7 @@ pub fn data_source_file_path(element: &xml::element::Element) -> super::DataSour
 
 /// Read `w:table` into a `DataSourceTableName`.
 #[must_use]
-pub fn data_source_table_name(element: &xml::element::Element) -> super::DataSourceTableName {
+pub fn data_source_table_name(element: &Element) -> super::DataSourceTableName {
     let mut node = super::DataSourceTableName::default();
     let mut reader = markup::Reader::new(element, &super::DATA_SOURCE_TABLE_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -2390,7 +2300,7 @@ pub fn data_source_table_name(element: &xml::element::Element) -> super::DataSou
 
 /// Read `w:dataType` into a `DataSourceType`.
 #[must_use]
-pub fn data_source_type(element: &xml::element::Element) -> super::DataSourceType {
+pub fn data_source_type(element: &Element) -> super::DataSourceType {
     let mut node = super::DataSourceType::default();
     let mut reader = markup::Reader::new(element, &super::DATA_SOURCE_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -2404,9 +2314,7 @@ pub fn data_source_type(element: &xml::element::Element) -> super::DataSourceTyp
 
 /// Read `w:dayLong` into a `DateBlockLongDayFormat`.
 #[must_use]
-pub fn date_block_long_day_format(
-    element: &xml::element::Element,
-) -> super::DateBlockLongDayFormat {
+pub fn date_block_long_day_format(element: &Element) -> super::DateBlockLongDayFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_LONG_DAY_FORMAT_SHAPE);
     super::DateBlockLongDayFormat {
         unknown: reader.finish(),
@@ -2415,9 +2323,7 @@ pub fn date_block_long_day_format(
 
 /// Read `w:monthLong` into a `DateBlockLongMonthFormat`.
 #[must_use]
-pub fn date_block_long_month_format(
-    element: &xml::element::Element,
-) -> super::DateBlockLongMonthFormat {
+pub fn date_block_long_month_format(element: &Element) -> super::DateBlockLongMonthFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_LONG_MONTH_FORMAT_SHAPE);
     super::DateBlockLongMonthFormat {
         unknown: reader.finish(),
@@ -2426,9 +2332,7 @@ pub fn date_block_long_month_format(
 
 /// Read `w:yearLong` into a `DateBlockLongYearFormat`.
 #[must_use]
-pub fn date_block_long_year_format(
-    element: &xml::element::Element,
-) -> super::DateBlockLongYearFormat {
+pub fn date_block_long_year_format(element: &Element) -> super::DateBlockLongYearFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_LONG_YEAR_FORMAT_SHAPE);
     super::DateBlockLongYearFormat {
         unknown: reader.finish(),
@@ -2437,9 +2341,7 @@ pub fn date_block_long_year_format(
 
 /// Read `w:dayShort` into a `DateBlockShortDayFormat`.
 #[must_use]
-pub fn date_block_short_day_format(
-    element: &xml::element::Element,
-) -> super::DateBlockShortDayFormat {
+pub fn date_block_short_day_format(element: &Element) -> super::DateBlockShortDayFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_SHORT_DAY_FORMAT_SHAPE);
     super::DateBlockShortDayFormat {
         unknown: reader.finish(),
@@ -2448,9 +2350,7 @@ pub fn date_block_short_day_format(
 
 /// Read `w:monthShort` into a `DateBlockShortMonthFormat`.
 #[must_use]
-pub fn date_block_short_month_format(
-    element: &xml::element::Element,
-) -> super::DateBlockShortMonthFormat {
+pub fn date_block_short_month_format(element: &Element) -> super::DateBlockShortMonthFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_SHORT_MONTH_FORMAT_SHAPE);
     super::DateBlockShortMonthFormat {
         unknown: reader.finish(),
@@ -2459,9 +2359,7 @@ pub fn date_block_short_month_format(
 
 /// Read `w:yearShort` into a `DateBlockShortYearFormat`.
 #[must_use]
-pub fn date_block_short_year_format(
-    element: &xml::element::Element,
-) -> super::DateBlockShortYearFormat {
+pub fn date_block_short_year_format(element: &Element) -> super::DateBlockShortYearFormat {
     let reader = markup::Reader::new(element, &super::DATE_BLOCK_SHORT_YEAR_FORMAT_SHAPE);
     super::DateBlockShortYearFormat {
         unknown: reader.finish(),
@@ -2470,7 +2368,7 @@ pub fn date_block_short_year_format(
 
 /// Read `w:dateFormat` into a `DateDisplayMask`.
 #[must_use]
-pub fn date_display_mask(element: &xml::element::Element) -> super::DateDisplayMask {
+pub fn date_display_mask(element: &Element) -> super::DateDisplayMask {
     let mut node = super::DateDisplayMask::default();
     let mut reader = markup::Reader::new(element, &super::DATE_DISPLAY_MASK_SHAPE);
     for (index, field) in &mut reader {
@@ -2484,7 +2382,7 @@ pub fn date_display_mask(element: &xml::element::Element) -> super::DateDisplayM
 
 /// Read `w:calendar` into a `DatePickerCalendarType`.
 #[must_use]
-pub fn date_picker_calendar_type(element: &xml::element::Element) -> super::DatePickerCalendarType {
+pub fn date_picker_calendar_type(element: &Element) -> super::DatePickerCalendarType {
     let mut node = super::DatePickerCalendarType::default();
     let mut reader = markup::Reader::new(element, &super::DATE_PICKER_CALENDAR_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -2498,9 +2396,7 @@ pub fn date_picker_calendar_type(element: &xml::element::Element) -> super::Date
 
 /// Read `w:date` into a `DateStructuredDocumentTag`.
 #[must_use]
-pub fn date_structured_document_tag(
-    element: &xml::element::Element,
-) -> super::DateStructuredDocumentTag {
+pub fn date_structured_document_tag(element: &Element) -> super::DateStructuredDocumentTag {
     let mut node = super::DateStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(element, &super::DATE_STRUCTURED_DOCUMENT_TAG_SHAPE);
     for (index, field) in &mut reader {
@@ -2520,7 +2416,7 @@ pub fn date_structured_document_tag(
 /// Read `w:default` into a `DefaultCheckboxFormFieldState`.
 #[must_use]
 pub fn default_checkbox_form_field_state(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DefaultCheckboxFormFieldState {
     let mut node = super::DefaultCheckboxFormFieldState::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_CHECKBOX_FORM_FIELD_STATE_SHAPE);
@@ -2535,9 +2431,7 @@ pub fn default_checkbox_form_field_state(
 
 /// Read `w:default` into a `DefaultDropDownListItemIndex`.
 #[must_use]
-pub fn default_drop_down_list_item_index(
-    element: &xml::element::Element,
-) -> super::DefaultDropDownListItemIndex {
+pub fn default_drop_down_list_item_index(element: &Element) -> super::DefaultDropDownListItemIndex {
     let mut node = super::DefaultDropDownListItemIndex::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_DROP_DOWN_LIST_ITEM_INDEX_SHAPE);
     for (index, field) in &mut reader {
@@ -2551,9 +2445,7 @@ pub fn default_drop_down_list_item_index(
 
 /// Read `w:pPrDefault` into a `DefaultParagraphProperties`.
 #[must_use]
-pub fn default_paragraph_properties(
-    element: &xml::element::Element,
-) -> super::DefaultParagraphProperties {
+pub fn default_paragraph_properties(element: &Element) -> super::DefaultParagraphProperties {
     let mut node = super::DefaultParagraphProperties::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_PARAGRAPH_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2568,7 +2460,7 @@ pub fn default_paragraph_properties(
 /// Read `w:hdrShapeDefaults` into a `DefaultPropertiesForVMLObjectsInHeaderAndFooter`.
 #[must_use]
 pub fn default_properties_for_vml_objects_in_header_and_footer(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DefaultPropertiesForVMLObjectsInHeaderAndFooter {
     let mut node = super::DefaultPropertiesForVMLObjectsInHeaderAndFooter::default();
     let mut reader = markup::Reader::new(
@@ -2587,7 +2479,7 @@ pub fn default_properties_for_vml_objects_in_header_and_footer(
 /// Read `w:shapeDefaults` into a `DefaultPropertiesForVMLObjectsInMainDocument`.
 #[must_use]
 pub fn default_properties_for_vml_objects_in_main_document(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DefaultPropertiesForVMLObjectsInMainDocument {
     let mut node = super::DefaultPropertiesForVMLObjectsInMainDocument::default();
     let mut reader = markup::Reader::new(
@@ -2605,7 +2497,7 @@ pub fn default_properties_for_vml_objects_in_main_document(
 
 /// Read `w:rPrDefault` into a `DefaultRunProperties`.
 #[must_use]
-pub fn default_run_properties(element: &xml::element::Element) -> super::DefaultRunProperties {
+pub fn default_run_properties(element: &Element) -> super::DefaultRunProperties {
     let mut node = super::DefaultRunProperties::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_RUN_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -2619,7 +2511,7 @@ pub fn default_run_properties(element: &xml::element::Element) -> super::Default
 
 /// Read `w:defaultTableStyle` into a `DefaultTableStyle`.
 #[must_use]
-pub fn default_table_style(element: &xml::element::Element) -> super::DefaultTableStyle {
+pub fn default_table_style(element: &Element) -> super::DefaultTableStyle {
     let mut node = super::DefaultTableStyle::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_TABLE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -2634,7 +2526,7 @@ pub fn default_table_style(element: &xml::element::Element) -> super::DefaultTab
 /// Read `w:default` into a `DefaultTextBoxFormFieldString`.
 #[must_use]
 pub fn default_text_box_form_field_string(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DefaultTextBoxFormFieldString {
     let mut node = super::DefaultTextBoxFormFieldString::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_TEXT_BOX_FORM_FIELD_STRING_SHAPE);
@@ -2649,7 +2541,7 @@ pub fn default_text_box_form_field_string(
 
 /// Read `w:del` into a `Del`.
 #[must_use]
-pub fn del(element: &xml::element::Element) -> super::Del {
+pub fn del(element: &Element) -> super::Del {
     let mut node = super::Del::default();
     let mut reader = markup::Reader::new(element, &super::DEL_SHAPE);
     for (index, field) in &mut reader {
@@ -2667,7 +2559,7 @@ pub fn del(element: &xml::element::Element) -> super::Del {
 
 /// Read `w:delInstrText` into a `DeletedFieldCode`.
 #[must_use]
-pub fn deleted_field_code(element: &xml::element::Element) -> super::DeletedFieldCode {
+pub fn deleted_field_code(element: &Element) -> super::DeletedFieldCode {
     let mut node = super::DeletedFieldCode::default();
     let mut reader = markup::Reader::new(element, &super::DELETED_FIELD_CODE_SHAPE);
     for (index, field) in &mut reader {
@@ -2683,9 +2575,7 @@ pub fn deleted_field_code(element: &xml::element::Element) -> super::DeletedFiel
 
 /// Read `w:del` into a `DeletedMathControlCharacter`.
 #[must_use]
-pub fn deleted_math_control_character(
-    element: &xml::element::Element,
-) -> super::DeletedMathControlCharacter {
+pub fn deleted_math_control_character(element: &Element) -> super::DeletedMathControlCharacter {
     let mut node = super::DeletedMathControlCharacter::default();
     let mut reader = markup::Reader::new(element, &super::DELETED_MATH_CONTROL_CHARACTER_SHAPE);
     for (index, field) in &mut reader {
@@ -2704,7 +2594,7 @@ pub fn deleted_math_control_character(
 
 /// Read `w:del` into a `DeletedRunContent`.
 #[must_use]
-pub fn deleted_run_content(element: &xml::element::Element) -> super::DeletedRunContent {
+pub fn deleted_run_content(element: &Element) -> super::DeletedRunContent {
     let mut node = super::DeletedRunContent::default();
     let mut reader = markup::Reader::new(element, &super::DELETED_RUN_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -2722,7 +2612,7 @@ pub fn deleted_run_content(element: &xml::element::Element) -> super::DeletedRun
 
 /// Read `w:del` into a `DeletedTableRow`.
 #[must_use]
-pub fn deleted_table_row(element: &xml::element::Element) -> super::DeletedTableRow {
+pub fn deleted_table_row(element: &Element) -> super::DeletedTableRow {
     let mut node = super::DeletedTableRow::default();
     let mut reader = markup::Reader::new(element, &super::DELETED_TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -2739,7 +2629,7 @@ pub fn deleted_table_row(element: &xml::element::Element) -> super::DeletedTable
 
 /// Read `w:delText` into a `DeletedText`.
 #[must_use]
-pub fn deleted_text(element: &xml::element::Element) -> super::DeletedText {
+pub fn deleted_text(element: &Element) -> super::DeletedText {
     let mut node = super::DeletedText::default();
     let mut reader = markup::Reader::new(element, &super::DELETED_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -2755,7 +2645,7 @@ pub fn deleted_text(element: &xml::element::Element) -> super::DeletedText {
 
 /// Read `w:description` into a `DescriptionForEntry`.
 #[must_use]
-pub fn description_for_entry(element: &xml::element::Element) -> super::DescriptionForEntry {
+pub fn description_for_entry(element: &Element) -> super::DescriptionForEntry {
     let mut node = super::DescriptionForEntry::default();
     let mut reader = markup::Reader::new(element, &super::DESCRIPTION_FOR_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -2770,7 +2660,7 @@ pub fn description_for_entry(element: &xml::element::Element) -> super::Descript
 /// Read `w:evenAndOddHeaders` into a `DifferentEvenOddPageHeadersAndFooters`.
 #[must_use]
 pub fn different_even_odd_page_headers_and_footers(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DifferentEvenOddPageHeadersAndFooters {
     let mut node = super::DifferentEvenOddPageHeadersAndFooters::default();
     let mut reader = markup::Reader::new(
@@ -2789,7 +2679,7 @@ pub fn different_even_odd_page_headers_and_footers(
 /// Read `w:titlePg` into a `DifferentFirstPageHeadersAndFooters`.
 #[must_use]
 pub fn different_first_page_headers_and_footers(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DifferentFirstPageHeadersAndFooters {
     let mut node = super::DifferentFirstPageHeadersAndFooters::default();
     let mut reader = markup::Reader::new(
@@ -2807,9 +2697,7 @@ pub fn different_first_page_headers_and_footers(
 
 /// Read `w:optimizeForBrowser` into a `DisableFeaturesNotSupported`.
 #[must_use]
-pub fn disable_features_not_supported(
-    element: &xml::element::Element,
-) -> super::DisableFeaturesNotSupported {
+pub fn disable_features_not_supported(element: &Element) -> super::DisableFeaturesNotSupported {
     let mut node = super::DisableFeaturesNotSupported::default();
     let mut reader = markup::Reader::new(element, &super::DISABLE_FEATURES_NOT_SUPPORTED_SHAPE);
     for (index, field) in &mut reader {
@@ -2826,7 +2714,7 @@ pub fn disable_features_not_supported(
 /// Read `w:caps` into a `DisplayAllCharactersAsCapitalLetters`.
 #[must_use]
 pub fn display_all_characters_as_capital_letters(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DisplayAllCharactersAsCapitalLetters {
     let mut node = super::DisplayAllCharactersAsCapitalLetters::default();
     let mut reader = markup::Reader::new(
@@ -2845,7 +2733,7 @@ pub fn display_all_characters_as_capital_letters(
 /// Read `w:isLgl` into a `DisplayAllLevelsUsingArabicNumerals`.
 #[must_use]
 pub fn display_all_levels_using_arabic_numerals(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DisplayAllLevelsUsingArabicNumerals {
     let mut node = super::DisplayAllLevelsUsingArabicNumerals::default();
     let mut reader = markup::Reader::new(
@@ -2863,7 +2751,7 @@ pub fn display_all_levels_using_arabic_numerals(
 
 /// Read `w:displayBackgroundShape` into a `DisplayBackgroundShape`.
 #[must_use]
-pub fn display_background_shape(element: &xml::element::Element) -> super::DisplayBackgroundShape {
+pub fn display_background_shape(element: &Element) -> super::DisplayBackgroundShape {
     let mut node = super::DisplayBackgroundShape::default();
     let mut reader = markup::Reader::new(element, &super::DISPLAY_BACKGROUND_SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -2877,9 +2765,7 @@ pub fn display_background_shape(element: &xml::element::Element) -> super::Displ
 
 /// Read `w:doNotLeaveBackslashAlone` into a `DisplayBackslashAsYenSign`.
 #[must_use]
-pub fn display_backslash_as_yen_sign(
-    element: &xml::element::Element,
-) -> super::DisplayBackslashAsYenSign {
+pub fn display_backslash_as_yen_sign(element: &Element) -> super::DisplayBackslashAsYenSign {
     let mut node = super::DisplayBackslashAsYenSign::default();
     let mut reader = markup::Reader::new(element, &super::DISPLAY_BACKSLASH_AS_YEN_SIGN_SHAPE);
     for (index, field) in &mut reader {
@@ -2893,9 +2779,7 @@ pub fn display_backslash_as_yen_sign(
 
 /// Read `w:outline` into a `DisplayCharacterOutline`.
 #[must_use]
-pub fn display_character_outline(
-    element: &xml::element::Element,
-) -> super::DisplayCharacterOutline {
+pub fn display_character_outline(element: &Element) -> super::DisplayCharacterOutline {
     let mut node = super::DisplayCharacterOutline::default();
     let mut reader = markup::Reader::new(element, &super::DISPLAY_CHARACTER_OUTLINE_SHAPE);
     for (index, field) in &mut reader {
@@ -2910,7 +2794,7 @@ pub fn display_character_outline(
 /// Read `w:showBreaksInFrames` into a `DisplayPageColumnBreaksPresentInFrames`.
 #[must_use]
 pub fn display_page_column_breaks_present_in_frames(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DisplayPageColumnBreaksPresentInFrames {
     let mut node = super::DisplayPageColumnBreaksPresentInFrames::default();
     let mut reader = markup::Reader::new(
@@ -2929,7 +2813,7 @@ pub fn display_page_column_breaks_present_in_frames(
 /// Read `w:defaultTabStop` into a `DistanceBetweenAutomaticTabStops`.
 #[must_use]
 pub fn distance_between_automatic_tab_stops(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DistanceBetweenAutomaticTabStops {
     let mut node = super::DistanceBetweenAutomaticTabStops::default();
     let mut reader =
@@ -2946,7 +2830,7 @@ pub fn distance_between_automatic_tab_stops(
 /// Read `w:displayHorizontalDrawingGridEvery` into a `DistanceBetweenHorizontalGridlines`.
 #[must_use]
 pub fn distance_between_horizontal_gridlines(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DistanceBetweenHorizontalGridlines {
     let mut node = super::DistanceBetweenHorizontalGridlines::default();
     let mut reader =
@@ -2963,7 +2847,7 @@ pub fn distance_between_horizontal_gridlines(
 /// Read `w:hpsRaise` into a `DistanceBetweenPhoneticGuideText`.
 #[must_use]
 pub fn distance_between_phonetic_guide_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DistanceBetweenPhoneticGuideText {
     let mut node = super::DistanceBetweenPhoneticGuideText::default();
     let mut reader =
@@ -2980,7 +2864,7 @@ pub fn distance_between_phonetic_guide_text(
 /// Read `w:displayVerticalDrawingGridEvery` into a `DistanceBetweenVerticalGridlines`.
 #[must_use]
 pub fn distance_between_vertical_gridlines(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DistanceBetweenVerticalGridlines {
     let mut node = super::DistanceBetweenVerticalGridlines::default();
     let mut reader =
@@ -2997,7 +2881,7 @@ pub fn distance_between_vertical_gridlines(
 /// Read `w:noLeading` into a `DoNotAddLeadingBetweenLinesOfText`.
 #[must_use]
 pub fn do_not_add_leading_between_lines_of_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotAddLeadingBetweenLinesOfText {
     let mut node = super::DoNotAddLeadingBetweenLinesOfText::default();
     let mut reader = markup::Reader::new(
@@ -3016,7 +2900,7 @@ pub fn do_not_add_leading_between_lines_of_text(
 /// Read `w:doNotBreakWrappedTables` into a `DoNotAllowFloatingTablesToBreakAcrossPages`.
 #[must_use]
 pub fn do_not_allow_floating_tables_to_break_across_pages(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotAllowFloatingTablesToBreakAcrossPages {
     let mut node = super::DoNotAllowFloatingTablesToBreakAcrossPages::default();
     let mut reader = markup::Reader::new(
@@ -3035,7 +2919,7 @@ pub fn do_not_allow_floating_tables_to_break_across_pages(
 /// Read `w:doNotAutofitConstrainedTables` into a `DoNotAutofitConstrainedTables`.
 #[must_use]
 pub fn do_not_autofit_constrained_tables(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotAutofitConstrainedTables {
     let mut node = super::DoNotAutofitConstrainedTables::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_AUTOFIT_CONSTRAINED_TABLES_SHAPE);
@@ -3051,7 +2935,7 @@ pub fn do_not_autofit_constrained_tables(
 /// Read `w:doNotAutoCompressPictures` into a `DoNotAutomaticallyCompressImages`.
 #[must_use]
 pub fn do_not_automatically_compress_images(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotAutomaticallyCompressImages {
     let mut node = super::DoNotAutomaticallyCompressImages::default();
     let mut reader =
@@ -3068,7 +2952,7 @@ pub fn do_not_automatically_compress_images(
 /// Read `w:noColumnBalance` into a `DoNotBalanceTextColumnsWithinASection`.
 #[must_use]
 pub fn do_not_balance_text_columns_within_a_section(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotBalanceTextColumnsWithinASection {
     let mut node = super::DoNotBalanceTextColumnsWithinASection::default();
     let mut reader = markup::Reader::new(
@@ -3087,7 +2971,7 @@ pub fn do_not_balance_text_columns_within_a_section(
 /// Read `w:doNotBreakConstrainedForcedTable` into a `DoNotBreakConstrainedForcedTable`.
 #[must_use]
 pub fn do_not_break_constrained_forced_table(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotBreakConstrainedForcedTable {
     let mut node = super::DoNotBreakConstrainedForcedTable::default();
     let mut reader =
@@ -3104,7 +2988,7 @@ pub fn do_not_break_constrained_forced_table(
 /// Read `w:useFELayout` into a `DoNotBypassEastAsianComplexScriptLayoutCode`.
 #[must_use]
 pub fn do_not_bypass_east_asian_complex_script_layout_code(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotBypassEastAsianComplexScriptLayoutCode {
     let mut node = super::DoNotBypassEastAsianComplexScriptLayoutCode::default();
     let mut reader = markup::Reader::new(
@@ -3123,7 +3007,7 @@ pub fn do_not_bypass_east_asian_complex_script_layout_code(
 /// Read `w:noExtraLineSpacing` into a `DoNotCenterContentOnLinesWithExactLineHeight`.
 #[must_use]
 pub fn do_not_center_content_on_lines_with_exact_line_height(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotCenterContentOnLinesWithExactLineHeight {
     let mut node = super::DoNotCenterContentOnLinesWithExactLineHeight::default();
     let mut reader = markup::Reader::new(
@@ -3141,9 +3025,7 @@ pub fn do_not_center_content_on_lines_with_exact_line_height(
 
 /// Read `w:noProof` into a `DoNotCheckSpellingOrGrammar`.
 #[must_use]
-pub fn do_not_check_spelling_or_grammar(
-    element: &xml::element::Element,
-) -> super::DoNotCheckSpellingOrGrammar {
+pub fn do_not_check_spelling_or_grammar(element: &Element) -> super::DoNotCheckSpellingOrGrammar {
     let mut node = super::DoNotCheckSpellingOrGrammar::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_CHECK_SPELLING_OR_GRAMMAR_SHAPE);
     for (index, field) in &mut reader {
@@ -3158,7 +3040,7 @@ pub fn do_not_check_spelling_or_grammar(
 /// Read `w:noTabHangInd` into a `DoNotCreateCustomTabStopForHangingIndent`.
 #[must_use]
 pub fn do_not_create_custom_tab_stop_for_hanging_indent(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotCreateCustomTabStopForHangingIndent {
     let mut node = super::DoNotCreateCustomTabStopForHangingIndent::default();
     let mut reader = markup::Reader::new(
@@ -3177,7 +3059,7 @@ pub fn do_not_create_custom_tab_stop_for_hanging_indent(
 /// Read `w:noBorder` into a `DoNotDisplayFramesetSplitters`.
 #[must_use]
 pub fn do_not_display_frameset_splitters(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotDisplayFramesetSplitters {
     let mut node = super::DoNotDisplayFramesetSplitters::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_DISPLAY_FRAMESET_SPLITTERS_SHAPE);
@@ -3193,7 +3075,7 @@ pub fn do_not_display_frameset_splitters(
 /// Read `w:hideGrammaticalErrors` into a `DoNotDisplayGrammaticalErrors`.
 #[must_use]
 pub fn do_not_display_grammatical_errors(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotDisplayGrammaticalErrors {
     let mut node = super::DoNotDisplayGrammaticalErrors::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_DISPLAY_GRAMMATICAL_ERRORS_SHAPE);
@@ -3208,9 +3090,7 @@ pub fn do_not_display_grammatical_errors(
 
 /// Read `w:doNotDisplayPageBoundaries` into a `DoNotDisplayPageBoundaries`.
 #[must_use]
-pub fn do_not_display_page_boundaries(
-    element: &xml::element::Element,
-) -> super::DoNotDisplayPageBoundaries {
+pub fn do_not_display_page_boundaries(element: &Element) -> super::DoNotDisplayPageBoundaries {
     let mut node = super::DoNotDisplayPageBoundaries::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_DISPLAY_PAGE_BOUNDARIES_SHAPE);
     for (index, field) in &mut reader {
@@ -3224,9 +3104,7 @@ pub fn do_not_display_page_boundaries(
 
 /// Read `w:hideSpellingErrors` into a `DoNotDisplaySpellingErrors`.
 #[must_use]
-pub fn do_not_display_spelling_errors(
-    element: &xml::element::Element,
-) -> super::DoNotDisplaySpellingErrors {
+pub fn do_not_display_spelling_errors(element: &Element) -> super::DoNotDisplaySpellingErrors {
     let mut node = super::DoNotDisplaySpellingErrors::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_DISPLAY_SPELLING_ERRORS_SHAPE);
     for (index, field) in &mut reader {
@@ -3240,9 +3118,7 @@ pub fn do_not_display_spelling_errors(
 
 /// Read `w:doNotHyphenateCaps` into a `DoNotHyphenateCapitalLetters`.
 #[must_use]
-pub fn do_not_hyphenate_capital_letters(
-    element: &xml::element::Element,
-) -> super::DoNotHyphenateCapitalLetters {
+pub fn do_not_hyphenate_capital_letters(element: &Element) -> super::DoNotHyphenateCapitalLetters {
     let mut node = super::DoNotHyphenateCapitalLetters::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_HYPHENATE_CAPITAL_LETTERS_SHAPE);
     for (index, field) in &mut reader {
@@ -3256,9 +3132,7 @@ pub fn do_not_hyphenate_capital_letters(
 
 /// Read `w:doNotIncludeSubdocsInStats` into a `DoNotIncludeSubdocsInStats`.
 #[must_use]
-pub fn do_not_include_subdocs_in_stats(
-    element: &xml::element::Element,
-) -> super::DoNotIncludeSubdocsInStats {
+pub fn do_not_include_subdocs_in_stats(element: &Element) -> super::DoNotIncludeSubdocsInStats {
     let mut node = super::DoNotIncludeSubdocsInStats::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_INCLUDE_SUBDOCS_IN_STATS_SHAPE);
     for (index, field) in &mut reader {
@@ -3273,7 +3147,7 @@ pub fn do_not_include_subdocs_in_stats(
 /// Read `w:noSpaceRaiseLower` into a `DoNotIncreaseLineHeightForRaisedLoweredText`.
 #[must_use]
 pub fn do_not_increase_line_height_for_raised_lowered_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotIncreaseLineHeightForRaisedLoweredText {
     let mut node = super::DoNotIncreaseLineHeightForRaisedLoweredText::default();
     let mut reader = markup::Reader::new(
@@ -3291,9 +3165,7 @@ pub fn do_not_increase_line_height_for_raised_lowered_text(
 
 /// Read `w:doNotOrganizeInFolder` into a `DoNotPlaceSupportingFiles`.
 #[must_use]
-pub fn do_not_place_supporting_files(
-    element: &xml::element::Element,
-) -> super::DoNotPlaceSupportingFiles {
+pub fn do_not_place_supporting_files(element: &Element) -> super::DoNotPlaceSupportingFiles {
     let mut node = super::DoNotPlaceSupportingFiles::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_PLACE_SUPPORTING_FILES_SHAPE);
     for (index, field) in &mut reader {
@@ -3307,7 +3179,7 @@ pub fn do_not_place_supporting_files(
 
 /// Read `w:doNotRelyOnCSS` into a `DoNotRelyOnCSS`.
 #[must_use]
-pub fn do_not_rely_on_css(element: &xml::element::Element) -> super::DoNotRelyOnCSS {
+pub fn do_not_rely_on_css(element: &Element) -> super::DoNotRelyOnCSS {
     let mut node = super::DoNotRelyOnCSS::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_RELY_ON_CSS_SHAPE);
     for (index, field) in &mut reader {
@@ -3321,9 +3193,7 @@ pub fn do_not_rely_on_css(element: &xml::element::Element) -> super::DoNotRelyOn
 
 /// Read `w:doNotShadeFormData` into a `DoNotShowFormFieldIndicator`.
 #[must_use]
-pub fn do_not_show_form_field_indicator(
-    element: &xml::element::Element,
-) -> super::DoNotShowFormFieldIndicator {
+pub fn do_not_show_form_field_indicator(element: &Element) -> super::DoNotShowFormFieldIndicator {
     let mut node = super::DoNotShowFormFieldIndicator::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_SHOW_FORM_FIELD_INDICATOR_SHAPE);
     for (index, field) in &mut reader {
@@ -3338,7 +3208,7 @@ pub fn do_not_show_form_field_indicator(
 /// Read `w:doNotDemarcateInvalidXml` into a `DoNotShowInvalidMarkupIndicator`.
 #[must_use]
 pub fn do_not_show_invalid_markup_indicator(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotShowInvalidMarkupIndicator {
     let mut node = super::DoNotShowInvalidMarkupIndicator::default();
     let mut reader =
@@ -3355,7 +3225,7 @@ pub fn do_not_show_invalid_markup_indicator(
 /// Read `w:doNotSnapToGridInCell` into a `DoNotSnapToDocumentGridInTableCellsWithObjects`.
 #[must_use]
 pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotSnapToDocumentGridInTableCellsWithObjects {
     let mut node = super::DoNotSnapToDocumentGridInTableCellsWithObjects::default();
     let mut reader = markup::Reader::new(
@@ -3373,9 +3243,7 @@ pub fn do_not_snap_to_document_grid_in_table_cells_with_objects(
 
 /// Read `w:doNotSuppressBlankLines` into a `DoNotSuppressBlankLines`.
 #[must_use]
-pub fn do_not_suppress_blank_lines(
-    element: &xml::element::Element,
-) -> super::DoNotSuppressBlankLines {
+pub fn do_not_suppress_blank_lines(element: &Element) -> super::DoNotSuppressBlankLines {
     let mut node = super::DoNotSuppressBlankLines::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_SUPPRESS_BLANK_LINES_SHAPE);
     for (index, field) in &mut reader {
@@ -3389,9 +3257,7 @@ pub fn do_not_suppress_blank_lines(
 
 /// Read `w:doNotSuppressIndentation` into a `DoNotSuppressIndentation`.
 #[must_use]
-pub fn do_not_suppress_indentation(
-    element: &xml::element::Element,
-) -> super::DoNotSuppressIndentation {
+pub fn do_not_suppress_indentation(element: &Element) -> super::DoNotSuppressIndentation {
     let mut node = super::DoNotSuppressIndentation::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_SUPPRESS_INDENTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -3406,7 +3272,7 @@ pub fn do_not_suppress_indentation(
 /// Read `w:doNotSuppressParagraphBorders` into a `DoNotSuppressParagraphBorders`.
 #[must_use]
 pub fn do_not_suppress_paragraph_borders(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotSuppressParagraphBorders {
     let mut node = super::DoNotSuppressParagraphBorders::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_SUPPRESS_PARAGRAPH_BORDERS_SHAPE);
@@ -3421,7 +3287,7 @@ pub fn do_not_suppress_paragraph_borders(
 
 /// Read `w:doNotTrackFormatting` into a `DoNotTrackFormatting`.
 #[must_use]
-pub fn do_not_track_formatting(element: &xml::element::Element) -> super::DoNotTrackFormatting {
+pub fn do_not_track_formatting(element: &Element) -> super::DoNotTrackFormatting {
     let mut node = super::DoNotTrackFormatting::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_TRACK_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
@@ -3435,9 +3301,7 @@ pub fn do_not_track_formatting(element: &xml::element::Element) -> super::DoNotT
 
 /// Read `w:doNotUseEastAsianBreakRules` into a `DoNotUseEastAsianBreakRules`.
 #[must_use]
-pub fn do_not_use_east_asian_break_rules(
-    element: &xml::element::Element,
-) -> super::DoNotUseEastAsianBreakRules {
+pub fn do_not_use_east_asian_break_rules(element: &Element) -> super::DoNotUseEastAsianBreakRules {
     let mut node = super::DoNotUseEastAsianBreakRules::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_USE_EAST_ASIAN_BREAK_RULES_SHAPE);
     for (index, field) in &mut reader {
@@ -3451,7 +3315,7 @@ pub fn do_not_use_east_asian_break_rules(
 
 /// Read `w:doNotUseLongFileNames` into a `DoNotUseFileNames`.
 #[must_use]
-pub fn do_not_use_file_names(element: &xml::element::Element) -> super::DoNotUseFileNames {
+pub fn do_not_use_file_names(element: &Element) -> super::DoNotUseFileNames {
     let mut node = super::DoNotUseFileNames::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_USE_FILE_NAMES_SHAPE);
     for (index, field) in &mut reader {
@@ -3466,7 +3330,7 @@ pub fn do_not_use_file_names(element: &xml::element::Element) -> super::DoNotUse
 /// Read `w:doNotUseHTMLParagraphAutoSpacing` into a `DoNotUseHTMLParagraphAutoSpacing`.
 #[must_use]
 pub fn do_not_use_html_paragraph_auto_spacing(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotUseHTMLParagraphAutoSpacing {
     let mut node = super::DoNotUseHTMLParagraphAutoSpacing::default();
     let mut reader = markup::Reader::new(
@@ -3485,7 +3349,7 @@ pub fn do_not_use_html_paragraph_auto_spacing(
 /// Read `w:doNotUseIndentAsNumberingTabStop` into a `DoNotUseIndentAsNumberingTabStop`.
 #[must_use]
 pub fn do_not_use_indent_as_numbering_tab_stop(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotUseIndentAsNumberingTabStop {
     let mut node = super::DoNotUseIndentAsNumberingTabStop::default();
     let mut reader = markup::Reader::new(
@@ -3504,7 +3368,7 @@ pub fn do_not_use_indent_as_numbering_tab_stop(
 /// Read `w:doNotUseMarginsForDrawingGridOrigin` into a `DoNotUseMarginsForDrawingGridOrigin`.
 #[must_use]
 pub fn do_not_use_margins_for_drawing_grid_origin(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DoNotUseMarginsForDrawingGridOrigin {
     let mut node = super::DoNotUseMarginsForDrawingGridOrigin::default();
     let mut reader = markup::Reader::new(
@@ -3522,7 +3386,7 @@ pub fn do_not_use_margins_for_drawing_grid_origin(
 
 /// Read `w:doNotTrackMoves` into a `DoNotUseMoveSyntax`.
 #[must_use]
-pub fn do_not_use_move_syntax(element: &xml::element::Element) -> super::DoNotUseMoveSyntax {
+pub fn do_not_use_move_syntax(element: &Element) -> super::DoNotUseMoveSyntax {
     let mut node = super::DoNotUseMoveSyntax::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_USE_MOVE_SYNTAX_SHAPE);
     for (index, field) in &mut reader {
@@ -3536,9 +3400,7 @@ pub fn do_not_use_move_syntax(element: &xml::element::Element) -> super::DoNotUs
 
 /// Read `w:doNotValidateAgainstSchema` into a `DoNotValidateAgainstSchema`.
 #[must_use]
-pub fn do_not_validate_against_schema(
-    element: &xml::element::Element,
-) -> super::DoNotValidateAgainstSchema {
+pub fn do_not_validate_against_schema(element: &Element) -> super::DoNotValidateAgainstSchema {
     let mut node = super::DoNotValidateAgainstSchema::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_VALIDATE_AGAINST_SCHEMA_SHAPE);
     for (index, field) in &mut reader {
@@ -3552,9 +3414,7 @@ pub fn do_not_validate_against_schema(
 
 /// Read `w:doNotVertAlignCellWithSp` into a `DoNotVertAlignCellWithSp`.
 #[must_use]
-pub fn do_not_vert_align_cell_with_sp(
-    element: &xml::element::Element,
-) -> super::DoNotVertAlignCellWithSp {
+pub fn do_not_vert_align_cell_with_sp(element: &Element) -> super::DoNotVertAlignCellWithSp {
     let mut node = super::DoNotVertAlignCellWithSp::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_VERT_ALIGN_CELL_WITH_SP_SHAPE);
     for (index, field) in &mut reader {
@@ -3568,9 +3428,7 @@ pub fn do_not_vert_align_cell_with_sp(
 
 /// Read `w:doNotWrapTextWithPunct` into a `DoNotWrapTextWithPunct`.
 #[must_use]
-pub fn do_not_wrap_text_with_punct(
-    element: &xml::element::Element,
-) -> super::DoNotWrapTextWithPunct {
+pub fn do_not_wrap_text_with_punct(element: &Element) -> super::DoNotWrapTextWithPunct {
     let mut node = super::DoNotWrapTextWithPunct::default();
     let mut reader = markup::Reader::new(element, &super::DO_NOT_WRAP_TEXT_WITH_PUNCT_SHAPE);
     for (index, field) in &mut reader {
@@ -3584,7 +3442,7 @@ pub fn do_not_wrap_text_with_punct(
 
 /// Read `w:document` into a `Document`.
 #[must_use]
-pub fn document(element: &xml::element::Element) -> super::Document {
+pub fn document(element: &Element) -> super::Document {
     let mut node = super::Document::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -3601,7 +3459,7 @@ pub fn document(element: &xml::element::Element) -> super::Document {
 
 /// Read `w:background` into a `DocumentBackground`.
 #[must_use]
-pub fn document_background(element: &xml::element::Element) -> super::DocumentBackground {
+pub fn document_background(element: &Element) -> super::DocumentBackground {
     let mut node = super::DocumentBackground::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_BACKGROUND_SHAPE);
     for (index, field) in &mut reader {
@@ -3621,7 +3479,7 @@ pub fn document_background(element: &xml::element::Element) -> super::DocumentBa
 
 /// Read `w:body` into a `DocumentBody`.
 #[must_use]
-pub fn document_body(element: &xml::element::Element) -> super::DocumentBody {
+pub fn document_body(element: &Element) -> super::DocumentBody {
     let mut node = super::DocumentBody::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -3637,7 +3495,7 @@ pub fn document_body(element: &xml::element::Element) -> super::DocumentBody {
 
 /// Read `w:documentType` into a `DocumentClassification`.
 #[must_use]
-pub fn document_classification(element: &xml::element::Element) -> super::DocumentClassification {
+pub fn document_classification(element: &Element) -> super::DocumentClassification {
     let mut node = super::DocumentClassification::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_CLASSIFICATION_SHAPE);
     for (index, field) in &mut reader {
@@ -3652,7 +3510,7 @@ pub fn document_classification(element: &xml::element::Element) -> super::Docume
 /// Read `w:docDefaults` into a `DocumentDefaultParagraphAndRunProperties`.
 #[must_use]
 pub fn document_default_paragraph_and_run_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DocumentDefaultParagraphAndRunProperties {
     let mut node = super::DocumentDefaultParagraphAndRunProperties::default();
     let mut reader = markup::Reader::new(
@@ -3672,9 +3530,7 @@ pub fn document_default_paragraph_and_run_properties(
 
 /// Read `w:documentProtection` into a `DocumentEditingRestrictions`.
 #[must_use]
-pub fn document_editing_restrictions(
-    element: &xml::element::Element,
-) -> super::DocumentEditingRestrictions {
+pub fn document_editing_restrictions(element: &Element) -> super::DocumentEditingRestrictions {
     let mut node = super::DocumentEditingRestrictions::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_EDITING_RESTRICTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -3707,7 +3563,7 @@ pub fn document_editing_restrictions(
 
 /// Read `w:endnotes` into a `DocumentEndnotes`.
 #[must_use]
-pub fn document_endnotes(element: &xml::element::Element) -> super::DocumentEndnotes {
+pub fn document_endnotes(element: &Element) -> super::DocumentEndnotes {
     let mut node = super::DocumentEndnotes::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_ENDNOTES_SHAPE);
     for (index, field) in &mut reader {
@@ -3722,7 +3578,7 @@ pub fn document_endnotes(element: &xml::element::Element) -> super::DocumentEndn
 /// Read `w:sectPr` into a `DocumentFinalSectionProperties`.
 #[must_use]
 pub fn document_final_section_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DocumentFinalSectionProperties {
     let mut node = super::DocumentFinalSectionProperties::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_FINAL_SECTION_PROPERTIES_SHAPE);
@@ -3763,7 +3619,7 @@ pub fn document_final_section_properties(
 
 /// Read `w:footnotes` into a `DocumentFootnotes`.
 #[must_use]
-pub fn document_footnotes(element: &xml::element::Element) -> super::DocumentFootnotes {
+pub fn document_footnotes(element: &Element) -> super::DocumentFootnotes {
     let mut node = super::DocumentFootnotes::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_FOOTNOTES_SHAPE);
     for (index, field) in &mut reader {
@@ -3777,7 +3633,7 @@ pub fn document_footnotes(element: &xml::element::Element) -> super::DocumentFoo
 
 /// Read `w:docGrid` into a `DocumentGrid`.
 #[must_use]
-pub fn document_grid(element: &xml::element::Element) -> super::DocumentGrid {
+pub fn document_grid(element: &Element) -> super::DocumentGrid {
     let mut node = super::DocumentGrid::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_GRID_SHAPE);
     for (index, field) in &mut reader {
@@ -3795,7 +3651,7 @@ pub fn document_grid(element: &xml::element::Element) -> super::DocumentGrid {
 /// Read `w:snapToGrid` into a `DocumentGridInterLineParagraphSpacing`.
 #[must_use]
 pub fn document_grid_inter_line_paragraph_spacing(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DocumentGridInterLineParagraphSpacing {
     let mut node = super::DocumentGridInterLineParagraphSpacing::default();
     let mut reader = markup::Reader::new(
@@ -3813,9 +3669,7 @@ pub fn document_grid_inter_line_paragraph_spacing(
 
 /// Read `w:docPartCategory` into a `DocumentPartCategoryFilter`.
 #[must_use]
-pub fn document_part_category_filter(
-    element: &xml::element::Element,
-) -> super::DocumentPartCategoryFilter {
+pub fn document_part_category_filter(element: &Element) -> super::DocumentPartCategoryFilter {
     let mut node = super::DocumentPartCategoryFilter::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_PART_CATEGORY_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -3829,9 +3683,7 @@ pub fn document_part_category_filter(
 
 /// Read `w:docPartGallery` into a `DocumentPartGalleryFilter`.
 #[must_use]
-pub fn document_part_gallery_filter(
-    element: &xml::element::Element,
-) -> super::DocumentPartGalleryFilter {
+pub fn document_part_gallery_filter(element: &Element) -> super::DocumentPartGalleryFilter {
     let mut node = super::DocumentPartGalleryFilter::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_PART_GALLERY_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -3846,7 +3698,7 @@ pub fn document_part_gallery_filter(
 /// Read `w:docPartList` into a `DocumentPartGalleryStructuredDocumentTag`.
 #[must_use]
 pub fn document_part_gallery_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DocumentPartGalleryStructuredDocumentTag {
     let mut node = super::DocumentPartGalleryStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(
@@ -3867,7 +3719,7 @@ pub fn document_part_gallery_structured_document_tag(
 
 /// Read `w:docPart` into a `DocumentPartReference`.
 #[must_use]
-pub fn document_part_reference(element: &xml::element::Element) -> super::DocumentPartReference {
+pub fn document_part_reference(element: &Element) -> super::DocumentPartReference {
     let mut node = super::DocumentPartReference::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_PART_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -3881,7 +3733,7 @@ pub fn document_part_reference(element: &xml::element::Element) -> super::Docume
 
 /// Read `w:settings` into a `DocumentSettings`.
 #[must_use]
-pub fn document_settings(element: &xml::element::Element) -> super::DocumentSettings {
+pub fn document_settings(element: &Element) -> super::DocumentSettings {
     let mut node = super::DocumentSettings::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -4009,7 +3861,7 @@ fn document_settings_2(node: &mut super::DocumentSettings, index: usize, field: 
 
 /// Read `w:docVars` into a `DocumentVariables`.
 #[must_use]
-pub fn document_variables(element: &xml::element::Element) -> super::DocumentVariables {
+pub fn document_variables(element: &Element) -> super::DocumentVariables {
     let mut node = super::DocumentVariables::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_VARIABLES_SHAPE);
     for (index, field) in &mut reader {
@@ -4023,7 +3875,7 @@ pub fn document_variables(element: &xml::element::Element) -> super::DocumentVar
 
 /// Read `w:view` into a `DocumentViewSetting`.
 #[must_use]
-pub fn document_view_setting(element: &xml::element::Element) -> super::DocumentViewSetting {
+pub fn document_view_setting(element: &Element) -> super::DocumentViewSetting {
     let mut node = super::DocumentViewSetting::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_VIEW_SETTING_SHAPE);
     for (index, field) in &mut reader {
@@ -4037,9 +3889,7 @@ pub fn document_view_setting(element: &xml::element::Element) -> super::Document
 
 /// Read `w:endnotePr` into a `DocumentWideEndnoteProperties`.
 #[must_use]
-pub fn document_wide_endnote_properties(
-    element: &xml::element::Element,
-) -> super::DocumentWideEndnoteProperties {
+pub fn document_wide_endnote_properties(element: &Element) -> super::DocumentWideEndnoteProperties {
     let mut node = super::DocumentWideEndnoteProperties::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_WIDE_ENDNOTE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -4059,7 +3909,7 @@ pub fn document_wide_endnote_properties(
 /// Read `w:footnotePr` into a `DocumentWideFootnoteProperties`.
 #[must_use]
 pub fn document_wide_footnote_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DocumentWideFootnoteProperties {
     let mut node = super::DocumentWideFootnoteProperties::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_WIDE_FOOTNOTE_PROPERTIES_SHAPE);
@@ -4080,7 +3930,7 @@ pub fn document_wide_footnote_properties(
 /// Read `w:doNotExpandShiftReturn` into a `DontJustifySoftLineBreakLines`.
 #[must_use]
 pub fn dont_justify_soft_line_break_lines(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DontJustifySoftLineBreakLines {
     let mut node = super::DontJustifySoftLineBreakLines::default();
     let mut reader = markup::Reader::new(element, &super::DONT_JUSTIFY_SOFT_LINE_BREAK_LINES_SHAPE);
@@ -4095,7 +3945,7 @@ pub fn dont_justify_soft_line_break_lines(
 
 /// Read `w:noWrap` into a `DontWrapCellContent`.
 #[must_use]
-pub fn dont_wrap_cell_content(element: &xml::element::Element) -> super::DontWrapCellContent {
+pub fn dont_wrap_cell_content(element: &Element) -> super::DontWrapCellContent {
     let mut node = super::DontWrapCellContent::default();
     let mut reader = markup::Reader::new(element, &super::DONT_WRAP_CELL_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -4109,7 +3959,7 @@ pub fn dont_wrap_cell_content(element: &xml::element::Element) -> super::DontWra
 
 /// Read `w:dstrike` into a `DoubleStrikethrough`.
 #[must_use]
-pub fn double_strikethrough(element: &xml::element::Element) -> super::DoubleStrikethrough {
+pub fn double_strikethrough(element: &Element) -> super::DoubleStrikethrough {
     let mut node = super::DoubleStrikethrough::default();
     let mut reader = markup::Reader::new(element, &super::DOUBLE_STRIKETHROUGH_SHAPE);
     for (index, field) in &mut reader {
@@ -4124,7 +3974,7 @@ pub fn double_strikethrough(element: &xml::element::Element) -> super::DoubleStr
 /// Read `w:drawingGridHorizontalSpacing` into a `DrawingGridHorizontalGridUnitSize`.
 #[must_use]
 pub fn drawing_grid_horizontal_grid_unit_size(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DrawingGridHorizontalGridUnitSize {
     let mut node = super::DrawingGridHorizontalGridUnitSize::default();
     let mut reader = markup::Reader::new(
@@ -4143,7 +3993,7 @@ pub fn drawing_grid_horizontal_grid_unit_size(
 /// Read `w:drawingGridHorizontalOrigin` into a `DrawingGridHorizontalOriginPoint`.
 #[must_use]
 pub fn drawing_grid_horizontal_origin_point(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DrawingGridHorizontalOriginPoint {
     let mut node = super::DrawingGridHorizontalOriginPoint::default();
     let mut reader =
@@ -4160,7 +4010,7 @@ pub fn drawing_grid_horizontal_origin_point(
 /// Read `w:drawingGridVerticalSpacing` into a `DrawingGridVerticalGridUnitSize`.
 #[must_use]
 pub fn drawing_grid_vertical_grid_unit_size(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DrawingGridVerticalGridUnitSize {
     let mut node = super::DrawingGridVerticalGridUnitSize::default();
     let mut reader =
@@ -4177,7 +4027,7 @@ pub fn drawing_grid_vertical_grid_unit_size(
 /// Read `w:drawingGridVerticalOrigin` into a `DrawingGridVerticalOriginPoint`.
 #[must_use]
 pub fn drawing_grid_vertical_origin_point(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DrawingGridVerticalOriginPoint {
     let mut node = super::DrawingGridVerticalOriginPoint::default();
     let mut reader = markup::Reader::new(element, &super::DRAWING_GRID_VERTICAL_ORIGIN_POINT_SHAPE);
@@ -4192,7 +4042,7 @@ pub fn drawing_grid_vertical_origin_point(
 
 /// Read `w:drawing` into a `DrawingMLObject`.
 #[must_use]
-pub fn drawing_ml_object(element: &xml::element::Element) -> super::DrawingMLObject {
+pub fn drawing_ml_object(element: &Element) -> super::DrawingMLObject {
     let mut node = super::DrawingMLObject::default();
     let mut reader = markup::Reader::new(element, &super::DRAWING_ML_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -4206,13 +4056,13 @@ pub fn drawing_ml_object(element: &xml::element::Element) -> super::DrawingMLObj
 
 /// Read one item of `DrawingObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn drawing_object(element: &xml::element::Element) -> super::DrawingObjectContent {
+pub fn drawing_object(element: &Element) -> super::DrawingObjectContent {
     markup::read(element)
 }
 
 /// Read `w:listEntry` into a `DropDownListEntry`.
 #[must_use]
-pub fn drop_down_list_entry(element: &xml::element::Element) -> super::DropDownListEntry {
+pub fn drop_down_list_entry(element: &Element) -> super::DropDownListEntry {
     let mut node = super::DropDownListEntry::default();
     let mut reader = markup::Reader::new(element, &super::DROP_DOWN_LIST_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -4227,7 +4077,7 @@ pub fn drop_down_list_entry(element: &xml::element::Element) -> super::DropDownL
 /// Read `w:ddList` into a `DropDownListFormFieldProperties`.
 #[must_use]
 pub fn drop_down_list_form_field_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DropDownListFormFieldProperties {
     let mut node = super::DropDownListFormFieldProperties::default();
     let mut reader =
@@ -4246,7 +4096,7 @@ pub fn drop_down_list_form_field_properties(
 
 /// Read `w:result` into a `DropDownListSelection`.
 #[must_use]
-pub fn drop_down_list_selection(element: &xml::element::Element) -> super::DropDownListSelection {
+pub fn drop_down_list_selection(element: &Element) -> super::DropDownListSelection {
     let mut node = super::DropDownListSelection::default();
     let mut reader = markup::Reader::new(element, &super::DROP_DOWN_LIST_SELECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -4261,7 +4111,7 @@ pub fn drop_down_list_selection(element: &xml::element::Element) -> super::DropD
 /// Read `w:dropDownList` into a `DropDownListStructuredDocumentTag`.
 #[must_use]
 pub fn drop_down_list_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::DropDownListStructuredDocumentTag {
     let mut node = super::DropDownListStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(
@@ -4281,9 +4131,7 @@ pub fn drop_down_list_structured_document_tag(
 
 /// Read `w:personalCompose` into a `EMailMessageCompositionStyle`.
 #[must_use]
-pub fn e_mail_message_composition_style(
-    element: &xml::element::Element,
-) -> super::EMailMessageCompositionStyle {
+pub fn e_mail_message_composition_style(element: &Element) -> super::EMailMessageCompositionStyle {
     let mut node = super::EMailMessageCompositionStyle::default();
     let mut reader = markup::Reader::new(element, &super::E_MAIL_MESSAGE_COMPOSITION_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -4297,9 +4145,7 @@ pub fn e_mail_message_composition_style(
 
 /// Read `w:personalReply` into a `EMailMessageReplyStyle`.
 #[must_use]
-pub fn e_mail_message_reply_style(
-    element: &xml::element::Element,
-) -> super::EMailMessageReplyStyle {
+pub fn e_mail_message_reply_style(element: &Element) -> super::EMailMessageReplyStyle {
     let mut node = super::EMailMessageReplyStyle::default();
     let mut reader = markup::Reader::new(element, &super::E_MAIL_MESSAGE_REPLY_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -4313,7 +4159,7 @@ pub fn e_mail_message_reply_style(
 
 /// Read `w:personal` into a `EMailMessageTextStyle`.
 #[must_use]
-pub fn e_mail_message_text_style(element: &xml::element::Element) -> super::EMailMessageTextStyle {
+pub fn e_mail_message_text_style(element: &Element) -> super::EMailMessageTextStyle {
     let mut node = super::EMailMessageTextStyle::default();
     let mut reader = markup::Reader::new(element, &super::E_MAIL_MESSAGE_TEXT_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -4327,9 +4173,7 @@ pub fn e_mail_message_text_style(element: &xml::element::Element) -> super::EMai
 
 /// Read `w:kinsoku` into a `EastAsianTypographyRules`.
 #[must_use]
-pub fn east_asian_typography_rules(
-    element: &xml::element::Element,
-) -> super::EastAsianTypographyRules {
+pub fn east_asian_typography_rules(element: &Element) -> super::EastAsianTypographyRules {
     let mut node = super::EastAsianTypographyRules::default();
     let mut reader = markup::Reader::new(element, &super::EAST_ASIAN_TYPOGRAPHY_RULES_SHAPE);
     for (index, field) in &mut reader {
@@ -4343,9 +4187,7 @@ pub fn east_asian_typography_rules(
 
 /// Read `w:eastAsianLayout` into a `EastAsianTypographySettings`.
 #[must_use]
-pub fn east_asian_typography_settings(
-    element: &xml::element::Element,
-) -> super::EastAsianTypographySettings {
+pub fn east_asian_typography_settings(element: &Element) -> super::EastAsianTypographySettings {
     let mut node = super::EastAsianTypographySettings::default();
     let mut reader = markup::Reader::new(element, &super::EAST_ASIAN_TYPOGRAPHY_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -4364,7 +4206,7 @@ pub fn east_asian_typography_settings(
 
 /// Read `w:embedSystemFonts` into a `EmbedCommonSystemFonts`.
 #[must_use]
-pub fn embed_common_system_fonts(element: &xml::element::Element) -> super::EmbedCommonSystemFonts {
+pub fn embed_common_system_fonts(element: &Element) -> super::EmbedCommonSystemFonts {
     let mut node = super::EmbedCommonSystemFonts::default();
     let mut reader = markup::Reader::new(element, &super::EMBED_COMMON_SYSTEM_FONTS_SHAPE);
     for (index, field) in &mut reader {
@@ -4378,7 +4220,7 @@ pub fn embed_common_system_fonts(element: &xml::element::Element) -> super::Embe
 
 /// Read `w:embedTrueTypeFonts` into a `EmbedTrueTypeFonts`.
 #[must_use]
-pub fn embed_true_type_fonts(element: &xml::element::Element) -> super::EmbedTrueTypeFonts {
+pub fn embed_true_type_fonts(element: &Element) -> super::EmbedTrueTypeFonts {
     let mut node = super::EmbedTrueTypeFonts::default();
     let mut reader = markup::Reader::new(element, &super::EMBED_TRUE_TYPE_FONTS_SHAPE);
     for (index, field) in &mut reader {
@@ -4392,7 +4234,7 @@ pub fn embed_true_type_fonts(element: &xml::element::Element) -> super::EmbedTru
 
 /// Read `w:control` into a `EmbeddedControl`.
 #[must_use]
-pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedControl {
+pub fn embedded_control(element: &Element) -> super::EmbeddedControl {
     let mut node = super::EmbeddedControl::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_CONTROL_SHAPE);
     for (index, field) in &mut reader {
@@ -4409,7 +4251,7 @@ pub fn embedded_control(element: &xml::element::Element) -> super::EmbeddedContr
 
 /// Read `w:object` into a `EmbeddedObject`.
 #[must_use]
-pub fn embedded_object(element: &xml::element::Element) -> super::EmbeddedObject {
+pub fn embedded_object(element: &Element) -> super::EmbeddedObject {
     let mut node = super::EmbeddedObject::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -4429,15 +4271,13 @@ pub fn embedded_object(element: &xml::element::Element) -> super::EmbeddedObject
 
 /// Read one item of `EmbeddedObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn embedded_object_content(element: &xml::element::Element) -> super::EmbeddedObjectContent {
+pub fn embedded_object_content(element: &Element) -> super::EmbeddedObjectContent {
     markup::read(element)
 }
 
 /// Read `w:objectEmbed` into a `EmbeddedObjectProperties`.
 #[must_use]
-pub fn embedded_object_properties(
-    element: &xml::element::Element,
-) -> super::EmbeddedObjectProperties {
+pub fn embedded_object_properties(element: &Element) -> super::EmbeddedObjectProperties {
     let mut node = super::EmbeddedObjectProperties::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_OBJECT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -4456,7 +4296,7 @@ pub fn embedded_object_properties(
 
 /// Read `w:movie` into a `EmbeddedVideo`.
 #[must_use]
-pub fn embedded_video(element: &xml::element::Element) -> super::EmbeddedVideo {
+pub fn embedded_video(element: &Element) -> super::EmbeddedVideo {
     let mut node = super::EmbeddedVideo::default();
     let mut reader = markup::Reader::new(element, &super::EMBEDDED_VIDEO_SHAPE);
     for (index, field) in &mut reader {
@@ -4470,7 +4310,7 @@ pub fn embedded_video(element: &xml::element::Element) -> super::EmbeddedVideo {
 
 /// Read `w:emboss` into a `Embossing`.
 #[must_use]
-pub fn embossing(element: &xml::element::Element) -> super::Embossing {
+pub fn embossing(element: &Element) -> super::Embossing {
     let mut node = super::Embossing::default();
     let mut reader = markup::Reader::new(element, &super::EMBOSSING_SHAPE);
     for (index, field) in &mut reader {
@@ -4484,7 +4324,7 @@ pub fn embossing(element: &xml::element::Element) -> super::Embossing {
 
 /// Read `w:em` into a `EmphasisMark`.
 #[must_use]
-pub fn emphasis_mark(element: &xml::element::Element) -> super::EmphasisMark {
+pub fn emphasis_mark(element: &Element) -> super::EmphasisMark {
     let mut node = super::EmphasisMark::default();
     let mut reader = markup::Reader::new(element, &super::EMPHASIS_MARK_SHAPE);
     for (index, field) in &mut reader {
@@ -4498,7 +4338,7 @@ pub fn emphasis_mark(element: &xml::element::Element) -> super::EmphasisMark {
 
 /// Read `w:endnote` into a `EndnoteContent`.
 #[must_use]
-pub fn endnote_content(element: &xml::element::Element) -> super::EndnoteContent {
+pub fn endnote_content(element: &Element) -> super::EndnoteContent {
     let mut node = super::EndnoteContent::default();
     let mut reader = markup::Reader::new(element, &super::ENDNOTE_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -4515,7 +4355,7 @@ pub fn endnote_content(element: &xml::element::Element) -> super::EndnoteContent
 
 /// Read `w:pos` into a `EndnotePlacement`.
 #[must_use]
-pub fn endnote_placement(element: &xml::element::Element) -> super::EndnotePlacement {
+pub fn endnote_placement(element: &Element) -> super::EndnotePlacement {
     let mut node = super::EndnotePlacement::default();
     let mut reader = markup::Reader::new(element, &super::ENDNOTE_PLACEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -4529,7 +4369,7 @@ pub fn endnote_placement(element: &xml::element::Element) -> super::EndnotePlace
 
 /// Read `w:endnoteReference` into a `EndnoteReference`.
 #[must_use]
-pub fn endnote_reference(element: &xml::element::Element) -> super::EndnoteReference {
+pub fn endnote_reference(element: &Element) -> super::EndnoteReference {
     let mut node = super::EndnoteReference::default();
     let mut reader = markup::Reader::new(element, &super::ENDNOTE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -4545,7 +4385,7 @@ pub fn endnote_reference(element: &xml::element::Element) -> super::EndnoteRefer
 
 /// Read `w:endnoteRef` into a `EndnoteReferenceMark`.
 #[must_use]
-pub fn endnote_reference_mark(element: &xml::element::Element) -> super::EndnoteReferenceMark {
+pub fn endnote_reference_mark(element: &Element) -> super::EndnoteReferenceMark {
     let reader = markup::Reader::new(element, &super::ENDNOTE_REFERENCE_MARK_SHAPE);
     super::EndnoteReferenceMark {
         unknown: reader.finish(),
@@ -4554,7 +4394,7 @@ pub fn endnote_reference_mark(element: &xml::element::Element) -> super::Endnote
 
 /// Read `w:category` into a `EntryCategorization`.
 #[must_use]
-pub fn entry_categorization(element: &xml::element::Element) -> super::EntryCategorization {
+pub fn entry_categorization(element: &Element) -> super::EntryCategorization {
     let mut node = super::EntryCategorization::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_CATEGORIZATION_SHAPE);
     for (index, field) in &mut reader {
@@ -4570,7 +4410,7 @@ pub fn entry_categorization(element: &xml::element::Element) -> super::EntryCate
 
 /// Read `w:guid` into a `EntryID`.
 #[must_use]
-pub fn entry_id(element: &xml::element::Element) -> super::EntryID {
+pub fn entry_id(element: &Element) -> super::EntryID {
     let mut node = super::EntryID::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -4584,7 +4424,7 @@ pub fn entry_id(element: &xml::element::Element) -> super::EntryID {
 
 /// Read `w:behavior` into a `EntryInsertionBehavior`.
 #[must_use]
-pub fn entry_insertion_behavior(element: &xml::element::Element) -> super::EntryInsertionBehavior {
+pub fn entry_insertion_behavior(element: &Element) -> super::EntryInsertionBehavior {
     let mut node = super::EntryInsertionBehavior::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_INSERTION_BEHAVIOR_SHAPE);
     for (index, field) in &mut reader {
@@ -4598,9 +4438,7 @@ pub fn entry_insertion_behavior(element: &xml::element::Element) -> super::Entry
 
 /// Read `w:behaviors` into a `EntryInsertionBehaviors`.
 #[must_use]
-pub fn entry_insertion_behaviors(
-    element: &xml::element::Element,
-) -> super::EntryInsertionBehaviors {
+pub fn entry_insertion_behaviors(element: &Element) -> super::EntryInsertionBehaviors {
     let mut node = super::EntryInsertionBehaviors::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_INSERTION_BEHAVIORS_SHAPE);
     for (index, field) in &mut reader {
@@ -4614,7 +4452,7 @@ pub fn entry_insertion_behaviors(
 
 /// Read `w:name` into a `EntryName`.
 #[must_use]
-pub fn entry_name(element: &xml::element::Element) -> super::EntryName {
+pub fn entry_name(element: &Element) -> super::EntryName {
     let mut node = super::EntryName::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -4630,7 +4468,7 @@ pub fn entry_name(element: &xml::element::Element) -> super::EntryName {
 
 /// Read `w:type` into a `EntryType`.
 #[must_use]
-pub fn entry_type(element: &xml::element::Element) -> super::EntryType {
+pub fn entry_type(element: &Element) -> super::EntryType {
     let mut node = super::EntryType::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -4644,7 +4482,7 @@ pub fn entry_type(element: &xml::element::Element) -> super::EntryType {
 
 /// Read `w:types` into a `EntryTypes`.
 #[must_use]
-pub fn entry_types(element: &xml::element::Element) -> super::EntryTypes {
+pub fn entry_types(element: &Element) -> super::EntryTypes {
     let mut node = super::EntryTypes::default();
     let mut reader = markup::Reader::new(element, &super::ENTRY_TYPES_SHAPE);
     for (index, field) in &mut reader {
@@ -4660,9 +4498,7 @@ pub fn entry_types(element: &xml::element::Element) -> super::EntryTypes {
 
 /// Read `w:equation` into a `EquationStructuredDocumentTag`.
 #[must_use]
-pub fn equation_structured_document_tag(
-    element: &xml::element::Element,
-) -> super::EquationStructuredDocumentTag {
+pub fn equation_structured_document_tag(element: &Element) -> super::EquationStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::EQUATION_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::EquationStructuredDocumentTag {
         unknown: reader.finish(),
@@ -4671,9 +4507,7 @@ pub fn equation_structured_document_tag(
 
 /// Read `w:entryMacro` into a `ExecuteOnFormFieldEntry`.
 #[must_use]
-pub fn execute_on_form_field_entry(
-    element: &xml::element::Element,
-) -> super::ExecuteOnFormFieldEntry {
+pub fn execute_on_form_field_entry(element: &Element) -> super::ExecuteOnFormFieldEntry {
     let mut node = super::ExecuteOnFormFieldEntry::default();
     let mut reader = markup::Reader::new(element, &super::EXECUTE_ON_FORM_FIELD_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -4687,9 +4521,7 @@ pub fn execute_on_form_field_entry(
 
 /// Read `w:exitMacro` into a `ExecuteOnFormFieldExit`.
 #[must_use]
-pub fn execute_on_form_field_exit(
-    element: &xml::element::Element,
-) -> super::ExecuteOnFormFieldExit {
+pub fn execute_on_form_field_exit(element: &Element) -> super::ExecuteOnFormFieldExit {
     let mut node = super::ExecuteOnFormFieldExit::default();
     let mut reader = markup::Reader::new(element, &super::EXECUTE_ON_FORM_FIELD_EXIT_SHAPE);
     for (index, field) in &mut reader {
@@ -4703,7 +4535,7 @@ pub fn execute_on_form_field_exit(
 
 /// Read `w:w` into a `ExpandedCompressedText`.
 #[must_use]
-pub fn expanded_compressed_text(element: &xml::element::Element) -> super::ExpandedCompressedText {
+pub fn expanded_compressed_text(element: &Element) -> super::ExpandedCompressedText {
     let mut node = super::ExpandedCompressedText::default();
     let mut reader = markup::Reader::new(element, &super::EXPANDED_COMPRESSED_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -4718,7 +4550,7 @@ pub fn expanded_compressed_text(element: &xml::element::Element) -> super::Expan
 /// Read `w:altChunkPr` into a `ExternalContentImportProperties`.
 #[must_use]
 pub fn external_content_import_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExternalContentImportProperties {
     let mut node = super::ExternalContentImportProperties::default();
     let mut reader = markup::Reader::new(element, &super::EXTERNAL_CONTENT_IMPORT_PROPERTIES_SHAPE);
@@ -4734,7 +4566,7 @@ pub fn external_content_import_properties(
 /// Read `w:fieldMapData` into a `ExternalDataSourceMergeFieldMapping`.
 #[must_use]
 pub fn external_data_source_merge_field_mapping(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExternalDataSourceMergeFieldMapping {
     let mut node = super::ExternalDataSourceMergeFieldMapping::default();
     let mut reader = markup::Reader::new(
@@ -4758,7 +4590,7 @@ pub fn external_data_source_merge_field_mapping(
 
 /// Read `w:instrText` into a `FieldCode`.
 #[must_use]
-pub fn field_code(element: &xml::element::Element) -> super::FieldCode {
+pub fn field_code(element: &Element) -> super::FieldCode {
     let mut node = super::FieldCode::default();
     let mut reader = markup::Reader::new(element, &super::FIELD_CODE_SHAPE);
     for (index, field) in &mut reader {
@@ -4774,9 +4606,7 @@ pub fn field_code(element: &xml::element::Element) -> super::FieldCode {
 
 /// Read `w:fHdr` into a `FirstRowContainsColumnNames`.
 #[must_use]
-pub fn first_row_contains_column_names(
-    element: &xml::element::Element,
-) -> super::FirstRowContainsColumnNames {
+pub fn first_row_contains_column_names(element: &Element) -> super::FirstRowContainsColumnNames {
     let mut node = super::FirstRowContainsColumnNames::default();
     let mut reader = markup::Reader::new(element, &super::FIRST_ROW_CONTAINS_COLUMN_NAMES_SHAPE);
     for (index, field) in &mut reader {
@@ -4790,7 +4620,7 @@ pub fn first_row_contains_column_names(
 
 /// Read `w:tcFitText` into a `FitTextWithinCell`.
 #[must_use]
-pub fn fit_text_within_cell(element: &xml::element::Element) -> super::FitTextWithinCell {
+pub fn fit_text_within_cell(element: &Element) -> super::FitTextWithinCell {
     let mut node = super::FitTextWithinCell::default();
     let mut reader = markup::Reader::new(element, &super::FIT_TEXT_WITHIN_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -4805,7 +4635,7 @@ pub fn fit_text_within_cell(element: &xml::element::Element) -> super::FitTextWi
 /// Read `w:wpJustification` into a `FitToExpandedWidthWhenPerformingFullJustification`.
 #[must_use]
 pub fn fit_to_expanded_width_when_performing_full_justification(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FitToExpandedWidthWhenPerformingFullJustification {
     let mut node = super::FitToExpandedWidthWhenPerformingFullJustification::default();
     let mut reader = markup::Reader::new(
@@ -4823,9 +4653,7 @@ pub fn fit_to_expanded_width_when_performing_full_justification(
 
 /// Read `w:tblOverlap` into a `FloatingTableAllowsOverlap`.
 #[must_use]
-pub fn floating_table_allows_overlap(
-    element: &xml::element::Element,
-) -> super::FloatingTableAllowsOverlap {
+pub fn floating_table_allows_overlap(element: &Element) -> super::FloatingTableAllowsOverlap {
     let mut node = super::FloatingTableAllowsOverlap::default();
     let mut reader = markup::Reader::new(element, &super::FLOATING_TABLE_ALLOWS_OVERLAP_SHAPE);
     for (index, field) in &mut reader {
@@ -4839,9 +4667,7 @@ pub fn floating_table_allows_overlap(
 
 /// Read `w:tblpPr` into a `FloatingTablePositioning`.
 #[must_use]
-pub fn floating_table_positioning(
-    element: &xml::element::Element,
-) -> super::FloatingTablePositioning {
+pub fn floating_table_positioning(element: &Element) -> super::FloatingTablePositioning {
     let mut node = super::FloatingTablePositioning::default();
     let mut reader = markup::Reader::new(element, &super::FLOATING_TABLE_POSITIONING_SHAPE);
     for (index, field) in &mut reader {
@@ -4865,7 +4691,7 @@ pub fn floating_table_positioning(
 
 /// Read `w:family` into a `FontFamily`.
 #[must_use]
-pub fn font_family(element: &xml::element::Element) -> super::FontFamily {
+pub fn font_family(element: &Element) -> super::FontFamily {
     let mut node = super::FontFamily::default();
     let mut reader = markup::Reader::new(element, &super::FONT_FAMILY_SHAPE);
     for (index, field) in &mut reader {
@@ -4879,7 +4705,7 @@ pub fn font_family(element: &xml::element::Element) -> super::FontFamily {
 
 /// Read `w:kern` into a `FontKerning`.
 #[must_use]
-pub fn font_kerning(element: &xml::element::Element) -> super::FontKerning {
+pub fn font_kerning(element: &Element) -> super::FontKerning {
     let mut node = super::FontKerning::default();
     let mut reader = markup::Reader::new(element, &super::FONT_KERNING_SHAPE);
     for (index, field) in &mut reader {
@@ -4893,7 +4719,7 @@ pub fn font_kerning(element: &xml::element::Element) -> super::FontKerning {
 
 /// Read `w:pitch` into a `FontPitch`.
 #[must_use]
-pub fn font_pitch(element: &xml::element::Element) -> super::FontPitch {
+pub fn font_pitch(element: &Element) -> super::FontPitch {
     let mut node = super::FontPitch::default();
     let mut reader = markup::Reader::new(element, &super::FONT_PITCH_SHAPE);
     for (index, field) in &mut reader {
@@ -4907,7 +4733,7 @@ pub fn font_pitch(element: &xml::element::Element) -> super::FontPitch {
 
 /// Read `w:fonts` into a `FontTableRootElement`.
 #[must_use]
-pub fn font_table_root_element(element: &xml::element::Element) -> super::FontTableRootElement {
+pub fn font_table_root_element(element: &Element) -> super::FontTableRootElement {
     let mut node = super::FontTableRootElement::default();
     let mut reader = markup::Reader::new(element, &super::FONT_TABLE_ROOT_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -4921,7 +4747,7 @@ pub fn font_table_root_element(element: &xml::element::Element) -> super::FontTa
 
 /// Read `w:ftr` into a `Footer`.
 #[must_use]
-pub fn footer(element: &xml::element::Element) -> super::Footer {
+pub fn footer(element: &Element) -> super::Footer {
     let mut node = super::Footer::default();
     let mut reader = markup::Reader::new(element, &super::FOOTER_SHAPE);
     for (index, field) in &mut reader {
@@ -4935,7 +4761,7 @@ pub fn footer(element: &xml::element::Element) -> super::Footer {
 
 /// Read `w:footerReference` into a `FooterReference`.
 #[must_use]
-pub fn footer_reference(element: &xml::element::Element) -> super::FooterReference {
+pub fn footer_reference(element: &Element) -> super::FooterReference {
     let mut node = super::FooterReference::default();
     let mut reader = markup::Reader::new(element, &super::FOOTER_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -4952,7 +4778,7 @@ pub fn footer_reference(element: &xml::element::Element) -> super::FooterReferen
 /// Read `w:numRestart` into a `FootnoteAndEndnoteNumberingRestartLocation`.
 #[must_use]
 pub fn footnote_and_endnote_numbering_restart_location(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FootnoteAndEndnoteNumberingRestartLocation {
     let mut node = super::FootnoteAndEndnoteNumberingRestartLocation::default();
     let mut reader = markup::Reader::new(
@@ -4971,7 +4797,7 @@ pub fn footnote_and_endnote_numbering_restart_location(
 /// Read `w:numStart` into a `FootnoteAndEndnoteNumberingStartingValue`.
 #[must_use]
 pub fn footnote_and_endnote_numbering_starting_value(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FootnoteAndEndnoteNumberingStartingValue {
     let mut node = super::FootnoteAndEndnoteNumberingStartingValue::default();
     let mut reader = markup::Reader::new(
@@ -4989,7 +4815,7 @@ pub fn footnote_and_endnote_numbering_starting_value(
 
 /// Read `w:footnote` into a `FootnoteContent`.
 #[must_use]
-pub fn footnote_content(element: &xml::element::Element) -> super::FootnoteContent {
+pub fn footnote_content(element: &Element) -> super::FootnoteContent {
     let mut node = super::FootnoteContent::default();
     let mut reader = markup::Reader::new(element, &super::FOOTNOTE_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5006,9 +4832,7 @@ pub fn footnote_content(element: &xml::element::Element) -> super::FootnoteConte
 
 /// Read `w:separator` into a `FootnoteEndnoteSeparatorMark`.
 #[must_use]
-pub fn footnote_endnote_separator_mark(
-    element: &xml::element::Element,
-) -> super::FootnoteEndnoteSeparatorMark {
+pub fn footnote_endnote_separator_mark(element: &Element) -> super::FootnoteEndnoteSeparatorMark {
     let reader = markup::Reader::new(element, &super::FOOTNOTE_ENDNOTE_SEPARATOR_MARK_SHAPE);
     super::FootnoteEndnoteSeparatorMark {
         unknown: reader.finish(),
@@ -5017,7 +4841,7 @@ pub fn footnote_endnote_separator_mark(
 
 /// Read `w:pos` into a `FootnotePlacement`.
 #[must_use]
-pub fn footnote_placement(element: &xml::element::Element) -> super::FootnotePlacement {
+pub fn footnote_placement(element: &Element) -> super::FootnotePlacement {
     let mut node = super::FootnotePlacement::default();
     let mut reader = markup::Reader::new(element, &super::FOOTNOTE_PLACEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5031,7 +4855,7 @@ pub fn footnote_placement(element: &xml::element::Element) -> super::FootnotePla
 
 /// Read `w:footnoteReference` into a `FootnoteReference`.
 #[must_use]
-pub fn footnote_reference(element: &xml::element::Element) -> super::FootnoteReference {
+pub fn footnote_reference(element: &Element) -> super::FootnoteReference {
     let mut node = super::FootnoteReference::default();
     let mut reader = markup::Reader::new(element, &super::FOOTNOTE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -5047,7 +4871,7 @@ pub fn footnote_reference(element: &xml::element::Element) -> super::FootnoteRef
 
 /// Read `w:footnoteRef` into a `FootnoteReferenceMark`.
 #[must_use]
-pub fn footnote_reference_mark(element: &xml::element::Element) -> super::FootnoteReferenceMark {
+pub fn footnote_reference_mark(element: &Element) -> super::FootnoteReferenceMark {
     let reader = markup::Reader::new(element, &super::FOOTNOTE_REFERENCE_MARK_SHAPE);
     super::FootnoteReferenceMark {
         unknown: reader.finish(),
@@ -5056,7 +4880,7 @@ pub fn footnote_reference_mark(element: &xml::element::Element) -> super::Footno
 
 /// Read `w:forgetLastTabAlignment` into a `ForgetLastTabAlignment`.
 #[must_use]
-pub fn forget_last_tab_alignment(element: &xml::element::Element) -> super::ForgetLastTabAlignment {
+pub fn forget_last_tab_alignment(element: &Element) -> super::ForgetLastTabAlignment {
     let mut node = super::ForgetLastTabAlignment::default();
     let mut reader = markup::Reader::new(element, &super::FORGET_LAST_TAB_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5070,7 +4894,7 @@ pub fn forget_last_tab_alignment(element: &xml::element::Element) -> super::Forg
 
 /// Read `w:enabled` into a `FormFieldEnabled`.
 #[must_use]
-pub fn form_field_enabled(element: &xml::element::Element) -> super::FormFieldEnabled {
+pub fn form_field_enabled(element: &Element) -> super::FormFieldEnabled {
     let mut node = super::FormFieldEnabled::default();
     let mut reader = markup::Reader::new(element, &super::FORM_FIELD_ENABLED_SHAPE);
     for (index, field) in &mut reader {
@@ -5084,7 +4908,7 @@ pub fn form_field_enabled(element: &xml::element::Element) -> super::FormFieldEn
 
 /// Read `w:name` into a `FormFieldName`.
 #[must_use]
-pub fn form_field_name(element: &xml::element::Element) -> super::FormFieldName {
+pub fn form_field_name(element: &Element) -> super::FormFieldName {
     let mut node = super::FormFieldName::default();
     let mut reader = markup::Reader::new(element, &super::FORM_FIELD_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -5098,7 +4922,7 @@ pub fn form_field_name(element: &xml::element::Element) -> super::FormFieldName 
 
 /// Read `w:ffData` into a `FormFieldProperties`.
 #[must_use]
-pub fn form_field_properties(element: &xml::element::Element) -> super::FormFieldProperties {
+pub fn form_field_properties(element: &Element) -> super::FormFieldProperties {
     let mut node = super::FormFieldProperties::default();
     let mut reader = markup::Reader::new(element, &super::FORM_FIELD_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -5112,15 +4936,13 @@ pub fn form_field_properties(element: &xml::element::Element) -> super::FormFiel
 
 /// Read one item of `FormFieldPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn form_field_properties_content(
-    element: &xml::element::Element,
-) -> super::FormFieldPropertiesContent {
+pub fn form_field_properties_content(element: &Element) -> super::FormFieldPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:noResizeAllowed` into a `FrameCannotBeResized`.
 #[must_use]
-pub fn frame_cannot_be_resized(element: &xml::element::Element) -> super::FrameCannotBeResized {
+pub fn frame_cannot_be_resized(element: &Element) -> super::FrameCannotBeResized {
     let mut node = super::FrameCannotBeResized::default();
     let mut reader = markup::Reader::new(element, &super::FRAME_CANNOT_BE_RESIZED_SHAPE);
     for (index, field) in &mut reader {
@@ -5134,7 +4956,7 @@ pub fn frame_cannot_be_resized(element: &xml::element::Element) -> super::FrameC
 
 /// Read `w:longDesc` into a `FrameLongDescription`.
 #[must_use]
-pub fn frame_long_description(element: &xml::element::Element) -> super::FrameLongDescription {
+pub fn frame_long_description(element: &Element) -> super::FrameLongDescription {
     let mut node = super::FrameLongDescription::default();
     let mut reader = markup::Reader::new(element, &super::FRAME_LONG_DESCRIPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -5148,7 +4970,7 @@ pub fn frame_long_description(element: &xml::element::Element) -> super::FrameLo
 
 /// Read `w:title` into a `FrameOrFramesetTitle`.
 #[must_use]
-pub fn frame_or_frameset_title(element: &xml::element::Element) -> super::FrameOrFramesetTitle {
+pub fn frame_or_frameset_title(element: &Element) -> super::FrameOrFramesetTitle {
     let mut node = super::FrameOrFramesetTitle::default();
     let mut reader = markup::Reader::new(element, &super::FRAME_OR_FRAMESET_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -5162,7 +4984,7 @@ pub fn frame_or_frameset_title(element: &xml::element::Element) -> super::FrameO
 
 /// Read `w:sz` into a `FrameSize`.
 #[must_use]
-pub fn frame_size(element: &xml::element::Element) -> super::FrameSize {
+pub fn frame_size(element: &Element) -> super::FrameSize {
     let mut node = super::FrameSize::default();
     let mut reader = markup::Reader::new(element, &super::FRAME_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -5176,13 +4998,13 @@ pub fn frame_size(element: &xml::element::Element) -> super::FrameSize {
 
 /// Read one item of `FramesetDefinitionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn frameset_definition(element: &xml::element::Element) -> super::FramesetDefinitionContent {
+pub fn frameset_definition(element: &Element) -> super::FramesetDefinitionContent {
     markup::read(element)
 }
 
 /// Read `w:frameLayout` into a `FramesetLayout`.
 #[must_use]
-pub fn frameset_layout(element: &xml::element::Element) -> super::FramesetLayout {
+pub fn frameset_layout(element: &Element) -> super::FramesetLayout {
     let mut node = super::FramesetLayout::default();
     let mut reader = markup::Reader::new(element, &super::FRAMESET_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -5196,9 +5018,7 @@ pub fn frameset_layout(element: &xml::element::Element) -> super::FramesetLayout
 
 /// Read `w:flatBorders` into a `FramesetSplitterBorderStyle`.
 #[must_use]
-pub fn frameset_splitter_border_style(
-    element: &xml::element::Element,
-) -> super::FramesetSplitterBorderStyle {
+pub fn frameset_splitter_border_style(element: &Element) -> super::FramesetSplitterBorderStyle {
     let mut node = super::FramesetSplitterBorderStyle::default();
     let mut reader = markup::Reader::new(element, &super::FRAMESET_SPLITTER_BORDER_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -5212,9 +5032,7 @@ pub fn frameset_splitter_border_style(
 
 /// Read `w:framesetSplitbar` into a `FramesetSplitterProperties`.
 #[must_use]
-pub fn frameset_splitter_properties(
-    element: &xml::element::Element,
-) -> super::FramesetSplitterProperties {
+pub fn frameset_splitter_properties(element: &Element) -> super::FramesetSplitterProperties {
     let mut node = super::FramesetSplitterProperties::default();
     let mut reader = markup::Reader::new(element, &super::FRAMESET_SPLITTER_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -5232,7 +5050,7 @@ pub fn frameset_splitter_properties(
 
 /// Read `w:w` into a `FramesetSplitterWidth`.
 #[must_use]
-pub fn frameset_splitter_width(element: &xml::element::Element) -> super::FramesetSplitterWidth {
+pub fn frameset_splitter_width(element: &Element) -> super::FramesetSplitterWidth {
     let mut node = super::FramesetSplitterWidth::default();
     let mut reader = markup::Reader::new(element, &super::FRAMESET_SPLITTER_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -5246,7 +5064,7 @@ pub fn frameset_splitter_width(element: &xml::element::Element) -> super::Frames
 
 /// Read `w:readModeInkLockDown` into a `FreezeDocumentLayout`.
 #[must_use]
-pub fn freeze_document_layout(element: &xml::element::Element) -> super::FreezeDocumentLayout {
+pub fn freeze_document_layout(element: &Element) -> super::FreezeDocumentLayout {
     let mut node = super::FreezeDocumentLayout::default();
     let mut reader = markup::Reader::new(element, &super::FREEZE_DOCUMENT_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -5264,7 +5082,7 @@ pub fn freeze_document_layout(element: &xml::element::Element) -> super::FreezeD
 
 /// Read `w:alias` into a `FriendlyName`.
 #[must_use]
-pub fn friendly_name(element: &xml::element::Element) -> super::FriendlyName {
+pub fn friendly_name(element: &Element) -> super::FriendlyName {
     let mut node = super::FriendlyName::default();
     let mut reader = markup::Reader::new(element, &super::FRIENDLY_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -5278,9 +5096,7 @@ pub fn friendly_name(element: &xml::element::Element) -> super::FriendlyName {
 
 /// Read `w:gallery` into a `GalleryAssociatedWithEntry`.
 #[must_use]
-pub fn gallery_associated_with_entry(
-    element: &xml::element::Element,
-) -> super::GalleryAssociatedWithEntry {
+pub fn gallery_associated_with_entry(element: &Element) -> super::GalleryAssociatedWithEntry {
     let mut node = super::GalleryAssociatedWithEntry::default();
     let mut reader = markup::Reader::new(element, &super::GALLERY_ASSOCIATED_WITH_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -5295,7 +5111,7 @@ pub fn gallery_associated_with_entry(
 /// Read `w:savePreviewPicture` into a `GenerateThumbnailForDocumentOnSave`.
 #[must_use]
 pub fn generate_thumbnail_for_document_on_save(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::GenerateThumbnailForDocumentOnSave {
     let mut node = super::GenerateThumbnailForDocumentOnSave::default();
     let mut reader = markup::Reader::new(
@@ -5313,7 +5129,7 @@ pub fn generate_thumbnail_for_document_on_save(
 
 /// Read `w:docPart` into a `GlossaryDocumentEntry`.
 #[must_use]
-pub fn glossary_document_entry(element: &xml::element::Element) -> super::GlossaryDocumentEntry {
+pub fn glossary_document_entry(element: &Element) -> super::GlossaryDocumentEntry {
     let mut node = super::GlossaryDocumentEntry::default();
     let mut reader = markup::Reader::new(element, &super::GLOSSARY_DOCUMENT_ENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -5330,7 +5146,7 @@ pub fn glossary_document_entry(element: &xml::element::Element) -> super::Glossa
 /// Read `w:docPartPr` into a `GlossaryDocumentEntryProperties`.
 #[must_use]
 pub fn glossary_document_entry_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::GlossaryDocumentEntryProperties {
     let mut node = super::GlossaryDocumentEntryProperties::default();
     let mut reader = markup::Reader::new(element, &super::GLOSSARY_DOCUMENT_ENTRY_PROPERTIES_SHAPE);
@@ -5347,16 +5163,14 @@ pub fn glossary_document_entry_properties(
 /// or `Other`.
 #[must_use]
 pub fn glossary_document_entry_properties_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::GlossaryDocumentEntryPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:glossaryDocument` into a `GlossaryDocumentRootElement`.
 #[must_use]
-pub fn glossary_document_root_element(
-    element: &xml::element::Element,
-) -> super::GlossaryDocumentRootElement {
+pub fn glossary_document_root_element(element: &Element) -> super::GlossaryDocumentRootElement {
     let mut node = super::GlossaryDocumentRootElement::default();
     let mut reader = markup::Reader::new(element, &super::GLOSSARY_DOCUMENT_ROOT_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5372,9 +5186,7 @@ pub fn glossary_document_root_element(
 
 /// Read `w:activeWritingStyle` into a `GrammarCheckingSettings`.
 #[must_use]
-pub fn grammar_checking_settings(
-    element: &xml::element::Element,
-) -> super::GrammarCheckingSettings {
+pub fn grammar_checking_settings(element: &Element) -> super::GrammarCheckingSettings {
     let mut node = super::GrammarCheckingSettings::default();
     let mut reader = markup::Reader::new(element, &super::GRAMMAR_CHECKING_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -5394,7 +5206,7 @@ pub fn grammar_checking_settings(
 
 /// Read `w:gridCol` into a `GridColumnDefinition`.
 #[must_use]
-pub fn grid_column_definition(element: &xml::element::Element) -> super::GridColumnDefinition {
+pub fn grid_column_definition(element: &Element) -> super::GridColumnDefinition {
     let mut node = super::GridColumnDefinition::default();
     let mut reader = markup::Reader::new(element, &super::GRID_COLUMN_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -5408,9 +5220,7 @@ pub fn grid_column_definition(element: &xml::element::Element) -> super::GridCol
 
 /// Read `w:gridAfter` into a `GridColumnsAfterLastCell`.
 #[must_use]
-pub fn grid_columns_after_last_cell(
-    element: &xml::element::Element,
-) -> super::GridColumnsAfterLastCell {
+pub fn grid_columns_after_last_cell(element: &Element) -> super::GridColumnsAfterLastCell {
     let mut node = super::GridColumnsAfterLastCell::default();
     let mut reader = markup::Reader::new(element, &super::GRID_COLUMNS_AFTER_LAST_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -5424,9 +5234,7 @@ pub fn grid_columns_after_last_cell(
 
 /// Read `w:gridBefore` into a `GridColumnsBeforeFirstCell`.
 #[must_use]
-pub fn grid_columns_before_first_cell(
-    element: &xml::element::Element,
-) -> super::GridColumnsBeforeFirstCell {
+pub fn grid_columns_before_first_cell(element: &Element) -> super::GridColumnsBeforeFirstCell {
     let mut node = super::GridColumnsBeforeFirstCell::default();
     let mut reader = markup::Reader::new(element, &super::GRID_COLUMNS_BEFORE_FIRST_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -5440,7 +5248,7 @@ pub fn grid_columns_before_first_cell(
 
 /// Read `w:gridSpan` into a `GridColumnsSpanned`.
 #[must_use]
-pub fn grid_columns_spanned(element: &xml::element::Element) -> super::GridColumnsSpanned {
+pub fn grid_columns_spanned(element: &Element) -> super::GridColumnsSpanned {
     let mut node = super::GridColumnsSpanned::default();
     let mut reader = markup::Reader::new(element, &super::GRID_COLUMNS_SPANNED_SHAPE);
     for (index, field) in &mut reader {
@@ -5454,9 +5262,7 @@ pub fn grid_columns_spanned(element: &xml::element::Element) -> super::GridColum
 
 /// Read `w:group` into a `GroupStructuredDocumentTag`.
 #[must_use]
-pub fn group_structured_document_tag(
-    element: &xml::element::Element,
-) -> super::GroupStructuredDocumentTag {
+pub fn group_structured_document_tag(element: &Element) -> super::GroupStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::GROUP_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::GroupStructuredDocumentTag {
         unknown: reader.finish(),
@@ -5465,9 +5271,7 @@ pub fn group_structured_document_tag(
 
 /// Read `w:rtlGutter` into a `GutterOnRightSideOfPage`.
 #[must_use]
-pub fn gutter_on_right_side_of_page(
-    element: &xml::element::Element,
-) -> super::GutterOnRightSideOfPage {
+pub fn gutter_on_right_side_of_page(element: &Element) -> super::GutterOnRightSideOfPage {
     let mut node = super::GutterOnRightSideOfPage::default();
     let mut reader = markup::Reader::new(element, &super::GUTTER_ON_RIGHT_SIDE_OF_PAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -5481,7 +5285,7 @@ pub fn gutter_on_right_side_of_page(
 
 /// Read `w:hdr` into a `Header`.
 #[must_use]
-pub fn header(element: &xml::element::Element) -> super::Header {
+pub fn header(element: &Element) -> super::Header {
     let mut node = super::Header::default();
     let mut reader = markup::Reader::new(element, &super::HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -5495,7 +5299,7 @@ pub fn header(element: &xml::element::Element) -> super::Header {
 
 /// Read `w:header` into a `HeaderCellReference`.
 #[must_use]
-pub fn header_cell_reference(element: &xml::element::Element) -> super::HeaderCellReference {
+pub fn header_cell_reference(element: &Element) -> super::HeaderCellReference {
     let mut node = super::HeaderCellReference::default();
     let mut reader = markup::Reader::new(element, &super::HEADER_CELL_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -5510,7 +5314,7 @@ pub fn header_cell_reference(element: &xml::element::Element) -> super::HeaderCe
 /// Read `w:headers` into a `HeaderCellsAssociatedWithTableCell`.
 #[must_use]
 pub fn header_cells_associated_with_table_cell(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::HeaderCellsAssociatedWithTableCell {
     let mut node = super::HeaderCellsAssociatedWithTableCell::default();
     let mut reader = markup::Reader::new(
@@ -5528,9 +5332,7 @@ pub fn header_cells_associated_with_table_cell(
 
 /// Read `w:headerSource` into a `HeaderDefinitionFilePath`.
 #[must_use]
-pub fn header_definition_file_path(
-    element: &xml::element::Element,
-) -> super::HeaderDefinitionFilePath {
+pub fn header_definition_file_path(element: &Element) -> super::HeaderDefinitionFilePath {
     let mut node = super::HeaderDefinitionFilePath::default();
     let mut reader = markup::Reader::new(element, &super::HEADER_DEFINITION_FILE_PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -5544,7 +5346,7 @@ pub fn header_definition_file_path(
 
 /// Read `w:headerReference` into a `HeaderReference`.
 #[must_use]
-pub fn header_reference(element: &xml::element::Element) -> super::HeaderReference {
+pub fn header_reference(element: &Element) -> super::HeaderReference {
     let mut node = super::HeaderReference::default();
     let mut reader = markup::Reader::new(element, &super::HEADER_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -5560,7 +5362,7 @@ pub fn header_reference(element: &xml::element::Element) -> super::HeaderReferen
 
 /// Read `w:hidden` into a `HiddenTableRowMarker`.
 #[must_use]
-pub fn hidden_table_row_marker(element: &xml::element::Element) -> super::HiddenTableRowMarker {
+pub fn hidden_table_row_marker(element: &Element) -> super::HiddenTableRowMarker {
     let mut node = super::HiddenTableRowMarker::default();
     let mut reader = markup::Reader::new(element, &super::HIDDEN_TABLE_ROW_MARKER_SHAPE);
     for (index, field) in &mut reader {
@@ -5574,7 +5376,7 @@ pub fn hidden_table_row_marker(element: &xml::element::Element) -> super::Hidden
 
 /// Read `w:vanish` into a `HiddenText`.
 #[must_use]
-pub fn hidden_text(element: &xml::element::Element) -> super::HiddenText {
+pub fn hidden_text(element: &Element) -> super::HiddenText {
     let mut node = super::HiddenText::default();
     let mut reader = markup::Reader::new(element, &super::HIDDEN_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -5589,7 +5391,7 @@ pub fn hidden_text(element: &xml::element::Element) -> super::HiddenText {
 /// Read `w:semiHidden` into a `HideStyleFromMainUserInterface`.
 #[must_use]
 pub fn hide_style_from_main_user_interface(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::HideStyleFromMainUserInterface {
     let mut node = super::HideStyleFromMainUserInterface::default();
     let mut reader =
@@ -5605,7 +5407,7 @@ pub fn hide_style_from_main_user_interface(
 
 /// Read `w:hMerge` into a `HorizontallyMergedCell`.
 #[must_use]
-pub fn horizontally_merged_cell(element: &xml::element::Element) -> super::HorizontallyMergedCell {
+pub fn horizontally_merged_cell(element: &Element) -> super::HorizontallyMergedCell {
     let mut node = super::HorizontallyMergedCell::default();
     let mut reader = markup::Reader::new(element, &super::HORIZONTALLY_MERGED_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -5619,7 +5421,7 @@ pub fn horizontally_merged_cell(element: &xml::element::Element) -> super::Horiz
 
 /// Read `w:hyperlink` into a `Hyperlink`.
 #[must_use]
-pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
+pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {
@@ -5640,7 +5442,7 @@ pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
 
 /// Read `w:hyphenationZone` into a `HyphenationZone`.
 #[must_use]
-pub fn hyphenation_zone(element: &xml::element::Element) -> super::HyphenationZone {
+pub fn hyphenation_zone(element: &Element) -> super::HyphenationZone {
     let mut node = super::HyphenationZone::default();
     let mut reader = markup::Reader::new(element, &super::HYPHENATION_ZONE_SHAPE);
     for (index, field) in &mut reader {
@@ -5654,7 +5456,7 @@ pub fn hyphenation_zone(element: &xml::element::Element) -> super::HyphenationZo
 
 /// Read `w:hideMark` into a `IgnoreEndOfCellMarker`.
 #[must_use]
-pub fn ignore_end_of_cell_marker(element: &xml::element::Element) -> super::IgnoreEndOfCellMarker {
+pub fn ignore_end_of_cell_marker(element: &Element) -> super::IgnoreEndOfCellMarker {
     let mut node = super::IgnoreEndOfCellMarker::default();
     let mut reader = markup::Reader::new(element, &super::IGNORE_END_OF_CELL_MARKER_SHAPE);
     for (index, field) in &mut reader {
@@ -5669,7 +5471,7 @@ pub fn ignore_end_of_cell_marker(element: &xml::element::Element) -> super::Igno
 /// Read `w:suppressBottomSpacing` into a `IgnoreExactLineHeightForLastLineOnPage`.
 #[must_use]
 pub fn ignore_exact_line_height_for_last_line_on_page(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::IgnoreExactLineHeightForLastLineOnPage {
     let mut node = super::IgnoreExactLineHeightForLastLineOnPage::default();
     let mut reader = markup::Reader::new(
@@ -5688,7 +5490,7 @@ pub fn ignore_exact_line_height_for_last_line_on_page(
 /// Read `w:suppressSpacingAtTopOfPage` into a `IgnoreMinimumLineHeightForFirstLineOnPage`.
 #[must_use]
 pub fn ignore_minimum_line_height_for_first_line_on_page(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::IgnoreMinimumLineHeightForFirstLineOnPage {
     let mut node = super::IgnoreMinimumLineHeightForFirstLineOnPage::default();
     let mut reader = markup::Reader::new(
@@ -5706,7 +5508,7 @@ pub fn ignore_minimum_line_height_for_first_line_on_page(
 
 /// Read `w:ignoreMixedContent` into a `IgnoreMixedContent`.
 #[must_use]
-pub fn ignore_mixed_content(element: &xml::element::Element) -> super::IgnoreMixedContent {
+pub fn ignore_mixed_content(element: &Element) -> super::IgnoreMixedContent {
     let mut node = super::IgnoreMixedContent::default();
     let mut reader = markup::Reader::new(element, &super::IGNORE_MIXED_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5721,7 +5523,7 @@ pub fn ignore_mixed_content(element: &xml::element::Element) -> super::IgnoreMix
 /// Read `w:footnoteLayoutLikeWW8` into a `IgnorePageBreakFromContinuousSectionBreak`.
 #[must_use]
 pub fn ignore_page_break_from_continuous_section_break(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::IgnorePageBreakFromContinuousSectionBreak {
     let mut node = super::IgnorePageBreakFromContinuousSectionBreak::default();
     let mut reader = markup::Reader::new(
@@ -5739,9 +5541,7 @@ pub fn ignore_page_break_from_continuous_section_break(
 
 /// Read `w:contextualSpacing` into a `IgnoreSpacingAboveAndBelow`.
 #[must_use]
-pub fn ignore_spacing_above_and_below(
-    element: &xml::element::Element,
-) -> super::IgnoreSpacingAboveAndBelow {
+pub fn ignore_spacing_above_and_below(element: &Element) -> super::IgnoreSpacingAboveAndBelow {
     let mut node = super::IgnoreSpacingAboveAndBelow::default();
     let mut reader = markup::Reader::new(element, &super::IGNORE_SPACING_ABOVE_AND_BELOW_SHAPE);
     for (index, field) in &mut reader {
@@ -5756,7 +5556,7 @@ pub fn ignore_spacing_above_and_below(
 /// Read `w:shapeLayoutLikeWW8` into a `IgnoreTextWrappingAroundObjectsAtBottomOfPage`.
 #[must_use]
 pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::IgnoreTextWrappingAroundObjectsAtBottomOfPage {
     let mut node = super::IgnoreTextWrappingAroundObjectsAtBottomOfPage::default();
     let mut reader = markup::Reader::new(
@@ -5775,7 +5575,7 @@ pub fn ignore_text_wrapping_around_objects_at_bottom_of_page(
 /// Read `w:doNotVertAlignInTxbx` into a `IgnoreVerticalAlignmentInTextboxes`.
 #[must_use]
 pub fn ignore_vertical_alignment_in_textboxes(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::IgnoreVerticalAlignmentInTextboxes {
     let mut node = super::IgnoreVerticalAlignmentInTextboxes::default();
     let mut reader = markup::Reader::new(
@@ -5793,7 +5593,7 @@ pub fn ignore_vertical_alignment_in_textboxes(
 
 /// Read `w:imprint` into a `Imprinting`.
 #[must_use]
-pub fn imprinting(element: &xml::element::Element) -> super::Imprinting {
+pub fn imprinting(element: &Element) -> super::Imprinting {
     let mut node = super::Imprinting::default();
     let mut reader = markup::Reader::new(element, &super::IMPRINTING_SHAPE);
     for (index, field) in &mut reader {
@@ -5808,7 +5608,7 @@ pub fn imprinting(element: &xml::element::Element) -> super::Imprinting {
 /// Read `w:recipients` into a `InclusionExclusionDataForDataSource`.
 #[must_use]
 pub fn inclusion_exclusion_data_for_data_source(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InclusionExclusionDataForDataSource {
     let mut node = super::InclusionExclusionDataForDataSource::default();
     let mut reader = markup::Reader::new(
@@ -5826,9 +5626,7 @@ pub fn inclusion_exclusion_data_for_data_source(
 
 /// Read `w:column` into a `IndexOfColumnBeingMapped`.
 #[must_use]
-pub fn index_of_column_being_mapped(
-    element: &xml::element::Element,
-) -> super::IndexOfColumnBeingMapped {
+pub fn index_of_column_being_mapped(element: &Element) -> super::IndexOfColumnBeingMapped {
     let mut node = super::IndexOfColumnBeingMapped::default();
     let mut reader = markup::Reader::new(element, &super::INDEX_OF_COLUMN_BEING_MAPPED_SHAPE);
     for (index, field) in &mut reader {
@@ -5843,7 +5641,7 @@ pub fn index_of_column_being_mapped(
 /// Read `w:divs` into a `InformationAboutHTMLDivElements`.
 #[must_use]
 pub fn information_about_html_div_elements(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InformationAboutHTMLDivElements {
     let mut node = super::InformationAboutHTMLDivElements::default();
     let mut reader =
@@ -5860,7 +5658,7 @@ pub fn information_about_html_div_elements(
 /// Read `w:div` into a `InformationAboutSingleHTMLDivElement`.
 #[must_use]
 pub fn information_about_single_html_div_element(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InformationAboutSingleHTMLDivElement {
     let mut node = super::InformationAboutSingleHTMLDivElement::default();
     let mut reader = markup::Reader::new(
@@ -5887,9 +5685,7 @@ pub fn information_about_single_html_div_element(
 
 /// Read `w:customXml` into a `InlineLevelCustomXMLElement`.
 #[must_use]
-pub fn inline_level_custom_xml_element(
-    element: &xml::element::Element,
-) -> super::InlineLevelCustomXMLElement {
+pub fn inline_level_custom_xml_element(element: &Element) -> super::InlineLevelCustomXMLElement {
     let mut node = super::InlineLevelCustomXMLElement::default();
     let mut reader = markup::Reader::new(element, &super::INLINE_LEVEL_CUSTOM_XML_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -5907,7 +5703,7 @@ pub fn inline_level_custom_xml_element(
 
 /// Read `w:smartTag` into a `InlineLevelSmartTag`.
 #[must_use]
-pub fn inline_level_smart_tag(element: &xml::element::Element) -> super::InlineLevelSmartTag {
+pub fn inline_level_smart_tag(element: &Element) -> super::InlineLevelSmartTag {
     let mut node = super::InlineLevelSmartTag::default();
     let mut reader = markup::Reader::new(element, &super::INLINE_LEVEL_SMART_TAG_SHAPE);
     for (index, field) in &mut reader {
@@ -5926,7 +5722,7 @@ pub fn inline_level_smart_tag(element: &xml::element::Element) -> super::InlineL
 /// Read `w:sdt` into a `InlineLevelStructuredDocumentTag`.
 #[must_use]
 pub fn inline_level_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InlineLevelStructuredDocumentTag {
     let mut node = super::InlineLevelStructuredDocumentTag::default();
     let mut reader =
@@ -5950,7 +5746,7 @@ pub fn inline_level_structured_document_tag(
 /// Read `w:sdtContent` into a `InlineLevelStructuredDocumentTagContent`.
 #[must_use]
 pub fn inline_level_structured_document_tag_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InlineLevelStructuredDocumentTagContent {
     let mut node = super::InlineLevelStructuredDocumentTagContent::default();
     let mut reader = markup::Reader::new(
@@ -5968,9 +5764,7 @@ pub fn inline_level_structured_document_tag_content(
 
 /// Read `w:ins` into a `InsertedMathControlCharacter`.
 #[must_use]
-pub fn inserted_math_control_character(
-    element: &xml::element::Element,
-) -> super::InsertedMathControlCharacter {
+pub fn inserted_math_control_character(element: &Element) -> super::InsertedMathControlCharacter {
     let mut node = super::InsertedMathControlCharacter::default();
     let mut reader = markup::Reader::new(element, &super::INSERTED_MATH_CONTROL_CHARACTER_SHAPE);
     for (index, field) in &mut reader {
@@ -5991,14 +5785,14 @@ pub fn inserted_math_control_character(
 /// `Other`.
 #[must_use]
 pub fn inserted_math_control_character_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::InsertedMathControlCharacterContent {
     markup::read(element)
 }
 
 /// Read `w:ins` into a `InsertedRunContent`.
 #[must_use]
-pub fn inserted_run_content(element: &xml::element::Element) -> super::InsertedRunContent {
+pub fn inserted_run_content(element: &Element) -> super::InsertedRunContent {
     let mut node = super::InsertedRunContent::default();
     let mut reader = markup::Reader::new(element, &super::INSERTED_RUN_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -6016,7 +5810,7 @@ pub fn inserted_run_content(element: &xml::element::Element) -> super::InsertedR
 
 /// Read `w:ins` into a `InsertedTableRow`.
 #[must_use]
-pub fn inserted_table_row(element: &xml::element::Element) -> super::InsertedTableRow {
+pub fn inserted_table_row(element: &Element) -> super::InsertedTableRow {
     let mut node = super::InsertedTableRow::default();
     let mut reader = markup::Reader::new(element, &super::INSERTED_TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -6033,7 +5827,7 @@ pub fn inserted_table_row(element: &xml::element::Element) -> super::InsertedTab
 
 /// Read `w:dirty` into a `InvalidatedFieldCache`.
 #[must_use]
-pub fn invalidated_field_cache(element: &xml::element::Element) -> super::InvalidatedFieldCache {
+pub fn invalidated_field_cache(element: &Element) -> super::InvalidatedFieldCache {
     let mut node = super::InvalidatedFieldCache::default();
     let mut reader = markup::Reader::new(element, &super::INVALIDATED_FIELD_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -6047,9 +5841,7 @@ pub fn invalidated_field_cache(element: &xml::element::Element) -> super::Invali
 
 /// Read `w:embedItalic` into a `ItalicFontStyleEmbedding`.
 #[must_use]
-pub fn italic_font_style_embedding(
-    element: &xml::element::Element,
-) -> super::ItalicFontStyleEmbedding {
+pub fn italic_font_style_embedding(element: &Element) -> super::ItalicFontStyleEmbedding {
     let mut node = super::ItalicFontStyleEmbedding::default();
     let mut reader = markup::Reader::new(element, &super::ITALIC_FONT_STYLE_EMBEDDING_SHAPE);
     for (index, field) in &mut reader {
@@ -6066,7 +5858,7 @@ pub fn italic_font_style_embedding(
 
 /// Read `w:i` into a `Italics`.
 #[must_use]
-pub fn italics(element: &xml::element::Element) -> super::Italics {
+pub fn italics(element: &Element) -> super::Italics {
     let mut node = super::Italics::default();
     let mut reader = markup::Reader::new(element, &super::ITALICS_SHAPE);
     for (index, field) in &mut reader {
@@ -6080,7 +5872,7 @@ pub fn italics(element: &xml::element::Element) -> super::Italics {
 
 /// Read `w:lvlJc` into a `Justification`.
 #[must_use]
-pub fn justification(element: &xml::element::Element) -> super::Justification {
+pub fn justification(element: &Element) -> super::Justification {
     let mut node = super::Justification::default();
     let mut reader = markup::Reader::new(element, &super::JUSTIFICATION_SHAPE);
     for (index, field) in &mut reader {
@@ -6094,7 +5886,7 @@ pub fn justification(element: &xml::element::Element) -> super::Justification {
 
 /// Read `w:keepLines` into a `KeepAllLinesOnOnePage`.
 #[must_use]
-pub fn keep_all_lines_on_one_page(element: &xml::element::Element) -> super::KeepAllLinesOnOnePage {
+pub fn keep_all_lines_on_one_page(element: &Element) -> super::KeepAllLinesOnOnePage {
     let mut node = super::KeepAllLinesOnOnePage::default();
     let mut reader = markup::Reader::new(element, &super::KEEP_ALL_LINES_ON_ONE_PAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -6109,7 +5901,7 @@ pub fn keep_all_lines_on_one_page(element: &xml::element::Element) -> super::Kee
 /// Read `w:keepNext` into a `KeepParagraphWithNextParagraph`.
 #[must_use]
 pub fn keep_paragraph_with_next_paragraph(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::KeepParagraphWithNextParagraph {
     let mut node = super::KeepParagraphWithNextParagraph::default();
     let mut reader = markup::Reader::new(element, &super::KEEP_PARAGRAPH_WITH_NEXT_PARAGRAPH_SHAPE);
@@ -6124,9 +5916,7 @@ pub fn keep_paragraph_with_next_paragraph(
 
 /// Read `w:matchSrc` into a `KeepSourceFormattingOnImport`.
 #[must_use]
-pub fn keep_source_formatting_on_import(
-    element: &xml::element::Element,
-) -> super::KeepSourceFormattingOnImport {
+pub fn keep_source_formatting_on_import(element: &Element) -> super::KeepSourceFormattingOnImport {
     let mut node = super::KeepSourceFormattingOnImport::default();
     let mut reader = markup::Reader::new(element, &super::KEEP_SOURCE_FORMATTING_ON_IMPORT_SHAPE);
     for (index, field) in &mut reader {
@@ -6140,9 +5930,7 @@ pub fn keep_source_formatting_on_import(
 
 /// Read `w:lid` into a `LanguageIDForPhoneticGuide`.
 #[must_use]
-pub fn language_id_for_phonetic_guide(
-    element: &xml::element::Element,
-) -> super::LanguageIDForPhoneticGuide {
+pub fn language_id_for_phonetic_guide(element: &Element) -> super::LanguageIDForPhoneticGuide {
     let mut node = super::LanguageIDForPhoneticGuide::default();
     let mut reader = markup::Reader::new(element, &super::LANGUAGE_ID_FOR_PHONETIC_GUIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -6156,7 +5944,7 @@ pub fn language_id_for_phonetic_guide(
 
 /// Read `w:lang` into a `LanguagesForRunContent`.
 #[must_use]
-pub fn languages_for_run_content(element: &xml::element::Element) -> super::LanguagesForRunContent {
+pub fn languages_for_run_content(element: &Element) -> super::LanguagesForRunContent {
     let mut node = super::LanguagesForRunContent::default();
     let mut reader = markup::Reader::new(element, &super::LANGUAGES_FOR_RUN_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -6174,7 +5962,7 @@ pub fn languages_for_run_content(element: &xml::element::Element) -> super::Lang
 /// Read `w:numIdMacAtCleanup` into a `LastReviewedAbstractNumberingDefinition`.
 #[must_use]
 pub fn last_reviewed_abstract_numbering_definition(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::LastReviewedAbstractNumberingDefinition {
     let mut node = super::LastReviewedAbstractNumberingDefinition::default();
     let mut reader = markup::Reader::new(
@@ -6192,7 +5980,7 @@ pub fn last_reviewed_abstract_numbering_definition(
 
 /// Read `w:lsdException` into a `LatentStyleException`.
 #[must_use]
-pub fn latent_style_exception(element: &xml::element::Element) -> super::LatentStyleException {
+pub fn latent_style_exception(element: &Element) -> super::LatentStyleException {
     let mut node = super::LatentStyleException::default();
     let mut reader = markup::Reader::new(element, &super::LATENT_STYLE_EXCEPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -6212,7 +6000,7 @@ pub fn latent_style_exception(element: &xml::element::Element) -> super::LatentS
 
 /// Read `w:latentStyles` into a `LatentStyleInformation`.
 #[must_use]
-pub fn latent_style_information(element: &xml::element::Element) -> super::LatentStyleInformation {
+pub fn latent_style_information(element: &Element) -> super::LatentStyleInformation {
     let mut node = super::LatentStyleInformation::default();
     let mut reader = markup::Reader::new(element, &super::LATENT_STYLE_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -6233,7 +6021,7 @@ pub fn latent_style_information(element: &xml::element::Element) -> super::Laten
 
 /// Read `w:layoutRawTableWidth` into a `LayoutRawTableWidth`.
 #[must_use]
-pub fn layout_raw_table_width(element: &xml::element::Element) -> super::LayoutRawTableWidth {
+pub fn layout_raw_table_width(element: &Element) -> super::LayoutRawTableWidth {
     let mut node = super::LayoutRawTableWidth::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_RAW_TABLE_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -6247,9 +6035,7 @@ pub fn layout_raw_table_width(element: &xml::element::Element) -> super::LayoutR
 
 /// Read `w:marW` into a `LeftAndRightMarginForFrame`.
 #[must_use]
-pub fn left_and_right_margin_for_frame(
-    element: &xml::element::Element,
-) -> super::LeftAndRightMarginForFrame {
+pub fn left_and_right_margin_for_frame(element: &Element) -> super::LeftAndRightMarginForFrame {
     let mut node = super::LeftAndRightMarginForFrame::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_AND_RIGHT_MARGIN_FOR_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -6263,7 +6049,7 @@ pub fn left_and_right_margin_for_frame(
 
 /// Read `w:left` into a `LeftBorder`.
 #[must_use]
-pub fn left_border(element: &xml::element::Element) -> super::LeftBorder {
+pub fn left_border(element: &Element) -> super::LeftBorder {
     let mut node = super::LeftBorder::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -6287,7 +6073,7 @@ pub fn left_border(element: &xml::element::Element) -> super::LeftBorder {
 
 /// Read `w:marLeft` into a `LeftMarginForHTMLDiv`.
 #[must_use]
-pub fn left_margin_for_html_div(element: &xml::element::Element) -> super::LeftMarginForHTMLDiv {
+pub fn left_margin_for_html_div(element: &Element) -> super::LeftMarginForHTMLDiv {
     let mut node = super::LeftMarginForHTMLDiv::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_MARGIN_FOR_HTML_DIV_SHAPE);
     for (index, field) in &mut reader {
@@ -6301,7 +6087,7 @@ pub fn left_margin_for_html_div(element: &xml::element::Element) -> super::LeftM
 
 /// Read `w:left` into a `LeftParagraphBorder`.
 #[must_use]
-pub fn left_paragraph_border(element: &xml::element::Element) -> super::LeftParagraphBorder {
+pub fn left_paragraph_border(element: &Element) -> super::LeftParagraphBorder {
     let mut node = super::LeftParagraphBorder::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_PARAGRAPH_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -6324,9 +6110,7 @@ pub fn left_paragraph_border(element: &xml::element::Element) -> super::LeftPara
 
 /// Read `w:left` into a `LeftParagraphBorderTblWidth`.
 #[must_use]
-pub fn left_paragraph_border_tbl_width(
-    element: &xml::element::Element,
-) -> super::LeftParagraphBorderTblWidth {
+pub fn left_paragraph_border_tbl_width(element: &Element) -> super::LeftParagraphBorderTblWidth {
     let mut node = super::LeftParagraphBorderTblWidth::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -6343,7 +6127,7 @@ pub fn left_paragraph_border_tbl_width(
 /// Read `w:applyBreakingRules` into a `LegacyEthiopicAmharicLineBreakingRules`.
 #[must_use]
 pub fn legacy_ethiopic_amharic_line_breaking_rules(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::LegacyEthiopicAmharicLineBreakingRules {
     let mut node = super::LegacyEthiopicAmharicLineBreakingRules::default();
     let mut reader = markup::Reader::new(
@@ -6362,7 +6146,7 @@ pub fn legacy_ethiopic_amharic_line_breaking_rules(
 /// Read `w:legacy` into a `LegacyNumberingLevelProperties`.
 #[must_use]
 pub fn legacy_numbering_level_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::LegacyNumberingLevelProperties {
     let mut node = super::LegacyNumberingLevelProperties::default();
     let mut reader = markup::Reader::new(element, &super::LEGACY_NUMBERING_LEVEL_PROPERTIES_SHAPE);
@@ -6380,7 +6164,7 @@ pub fn legacy_numbering_level_properties(
 
 /// Read `w:lnNumType` into a `LineNumberingSettings`.
 #[must_use]
-pub fn line_numbering_settings(element: &xml::element::Element) -> super::LineNumberingSettings {
+pub fn line_numbering_settings(element: &Element) -> super::LineNumberingSettings {
     let mut node = super::LineNumberingSettings::default();
     let mut reader = markup::Reader::new(element, &super::LINE_NUMBERING_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -6398,7 +6182,7 @@ pub fn line_numbering_settings(element: &xml::element::Element) -> super::LineNu
 
 /// Read `w:lineWrapLikeWord6` into a `LineWrapLikeWord6`.
 #[must_use]
-pub fn line_wrap_like_word6(element: &xml::element::Element) -> super::LineWrapLikeWord6 {
+pub fn line_wrap_like_word6(element: &Element) -> super::LineWrapLikeWord6 {
     let mut node = super::LineWrapLikeWord6::default();
     let mut reader = markup::Reader::new(element, &super::LINE_WRAP_LIKE_WORD6_SHAPE);
     for (index, field) in &mut reader {
@@ -6412,7 +6196,7 @@ pub fn line_wrap_like_word6(element: &xml::element::Element) -> super::LineWrapL
 
 /// Read `w:wrapTrailSpaces` into a `LineWrapTrailingSpaces`.
 #[must_use]
-pub fn line_wrap_trailing_spaces(element: &xml::element::Element) -> super::LineWrapTrailingSpaces {
+pub fn line_wrap_trailing_spaces(element: &Element) -> super::LineWrapTrailingSpaces {
     let mut node = super::LineWrapTrailingSpaces::default();
     let mut reader = markup::Reader::new(element, &super::LINE_WRAP_TRAILING_SPACES_SHAPE);
     for (index, field) in &mut reader {
@@ -6426,9 +6210,7 @@ pub fn line_wrap_trailing_spaces(element: &xml::element::Element) -> super::Line
 
 /// Read `w:linkToQuery` into a `LinkToExternalQueryFile`.
 #[must_use]
-pub fn link_to_external_query_file(
-    element: &xml::element::Element,
-) -> super::LinkToExternalQueryFile {
+pub fn link_to_external_query_file(element: &Element) -> super::LinkToExternalQueryFile {
     let mut node = super::LinkToExternalQueryFile::default();
     let mut reader = markup::Reader::new(element, &super::LINK_TO_EXTERNAL_QUERY_FILE_SHAPE);
     for (index, field) in &mut reader {
@@ -6442,7 +6224,7 @@ pub fn link_to_external_query_file(
 
 /// Read `w:objectLink` into a `LinkedObjectProperties`.
 #[must_use]
-pub fn linked_object_properties(element: &xml::element::Element) -> super::LinkedObjectProperties {
+pub fn linked_object_properties(element: &Element) -> super::LinkedObjectProperties {
     let mut node = super::LinkedObjectProperties::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_OBJECT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -6463,7 +6245,7 @@ pub fn linked_object_properties(element: &xml::element::Element) -> super::Linke
 
 /// Read `w:link` into a `LinkedStyleReference`.
 #[must_use]
-pub fn linked_style_reference(element: &xml::element::Element) -> super::LinkedStyleReference {
+pub fn linked_style_reference(element: &Element) -> super::LinkedStyleReference {
     let mut node = super::LinkedStyleReference::default();
     let mut reader = markup::Reader::new(element, &super::LINKED_STYLE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -6478,7 +6260,7 @@ pub fn linked_style_reference(element: &xml::element::Element) -> super::LinkedS
 /// Read `w:docParts` into a `ListOfGlossaryDocumentEntries`.
 #[must_use]
 pub fn list_of_glossary_document_entries(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ListOfGlossaryDocumentEntries {
     let mut node = super::ListOfGlossaryDocumentEntries::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_GLOSSARY_DOCUMENT_ENTRIES_SHAPE);
@@ -6494,7 +6276,7 @@ pub fn list_of_glossary_document_entries(
 /// Read `w:listSeparator` into a `ListSeparatorForFieldCodeEvaluation`.
 #[must_use]
 pub fn list_separator_for_field_code_evaluation(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ListSeparatorForFieldCodeEvaluation {
     let mut node = super::ListSeparatorForFieldCodeEvaluation::default();
     let mut reader = markup::Reader::new(
@@ -6512,7 +6294,7 @@ pub fn list_separator_for_field_code_evaluation(
 
 /// Read `w:lock` into a `LockingSetting`.
 #[must_use]
-pub fn locking_setting(element: &xml::element::Element) -> super::LockingSetting {
+pub fn locking_setting(element: &Element) -> super::LockingSetting {
     let mut node = super::LockingSetting::default();
     let mut reader = markup::Reader::new(element, &super::LOCKING_SETTING_SHAPE);
     for (index, field) in &mut reader {
@@ -6526,7 +6308,7 @@ pub fn locking_setting(element: &xml::element::Element) -> super::LockingSetting
 
 /// Read `w:zoom` into a `MagnificationSetting`.
 #[must_use]
-pub fn magnification_setting(element: &xml::element::Element) -> super::MagnificationSetting {
+pub fn magnification_setting(element: &Element) -> super::MagnificationSetting {
     let mut node = super::MagnificationSetting::default();
     let mut reader = markup::Reader::new(element, &super::MAGNIFICATION_SETTING_SHAPE);
     for (index, field) in &mut reader {
@@ -6543,7 +6325,7 @@ pub fn magnification_setting(element: &xml::element::Element) -> super::Magnific
 /// Read `w:checkErrors` into a `MailMergeErrorReportingSetting`.
 #[must_use]
 pub fn mail_merge_error_reporting_setting(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MailMergeErrorReportingSetting {
     let mut node = super::MailMergeErrorReportingSetting::default();
     let mut reader = markup::Reader::new(element, &super::MAIL_MERGE_ERROR_REPORTING_SETTING_SHAPE);
@@ -6558,7 +6340,7 @@ pub fn mail_merge_error_reporting_setting(
 
 /// Read `w:mailMerge` into a `MailMergeSettings`.
 #[must_use]
-pub fn mail_merge_settings(element: &xml::element::Element) -> super::MailMergeSettings {
+pub fn mail_merge_settings(element: &Element) -> super::MailMergeSettings {
     let mut node = super::MailMergeSettings::default();
     let mut reader = markup::Reader::new(element, &super::MAIL_MERGE_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -6588,9 +6370,7 @@ pub fn mail_merge_settings(element: &xml::element::Element) -> super::MailMergeS
 
 /// Read `w:linkedToFile` into a `MaintainLinkToExistingFile`.
 #[must_use]
-pub fn maintain_link_to_existing_file(
-    element: &xml::element::Element,
-) -> super::MaintainLinkToExistingFile {
+pub fn maintain_link_to_existing_file(element: &Element) -> super::MaintainLinkToExistingFile {
     let mut node = super::MaintainLinkToExistingFile::default();
     let mut reader = markup::Reader::new(element, &super::MAINTAIN_LINK_TO_EXISTING_FILE_SHAPE);
     for (index, field) in &mut reader {
@@ -6604,7 +6384,7 @@ pub fn maintain_link_to_existing_file(
 
 /// Read `w:fitText` into a `ManualRunWidth`.
 #[must_use]
-pub fn manual_run_width(element: &xml::element::Element) -> super::ManualRunWidth {
+pub fn manual_run_width(element: &Element) -> super::ManualRunWidth {
     let mut node = super::ManualRunWidth::default();
     let mut reader = markup::Reader::new(element, &super::MANUAL_RUN_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -6621,7 +6401,7 @@ pub fn manual_run_width(element: &xml::element::Element) -> super::ManualRunWidt
 /// Read `w:consecutiveHyphenLimit` into a `MaximumNumberOfConsecutivelyHyphenatedLines`.
 #[must_use]
 pub fn maximum_number_of_consecutively_hyphenated_lines(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MaximumNumberOfConsecutivelyHyphenatedLines {
     let mut node = super::MaximumNumberOfConsecutivelyHyphenatedLines::default();
     let mut reader = markup::Reader::new(
@@ -6639,7 +6419,7 @@ pub fn maximum_number_of_consecutively_hyphenated_lines(
 
 /// Read `w:type` into a `MergeFieldMapping`.
 #[must_use]
-pub fn merge_field_mapping(element: &xml::element::Element) -> super::MergeFieldMapping {
+pub fn merge_field_mapping(element: &Element) -> super::MergeFieldMapping {
     let mut node = super::MergeFieldMapping::default();
     let mut reader = markup::Reader::new(element, &super::MERGE_FIELD_MAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -6653,9 +6433,7 @@ pub fn merge_field_mapping(element: &xml::element::Element) -> super::MergeField
 
 /// Read `w:destination` into a `MergedDocumentDestination`.
 #[must_use]
-pub fn merged_document_destination(
-    element: &xml::element::Element,
-) -> super::MergedDocumentDestination {
+pub fn merged_document_destination(element: &Element) -> super::MergedDocumentDestination {
     let mut node = super::MergedDocumentDestination::default();
     let mut reader = markup::Reader::new(element, &super::MERGED_DOCUMENT_DESTINATION_SHAPE);
     for (index, field) in &mut reader {
@@ -6670,7 +6448,7 @@ pub fn merged_document_destination(
 /// Read `w:mailAsAttachment` into a `MergedDocumentToEMailAttachment`.
 #[must_use]
 pub fn merged_document_to_e_mail_attachment(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MergedDocumentToEMailAttachment {
     let mut node = super::MergedDocumentToEMailAttachment::default();
     let mut reader =
@@ -6686,9 +6464,7 @@ pub fn merged_document_to_e_mail_attachment(
 
 /// Read `w:mailSubject` into a `MergedEMailOrFaxSubjectLine`.
 #[must_use]
-pub fn merged_e_mail_or_fax_subject_line(
-    element: &xml::element::Element,
-) -> super::MergedEMailOrFaxSubjectLine {
+pub fn merged_e_mail_or_fax_subject_line(element: &Element) -> super::MergedEMailOrFaxSubjectLine {
     let mut node = super::MergedEMailOrFaxSubjectLine::default();
     let mut reader = markup::Reader::new(element, &super::MERGED_E_MAIL_OR_FAX_SUBJECT_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -6702,7 +6478,7 @@ pub fn merged_e_mail_or_fax_subject_line(
 
 /// Read `w:mirrorMargins` into a `MirrorPageMargins`.
 #[must_use]
-pub fn mirror_page_margins(element: &xml::element::Element) -> super::MirrorPageMargins {
+pub fn mirror_page_margins(element: &Element) -> super::MirrorPageMargins {
     let mut node = super::MirrorPageMargins::default();
     let mut reader = markup::Reader::new(element, &super::MIRROR_PAGE_MARGINS_SHAPE);
     for (index, field) in &mut reader {
@@ -6717,7 +6493,7 @@ pub fn mirror_page_margins(element: &xml::element::Element) -> super::MirrorPage
 /// Read `w:moveToRangeEnd` into a `MoveDestinationLocationContainerEnd`.
 #[must_use]
 pub fn move_destination_location_container_end(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MoveDestinationLocationContainerEnd {
     let mut node = super::MoveDestinationLocationContainerEnd::default();
     let mut reader = markup::Reader::new(
@@ -6738,7 +6514,7 @@ pub fn move_destination_location_container_end(
 /// Read `w:moveToRangeStart` into a `MoveDestinationLocationContainerStart`.
 #[must_use]
 pub fn move_destination_location_container_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MoveDestinationLocationContainerStart {
     let mut node = super::MoveDestinationLocationContainerStart::default();
     let mut reader = markup::Reader::new(
@@ -6763,9 +6539,7 @@ pub fn move_destination_location_container_start(
 
 /// Read `w:moveTo` into a `MoveDestinationParagraph`.
 #[must_use]
-pub fn move_destination_paragraph(
-    element: &xml::element::Element,
-) -> super::MoveDestinationParagraph {
+pub fn move_destination_paragraph(element: &Element) -> super::MoveDestinationParagraph {
     let mut node = super::MoveDestinationParagraph::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_DESTINATION_PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
@@ -6782,9 +6556,7 @@ pub fn move_destination_paragraph(
 
 /// Read `w:moveTo` into a `MoveDestinationRunContent`.
 #[must_use]
-pub fn move_destination_run_content(
-    element: &xml::element::Element,
-) -> super::MoveDestinationRunContent {
+pub fn move_destination_run_content(element: &Element) -> super::MoveDestinationRunContent {
     let mut node = super::MoveDestinationRunContent::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_DESTINATION_RUN_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -6803,7 +6575,7 @@ pub fn move_destination_run_content(
 /// Read `w:moveFromRangeEnd` into a `MoveSourceLocationContainerEnd`.
 #[must_use]
 pub fn move_source_location_container_end(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MoveSourceLocationContainerEnd {
     let mut node = super::MoveSourceLocationContainerEnd::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_SOURCE_LOCATION_CONTAINER_END_SHAPE);
@@ -6821,7 +6593,7 @@ pub fn move_source_location_container_end(
 /// Read `w:moveFromRangeStart` into a `MoveSourceLocationContainerStart`.
 #[must_use]
 pub fn move_source_location_container_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::MoveSourceLocationContainerStart {
     let mut node = super::MoveSourceLocationContainerStart::default();
     let mut reader =
@@ -6844,7 +6616,7 @@ pub fn move_source_location_container_start(
 
 /// Read `w:moveFrom` into a `MoveSourceParagraph`.
 #[must_use]
-pub fn move_source_paragraph(element: &xml::element::Element) -> super::MoveSourceParagraph {
+pub fn move_source_paragraph(element: &Element) -> super::MoveSourceParagraph {
     let mut node = super::MoveSourceParagraph::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_SOURCE_PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
@@ -6861,7 +6633,7 @@ pub fn move_source_paragraph(element: &xml::element::Element) -> super::MoveSour
 
 /// Read `w:moveFrom` into a `MoveSourceRunContent`.
 #[must_use]
-pub fn move_source_run_content(element: &xml::element::Element) -> super::MoveSourceRunContent {
+pub fn move_source_run_content(element: &Element) -> super::MoveSourceRunContent {
     let mut node = super::MoveSourceRunContent::default();
     let mut reader = markup::Reader::new(element, &super::MOVE_SOURCE_RUN_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -6879,9 +6651,7 @@ pub fn move_source_run_content(element: &xml::element::Element) -> super::MoveSo
 
 /// Read `w:frameset` into a `NestedFramesetDefinition`.
 #[must_use]
-pub fn nested_frameset_definition(
-    element: &xml::element::Element,
-) -> super::NestedFramesetDefinition {
+pub fn nested_frameset_definition(element: &Element) -> super::NestedFramesetDefinition {
     let mut node = super::NestedFramesetDefinition::default();
     let mut reader = markup::Reader::new(element, &super::NESTED_FRAMESET_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -6901,7 +6671,7 @@ pub fn nested_frameset_definition(
 /// Read `w:noPunctuationKerning` into a `NeverKernPunctuationCharacters`.
 #[must_use]
 pub fn never_kern_punctuation_characters(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NeverKernPunctuationCharacters {
     let mut node = super::NeverKernPunctuationCharacters::default();
     let mut reader = markup::Reader::new(element, &super::NEVER_KERN_PUNCTUATION_CHARACTERS_SHAPE);
@@ -6916,9 +6686,7 @@ pub fn never_kern_punctuation_characters(
 
 /// Read `w:noBreakHyphen` into a `NonBreakingHyphenCharacter`.
 #[must_use]
-pub fn non_breaking_hyphen_character(
-    element: &xml::element::Element,
-) -> super::NonBreakingHyphenCharacter {
+pub fn non_breaking_hyphen_character(element: &Element) -> super::NonBreakingHyphenCharacter {
     let reader = markup::Reader::new(element, &super::NON_BREAKING_HYPHEN_CHARACTER_SHAPE);
     super::NonBreakingHyphenCharacter {
         unknown: reader.finish(),
@@ -6927,9 +6695,7 @@ pub fn non_breaking_hyphen_character(
 
 /// Read `w:sz` into a `NonComplexScriptFontSize`.
 #[must_use]
-pub fn non_complex_script_font_size(
-    element: &xml::element::Element,
-) -> super::NonComplexScriptFontSize {
+pub fn non_complex_script_font_size(element: &Element) -> super::NonComplexScriptFontSize {
     let mut node = super::NonComplexScriptFontSize::default();
     let mut reader = markup::Reader::new(element, &super::NON_COMPLEX_SCRIPT_FONT_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -6943,9 +6709,7 @@ pub fn non_complex_script_font_size(
 
 /// Read `w:notTrueType` into a `NotATrueTypeOutlineFont`.
 #[must_use]
-pub fn not_a_true_type_outline_font(
-    element: &xml::element::Element,
-) -> super::NotATrueTypeOutlineFont {
+pub fn not_a_true_type_outline_font(element: &Element) -> super::NotATrueTypeOutlineFont {
     let mut node = super::NotATrueTypeOutlineFont::default();
     let mut reader = markup::Reader::new(element, &super::NOT_A_TRUE_TYPE_OUTLINE_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -6959,9 +6723,7 @@ pub fn not_a_true_type_outline_font(
 
 /// Read `w:tblStyleColBandSize` into a `NumberOfColumnsInColumnBand`.
 #[must_use]
-pub fn number_of_columns_in_column_band(
-    element: &xml::element::Element,
-) -> super::NumberOfColumnsInColumnBand {
+pub fn number_of_columns_in_column_band(element: &Element) -> super::NumberOfColumnsInColumnBand {
     let mut node = super::NumberOfColumnsInColumnBand::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_COLUMNS_IN_COLUMN_BAND_SHAPE);
     for (index, field) in &mut reader {
@@ -6975,9 +6737,7 @@ pub fn number_of_columns_in_column_band(
 
 /// Read `w:bookFoldPrintingSheets` into a `NumberOfPagesPerBooklet`.
 #[must_use]
-pub fn number_of_pages_per_booklet(
-    element: &xml::element::Element,
-) -> super::NumberOfPagesPerBooklet {
+pub fn number_of_pages_per_booklet(element: &Element) -> super::NumberOfPagesPerBooklet {
     let mut node = super::NumberOfPagesPerBooklet::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_PAGES_PER_BOOKLET_SHAPE);
     for (index, field) in &mut reader {
@@ -6991,7 +6751,7 @@ pub fn number_of_pages_per_booklet(
 
 /// Read `w:tblStyleRowBandSize` into a `NumberOfRowsInRowBand`.
 #[must_use]
-pub fn number_of_rows_in_row_band(element: &xml::element::Element) -> super::NumberOfRowsInRowBand {
+pub fn number_of_rows_in_row_band(element: &Element) -> super::NumberOfRowsInRowBand {
     let mut node = super::NumberOfRowsInRowBand::default();
     let mut reader = markup::Reader::new(element, &super::NUMBER_OF_ROWS_IN_ROW_BAND_SHAPE);
     for (index, field) in &mut reader {
@@ -7005,9 +6765,7 @@ pub fn number_of_rows_in_row_band(element: &xml::element::Element) -> super::Num
 
 /// Read `w:num` into a `NumberingDefinitionInstance`.
 #[must_use]
-pub fn numbering_definition_instance(
-    element: &xml::element::Element,
-) -> super::NumberingDefinitionInstance {
+pub fn numbering_definition_instance(element: &Element) -> super::NumberingDefinitionInstance {
     let mut node = super::NumberingDefinitionInstance::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_DEFINITION_INSTANCE_SHAPE);
     for (index, field) in &mut reader {
@@ -7025,7 +6783,7 @@ pub fn numbering_definition_instance(
 /// Read `w:numId` into a `NumberingDefinitionInstanceReferenceNumId`.
 #[must_use]
 pub fn numbering_definition_instance_reference_num_id(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberingDefinitionInstanceReferenceNumId {
     let mut node = super::NumberingDefinitionInstanceReferenceNumId::default();
     let mut reader = markup::Reader::new(
@@ -7044,7 +6802,7 @@ pub fn numbering_definition_instance_reference_num_id(
 /// Read `w:numPr` into a `NumberingDefinitionInstanceReferenceNumPr`.
 #[must_use]
 pub fn numbering_definition_instance_reference_num_pr(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberingDefinitionInstanceReferenceNumPr {
     let mut node = super::NumberingDefinitionInstanceReferenceNumPr::default();
     let mut reader = markup::Reader::new(
@@ -7066,7 +6824,7 @@ pub fn numbering_definition_instance_reference_num_pr(
 
 /// Read `w:numbering` into a `NumberingDefinitions`.
 #[must_use]
-pub fn numbering_definitions(element: &xml::element::Element) -> super::NumberingDefinitions {
+pub fn numbering_definitions(element: &Element) -> super::NumberingDefinitions {
     let mut node = super::NumberingDefinitions::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_DEFINITIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -7084,7 +6842,7 @@ pub fn numbering_definitions(element: &xml::element::Element) -> super::Numberin
 
 /// Read `w:numFmt` into a `NumberingFormat`.
 #[must_use]
-pub fn numbering_format(element: &xml::element::Element) -> super::NumberingFormat {
+pub fn numbering_format(element: &Element) -> super::NumberingFormat {
     let mut node = super::NumberingFormat::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_FORMAT_SHAPE);
     for (index, field) in &mut reader {
@@ -7101,7 +6859,7 @@ pub fn numbering_format(element: &xml::element::Element) -> super::NumberingForm
 /// Read `w:lvlOverride` into a `NumberingLevelDefinitionOverride`.
 #[must_use]
 pub fn numbering_level_definition_override(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberingLevelDefinitionOverride {
     let mut node = super::NumberingLevelDefinitionOverride::default();
     let mut reader =
@@ -7121,7 +6879,7 @@ pub fn numbering_level_definition_override(
 /// Read `w:lvl` into a `NumberingLevelOverrideDefinition`.
 #[must_use]
 pub fn numbering_level_override_definition(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberingLevelOverrideDefinition {
     let mut node = super::NumberingLevelOverrideDefinition::default();
     let mut reader =
@@ -7152,9 +6910,7 @@ pub fn numbering_level_override_definition(
 
 /// Read `w:ilvl` into a `NumberingLevelReference`.
 #[must_use]
-pub fn numbering_level_reference(
-    element: &xml::element::Element,
-) -> super::NumberingLevelReference {
+pub fn numbering_level_reference(element: &Element) -> super::NumberingLevelReference {
     let mut node = super::NumberingLevelReference::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_LEVEL_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -7169,7 +6925,7 @@ pub fn numbering_level_reference(
 /// Read `w:startOverride` into a `NumberingLevelStartingValueOverride`.
 #[must_use]
 pub fn numbering_level_starting_value_override(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::NumberingLevelStartingValueOverride {
     let mut node = super::NumberingLevelStartingValueOverride::default();
     let mut reader = markup::Reader::new(
@@ -7187,7 +6943,7 @@ pub fn numbering_level_starting_value_override(
 
 /// Read `w:lvlText` into a `NumberingLevelText`.
 #[must_use]
-pub fn numbering_level_text(element: &xml::element::Element) -> super::NumberingLevelText {
+pub fn numbering_level_text(element: &Element) -> super::NumberingLevelText {
     let mut node = super::NumberingLevelText::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_LEVEL_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -7203,9 +6959,7 @@ pub fn numbering_level_text(element: &xml::element::Element) -> super::Numbering
 
 /// Read `w:styleLink` into a `NumberingStyleDefinition`.
 #[must_use]
-pub fn numbering_style_definition(
-    element: &xml::element::Element,
-) -> super::NumberingStyleDefinition {
+pub fn numbering_style_definition(element: &Element) -> super::NumberingStyleDefinition {
     let mut node = super::NumberingStyleDefinition::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_STYLE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -7219,9 +6973,7 @@ pub fn numbering_style_definition(
 
 /// Read `w:numStyleLink` into a `NumberingStyleReference`.
 #[must_use]
-pub fn numbering_style_reference(
-    element: &xml::element::Element,
-) -> super::NumberingStyleReference {
+pub fn numbering_style_reference(element: &Element) -> super::NumberingStyleReference {
     let mut node = super::NumberingStyleReference::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_STYLE_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -7235,7 +6987,7 @@ pub fn numbering_style_reference(
 
 /// Read `w:tmpl` into a `NumberingTemplateCode`.
 #[must_use]
-pub fn numbering_template_code(element: &xml::element::Element) -> super::NumberingTemplateCode {
+pub fn numbering_template_code(element: &Element) -> super::NumberingTemplateCode {
     let mut node = super::NumberingTemplateCode::default();
     let mut reader = markup::Reader::new(element, &super::NUMBERING_TEMPLATE_CODE_SHAPE);
     for (index, field) in &mut reader {
@@ -7249,9 +7001,7 @@ pub fn numbering_template_code(element: &xml::element::Element) -> super::Number
 
 /// Read `w:src` into a `ODSODataSourceFilePath`.
 #[must_use]
-pub fn odso_data_source_file_path(
-    element: &xml::element::Element,
-) -> super::ODSODataSourceFilePath {
+pub fn odso_data_source_file_path(element: &Element) -> super::ODSODataSourceFilePath {
     let mut node = super::ODSODataSourceFilePath::default();
     let mut reader = markup::Reader::new(element, &super::ODSO_DATA_SOURCE_FILE_PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -7265,7 +7015,7 @@ pub fn odso_data_source_file_path(
 
 /// Read `w:type` into a `ODSODataSourceType`.
 #[must_use]
-pub fn odso_data_source_type(element: &xml::element::Element) -> super::ODSODataSourceType {
+pub fn odso_data_source_type(element: &Element) -> super::ODSODataSourceType {
     let mut node = super::ODSODataSourceType::default();
     let mut reader = markup::Reader::new(element, &super::ODSO_DATA_SOURCE_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -7280,7 +7030,7 @@ pub fn odso_data_source_type(element: &xml::element::Element) -> super::ODSOData
 /// Read `w:odso` into a `OfficeDataSourceObjectSettings`.
 #[must_use]
 pub fn office_data_source_object_settings(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::OfficeDataSourceObjectSettings {
     let mut node = super::OfficeDataSourceObjectSettings::default();
     let mut reader = markup::Reader::new(element, &super::OFFICE_DATA_SOURCE_OBJECT_SETTINGS_SHAPE);
@@ -7303,7 +7053,7 @@ pub fn office_data_source_object_settings(
 
 /// Read `w:oMath` into a `OfficeOpenXMLMath`.
 #[must_use]
-pub fn office_open_xml_math(element: &xml::element::Element) -> super::OfficeOpenXMLMath {
+pub fn office_open_xml_math(element: &Element) -> super::OfficeOpenXMLMath {
     let mut node = super::OfficeOpenXMLMath::default();
     let mut reader = markup::Reader::new(element, &super::OFFICE_OPEN_XML_MATH_SHAPE);
     for (index, field) in &mut reader {
@@ -7317,9 +7067,7 @@ pub fn office_open_xml_math(element: &xml::element::Element) -> super::OfficeOpe
 
 /// Read `w:formProt` into a `OnlyAllowEditingOfFormFields`.
 #[must_use]
-pub fn only_allow_editing_of_form_fields(
-    element: &xml::element::Element,
-) -> super::OnlyAllowEditingOfFormFields {
+pub fn only_allow_editing_of_form_fields(element: &Element) -> super::OnlyAllowEditingOfFormFields {
     let mut node = super::OnlyAllowEditingOfFormFields::default();
     let mut reader = markup::Reader::new(element, &super::ONLY_ALLOW_EDITING_OF_FORM_FIELDS_SHAPE);
     for (index, field) in &mut reader {
@@ -7334,7 +7082,7 @@ pub fn only_allow_editing_of_form_fields(
 /// Read `w:spacingInWholePoints` into a `OnlyExpandCondenseTextByWholePoints`.
 #[must_use]
 pub fn only_expand_condense_text_by_whole_points(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::OnlyExpandCondenseTextByWholePoints {
     let mut node = super::OnlyExpandCondenseTextByWholePoints::default();
     let mut reader = markup::Reader::new(
@@ -7352,9 +7100,7 @@ pub fn only_expand_condense_text_by_whole_points(
 
 /// Read `w:printFormsData` into a `OnlyPrintFormFieldContent`.
 #[must_use]
-pub fn only_print_form_field_content(
-    element: &xml::element::Element,
-) -> super::OnlyPrintFormFieldContent {
+pub fn only_print_form_field_content(element: &Element) -> super::OnlyPrintFormFieldContent {
     let mut node = super::OnlyPrintFormFieldContent::default();
     let mut reader = markup::Reader::new(element, &super::ONLY_PRINT_FORM_FIELD_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -7368,9 +7114,7 @@ pub fn only_print_form_field_content(
 
 /// Read `w:saveXmlDataOnly` into a `OnlySaveCustomXMLMarkup`.
 #[must_use]
-pub fn only_save_custom_xml_markup(
-    element: &xml::element::Element,
-) -> super::OnlySaveCustomXMLMarkup {
+pub fn only_save_custom_xml_markup(element: &Element) -> super::OnlySaveCustomXMLMarkup {
     let mut node = super::OnlySaveCustomXMLMarkup::default();
     let mut reader = markup::Reader::new(element, &super::ONLY_SAVE_CUSTOM_XML_MARKUP_SHAPE);
     for (index, field) in &mut reader {
@@ -7384,9 +7128,7 @@ pub fn only_save_custom_xml_markup(
 
 /// Read `w:saveFormsData` into a `OnlySaveFormFieldContent`.
 #[must_use]
-pub fn only_save_form_field_content(
-    element: &xml::element::Element,
-) -> super::OnlySaveFormFieldContent {
+pub fn only_save_form_field_content(element: &Element) -> super::OnlySaveFormFieldContent {
     let mut node = super::OnlySaveFormFieldContent::default();
     let mut reader = markup::Reader::new(element, &super::ONLY_SAVE_FORM_FIELD_CONTENT_SHAPE);
     for (index, field) in &mut reader {
@@ -7400,9 +7142,7 @@ pub fn only_save_form_field_content(
 
 /// Read `w:softHyphen` into a `OptionalHyphenCharacter`.
 #[must_use]
-pub fn optional_hyphen_character(
-    element: &xml::element::Element,
-) -> super::OptionalHyphenCharacter {
+pub fn optional_hyphen_character(element: &Element) -> super::OptionalHyphenCharacter {
     let reader = markup::Reader::new(element, &super::OPTIONAL_HYPHEN_CHARACTER_SHAPE);
     super::OptionalHyphenCharacter {
         unknown: reader.finish(),
@@ -7412,7 +7152,7 @@ pub fn optional_hyphen_character(
 /// Read `w:uiPriority` into a `OptionalUserInterfaceSortingOrder`.
 #[must_use]
 pub fn optional_user_interface_sorting_order(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::OptionalUserInterfaceSortingOrder {
     let mut node = super::OptionalUserInterfaceSortingOrder::default();
     let mut reader =
@@ -7429,7 +7169,7 @@ pub fn optional_user_interface_sorting_order(
 /// Read `w:rsidRoot` into a `OriginalDocumentRevisionSaveID`.
 #[must_use]
 pub fn original_document_revision_save_id(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::OriginalDocumentRevisionSaveID {
     let mut node = super::OriginalDocumentRevisionSaveID::default();
     let mut reader = markup::Reader::new(element, &super::ORIGINAL_DOCUMENT_REVISION_SAVE_ID_SHAPE);
@@ -7444,7 +7184,7 @@ pub fn original_document_revision_save_id(
 
 /// Read `w:encoding` into a `OutputEncoding`.
 #[must_use]
-pub fn output_encoding(element: &xml::element::Element) -> super::OutputEncoding {
+pub fn output_encoding(element: &Element) -> super::OutputEncoding {
     let mut node = super::OutputEncoding::default();
     let mut reader = markup::Reader::new(element, &super::OUTPUT_ENCODING_SHAPE);
     for (index, field) in &mut reader {
@@ -7458,9 +7198,7 @@ pub fn output_encoding(element: &xml::element::Element) -> super::OutputEncoding
 
 /// Read `w:bordersDoNotSurroundFooter` into a `PageBorderExcludesFooter`.
 #[must_use]
-pub fn page_border_excludes_footer(
-    element: &xml::element::Element,
-) -> super::PageBorderExcludesFooter {
+pub fn page_border_excludes_footer(element: &Element) -> super::PageBorderExcludesFooter {
     let mut node = super::PageBorderExcludesFooter::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_BORDER_EXCLUDES_FOOTER_SHAPE);
     for (index, field) in &mut reader {
@@ -7474,9 +7212,7 @@ pub fn page_border_excludes_footer(
 
 /// Read `w:bordersDoNotSurroundHeader` into a `PageBorderExcludesHeader`.
 #[must_use]
-pub fn page_border_excludes_header(
-    element: &xml::element::Element,
-) -> super::PageBorderExcludesHeader {
+pub fn page_border_excludes_header(element: &Element) -> super::PageBorderExcludesHeader {
     let mut node = super::PageBorderExcludesHeader::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_BORDER_EXCLUDES_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -7490,7 +7226,7 @@ pub fn page_border_excludes_header(
 
 /// Read `w:pgBorders` into a `PageBorders`.
 #[must_use]
-pub fn page_borders(element: &xml::element::Element) -> super::PageBorders {
+pub fn page_borders(element: &Element) -> super::PageBorders {
     let mut node = super::PageBorders::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_BORDERS_SHAPE);
     for (index, field) in &mut reader {
@@ -7511,7 +7247,7 @@ pub fn page_borders(element: &xml::element::Element) -> super::PageBorders {
 
 /// Read `w:pgMar` into a `PageMargins`.
 #[must_use]
-pub fn page_margins(element: &xml::element::Element) -> super::PageMargins {
+pub fn page_margins(element: &Element) -> super::PageMargins {
     let mut node = super::PageMargins::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_MARGINS_SHAPE);
     for (index, field) in &mut reader {
@@ -7532,7 +7268,7 @@ pub fn page_margins(element: &xml::element::Element) -> super::PageMargins {
 
 /// Read `w:pgNum` into a `PageNumberBlock`.
 #[must_use]
-pub fn page_number_block(element: &xml::element::Element) -> super::PageNumberBlock {
+pub fn page_number_block(element: &Element) -> super::PageNumberBlock {
     let reader = markup::Reader::new(element, &super::PAGE_NUMBER_BLOCK_SHAPE);
     super::PageNumberBlock {
         unknown: reader.finish(),
@@ -7541,7 +7277,7 @@ pub fn page_number_block(element: &xml::element::Element) -> super::PageNumberBl
 
 /// Read `w:pgNumType` into a `PageNumberingSettings`.
 #[must_use]
-pub fn page_numbering_settings(element: &xml::element::Element) -> super::PageNumberingSettings {
+pub fn page_numbering_settings(element: &Element) -> super::PageNumberingSettings {
     let mut node = super::PageNumberingSettings::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_NUMBERING_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -7559,7 +7295,7 @@ pub fn page_numbering_settings(element: &xml::element::Element) -> super::PageNu
 
 /// Read `w:pgSz` into a `PageSize`.
 #[must_use]
-pub fn page_size(element: &xml::element::Element) -> super::PageSize {
+pub fn page_size(element: &Element) -> super::PageSize {
     let mut node = super::PageSize::default();
     let mut reader = markup::Reader::new(element, &super::PAGE_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -7578,7 +7314,7 @@ pub fn page_size(element: &xml::element::Element) -> super::PageSize {
 /// Read `w:panose1` into a `Panose1TypefaceClassificationNumber`.
 #[must_use]
 pub fn panose1typeface_classification_number(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::Panose1TypefaceClassificationNumber {
     let mut node = super::Panose1TypefaceClassificationNumber::default();
     let mut reader =
@@ -7594,7 +7330,7 @@ pub fn panose1typeface_classification_number(
 
 /// Read `w:paperSrc` into a `PaperSourceInformation`.
 #[must_use]
-pub fn paper_source_information(element: &xml::element::Element) -> super::PaperSourceInformation {
+pub fn paper_source_information(element: &Element) -> super::PaperSourceInformation {
     let mut node = super::PaperSourceInformation::default();
     let mut reader = markup::Reader::new(element, &super::PAPER_SOURCE_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -7610,7 +7346,7 @@ pub fn paper_source_information(element: &xml::element::Element) -> super::Paper
 
 /// Read `w:p` into a `Paragraph`.
 #[must_use]
-pub fn paragraph(element: &xml::element::Element) -> super::Paragraph {
+pub fn paragraph(element: &Element) -> super::Paragraph {
     let mut node = super::Paragraph::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
@@ -7634,7 +7370,7 @@ pub fn paragraph(element: &xml::element::Element) -> super::Paragraph {
 
 /// Read `w:jc` into a `ParagraphAlignment`.
 #[must_use]
-pub fn paragraph_alignment(element: &xml::element::Element) -> super::ParagraphAlignment {
+pub fn paragraph_alignment(element: &Element) -> super::ParagraphAlignment {
     let mut node = super::ParagraphAlignment::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -7649,7 +7385,7 @@ pub fn paragraph_alignment(element: &xml::element::Element) -> super::ParagraphA
 /// Read `w:top` into a `ParagraphBorderAboveIdenticalParagraphs`.
 #[must_use]
 pub fn paragraph_border_above_identical_paragraphs(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderAboveIdenticalParagraphs {
     let mut node = super::ParagraphBorderAboveIdenticalParagraphs::default();
     let mut reader = markup::Reader::new(
@@ -7677,7 +7413,7 @@ pub fn paragraph_border_above_identical_paragraphs(
 /// Read `w:top` into a `ParagraphBorderAboveIdenticalParagraphsTblWidth`.
 #[must_use]
 pub fn paragraph_border_above_identical_paragraphs_tbl_width(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderAboveIdenticalParagraphsTblWidth {
     let mut node = super::ParagraphBorderAboveIdenticalParagraphsTblWidth::default();
     let mut reader = markup::Reader::new(
@@ -7698,7 +7434,7 @@ pub fn paragraph_border_above_identical_paragraphs_tbl_width(
 /// Read `w:bottom` into a `ParagraphBorderBelowIdenticalParagraphs`.
 #[must_use]
 pub fn paragraph_border_below_identical_paragraphs(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderBelowIdenticalParagraphs {
     let mut node = super::ParagraphBorderBelowIdenticalParagraphs::default();
     let mut reader = markup::Reader::new(
@@ -7726,7 +7462,7 @@ pub fn paragraph_border_below_identical_paragraphs(
 /// Read `w:bottom` into a `ParagraphBorderBelowIdenticalParagraphsTblWidth`.
 #[must_use]
 pub fn paragraph_border_below_identical_paragraphs_tbl_width(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderBelowIdenticalParagraphsTblWidth {
     let mut node = super::ParagraphBorderBelowIdenticalParagraphsTblWidth::default();
     let mut reader = markup::Reader::new(
@@ -7747,7 +7483,7 @@ pub fn paragraph_border_below_identical_paragraphs_tbl_width(
 /// Read `w:bar` into a `ParagraphBorderBetweenFacingPages`.
 #[must_use]
 pub fn paragraph_border_between_facing_pages(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderBetweenFacingPages {
     let mut node = super::ParagraphBorderBetweenFacingPages::default();
     let mut reader =
@@ -7773,7 +7509,7 @@ pub fn paragraph_border_between_facing_pages(
 /// Read `w:between` into a `ParagraphBorderBetweenIdenticalParagraphs`.
 #[must_use]
 pub fn paragraph_border_between_identical_paragraphs(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphBorderBetweenIdenticalParagraphs {
     let mut node = super::ParagraphBorderBetweenIdenticalParagraphs::default();
     let mut reader = markup::Reader::new(
@@ -7800,7 +7536,7 @@ pub fn paragraph_border_between_identical_paragraphs(
 
 /// Read `w:pBdr` into a `ParagraphBorders`.
 #[must_use]
-pub fn paragraph_borders(element: &xml::element::Element) -> super::ParagraphBorders {
+pub fn paragraph_borders(element: &Element) -> super::ParagraphBorders {
     let mut node = super::ParagraphBorders::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_BORDERS_SHAPE);
     for (index, field) in &mut reader {
@@ -7821,7 +7557,7 @@ pub fn paragraph_borders(element: &xml::element::Element) -> super::ParagraphBor
 /// Read `w:cnfStyle` into a `ParagraphConditionalFormatting`.
 #[must_use]
 pub fn paragraph_conditional_formatting(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphConditionalFormatting {
     let mut node = super::ParagraphConditionalFormatting::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_CONDITIONAL_FORMATTING_SHAPE);
@@ -7849,13 +7585,13 @@ pub fn paragraph_conditional_formatting(
 
 /// Read one item of `ParagraphContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn paragraph_content(element: &xml::element::Element) -> super::ParagraphContent {
+pub fn paragraph_content(element: &Element) -> super::ParagraphContent {
     markup::read(element)
 }
 
 /// Read `w:ind` into a `ParagraphIndentation`.
 #[must_use]
-pub fn paragraph_indentation(element: &xml::element::Element) -> super::ParagraphIndentation {
+pub fn paragraph_indentation(element: &Element) -> super::ParagraphIndentation {
     let mut node = super::ParagraphIndentation::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_INDENTATION_SHAPE);
     for (index, field) in &mut reader {
@@ -7881,9 +7617,7 @@ pub fn paragraph_indentation(element: &xml::element::Element) -> super::Paragrap
 
 /// Read `w:specVanish` into a `ParagraphMarkIsAlwaysHidden`.
 #[must_use]
-pub fn paragraph_mark_is_always_hidden(
-    element: &xml::element::Element,
-) -> super::ParagraphMarkIsAlwaysHidden {
+pub fn paragraph_mark_is_always_hidden(element: &Element) -> super::ParagraphMarkIsAlwaysHidden {
     let mut node = super::ParagraphMarkIsAlwaysHidden::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_MARK_IS_ALWAYS_HIDDEN_SHAPE);
     for (index, field) in &mut reader {
@@ -7898,7 +7632,7 @@ pub fn paragraph_mark_is_always_hidden(
 /// Read `w:rPrChange` into a `ParagraphMarkRunPropertiesRevision`.
 #[must_use]
 pub fn paragraph_mark_run_properties_revision(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphMarkRunPropertiesRevision {
     let mut node = super::ParagraphMarkRunPropertiesRevision::default();
     let mut reader = markup::Reader::new(
@@ -7921,7 +7655,7 @@ pub fn paragraph_mark_run_properties_revision(
 
 /// Read `w:pPr` into a `ParagraphProperties`.
 #[must_use]
-pub fn paragraph_properties(element: &xml::element::Element) -> super::ParagraphProperties {
+pub fn paragraph_properties(element: &Element) -> super::ParagraphProperties {
     let mut node = super::ParagraphProperties::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -7972,7 +7706,7 @@ pub fn paragraph_properties(element: &xml::element::Element) -> super::Paragraph
 /// Read `w:pPr` into a `ParagraphPropertiesPPrGeneral`.
 #[must_use]
 pub fn paragraph_properties_p_pr_general(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ParagraphPropertiesPPrGeneral {
     let mut node = super::ParagraphPropertiesPPrGeneral::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE);
@@ -8021,7 +7755,7 @@ pub fn paragraph_properties_p_pr_general(
 
 /// Read `w:shd` into a `ParagraphShading`.
 #[must_use]
-pub fn paragraph_shading(element: &xml::element::Element) -> super::ParagraphShading {
+pub fn paragraph_shading(element: &Element) -> super::ParagraphShading {
     let mut node = super::ParagraphShading::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_SHADING_SHAPE);
     for (index, field) in &mut reader {
@@ -8044,9 +7778,7 @@ pub fn paragraph_shading(element: &xml::element::Element) -> super::ParagraphSha
 
 /// Read `w:textDirection` into a `ParagraphTextFlowDirection`.
 #[must_use]
-pub fn paragraph_text_flow_direction(
-    element: &xml::element::Element,
-) -> super::ParagraphTextFlowDirection {
+pub fn paragraph_text_flow_direction(element: &Element) -> super::ParagraphTextFlowDirection {
     let mut node = super::ParagraphTextFlowDirection::default();
     let mut reader = markup::Reader::new(element, &super::PARAGRAPH_TEXT_FLOW_DIRECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -8060,7 +7792,7 @@ pub fn paragraph_text_flow_direction(
 
 /// Read `w:basedOn` into a `ParentStyleID`.
 #[must_use]
-pub fn parent_style_id(element: &xml::element::Element) -> super::ParentStyleID {
+pub fn parent_style_id(element: &Element) -> super::ParentStyleID {
     let mut node = super::ParentStyleID::default();
     let mut reader = markup::Reader::new(element, &super::PARENT_STYLE_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -8074,9 +7806,7 @@ pub fn parent_style_id(element: &xml::element::Element) -> super::ParentStyleID 
 
 /// Read `w:summaryLength` into a `PercentageOfDocumentToUse`.
 #[must_use]
-pub fn percentage_of_document_to_use(
-    element: &xml::element::Element,
-) -> super::PercentageOfDocumentToUse {
+pub fn percentage_of_document_to_use(element: &Element) -> super::PercentageOfDocumentToUse {
     let mut node = super::PercentageOfDocumentToUse::default();
     let mut reader = markup::Reader::new(element, &super::PERCENTAGE_OF_DOCUMENT_TO_USE_SHAPE);
     for (index, field) in &mut reader {
@@ -8090,7 +7820,7 @@ pub fn percentage_of_document_to_use(
 
 /// Read `w:ruby` into a `PhoneticGuide`.
 #[must_use]
-pub fn phonetic_guide(element: &xml::element::Element) -> super::PhoneticGuide {
+pub fn phonetic_guide(element: &Element) -> super::PhoneticGuide {
     let mut node = super::PhoneticGuide::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_SHAPE);
     for (index, field) in &mut reader {
@@ -8107,7 +7837,7 @@ pub fn phonetic_guide(element: &xml::element::Element) -> super::PhoneticGuide {
 
 /// Read `w:rubyBase` into a `PhoneticGuideBaseText`.
 #[must_use]
-pub fn phonetic_guide_base_text(element: &xml::element::Element) -> super::PhoneticGuideBaseText {
+pub fn phonetic_guide_base_text(element: &Element) -> super::PhoneticGuideBaseText {
     let mut node = super::PhoneticGuideBaseText::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_BASE_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -8122,7 +7852,7 @@ pub fn phonetic_guide_base_text(element: &xml::element::Element) -> super::Phone
 /// Read `w:hpsBaseText` into a `PhoneticGuideBaseTextFontSize`.
 #[must_use]
 pub fn phonetic_guide_base_text_font_size(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PhoneticGuideBaseTextFontSize {
     let mut node = super::PhoneticGuideBaseTextFontSize::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_BASE_TEXT_FONT_SIZE_SHAPE);
@@ -8137,15 +7867,13 @@ pub fn phonetic_guide_base_text_font_size(
 
 /// Read one item of `PhoneticGuideContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn phonetic_guide_content(element: &xml::element::Element) -> super::PhoneticGuideContent {
+pub fn phonetic_guide_content(element: &Element) -> super::PhoneticGuideContent {
     markup::read(element)
 }
 
 /// Read `w:rubyPr` into a `PhoneticGuideProperties`.
 #[must_use]
-pub fn phonetic_guide_properties(
-    element: &xml::element::Element,
-) -> super::PhoneticGuideProperties {
+pub fn phonetic_guide_properties(element: &Element) -> super::PhoneticGuideProperties {
     let mut node = super::PhoneticGuideProperties::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8165,7 +7893,7 @@ pub fn phonetic_guide_properties(
 
 /// Read `w:rt` into a `PhoneticGuideText`.
 #[must_use]
-pub fn phonetic_guide_text(element: &xml::element::Element) -> super::PhoneticGuideText {
+pub fn phonetic_guide_text(element: &Element) -> super::PhoneticGuideText {
     let mut node = super::PhoneticGuideText::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -8179,9 +7907,7 @@ pub fn phonetic_guide_text(element: &xml::element::Element) -> super::PhoneticGu
 
 /// Read `w:rubyAlign` into a `PhoneticGuideTextAlignment`.
 #[must_use]
-pub fn phonetic_guide_text_alignment(
-    element: &xml::element::Element,
-) -> super::PhoneticGuideTextAlignment {
+pub fn phonetic_guide_text_alignment(element: &Element) -> super::PhoneticGuideTextAlignment {
     let mut node = super::PhoneticGuideTextAlignment::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_TEXT_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -8195,9 +7921,7 @@ pub fn phonetic_guide_text_alignment(
 
 /// Read `w:hps` into a `PhoneticGuideTextFontSize`.
 #[must_use]
-pub fn phonetic_guide_text_font_size(
-    element: &xml::element::Element,
-) -> super::PhoneticGuideTextFontSize {
+pub fn phonetic_guide_text_font_size(element: &Element) -> super::PhoneticGuideTextFontSize {
     let mut node = super::PhoneticGuideTextFontSize::default();
     let mut reader = markup::Reader::new(element, &super::PHONETIC_GUIDE_TEXT_FONT_SIZE_SHAPE);
     for (index, field) in &mut reader {
@@ -8212,7 +7936,7 @@ pub fn phonetic_guide_text_font_size(
 /// Read `w:numPicBullet` into a `PictureNumberingSymbolDefinition`.
 #[must_use]
 pub fn picture_numbering_symbol_definition(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PictureNumberingSymbolDefinition {
     let mut node = super::PictureNumberingSymbolDefinition::default();
     let mut reader =
@@ -8232,7 +7956,7 @@ pub fn picture_numbering_symbol_definition(
 /// or `Other`.
 #[must_use]
 pub fn picture_numbering_symbol_definition_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PictureNumberingSymbolDefinitionContent {
     markup::read(element)
 }
@@ -8240,7 +7964,7 @@ pub fn picture_numbering_symbol_definition_content(
 /// Read `w:lvlPicBulletId` into a `PictureNumberingSymbolDefinitionReference`.
 #[must_use]
 pub fn picture_numbering_symbol_definition_reference(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PictureNumberingSymbolDefinitionReference {
     let mut node = super::PictureNumberingSymbolDefinitionReference::default();
     let mut reader = markup::Reader::new(
@@ -8258,9 +7982,7 @@ pub fn picture_numbering_symbol_definition_reference(
 
 /// Read `w:picture` into a `PictureStructuredDocumentTag`.
 #[must_use]
-pub fn picture_structured_document_tag(
-    element: &xml::element::Element,
-) -> super::PictureStructuredDocumentTag {
+pub fn picture_structured_document_tag(element: &Element) -> super::PictureStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::PICTURE_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::PictureStructuredDocumentTag {
         unknown: reader.finish(),
@@ -8270,7 +7992,7 @@ pub fn picture_structured_document_tag(
 /// Read `w:pixelsPerInch` into a `PixelsPerInchForGraphicsImages`.
 #[must_use]
 pub fn pixels_per_inch_for_graphics_images(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PixelsPerInchForGraphicsImages {
     let mut node = super::PixelsPerInchForGraphicsImages::default();
     let mut reader =
@@ -8287,7 +8009,7 @@ pub fn pixels_per_inch_for_graphics_images(
 /// Read `w:formsDesign` into a `PlaceholderTextShouldBeResaved`.
 #[must_use]
 pub fn placeholder_text_should_be_resaved(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PlaceholderTextShouldBeResaved {
     let mut node = super::PlaceholderTextShouldBeResaved::default();
     let mut reader = markup::Reader::new(element, &super::PLACEHOLDER_TEXT_SHOULD_BE_RESAVED_SHAPE);
@@ -8303,7 +8025,7 @@ pub fn placeholder_text_should_be_resaved(
 /// Read `w:text` into a `PlainTextStructuredDocumentTag`.
 #[must_use]
 pub fn plain_text_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PlainTextStructuredDocumentTag {
     let mut node = super::PlainTextStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(element, &super::PLAIN_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -8318,9 +8040,7 @@ pub fn plain_text_structured_document_tag(
 
 /// Read `w:gutterAtTop` into a `PositionGutterAtTopOfPage`.
 #[must_use]
-pub fn position_gutter_at_top_of_page(
-    element: &xml::element::Element,
-) -> super::PositionGutterAtTopOfPage {
+pub fn position_gutter_at_top_of_page(element: &Element) -> super::PositionGutterAtTopOfPage {
     let mut node = super::PositionGutterAtTopOfPage::default();
     let mut reader = markup::Reader::new(element, &super::POSITION_GUTTER_AT_TOP_OF_PAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -8335,7 +8055,7 @@ pub fn position_gutter_at_top_of_page(
 /// Read `w:lastRenderedPageBreak` into a `PositionOfLastCalculatedPageBreak`.
 #[must_use]
 pub fn position_of_last_calculated_page_break(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PositionOfLastCalculatedPageBreak {
     let reader = markup::Reader::new(
         element,
@@ -8348,9 +8068,7 @@ pub fn position_of_last_calculated_page_break(
 
 /// Read `w:mappedName` into a `PredefinedMergeFieldName`.
 #[must_use]
-pub fn predefined_merge_field_name(
-    element: &xml::element::Element,
-) -> super::PredefinedMergeFieldName {
+pub fn predefined_merge_field_name(element: &Element) -> super::PredefinedMergeFieldName {
     let mut node = super::PredefinedMergeFieldName::default();
     let mut reader = markup::Reader::new(element, &super::PREDEFINED_MERGE_FIELD_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -8364,9 +8082,7 @@ pub fn predefined_merge_field_name(
 
 /// Read `w:tcW` into a `PreferredTableCellWidth`.
 #[must_use]
-pub fn preferred_table_cell_width(
-    element: &xml::element::Element,
-) -> super::PreferredTableCellWidth {
+pub fn preferred_table_cell_width(element: &Element) -> super::PreferredTableCellWidth {
     let mut node = super::PreferredTableCellWidth::default();
     let mut reader = markup::Reader::new(element, &super::PREFERRED_TABLE_CELL_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -8382,7 +8098,7 @@ pub fn preferred_table_cell_width(
 
 /// Read `w:tblW` into a `PreferredTableWidth`.
 #[must_use]
-pub fn preferred_table_width(element: &xml::element::Element) -> super::PreferredTableWidth {
+pub fn preferred_table_width(element: &Element) -> super::PreferredTableWidth {
     let mut node = super::PreferredTableWidth::default();
     let mut reader = markup::Reader::new(element, &super::PREFERRED_TABLE_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -8398,9 +8114,7 @@ pub fn preferred_table_width(element: &xml::element::Element) -> super::Preferre
 
 /// Read `w:wAfter` into a `PreferredWidthAfterTableRow`.
 #[must_use]
-pub fn preferred_width_after_table_row(
-    element: &xml::element::Element,
-) -> super::PreferredWidthAfterTableRow {
+pub fn preferred_width_after_table_row(element: &Element) -> super::PreferredWidthAfterTableRow {
     let mut node = super::PreferredWidthAfterTableRow::default();
     let mut reader = markup::Reader::new(element, &super::PREFERRED_WIDTH_AFTER_TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -8416,9 +8130,7 @@ pub fn preferred_width_after_table_row(
 
 /// Read `w:wBefore` into a `PreferredWidthBeforeTableRow`.
 #[must_use]
-pub fn preferred_width_before_table_row(
-    element: &xml::element::Element,
-) -> super::PreferredWidthBeforeTableRow {
+pub fn preferred_width_before_table_row(element: &Element) -> super::PreferredWidthBeforeTableRow {
     let mut node = super::PreferredWidthBeforeTableRow::default();
     let mut reader = markup::Reader::new(element, &super::PREFERRED_WIDTH_BEFORE_TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -8435,7 +8147,7 @@ pub fn preferred_width_before_table_row(
 /// Read `w:styleLockTheme` into a `PreventModificationOfThemesPart`.
 #[must_use]
 pub fn prevent_modification_of_themes_part(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreventModificationOfThemesPart {
     let mut node = super::PreventModificationOfThemesPart::default();
     let mut reader =
@@ -8452,7 +8164,7 @@ pub fn prevent_modification_of_themes_part(
 /// Read `w:styleLockQFSet` into a `PreventReplacementOfStylesPart`.
 #[must_use]
 pub fn prevent_replacement_of_styles_part(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreventReplacementOfStylesPart {
     let mut node = super::PreventReplacementOfStylesPart::default();
     let mut reader = markup::Reader::new(element, &super::PREVENT_REPLACEMENT_OF_STYLES_PART_SHAPE);
@@ -8468,7 +8180,7 @@ pub fn prevent_replacement_of_styles_part(
 /// Read `w:suppressOverlap` into a `PreventTextFramesFromOverlapping`.
 #[must_use]
 pub fn prevent_text_frames_from_overlapping(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreventTextFramesFromOverlapping {
     let mut node = super::PreventTextFramesFromOverlapping::default();
     let mut reader =
@@ -8485,7 +8197,7 @@ pub fn prevent_text_frames_from_overlapping(
 /// Read `w:numberingChange` into a `PreviousNumberingFieldProperties`.
 #[must_use]
 pub fn previous_numbering_field_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreviousNumberingFieldProperties {
     let mut node = super::PreviousNumberingFieldProperties::default();
     let mut reader =
@@ -8507,7 +8219,7 @@ pub fn previous_numbering_field_properties(
 /// Read `w:rPr` into a `PreviousParagraphMarkRunProperties`.
 #[must_use]
 pub fn previous_paragraph_mark_run_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreviousParagraphMarkRunProperties {
     let mut node = super::PreviousParagraphMarkRunProperties::default();
     let mut reader = markup::Reader::new(
@@ -8543,9 +8255,7 @@ pub fn previous_paragraph_mark_run_properties(
 
 /// Read `w:pPr` into a `PreviousParagraphProperties`.
 #[must_use]
-pub fn previous_paragraph_properties(
-    element: &xml::element::Element,
-) -> super::PreviousParagraphProperties {
+pub fn previous_paragraph_properties(element: &Element) -> super::PreviousParagraphProperties {
     let mut node = super::PreviousParagraphProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_PARAGRAPH_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8592,7 +8302,7 @@ pub fn previous_paragraph_properties(
 
 /// Read `w:rPr` into a `PreviousRunProperties`.
 #[must_use]
-pub fn previous_run_properties(element: &xml::element::Element) -> super::PreviousRunProperties {
+pub fn previous_run_properties(element: &Element) -> super::PreviousRunProperties {
     let mut node = super::PreviousRunProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_RUN_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8619,9 +8329,7 @@ pub fn previous_run_properties(element: &xml::element::Element) -> super::Previo
 
 /// Read `w:sectPr` into a `PreviousSectionProperties`.
 #[must_use]
-pub fn previous_section_properties(
-    element: &xml::element::Element,
-) -> super::PreviousSectionProperties {
+pub fn previous_section_properties(element: &Element) -> super::PreviousSectionProperties {
     let mut node = super::PreviousSectionProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_SECTION_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8659,9 +8367,7 @@ pub fn previous_section_properties(
 
 /// Read `w:tcPr` into a `PreviousTableCellProperties`.
 #[must_use]
-pub fn previous_table_cell_properties(
-    element: &xml::element::Element,
-) -> super::PreviousTableCellProperties {
+pub fn previous_table_cell_properties(element: &Element) -> super::PreviousTableCellProperties {
     let mut node = super::PreviousTableCellProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_TABLE_CELL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8690,7 +8396,7 @@ pub fn previous_table_cell_properties(
 
 /// Read `w:tblGrid` into a `PreviousTableGrid`.
 #[must_use]
-pub fn previous_table_grid(element: &xml::element::Element) -> super::PreviousTableGrid {
+pub fn previous_table_grid(element: &Element) -> super::PreviousTableGrid {
     let mut node = super::PreviousTableGrid::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_TABLE_GRID_SHAPE);
     for (index, field) in &mut reader {
@@ -8705,7 +8411,7 @@ pub fn previous_table_grid(element: &xml::element::Element) -> super::PreviousTa
 /// Read `w:tblPrEx` into a `PreviousTableLevelPropertyExceptions`.
 #[must_use]
 pub fn previous_table_level_property_exceptions(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PreviousTableLevelPropertyExceptions {
     let mut node = super::PreviousTableLevelPropertyExceptions::default();
     let mut reader = markup::Reader::new(
@@ -8732,9 +8438,7 @@ pub fn previous_table_level_property_exceptions(
 
 /// Read `w:tblPr` into a `PreviousTableProperties`.
 #[must_use]
-pub fn previous_table_properties(
-    element: &xml::element::Element,
-) -> super::PreviousTableProperties {
+pub fn previous_table_properties(element: &Element) -> super::PreviousTableProperties {
     let mut node = super::PreviousTableProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_TABLE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8765,9 +8469,7 @@ pub fn previous_table_properties(
 
 /// Read `w:trPr` into a `PreviousTableRowProperties`.
 #[must_use]
-pub fn previous_table_row_properties(
-    element: &xml::element::Element,
-) -> super::PreviousTableRowProperties {
+pub fn previous_table_row_properties(element: &Element) -> super::PreviousTableRowProperties {
     let mut node = super::PreviousTableRowProperties::default();
     let mut reader = markup::Reader::new(element, &super::PREVIOUS_TABLE_ROW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -8781,7 +8483,7 @@ pub fn previous_table_row_properties(
 
 /// Read `w:qFormat` into a `PrimaryStyle`.
 #[must_use]
-pub fn primary_style(element: &xml::element::Element) -> super::PrimaryStyle {
+pub fn primary_style(element: &Element) -> super::PrimaryStyle {
     let mut node = super::PrimaryStyle::default();
     let mut reader = markup::Reader::new(element, &super::PRIMARY_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -8795,7 +8497,7 @@ pub fn primary_style(element: &xml::element::Element) -> super::PrimaryStyle {
 
 /// Read `w:name` into a `PrimaryStyleName`.
 #[must_use]
-pub fn primary_style_name(element: &xml::element::Element) -> super::PrimaryStyleName {
+pub fn primary_style_name(element: &Element) -> super::PrimaryStyleName {
     let mut node = super::PrimaryStyleName::default();
     let mut reader = markup::Reader::new(element, &super::PRIMARY_STYLE_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -8810,7 +8512,7 @@ pub fn primary_style_name(element: &xml::element::Element) -> super::PrimaryStyl
 /// Read `w:printBodyTextBeforeHeader` into a `PrintBodyTextBeforeHeaderFooterContents`.
 #[must_use]
 pub fn print_body_text_before_header_footer_contents(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PrintBodyTextBeforeHeaderFooterContents {
     let mut node = super::PrintBodyTextBeforeHeaderFooterContents::default();
     let mut reader = markup::Reader::new(
@@ -8829,7 +8531,7 @@ pub fn print_body_text_before_header_footer_contents(
 /// Read `w:printColBlack` into a `PrintColorsAsBlackAndWhiteWithoutDithering`.
 #[must_use]
 pub fn print_colors_as_black_and_white_without_dithering(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PrintColorsAsBlackAndWhiteWithoutDithering {
     let mut node = super::PrintColorsAsBlackAndWhiteWithoutDithering::default();
     let mut reader = markup::Reader::new(
@@ -8848,7 +8550,7 @@ pub fn print_colors_as_black_and_white_without_dithering(
 /// Read `w:printFractionalCharacterWidth` into a `PrintFractionalCharacterWidths`.
 #[must_use]
 pub fn print_fractional_character_widths(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PrintFractionalCharacterWidths {
     let mut node = super::PrintFractionalCharacterWidths::default();
     let mut reader = markup::Reader::new(element, &super::PRINT_FRACTIONAL_CHARACTER_WIDTHS_SHAPE);
@@ -8864,7 +8566,7 @@ pub fn print_fractional_character_widths(
 /// Read `w:printPostScriptOverText` into a `PrintPostScriptCodesWithDocumentText`.
 #[must_use]
 pub fn print_post_script_codes_with_document_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::PrintPostScriptCodesWithDocumentText {
     let mut node = super::PrintPostScriptCodesWithDocumentText::default();
     let mut reader = markup::Reader::new(
@@ -8882,7 +8584,7 @@ pub fn print_post_script_codes_with_document_text(
 
 /// Read `w:printTwoOnOne` into a `PrintTwoPagesPerSheet`.
 #[must_use]
-pub fn print_two_pages_per_sheet(element: &xml::element::Element) -> super::PrintTwoPagesPerSheet {
+pub fn print_two_pages_per_sheet(element: &Element) -> super::PrintTwoPagesPerSheet {
     let mut node = super::PrintTwoPagesPerSheet::default();
     let mut reader = markup::Reader::new(element, &super::PRINT_TWO_PAGES_PER_SHEET_SHAPE);
     for (index, field) in &mut reader {
@@ -8896,7 +8598,7 @@ pub fn print_two_pages_per_sheet(element: &xml::element::Element) -> super::Prin
 
 /// Read `w:tag` into a `ProgrammaticTag`.
 #[must_use]
-pub fn programmatic_tag(element: &xml::element::Element) -> super::ProgrammaticTag {
+pub fn programmatic_tag(element: &Element) -> super::ProgrammaticTag {
     let mut node = super::ProgrammaticTag::default();
     let mut reader = markup::Reader::new(element, &super::PROGRAMMATIC_TAG_SHAPE);
     for (index, field) in &mut reader {
@@ -8910,7 +8612,7 @@ pub fn programmatic_tag(element: &xml::element::Element) -> super::ProgrammaticT
 
 /// Read `w:proofErr` into a `ProofingErrorAnchor`.
 #[must_use]
-pub fn proofing_error_anchor(element: &xml::element::Element) -> super::ProofingErrorAnchor {
+pub fn proofing_error_anchor(element: &Element) -> super::ProofingErrorAnchor {
     let mut node = super::ProofingErrorAnchor::default();
     let mut reader = markup::Reader::new(element, &super::PROOFING_ERROR_ANCHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -8924,9 +8626,7 @@ pub fn proofing_error_anchor(element: &xml::element::Element) -> super::Proofing
 
 /// Read `w:font` into a `PropertiesForASingleFont`.
 #[must_use]
-pub fn properties_for_a_single_font(
-    element: &xml::element::Element,
-) -> super::PropertiesForASingleFont {
+pub fn properties_for_a_single_font(element: &Element) -> super::PropertiesForASingleFont {
     let mut node = super::PropertiesForASingleFont::default();
     let mut reader = markup::Reader::new(element, &super::PROPERTIES_FOR_A_SINGLE_FONT_SHAPE);
     for (index, field) in &mut reader {
@@ -8952,9 +8652,7 @@ pub fn properties_for_a_single_font(
 
 /// Read `w:query` into a `QueryForDataSourceRecords`.
 #[must_use]
-pub fn query_for_data_source_records(
-    element: &xml::element::Element,
-) -> super::QueryForDataSourceRecords {
+pub fn query_for_data_source_records(element: &Element) -> super::QueryForDataSourceRecords {
     let mut node = super::QueryForDataSourceRecords::default();
     let mut reader = markup::Reader::new(element, &super::QUERY_FOR_DATA_SOURCE_RECORDS_SHAPE);
     for (index, field) in &mut reader {
@@ -8969,7 +8667,7 @@ pub fn query_for_data_source_records(
 /// Read `w:decimalSymbol` into a `RadixPointForFieldCodeEvaluation`.
 #[must_use]
 pub fn radix_point_for_field_code_evaluation(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RadixPointForFieldCodeEvaluation {
     let mut node = super::RadixPointForFieldCodeEvaluation::default();
     let mut reader =
@@ -8985,13 +8683,13 @@ pub fn radix_point_for_field_code_evaluation(
 
 /// Read one item of `RangeMarkupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn range_markup(element: &xml::element::Element) -> super::RangeMarkupContent {
+pub fn range_markup(element: &Element) -> super::RangeMarkupContent {
     markup::read(element)
 }
 
 /// Read `w:permEnd` into a `RangePermissionEnd`.
 #[must_use]
-pub fn range_permission_end(element: &xml::element::Element) -> super::RangePermissionEnd {
+pub fn range_permission_end(element: &Element) -> super::RangePermissionEnd {
     let mut node = super::RangePermissionEnd::default();
     let mut reader = markup::Reader::new(element, &super::RANGE_PERMISSION_END_SHAPE);
     for (index, field) in &mut reader {
@@ -9007,7 +8705,7 @@ pub fn range_permission_end(element: &xml::element::Element) -> super::RangePerm
 
 /// Read `w:permStart` into a `RangePermissionStart`.
 #[must_use]
-pub fn range_permission_start(element: &xml::element::Element) -> super::RangePermissionStart {
+pub fn range_permission_start(element: &Element) -> super::RangePermissionStart {
     let mut node = super::RangePermissionStart::default();
     let mut reader = markup::Reader::new(element, &super::RANGE_PERMISSION_START_SHAPE);
     for (index, field) in &mut reader {
@@ -9027,9 +8725,7 @@ pub fn range_permission_start(element: &xml::element::Element) -> super::RangePe
 
 /// Read `w:calcOnExit` into a `RecalculateFieldsWhenModified`.
 #[must_use]
-pub fn recalculate_fields_when_modified(
-    element: &xml::element::Element,
-) -> super::RecalculateFieldsWhenModified {
+pub fn recalculate_fields_when_modified(element: &Element) -> super::RecalculateFieldsWhenModified {
     let mut node = super::RecalculateFieldsWhenModified::default();
     let mut reader = markup::Reader::new(element, &super::RECALCULATE_FIELDS_WHEN_MODIFIED_SHAPE);
     for (index, field) in &mut reader {
@@ -9043,7 +8739,7 @@ pub fn recalculate_fields_when_modified(
 
 /// Read `w:doNotSaveAsSingleFile` into a `RecommendWebPageFormat`.
 #[must_use]
-pub fn recommend_web_page_format(element: &xml::element::Element) -> super::RecommendWebPageFormat {
+pub fn recommend_web_page_format(element: &Element) -> super::RecommendWebPageFormat {
     let mut node = super::RecommendWebPageFormat::default();
     let mut reader = markup::Reader::new(element, &super::RECOMMEND_WEB_PAGE_FORMAT_SHAPE);
     for (index, field) in &mut reader {
@@ -9058,7 +8754,7 @@ pub fn recommend_web_page_format(element: &xml::element::Element) -> super::Reco
 /// Read `w:activeRecord` into a `RecordCurrentlyDisplayedInMergedDocument`.
 #[must_use]
 pub fn record_currently_displayed_in_merged_document(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RecordCurrentlyDisplayedInMergedDocument {
     let mut node = super::RecordCurrentlyDisplayedInMergedDocument::default();
     let mut reader = markup::Reader::new(
@@ -9076,9 +8772,7 @@ pub fn record_currently_displayed_in_merged_document(
 
 /// Read `w:active` into a `RecordIsIncludedInMailMerge`.
 #[must_use]
-pub fn record_is_included_in_mail_merge(
-    element: &xml::element::Element,
-) -> super::RecordIsIncludedInMailMerge {
+pub fn record_is_included_in_mail_merge(element: &Element) -> super::RecordIsIncludedInMailMerge {
     let mut node = super::RecordIsIncludedInMailMerge::default();
     let mut reader = markup::Reader::new(element, &super::RECORD_IS_INCLUDED_IN_MAIL_MERGE_SHAPE);
     for (index, field) in &mut reader {
@@ -9093,7 +8787,7 @@ pub fn record_is_included_in_mail_merge(
 /// Read `w:recipientData` into a `ReferenceToInclusionExclusionData`.
 #[must_use]
 pub fn reference_to_inclusion_exclusion_data(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ReferenceToInclusionExclusionData {
     let mut node = super::ReferenceToInclusionExclusionData::default();
     let mut reader =
@@ -9110,7 +8804,7 @@ pub fn reference_to_inclusion_exclusion_data(
 /// Read `w:printerSettings` into a `ReferenceToPrinterSettingsData`.
 #[must_use]
 pub fn reference_to_printer_settings_data(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ReferenceToPrinterSettingsData {
     let mut node = super::ReferenceToPrinterSettingsData::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCE_TO_PRINTER_SETTINGS_DATA_SHAPE);
@@ -9125,9 +8819,7 @@ pub fn reference_to_printer_settings_data(
 
 /// Read `w:rStyle` into a `ReferencedCharacterStyle`.
 #[must_use]
-pub fn referenced_character_style(
-    element: &xml::element::Element,
-) -> super::ReferencedCharacterStyle {
+pub fn referenced_character_style(element: &Element) -> super::ReferencedCharacterStyle {
     let mut node = super::ReferencedCharacterStyle::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCED_CHARACTER_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -9141,9 +8833,7 @@ pub fn referenced_character_style(
 
 /// Read `w:pStyle` into a `ReferencedParagraphStyle`.
 #[must_use]
-pub fn referenced_paragraph_style(
-    element: &xml::element::Element,
-) -> super::ReferencedParagraphStyle {
+pub fn referenced_paragraph_style(element: &Element) -> super::ReferencedParagraphStyle {
     let mut node = super::ReferencedParagraphStyle::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCED_PARAGRAPH_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -9157,7 +8847,7 @@ pub fn referenced_paragraph_style(
 
 /// Read `w:tblStyle` into a `ReferencedTableStyle`.
 #[must_use]
-pub fn referenced_table_style(element: &xml::element::Element) -> super::ReferencedTableStyle {
+pub fn referenced_table_style(element: &Element) -> super::ReferencedTableStyle {
     let mut node = super::ReferencedTableStyle::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCED_TABLE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -9171,9 +8861,7 @@ pub fn referenced_table_style(element: &xml::element::Element) -> super::Referen
 
 /// Read `w:embedRegular` into a `RegularFontStyleEmbedding`.
 #[must_use]
-pub fn regular_font_style_embedding(
-    element: &xml::element::Element,
-) -> super::RegularFontStyleEmbedding {
+pub fn regular_font_style_embedding(element: &Element) -> super::RegularFontStyleEmbedding {
     let mut node = super::RegularFontStyleEmbedding::default();
     let mut reader = markup::Reader::new(element, &super::REGULAR_FONT_STYLE_EMBEDDING_SHAPE);
     for (index, field) in &mut reader {
@@ -9191,7 +8879,7 @@ pub fn regular_font_style_embedding(
 /// Read `w:removeDateAndTime` into a `RemoveDateAndTimeFromAnnotations`.
 #[must_use]
 pub fn remove_date_and_time_from_annotations(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RemoveDateAndTimeFromAnnotations {
     let mut node = super::RemoveDateAndTimeFromAnnotations::default();
     let mut reader =
@@ -9207,9 +8895,7 @@ pub fn remove_date_and_time_from_annotations(
 
 /// Read `w:removePersonalInformation` into a `RemovePersonalInformation`.
 #[must_use]
-pub fn remove_personal_information(
-    element: &xml::element::Element,
-) -> super::RemovePersonalInformation {
+pub fn remove_personal_information(element: &Element) -> super::RemovePersonalInformation {
     let mut node = super::RemovePersonalInformation::default();
     let mut reader = markup::Reader::new(element, &super::REMOVE_PERSONAL_INFORMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -9223,9 +8909,7 @@ pub fn remove_personal_information(
 
 /// Read `w:unhideWhenUsed` into a `RemoveSemiHiddenProperty`.
 #[must_use]
-pub fn remove_semi_hidden_property(
-    element: &xml::element::Element,
-) -> super::RemoveSemiHiddenProperty {
+pub fn remove_semi_hidden_property(element: &Element) -> super::RemoveSemiHiddenProperty {
     let mut node = super::RemoveSemiHiddenProperty::default();
     let mut reader = markup::Reader::new(element, &super::REMOVE_SEMI_HIDDEN_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
@@ -9239,9 +8923,7 @@ pub fn remove_semi_hidden_property(
 
 /// Read `w:doNotEmbedSmartTags` into a `RemoveSmartTagsWhenSaving`.
 #[must_use]
-pub fn remove_smart_tags_when_saving(
-    element: &xml::element::Element,
-) -> super::RemoveSmartTagsWhenSaving {
+pub fn remove_smart_tags_when_saving(element: &Element) -> super::RemoveSmartTagsWhenSaving {
     let mut node = super::RemoveSmartTagsWhenSaving::default();
     let mut reader = markup::Reader::new(element, &super::REMOVE_SMART_TAGS_WHEN_SAVING_SHAPE);
     for (index, field) in &mut reader {
@@ -9256,7 +8938,7 @@ pub fn remove_smart_tags_when_saving(
 /// Read `w:temporary` into a `RemoveStructuredDocumentTagWhenEdited`.
 #[must_use]
 pub fn remove_structured_document_tag_when_edited(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RemoveStructuredDocumentTagWhenEdited {
     let mut node = super::RemoveStructuredDocumentTagWhenEdited::default();
     let mut reader = markup::Reader::new(
@@ -9274,7 +8956,7 @@ pub fn remove_structured_document_tag_when_edited(
 
 /// Read `w:tblHeader` into a `RepeatTableRow`.
 #[must_use]
-pub fn repeat_table_row(element: &xml::element::Element) -> super::RepeatTableRow {
+pub fn repeat_table_row(element: &Element) -> super::RepeatTableRow {
     let mut node = super::RepeatTableRow::default();
     let mut reader = markup::Reader::new(element, &super::REPEAT_TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -9289,7 +8971,7 @@ pub fn repeat_table_row(element: &xml::element::Element) -> super::RepeatTableRo
 /// Read `w:subFontBySize` into a `RequireExactSizeDuringFontSubstitution`.
 #[must_use]
 pub fn require_exact_size_during_font_substitution(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RequireExactSizeDuringFontSubstitution {
     let mut node = super::RequireExactSizeDuringFontSubstitution::default();
     let mut reader = markup::Reader::new(
@@ -9307,9 +8989,7 @@ pub fn require_exact_size_during_font_substitution(
 
 /// Read `w:lvlRestart` into a `RestartNumberingLevelSymbol`.
 #[must_use]
-pub fn restart_numbering_level_symbol(
-    element: &xml::element::Element,
-) -> super::RestartNumberingLevelSymbol {
+pub fn restart_numbering_level_symbol(element: &Element) -> super::RestartNumberingLevelSymbol {
     let mut node = super::RestartNumberingLevelSymbol::default();
     let mut reader = markup::Reader::new(element, &super::RESTART_NUMBERING_LEVEL_SYMBOL_SHAPE);
     for (index, field) in &mut reader {
@@ -9323,9 +9003,7 @@ pub fn restart_numbering_level_symbol(
 
 /// Read `w:bookFoldRevPrinting` into a `ReverseBookFoldPrinting`.
 #[must_use]
-pub fn reverse_book_fold_printing(
-    element: &xml::element::Element,
-) -> super::ReverseBookFoldPrinting {
+pub fn reverse_book_fold_printing(element: &Element) -> super::ReverseBookFoldPrinting {
     let mut node = super::ReverseBookFoldPrinting::default();
     let mut reader = markup::Reader::new(element, &super::REVERSE_BOOK_FOLD_PRINTING_SHAPE);
     for (index, field) in &mut reader {
@@ -9340,7 +9018,7 @@ pub fn reverse_book_fold_printing(
 /// Read `w:rsid` into a `RevisionIdentifierForStyleDefinition`.
 #[must_use]
 pub fn revision_identifier_for_style_definition(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionIdentifierForStyleDefinition {
     let mut node = super::RevisionIdentifierForStyleDefinition::default();
     let mut reader = markup::Reader::new(
@@ -9359,7 +9037,7 @@ pub fn revision_identifier_for_style_definition(
 /// Read `w:pPrChange` into a `RevisionInformationForParagraphProperties`.
 #[must_use]
 pub fn revision_information_for_paragraph_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForParagraphProperties {
     let mut node = super::RevisionInformationForParagraphProperties::default();
     let mut reader = markup::Reader::new(
@@ -9383,7 +9061,7 @@ pub fn revision_information_for_paragraph_properties(
 /// Read `w:rPrChange` into a `RevisionInformationForRunProperties`.
 #[must_use]
 pub fn revision_information_for_run_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForRunProperties {
     let mut node = super::RevisionInformationForRunProperties::default();
     let mut reader = markup::Reader::new(
@@ -9407,7 +9085,7 @@ pub fn revision_information_for_run_properties(
 /// Read `w:sectPrChange` into a `RevisionInformationForSectionProperties`.
 #[must_use]
 pub fn revision_information_for_section_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForSectionProperties {
     let mut node = super::RevisionInformationForSectionProperties::default();
     let mut reader = markup::Reader::new(
@@ -9431,7 +9109,7 @@ pub fn revision_information_for_section_properties(
 /// Read `w:tcPrChange` into a `RevisionInformationForTableCellProperties`.
 #[must_use]
 pub fn revision_information_for_table_cell_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForTableCellProperties {
     let mut node = super::RevisionInformationForTableCellProperties::default();
     let mut reader = markup::Reader::new(
@@ -9455,7 +9133,7 @@ pub fn revision_information_for_table_cell_properties(
 /// Read `w:tblPrExChange` into a `RevisionInformationForTableLevelPropertyExceptions`.
 #[must_use]
 pub fn revision_information_for_table_level_property_exceptions(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForTableLevelPropertyExceptions {
     let mut node = super::RevisionInformationForTableLevelPropertyExceptions::default();
     let mut reader = markup::Reader::new(
@@ -9479,7 +9157,7 @@ pub fn revision_information_for_table_level_property_exceptions(
 /// Read `w:tblPrChange` into a `RevisionInformationForTableProperties`.
 #[must_use]
 pub fn revision_information_for_table_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForTableProperties {
     let mut node = super::RevisionInformationForTableProperties::default();
     let mut reader = markup::Reader::new(
@@ -9503,7 +9181,7 @@ pub fn revision_information_for_table_properties(
 /// Read `w:trPrChange` into a `RevisionInformationForTableRowProperties`.
 #[must_use]
 pub fn revision_information_for_table_row_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RevisionInformationForTableRowProperties {
     let mut node = super::RevisionInformationForTableRowProperties::default();
     let mut reader = markup::Reader::new(
@@ -9526,7 +9204,7 @@ pub fn revision_information_for_table_row_properties(
 
 /// Read `w:rsids` into a `RevisionSaveIDValues`.
 #[must_use]
-pub fn revision_save_id_values(element: &xml::element::Element) -> super::RevisionSaveIDValues {
+pub fn revision_save_id_values(element: &Element) -> super::RevisionSaveIDValues {
     let mut node = super::RevisionSaveIDValues::default();
     let mut reader = markup::Reader::new(element, &super::REVISION_SAVE_ID_VALUES_SHAPE);
     for (index, field) in &mut reader {
@@ -9542,9 +9220,7 @@ pub fn revision_save_id_values(element: &xml::element::Element) -> super::Revisi
 
 /// Read `w:txbxContent` into a `RichTextBoxContentContainer`.
 #[must_use]
-pub fn rich_text_box_content_container(
-    element: &xml::element::Element,
-) -> super::RichTextBoxContentContainer {
+pub fn rich_text_box_content_container(element: &Element) -> super::RichTextBoxContentContainer {
     let mut node = super::RichTextBoxContentContainer::default();
     let mut reader = markup::Reader::new(element, &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE);
     for (index, field) in &mut reader {
@@ -9559,7 +9235,7 @@ pub fn rich_text_box_content_container(
 /// Read `w:richText` into a `RichTextStructuredDocumentTag`.
 #[must_use]
 pub fn rich_text_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RichTextStructuredDocumentTag {
     let reader = markup::Reader::new(element, &super::RICH_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE);
     super::RichTextStructuredDocumentTag {
@@ -9569,7 +9245,7 @@ pub fn rich_text_structured_document_tag(
 
 /// Read `w:right` into a `RightBorder`.
 #[must_use]
-pub fn right_border(element: &xml::element::Element) -> super::RightBorder {
+pub fn right_border(element: &Element) -> super::RightBorder {
     let mut node = super::RightBorder::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -9593,7 +9269,7 @@ pub fn right_border(element: &xml::element::Element) -> super::RightBorder {
 
 /// Read `w:marRight` into a `RightMarginForHTMLDiv`.
 #[must_use]
-pub fn right_margin_for_html_div(element: &xml::element::Element) -> super::RightMarginForHTMLDiv {
+pub fn right_margin_for_html_div(element: &Element) -> super::RightMarginForHTMLDiv {
     let mut node = super::RightMarginForHTMLDiv::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_MARGIN_FOR_HTML_DIV_SHAPE);
     for (index, field) in &mut reader {
@@ -9607,7 +9283,7 @@ pub fn right_margin_for_html_div(element: &xml::element::Element) -> super::Righ
 
 /// Read `w:right` into a `RightParagraphBorder`.
 #[must_use]
-pub fn right_paragraph_border(element: &xml::element::Element) -> super::RightParagraphBorder {
+pub fn right_paragraph_border(element: &Element) -> super::RightParagraphBorder {
     let mut node = super::RightParagraphBorder::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_PARAGRAPH_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -9630,9 +9306,7 @@ pub fn right_paragraph_border(element: &xml::element::Element) -> super::RightPa
 
 /// Read `w:right` into a `RightParagraphBorderTblWidth`.
 #[must_use]
-pub fn right_paragraph_border_tbl_width(
-    element: &xml::element::Element,
-) -> super::RightParagraphBorderTblWidth {
+pub fn right_paragraph_border_tbl_width(element: &Element) -> super::RightParagraphBorderTblWidth {
     let mut node = super::RightParagraphBorderTblWidth::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -9648,9 +9322,7 @@ pub fn right_paragraph_border_tbl_width(
 
 /// Read `w:bidi` into a `RightToLeftParagraphLayout`.
 #[must_use]
-pub fn right_to_left_paragraph_layout(
-    element: &xml::element::Element,
-) -> super::RightToLeftParagraphLayout {
+pub fn right_to_left_paragraph_layout(element: &Element) -> super::RightToLeftParagraphLayout {
     let mut node = super::RightToLeftParagraphLayout::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_TO_LEFT_PARAGRAPH_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -9664,7 +9336,7 @@ pub fn right_to_left_paragraph_layout(
 
 /// Read `w:rtl` into a `RightToLeftText`.
 #[must_use]
-pub fn right_to_left_text(element: &xml::element::Element) -> super::RightToLeftText {
+pub fn right_to_left_text(element: &Element) -> super::RightToLeftText {
     let mut node = super::RightToLeftText::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_TO_LEFT_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -9678,9 +9350,7 @@ pub fn right_to_left_text(element: &xml::element::Element) -> super::RightToLeft
 
 /// Read `w:customXml` into a `RowLevelCustomXMLElement`.
 #[must_use]
-pub fn row_level_custom_xml_element(
-    element: &xml::element::Element,
-) -> super::RowLevelCustomXMLElement {
+pub fn row_level_custom_xml_element(element: &Element) -> super::RowLevelCustomXMLElement {
     let mut node = super::RowLevelCustomXMLElement::default();
     let mut reader = markup::Reader::new(element, &super::ROW_LEVEL_CUSTOM_XML_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -9699,7 +9369,7 @@ pub fn row_level_custom_xml_element(
 /// Read `w:sdt` into a `RowLevelStructuredDocumentTag`.
 #[must_use]
 pub fn row_level_structured_document_tag(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RowLevelStructuredDocumentTag {
     let mut node = super::RowLevelStructuredDocumentTag::default();
     let mut reader = markup::Reader::new(element, &super::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE);
@@ -9722,7 +9392,7 @@ pub fn row_level_structured_document_tag(
 /// Read `w:sdtContent` into a `RowLevelStructuredDocumentTagContent`.
 #[must_use]
 pub fn row_level_structured_document_tag_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RowLevelStructuredDocumentTagContent {
     let mut node = super::RowLevelStructuredDocumentTagContent::default();
     let mut reader = markup::Reader::new(
@@ -9740,7 +9410,7 @@ pub fn row_level_structured_document_tag_content(
 
 /// Read `w:color` into a `RunContentColor`.
 #[must_use]
-pub fn run_content_color(element: &xml::element::Element) -> super::RunContentColor {
+pub fn run_content_color(element: &Element) -> super::RunContentColor {
     let mut node = super::RunContentColor::default();
     let mut reader = markup::Reader::new(element, &super::RUN_CONTENT_COLOR_SHAPE);
     for (index, field) in &mut reader {
@@ -9758,7 +9428,7 @@ pub fn run_content_color(element: &xml::element::Element) -> super::RunContentCo
 
 /// Read `w:rFonts` into a `RunFonts`.
 #[must_use]
-pub fn run_fonts(element: &xml::element::Element) -> super::RunFonts {
+pub fn run_fonts(element: &Element) -> super::RunFonts {
     let mut node = super::RunFonts::default();
     let mut reader = markup::Reader::new(element, &super::RUN_FONTS_SHAPE);
     for (index, field) in &mut reader {
@@ -9781,7 +9451,7 @@ pub fn run_fonts(element: &xml::element::Element) -> super::RunFonts {
 
 /// Read `w:rPr` into a `RunProperties`.
 #[must_use]
-pub fn run_properties(element: &xml::element::Element) -> super::RunProperties {
+pub fn run_properties(element: &Element) -> super::RunProperties {
     let mut node = super::RunProperties::default();
     let mut reader = markup::Reader::new(element, &super::RUN_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -9809,14 +9479,14 @@ pub fn run_properties(element: &xml::element::Element) -> super::RunProperties {
 
 /// Read one item of `RunPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn run_properties_content(element: &xml::element::Element) -> super::RunPropertiesContent {
+pub fn run_properties_content(element: &Element) -> super::RunPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:rPr` into a `RunPropertiesForTheParagraphMark`.
 #[must_use]
 pub fn run_properties_for_the_paragraph_mark(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::RunPropertiesForTheParagraphMark {
     let mut node = super::RunPropertiesForTheParagraphMark::default();
     let mut reader =
@@ -9851,7 +9521,7 @@ pub fn run_properties_for_the_paragraph_mark(
 
 /// Read `w:saveSmartTagsAsXml` into a `SaveSmartTagData`.
 #[must_use]
-pub fn save_smart_tag_data(element: &xml::element::Element) -> super::SaveSmartTagData {
+pub fn save_smart_tag_data(element: &Element) -> super::SaveSmartTagData {
     let mut node = super::SaveSmartTagData::default();
     let mut reader = markup::Reader::new(element, &super::SAVE_SMART_TAG_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -9866,7 +9536,7 @@ pub fn save_smart_tag_data(element: &xml::element::Element) -> super::SaveSmartT
 /// Read `w:useXSLTWhenSaving` into a `SaveThroughCustomXSLTransform`.
 #[must_use]
 pub fn save_through_custom_xsl_transform(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SaveThroughCustomXSLTransform {
     let mut node = super::SaveThroughCustomXSLTransform::default();
     let mut reader = markup::Reader::new(element, &super::SAVE_THROUGH_CUSTOM_XSL_TRANSFORM_SHAPE);
@@ -9881,7 +9551,7 @@ pub fn save_through_custom_xsl_transform(
 
 /// Read `w:scrollbar` into a `ScrollbarDisplayOption`.
 #[must_use]
-pub fn scrollbar_display_option(element: &xml::element::Element) -> super::ScrollbarDisplayOption {
+pub fn scrollbar_display_option(element: &Element) -> super::ScrollbarDisplayOption {
     let mut node = super::ScrollbarDisplayOption::default();
     let mut reader = markup::Reader::new(element, &super::SCROLLBAR_DISPLAY_OPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -9895,13 +9565,13 @@ pub fn scrollbar_display_option(element: &xml::element::Element) -> super::Scrol
 
 /// Read one item of `SectionPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn section_properties(element: &xml::element::Element) -> super::SectionPropertiesContent {
+pub fn section_properties(element: &Element) -> super::SectionPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:type` into a `SectionType`.
 #[must_use]
-pub fn section_type(element: &xml::element::Element) -> super::SectionType {
+pub fn section_type(element: &Element) -> super::SectionType {
     let mut node = super::SectionType::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -9915,9 +9585,7 @@ pub fn section_type(element: &xml::element::Element) -> super::SectionType {
 
 /// Read `w:endnotePr` into a `SectionWideEndnoteProperties`.
 #[must_use]
-pub fn section_wide_endnote_properties(
-    element: &xml::element::Element,
-) -> super::SectionWideEndnoteProperties {
+pub fn section_wide_endnote_properties(element: &Element) -> super::SectionWideEndnoteProperties {
     let mut node = super::SectionWideEndnoteProperties::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_WIDE_ENDNOTE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -9935,9 +9603,7 @@ pub fn section_wide_endnote_properties(
 
 /// Read `w:footnotePr` into a `SectionWideFootnoteProperties`.
 #[must_use]
-pub fn section_wide_footnote_properties(
-    element: &xml::element::Element,
-) -> super::SectionWideFootnoteProperties {
+pub fn section_wide_footnote_properties(element: &Element) -> super::SectionWideFootnoteProperties {
     let mut node = super::SectionWideFootnoteProperties::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_WIDE_FOOTNOTE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -9956,7 +9622,7 @@ pub fn section_wide_footnote_properties(
 /// Read `w:selectFldWithFirstOrLastChar` into a `SelectFldWithFirstOrLastChar`.
 #[must_use]
 pub fn select_fld_with_first_or_last_char(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SelectFldWithFirstOrLastChar {
     let mut node = super::SelectFldWithFirstOrLastChar::default();
     let mut reader = markup::Reader::new(element, &super::SELECT_FLD_WITH_FIRST_OR_LAST_CHAR_SHAPE);
@@ -9971,9 +9637,7 @@ pub fn select_fld_with_first_or_last_char(
 
 /// Read `w:divBdr` into a `SetOfBordersForHTMLDiv`.
 #[must_use]
-pub fn set_of_borders_for_html_div(
-    element: &xml::element::Element,
-) -> super::SetOfBordersForHTMLDiv {
+pub fn set_of_borders_for_html_div(element: &Element) -> super::SetOfBordersForHTMLDiv {
     let mut node = super::SetOfBordersForHTMLDiv::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_BORDERS_FOR_HTML_DIV_SHAPE);
     for (index, field) in &mut reader {
@@ -9991,7 +9655,7 @@ pub fn set_of_borders_for_html_div(
 
 /// Read `w:tabs` into a `SetOfCustomTabStops`.
 #[must_use]
-pub fn set_of_custom_tab_stops(element: &xml::element::Element) -> super::SetOfCustomTabStops {
+pub fn set_of_custom_tab_stops(element: &Element) -> super::SetOfCustomTabStops {
     let mut node = super::SetOfCustomTabStops::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_CUSTOM_TAB_STOPS_SHAPE);
     for (index, field) in &mut reader {
@@ -10005,7 +9669,7 @@ pub fn set_of_custom_tab_stops(element: &xml::element::Element) -> super::SetOfC
 
 /// Read `w:shadow` into a `Shadow`.
 #[must_use]
-pub fn shadow(element: &xml::element::Element) -> super::Shadow {
+pub fn shadow(element: &Element) -> super::Shadow {
     let mut node = super::Shadow::default();
     let mut reader = markup::Reader::new(element, &super::SHADOW_SHAPE);
     for (index, field) in &mut reader {
@@ -10019,9 +9683,7 @@ pub fn shadow(element: &xml::element::Element) -> super::Shadow {
 
 /// Read `w:showEnvelope` into a `ShowEMailMessageHeader`.
 #[must_use]
-pub fn show_e_mail_message_header(
-    element: &xml::element::Element,
-) -> super::ShowEMailMessageHeader {
+pub fn show_e_mail_message_header(element: &Element) -> super::ShowEMailMessageHeader {
     let mut node = super::ShowEMailMessageHeader::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_E_MAIL_MESSAGE_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -10035,7 +9697,7 @@ pub fn show_e_mail_message_header(
 
 /// Read `w:showXMLTags` into a `ShowXMLTags`.
 #[must_use]
-pub fn show_xml_tags(element: &xml::element::Element) -> super::ShowXMLTags {
+pub fn show_xml_tags(element: &Element) -> super::ShowXMLTags {
     let mut node = super::ShowXMLTags::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_XML_TAGS_SHAPE);
     for (index, field) in &mut reader {
@@ -10049,7 +9711,7 @@ pub fn show_xml_tags(element: &xml::element::Element) -> super::ShowXMLTags {
 
 /// Read `w:fldSimple` into a `SimpleField`.
 #[must_use]
-pub fn simple_field(element: &xml::element::Element) -> super::SimpleField {
+pub fn simple_field(element: &Element) -> super::SimpleField {
     let mut node = super::SimpleField::default();
     let mut reader = markup::Reader::new(element, &super::SIMPLE_FIELD_SHAPE);
     for (index, field) in &mut reader {
@@ -10069,7 +9731,7 @@ pub fn simple_field(element: &xml::element::Element) -> super::SimpleField {
 /// Read `w:autoCaption` into a `SingleAutomaticCaptioningSetting`.
 #[must_use]
 pub fn single_automatic_captioning_setting(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SingleAutomaticCaptioningSetting {
     let mut node = super::SingleAutomaticCaptioningSetting::default();
     let mut reader =
@@ -10087,9 +9749,7 @@ pub fn single_automatic_captioning_setting(
 
 /// Read `w:caption` into a `SingleCaptionTypeDefinition`.
 #[must_use]
-pub fn single_caption_type_definition(
-    element: &xml::element::Element,
-) -> super::SingleCaptionTypeDefinition {
+pub fn single_caption_type_definition(element: &Element) -> super::SingleCaptionTypeDefinition {
     let mut node = super::SingleCaptionTypeDefinition::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_CAPTION_TYPE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -10110,7 +9770,7 @@ pub fn single_caption_type_definition(
 
 /// Read `w:col` into a `SingleColumnDefinition`.
 #[must_use]
-pub fn single_column_definition(element: &xml::element::Element) -> super::SingleColumnDefinition {
+pub fn single_column_definition(element: &Element) -> super::SingleColumnDefinition {
     let mut node = super::SingleColumnDefinition::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_COLUMN_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -10126,7 +9786,7 @@ pub fn single_column_definition(element: &xml::element::Element) -> super::Singl
 
 /// Read `w:docVar` into a `SingleDocumentVariable`.
 #[must_use]
-pub fn single_document_variable(element: &xml::element::Element) -> super::SingleDocumentVariable {
+pub fn single_document_variable(element: &Element) -> super::SingleDocumentVariable {
     let mut node = super::SingleDocumentVariable::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_DOCUMENT_VARIABLE_SHAPE);
     for (index, field) in &mut reader {
@@ -10142,7 +9802,7 @@ pub fn single_document_variable(element: &xml::element::Element) -> super::Singl
 
 /// Read `w:frame` into a `SingleFrameProperties`.
 #[must_use]
-pub fn single_frame_properties(element: &xml::element::Element) -> super::SingleFrameProperties {
+pub fn single_frame_properties(element: &Element) -> super::SingleFrameProperties {
     let mut node = super::SingleFrameProperties::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_FRAME_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -10166,7 +9826,7 @@ pub fn single_frame_properties(element: &xml::element::Element) -> super::Single
 
 /// Read `w:strike` into a `SingleStrikethrough`.
 #[must_use]
-pub fn single_strikethrough(element: &xml::element::Element) -> super::SingleStrikethrough {
+pub fn single_strikethrough(element: &Element) -> super::SingleStrikethrough {
     let mut node = super::SingleStrikethrough::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_STRIKETHROUGH_SHAPE);
     for (index, field) in &mut reader {
@@ -10180,7 +9840,7 @@ pub fn single_strikethrough(element: &xml::element::Element) -> super::SingleStr
 
 /// Read `w:tcMar` into a `SingleTableCellMargins`.
 #[must_use]
-pub fn single_table_cell_margins(element: &xml::element::Element) -> super::SingleTableCellMargins {
+pub fn single_table_cell_margins(element: &Element) -> super::SingleTableCellMargins {
     let mut node = super::SingleTableCellMargins::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_TABLE_CELL_MARGINS_SHAPE);
     for (index, field) in &mut reader {
@@ -10200,7 +9860,7 @@ pub fn single_table_cell_margins(element: &xml::element::Element) -> super::Sing
 
 /// Read `w:smallCaps` into a `SmallCaps`.
 #[must_use]
-pub fn small_caps(element: &xml::element::Element) -> super::SmallCaps {
+pub fn small_caps(element: &Element) -> super::SmallCaps {
     let mut node = super::SmallCaps::default();
     let mut reader = markup::Reader::new(element, &super::SMALL_CAPS_SHAPE);
     for (index, field) in &mut reader {
@@ -10214,7 +9874,7 @@ pub fn small_caps(element: &xml::element::Element) -> super::SmallCaps {
 
 /// Read `w:smartTagPr` into a `SmartTagProperties`.
 #[must_use]
-pub fn smart_tag_properties(element: &xml::element::Element) -> super::SmartTagProperties {
+pub fn smart_tag_properties(element: &Element) -> super::SmartTagProperties {
     let mut node = super::SmartTagProperties::default();
     let mut reader = markup::Reader::new(element, &super::SMART_TAG_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -10228,7 +9888,7 @@ pub fn smart_tag_properties(element: &xml::element::Element) -> super::SmartTagP
 
 /// Read `w:mainDocumentType` into a `SourceDocumentType`.
 #[must_use]
-pub fn source_document_type(element: &xml::element::Element) -> super::SourceDocumentType {
+pub fn source_document_type(element: &Element) -> super::SourceDocumentType {
     let mut node = super::SourceDocumentType::default();
     let mut reader = markup::Reader::new(element, &super::SOURCE_DOCUMENT_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -10242,7 +9902,7 @@ pub fn source_document_type(element: &xml::element::Element) -> super::SourceDoc
 
 /// Read `w:sourceFileName` into a `SourceFileForFrame`.
 #[must_use]
-pub fn source_file_for_frame(element: &xml::element::Element) -> super::SourceFileForFrame {
+pub fn source_file_for_frame(element: &Element) -> super::SourceFileForFrame {
     let mut node = super::SourceFileForFrame::default();
     let mut reader = markup::Reader::new(element, &super::SOURCE_FILE_FOR_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -10257,7 +9917,7 @@ pub fn source_file_for_frame(element: &xml::element::Element) -> super::SourceFi
 /// Read `w:spacing` into a `SpacingBetweenLinesAndAboveBelowParagraph`.
 #[must_use]
 pub fn spacing_between_lines_and_above_below_paragraph(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SpacingBetweenLinesAndAboveBelowParagraph {
     let mut node = super::SpacingBetweenLinesAndAboveBelowParagraph::default();
     let mut reader = markup::Reader::new(
@@ -10283,7 +9943,7 @@ pub fn spacing_between_lines_and_above_below_paragraph(
 
 /// Read `w:endnote` into a `SpecialEndnoteList`.
 #[must_use]
-pub fn special_endnote_list(element: &xml::element::Element) -> super::SpecialEndnoteList {
+pub fn special_endnote_list(element: &Element) -> super::SpecialEndnoteList {
     let mut node = super::SpecialEndnoteList::default();
     let mut reader = markup::Reader::new(element, &super::SPECIAL_ENDNOTE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -10297,7 +9957,7 @@ pub fn special_endnote_list(element: &xml::element::Element) -> super::SpecialEn
 
 /// Read `w:footnote` into a `SpecialFootnoteList`.
 #[must_use]
-pub fn special_footnote_list(element: &xml::element::Element) -> super::SpecialFootnoteList {
+pub fn special_footnote_list(element: &Element) -> super::SpecialFootnoteList {
     let mut node = super::SpecialFootnoteList::default();
     let mut reader = markup::Reader::new(element, &super::SPECIAL_FOOTNOTE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -10312,7 +9972,7 @@ pub fn special_footnote_list(element: &xml::element::Element) -> super::SpecialF
 /// Read `w:proofState` into a `SpellingAndGrammaticalCheckingState`.
 #[must_use]
 pub fn spelling_and_grammatical_checking_state(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SpellingAndGrammaticalCheckingState {
     let mut node = super::SpellingAndGrammaticalCheckingState::default();
     let mut reader = markup::Reader::new(
@@ -10332,9 +9992,7 @@ pub fn spelling_and_grammatical_checking_state(
 
 /// Read `w:splitPgBreakAndParaMark` into a `SplitPgBreakAndParaMark`.
 #[must_use]
-pub fn split_pg_break_and_para_mark(
-    element: &xml::element::Element,
-) -> super::SplitPgBreakAndParaMark {
+pub fn split_pg_break_and_para_mark(element: &Element) -> super::SplitPgBreakAndParaMark {
     let mut node = super::SplitPgBreakAndParaMark::default();
     let mut reader = markup::Reader::new(element, &super::SPLIT_PG_BREAK_AND_PARA_MARK_SHAPE);
     for (index, field) in &mut reader {
@@ -10348,9 +10006,7 @@ pub fn split_pg_break_and_para_mark(
 
 /// Read `w:pageBreakBefore` into a `StartParagraphOnNextPage`.
 #[must_use]
-pub fn start_paragraph_on_next_page(
-    element: &xml::element::Element,
-) -> super::StartParagraphOnNextPage {
+pub fn start_paragraph_on_next_page(element: &Element) -> super::StartParagraphOnNextPage {
     let mut node = super::StartParagraphOnNextPage::default();
     let mut reader = markup::Reader::new(element, &super::START_PARAGRAPH_ON_NEXT_PAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -10364,7 +10020,7 @@ pub fn start_paragraph_on_next_page(
 
 /// Read `w:start` into a `StartingValue`.
 #[must_use]
-pub fn starting_value(element: &xml::element::Element) -> super::StartingValue {
+pub fn starting_value(element: &Element) -> super::StartingValue {
     let mut node = super::StartingValue::default();
     let mut reader = markup::Reader::new(element, &super::STARTING_VALUE_SHAPE);
     for (index, field) in &mut reader {
@@ -10378,7 +10034,7 @@ pub fn starting_value(element: &xml::element::Element) -> super::StartingValue {
 
 /// Read `w:strictFirstAndLastChars` into a `StrictKinsokuRules`.
 #[must_use]
-pub fn strict_kinsoku_rules(element: &xml::element::Element) -> super::StrictKinsokuRules {
+pub fn strict_kinsoku_rules(element: &Element) -> super::StrictKinsokuRules {
     let mut node = super::StrictKinsokuRules::default();
     let mut reader = markup::Reader::new(element, &super::STRICT_KINSOKU_RULES_SHAPE);
     for (index, field) in &mut reader {
@@ -10393,7 +10049,7 @@ pub fn strict_kinsoku_rules(element: &xml::element::Element) -> super::StrictKin
 /// Read `w:sdtEndPr` into a `StructuredDocumentTagEndCharacterProperties`.
 #[must_use]
 pub fn structured_document_tag_end_character_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StructuredDocumentTagEndCharacterProperties {
     let mut node = super::StructuredDocumentTagEndCharacterProperties::default();
     let mut reader = markup::Reader::new(
@@ -10411,9 +10067,7 @@ pub fn structured_document_tag_end_character_properties(
 
 /// Read `w:label` into a `StructuredDocumentTagLabel`.
 #[must_use]
-pub fn structured_document_tag_label(
-    element: &xml::element::Element,
-) -> super::StructuredDocumentTagLabel {
+pub fn structured_document_tag_label(element: &Element) -> super::StructuredDocumentTagLabel {
     let mut node = super::StructuredDocumentTagLabel::default();
     let mut reader = markup::Reader::new(element, &super::STRUCTURED_DOCUMENT_TAG_LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -10428,7 +10082,7 @@ pub fn structured_document_tag_label(
 /// Read `w:tabIndex` into a `StructuredDocumentTagNavigationOrderIndex`.
 #[must_use]
 pub fn structured_document_tag_navigation_order_index(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StructuredDocumentTagNavigationOrderIndex {
     let mut node = super::StructuredDocumentTagNavigationOrderIndex::default();
     let mut reader = markup::Reader::new(
@@ -10447,7 +10101,7 @@ pub fn structured_document_tag_navigation_order_index(
 /// Read `w:placeholder` into a `StructuredDocumentTagPlaceholderText`.
 #[must_use]
 pub fn structured_document_tag_placeholder_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StructuredDocumentTagPlaceholderText {
     let mut node = super::StructuredDocumentTagPlaceholderText::default();
     let mut reader = markup::Reader::new(
@@ -10466,7 +10120,7 @@ pub fn structured_document_tag_placeholder_text(
 /// Read `w:sdtPr` into a `StructuredDocumentTagProperties`.
 #[must_use]
 pub fn structured_document_tag_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StructuredDocumentTagProperties {
     let mut node = super::StructuredDocumentTagProperties::default();
     let mut reader = markup::Reader::new(element, &super::STRUCTURED_DOCUMENT_TAG_PROPERTIES_SHAPE);
@@ -10500,14 +10154,14 @@ pub fn structured_document_tag_properties(
 /// or `Other`.
 #[must_use]
 pub fn structured_document_tag_properties_content(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StructuredDocumentTagPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:locked` into a `StyleCannotBeApplied`.
 #[must_use]
-pub fn style_cannot_be_applied(element: &xml::element::Element) -> super::StyleCannotBeApplied {
+pub fn style_cannot_be_applied(element: &Element) -> super::StyleCannotBeApplied {
     let mut node = super::StyleCannotBeApplied::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_CANNOT_BE_APPLIED_SHAPE);
     for (index, field) in &mut reader {
@@ -10522,7 +10176,7 @@ pub fn style_cannot_be_applied(element: &xml::element::Element) -> super::StyleC
 /// Read `w:tblStylePr` into a `StyleConditionalTableFormattingProperties`.
 #[must_use]
 pub fn style_conditional_table_formatting_properties(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::StyleConditionalTableFormattingProperties {
     let mut node = super::StyleConditionalTableFormattingProperties::default();
     let mut reader = markup::Reader::new(
@@ -10546,7 +10200,7 @@ pub fn style_conditional_table_formatting_properties(
 
 /// Read `w:style` into a `StyleDefinition`.
 #[must_use]
-pub fn style_definition(element: &xml::element::Element) -> super::StyleDefinition {
+pub fn style_definition(element: &Element) -> super::StyleDefinition {
     let mut node = super::StyleDefinition::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -10586,7 +10240,7 @@ pub fn style_definition(element: &xml::element::Element) -> super::StyleDefiniti
 
 /// Read `w:styles` into a `StyleDefinitions`.
 #[must_use]
-pub fn style_definitions(element: &xml::element::Element) -> super::StyleDefinitions {
+pub fn style_definitions(element: &Element) -> super::StyleDefinitions {
     let mut node = super::StyleDefinitions::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_DEFINITIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -10603,7 +10257,7 @@ pub fn style_definitions(element: &xml::element::Element) -> super::StyleDefinit
 
 /// Read `w:next` into a `StyleForNextParagraph`.
 #[must_use]
-pub fn style_for_next_paragraph(element: &xml::element::Element) -> super::StyleForNextParagraph {
+pub fn style_for_next_paragraph(element: &Element) -> super::StyleForNextParagraph {
     let mut node = super::StyleForNextParagraph::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_FOR_NEXT_PARAGRAPH_SHAPE);
     for (index, field) in &mut reader {
@@ -10617,9 +10271,7 @@ pub fn style_for_next_paragraph(element: &xml::element::Element) -> super::Style
 
 /// Read `w:vertAlign` into a `SubscriptSuperscriptText`.
 #[must_use]
-pub fn subscript_superscript_text(
-    element: &xml::element::Element,
-) -> super::SubscriptSuperscriptText {
+pub fn subscript_superscript_text(element: &Element) -> super::SubscriptSuperscriptText {
     let mut node = super::SubscriptSuperscriptText::default();
     let mut reader = markup::Reader::new(element, &super::SUBSCRIPT_SUPERSCRIPT_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -10633,9 +10285,7 @@ pub fn subscript_superscript_text(
 
 /// Read `w:saveSubsetFonts` into a `SubsetFontsWhenEmbedding`.
 #[must_use]
-pub fn subset_fonts_when_embedding(
-    element: &xml::element::Element,
-) -> super::SubsetFontsWhenEmbedding {
+pub fn subset_fonts_when_embedding(element: &Element) -> super::SubsetFontsWhenEmbedding {
     let mut node = super::SubsetFontsWhenEmbedding::default();
     let mut reader = markup::Reader::new(element, &super::SUBSET_FONTS_WHEN_EMBEDDING_SHAPE);
     for (index, field) in &mut reader {
@@ -10649,7 +10299,7 @@ pub fn subset_fonts_when_embedding(
 
 /// Read `w:stylePaneFormatFilter` into a `SuggestedFiltering`.
 #[must_use]
-pub fn suggested_filtering(element: &xml::element::Element) -> super::SuggestedFiltering {
+pub fn suggested_filtering(element: &Element) -> super::SuggestedFiltering {
     let mut node = super::SuggestedFiltering::default();
     let mut reader = markup::Reader::new(element, &super::SUGGESTED_FILTERING_SHAPE);
     for (index, field) in &mut reader {
@@ -10679,7 +10329,7 @@ pub fn suggested_filtering(element: &xml::element::Element) -> super::SuggestedF
 
 /// Read `w:stylePaneSortMethod` into a `SuggestedSorting`.
 #[must_use]
-pub fn suggested_sorting(element: &xml::element::Element) -> super::SuggestedSorting {
+pub fn suggested_sorting(element: &Element) -> super::SuggestedSorting {
     let mut node = super::SuggestedSorting::default();
     let mut reader = markup::Reader::new(element, &super::SUGGESTED_SORTING_SHAPE);
     for (index, field) in &mut reader {
@@ -10694,7 +10344,7 @@ pub fn suggested_sorting(element: &xml::element::Element) -> super::SuggestedSor
 /// Read `w:smartTagType` into a `SupplementarySmartTagInformation`.
 #[must_use]
 pub fn supplementary_smart_tag_information(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SupplementarySmartTagInformation {
     let mut node = super::SupplementarySmartTagInformation::default();
     let mut reader =
@@ -10714,7 +10364,7 @@ pub fn supplementary_smart_tag_information(
 /// Read `w:sig` into a `SupportedUnicodeSubrangesAndCodePages`.
 #[must_use]
 pub fn supported_unicode_subranges_and_code_pages(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SupportedUnicodeSubrangesAndCodePages {
     let mut node = super::SupportedUnicodeSubrangesAndCodePages::default();
     let mut reader = markup::Reader::new(
@@ -10738,9 +10388,7 @@ pub fn supported_unicode_subranges_and_code_pages(
 
 /// Read `w:noEndnote` into a `SuppressEndnotesInDocument`.
 #[must_use]
-pub fn suppress_endnotes_in_document(
-    element: &xml::element::Element,
-) -> super::SuppressEndnotesInDocument {
+pub fn suppress_endnotes_in_document(element: &Element) -> super::SuppressEndnotesInDocument {
     let mut node = super::SuppressEndnotesInDocument::default();
     let mut reader = markup::Reader::new(element, &super::SUPPRESS_ENDNOTES_IN_DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -10755,7 +10403,7 @@ pub fn suppress_endnotes_in_document(
 /// Read `w:suppressAutoHyphens` into a `SuppressHyphenationForParagraph`.
 #[must_use]
 pub fn suppress_hyphenation_for_paragraph(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SuppressHyphenationForParagraph {
     let mut node = super::SuppressHyphenationForParagraph::default();
     let mut reader = markup::Reader::new(element, &super::SUPPRESS_HYPHENATION_FOR_PARAGRAPH_SHAPE);
@@ -10771,7 +10419,7 @@ pub fn suppress_hyphenation_for_paragraph(
 /// Read `w:suppressLineNumbers` into a `SuppressLineNumbersForParagraph`.
 #[must_use]
 pub fn suppress_line_numbers_for_paragraph(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SuppressLineNumbersForParagraph {
     let mut node = super::SuppressLineNumbersForParagraph::default();
     let mut reader =
@@ -10787,9 +10435,7 @@ pub fn suppress_line_numbers_for_paragraph(
 
 /// Read `w:suppressSpBfAfterPgBrk` into a `SuppressSpBfAfterPgBrk`.
 #[must_use]
-pub fn suppress_sp_bf_after_pg_brk(
-    element: &xml::element::Element,
-) -> super::SuppressSpBfAfterPgBrk {
+pub fn suppress_sp_bf_after_pg_brk(element: &Element) -> super::SuppressSpBfAfterPgBrk {
     let mut node = super::SuppressSpBfAfterPgBrk::default();
     let mut reader = markup::Reader::new(element, &super::SUPPRESS_SP_BF_AFTER_PG_BRK_SHAPE);
     for (index, field) in &mut reader {
@@ -10803,7 +10449,7 @@ pub fn suppress_sp_bf_after_pg_brk(
 
 /// Read `w:suppressTopSpacing` into a `SuppressTopSpacing`.
 #[must_use]
-pub fn suppress_top_spacing(element: &xml::element::Element) -> super::SuppressTopSpacing {
+pub fn suppress_top_spacing(element: &Element) -> super::SuppressTopSpacing {
     let mut node = super::SuppressTopSpacing::default();
     let mut reader = markup::Reader::new(element, &super::SUPPRESS_TOP_SPACING_SHAPE);
     for (index, field) in &mut reader {
@@ -10818,7 +10464,7 @@ pub fn suppress_top_spacing(element: &xml::element::Element) -> super::SuppressT
 /// Read `w:swapBordersFacingPages` into a `SwapParagraphBordersOnOddNumberedPages`.
 #[must_use]
 pub fn swap_paragraph_borders_on_odd_numbered_pages(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::SwapParagraphBordersOnOddNumberedPages {
     let mut node = super::SwapParagraphBordersOnOddNumberedPages::default();
     let mut reader = markup::Reader::new(
@@ -10836,7 +10482,7 @@ pub fn swap_paragraph_borders_on_odd_numbered_pages(
 
 /// Read `w:sym` into a `SymbolCharacter`.
 #[must_use]
-pub fn symbol_character(element: &xml::element::Element) -> super::SymbolCharacter {
+pub fn symbol_character(element: &Element) -> super::SymbolCharacter {
     let mut node = super::SymbolCharacter::default();
     let mut reader = markup::Reader::new(element, &super::SYMBOL_CHARACTER_SHAPE);
     for (index, field) in &mut reader {
@@ -10852,7 +10498,7 @@ pub fn symbol_character(element: &xml::element::Element) -> super::SymbolCharact
 
 /// Read `w:tab` into a `TabCharacter`.
 #[must_use]
-pub fn tab_character(element: &xml::element::Element) -> super::TabCharacter {
+pub fn tab_character(element: &Element) -> super::TabCharacter {
     let reader = markup::Reader::new(element, &super::TAB_CHARACTER_SHAPE);
     super::TabCharacter {
         unknown: reader.finish(),
@@ -10861,7 +10507,7 @@ pub fn tab_character(element: &xml::element::Element) -> super::TabCharacter {
 
 /// Read `w:tbl` into a `Table`.
 #[must_use]
-pub fn table(element: &xml::element::Element) -> super::Table {
+pub fn table(element: &Element) -> super::Table {
     let mut node = super::Table::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_SHAPE);
     for (index, field) in &mut reader {
@@ -10879,9 +10525,7 @@ pub fn table(element: &xml::element::Element) -> super::Table {
 
 /// Read `w:jc` into a `TableAlignmentException`.
 #[must_use]
-pub fn table_alignment_exception(
-    element: &xml::element::Element,
-) -> super::TableAlignmentException {
+pub fn table_alignment_exception(element: &Element) -> super::TableAlignmentException {
     let mut node = super::TableAlignmentException::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_ALIGNMENT_EXCEPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -10895,7 +10539,7 @@ pub fn table_alignment_exception(
 
 /// Read `w:tblBorders` into a `TableBorders`.
 #[must_use]
-pub fn table_borders(element: &xml::element::Element) -> super::TableBorders {
+pub fn table_borders(element: &Element) -> super::TableBorders {
     let mut node = super::TableBorders::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_BORDERS_SHAPE);
     for (index, field) in &mut reader {
@@ -10917,7 +10561,7 @@ pub fn table_borders(element: &xml::element::Element) -> super::TableBorders {
 
 /// Read `w:tblCaption` into a `TableCaption`.
 #[must_use]
-pub fn table_caption(element: &xml::element::Element) -> super::TableCaption {
+pub fn table_caption(element: &Element) -> super::TableCaption {
     let mut node = super::TableCaption::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CAPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -10931,7 +10575,7 @@ pub fn table_caption(element: &xml::element::Element) -> super::TableCaption {
 
 /// Read `w:tc` into a `TableCell`.
 #[must_use]
-pub fn table_cell(element: &xml::element::Element) -> super::TableCell {
+pub fn table_cell(element: &Element) -> super::TableCell {
     let mut node = super::TableCell::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -10948,7 +10592,7 @@ pub fn table_cell(element: &xml::element::Element) -> super::TableCell {
 
 /// Read `w:tcBorders` into a `TableCellBorders`.
 #[must_use]
-pub fn table_cell_borders(element: &xml::element::Element) -> super::TableCellBorders {
+pub fn table_cell_borders(element: &Element) -> super::TableCellBorders {
     let mut node = super::TableCellBorders::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_BORDERS_SHAPE);
     for (index, field) in &mut reader {
@@ -10972,7 +10616,7 @@ pub fn table_cell_borders(element: &xml::element::Element) -> super::TableCellBo
 
 /// Read `w:cellDel` into a `TableCellDeletion`.
 #[must_use]
-pub fn table_cell_deletion(element: &xml::element::Element) -> super::TableCellDeletion {
+pub fn table_cell_deletion(element: &Element) -> super::TableCellDeletion {
     let mut node = super::TableCellDeletion::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_DELETION_SHAPE);
     for (index, field) in &mut reader {
@@ -10989,7 +10633,7 @@ pub fn table_cell_deletion(element: &xml::element::Element) -> super::TableCellD
 
 /// Read `w:cellIns` into a `TableCellInsertion`.
 #[must_use]
-pub fn table_cell_insertion(element: &xml::element::Element) -> super::TableCellInsertion {
+pub fn table_cell_insertion(element: &Element) -> super::TableCellInsertion {
     let mut node = super::TableCellInsertion::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_INSERTION_SHAPE);
     for (index, field) in &mut reader {
@@ -11006,9 +10650,7 @@ pub fn table_cell_insertion(element: &xml::element::Element) -> super::TableCell
 
 /// Read `w:start` into a `TableCellLeadingEdgeBorder`.
 #[must_use]
-pub fn table_cell_leading_edge_border(
-    element: &xml::element::Element,
-) -> super::TableCellLeadingEdgeBorder {
+pub fn table_cell_leading_edge_border(element: &Element) -> super::TableCellLeadingEdgeBorder {
     let mut node = super::TableCellLeadingEdgeBorder::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_LEADING_EDGE_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -11032,7 +10674,7 @@ pub fn table_cell_leading_edge_border(
 /// Read `w:start` into a `TableCellLeadingEdgeBorderTblWidth`.
 #[must_use]
 pub fn table_cell_leading_edge_border_tbl_width(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableCellLeadingEdgeBorderTblWidth {
     let mut node = super::TableCellLeadingEdgeBorderTblWidth::default();
     let mut reader = markup::Reader::new(
@@ -11052,9 +10694,7 @@ pub fn table_cell_leading_edge_border_tbl_width(
 
 /// Read `w:tblCellMar` into a `TableCellMarginExceptions`.
 #[must_use]
-pub fn table_cell_margin_exceptions(
-    element: &xml::element::Element,
-) -> super::TableCellMarginExceptions {
+pub fn table_cell_margin_exceptions(element: &Element) -> super::TableCellMarginExceptions {
     let mut node = super::TableCellMarginExceptions::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_MARGIN_EXCEPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -11074,7 +10714,7 @@ pub fn table_cell_margin_exceptions(
 
 /// Read `w:tcPr` into a `TableCellProperties`.
 #[must_use]
-pub fn table_cell_properties(element: &xml::element::Element) -> super::TableCellProperties {
+pub fn table_cell_properties(element: &Element) -> super::TableCellProperties {
     let mut node = super::TableCellProperties::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -11105,7 +10745,7 @@ pub fn table_cell_properties(element: &xml::element::Element) -> super::TableCel
 /// Read `w:end` into a `TableCellTrailingMarginException`.
 #[must_use]
 pub fn table_cell_trailing_margin_exception(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableCellTrailingMarginException {
     let mut node = super::TableCellTrailingMarginException::default();
     let mut reader =
@@ -11131,7 +10771,7 @@ pub fn table_cell_trailing_margin_exception(
 /// Read `w:end` into a `TableCellTrailingMarginExceptionTblWidth`.
 #[must_use]
 pub fn table_cell_trailing_margin_exception_tbl_width(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableCellTrailingMarginExceptionTblWidth {
     let mut node = super::TableCellTrailingMarginExceptionTblWidth::default();
     let mut reader = markup::Reader::new(
@@ -11151,9 +10791,7 @@ pub fn table_cell_trailing_margin_exception_tbl_width(
 
 /// Read `w:vAlign` into a `TableCellVerticalAlignment`.
 #[must_use]
-pub fn table_cell_vertical_alignment(
-    element: &xml::element::Element,
-) -> super::TableCellVerticalAlignment {
+pub fn table_cell_vertical_alignment(element: &Element) -> super::TableCellVerticalAlignment {
     let mut node = super::TableCellVerticalAlignment::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_CELL_VERTICAL_ALIGNMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -11167,7 +10805,7 @@ pub fn table_cell_vertical_alignment(
 
 /// Read `w:tblDescription` into a `TableDescription`.
 #[must_use]
-pub fn table_description(element: &xml::element::Element) -> super::TableDescription {
+pub fn table_description(element: &Element) -> super::TableDescription {
     let mut node = super::TableDescription::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_DESCRIPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -11181,7 +10819,7 @@ pub fn table_description(element: &xml::element::Element) -> super::TableDescrip
 
 /// Read `w:tblGrid` into a `TableGrid`.
 #[must_use]
-pub fn table_grid(element: &xml::element::Element) -> super::TableGrid {
+pub fn table_grid(element: &Element) -> super::TableGrid {
     let mut node = super::TableGrid::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_GRID_SHAPE);
     for (index, field) in &mut reader {
@@ -11198,7 +10836,7 @@ pub fn table_grid(element: &xml::element::Element) -> super::TableGrid {
 /// Read `w:tblGridChange` into a `TableGridColumnRevisionInformation`.
 #[must_use]
 pub fn table_grid_column_revision_information(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableGridColumnRevisionInformation {
     let mut node = super::TableGridColumnRevisionInformation::default();
     let mut reader = markup::Reader::new(
@@ -11218,9 +10856,7 @@ pub fn table_grid_column_revision_information(
 
 /// Read `w:tblInd` into a `TableIndentFromLeadingMargin`.
 #[must_use]
-pub fn table_indent_from_leading_margin(
-    element: &xml::element::Element,
-) -> super::TableIndentFromLeadingMargin {
+pub fn table_indent_from_leading_margin(element: &Element) -> super::TableIndentFromLeadingMargin {
     let mut node = super::TableIndentFromLeadingMargin::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_INDENT_FROM_LEADING_MARGIN_SHAPE);
     for (index, field) in &mut reader {
@@ -11237,7 +10873,7 @@ pub fn table_indent_from_leading_margin(
 /// Read `w:insideH` into a `TableInsideHorizontalEdgesBorder`.
 #[must_use]
 pub fn table_inside_horizontal_edges_border(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableInsideHorizontalEdgesBorder {
     let mut node = super::TableInsideHorizontalEdgesBorder::default();
     let mut reader =
@@ -11263,7 +10899,7 @@ pub fn table_inside_horizontal_edges_border(
 /// Read `w:insideV` into a `TableInsideVerticalEdgesBorder`.
 #[must_use]
 pub fn table_inside_vertical_edges_border(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableInsideVerticalEdgesBorder {
     let mut node = super::TableInsideVerticalEdgesBorder::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_INSIDE_VERTICAL_EDGES_BORDER_SHAPE);
@@ -11287,7 +10923,7 @@ pub fn table_inside_vertical_edges_border(
 
 /// Read `w:tblLayout` into a `TableLayout`.
 #[must_use]
-pub fn table_layout(element: &xml::element::Element) -> super::TableLayout {
+pub fn table_layout(element: &Element) -> super::TableLayout {
     let mut node = super::TableLayout::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_LAYOUT_SHAPE);
     for (index, field) in &mut reader {
@@ -11301,9 +10937,7 @@ pub fn table_layout(element: &xml::element::Element) -> super::TableLayout {
 
 /// Read `w:tblPrEx` into a `TableLevelPropertyExceptions`.
 #[must_use]
-pub fn table_level_property_exceptions(
-    element: &xml::element::Element,
-) -> super::TableLevelPropertyExceptions {
+pub fn table_level_property_exceptions(element: &Element) -> super::TableLevelPropertyExceptions {
     let mut node = super::TableLevelPropertyExceptions::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -11327,7 +10961,7 @@ pub fn table_level_property_exceptions(
 
 /// Read `w:tblPr` into a `TableProperties`.
 #[must_use]
-pub fn table_properties(element: &xml::element::Element) -> super::TableProperties {
+pub fn table_properties(element: &Element) -> super::TableProperties {
     let mut node = super::TableProperties::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -11359,7 +10993,7 @@ pub fn table_properties(element: &xml::element::Element) -> super::TableProperti
 
 /// Read `w:tr` into a `TableRow`.
 #[must_use]
-pub fn table_row(element: &xml::element::Element) -> super::TableRow {
+pub fn table_row(element: &Element) -> super::TableRow {
     let mut node = super::TableRow::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_ROW_SHAPE);
     for (index, field) in &mut reader {
@@ -11383,7 +11017,7 @@ pub fn table_row(element: &xml::element::Element) -> super::TableRow {
 /// Read `w:cantSplit` into a `TableRowCannotBreakAcrossPages`.
 #[must_use]
 pub fn table_row_cannot_break_across_pages(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableRowCannotBreakAcrossPages {
     let mut node = super::TableRowCannotBreakAcrossPages::default();
     let mut reader =
@@ -11399,7 +11033,7 @@ pub fn table_row_cannot_break_across_pages(
 
 /// Read `w:tblCellSpacing` into a `TableRowCellSpacing`.
 #[must_use]
-pub fn table_row_cell_spacing(element: &xml::element::Element) -> super::TableRowCellSpacing {
+pub fn table_row_cell_spacing(element: &Element) -> super::TableRowCellSpacing {
     let mut node = super::TableRowCellSpacing::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_ROW_CELL_SPACING_SHAPE);
     for (index, field) in &mut reader {
@@ -11415,7 +11049,7 @@ pub fn table_row_cell_spacing(element: &xml::element::Element) -> super::TableRo
 
 /// Read `w:trHeight` into a `TableRowHeight`.
 #[must_use]
-pub fn table_row_height(element: &xml::element::Element) -> super::TableRowHeight {
+pub fn table_row_height(element: &Element) -> super::TableRowHeight {
     let mut node = super::TableRowHeight::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_ROW_HEIGHT_SHAPE);
     for (index, field) in &mut reader {
@@ -11431,7 +11065,7 @@ pub fn table_row_height(element: &xml::element::Element) -> super::TableRowHeigh
 
 /// Read `w:trPr` into a `TableRowProperties`.
 #[must_use]
-pub fn table_row_properties(element: &xml::element::Element) -> super::TableRowProperties {
+pub fn table_row_properties(element: &Element) -> super::TableRowProperties {
     let mut node = super::TableRowProperties::default();
     let mut reader = markup::Reader::new(element, &super::TABLE_ROW_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -11450,16 +11084,14 @@ pub fn table_row_properties(element: &xml::element::Element) -> super::TableRowP
 
 /// Read one item of `TableRowPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn table_row_properties_content(
-    element: &xml::element::Element,
-) -> super::TableRowPropertiesContent {
+pub fn table_row_properties_content(element: &Element) -> super::TableRowPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w:tblLook` into a `TableStyleConditionalFormattingSettingsException`.
 #[must_use]
 pub fn table_style_conditional_formatting_settings_exception(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TableStyleConditionalFormattingSettingsException {
     let mut node = super::TableStyleConditionalFormattingSettingsException::default();
     let mut reader = markup::Reader::new(
@@ -11484,9 +11116,7 @@ pub fn table_style_conditional_formatting_settings_exception(
 
 /// Read `w:targetScreenSz` into a `TargetScreenSizeForWebPage`.
 #[must_use]
-pub fn target_screen_size_for_web_page(
-    element: &xml::element::Element,
-) -> super::TargetScreenSizeForWebPage {
+pub fn target_screen_size_for_web_page(element: &Element) -> super::TargetScreenSizeForWebPage {
     let mut node = super::TargetScreenSizeForWebPage::default();
     let mut reader = markup::Reader::new(element, &super::TARGET_SCREEN_SIZE_FOR_WEB_PAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -11500,7 +11130,7 @@ pub fn target_screen_size_for_web_page(
 
 /// Read `w:t` into a `Text`.
 #[must_use]
-pub fn text(element: &xml::element::Element) -> super::Text {
+pub fn text(element: &Element) -> super::Text {
     let mut node = super::Text::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -11516,7 +11146,7 @@ pub fn text(element: &xml::element::Element) -> super::Text {
 
 /// Read `w:bdr` into a `TextBorder`.
 #[must_use]
-pub fn text_border(element: &xml::element::Element) -> super::TextBorder {
+pub fn text_border(element: &Element) -> super::TextBorder {
     let mut node = super::TextBorder::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -11539,9 +11169,7 @@ pub fn text_border(element: &xml::element::Element) -> super::TextBorder {
 
 /// Read `w:format` into a `TextBoxFormFieldFormatting`.
 #[must_use]
-pub fn text_box_form_field_formatting(
-    element: &xml::element::Element,
-) -> super::TextBoxFormFieldFormatting {
+pub fn text_box_form_field_formatting(element: &Element) -> super::TextBoxFormFieldFormatting {
     let mut node = super::TextBoxFormFieldFormatting::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_FORM_FIELD_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
@@ -11556,7 +11184,7 @@ pub fn text_box_form_field_formatting(
 /// Read `w:maxLength` into a `TextBoxFormFieldMaximumLength`.
 #[must_use]
 pub fn text_box_form_field_maximum_length(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TextBoxFormFieldMaximumLength {
     let mut node = super::TextBoxFormFieldMaximumLength::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_FORM_FIELD_MAXIMUM_LENGTH_SHAPE);
@@ -11571,9 +11199,7 @@ pub fn text_box_form_field_maximum_length(
 
 /// Read `w:textInput` into a `TextBoxFormFieldProperties`.
 #[must_use]
-pub fn text_box_form_field_properties(
-    element: &xml::element::Element,
-) -> super::TextBoxFormFieldProperties {
+pub fn text_box_form_field_properties(element: &Element) -> super::TextBoxFormFieldProperties {
     let mut node = super::TextBoxFormFieldProperties::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_FORM_FIELD_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -11591,7 +11217,7 @@ pub fn text_box_form_field_properties(
 
 /// Read `w:type` into a `TextBoxFormFieldType`.
 #[must_use]
-pub fn text_box_form_field_type(element: &xml::element::Element) -> super::TextBoxFormFieldType {
+pub fn text_box_form_field_type(element: &Element) -> super::TextBoxFormFieldType {
     let mut node = super::TextBoxFormFieldType::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_FORM_FIELD_TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -11605,7 +11231,7 @@ pub fn text_box_form_field_type(element: &xml::element::Element) -> super::TextB
 
 /// Read `w:framePr` into a `TextFrameProperties`.
 #[must_use]
-pub fn text_frame_properties(element: &xml::element::Element) -> super::TextFrameProperties {
+pub fn text_frame_properties(element: &Element) -> super::TextFrameProperties {
     let mut node = super::TextFrameProperties::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_FRAME_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -11634,7 +11260,7 @@ pub fn text_frame_properties(element: &xml::element::Element) -> super::TextFram
 
 /// Read `w:highlight` into a `TextHighlighting`.
 #[must_use]
-pub fn text_highlighting(element: &xml::element::Element) -> super::TextHighlighting {
+pub fn text_highlighting(element: &Element) -> super::TextHighlighting {
     let mut node = super::TextHighlighting::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_HIGHLIGHTING_SHAPE);
     for (index, field) in &mut reader {
@@ -11648,7 +11274,7 @@ pub fn text_highlighting(element: &xml::element::Element) -> super::TextHighligh
 
 /// Read `w:r` into a `TextRun`.
 #[must_use]
-pub fn text_run(element: &xml::element::Element) -> super::TextRun {
+pub fn text_run(element: &Element) -> super::TextRun {
     let mut node = super::TextRun::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_RUN_SHAPE);
     for (index, field) in &mut reader {
@@ -11667,13 +11293,13 @@ pub fn text_run(element: &xml::element::Element) -> super::TextRun {
 
 /// Read one item of `TextRunContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn text_run_content(element: &xml::element::Element) -> super::TextRunContent {
+pub fn text_run_content(element: &Element) -> super::TextRunContent {
     markup::read(element)
 }
 
 /// Read `w:textboxTightWrap` into a `TextboxTightWrap`.
 #[must_use]
-pub fn textbox_tight_wrap(element: &xml::element::Element) -> super::TextboxTightWrap {
+pub fn textbox_tight_wrap(element: &Element) -> super::TextboxTightWrap {
     let mut node = super::TextboxTightWrap::default();
     let mut reader = markup::Reader::new(element, &super::TEXTBOX_TIGHT_WRAP_SHAPE);
     for (index, field) in &mut reader {
@@ -11687,7 +11313,7 @@ pub fn textbox_tight_wrap(element: &xml::element::Element) -> super::TextboxTigh
 
 /// Read `w:clrSchemeMapping` into a `ThemeColorMappings`.
 #[must_use]
-pub fn theme_color_mappings(element: &xml::element::Element) -> super::ThemeColorMappings {
+pub fn theme_color_mappings(element: &Element) -> super::ThemeColorMappings {
     let mut node = super::ThemeColorMappings::default();
     let mut reader = markup::Reader::new(element, &super::THEME_COLOR_MAPPINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -11713,7 +11339,7 @@ pub fn theme_color_mappings(element: &xml::element::Element) -> super::ThemeColo
 
 /// Read `w:themeFontLang` into a `ThemeFontLanguages`.
 #[must_use]
-pub fn theme_font_languages(element: &xml::element::Element) -> super::ThemeFontLanguages {
+pub fn theme_font_languages(element: &Element) -> super::ThemeFontLanguages {
     let mut node = super::ThemeFontLanguages::default();
     let mut reader = markup::Reader::new(element, &super::THEME_FONT_LANGUAGES_SHAPE);
     for (index, field) in &mut reader {
@@ -11730,9 +11356,7 @@ pub fn theme_font_languages(element: &xml::element::Element) -> super::ThemeFont
 
 /// Read `w:marH` into a `TopAndBottomMarginForFrame`.
 #[must_use]
-pub fn top_and_bottom_margin_for_frame(
-    element: &xml::element::Element,
-) -> super::TopAndBottomMarginForFrame {
+pub fn top_and_bottom_margin_for_frame(element: &Element) -> super::TopAndBottomMarginForFrame {
     let mut node = super::TopAndBottomMarginForFrame::default();
     let mut reader = markup::Reader::new(element, &super::TOP_AND_BOTTOM_MARGIN_FOR_FRAME_SHAPE);
     for (index, field) in &mut reader {
@@ -11746,7 +11370,7 @@ pub fn top_and_bottom_margin_for_frame(
 
 /// Read `w:top` into a `TopBorder`.
 #[must_use]
-pub fn top_border(element: &xml::element::Element) -> super::TopBorder {
+pub fn top_border(element: &Element) -> super::TopBorder {
     let mut node = super::TopBorder::default();
     let mut reader = markup::Reader::new(element, &super::TOP_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -11773,7 +11397,7 @@ pub fn top_border(element: &xml::element::Element) -> super::TopBorder {
 /// Read `w:tl2br` into a `TopLeftBottomRightDiagonalBorder`.
 #[must_use]
 pub fn top_left_bottom_right_diagonal_border(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TopLeftBottomRightDiagonalBorder {
     let mut node = super::TopLeftBottomRightDiagonalBorder::default();
     let mut reader =
@@ -11798,7 +11422,7 @@ pub fn top_left_bottom_right_diagonal_border(
 
 /// Read `w:marTop` into a `TopMarginForHTMLDiv`.
 #[must_use]
-pub fn top_margin_for_html_div(element: &xml::element::Element) -> super::TopMarginForHTMLDiv {
+pub fn top_margin_for_html_div(element: &Element) -> super::TopMarginForHTMLDiv {
     let mut node = super::TopMarginForHTMLDiv::default();
     let mut reader = markup::Reader::new(element, &super::TOP_MARGIN_FOR_HTML_DIV_SHAPE);
     for (index, field) in &mut reader {
@@ -11813,7 +11437,7 @@ pub fn top_margin_for_html_div(element: &xml::element::Element) -> super::TopMar
 /// Read `w:tr2bl` into a `TopRightBottomLeftDiagonalBorder`.
 #[must_use]
 pub fn top_right_bottom_left_diagonal_border(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TopRightBottomLeftDiagonalBorder {
     let mut node = super::TopRightBottomLeftDiagonalBorder::default();
     let mut reader =
@@ -11838,9 +11462,7 @@ pub fn top_right_bottom_left_diagonal_border(
 
 /// Read `w:trackRevisions` into a `TrackRevisionsToDocument`.
 #[must_use]
-pub fn track_revisions_to_document(
-    element: &xml::element::Element,
-) -> super::TrackRevisionsToDocument {
+pub fn track_revisions_to_document(element: &Element) -> super::TrackRevisionsToDocument {
     let mut node = super::TrackRevisionsToDocument::default();
     let mut reader = markup::Reader::new(element, &super::TRACK_REVISIONS_TO_DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -11854,14 +11476,14 @@ pub fn track_revisions_to_document(
 
 /// Read one item of `TrackedRunContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn tracked_run(element: &xml::element::Element) -> super::TrackedRunContent {
+pub fn tracked_run(element: &Element) -> super::TrackedRunContent {
     markup::read(element)
 }
 
 /// Read `w:convMailMergeEsc` into a `TreatBackslashQuotationDelimiterAsTwoQuotationMarks`.
 #[must_use]
 pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks {
     let mut node = super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks::default();
     let mut reader = markup::Reader::new(
@@ -11879,9 +11501,7 @@ pub fn treat_backslash_quotation_delimiter_as_two_quotation_marks(
 
 /// Read `w:truncateFontHeightsLikeWP6` into a `TruncateFontHeightsLikeWP6`.
 #[must_use]
-pub fn truncate_font_heights_like_wp6(
-    element: &xml::element::Element,
-) -> super::TruncateFontHeightsLikeWP6 {
+pub fn truncate_font_heights_like_wp6(element: &Element) -> super::TruncateFontHeightsLikeWP6 {
     let mut node = super::TruncateFontHeightsLikeWP6::default();
     let mut reader = markup::Reader::new(element, &super::TRUNCATE_FONT_HEIGHTS_LIKE_WP6_SHAPE);
     for (index, field) in &mut reader {
@@ -11895,7 +11515,7 @@ pub fn truncate_font_heights_like_wp6(
 
 /// Read `w:udl` into a `UDLConnectionString`.
 #[must_use]
-pub fn udl_connection_string(element: &xml::element::Element) -> super::UDLConnectionString {
+pub fn udl_connection_string(element: &Element) -> super::UDLConnectionString {
     let mut node = super::UDLConnectionString::default();
     let mut reader = markup::Reader::new(element, &super::UDL_CONNECTION_STRING_SHAPE);
     for (index, field) in &mut reader {
@@ -11909,7 +11529,7 @@ pub fn udl_connection_string(element: &xml::element::Element) -> super::UDLConne
 
 /// Read `w:u` into a `Underline`.
 #[must_use]
-pub fn underline(element: &xml::element::Element) -> super::Underline {
+pub fn underline(element: &Element) -> super::Underline {
     let mut node = super::Underline::default();
     let mut reader = markup::Reader::new(element, &super::UNDERLINE_SHAPE);
     for (index, field) in &mut reader {
@@ -11928,9 +11548,7 @@ pub fn underline(element: &xml::element::Element) -> super::Underline {
 
 /// Read `w:ulTrailSpace` into a `UnderlineAllTrailingSpaces`.
 #[must_use]
-pub fn underline_all_trailing_spaces(
-    element: &xml::element::Element,
-) -> super::UnderlineAllTrailingSpaces {
+pub fn underline_all_trailing_spaces(element: &Element) -> super::UnderlineAllTrailingSpaces {
     let mut node = super::UnderlineAllTrailingSpaces::default();
     let mut reader = markup::Reader::new(element, &super::UNDERLINE_ALL_TRAILING_SPACES_SHAPE);
     for (index, field) in &mut reader {
@@ -11945,7 +11563,7 @@ pub fn underline_all_trailing_spaces(
 /// Read `w:underlineTabInNumList` into a `UnderlineFollowingCharacterFollowingNumbering`.
 #[must_use]
 pub fn underline_following_character_following_numbering(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UnderlineFollowingCharacterFollowingNumbering {
     let mut node = super::UnderlineFollowingCharacterFollowingNumbering::default();
     let mut reader = markup::Reader::new(
@@ -11963,7 +11581,7 @@ pub fn underline_following_character_following_numbering(
 
 /// Read `w:id` into a `UniqueID`.
 #[must_use]
-pub fn unique_id(element: &xml::element::Element) -> super::UniqueID {
+pub fn unique_id(element: &Element) -> super::UniqueID {
     let mut node = super::UniqueID::default();
     let mut reader = markup::Reader::new(element, &super::UNIQUE_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -11977,7 +11595,7 @@ pub fn unique_id(element: &xml::element::Element) -> super::UniqueID {
 
 /// Read `w:uniqueTag` into a `UniqueValueForRecord`.
 #[must_use]
-pub fn unique_value_for_record(element: &xml::element::Element) -> super::UniqueValueForRecord {
+pub fn unique_value_for_record(element: &Element) -> super::UniqueValueForRecord {
     let mut node = super::UniqueValueForRecord::default();
     let mut reader = markup::Reader::new(element, &super::UNIQUE_VALUE_FOR_RECORD_SHAPE);
     for (index, field) in &mut reader {
@@ -11991,7 +11609,7 @@ pub fn unique_value_for_record(element: &xml::element::Element) -> super::Unique
 
 /// Read `w:forceUpgrade` into a `UpgradeDocumentOnOpen`.
 #[must_use]
-pub fn upgrade_document_on_open(element: &xml::element::Element) -> super::UpgradeDocumentOnOpen {
+pub fn upgrade_document_on_open(element: &Element) -> super::UpgradeDocumentOnOpen {
     let reader = markup::Reader::new(element, &super::UPGRADE_DOCUMENT_ON_OPEN_SHAPE);
     super::UpgradeDocumentOnOpen {
         unknown: reader.finish(),
@@ -12000,9 +11618,7 @@ pub fn upgrade_document_on_open(element: &xml::element::Element) -> super::Upgra
 
 /// Read `w:useAltKinsokuLineBreakRules` into a `UseAltKinsokuLineBreakRules`.
 #[must_use]
-pub fn use_alt_kinsoku_line_break_rules(
-    element: &xml::element::Element,
-) -> super::UseAltKinsokuLineBreakRules {
+pub fn use_alt_kinsoku_line_break_rules(element: &Element) -> super::UseAltKinsokuLineBreakRules {
     let mut node = super::UseAltKinsokuLineBreakRules::default();
     let mut reader = markup::Reader::new(element, &super::USE_ALT_KINSOKU_LINE_BREAK_RULES_SHAPE);
     for (index, field) in &mut reader {
@@ -12016,9 +11632,7 @@ pub fn use_alt_kinsoku_line_break_rules(
 
 /// Read `w:useAnsiKerningPairs` into a `UseANSIKerningPairsFromFonts`.
 #[must_use]
-pub fn use_ansi_kerning_pairs_from_fonts(
-    element: &xml::element::Element,
-) -> super::UseANSIKerningPairsFromFonts {
+pub fn use_ansi_kerning_pairs_from_fonts(element: &Element) -> super::UseANSIKerningPairsFromFonts {
     let mut node = super::UseANSIKerningPairsFromFonts::default();
     let mut reader = markup::Reader::new(element, &super::USE_ANSI_KERNING_PAIRS_FROM_FONTS_SHAPE);
     for (index, field) in &mut reader {
@@ -12033,7 +11647,7 @@ pub fn use_ansi_kerning_pairs_from_fonts(
 /// Read `w:cachedColBalance` into a `UseCachedParagraphInformationForColumnBalancing`.
 #[must_use]
 pub fn use_cached_paragraph_information_for_column_balancing(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseCachedParagraphInformationForColumnBalancing {
     let mut node = super::UseCachedParagraphInformationForColumnBalancing::default();
     let mut reader = markup::Reader::new(
@@ -12052,7 +11666,7 @@ pub fn use_cached_paragraph_information_for_column_balancing(
 /// Read `w:cs` into a `UseComplexScriptFormattingOnRun`.
 #[must_use]
 pub fn use_complex_script_formatting_on_run(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseComplexScriptFormattingOnRun {
     let mut node = super::UseComplexScriptFormattingOnRun::default();
     let mut reader =
@@ -12069,7 +11683,7 @@ pub fn use_complex_script_formatting_on_run(
 /// Read `w:dynamicAddress` into a `UseCountryBasedAddressFieldOrdering`.
 #[must_use]
 pub fn use_country_based_address_field_ordering(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseCountryBasedAddressFieldOrdering {
     let mut node = super::UseCountryBasedAddressFieldOrdering::default();
     let mut reader = markup::Reader::new(
@@ -12088,7 +11702,7 @@ pub fn use_country_based_address_field_ordering(
 /// Read `w:useWord97LineBreakRules` into a `UseIncorrectInterCharacterSpacingRules`.
 #[must_use]
 pub fn use_incorrect_inter_character_spacing_rules(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseIncorrectInterCharacterSpacingRules {
     let mut node = super::UseIncorrectInterCharacterSpacingRules::default();
     let mut reader = markup::Reader::new(
@@ -12107,7 +11721,7 @@ pub fn use_incorrect_inter_character_spacing_rules(
 /// Read `w:mirrorIndents` into a `UseLeftRightIndentsAsInsideOutsideIndents`.
 #[must_use]
 pub fn use_left_right_indents_as_inside_outside_indents(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseLeftRightIndentsAsInsideOutsideIndents {
     let mut node = super::UseLeftRightIndentsAsInsideOutsideIndents::default();
     let mut reader = markup::Reader::new(
@@ -12125,7 +11739,7 @@ pub fn use_left_right_indents_as_inside_outside_indents(
 
 /// Read `w:useNormalStyleForList` into a `UseNormalStyleForList`.
 #[must_use]
-pub fn use_normal_style_for_list(element: &xml::element::Element) -> super::UseNormalStyleForList {
+pub fn use_normal_style_for_list(element: &Element) -> super::UseNormalStyleForList {
     let mut node = super::UseNormalStyleForList::default();
     let mut reader = markup::Reader::new(element, &super::USE_NORMAL_STYLE_FOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -12140,7 +11754,7 @@ pub fn use_normal_style_for_list(element: &xml::element::Element) -> super::UseN
 /// Read `w:usePrinterMetrics` into a `UsePrinterMetricsToDisplayDocuments`.
 #[must_use]
 pub fn use_printer_metrics_to_display_documents(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UsePrinterMetricsToDisplayDocuments {
     let mut node = super::UsePrinterMetricsToDisplayDocuments::default();
     let mut reader = markup::Reader::new(
@@ -12159,7 +11773,7 @@ pub fn use_printer_metrics_to_display_documents(
 /// Read `w:useSingleBorderforContiguousCells` into a `UseSingleBorderforContiguousCells`.
 #[must_use]
 pub fn use_single_borderfor_contiguous_cells(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseSingleBorderforContiguousCells {
     let mut node = super::UseSingleBorderforContiguousCells::default();
     let mut reader =
@@ -12176,7 +11790,7 @@ pub fn use_single_borderfor_contiguous_cells(
 /// Read `w:mwSmallCaps` into a `UseSpecificSmallCapsAlgorithm`.
 #[must_use]
 pub fn use_specific_small_caps_algorithm(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UseSpecificSmallCapsAlgorithm {
     let mut node = super::UseSpecificSmallCapsAlgorithm::default();
     let mut reader = markup::Reader::new(element, &super::USE_SPECIFIC_SMALL_CAPS_ALGORITHM_SHAPE);
@@ -12191,7 +11805,7 @@ pub fn use_specific_small_caps_algorithm(
 
 /// Read `w:wpSpaceWidth` into a `UseSpecificSpaceWidth`.
 #[must_use]
-pub fn use_specific_space_width(element: &xml::element::Element) -> super::UseSpecificSpaceWidth {
+pub fn use_specific_space_width(element: &Element) -> super::UseSpecificSpaceWidth {
     let mut node = super::UseSpecificSpaceWidth::default();
     let mut reader = markup::Reader::new(element, &super::USE_SPECIFIC_SPACE_WIDTH_SHAPE);
     for (index, field) in &mut reader {
@@ -12205,7 +11819,7 @@ pub fn use_specific_space_width(element: &xml::element::Element) -> super::UseSp
 
 /// Read `w:suppressTopSpacingWP` into a `UseStaticTextLeading`.
 #[must_use]
-pub fn use_static_text_leading(element: &xml::element::Element) -> super::UseStaticTextLeading {
+pub fn use_static_text_leading(element: &Element) -> super::UseStaticTextLeading {
     let mut node = super::UseStaticTextLeading::default();
     let mut reader = markup::Reader::new(element, &super::USE_STATIC_TEXT_LEADING_SHAPE);
     for (index, field) in &mut reader {
@@ -12219,9 +11833,7 @@ pub fn use_static_text_leading(element: &xml::element::Element) -> super::UseSta
 
 /// Read `w:useWord2002TableStyleRules` into a `UseWord2002TableStyleRules`.
 #[must_use]
-pub fn use_word2002table_style_rules(
-    element: &xml::element::Element,
-) -> super::UseWord2002TableStyleRules {
+pub fn use_word2002table_style_rules(element: &Element) -> super::UseWord2002TableStyleRules {
     let mut node = super::UseWord2002TableStyleRules::default();
     let mut reader = markup::Reader::new(element, &super::USE_WORD2002TABLE_STYLE_RULES_SHAPE);
     for (index, field) in &mut reader {
@@ -12236,7 +11848,7 @@ pub fn use_word2002table_style_rules(
 /// Read `w:relyOnVML` into a `UtilizeVMLWhenSavingAsWebPage`.
 #[must_use]
 pub fn utilize_vml_when_saving_as_web_page(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::UtilizeVMLWhenSavingAsWebPage {
     let mut node = super::UtilizeVMLWhenSavingAsWebPage::default();
     let mut reader =
@@ -12253,7 +11865,7 @@ pub fn utilize_vml_when_saving_as_web_page(
 /// Read `w:textAlignment` into a `VerticalCharacterAlignmentOnLine`.
 #[must_use]
 pub fn vertical_character_alignment_on_line(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::VerticalCharacterAlignmentOnLine {
     let mut node = super::VerticalCharacterAlignmentOnLine::default();
     let mut reader =
@@ -12269,7 +11881,7 @@ pub fn vertical_character_alignment_on_line(
 
 /// Read `w:vMerge` into a `VerticallyMergedCell`.
 #[must_use]
-pub fn vertically_merged_cell(element: &xml::element::Element) -> super::VerticallyMergedCell {
+pub fn vertically_merged_cell(element: &Element) -> super::VerticallyMergedCell {
     let mut node = super::VerticallyMergedCell::default();
     let mut reader = markup::Reader::new(element, &super::VERTICALLY_MERGED_CELL_SHAPE);
     for (index, field) in &mut reader {
@@ -12284,7 +11896,7 @@ pub fn vertically_merged_cell(element: &xml::element::Element) -> super::Vertica
 /// Read `w:cellMerge` into a `VerticallyMergedSplitTableCells`.
 #[must_use]
 pub fn vertically_merged_split_table_cells(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::VerticallyMergedSplitTableCells {
     let mut node = super::VerticallyMergedSplitTableCells::default();
     let mut reader =
@@ -12307,7 +11919,7 @@ pub fn vertically_merged_split_table_cells(
 /// Read `w:position` into a `VerticallyRaisedOrLoweredText`.
 #[must_use]
 pub fn vertically_raised_or_lowered_text(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::VerticallyRaisedOrLoweredText {
     let mut node = super::VerticallyRaisedOrLoweredText::default();
     let mut reader = markup::Reader::new(element, &super::VERTICALLY_RAISED_OR_LOWERED_TEXT_SHAPE);
@@ -12322,9 +11934,7 @@ pub fn vertically_raised_or_lowered_text(
 
 /// Read `w:viewMergedData` into a `ViewMergedDataWithinDocument`.
 #[must_use]
-pub fn view_merged_data_within_document(
-    element: &xml::element::Element,
-) -> super::ViewMergedDataWithinDocument {
+pub fn view_merged_data_within_document(element: &Element) -> super::ViewMergedDataWithinDocument {
     let mut node = super::ViewMergedDataWithinDocument::default();
     let mut reader = markup::Reader::new(element, &super::VIEW_MERGED_DATA_WITHIN_DOCUMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -12338,9 +11948,7 @@ pub fn view_merged_data_within_document(
 
 /// Read `w:revisionView` into a `VisibilityOfAnnotationTypes`.
 #[must_use]
-pub fn visibility_of_annotation_types(
-    element: &xml::element::Element,
-) -> super::VisibilityOfAnnotationTypes {
+pub fn visibility_of_annotation_types(element: &Element) -> super::VisibilityOfAnnotationTypes {
     let mut node = super::VisibilityOfAnnotationTypes::default();
     let mut reader = markup::Reader::new(element, &super::VISIBILITY_OF_ANNOTATION_TYPES_SHAPE);
     for (index, field) in &mut reader {
@@ -12359,9 +11967,7 @@ pub fn visibility_of_annotation_types(
 
 /// Read `w:bidiVisual` into a `VisuallyRightToLeftTable`.
 #[must_use]
-pub fn visually_right_to_left_table(
-    element: &xml::element::Element,
-) -> super::VisuallyRightToLeftTable {
+pub fn visually_right_to_left_table(element: &Element) -> super::VisuallyRightToLeftTable {
     let mut node = super::VisuallyRightToLeftTable::default();
     let mut reader = markup::Reader::new(element, &super::VISUALLY_RIGHT_TO_LEFT_TABLE_SHAPE);
     for (index, field) in &mut reader {
@@ -12375,13 +11981,13 @@ pub fn visually_right_to_left_table(
 
 /// Read one item of `VmlElementContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn vml_element(element: &xml::element::Element) -> super::VmlElementContent {
+pub fn vml_element(element: &Element) -> super::VmlElementContent {
     markup::read(element)
 }
 
 /// Read `w:pict` into a `VMLObject`.
 #[must_use]
-pub fn vml_object(element: &xml::element::Element) -> super::VMLObject {
+pub fn vml_object(element: &Element) -> super::VMLObject {
     let mut node = super::VMLObject::default();
     let mut reader = markup::Reader::new(element, &super::VML_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -12400,15 +12006,13 @@ pub fn vml_object(element: &xml::element::Element) -> super::VMLObject {
 /// Read one item of `VmlOfficeDrawingElementContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn vml_office_drawing_element(
-    element: &xml::element::Element,
-) -> super::VmlOfficeDrawingElementContent {
+pub fn vml_office_drawing_element(element: &Element) -> super::VmlOfficeDrawingElementContent {
     markup::read(element)
 }
 
 /// Read `w:webHidden` into a `WebHiddenText`.
 #[must_use]
-pub fn web_hidden_text(element: &xml::element::Element) -> super::WebHiddenText {
+pub fn web_hidden_text(element: &Element) -> super::WebHiddenText {
     let mut node = super::WebHiddenText::default();
     let mut reader = markup::Reader::new(element, &super::WEB_HIDDEN_TEXT_SHAPE);
     for (index, field) in &mut reader {
@@ -12422,7 +12026,7 @@ pub fn web_hidden_text(element: &xml::element::Element) -> super::WebHiddenText 
 
 /// Read `w:webSettings` into a `WebPageSettings`.
 #[must_use]
-pub fn web_page_settings(element: &xml::element::Element) -> super::WebPageSettings {
+pub fn web_page_settings(element: &Element) -> super::WebPageSettings {
     let mut node = super::WebPageSettings::default();
     let mut reader = markup::Reader::new(element, &super::WEB_PAGE_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -12449,7 +12053,7 @@ pub fn web_page_settings(element: &xml::element::Element) -> super::WebPageSetti
 
 /// Read `w:writeProtection` into a `WriteProtection`.
 #[must_use]
-pub fn write_protection(element: &xml::element::Element) -> super::WriteProtection {
+pub fn write_protection(element: &Element) -> super::WriteProtection {
     let mut node = super::WriteProtection::default();
     let mut reader = markup::Reader::new(element, &super::WRITE_PROTECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -12480,7 +12084,7 @@ pub fn write_protection(element: &xml::element::Element) -> super::WriteProtecti
 
 /// Read `w:dataBinding` into a `XMLMapping`.
 #[must_use]
-pub fn xml_mapping(element: &xml::element::Element) -> super::XMLMapping {
+pub fn xml_mapping(element: &Element) -> super::XMLMapping {
     let mut node = super::XMLMapping::default();
     let mut reader = markup::Reader::new(element, &super::XML_MAPPING_SHAPE);
     for (index, field) in &mut reader {

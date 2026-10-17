@@ -213,20 +213,18 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AbsoluteUrl` as its element, `xxl21:absoluteUrl`.
 #[must_use]
-pub fn absolute_url(node: &super::AbsoluteUrl, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn absolute_url(node: &super::AbsoluteUrl, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::ABSOLUTE_URL_SHAPE, &node.unknown).finish()
 }
 
 /// Write a `AlternateUrls` as its element, `xxl21:alternateUrls`.
 #[must_use]
-pub fn alternate_urls(
-    node: &super::AlternateUrls,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn alternate_urls(node: &super::AlternateUrls, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ALTERNATE_URLS_SHAPE, &node.unknown);
     writer.attribute(0, &node.drive_id);
     writer.attribute(1, &node.item_id);
@@ -237,6 +235,6 @@ pub fn alternate_urls(
 
 /// Write a `RelativeUrl` as its element, `xxl21:relativeUrl`.
 #[must_use]
-pub fn relative_url(node: &super::RelativeUrl, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn relative_url(node: &super::RelativeUrl, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::RELATIVE_URL_SHAPE, &node.unknown).finish()
 }

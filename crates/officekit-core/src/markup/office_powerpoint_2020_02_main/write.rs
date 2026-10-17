@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DesignPr` as its element, `p202:designPr`.
 #[must_use]
-pub fn design_pr(node: &super::DesignPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn design_pr(node: &super::DesignPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DESIGN_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.edt_design_elem);
     writer.child(&node.design_tag_lst);
@@ -227,7 +228,7 @@ pub fn design_pr(node: &super::DesignPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `DesignTag` as its element, `p202:designTag`.
 #[must_use]
-pub fn design_tag(node: &super::DesignTag, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn design_tag(node: &super::DesignTag, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DESIGN_TAG_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.val);
@@ -236,10 +237,7 @@ pub fn design_tag(node: &super::DesignTag, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `DesignTagLst` as its element, `p202:designTagLst`.
 #[must_use]
-pub fn design_tag_lst(
-    node: &super::DesignTagLst,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn design_tag_lst(node: &super::DesignTagLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DESIGN_TAG_LST_SHAPE, &node.unknown);
     writer.child(&node.design_tag);
     writer.finish()
@@ -247,7 +245,7 @@ pub fn design_tag_lst(
 
 /// Write a `ExtLst` as its element, `p202:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()

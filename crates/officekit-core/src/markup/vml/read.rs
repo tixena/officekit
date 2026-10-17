@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `v:arc` into a `ArcSegment`.
 #[must_use]
-pub fn arc_segment(element: &xml::element::Element) -> super::ArcSegment {
+pub fn arc_segment(element: &Element) -> super::ArcSegment {
     let mut node = super::ArcSegment::default();
     let mut reader = markup::Reader::new(element, &super::ARC_SEGMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -287,7 +287,7 @@ pub fn arc_segment(element: &xml::element::Element) -> super::ArcSegment {
 
 /// Read `v:curve` into a `BezierCurve`.
 #[must_use]
-pub fn bezier_curve(element: &xml::element::Element) -> super::BezierCurve {
+pub fn bezier_curve(element: &Element) -> super::BezierCurve {
     let mut node = super::BezierCurve::default();
     let mut reader = markup::Reader::new(element, &super::BEZIER_CURVE_SHAPE);
     for (index, field) in &mut reader {
@@ -359,7 +359,7 @@ pub fn bezier_curve(element: &xml::element::Element) -> super::BezierCurve {
 
 /// Read `v:background` into a `DocumentBackground`.
 #[must_use]
-pub fn document_background(element: &xml::element::Element) -> super::DocumentBackground {
+pub fn document_background(element: &Element) -> super::DocumentBackground {
     let mut node = super::DocumentBackground::default();
     let mut reader = markup::Reader::new(element, &super::DOCUMENT_BACKGROUND_SHAPE);
     for (index, field) in &mut reader {
@@ -381,7 +381,7 @@ pub fn document_background(element: &xml::element::Element) -> super::DocumentBa
 
 /// Read `v:imagedata` into a `ImageData`.
 #[must_use]
-pub fn image_data(element: &xml::element::Element) -> super::ImageData {
+pub fn image_data(element: &Element) -> super::ImageData {
     let mut node = super::ImageData::default();
     let mut reader = markup::Reader::new(element, &super::IMAGE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -419,7 +419,7 @@ pub fn image_data(element: &xml::element::Element) -> super::ImageData {
 
 /// Read `v:image` into a `ImageFile`.
 #[must_use]
-pub fn image_file(element: &xml::element::Element) -> super::ImageFile {
+pub fn image_file(element: &Element) -> super::ImageFile {
     let mut node = super::ImageFile::default();
     let mut reader = markup::Reader::new(element, &super::IMAGE_FILE_SHAPE);
     for (index, field) in &mut reader {
@@ -497,7 +497,7 @@ pub fn image_file(element: &xml::element::Element) -> super::ImageFile {
 
 /// Read `v:line` into a `Line`.
 #[must_use]
-pub fn line(element: &xml::element::Element) -> super::Line {
+pub fn line(element: &Element) -> super::Line {
     let mut node = super::Line::default();
     let mut reader = markup::Reader::new(element, &super::LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -567,7 +567,7 @@ pub fn line(element: &xml::element::Element) -> super::Line {
 
 /// Read `v:stroke` into a `LineStrokeSettings`.
 #[must_use]
-pub fn line_stroke_settings(element: &xml::element::Element) -> super::LineStrokeSettings {
+pub fn line_stroke_settings(element: &Element) -> super::LineStrokeSettings {
     let mut node = super::LineStrokeSettings::default();
     let mut reader = markup::Reader::new(element, &super::LINE_STROKE_SETTINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -615,7 +615,7 @@ pub fn line_stroke_settings(element: &xml::element::Element) -> super::LineStrok
 
 /// Read `v:polyline` into a `MultiplePathLine`.
 #[must_use]
-pub fn multiple_path_line(element: &xml::element::Element) -> super::MultiplePathLine {
+pub fn multiple_path_line(element: &Element) -> super::MultiplePathLine {
     let mut node = super::MultiplePathLine::default();
     let mut reader = markup::Reader::new(element, &super::MULTIPLE_PATH_LINE_SHAPE);
     for (index, field) in &mut reader {
@@ -684,15 +684,13 @@ pub fn multiple_path_line(element: &xml::element::Element) -> super::MultiplePat
 
 /// Read one item of `MultiplePathLineContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn multiple_path_line_content(
-    element: &xml::element::Element,
-) -> super::MultiplePathLineContent {
+pub fn multiple_path_line_content(element: &Element) -> super::MultiplePathLineContent {
     markup::read(element)
 }
 
 /// Read `v:oval` into a `Oval`.
 #[must_use]
-pub fn oval(element: &xml::element::Element) -> super::Oval {
+pub fn oval(element: &Element) -> super::Oval {
     let mut node = super::Oval::default();
     let mut reader = markup::Reader::new(element, &super::OVAL_SHAPE);
     for (index, field) in &mut reader {
@@ -760,7 +758,7 @@ pub fn oval(element: &xml::element::Element) -> super::Oval {
 
 /// Read `v:rect` into a `Rectangle`.
 #[must_use]
-pub fn rectangle(element: &xml::element::Element) -> super::Rectangle {
+pub fn rectangle(element: &Element) -> super::Rectangle {
     let mut node = super::Rectangle::default();
     let mut reader = markup::Reader::new(element, &super::RECTANGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -828,7 +826,7 @@ pub fn rectangle(element: &xml::element::Element) -> super::Rectangle {
 
 /// Read `v:roundrect` into a `RoundedRectangle`.
 #[must_use]
-pub fn rounded_rectangle(element: &xml::element::Element) -> super::RoundedRectangle {
+pub fn rounded_rectangle(element: &Element) -> super::RoundedRectangle {
     let mut node = super::RoundedRectangle::default();
     let mut reader = markup::Reader::new(element, &super::ROUNDED_RECTANGLE_SHAPE);
     for (index, field) in &mut reader {
@@ -897,7 +895,7 @@ pub fn rounded_rectangle(element: &xml::element::Element) -> super::RoundedRecta
 
 /// Read `v:formulas` into a `SetOfFormulas`.
 #[must_use]
-pub fn set_of_formulas(element: &xml::element::Element) -> super::SetOfFormulas {
+pub fn set_of_formulas(element: &Element) -> super::SetOfFormulas {
     let mut node = super::SetOfFormulas::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_FORMULAS_SHAPE);
     for (index, field) in &mut reader {
@@ -911,7 +909,7 @@ pub fn set_of_formulas(element: &xml::element::Element) -> super::SetOfFormulas 
 
 /// Read `v:handles` into a `SetOfHandles`.
 #[must_use]
-pub fn set_of_handles(element: &xml::element::Element) -> super::SetOfHandles {
+pub fn set_of_handles(element: &Element) -> super::SetOfHandles {
     let mut node = super::SetOfHandles::default();
     let mut reader = markup::Reader::new(element, &super::SET_OF_HANDLES_SHAPE);
     for (index, field) in &mut reader {
@@ -925,7 +923,7 @@ pub fn set_of_handles(element: &xml::element::Element) -> super::SetOfHandles {
 
 /// Read `v:shadow` into a `ShadowEffect`.
 #[must_use]
-pub fn shadow_effect(element: &xml::element::Element) -> super::ShadowEffect {
+pub fn shadow_effect(element: &Element) -> super::ShadowEffect {
     let mut node = super::ShadowEffect::default();
     let mut reader = markup::Reader::new(element, &super::SHADOW_EFFECT_SHAPE);
     for (index, field) in &mut reader {
@@ -950,7 +948,7 @@ pub fn shadow_effect(element: &xml::element::Element) -> super::ShadowEffect {
 
 /// Read `v:shape` into a `ShapeDefinition`.
 #[must_use]
-pub fn shape_definition(element: &xml::element::Element) -> super::ShapeDefinition {
+pub fn shape_definition(element: &Element) -> super::ShapeDefinition {
     let mut node = super::ShapeDefinition::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1023,19 +1021,19 @@ pub fn shape_definition(element: &xml::element::Element) -> super::ShapeDefiniti
 
 /// Read one item of `ShapeDefinitionContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_definition_content(element: &xml::element::Element) -> super::ShapeDefinitionContent {
+pub fn shape_definition_content(element: &Element) -> super::ShapeDefinitionContent {
     markup::read(element)
 }
 
 /// Read one item of `ShapeElementContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_element(element: &xml::element::Element) -> super::ShapeElementContent {
+pub fn shape_element(element: &Element) -> super::ShapeElementContent {
     markup::read(element)
 }
 
 /// Read `v:fill` into a `ShapeFillProperties`.
 #[must_use]
-pub fn shape_fill_properties(element: &xml::element::Element) -> super::ShapeFillProperties {
+pub fn shape_fill_properties(element: &Element) -> super::ShapeFillProperties {
     let mut node = super::ShapeFillProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_FILL_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1077,7 +1075,7 @@ pub fn shape_fill_properties(element: &xml::element::Element) -> super::ShapeFil
 
 /// Read `v:group` into a `ShapeGroup`.
 #[must_use]
-pub fn shape_group(element: &xml::element::Element) -> super::ShapeGroup {
+pub fn shape_group(element: &Element) -> super::ShapeGroup {
     let mut node = super::ShapeGroup::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -1131,13 +1129,13 @@ pub fn shape_group(element: &xml::element::Element) -> super::ShapeGroup {
 
 /// Read one item of `ShapeGroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn shape_group_content(element: &xml::element::Element) -> super::ShapeGroupContent {
+pub fn shape_group_content(element: &Element) -> super::ShapeGroupContent {
     markup::read(element)
 }
 
 /// Read `v:h` into a `ShapeHandle`.
 #[must_use]
-pub fn shape_handle(element: &xml::element::Element) -> super::ShapeHandle {
+pub fn shape_handle(element: &Element) -> super::ShapeHandle {
     let mut node = super::ShapeHandle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_HANDLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1160,7 +1158,7 @@ pub fn shape_handle(element: &xml::element::Element) -> super::ShapeHandle {
 
 /// Read `v:path` into a `ShapePath`.
 #[must_use]
-pub fn shape_path(element: &xml::element::Element) -> super::ShapePath {
+pub fn shape_path(element: &Element) -> super::ShapePath {
     let mut node = super::ShapePath::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -1189,7 +1187,7 @@ pub fn shape_path(element: &xml::element::Element) -> super::ShapePath {
 
 /// Read `v:shapetype` into a `ShapeTemplate`.
 #[must_use]
-pub fn shape_template(element: &xml::element::Element) -> super::ShapeTemplate {
+pub fn shape_template(element: &Element) -> super::ShapeTemplate {
     let mut node = super::ShapeTemplate::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_TEMPLATE_SHAPE);
     for (index, field) in &mut reader {
@@ -1261,7 +1259,7 @@ pub fn shape_template(element: &xml::element::Element) -> super::ShapeTemplate {
 
 /// Read `v:f` into a `SingleFormula`.
 #[must_use]
-pub fn single_formula(element: &xml::element::Element) -> super::SingleFormula {
+pub fn single_formula(element: &Element) -> super::SingleFormula {
     let mut node = super::SingleFormula::default();
     let mut reader = markup::Reader::new(element, &super::SINGLE_FORMULA_SHAPE);
     for (index, field) in &mut reader {
@@ -1275,7 +1273,7 @@ pub fn single_formula(element: &xml::element::Element) -> super::SingleFormula {
 
 /// Read `v:textbox` into a `TextBox`.
 #[must_use]
-pub fn text_box(element: &xml::element::Element) -> super::TextBox {
+pub fn text_box(element: &Element) -> super::TextBox {
     let mut node = super::TextBox::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BOX_SHAPE);
     for (index, field) in &mut reader {
@@ -1295,13 +1293,13 @@ pub fn text_box(element: &xml::element::Element) -> super::TextBox {
 
 /// Read one item of `TextBoxContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn text_box_content(element: &xml::element::Element) -> super::TextBoxContent {
+pub fn text_box_content(element: &Element) -> super::TextBoxContent {
     markup::read(element)
 }
 
 /// Read `v:textpath` into a `TextLayoutPath`.
 #[must_use]
-pub fn text_layout_path(element: &xml::element::Element) -> super::TextLayoutPath {
+pub fn text_layout_path(element: &Element) -> super::TextLayoutPath {
     let mut node = super::TextLayoutPath::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_LAYOUT_PATH_SHAPE);
     for (index, field) in &mut reader {

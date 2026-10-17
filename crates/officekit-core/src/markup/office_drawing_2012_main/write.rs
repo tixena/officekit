@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `BackgroundPr` as its element, `a15:backgroundPr`.
 #[must_use]
-pub fn background_pr(
-    node: &super::BackgroundPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn background_pr(node: &super::BackgroundPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::BACKGROUND_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.attribute(1, &node.bw_pure);
@@ -231,10 +229,7 @@ pub fn background_pr(
 
 /// Write a `NonVisualGroupProps` as its element, `a15:nonVisualGroupProps`.
 #[must_use]
-pub fn non_visual_group_props(
-    node: &super::NonVisualGroupProps,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn non_visual_group_props(node: &super::NonVisualGroupProps, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::NON_VISUAL_GROUP_PROPS_SHAPE, &node.unknown);
     writer.attribute(0, &node.is_legacy_group);
@@ -243,7 +238,7 @@ pub fn non_visual_group_props(
 
 /// Write a `ObjectPr` as its element, `a15:objectPr`.
 #[must_use]
-pub fn object_pr(node: &super::ObjectPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn object_pr(node: &super::ObjectPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::OBJECT_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.object_id);
     writer.attribute(1, &node.is_active_x);
@@ -253,10 +248,7 @@ pub fn object_pr(node: &super::ObjectPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `SignatureLine` as its element, `a15:signatureLine`.
 #[must_use]
-pub fn signature_line(
-    node: &super::SignatureLine,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn signature_line(node: &super::SignatureLine, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SIGNATURE_LINE_SHAPE, &node.unknown);
     writer.attribute(0, &node.is_signature_line);
     writer.attribute(1, &node.id);

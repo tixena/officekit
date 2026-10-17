@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `wetp:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Taskpane` as its element, `wetp:taskpane`.
 #[must_use]
-pub fn taskpane(node: &super::Taskpane, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn taskpane(node: &super::Taskpane, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASKPANE_SHAPE, &node.unknown);
     writer.attribute(0, &node.dockstate);
     writer.attribute(1, &node.visibility);
@@ -239,7 +240,7 @@ pub fn taskpane(node: &super::Taskpane, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `Taskpanes` as its element, `wetp:taskpanes`.
 #[must_use]
-pub fn taskpanes(node: &super::Taskpanes, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn taskpanes(node: &super::Taskpanes, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TASKPANES_SHAPE, &node.unknown);
     writer.child(&node.taskpane);
     writer.finish()
@@ -247,10 +248,7 @@ pub fn taskpanes(node: &super::Taskpanes, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Webextensionref` as its element, `wetp:webextensionref`.
 #[must_use]
-pub fn webextensionref(
-    node: &super::Webextensionref,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `dgm1612:lstStyle` into a `LstStyle`.
 #[must_use]
-pub fn lst_style(element: &xml::element::Element) -> super::LstStyle {
+pub fn lst_style(element: &Element) -> super::LstStyle {
     let mut node = super::LstStyle::default();
     let mut reader = markup::Reader::new(element, &super::LST_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -242,7 +242,7 @@ pub fn lst_style(element: &xml::element::Element) -> super::LstStyle {
 
 /// Read `dgm1612:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {

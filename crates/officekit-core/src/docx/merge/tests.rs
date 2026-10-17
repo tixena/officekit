@@ -1,8 +1,10 @@
 #![cfg(feature = "transitional")]
 
+use officekit_xml::element::Element;
+use officekit_xml::write::{Layout, Scope, WriteOptions};
+
 use super::super::Docx;
 use crate::error::PackageError;
-use crate::markup::Scope;
 use crate::markup::wordprocessing::{self, Document, DocumentBody};
 use crate::packaging::package::OpenOptions;
 use crate::packaging::part_name::PartName;
@@ -11,8 +13,6 @@ use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
-use crate::xml::element::Element;
-use crate::xml::write::{Layout, WriteOptions};
 
 /// The declarations of every fixture root but the source's main document's.
 const ROOT: &str = concat!(
@@ -303,10 +303,7 @@ fn notes_source() -> Docx {
 /// The notes source imported into the notes target, every declaration kept on write.
 fn notes_import() -> (Docx, Document, Element) {
     let mut target = notes_target();
-    target.set_write_options(WriteOptions {
-        layout: Layout::Compact,
-        namespace_cleanup: false,
-    });
+    target.set_write_options(WriteOptions::new(Layout::Compact, false));
     let (document, body) = import(&mut target, &notes_source());
     (target, document, body)
 }

@@ -213,13 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `sl:schema` into a `CustomXMLSchemaReference`.
 #[must_use]
-pub fn custom_xml_schema_reference(
-    element: &xml::element::Element,
-) -> super::CustomXMLSchemaReference {
+pub fn custom_xml_schema_reference(element: &Element) -> super::CustomXMLSchemaReference {
     let mut node = super::CustomXMLSchemaReference::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -238,7 +236,7 @@ pub fn custom_xml_schema_reference(
 /// Read `sl:schemaLibrary` into a `EmbeddedCustomXMLSchemaSupplementaryData`.
 #[must_use]
 pub fn embedded_custom_xml_schema_supplementary_data(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::EmbeddedCustomXMLSchemaSupplementaryData {
     let mut node = super::EmbeddedCustomXMLSchemaSupplementaryData::default();
     let mut reader = markup::Reader::new(

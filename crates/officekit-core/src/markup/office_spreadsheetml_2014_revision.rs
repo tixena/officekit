@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_R: Option<NamespaceId> = Some(88);
@@ -2302,7 +2302,7 @@ pub struct Ref {
 pub enum ReferenceMapContent {
     Future(Future),
     OartAnchor(OartAnchor),
-    Other(xml::element::Node),
+    Other(Node),
     Ref(Ref),
     SheetUid(SheetUid),
     Test(Test),
@@ -2342,7 +2342,7 @@ pub struct RevStream {
 pub enum RevisionChangeObjectContent {
     Body(Body),
     Link(Link),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// `ST_RevisionContext`: the text the file carried.
@@ -2363,7 +2363,7 @@ pub enum RevisionContextMember {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionGroupContent {
-    Other(xml::element::Node),
+    Other(Node),
     XrrDefName(XrrDefName),
     XrrList(XrrList),
     XrrListExpR(XrrListExpR),
@@ -2394,7 +2394,7 @@ pub struct RevisionPtr {
 pub enum RevisionStateContent {
     FreezePanes(FreezePanes),
     HideUnhideSheet(HideUnhideSheet),
-    Other(xml::element::Node),
+    Other(Node),
     Outlines(Outlines),
     RowColVisualOps(RowColVisualOps),
     ShowGridlinesHeadings(ShowGridlinesHeadings),
@@ -2404,7 +2404,7 @@ pub enum RevisionStateContent {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum RevisionStreamContent {
-    Other(xml::element::Node),
+    Other(Node),
     XrrDefName(XrrDefName),
     XrrList(XrrList),
     XrrListExpR(XrrListExpR),
@@ -2537,7 +2537,7 @@ pub enum StateBasedObjectContent {
     Comments(Comments),
     DataValidation(DataValidation),
     Hyperlink(Hyperlink),
-    Other(xml::element::Node),
+    Other(Node),
     PivotTableDefinition(Box<PivotTableDefinition>),
     SparklineGroup(SparklineGroup),
 }
@@ -3149,7 +3149,7 @@ impl AdjustTypeExt {
 }
 
 impl markup::Read for AutoFilter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::auto_filter(element)
     }
 }
@@ -3162,7 +3162,7 @@ impl markup::Write for AutoFilter {
 }
 
 impl markup::Read for Body {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::body(element)
     }
 }
@@ -3175,7 +3175,7 @@ impl markup::Write for Body {
 }
 
 impl markup::Read for C {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c(element)
     }
 }
@@ -3188,7 +3188,7 @@ impl markup::Write for C {
 }
 
 impl markup::Read for Ccse {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ccse(element)
     }
 }
@@ -3201,7 +3201,7 @@ impl markup::Write for Ccse {
 }
 
 impl markup::Read for Comments {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments(element)
     }
 }
@@ -3214,7 +3214,7 @@ impl markup::Write for Comments {
 }
 
 impl markup::Read for DataValidation {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_validation(element)
     }
 }
@@ -3227,7 +3227,7 @@ impl markup::Write for DataValidation {
 }
 
 impl markup::Read for Dxf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dxf(element)
     }
 }
@@ -3287,7 +3287,7 @@ impl ExtFeatureType {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -3351,7 +3351,7 @@ impl ExtSubFeatureType {
 }
 
 impl markup::Read for F {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::f(element)
     }
 }
@@ -3561,7 +3561,7 @@ impl FillTypeExt {
 }
 
 impl markup::Read for Formula {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::formula(element)
     }
 }
@@ -3574,7 +3574,7 @@ impl markup::Write for Formula {
 }
 
 impl markup::Read for FreezePanes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::freeze_panes(element)
     }
 }
@@ -3587,7 +3587,7 @@ impl markup::Write for FreezePanes {
 }
 
 impl markup::Read for Future {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::future(element)
     }
 }
@@ -3600,7 +3600,7 @@ impl markup::Write for Future {
 }
 
 impl markup::Read for HdrRevExHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hdr_rev_ex_header(element)
     }
 }
@@ -3613,7 +3613,7 @@ impl markup::Write for HdrRevExHeader {
 }
 
 impl markup::Read for HdrStateBasedHeader {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hdr_state_based_header(element)
     }
 }
@@ -3626,7 +3626,7 @@ impl markup::Write for HdrStateBasedHeader {
 }
 
 impl markup::Read for HideUnhideSheet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hide_unhide_sheet(element)
     }
 }
@@ -3639,7 +3639,7 @@ impl markup::Write for HideUnhideSheet {
 }
 
 impl markup::Read for Hyperlink {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyperlink(element)
     }
 }
@@ -3652,7 +3652,7 @@ impl markup::Write for Hyperlink {
 }
 
 impl markup::Read for Is {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::is(element)
     }
 }
@@ -3665,7 +3665,7 @@ impl markup::Write for Is {
 }
 
 impl markup::Read for Link {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::link(element)
     }
 }
@@ -3678,7 +3678,7 @@ impl markup::Write for Link {
 }
 
 impl markup::Read for OartAnchor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::oart_anchor(element)
     }
 }
@@ -3741,7 +3741,7 @@ impl OartAnchorType {
 }
 
 impl markup::Read for ObjectState {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::object_state(element)
     }
 }
@@ -3754,7 +3754,7 @@ impl markup::Write for ObjectState {
 }
 
 impl markup::Read for Outline {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::outline(element)
     }
 }
@@ -3767,7 +3767,7 @@ impl markup::Write for Outline {
 }
 
 impl markup::Read for Outlines {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::outlines(element)
     }
 }
@@ -3780,7 +3780,7 @@ impl markup::Write for Outlines {
 }
 
 impl markup::Read for PivotTableDefinition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pivot_table_definition(element)
     }
 }
@@ -3793,7 +3793,7 @@ impl markup::Write for PivotTableDefinition {
 }
 
 impl markup::Read for Ref {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#ref(element)
     }
 }
@@ -3806,18 +3806,18 @@ impl markup::Write for Ref {
 }
 
 impl markup::Read for ReferenceMapContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "future")) => Self::Future(markup::read(element)),
             Some((NS_XR, "oartAnchor")) => Self::OartAnchor(markup::read(element)),
             Some((NS_XR, "ref")) => Self::Ref(markup::read(element)),
             Some((NS_XR, "sheetUid")) => Self::SheetUid(markup::read(element)),
             Some((NS_XR, "test")) => Self::Test(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3836,7 +3836,7 @@ impl markup::Write for ReferenceMapContent {
 }
 
 impl markup::Read for Refmap {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::refmap(element)
     }
 }
@@ -3849,7 +3849,7 @@ impl markup::Write for Refmap {
 }
 
 impl markup::Read for RevHdrs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rev_hdrs(element)
     }
 }
@@ -3862,7 +3862,7 @@ impl markup::Write for RevHdrs {
 }
 
 impl markup::Read for RevStream {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rev_stream(element)
     }
 }
@@ -3881,15 +3881,15 @@ impl Default for RevisionChangeObjectContent {
 }
 
 impl markup::Read for RevisionChangeObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "body")) => Self::Body(markup::read(element)),
             Some((NS_XR, "link")) => Self::Link(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3960,11 +3960,11 @@ impl RevisionContext {
 }
 
 impl markup::Read for RevisionGroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "xrrDefName")) => Self::XrrDefName(markup::read(element)),
             Some((NS_XR, "xrrList")) => Self::XrrList(markup::read(element)),
@@ -3979,7 +3979,7 @@ impl markup::Read for RevisionGroupContent {
             Some((NS_XR, "xrrftr")) => Self::Xrrftr(markup::read(element)),
             Some((NS_XR, "xrrm")) => Self::Xrrm(markup::read(element)),
             Some((NS_XR, "xrrrc")) => Self::Xrrrc(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4006,7 +4006,7 @@ impl markup::Write for RevisionGroupContent {
 }
 
 impl markup::Read for RevisionPtr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::revision_ptr(element)
     }
 }
@@ -4025,11 +4025,11 @@ impl Default for RevisionStateContent {
 }
 
 impl markup::Read for RevisionStateContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "freezePanes")) => Self::FreezePanes(markup::read(element)),
             Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(markup::read(element)),
@@ -4038,7 +4038,7 @@ impl markup::Read for RevisionStateContent {
             Some((NS_XR, "showGridlinesHeadings")) => {
                 Self::ShowGridlinesHeadings(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4057,11 +4057,11 @@ impl markup::Write for RevisionStateContent {
 }
 
 impl markup::Read for RevisionStreamContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "xrrDefName")) => Self::XrrDefName(markup::read(element)),
             Some((NS_XR, "xrrList")) => Self::XrrList(markup::read(element)),
@@ -4077,7 +4077,7 @@ impl markup::Read for RevisionStreamContent {
             Some((NS_XR, "xrrg")) => Self::Xrrg(markup::read(element)),
             Some((NS_XR, "xrrm")) => Self::Xrrm(markup::read(element)),
             Some((NS_XR, "xrrrc")) => Self::Xrrrc(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4201,7 +4201,7 @@ impl RowColVisualOp {
 }
 
 impl markup::Read for RowColVisualOps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_col_visual_ops(element)
     }
 }
@@ -4316,7 +4316,7 @@ impl SheetOp {
 }
 
 impl markup::Read for SheetUid {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sheet_uid(element)
     }
 }
@@ -4329,7 +4329,7 @@ impl markup::Write for SheetUid {
 }
 
 impl markup::Read for ShowGridlinesHeadings {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::show_gridlines_headings(element)
     }
 }
@@ -4342,7 +4342,7 @@ impl markup::Write for ShowGridlinesHeadings {
 }
 
 impl markup::Read for SparklineGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sparkline_group(element)
     }
 }
@@ -4361,11 +4361,11 @@ impl Default for StateBasedObjectContent {
 }
 
 impl markup::Read for StateBasedObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XR, "autoFilter")) => Self::AutoFilter(markup::read(element)),
             Some((NS_XR, "comments")) => Self::Comments(markup::read(element)),
@@ -4375,7 +4375,7 @@ impl markup::Read for StateBasedObjectContent {
                 Self::PivotTableDefinition(Box::new(markup::read(element)))
             }
             Some((NS_XR, "sparklineGroup")) => Self::SparklineGroup(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4444,7 +4444,7 @@ impl SubFeatureType {
 }
 
 impl markup::Read for Test {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::test(element)
     }
 }
@@ -4457,7 +4457,7 @@ impl markup::Write for Test {
 }
 
 impl markup::Read for V {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::v(element)
     }
 }
@@ -4470,7 +4470,7 @@ impl markup::Write for V {
 }
 
 impl markup::Read for XrrDefName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_def_name(element)
     }
 }
@@ -4483,7 +4483,7 @@ impl markup::Write for XrrDefName {
 }
 
 impl markup::Read for XrrList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_list(element)
     }
 }
@@ -4496,7 +4496,7 @@ impl markup::Write for XrrList {
 }
 
 impl markup::Read for XrrListExpR {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_list_exp_r(element)
     }
 }
@@ -4509,7 +4509,7 @@ impl markup::Write for XrrListExpR {
 }
 
 impl markup::Read for XrrSheet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_sheet(element)
     }
 }
@@ -4522,7 +4522,7 @@ impl markup::Write for XrrSheet {
 }
 
 impl markup::Read for XrrTrim {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_trim(element)
     }
 }
@@ -4535,7 +4535,7 @@ impl markup::Write for XrrTrim {
 }
 
 impl markup::Read for XrrUspt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrr_uspt(element)
     }
 }
@@ -4548,7 +4548,7 @@ impl markup::Write for XrrUspt {
 }
 
 impl markup::Read for Xrrc {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrc(element)
     }
 }
@@ -4561,7 +4561,7 @@ impl markup::Write for Xrrc {
 }
 
 impl markup::Read for Xrrco {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrco(element)
     }
 }
@@ -4574,7 +4574,7 @@ impl markup::Write for Xrrco {
 }
 
 impl markup::Read for Xrrdo {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrdo(element)
     }
 }
@@ -4587,7 +4587,7 @@ impl markup::Write for Xrrdo {
 }
 
 impl markup::Read for Xrrf {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrf(element)
     }
 }
@@ -4600,7 +4600,7 @@ impl markup::Write for Xrrf {
 }
 
 impl markup::Read for Xrrftr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrftr(element)
     }
 }
@@ -4613,7 +4613,7 @@ impl markup::Write for Xrrftr {
 }
 
 impl markup::Read for Xrrg {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrg(element)
     }
 }
@@ -4626,7 +4626,7 @@ impl markup::Write for Xrrg {
 }
 
 impl markup::Read for Xrrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrm(element)
     }
 }
@@ -4639,7 +4639,7 @@ impl markup::Write for Xrrm {
 }
 
 impl markup::Read for Xrrrc {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrrc(element)
     }
 }
@@ -4652,7 +4652,7 @@ impl markup::Write for Xrrrc {
 }
 
 impl markup::Read for Xrrtest {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xrrtest(element)
     }
 }

@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CustomFileProperties` as its element, `op:Properties`.
 #[must_use]
-pub fn custom_file_properties(
-    node: &super::CustomFileProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_file_properties(node: &super::CustomFileProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CUSTOM_FILE_PROPERTIES_SHAPE, &node.unknown);
     writer.child(&node.custom_file_property);
@@ -230,10 +228,7 @@ pub fn custom_file_properties(
 
 /// Write a `CustomFileProperty` as its element, `op:property`.
 #[must_use]
-pub fn custom_file_property(
-    node: &super::CustomFileProperty,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn custom_file_property(node: &super::CustomFileProperty, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CUSTOM_FILE_PROPERTY_SHAPE, &node.unknown);
     writer.attribute(0, &node.fmtid);
     writer.attribute(1, &node.pid);

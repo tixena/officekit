@@ -8,6 +8,9 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use std::path::Path;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::name::OfficeVersion;
+
 use super::error::{ErrorCode, Errors, ValidationError};
 use super::generated::PART_RULES;
 use super::package;
@@ -17,8 +20,6 @@ use super::semantic::registry::{PartChecks, Run};
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::name::OfficeVersion;
 
 #[cfg(test)]
 mod tests;

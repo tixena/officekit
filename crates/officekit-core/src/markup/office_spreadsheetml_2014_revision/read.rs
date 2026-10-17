@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xr:autoFilter` into a `AutoFilter`.
 #[must_use]
-pub fn auto_filter(element: &xml::element::Element) -> super::AutoFilter {
+pub fn auto_filter(element: &Element) -> super::AutoFilter {
     let mut node = super::AutoFilter::default();
     let mut reader = markup::Reader::new(element, &super::AUTO_FILTER_SHAPE);
     for (index, field) in &mut reader {
@@ -235,7 +235,7 @@ pub fn auto_filter(element: &xml::element::Element) -> super::AutoFilter {
 
 /// Read `xr:body` into a `Body`.
 #[must_use]
-pub fn body(element: &xml::element::Element) -> super::Body {
+pub fn body(element: &Element) -> super::Body {
     let mut node = super::Body::default();
     let mut reader = markup::Reader::new(element, &super::BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn body(element: &xml::element::Element) -> super::Body {
 
 /// Read `xr:c` into a `C`.
 #[must_use]
-pub fn c(element: &xml::element::Element) -> super::C {
+pub fn c(element: &Element) -> super::C {
     let mut node = super::C::default();
     let mut reader = markup::Reader::new(element, &super::C_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +270,7 @@ pub fn c(element: &xml::element::Element) -> super::C {
 
 /// Read `xr:ccse` into a `Ccse`.
 #[must_use]
-pub fn ccse(element: &xml::element::Element) -> super::Ccse {
+pub fn ccse(element: &Element) -> super::Ccse {
     let mut node = super::Ccse::default();
     let mut reader = markup::Reader::new(element, &super::CCSE_SHAPE);
     for (index, field) in &mut reader {
@@ -289,7 +289,7 @@ pub fn ccse(element: &xml::element::Element) -> super::Ccse {
 
 /// Read `xr:comments` into a `Comments`.
 #[must_use]
-pub fn comments(element: &xml::element::Element) -> super::Comments {
+pub fn comments(element: &Element) -> super::Comments {
     let mut node = super::Comments::default();
     let mut reader = markup::Reader::new(element, &super::COMMENTS_SHAPE);
     for (index, field) in &mut reader {
@@ -306,7 +306,7 @@ pub fn comments(element: &xml::element::Element) -> super::Comments {
 
 /// Read `xr:dataValidation` into a `DataValidation`.
 #[must_use]
-pub fn data_validation(element: &xml::element::Element) -> super::DataValidation {
+pub fn data_validation(element: &Element) -> super::DataValidation {
     let mut node = super::DataValidation::default();
     let mut reader = markup::Reader::new(element, &super::DATA_VALIDATION_SHAPE);
     for (index, field) in &mut reader {
@@ -336,7 +336,7 @@ pub fn data_validation(element: &xml::element::Element) -> super::DataValidation
 
 /// Read `xr:dxf` into a `Dxf`.
 #[must_use]
-pub fn dxf(element: &xml::element::Element) -> super::Dxf {
+pub fn dxf(element: &Element) -> super::Dxf {
     let mut node = super::Dxf::default();
     let mut reader = markup::Reader::new(element, &super::DXF_SHAPE);
     for (index, field) in &mut reader {
@@ -357,7 +357,7 @@ pub fn dxf(element: &xml::element::Element) -> super::Dxf {
 
 /// Read `xr:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -371,7 +371,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xr:f` into a `F`.
 #[must_use]
-pub fn f(element: &xml::element::Element) -> super::F {
+pub fn f(element: &Element) -> super::F {
     let mut node = super::F::default();
     let mut reader = markup::Reader::new(element, &super::F_SHAPE);
     for (index, field) in &mut reader {
@@ -385,7 +385,7 @@ pub fn f(element: &xml::element::Element) -> super::F {
 
 /// Read `xr:formula` into a `Formula`.
 #[must_use]
-pub fn formula(element: &xml::element::Element) -> super::Formula {
+pub fn formula(element: &Element) -> super::Formula {
     let mut node = super::Formula::default();
     let mut reader = markup::Reader::new(element, &super::FORMULA_SHAPE);
     for (index, field) in &mut reader {
@@ -399,7 +399,7 @@ pub fn formula(element: &xml::element::Element) -> super::Formula {
 
 /// Read `xr:freezePanes` into a `FreezePanes`.
 #[must_use]
-pub fn freeze_panes(element: &xml::element::Element) -> super::FreezePanes {
+pub fn freeze_panes(element: &Element) -> super::FreezePanes {
     let mut node = super::FreezePanes::default();
     let mut reader = markup::Reader::new(element, &super::FREEZE_PANES_SHAPE);
     for (index, field) in &mut reader {
@@ -413,7 +413,7 @@ pub fn freeze_panes(element: &xml::element::Element) -> super::FreezePanes {
 
 /// Read `xr:future` into a `Future`.
 #[must_use]
-pub fn future(element: &xml::element::Element) -> super::Future {
+pub fn future(element: &Element) -> super::Future {
     let reader = markup::Reader::new(element, &super::FUTURE_SHAPE);
     super::Future {
         unknown: reader.finish(),
@@ -422,7 +422,7 @@ pub fn future(element: &xml::element::Element) -> super::Future {
 
 /// Read `xr:hdr` into a `HdrRevExHeader`.
 #[must_use]
-pub fn hdr_rev_ex_header(element: &xml::element::Element) -> super::HdrRevExHeader {
+pub fn hdr_rev_ex_header(element: &Element) -> super::HdrRevExHeader {
     let mut node = super::HdrRevExHeader::default();
     let mut reader = markup::Reader::new(element, &super::HDR_REV_EX_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -440,7 +440,7 @@ pub fn hdr_rev_ex_header(element: &xml::element::Element) -> super::HdrRevExHead
 
 /// Read `xr:hdr` into a `HdrStateBasedHeader`.
 #[must_use]
-pub fn hdr_state_based_header(element: &xml::element::Element) -> super::HdrStateBasedHeader {
+pub fn hdr_state_based_header(element: &Element) -> super::HdrStateBasedHeader {
     let mut node = super::HdrStateBasedHeader::default();
     let mut reader = markup::Reader::new(element, &super::HDR_STATE_BASED_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -460,7 +460,7 @@ pub fn hdr_state_based_header(element: &xml::element::Element) -> super::HdrStat
 
 /// Read `xr:hideUnhideSheet` into a `HideUnhideSheet`.
 #[must_use]
-pub fn hide_unhide_sheet(element: &xml::element::Element) -> super::HideUnhideSheet {
+pub fn hide_unhide_sheet(element: &Element) -> super::HideUnhideSheet {
     let mut node = super::HideUnhideSheet::default();
     let mut reader = markup::Reader::new(element, &super::HIDE_UNHIDE_SHEET_SHAPE);
     for (index, field) in &mut reader {
@@ -474,7 +474,7 @@ pub fn hide_unhide_sheet(element: &xml::element::Element) -> super::HideUnhideSh
 
 /// Read `xr:hyperlink` into a `Hyperlink`.
 #[must_use]
-pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
+pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {
@@ -493,7 +493,7 @@ pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
 
 /// Read `xr:is` into a `Is`.
 #[must_use]
-pub fn is(element: &xml::element::Element) -> super::Is {
+pub fn is(element: &Element) -> super::Is {
     let mut node = super::Is::default();
     let mut reader = markup::Reader::new(element, &super::IS_SHAPE);
     for (index, field) in &mut reader {
@@ -511,7 +511,7 @@ pub fn is(element: &xml::element::Element) -> super::Is {
 
 /// Read `xr:link` into a `Link`.
 #[must_use]
-pub fn link(element: &xml::element::Element) -> super::Link {
+pub fn link(element: &Element) -> super::Link {
     let mut node = super::Link::default();
     let mut reader = markup::Reader::new(element, &super::LINK_SHAPE);
     for (index, field) in &mut reader {
@@ -525,7 +525,7 @@ pub fn link(element: &xml::element::Element) -> super::Link {
 
 /// Read `xr:oartAnchor` into a `OartAnchor`.
 #[must_use]
-pub fn oart_anchor(element: &xml::element::Element) -> super::OartAnchor {
+pub fn oart_anchor(element: &Element) -> super::OartAnchor {
     let mut node = super::OartAnchor::default();
     let mut reader = markup::Reader::new(element, &super::OART_ANCHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -553,7 +553,7 @@ pub fn oart_anchor(element: &xml::element::Element) -> super::OartAnchor {
 
 /// Read `xr:objectState` into a `ObjectState`.
 #[must_use]
-pub fn object_state(element: &xml::element::Element) -> super::ObjectState {
+pub fn object_state(element: &Element) -> super::ObjectState {
     let mut node = super::ObjectState::default();
     let mut reader = markup::Reader::new(element, &super::OBJECT_STATE_SHAPE);
     for (index, field) in &mut reader {
@@ -567,7 +567,7 @@ pub fn object_state(element: &xml::element::Element) -> super::ObjectState {
 
 /// Read `xr:outline` into a `Outline`.
 #[must_use]
-pub fn outline(element: &xml::element::Element) -> super::Outline {
+pub fn outline(element: &Element) -> super::Outline {
     let mut node = super::Outline::default();
     let mut reader = markup::Reader::new(element, &super::OUTLINE_SHAPE);
     for (index, field) in &mut reader {
@@ -583,7 +583,7 @@ pub fn outline(element: &xml::element::Element) -> super::Outline {
 
 /// Read `xr:outlines` into a `Outlines`.
 #[must_use]
-pub fn outlines(element: &xml::element::Element) -> super::Outlines {
+pub fn outlines(element: &Element) -> super::Outlines {
     let mut node = super::Outlines::default();
     let mut reader = markup::Reader::new(element, &super::OUTLINES_SHAPE);
     for (index, field) in &mut reader {
@@ -599,7 +599,7 @@ pub fn outlines(element: &xml::element::Element) -> super::Outlines {
 
 /// Read `xr:pivotTableDefinition` into a `PivotTableDefinition`.
 #[must_use]
-pub fn pivot_table_definition(element: &xml::element::Element) -> super::PivotTableDefinition {
+pub fn pivot_table_definition(element: &Element) -> super::PivotTableDefinition {
     let mut node = super::PivotTableDefinition::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_TABLE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -698,7 +698,7 @@ pub fn pivot_table_definition(element: &xml::element::Element) -> super::PivotTa
 
 /// Read `xr:ref` into a `Ref`.
 #[must_use]
-pub fn r#ref(element: &xml::element::Element) -> super::Ref {
+pub fn r#ref(element: &Element) -> super::Ref {
     let mut node = super::Ref::default();
     let mut reader = markup::Reader::new(element, &super::REF_SHAPE);
     for (index, field) in &mut reader {
@@ -719,13 +719,13 @@ pub fn r#ref(element: &xml::element::Element) -> super::Ref {
 
 /// Read one item of `ReferenceMapContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn reference_map(element: &xml::element::Element) -> super::ReferenceMapContent {
+pub fn reference_map(element: &Element) -> super::ReferenceMapContent {
     markup::read(element)
 }
 
 /// Read `xr:refmap` into a `Refmap`.
 #[must_use]
-pub fn refmap(element: &xml::element::Element) -> super::Refmap {
+pub fn refmap(element: &Element) -> super::Refmap {
     let mut node = super::Refmap::default();
     let mut reader = markup::Reader::new(element, &super::REFMAP_SHAPE);
     for (index, field) in &mut reader {
@@ -739,7 +739,7 @@ pub fn refmap(element: &xml::element::Element) -> super::Refmap {
 
 /// Read `xr:revHdrs` into a `RevHdrs`.
 #[must_use]
-pub fn rev_hdrs(element: &xml::element::Element) -> super::RevHdrs {
+pub fn rev_hdrs(element: &Element) -> super::RevHdrs {
     let mut node = super::RevHdrs::default();
     let mut reader = markup::Reader::new(element, &super::REV_HDRS_SHAPE);
     for (index, field) in &mut reader {
@@ -758,7 +758,7 @@ pub fn rev_hdrs(element: &xml::element::Element) -> super::RevHdrs {
 
 /// Read `xr:revStream` into a `RevStream`.
 #[must_use]
-pub fn rev_stream(element: &xml::element::Element) -> super::RevStream {
+pub fn rev_stream(element: &Element) -> super::RevStream {
     let mut node = super::RevStream::default();
     let mut reader = markup::Reader::new(element, &super::REV_STREAM_SHAPE);
     for (index, field) in &mut reader {
@@ -772,21 +772,19 @@ pub fn rev_stream(element: &xml::element::Element) -> super::RevStream {
 
 /// Read one item of `RevisionChangeObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn revision_change_object(
-    element: &xml::element::Element,
-) -> super::RevisionChangeObjectContent {
+pub fn revision_change_object(element: &Element) -> super::RevisionChangeObjectContent {
     markup::read(element)
 }
 
 /// Read one item of `RevisionGroupContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn revision_group(element: &xml::element::Element) -> super::RevisionGroupContent {
+pub fn revision_group(element: &Element) -> super::RevisionGroupContent {
     markup::read(element)
 }
 
 /// Read `xr:revisionPtr` into a `RevisionPtr`.
 #[must_use]
-pub fn revision_ptr(element: &xml::element::Element) -> super::RevisionPtr {
+pub fn revision_ptr(element: &Element) -> super::RevisionPtr {
     let mut node = super::RevisionPtr::default();
     let mut reader = markup::Reader::new(element, &super::REVISION_PTR_SHAPE);
     for (index, field) in &mut reader {
@@ -802,19 +800,19 @@ pub fn revision_ptr(element: &xml::element::Element) -> super::RevisionPtr {
 
 /// Read one item of `RevisionStateContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn revision_state(element: &xml::element::Element) -> super::RevisionStateContent {
+pub fn revision_state(element: &Element) -> super::RevisionStateContent {
     markup::read(element)
 }
 
 /// Read one item of `RevisionStreamContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn revision_stream(element: &xml::element::Element) -> super::RevisionStreamContent {
+pub fn revision_stream(element: &Element) -> super::RevisionStreamContent {
     markup::read(element)
 }
 
 /// Read `xr:rowColVisualOps` into a `RowColVisualOps`.
 #[must_use]
-pub fn row_col_visual_ops(element: &xml::element::Element) -> super::RowColVisualOps {
+pub fn row_col_visual_ops(element: &Element) -> super::RowColVisualOps {
     let mut node = super::RowColVisualOps::default();
     let mut reader = markup::Reader::new(element, &super::ROW_COL_VISUAL_OPS_SHAPE);
     for (index, field) in &mut reader {
@@ -832,7 +830,7 @@ pub fn row_col_visual_ops(element: &xml::element::Element) -> super::RowColVisua
 
 /// Read `xr:sheetUid` into a `SheetUid`.
 #[must_use]
-pub fn sheet_uid(element: &xml::element::Element) -> super::SheetUid {
+pub fn sheet_uid(element: &Element) -> super::SheetUid {
     let mut node = super::SheetUid::default();
     let mut reader = markup::Reader::new(element, &super::SHEET_UID_SHAPE);
     for (index, field) in &mut reader {
@@ -851,7 +849,7 @@ pub fn sheet_uid(element: &xml::element::Element) -> super::SheetUid {
 
 /// Read `xr:showGridlinesHeadings` into a `ShowGridlinesHeadings`.
 #[must_use]
-pub fn show_gridlines_headings(element: &xml::element::Element) -> super::ShowGridlinesHeadings {
+pub fn show_gridlines_headings(element: &Element) -> super::ShowGridlinesHeadings {
     let mut node = super::ShowGridlinesHeadings::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_GRIDLINES_HEADINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -867,7 +865,7 @@ pub fn show_gridlines_headings(element: &xml::element::Element) -> super::ShowGr
 
 /// Read `xr:sparklineGroup` into a `SparklineGroup`.
 #[must_use]
-pub fn sparkline_group(element: &xml::element::Element) -> super::SparklineGroup {
+pub fn sparkline_group(element: &Element) -> super::SparklineGroup {
     let mut node = super::SparklineGroup::default();
     let mut reader = markup::Reader::new(element, &super::SPARKLINE_GROUP_SHAPE);
     for (index, field) in &mut reader {
@@ -908,13 +906,13 @@ pub fn sparkline_group(element: &xml::element::Element) -> super::SparklineGroup
 
 /// Read one item of `StateBasedObjectContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn state_based_object(element: &xml::element::Element) -> super::StateBasedObjectContent {
+pub fn state_based_object(element: &Element) -> super::StateBasedObjectContent {
     markup::read(element)
 }
 
 /// Read `xr:test` into a `Test`.
 #[must_use]
-pub fn test(element: &xml::element::Element) -> super::Test {
+pub fn test(element: &Element) -> super::Test {
     let mut node = super::Test::default();
     let mut reader = markup::Reader::new(element, &super::TEST_SHAPE);
     for (index, field) in &mut reader {
@@ -932,7 +930,7 @@ pub fn test(element: &xml::element::Element) -> super::Test {
 
 /// Read `xr:v` into a `V`.
 #[must_use]
-pub fn v(element: &xml::element::Element) -> super::V {
+pub fn v(element: &Element) -> super::V {
     let mut node = super::V::default();
     let mut reader = markup::Reader::new(element, &super::V_SHAPE);
     for (index, field) in &mut reader {
@@ -946,7 +944,7 @@ pub fn v(element: &xml::element::Element) -> super::V {
 
 /// Read `xr:xrrDefName` into a `XrrDefName`.
 #[must_use]
-pub fn xrr_def_name(element: &xml::element::Element) -> super::XrrDefName {
+pub fn xrr_def_name(element: &Element) -> super::XrrDefName {
     let mut node = super::XrrDefName::default();
     let mut reader = markup::Reader::new(element, &super::XRR_DEF_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -978,7 +976,7 @@ pub fn xrr_def_name(element: &xml::element::Element) -> super::XrrDefName {
 
 /// Read `xr:xrrList` into a `XrrList`.
 #[must_use]
-pub fn xrr_list(element: &xml::element::Element) -> super::XrrList {
+pub fn xrr_list(element: &Element) -> super::XrrList {
     let mut node = super::XrrList::default();
     let mut reader = markup::Reader::new(element, &super::XRR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1005,7 +1003,7 @@ pub fn xrr_list(element: &xml::element::Element) -> super::XrrList {
 
 /// Read `xr:xrrListExpR` into a `XrrListExpR`.
 #[must_use]
-pub fn xrr_list_exp_r(element: &xml::element::Element) -> super::XrrListExpR {
+pub fn xrr_list_exp_r(element: &Element) -> super::XrrListExpR {
     let mut node = super::XrrListExpR::default();
     let mut reader = markup::Reader::new(element, &super::XRR_LIST_EXP_R_SHAPE);
     for (index, field) in &mut reader {
@@ -1026,7 +1024,7 @@ pub fn xrr_list_exp_r(element: &xml::element::Element) -> super::XrrListExpR {
 
 /// Read `xr:xrrSheet` into a `XrrSheet`.
 #[must_use]
-pub fn xrr_sheet(element: &xml::element::Element) -> super::XrrSheet {
+pub fn xrr_sheet(element: &Element) -> super::XrrSheet {
     let mut node = super::XrrSheet::default();
     let mut reader = markup::Reader::new(element, &super::XRR_SHEET_SHAPE);
     for (index, field) in &mut reader {
@@ -1049,7 +1047,7 @@ pub fn xrr_sheet(element: &xml::element::Element) -> super::XrrSheet {
 
 /// Read `xr:xrrTrim` into a `XrrTrim`.
 #[must_use]
-pub fn xrr_trim(element: &xml::element::Element) -> super::XrrTrim {
+pub fn xrr_trim(element: &Element) -> super::XrrTrim {
     let mut node = super::XrrTrim::default();
     let mut reader = markup::Reader::new(element, &super::XRR_TRIM_SHAPE);
     for (index, field) in &mut reader {
@@ -1068,7 +1066,7 @@ pub fn xrr_trim(element: &xml::element::Element) -> super::XrrTrim {
 
 /// Read `xr:xrrUspt` into a `XrrUspt`.
 #[must_use]
-pub fn xrr_uspt(element: &xml::element::Element) -> super::XrrUspt {
+pub fn xrr_uspt(element: &Element) -> super::XrrUspt {
     let mut node = super::XrrUspt::default();
     let mut reader = markup::Reader::new(element, &super::XRR_USPT_SHAPE);
     for (index, field) in &mut reader {
@@ -1087,7 +1085,7 @@ pub fn xrr_uspt(element: &xml::element::Element) -> super::XrrUspt {
 
 /// Read `xr:xrrc` into a `Xrrc`.
 #[must_use]
-pub fn xrrc(element: &xml::element::Element) -> super::Xrrc {
+pub fn xrrc(element: &Element) -> super::Xrrc {
     let mut node = super::Xrrc::default();
     let mut reader = markup::Reader::new(element, &super::XRRC_SHAPE);
     for (index, field) in &mut reader {
@@ -1113,7 +1111,7 @@ pub fn xrrc(element: &xml::element::Element) -> super::Xrrc {
 
 /// Read `xr:xrrco` into a `Xrrco`.
 #[must_use]
-pub fn xrrco(element: &xml::element::Element) -> super::Xrrco {
+pub fn xrrco(element: &Element) -> super::Xrrco {
     let mut node = super::Xrrco::default();
     let mut reader = markup::Reader::new(element, &super::XRRCO_SHAPE);
     for (index, field) in &mut reader {
@@ -1134,7 +1132,7 @@ pub fn xrrco(element: &xml::element::Element) -> super::Xrrco {
 
 /// Read `xr:xrrdo` into a `Xrrdo`.
 #[must_use]
-pub fn xrrdo(element: &xml::element::Element) -> super::Xrrdo {
+pub fn xrrdo(element: &Element) -> super::Xrrdo {
     let mut node = super::Xrrdo::default();
     let mut reader = markup::Reader::new(element, &super::XRRDO_SHAPE);
     for (index, field) in &mut reader {
@@ -1154,7 +1152,7 @@ pub fn xrrdo(element: &xml::element::Element) -> super::Xrrdo {
 
 /// Read `xr:xrrf` into a `Xrrf`.
 #[must_use]
-pub fn xrrf(element: &xml::element::Element) -> super::Xrrf {
+pub fn xrrf(element: &Element) -> super::Xrrf {
     let mut node = super::Xrrf::default();
     let mut reader = markup::Reader::new(element, &super::XRRF_SHAPE);
     for (index, field) in &mut reader {
@@ -1189,7 +1187,7 @@ pub fn xrrf(element: &xml::element::Element) -> super::Xrrf {
 
 /// Read `xr:xrrftr` into a `Xrrftr`.
 #[must_use]
-pub fn xrrftr(element: &xml::element::Element) -> super::Xrrftr {
+pub fn xrrftr(element: &Element) -> super::Xrrftr {
     let mut node = super::Xrrftr::default();
     let mut reader = markup::Reader::new(element, &super::XRRFTR_SHAPE);
     for (index, field) in &mut reader {
@@ -1210,7 +1208,7 @@ pub fn xrrftr(element: &xml::element::Element) -> super::Xrrftr {
 
 /// Read `xr:xrrg` into a `Xrrg`.
 #[must_use]
-pub fn xrrg(element: &xml::element::Element) -> super::Xrrg {
+pub fn xrrg(element: &Element) -> super::Xrrg {
     let mut node = super::Xrrg::default();
     let mut reader = markup::Reader::new(element, &super::XRRG_SHAPE);
     for (index, field) in &mut reader {
@@ -1230,7 +1228,7 @@ pub fn xrrg(element: &xml::element::Element) -> super::Xrrg {
 
 /// Read `xr:xrrm` into a `Xrrm`.
 #[must_use]
-pub fn xrrm(element: &xml::element::Element) -> super::Xrrm {
+pub fn xrrm(element: &Element) -> super::Xrrm {
     let mut node = super::Xrrm::default();
     let mut reader = markup::Reader::new(element, &super::XRRM_SHAPE);
     for (index, field) in &mut reader {
@@ -1252,7 +1250,7 @@ pub fn xrrm(element: &xml::element::Element) -> super::Xrrm {
 
 /// Read `xr:xrrrc` into a `Xrrrc`.
 #[must_use]
-pub fn xrrrc(element: &xml::element::Element) -> super::Xrrrc {
+pub fn xrrrc(element: &Element) -> super::Xrrrc {
     let mut node = super::Xrrrc::default();
     let mut reader = markup::Reader::new(element, &super::XRRRC_SHAPE);
     for (index, field) in &mut reader {
@@ -1274,7 +1272,7 @@ pub fn xrrrc(element: &xml::element::Element) -> super::Xrrrc {
 
 /// Read `xr:xrrtest` into a `Xrrtest`.
 #[must_use]
-pub fn xrrtest(element: &xml::element::Element) -> super::Xrrtest {
+pub fn xrrtest(element: &Element) -> super::Xrrtest {
     let reader = markup::Reader::new(element, &super::XRRTEST_SHAPE);
     super::Xrrtest {
         unknown: reader.finish(),

@@ -3,10 +3,11 @@
 
 use std::io;
 
-use super::writer::PartWriter;
+use officekit_xml::element::Node;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{is_whitespace_text, preserves_space, qualified};
+
 use crate::markup::{Context, Unknown};
-use crate::xml::element::Node;
-use crate::xml::write::{is_whitespace_text, preserves_space, qualified};
 
 #[cfg(test)]
 mod tests;

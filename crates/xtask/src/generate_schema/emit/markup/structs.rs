@@ -7,7 +7,7 @@ use core::mem;
 
 use anyhow::{Context as _, Result, bail};
 use officekit_core::markup::Unknown;
-use officekit_core::xml;
+use officekit_xml::element::Node as XmlNode;
 
 use super::enums::{self, Entry, Placements, Position, Row};
 use super::names::{self, Heading, Overrides, Titles};
@@ -252,7 +252,7 @@ impl Catalog {
                 .iter()
                 .map(|(_, arm)| (sizes.get(*arm).copied().unwrap_or(0), Some(*arm)))
                 .collect();
-            variants.push((mem::size_of::<xml::element::Node>(), None));
+            variants.push((mem::size_of::<XmlNode>(), None));
             loop {
                 variants.sort_by_key(|variant| Reverse(variant.0));
                 let (Some(&(largest, arm)), Some(&(second, _))) =

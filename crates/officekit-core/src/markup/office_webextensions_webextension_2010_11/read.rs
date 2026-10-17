@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `we:alternateReferences` into a `AlternateReferences`.
 #[must_use]
-pub fn alternate_references(element: &xml::element::Element) -> super::AlternateReferences {
+pub fn alternate_references(element: &Element) -> super::AlternateReferences {
     let mut node = super::AlternateReferences::default();
     let mut reader = markup::Reader::new(element, &super::ALTERNATE_REFERENCES_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn alternate_references(element: &xml::element::Element) -> super::Alternate
 
 /// Read `we:binding` into a `Binding`.
 #[must_use]
-pub fn binding(element: &xml::element::Element) -> super::Binding {
+pub fn binding(element: &Element) -> super::Binding {
     let mut node = super::Binding::default();
     let mut reader = markup::Reader::new(element, &super::BINDING_SHAPE);
     for (index, field) in &mut reader {
@@ -249,7 +249,7 @@ pub fn binding(element: &xml::element::Element) -> super::Binding {
 
 /// Read `we:bindings` into a `Bindings`.
 #[must_use]
-pub fn bindings(element: &xml::element::Element) -> super::Bindings {
+pub fn bindings(element: &Element) -> super::Bindings {
     let mut node = super::Bindings::default();
     let mut reader = markup::Reader::new(element, &super::BINDINGS_SHAPE);
     for (index, field) in &mut reader {
@@ -263,7 +263,7 @@ pub fn bindings(element: &xml::element::Element) -> super::Bindings {
 
 /// Read `we:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -277,7 +277,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `we:properties` into a `Properties`.
 #[must_use]
-pub fn properties(element: &xml::element::Element) -> super::Properties {
+pub fn properties(element: &Element) -> super::Properties {
     let mut node = super::Properties::default();
     let mut reader = markup::Reader::new(element, &super::PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -291,7 +291,7 @@ pub fn properties(element: &xml::element::Element) -> super::Properties {
 
 /// Read `we:property` into a `Property`.
 #[must_use]
-pub fn property(element: &xml::element::Element) -> super::Property {
+pub fn property(element: &Element) -> super::Property {
     let mut node = super::Property::default();
     let mut reader = markup::Reader::new(element, &super::PROPERTY_SHAPE);
     for (index, field) in &mut reader {
@@ -307,7 +307,7 @@ pub fn property(element: &xml::element::Element) -> super::Property {
 
 /// Read `we:reference` into a `Reference`.
 #[must_use]
-pub fn reference(element: &xml::element::Element) -> super::Reference {
+pub fn reference(element: &Element) -> super::Reference {
     let mut node = super::Reference::default();
     let mut reader = markup::Reader::new(element, &super::REFERENCE_SHAPE);
     for (index, field) in &mut reader {
@@ -326,7 +326,7 @@ pub fn reference(element: &xml::element::Element) -> super::Reference {
 
 /// Read `we:snapshot` into a `Snapshot`.
 #[must_use]
-pub fn snapshot(element: &xml::element::Element) -> super::Snapshot {
+pub fn snapshot(element: &Element) -> super::Snapshot {
     let mut node = super::Snapshot::default();
     let mut reader = markup::Reader::new(element, &super::SNAPSHOT_SHAPE);
     for (index, field) in &mut reader {
@@ -345,7 +345,7 @@ pub fn snapshot(element: &xml::element::Element) -> super::Snapshot {
 
 /// Read `we:webextension` into a `Webextension`.
 #[must_use]
-pub fn webextension(element: &xml::element::Element) -> super::Webextension {
+pub fn webextension(element: &Element) -> super::Webextension {
     let mut node = super::Webextension::default();
     let mut reader = markup::Reader::new(element, &super::WEBEXTENSION_SHAPE);
     for (index, field) in &mut reader {
@@ -367,7 +367,7 @@ pub fn webextension(element: &xml::element::Element) -> super::Webextension {
 
 /// Read `we:webextensionref` into a `Webextensionref`.
 #[must_use]
-pub fn webextensionref(element: &xml::element::Element) -> super::Webextensionref {
+pub fn webextensionref(element: &Element) -> super::Webextensionref {
     let mut node = super::Webextensionref::default();
     let mut reader = markup::Reader::new(element, &super::WEBEXTENSIONREF_SHAPE);
     for (index, field) in &mut reader {

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -712,7 +712,7 @@ pub struct ExtLst {
 #[non_exhaustive]
 pub enum GroupShapeContent {
     GrpSp(GrpSp),
-    Other(xml::element::Node),
+    Other(Node),
     Sp(Sp),
 }
 
@@ -908,7 +908,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for CNvGrpSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_grp_sp_pr(element)
     }
 }
@@ -921,7 +921,7 @@ impl markup::Write for CNvGrpSpPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -934,7 +934,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for CNvSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_sp_pr(element)
     }
 }
@@ -947,7 +947,7 @@ impl markup::Write for CNvSpPr {
 }
 
 impl markup::Read for DataModelExt {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_model_ext(element)
     }
 }
@@ -960,7 +960,7 @@ impl markup::Write for DataModelExt {
 }
 
 impl markup::Read for Drawing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing(element)
     }
 }
@@ -973,7 +973,7 @@ impl markup::Write for Drawing {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -986,15 +986,15 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for GroupShapeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_DSP, "grpSp")) => Self::GrpSp(markup::read(element)),
             Some((NS_DSP, "sp")) => Self::Sp(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -1010,7 +1010,7 @@ impl markup::Write for GroupShapeContent {
 }
 
 impl markup::Read for GrpSp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp(element)
     }
 }
@@ -1023,7 +1023,7 @@ impl markup::Write for GrpSp {
 }
 
 impl markup::Read for GrpSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::grp_sp_pr(element)
     }
 }
@@ -1036,7 +1036,7 @@ impl markup::Write for GrpSpPr {
 }
 
 impl markup::Read for NvGrpSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_grp_sp_pr(element)
     }
 }
@@ -1049,7 +1049,7 @@ impl markup::Write for NvGrpSpPr {
 }
 
 impl markup::Read for NvSpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_sp_pr(element)
     }
 }
@@ -1062,7 +1062,7 @@ impl markup::Write for NvSpPr {
 }
 
 impl markup::Read for Sp {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp(element)
     }
 }
@@ -1075,7 +1075,7 @@ impl markup::Write for Sp {
 }
 
 impl markup::Read for SpPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_pr(element)
     }
 }
@@ -1088,7 +1088,7 @@ impl markup::Write for SpPr {
 }
 
 impl markup::Read for SpTree {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sp_tree(element)
     }
 }
@@ -1101,7 +1101,7 @@ impl markup::Write for SpTree {
 }
 
 impl markup::Read for Style {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::style(element)
     }
 }
@@ -1114,7 +1114,7 @@ impl markup::Write for Style {
 }
 
 impl markup::Read for TxBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_body(element)
     }
 }
@@ -1127,7 +1127,7 @@ impl markup::Write for TxBody {
 }
 
 impl markup::Read for TxXfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_xfrm(element)
     }
 }

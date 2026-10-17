@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w10:anchorlock` into a `AnchorLocationIsLocked`.
 #[must_use]
-pub fn anchor_location_is_locked(element: &xml::element::Element) -> super::AnchorLocationIsLocked {
+pub fn anchor_location_is_locked(element: &Element) -> super::AnchorLocationIsLocked {
     let reader = markup::Reader::new(element, &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE);
     super::AnchorLocationIsLocked {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn anchor_location_is_locked(element: &xml::element::Element) -> super::Anch
 
 /// Read `w10:borderbottom` into a `BottomBorder`.
 #[must_use]
-pub fn bottom_border(element: &xml::element::Element) -> super::BottomBorder {
+pub fn bottom_border(element: &Element) -> super::BottomBorder {
     let mut node = super::BottomBorder::default();
     let mut reader = markup::Reader::new(element, &super::BOTTOM_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -243,7 +243,7 @@ pub fn bottom_border(element: &xml::element::Element) -> super::BottomBorder {
 
 /// Read `w10:borderleft` into a `LeftBorder`.
 #[must_use]
-pub fn left_border(element: &xml::element::Element) -> super::LeftBorder {
+pub fn left_border(element: &Element) -> super::LeftBorder {
     let mut node = super::LeftBorder::default();
     let mut reader = markup::Reader::new(element, &super::LEFT_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -260,7 +260,7 @@ pub fn left_border(element: &xml::element::Element) -> super::LeftBorder {
 
 /// Read `w10:borderright` into a `RightBorder`.
 #[must_use]
-pub fn right_border(element: &xml::element::Element) -> super::RightBorder {
+pub fn right_border(element: &Element) -> super::RightBorder {
     let mut node = super::RightBorder::default();
     let mut reader = markup::Reader::new(element, &super::RIGHT_BORDER_SHAPE);
     for (index, field) in &mut reader {
@@ -277,7 +277,7 @@ pub fn right_border(element: &xml::element::Element) -> super::RightBorder {
 
 /// Read `w10:wrap` into a `TextWrapping`.
 #[must_use]
-pub fn text_wrapping(element: &xml::element::Element) -> super::TextWrapping {
+pub fn text_wrapping(element: &Element) -> super::TextWrapping {
     let mut node = super::TextWrapping::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_WRAPPING_SHAPE);
     for (index, field) in &mut reader {
@@ -295,7 +295,7 @@ pub fn text_wrapping(element: &xml::element::Element) -> super::TextWrapping {
 
 /// Read `w10:bordertop` into a `TopBorder`.
 #[must_use]
-pub fn top_border(element: &xml::element::Element) -> super::TopBorder {
+pub fn top_border(element: &Element) -> super::TopBorder {
     let mut node = super::TopBorder::default();
     let mut reader = markup::Reader::new(element, &super::TOP_BORDER_SHAPE);
     for (index, field) in &mut reader {

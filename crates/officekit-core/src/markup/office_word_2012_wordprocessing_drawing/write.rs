@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `WebVideoPr` as its element, `wp15:webVideoPr`.
 #[must_use]
-pub fn web_video_pr(node: &super::WebVideoPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn web_video_pr(node: &super::WebVideoPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::WEB_VIDEO_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.embedded_html);
     writer.attribute(1, &node.h);

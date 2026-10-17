@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -498,7 +498,7 @@ pub enum LineSketchTypePropertiesContent {
     LineSketchFreehand(LineSketchFreehand),
     LineSketchNone(LineSketchNone),
     LineSketchScribble(LineSketchScribble),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `ask:seed`, schema type `ST_LineSketchSeed` of SDK 3.5.1's data.
@@ -564,7 +564,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -577,7 +577,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for LineSketchCurved {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_sketch_curved(element)
     }
 }
@@ -590,7 +590,7 @@ impl markup::Write for LineSketchCurved {
 }
 
 impl markup::Read for LineSketchFreehand {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_sketch_freehand(element)
     }
 }
@@ -603,7 +603,7 @@ impl markup::Write for LineSketchFreehand {
 }
 
 impl markup::Read for LineSketchNone {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_sketch_none(element)
     }
 }
@@ -616,7 +616,7 @@ impl markup::Write for LineSketchNone {
 }
 
 impl markup::Read for LineSketchScribble {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_sketch_scribble(element)
     }
 }
@@ -629,7 +629,7 @@ impl markup::Write for LineSketchScribble {
 }
 
 impl markup::Read for LineSketchStyleProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::line_sketch_style_props(element)
     }
 }
@@ -642,17 +642,17 @@ impl markup::Write for LineSketchStyleProps {
 }
 
 impl markup::Read for LineSketchTypePropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(markup::read(element)),
             Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(markup::read(element)),
             Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(markup::read(element)),
             Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -670,7 +670,7 @@ impl markup::Write for LineSketchTypePropertiesContent {
 }
 
 impl markup::Read for Seed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::seed(element)
     }
 }
@@ -683,7 +683,7 @@ impl markup::Write for Seed {
 }
 
 impl markup::Read for Type {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::r#type(element)
     }
 }

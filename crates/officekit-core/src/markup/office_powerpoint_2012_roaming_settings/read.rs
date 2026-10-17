@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `pRoam:key` into a `Key`.
 #[must_use]
-pub fn key(element: &xml::element::Element) -> super::Key {
+pub fn key(element: &Element) -> super::Key {
     let mut node = super::Key::default();
     let mut reader = markup::Reader::new(element, &super::KEY_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn key(element: &xml::element::Element) -> super::Key {
 
 /// Read `pRoam:props` into a `Props`.
 #[must_use]
-pub fn props(element: &xml::element::Element) -> super::Props {
+pub fn props(element: &Element) -> super::Props {
     let mut node = super::Props::default();
     let mut reader = markup::Reader::new(element, &super::PROPS_SHAPE);
     for (index, field) in &mut reader {
@@ -247,7 +247,7 @@ pub fn props(element: &xml::element::Element) -> super::Props {
 
 /// Read `pRoam:value` into a `Value`.
 #[must_use]
-pub fn value(element: &xml::element::Element) -> super::Value {
+pub fn value(element: &Element) -> super::Value {
     let mut node = super::Value::default();
     let mut reader = markup::Reader::new(element, &super::VALUE_SHAPE);
     for (index, field) in &mut reader {

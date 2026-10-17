@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A16: Option<NamespaceId> = Some(3);
@@ -408,7 +408,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ColId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::col_id(element)
     }
 }
@@ -421,7 +421,7 @@ impl markup::Write for ColId {
 }
 
 impl markup::Read for CreationId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::creation_id(element)
     }
 }
@@ -434,7 +434,7 @@ impl markup::Write for CreationId {
 }
 
 impl markup::Read for CxnDERefs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cxn_de_refs(element)
     }
 }
@@ -447,7 +447,7 @@ impl markup::Write for CxnDERefs {
 }
 
 impl markup::Read for PredDERef {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pred_de_ref(element)
     }
 }
@@ -460,7 +460,7 @@ impl markup::Write for PredDERef {
 }
 
 impl markup::Read for RowId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_id(element)
     }
 }

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xltc2:checksum` into a `Checksum`.
 #[must_use]
-pub fn checksum(element: &xml::element::Element) -> super::Checksum {
+pub fn checksum(element: &Element) -> super::Checksum {
     let mut node = super::Checksum::default();
     let mut reader = markup::Reader::new(element, &super::CHECKSUM_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn checksum(element: &xml::element::Element) -> super::Checksum {
 
 /// Read `xltc2:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xltc2:hyperlink` into a `Hyperlink`.
 #[must_use]
-pub fn hyperlink(element: &xml::element::Element) -> super::Hyperlink {
+pub fn hyperlink(element: &Element) -> super::Hyperlink {
     let mut node = super::Hyperlink::default();
     let mut reader = markup::Reader::new(element, &super::HYPERLINK_SHAPE);
     for (index, field) in &mut reader {

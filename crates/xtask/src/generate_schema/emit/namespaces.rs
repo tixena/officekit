@@ -1,5 +1,5 @@
 //! The namespace table: one row per namespace officekit knows, written to
-//! `crates/officekit-core/src/xml/name/table.rs`.
+//! `crates/officekit-xml/src/name/table.rs`.
 
 use alloc::collections::{BTreeMap, BTreeSet};
 use std::ffi::OsStr;
@@ -17,7 +17,7 @@ use crate::generate_schema::sdk_data::{DataVersion, SdkData};
 mod tests;
 
 /// Where the table is written, from the workspace root.
-pub const TABLE_PATH: &str = "crates/officekit-core/src/xml/name/table.rs";
+pub const TABLE_PATH: &str = "crates/officekit-xml/src/name/table.rs";
 
 /// `NamespaceId` is a `u8`, so the table holds at most this many rows.
 const MAX_ROWS: usize = 256;

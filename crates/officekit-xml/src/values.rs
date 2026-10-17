@@ -2,6 +2,8 @@
 
 pub mod parse;
 
+use regex::Regex;
+
 /// Why a stored text is not a value of its simple type; the text stays stored
 /// and is written back as read.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -60,6 +62,53 @@ pub enum MeasureUnit {
     Picas,
     /// `pt`.
     Points,
+}
+
+impl DateTime {
+    /// A date and time from its `(year, month, day)`, its
+    /// `(hour, minute, second, nanosecond)`, and its zone.
+    #[must_use]
+    pub const fn new(
+        (year, month, day): (i32, u8, u8),
+        (hour, minute, second, nanosecond): (u8, u8, u8, u32),
+        offset_minutes: Option<i16>,
+    ) -> Self {
+        Self {
+            day,
+            hour,
+            minute,
+            month,
+            nanosecond,
+            offset_minutes,
+            second,
+            year,
+        }
+    }
+}
+
+impl Measure {
+    #[must_use]
+    pub const fn new(unit: MeasureUnit, value: f64) -> Self {
+        Self { unit, value }
+    }
+}
+
+impl ValueError {
+    #[must_use]
+    pub const fn new(simple_type: &'static str, text: String) -> Self {
+        Self { simple_type, text }
+    }
+}
+
+/// Whether `value` matches `pattern` whole, as an XML Schema pattern facet
+/// matches: the regular expression anchored at both ends. The pattern is
+/// compiled on each call.
+///
+/// # Errors
+///
+/// A pattern the `regex` crate cannot compile.
+pub fn matches_pattern(pattern: &str, value: &str) -> Result<bool, regex::Error> {
+    Ok(Regex::new(&format!("^(?:{pattern})$"))?.is_match(value))
 }
 
 #[cfg(test)]

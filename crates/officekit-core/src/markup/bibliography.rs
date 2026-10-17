@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_B: Option<NamespaceId> = Some(21);
@@ -2185,7 +2185,7 @@ pub enum ContributorsListContent {
     Interviewee(Interviewee),
     Interviewer(Interviewer),
     Inventor(Inventor),
-    Other(xml::element::Node),
+    Other(Node),
     Performer(Performer),
     ProducerName(ProducerName),
     Translator(Translator),
@@ -2392,7 +2392,7 @@ pub struct NameList {
 pub enum NameOrCorporateContent {
     CorporateAuthor(CorporateAuthor),
     NameList(NameList),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 22.6.2.45 `NumberVolumes` (Number of Volumes): the tag `b:NumberVolumes`, schema type
@@ -2586,7 +2586,7 @@ pub enum SourceContent {
     Month(Month),
     MonthAccessed(MonthAccessed),
     NumberOfVolumes(NumberOfVolumes),
-    Other(xml::element::Node),
+    Other(Node),
     Pages(Pages),
     PatentNumber(PatentNumber),
     PatentType(PatentType),
@@ -3076,7 +3076,7 @@ pub struct YearAccessed {
 }
 
 impl markup::Read for AbbreviatedCaseNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::abbreviated_case_number(element)
     }
 }
@@ -3089,7 +3089,7 @@ impl markup::Write for AbbreviatedCaseNumber {
 }
 
 impl markup::Read for AlbumTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::album_title(element)
     }
 }
@@ -3102,7 +3102,7 @@ impl markup::Write for AlbumTitle {
 }
 
 impl markup::Read for Artist {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::artist(element)
     }
 }
@@ -3115,7 +3115,7 @@ impl markup::Write for Artist {
 }
 
 impl markup::Read for Author {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::author(element)
     }
 }
@@ -3200,7 +3200,7 @@ impl BibliographicDataSourceTypes {
 }
 
 impl markup::Read for BookAuthor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::book_author(element)
     }
 }
@@ -3213,7 +3213,7 @@ impl markup::Write for BookAuthor {
 }
 
 impl markup::Read for BookTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::book_title(element)
     }
 }
@@ -3226,7 +3226,7 @@ impl markup::Write for BookTitle {
 }
 
 impl markup::Read for BroadcastTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::broadcast_title(element)
     }
 }
@@ -3239,7 +3239,7 @@ impl markup::Write for BroadcastTitle {
 }
 
 impl markup::Read for Broadcaster {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::broadcaster(element)
     }
 }
@@ -3252,7 +3252,7 @@ impl markup::Write for Broadcaster {
 }
 
 impl markup::Read for CaseNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::case_number(element)
     }
 }
@@ -3265,7 +3265,7 @@ impl markup::Write for CaseNumber {
 }
 
 impl markup::Read for ChapterNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::chapter_number(element)
     }
 }
@@ -3278,7 +3278,7 @@ impl markup::Write for ChapterNumber {
 }
 
 impl markup::Read for City {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::city(element)
     }
 }
@@ -3291,7 +3291,7 @@ impl markup::Write for City {
 }
 
 impl markup::Read for Comments {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comments(element)
     }
 }
@@ -3304,7 +3304,7 @@ impl markup::Write for Comments {
 }
 
 impl markup::Read for Compiler {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::compiler(element)
     }
 }
@@ -3317,7 +3317,7 @@ impl markup::Write for Compiler {
 }
 
 impl markup::Read for Composer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::composer(element)
     }
 }
@@ -3330,7 +3330,7 @@ impl markup::Write for Composer {
 }
 
 impl markup::Read for Conductor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::conductor(element)
     }
 }
@@ -3343,7 +3343,7 @@ impl markup::Write for Conductor {
 }
 
 impl markup::Read for ConferenceOrProceedingsName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::conference_or_proceedings_name(element)
     }
 }
@@ -3356,7 +3356,7 @@ impl markup::Write for ConferenceOrProceedingsName {
 }
 
 impl markup::Read for ContributorsList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::contributors_list(element)
     }
 }
@@ -3369,11 +3369,11 @@ impl markup::Write for ContributorsList {
 }
 
 impl markup::Read for ContributorsListContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_B, "Artist")) => Self::Artist(markup::read(element)),
             Some((NS_B, "Author")) => Self::Author(markup::read(element)),
@@ -3391,7 +3391,7 @@ impl markup::Read for ContributorsListContent {
             Some((NS_B, "ProducerName")) => Self::ProducerName(markup::read(element)),
             Some((NS_B, "Translator")) => Self::Translator(markup::read(element)),
             Some((NS_B, "Writer")) => Self::Writer(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3421,7 +3421,7 @@ impl markup::Write for ContributorsListContent {
 }
 
 impl markup::Read for CorporateAuthor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::corporate_author(element)
     }
 }
@@ -3434,7 +3434,7 @@ impl markup::Write for CorporateAuthor {
 }
 
 impl markup::Read for Counsel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::counsel(element)
     }
 }
@@ -3447,7 +3447,7 @@ impl markup::Write for Counsel {
 }
 
 impl markup::Read for CountryOrRegion {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::country_or_region(element)
     }
 }
@@ -3460,7 +3460,7 @@ impl markup::Write for CountryOrRegion {
 }
 
 impl markup::Read for Court {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::court(element)
     }
 }
@@ -3473,7 +3473,7 @@ impl markup::Write for Court {
 }
 
 impl markup::Read for Day {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::day(element)
     }
 }
@@ -3486,7 +3486,7 @@ impl markup::Write for Day {
 }
 
 impl markup::Read for DayAccessed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::day_accessed(element)
     }
 }
@@ -3499,7 +3499,7 @@ impl markup::Write for DayAccessed {
 }
 
 impl markup::Read for Department {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::department(element)
     }
 }
@@ -3512,7 +3512,7 @@ impl markup::Write for Department {
 }
 
 impl markup::Read for Director {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::director(element)
     }
 }
@@ -3525,7 +3525,7 @@ impl markup::Write for Director {
 }
 
 impl markup::Read for Distributor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::distributor(element)
     }
 }
@@ -3538,7 +3538,7 @@ impl markup::Write for Distributor {
 }
 
 impl markup::Read for Editor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::editor(element)
     }
 }
@@ -3551,7 +3551,7 @@ impl markup::Write for Editor {
 }
 
 impl markup::Read for EditorEdition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::editor_edition(element)
     }
 }
@@ -3564,7 +3564,7 @@ impl markup::Write for EditorEdition {
 }
 
 impl markup::Read for GUID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::guid(element)
     }
 }
@@ -3577,7 +3577,7 @@ impl markup::Write for GUID {
 }
 
 impl markup::Read for Institution {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::institution(element)
     }
 }
@@ -3590,7 +3590,7 @@ impl markup::Write for Institution {
 }
 
 impl markup::Read for InternetSiteTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::internet_site_title(element)
     }
 }
@@ -3603,7 +3603,7 @@ impl markup::Write for InternetSiteTitle {
 }
 
 impl markup::Read for Interviewee {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::interviewee(element)
     }
 }
@@ -3616,7 +3616,7 @@ impl markup::Write for Interviewee {
 }
 
 impl markup::Read for Interviewer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::interviewer(element)
     }
 }
@@ -3629,7 +3629,7 @@ impl markup::Write for Interviewer {
 }
 
 impl markup::Read for Inventor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inventor(element)
     }
 }
@@ -3642,7 +3642,7 @@ impl markup::Write for Inventor {
 }
 
 impl markup::Read for Issue {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::issue(element)
     }
 }
@@ -3655,7 +3655,7 @@ impl markup::Write for Issue {
 }
 
 impl markup::Read for JournalName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::journal_name(element)
     }
 }
@@ -3668,7 +3668,7 @@ impl markup::Write for JournalName {
 }
 
 impl markup::Read for LocaleID {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::locale_id(element)
     }
 }
@@ -3681,7 +3681,7 @@ impl markup::Write for LocaleID {
 }
 
 impl markup::Read for Medium {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::medium(element)
     }
 }
@@ -3694,7 +3694,7 @@ impl markup::Write for Medium {
 }
 
 impl markup::Read for Month {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::month(element)
     }
 }
@@ -3707,7 +3707,7 @@ impl markup::Write for Month {
 }
 
 impl markup::Read for MonthAccessed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::month_accessed(element)
     }
 }
@@ -3720,7 +3720,7 @@ impl markup::Write for MonthAccessed {
 }
 
 impl markup::Read for NameList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::name_list(element)
     }
 }
@@ -3733,15 +3733,15 @@ impl markup::Write for NameList {
 }
 
 impl markup::Read for NameOrCorporateContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_B, "Corporate")) => Self::CorporateAuthor(markup::read(element)),
             Some((NS_B, "NameList")) => Self::NameList(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3757,7 +3757,7 @@ impl markup::Write for NameOrCorporateContent {
 }
 
 impl markup::Read for NumberOfVolumes {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::number_of_volumes(element)
     }
 }
@@ -3770,7 +3770,7 @@ impl markup::Write for NumberOfVolumes {
 }
 
 impl markup::Read for Pages {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pages(element)
     }
 }
@@ -3783,7 +3783,7 @@ impl markup::Write for Pages {
 }
 
 impl markup::Read for PatentNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::patent_number(element)
     }
 }
@@ -3796,7 +3796,7 @@ impl markup::Write for PatentNumber {
 }
 
 impl markup::Read for PatentType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::patent_type(element)
     }
 }
@@ -3809,7 +3809,7 @@ impl markup::Write for PatentType {
 }
 
 impl markup::Read for Performer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::performer(element)
     }
 }
@@ -3822,7 +3822,7 @@ impl markup::Write for Performer {
 }
 
 impl markup::Read for PeriodicalTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::periodical_title(element)
     }
 }
@@ -3835,7 +3835,7 @@ impl markup::Write for PeriodicalTitle {
 }
 
 impl markup::Read for Person {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::person(element)
     }
 }
@@ -3848,7 +3848,7 @@ impl markup::Write for Person {
 }
 
 impl markup::Read for PersonsFirstOrGivenName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::persons_first_or_given_name(element)
     }
 }
@@ -3861,7 +3861,7 @@ impl markup::Write for PersonsFirstOrGivenName {
 }
 
 impl markup::Read for PersonsLastOrFamilyName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::persons_last_or_family_name(element)
     }
 }
@@ -3874,7 +3874,7 @@ impl markup::Write for PersonsLastOrFamilyName {
 }
 
 impl markup::Read for PersonsMiddleOrOtherName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::persons_middle_or_other_name(element)
     }
 }
@@ -3887,7 +3887,7 @@ impl markup::Write for PersonsMiddleOrOtherName {
 }
 
 impl markup::Read for ProducerName {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::producer_name(element)
     }
 }
@@ -3900,7 +3900,7 @@ impl markup::Write for ProducerName {
 }
 
 impl markup::Read for ProductionCompany {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::production_company(element)
     }
 }
@@ -3913,7 +3913,7 @@ impl markup::Write for ProductionCompany {
 }
 
 impl markup::Read for PublicationTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::publication_title(element)
     }
 }
@@ -3926,7 +3926,7 @@ impl markup::Write for PublicationTitle {
 }
 
 impl markup::Read for Publisher {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::publisher(element)
     }
 }
@@ -3939,7 +3939,7 @@ impl markup::Write for Publisher {
 }
 
 impl markup::Read for RecordingNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::recording_number(element)
     }
 }
@@ -3952,7 +3952,7 @@ impl markup::Write for RecordingNumber {
 }
 
 impl markup::Read for ReferenceOrder {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reference_order(element)
     }
 }
@@ -3965,7 +3965,7 @@ impl markup::Write for ReferenceOrder {
 }
 
 impl markup::Read for Reporter {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reporter(element)
     }
 }
@@ -3978,7 +3978,7 @@ impl markup::Write for Reporter {
 }
 
 impl markup::Read for ShortTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::short_title(element)
     }
 }
@@ -3991,7 +3991,7 @@ impl markup::Write for ShortTitle {
 }
 
 impl markup::Read for Source {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::source(element)
     }
 }
@@ -4004,11 +4004,11 @@ impl markup::Write for Source {
 }
 
 impl markup::Read for SourceContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_B, "AbbreviatedCaseNumber")) => {
                 Self::AbbreviatedCaseNumber(markup::read(element))
@@ -4066,7 +4066,7 @@ impl markup::Read for SourceContent {
             Some((NS_B, "Volume")) => Self::Volume(markup::read(element)),
             Some((NS_B, "Year")) => Self::Year(markup::read(element)),
             Some((NS_B, "YearAccessed")) => Self::YearAccessed(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -4132,7 +4132,7 @@ impl markup::Write for SourceContent {
 }
 
 impl markup::Read for SourceType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::source_type(element)
     }
 }
@@ -4145,7 +4145,7 @@ impl markup::Write for SourceType {
 }
 
 impl markup::Read for Sources {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::sources(element)
     }
 }
@@ -4158,7 +4158,7 @@ impl markup::Write for Sources {
 }
 
 impl markup::Read for StandardNumber {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::standard_number(element)
     }
 }
@@ -4171,7 +4171,7 @@ impl markup::Write for StandardNumber {
 }
 
 impl markup::Read for StateOrProvince {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::state_or_province(element)
     }
 }
@@ -4184,7 +4184,7 @@ impl markup::Write for StateOrProvince {
 }
 
 impl markup::Read for Station {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::station(element)
     }
 }
@@ -4197,7 +4197,7 @@ impl markup::Write for Station {
 }
 
 impl markup::Read for Tag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tag(element)
     }
 }
@@ -4210,7 +4210,7 @@ impl markup::Write for Tag {
 }
 
 impl markup::Read for Theater {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::theater(element)
     }
 }
@@ -4223,7 +4223,7 @@ impl markup::Write for Theater {
 }
 
 impl markup::Read for ThesisType {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::thesis_type(element)
     }
 }
@@ -4236,7 +4236,7 @@ impl markup::Write for ThesisType {
 }
 
 impl markup::Read for Title {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::title(element)
     }
 }
@@ -4249,7 +4249,7 @@ impl markup::Write for Title {
 }
 
 impl markup::Read for Translator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::translator(element)
     }
 }
@@ -4262,7 +4262,7 @@ impl markup::Write for Translator {
 }
 
 impl markup::Read for URL {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::url(element)
     }
 }
@@ -4275,7 +4275,7 @@ impl markup::Write for URL {
 }
 
 impl markup::Read for Version {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::version(element)
     }
 }
@@ -4288,7 +4288,7 @@ impl markup::Write for Version {
 }
 
 impl markup::Read for Volume {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::volume(element)
     }
 }
@@ -4301,7 +4301,7 @@ impl markup::Write for Volume {
 }
 
 impl markup::Read for Writer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::writer(element)
     }
 }
@@ -4314,7 +4314,7 @@ impl markup::Write for Writer {
 }
 
 impl markup::Read for Year {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::year(element)
     }
 }
@@ -4327,7 +4327,7 @@ impl markup::Write for Year {
 }
 
 impl markup::Read for YearAccessed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::year_accessed(element)
     }
 }

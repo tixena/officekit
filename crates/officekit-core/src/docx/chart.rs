@@ -8,6 +8,9 @@ use alloc::collections::btree_map::Entry;
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use officekit_xml::element::{Attribute, Element, Node};
+use officekit_xml::name::{Namespace, QName};
+
 use crate::embedded::Embedded;
 use crate::error::PackageError;
 use crate::markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
@@ -16,8 +19,6 @@ use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::{chart, shared_string_table, worksheet};
 use crate::xlsx::Xlsx;
-use crate::xml::element::{Attribute, Element, Node};
-use crate::xml::name::{Namespace, QName};
 
 use super::Docx;
 
@@ -316,10 +317,10 @@ fn set_attribute(element: &mut Element, local: &str, value: &str) {
     }) {
         value.clone_into(&mut attribute.value);
     } else {
-        element.attributes.push(Attribute {
-            name: QName::unprefixed(local, ""),
-            value: value.to_owned(),
-        });
+        element.attributes.push(Attribute::new(
+            QName::unprefixed(local, ""),
+            value.to_owned(),
+        ));
     }
 }
 

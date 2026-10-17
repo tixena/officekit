@@ -1,7 +1,8 @@
+use officekit_xml::parse::parse;
+use officekit_xml::write::WriteOptions;
+
 use super::ContentTypes;
 use crate::packaging::part_name::PartName;
-use crate::xml::parse::parse;
-use crate::xml::write::WriteOptions;
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";

@@ -214,14 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CNvGrpSpPr` as its element, `dsp:cNvGrpSpPr`.
 #[must_use]
-pub fn c_nv_grp_sp_pr(
-    node: &super::CNvGrpSpPr,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_GRP_SP_PR_SHAPE, &node.unknown);
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
@@ -230,7 +228,7 @@ pub fn c_nv_grp_sp_pr(
 
 /// Write a `CNvPr` as its element, `dsp:cNvPr`.
 #[must_use]
-pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -245,7 +243,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `CNvSpPr` as its element, `dsp:cNvSpPr`.
 #[must_use]
-pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.tx_box);
     writer.child(&node.shape_locks);
@@ -255,10 +253,7 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `DataModelExt` as its element, `dsp:dataModelExt`.
 #[must_use]
-pub fn data_model_ext(
-    node: &super::DataModelExt,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_model_ext(node: &super::DataModelExt, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DATA_MODEL_EXT_SHAPE, &node.unknown);
     writer.attribute(0, &node.rel_id);
     writer.attribute(1, &node.min_ver);
@@ -267,7 +262,7 @@ pub fn data_model_ext(
 
 /// Write a `Drawing` as its element, `dsp:drawing`.
 #[must_use]
-pub fn drawing(node: &super::Drawing, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn drawing(node: &super::Drawing, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DRAWING_SHAPE, &node.unknown);
     writer.child(&node.sp_tree);
     writer.finish()
@@ -275,7 +270,7 @@ pub fn drawing(node: &super::Drawing, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `ExtLst` as its element, `dsp:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -288,7 +283,7 @@ pub fn group_shape(node: &super::GroupShapeContent, writer: &mut markup::Writer<
 
 /// Write a `GrpSp` as its element, `dsp:grpSp`.
 #[must_use]
-pub fn grp_sp(node: &super::GrpSp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_SHAPE, &node.unknown);
     writer.child(&node.nv_grp_sp_pr);
     writer.child(&node.pr);
@@ -299,7 +294,7 @@ pub fn grp_sp(node: &super::GrpSp, scope: &mut markup::Scope) -> xml::element::E
 
 /// Write a `GrpSpPr` as its element, `dsp:grpSpPr`.
 #[must_use]
-pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRP_SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
@@ -312,7 +307,7 @@ pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut markup::Scope) -> xml::eleme
 
 /// Write a `NvGrpSpPr` as its element, `dsp:nvGrpSpPr`.
 #[must_use]
-pub fn nv_grp_sp_pr(node: &super::NvGrpSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nv_grp_sp_pr(node: &super::NvGrpSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NV_GRP_SP_PR_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c);
@@ -321,7 +316,7 @@ pub fn nv_grp_sp_pr(node: &super::NvGrpSpPr, scope: &mut markup::Scope) -> xml::
 
 /// Write a `NvSpPr` as its element, `dsp:nvSpPr`.
 #[must_use]
-pub fn nv_sp_pr(node: &super::NvSpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn nv_sp_pr(node: &super::NvSpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NV_SP_PR_SHAPE, &node.unknown);
     writer.child(&node.c_nv_pr);
     writer.child(&node.c);
@@ -330,7 +325,7 @@ pub fn nv_sp_pr(node: &super::NvSpPr, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Sp` as its element, `dsp:sp`.
 #[must_use]
-pub fn sp(node: &super::Sp, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp(node: &super::Sp, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_SHAPE, &node.unknown);
     writer.attribute(0, &node.model_id);
     writer.child(&node.nv_sp_pr);
@@ -344,7 +339,7 @@ pub fn sp(node: &super::Sp, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `SpPr` as its element, `dsp:spPr`.
 #[must_use]
-pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -360,7 +355,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut markup::Scope) -> xml::element::Ele
 
 /// Write a `SpTree` as its element, `dsp:spTree`.
 #[must_use]
-pub fn sp_tree(node: &super::SpTree, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn sp_tree(node: &super::SpTree, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SP_TREE_SHAPE, &node.unknown);
     writer.child(&node.nv_grp_sp_pr);
     writer.child(&node.grp_sp_pr);
@@ -371,7 +366,7 @@ pub fn sp_tree(node: &super::SpTree, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Style` as its element, `dsp:style`.
 #[must_use]
-pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
@@ -382,7 +377,7 @@ pub fn style(node: &super::Style, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `TxBody` as its element, `dsp:txBody`.
 #[must_use]
-pub fn tx_body(node: &super::TxBody, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TX_BODY_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.text_list_styles);
@@ -392,7 +387,7 @@ pub fn tx_body(node: &super::TxBody, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `TxXfrm` as its element, `dsp:txXfrm`.
 #[must_use]
-pub fn tx_xfrm(node: &super::TxXfrm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tx_xfrm(node: &super::TxXfrm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TX_XFRM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `woe:oembed` into a `Oembed`.
 #[must_use]
-pub fn oembed(element: &xml::element::Element) -> super::Oembed {
+pub fn oembed(element: &Element) -> super::Oembed {
     let mut node = super::Oembed::default();
     let mut reader = markup::Reader::new(element, &super::OEMBED_SHAPE);
     for (index, field) in &mut reader {

@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `aanim:animPr` into a `AnimPr`.
 #[must_use]
-pub fn anim_pr(element: &xml::element::Element) -> super::AnimPr {
+pub fn anim_pr(element: &Element) -> super::AnimPr {
     let mut node = super::AnimPr::default();
     let mut reader = markup::Reader::new(element, &super::ANIM_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -239,7 +239,7 @@ pub fn anim_pr(element: &xml::element::Element) -> super::AnimPr {
 
 /// Read `aanim:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {

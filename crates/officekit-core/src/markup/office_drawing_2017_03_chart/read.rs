@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `c16r3:dataDisplayOptions16` into a `DataDisplayOptions16`.
 #[must_use]
-pub fn data_display_options16(element: &xml::element::Element) -> super::DataDisplayOptions16 {
+pub fn data_display_options16(element: &Element) -> super::DataDisplayOptions16 {
     let mut node = super::DataDisplayOptions16::default();
     let mut reader = markup::Reader::new(element, &super::DATA_DISPLAY_OPTIONS16_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn data_display_options16(element: &xml::element::Element) -> super::DataDis
 
 /// Read `c16r3:dispNaAsBlank` into a `DispNaAsBlank`.
 #[must_use]
-pub fn disp_na_as_blank(element: &xml::element::Element) -> super::DispNaAsBlank {
+pub fn disp_na_as_blank(element: &Element) -> super::DispNaAsBlank {
     let mut node = super::DispNaAsBlank::default();
     let mut reader = markup::Reader::new(element, &super::DISP_NA_AS_BLANK_SHAPE);
     for (index, field) in &mut reader {

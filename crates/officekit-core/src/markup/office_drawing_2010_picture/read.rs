@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `pic14:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `pic14:style` into a `Style`.
 #[must_use]
-pub fn style(element: &xml::element::Element) -> super::Style {
+pub fn style(element: &Element) -> super::Style {
     let mut node = super::Style::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_SHAPE);
     for (index, field) in &mut reader {

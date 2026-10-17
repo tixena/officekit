@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XXL21: Option<NamespaceId> = Some(164);
@@ -352,7 +352,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AbsoluteUrl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::absolute_url(element)
     }
 }
@@ -365,7 +365,7 @@ impl markup::Write for AbsoluteUrl {
 }
 
 impl markup::Read for AlternateUrls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::alternate_urls(element)
     }
 }
@@ -378,7 +378,7 @@ impl markup::Write for AlternateUrls {
 }
 
 impl markup::Read for RelativeUrl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::relative_url(element)
     }
 }

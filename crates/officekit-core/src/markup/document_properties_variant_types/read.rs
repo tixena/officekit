@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `vt:array` into a `Array`.
 #[must_use]
-pub fn array(element: &xml::element::Element) -> super::Array {
+pub fn array(element: &Element) -> super::Array {
     let mut node = super::Array::default();
     let mut reader = markup::Reader::new(element, &super::ARRAY_SHAPE);
     for (index, field) in &mut reader {
@@ -235,13 +235,13 @@ pub fn array(element: &xml::element::Element) -> super::Array {
 
 /// Read one item of `ArrayContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn array_content(element: &xml::element::Element) -> super::ArrayContent {
+pub fn array_content(element: &Element) -> super::ArrayContent {
     markup::read(element)
 }
 
 /// Read `vt:bstr` into a `BasicString`.
 #[must_use]
-pub fn basic_string(element: &xml::element::Element) -> super::BasicString {
+pub fn basic_string(element: &Element) -> super::BasicString {
     let mut node = super::BasicString::default();
     let mut reader = markup::Reader::new(element, &super::BASIC_STRING_SHAPE);
     for (index, field) in &mut reader {
@@ -255,7 +255,7 @@ pub fn basic_string(element: &xml::element::Element) -> super::BasicString {
 
 /// Read `vt:blob` into a `BinaryBlob`.
 #[must_use]
-pub fn binary_blob(element: &xml::element::Element) -> super::BinaryBlob {
+pub fn binary_blob(element: &Element) -> super::BinaryBlob {
     let mut node = super::BinaryBlob::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_BLOB_SHAPE);
     for (index, field) in &mut reader {
@@ -269,7 +269,7 @@ pub fn binary_blob(element: &xml::element::Element) -> super::BinaryBlob {
 
 /// Read `vt:oblob` into a `BinaryBlobObject`.
 #[must_use]
-pub fn binary_blob_object(element: &xml::element::Element) -> super::BinaryBlobObject {
+pub fn binary_blob_object(element: &Element) -> super::BinaryBlobObject {
     let mut node = super::BinaryBlobObject::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_BLOB_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -283,7 +283,7 @@ pub fn binary_blob_object(element: &xml::element::Element) -> super::BinaryBlobO
 
 /// Read `vt:storage` into a `BinaryStorage`.
 #[must_use]
-pub fn binary_storage(element: &xml::element::Element) -> super::BinaryStorage {
+pub fn binary_storage(element: &Element) -> super::BinaryStorage {
     let mut node = super::BinaryStorage::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_STORAGE_SHAPE);
     for (index, field) in &mut reader {
@@ -297,7 +297,7 @@ pub fn binary_storage(element: &xml::element::Element) -> super::BinaryStorage {
 
 /// Read `vt:ostorage` into a `BinaryStorageObject`.
 #[must_use]
-pub fn binary_storage_object(element: &xml::element::Element) -> super::BinaryStorageObject {
+pub fn binary_storage_object(element: &Element) -> super::BinaryStorageObject {
     let mut node = super::BinaryStorageObject::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_STORAGE_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -311,7 +311,7 @@ pub fn binary_storage_object(element: &xml::element::Element) -> super::BinarySt
 
 /// Read `vt:stream` into a `BinaryStream`.
 #[must_use]
-pub fn binary_stream(element: &xml::element::Element) -> super::BinaryStream {
+pub fn binary_stream(element: &Element) -> super::BinaryStream {
     let mut node = super::BinaryStream::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_STREAM_SHAPE);
     for (index, field) in &mut reader {
@@ -325,7 +325,7 @@ pub fn binary_stream(element: &xml::element::Element) -> super::BinaryStream {
 
 /// Read `vt:ostream` into a `BinaryStreamObject`.
 #[must_use]
-pub fn binary_stream_object(element: &xml::element::Element) -> super::BinaryStreamObject {
+pub fn binary_stream_object(element: &Element) -> super::BinaryStreamObject {
     let mut node = super::BinaryStreamObject::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_STREAM_OBJECT_SHAPE);
     for (index, field) in &mut reader {
@@ -339,7 +339,7 @@ pub fn binary_stream_object(element: &xml::element::Element) -> super::BinaryStr
 
 /// Read `vt:vstream` into a `BinaryVersionedStream`.
 #[must_use]
-pub fn binary_versioned_stream(element: &xml::element::Element) -> super::BinaryVersionedStream {
+pub fn binary_versioned_stream(element: &Element) -> super::BinaryVersionedStream {
     let mut node = super::BinaryVersionedStream::default();
     let mut reader = markup::Reader::new(element, &super::BINARY_VERSIONED_STREAM_SHAPE);
     for (index, field) in &mut reader {
@@ -355,7 +355,7 @@ pub fn binary_versioned_stream(element: &xml::element::Element) -> super::Binary
 
 /// Read `vt:bool` into a `Boolean`.
 #[must_use]
-pub fn boolean(element: &xml::element::Element) -> super::Boolean {
+pub fn boolean(element: &Element) -> super::Boolean {
     let mut node = super::Boolean::default();
     let mut reader = markup::Reader::new(element, &super::BOOLEAN_SHAPE);
     for (index, field) in &mut reader {
@@ -369,7 +369,7 @@ pub fn boolean(element: &xml::element::Element) -> super::Boolean {
 
 /// Read `vt:clsid` into a `ClassID`.
 #[must_use]
-pub fn class_id(element: &xml::element::Element) -> super::ClassID {
+pub fn class_id(element: &Element) -> super::ClassID {
     let mut node = super::ClassID::default();
     let mut reader = markup::Reader::new(element, &super::CLASS_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -383,7 +383,7 @@ pub fn class_id(element: &xml::element::Element) -> super::ClassID {
 
 /// Read `vt:cy` into a `Currency`.
 #[must_use]
-pub fn currency(element: &xml::element::Element) -> super::Currency {
+pub fn currency(element: &Element) -> super::Currency {
     let mut node = super::Currency::default();
     let mut reader = markup::Reader::new(element, &super::CURRENCY_SHAPE);
     for (index, field) in &mut reader {
@@ -397,7 +397,7 @@ pub fn currency(element: &xml::element::Element) -> super::Currency {
 
 /// Read `vt:date` into a `DateAndTime`.
 #[must_use]
-pub fn date_and_time(element: &xml::element::Element) -> super::DateAndTime {
+pub fn date_and_time(element: &Element) -> super::DateAndTime {
     let mut node = super::DateAndTime::default();
     let mut reader = markup::Reader::new(element, &super::DATE_AND_TIME_SHAPE);
     for (index, field) in &mut reader {
@@ -411,7 +411,7 @@ pub fn date_and_time(element: &xml::element::Element) -> super::DateAndTime {
 
 /// Read `vt:decimal` into a `Decimal`.
 #[must_use]
-pub fn decimal(element: &xml::element::Element) -> super::Decimal {
+pub fn decimal(element: &Element) -> super::Decimal {
     let mut node = super::Decimal::default();
     let mut reader = markup::Reader::new(element, &super::DECIMAL_SHAPE);
     for (index, field) in &mut reader {
@@ -425,7 +425,7 @@ pub fn decimal(element: &xml::element::Element) -> super::Decimal {
 
 /// Read `vt:empty` into a `Empty`.
 #[must_use]
-pub fn empty(element: &xml::element::Element) -> super::Empty {
+pub fn empty(element: &Element) -> super::Empty {
     let reader = markup::Reader::new(element, &super::EMPTY_SHAPE);
     super::Empty {
         unknown: reader.finish(),
@@ -434,7 +434,7 @@ pub fn empty(element: &xml::element::Element) -> super::Empty {
 
 /// Read `vt:error` into a `ErrorStatusCode`.
 #[must_use]
-pub fn error_status_code(element: &xml::element::Element) -> super::ErrorStatusCode {
+pub fn error_status_code(element: &Element) -> super::ErrorStatusCode {
     let mut node = super::ErrorStatusCode::default();
     let mut reader = markup::Reader::new(element, &super::ERROR_STATUS_CODE_SHAPE);
     for (index, field) in &mut reader {
@@ -448,7 +448,7 @@ pub fn error_status_code(element: &xml::element::Element) -> super::ErrorStatusC
 
 /// Read `vt:filetime` into a `FileTime`.
 #[must_use]
-pub fn file_time(element: &xml::element::Element) -> super::FileTime {
+pub fn file_time(element: &Element) -> super::FileTime {
     let mut node = super::FileTime::default();
     let mut reader = markup::Reader::new(element, &super::FILE_TIME_SHAPE);
     for (index, field) in &mut reader {
@@ -462,7 +462,7 @@ pub fn file_time(element: &xml::element::Element) -> super::FileTime {
 
 /// Read `vt:i1` into a `I1`.
 #[must_use]
-pub fn i1(element: &xml::element::Element) -> super::I1 {
+pub fn i1(element: &Element) -> super::I1 {
     let mut node = super::I1::default();
     let mut reader = markup::Reader::new(element, &super::I1_SHAPE);
     for (index, field) in &mut reader {
@@ -476,7 +476,7 @@ pub fn i1(element: &xml::element::Element) -> super::I1 {
 
 /// Read `vt:i2` into a `I2`.
 #[must_use]
-pub fn i2(element: &xml::element::Element) -> super::I2 {
+pub fn i2(element: &Element) -> super::I2 {
     let mut node = super::I2::default();
     let mut reader = markup::Reader::new(element, &super::I2_SHAPE);
     for (index, field) in &mut reader {
@@ -490,7 +490,7 @@ pub fn i2(element: &xml::element::Element) -> super::I2 {
 
 /// Read `vt:i4` into a `I4`.
 #[must_use]
-pub fn i4(element: &xml::element::Element) -> super::I4 {
+pub fn i4(element: &Element) -> super::I4 {
     let mut node = super::I4::default();
     let mut reader = markup::Reader::new(element, &super::I4_SHAPE);
     for (index, field) in &mut reader {
@@ -504,7 +504,7 @@ pub fn i4(element: &xml::element::Element) -> super::I4 {
 
 /// Read `vt:i8` into a `I8`.
 #[must_use]
-pub fn i8(element: &xml::element::Element) -> super::I8 {
+pub fn i8(element: &Element) -> super::I8 {
     let mut node = super::I8::default();
     let mut reader = markup::Reader::new(element, &super::I8_SHAPE);
     for (index, field) in &mut reader {
@@ -518,7 +518,7 @@ pub fn i8(element: &xml::element::Element) -> super::I8 {
 
 /// Read `vt:int` into a `Integer`.
 #[must_use]
-pub fn integer(element: &xml::element::Element) -> super::Integer {
+pub fn integer(element: &Element) -> super::Integer {
     let mut node = super::Integer::default();
     let mut reader = markup::Reader::new(element, &super::INTEGER_SHAPE);
     for (index, field) in &mut reader {
@@ -532,7 +532,7 @@ pub fn integer(element: &xml::element::Element) -> super::Integer {
 
 /// Read `vt:lpstr` into a `LPSTR`.
 #[must_use]
-pub fn lpstr(element: &xml::element::Element) -> super::LPSTR {
+pub fn lpstr(element: &Element) -> super::LPSTR {
     let mut node = super::LPSTR::default();
     let mut reader = markup::Reader::new(element, &super::LPSTR_SHAPE);
     for (index, field) in &mut reader {
@@ -546,7 +546,7 @@ pub fn lpstr(element: &xml::element::Element) -> super::LPSTR {
 
 /// Read `vt:lpwstr` into a `LPWSTR`.
 #[must_use]
-pub fn lpwstr(element: &xml::element::Element) -> super::LPWSTR {
+pub fn lpwstr(element: &Element) -> super::LPWSTR {
     let mut node = super::LPWSTR::default();
     let mut reader = markup::Reader::new(element, &super::LPWSTR_SHAPE);
     for (index, field) in &mut reader {
@@ -560,7 +560,7 @@ pub fn lpwstr(element: &xml::element::Element) -> super::LPWSTR {
 
 /// Read `vt:null` into a `Null`.
 #[must_use]
-pub fn null(element: &xml::element::Element) -> super::Null {
+pub fn null(element: &Element) -> super::Null {
     let reader = markup::Reader::new(element, &super::NULL_SHAPE);
     super::Null {
         unknown: reader.finish(),
@@ -569,7 +569,7 @@ pub fn null(element: &xml::element::Element) -> super::Null {
 
 /// Read `vt:r4` into a `R4`.
 #[must_use]
-pub fn r4(element: &xml::element::Element) -> super::R4 {
+pub fn r4(element: &Element) -> super::R4 {
     let mut node = super::R4::default();
     let mut reader = markup::Reader::new(element, &super::R4_SHAPE);
     for (index, field) in &mut reader {
@@ -583,7 +583,7 @@ pub fn r4(element: &xml::element::Element) -> super::R4 {
 
 /// Read `vt:r8` into a `R8`.
 #[must_use]
-pub fn r8(element: &xml::element::Element) -> super::R8 {
+pub fn r8(element: &Element) -> super::R8 {
     let mut node = super::R8::default();
     let mut reader = markup::Reader::new(element, &super::R8_SHAPE);
     for (index, field) in &mut reader {
@@ -597,7 +597,7 @@ pub fn r8(element: &xml::element::Element) -> super::R8 {
 
 /// Read `vt:ui1` into a `Ui1`.
 #[must_use]
-pub fn ui1(element: &xml::element::Element) -> super::Ui1 {
+pub fn ui1(element: &Element) -> super::Ui1 {
     let mut node = super::Ui1::default();
     let mut reader = markup::Reader::new(element, &super::UI1_SHAPE);
     for (index, field) in &mut reader {
@@ -611,7 +611,7 @@ pub fn ui1(element: &xml::element::Element) -> super::Ui1 {
 
 /// Read `vt:ui2` into a `Ui2`.
 #[must_use]
-pub fn ui2(element: &xml::element::Element) -> super::Ui2 {
+pub fn ui2(element: &Element) -> super::Ui2 {
     let mut node = super::Ui2::default();
     let mut reader = markup::Reader::new(element, &super::UI2_SHAPE);
     for (index, field) in &mut reader {
@@ -625,7 +625,7 @@ pub fn ui2(element: &xml::element::Element) -> super::Ui2 {
 
 /// Read `vt:ui4` into a `Ui4`.
 #[must_use]
-pub fn ui4(element: &xml::element::Element) -> super::Ui4 {
+pub fn ui4(element: &Element) -> super::Ui4 {
     let mut node = super::Ui4::default();
     let mut reader = markup::Reader::new(element, &super::UI4_SHAPE);
     for (index, field) in &mut reader {
@@ -639,7 +639,7 @@ pub fn ui4(element: &xml::element::Element) -> super::Ui4 {
 
 /// Read `vt:ui8` into a `Ui8`.
 #[must_use]
-pub fn ui8(element: &xml::element::Element) -> super::Ui8 {
+pub fn ui8(element: &Element) -> super::Ui8 {
     let mut node = super::Ui8::default();
     let mut reader = markup::Reader::new(element, &super::UI8_SHAPE);
     for (index, field) in &mut reader {
@@ -653,7 +653,7 @@ pub fn ui8(element: &xml::element::Element) -> super::Ui8 {
 
 /// Read `vt:uint` into a `UnsignedInteger`.
 #[must_use]
-pub fn unsigned_integer(element: &xml::element::Element) -> super::UnsignedInteger {
+pub fn unsigned_integer(element: &Element) -> super::UnsignedInteger {
     let mut node = super::UnsignedInteger::default();
     let mut reader = markup::Reader::new(element, &super::UNSIGNED_INTEGER_SHAPE);
     for (index, field) in &mut reader {
@@ -667,7 +667,7 @@ pub fn unsigned_integer(element: &xml::element::Element) -> super::UnsignedInteg
 
 /// Read `vt:variant` into a `Variant`.
 #[must_use]
-pub fn variant(element: &xml::element::Element) -> super::Variant {
+pub fn variant(element: &Element) -> super::Variant {
     let mut node = super::Variant::default();
     let mut reader = markup::Reader::new(element, &super::VARIANT_SHAPE);
     for (index, field) in &mut reader {
@@ -681,13 +681,13 @@ pub fn variant(element: &xml::element::Element) -> super::Variant {
 
 /// Read one item of `VariantContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn variant_content(element: &xml::element::Element) -> super::VariantContent {
+pub fn variant_content(element: &Element) -> super::VariantContent {
     markup::read(element)
 }
 
 /// Read `vt:vector` into a `Vector`.
 #[must_use]
-pub fn vector(element: &xml::element::Element) -> super::Vector {
+pub fn vector(element: &Element) -> super::Vector {
     let mut node = super::Vector::default();
     let mut reader = markup::Reader::new(element, &super::VECTOR_SHAPE);
     for (index, field) in &mut reader {
@@ -704,6 +704,6 @@ pub fn vector(element: &xml::element::Element) -> super::Vector {
 
 /// Read one item of `VectorContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn vector_content(element: &xml::element::Element) -> super::VectorContent {
+pub fn vector_content(element: &Element) -> super::VectorContent {
     markup::read(element)
 }

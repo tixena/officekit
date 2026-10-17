@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `t:Anchor` into a `Anchor`.
 #[must_use]
-pub fn anchor(element: &xml::element::Element) -> super::Anchor {
+pub fn anchor(element: &Element) -> super::Anchor {
     let mut node = super::Anchor::default();
     let mut reader = markup::Reader::new(element, &super::ANCHOR_SHAPE);
     for (index, field) in &mut reader {
@@ -233,7 +233,7 @@ pub fn anchor(element: &xml::element::Element) -> super::Anchor {
 
 /// Read `t:Assign` into a `Assign`.
 #[must_use]
-pub fn assign(element: &xml::element::Element) -> super::Assign {
+pub fn assign(element: &Element) -> super::Assign {
     let reader = markup::Reader::new(element, &super::ASSIGN_SHAPE);
     super::Assign {
         unknown: reader.finish(),
@@ -242,7 +242,7 @@ pub fn assign(element: &xml::element::Element) -> super::Assign {
 
 /// Read `t:Attribution` into a `Attribution`.
 #[must_use]
-pub fn attribution(element: &xml::element::Element) -> super::Attribution {
+pub fn attribution(element: &Element) -> super::Attribution {
     let reader = markup::Reader::new(element, &super::ATTRIBUTION_SHAPE);
     super::Attribution {
         unknown: reader.finish(),
@@ -251,7 +251,7 @@ pub fn attribution(element: &xml::element::Element) -> super::Attribution {
 
 /// Read `t:Comment` into a `Comment`.
 #[must_use]
-pub fn comment(element: &xml::element::Element) -> super::Comment {
+pub fn comment(element: &Element) -> super::Comment {
     let mut node = super::Comment::default();
     let mut reader = markup::Reader::new(element, &super::COMMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -265,7 +265,7 @@ pub fn comment(element: &xml::element::Element) -> super::Comment {
 
 /// Read `t:Create` into a `Create`.
 #[must_use]
-pub fn create(element: &xml::element::Element) -> super::Create {
+pub fn create(element: &Element) -> super::Create {
     let reader = markup::Reader::new(element, &super::CREATE_SHAPE);
     super::Create {
         unknown: reader.finish(),
@@ -274,7 +274,7 @@ pub fn create(element: &xml::element::Element) -> super::Create {
 
 /// Read `t:Delete` into a `Delete`.
 #[must_use]
-pub fn delete(element: &xml::element::Element) -> super::Delete {
+pub fn delete(element: &Element) -> super::Delete {
     let reader = markup::Reader::new(element, &super::DELETE_SHAPE);
     super::Delete {
         unknown: reader.finish(),
@@ -283,7 +283,7 @@ pub fn delete(element: &xml::element::Element) -> super::Delete {
 
 /// Read `t:Event` into a `Event`.
 #[must_use]
-pub fn event(element: &xml::element::Element) -> super::Event {
+pub fn event(element: &Element) -> super::Event {
     let mut node = super::Event::default();
     let mut reader = markup::Reader::new(element, &super::EVENT_SHAPE);
     for (index, field) in &mut reader {
@@ -303,7 +303,7 @@ pub fn event(element: &xml::element::Element) -> super::Event {
 
 /// Read `t:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -317,7 +317,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `t:History` into a `History`.
 #[must_use]
-pub fn history(element: &xml::element::Element) -> super::History {
+pub fn history(element: &Element) -> super::History {
     let mut node = super::History::default();
     let mut reader = markup::Reader::new(element, &super::HISTORY_SHAPE);
     for (index, field) in &mut reader {
@@ -331,7 +331,7 @@ pub fn history(element: &xml::element::Element) -> super::History {
 
 /// Read `t:Priority` into a `Priority`.
 #[must_use]
-pub fn priority(element: &xml::element::Element) -> super::Priority {
+pub fn priority(element: &Element) -> super::Priority {
     let mut node = super::Priority::default();
     let mut reader = markup::Reader::new(element, &super::PRIORITY_SHAPE);
     for (index, field) in &mut reader {
@@ -345,7 +345,7 @@ pub fn priority(element: &xml::element::Element) -> super::Priority {
 
 /// Read `t:Progress` into a `Progress`.
 #[must_use]
-pub fn progress(element: &xml::element::Element) -> super::Progress {
+pub fn progress(element: &Element) -> super::Progress {
     let mut node = super::Progress::default();
     let mut reader = markup::Reader::new(element, &super::PROGRESS_SHAPE);
     for (index, field) in &mut reader {
@@ -359,7 +359,7 @@ pub fn progress(element: &xml::element::Element) -> super::Progress {
 
 /// Read `t:Schedule` into a `Schedule`.
 #[must_use]
-pub fn schedule(element: &xml::element::Element) -> super::Schedule {
+pub fn schedule(element: &Element) -> super::Schedule {
     let mut node = super::Schedule::default();
     let mut reader = markup::Reader::new(element, &super::SCHEDULE_SHAPE);
     for (index, field) in &mut reader {
@@ -375,7 +375,7 @@ pub fn schedule(element: &xml::element::Element) -> super::Schedule {
 
 /// Read `t:SetTitle` into a `SetTitle`.
 #[must_use]
-pub fn set_title(element: &xml::element::Element) -> super::SetTitle {
+pub fn set_title(element: &Element) -> super::SetTitle {
     let mut node = super::SetTitle::default();
     let mut reader = markup::Reader::new(element, &super::SET_TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -389,7 +389,7 @@ pub fn set_title(element: &xml::element::Element) -> super::SetTitle {
 
 /// Read `t:Task` into a `Task`.
 #[must_use]
-pub fn task(element: &xml::element::Element) -> super::Task {
+pub fn task(element: &Element) -> super::Task {
     let mut node = super::Task::default();
     let mut reader = markup::Reader::new(element, &super::TASK_SHAPE);
     for (index, field) in &mut reader {
@@ -407,13 +407,13 @@ pub fn task(element: &xml::element::Element) -> super::Task {
 
 /// Read one item of `TaskHistoryEventContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn task_history_event(element: &xml::element::Element) -> super::TaskHistoryEventContent {
+pub fn task_history_event(element: &Element) -> super::TaskHistoryEventContent {
     markup::read(element)
 }
 
 /// Read `t:Tasks` into a `Tasks`.
 #[must_use]
-pub fn tasks(element: &xml::element::Element) -> super::Tasks {
+pub fn tasks(element: &Element) -> super::Tasks {
     let mut node = super::Tasks::default();
     let mut reader = markup::Reader::new(element, &super::TASKS_SHAPE);
     for (index, field) in &mut reader {
@@ -429,7 +429,7 @@ pub fn tasks(element: &xml::element::Element) -> super::Tasks {
 
 /// Read `t:Unassign` into a `Unassign`.
 #[must_use]
-pub fn unassign(element: &xml::element::Element) -> super::Unassign {
+pub fn unassign(element: &Element) -> super::Unassign {
     let reader = markup::Reader::new(element, &super::UNASSIGN_SHAPE);
     super::Unassign {
         unknown: reader.finish(),
@@ -438,7 +438,7 @@ pub fn unassign(element: &xml::element::Element) -> super::Unassign {
 
 /// Read `t:UnassignAll` into a `UnassignAll`.
 #[must_use]
-pub fn unassign_all(element: &xml::element::Element) -> super::UnassignAll {
+pub fn unassign_all(element: &Element) -> super::UnassignAll {
     let reader = markup::Reader::new(element, &super::UNASSIGN_ALL_SHAPE);
     super::UnassignAll {
         unknown: reader.finish(),
@@ -447,7 +447,7 @@ pub fn unassign_all(element: &xml::element::Element) -> super::UnassignAll {
 
 /// Read `t:Undelete` into a `Undelete`.
 #[must_use]
-pub fn undelete(element: &xml::element::Element) -> super::Undelete {
+pub fn undelete(element: &Element) -> super::Undelete {
     let reader = markup::Reader::new(element, &super::UNDELETE_SHAPE);
     super::Undelete {
         unknown: reader.finish(),
@@ -456,7 +456,7 @@ pub fn undelete(element: &xml::element::Element) -> super::Undelete {
 
 /// Read `t:Undo` into a `Undo`.
 #[must_use]
-pub fn undo(element: &xml::element::Element) -> super::Undo {
+pub fn undo(element: &Element) -> super::Undo {
     let mut node = super::Undo::default();
     let mut reader = markup::Reader::new(element, &super::UNDO_SHAPE);
     for (index, field) in &mut reader {

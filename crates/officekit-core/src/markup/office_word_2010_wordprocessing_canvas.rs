@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -476,7 +476,7 @@ pub struct Whole {
 pub enum WordprocessingCanvasContent {
     ContentPart(super::office_word_2010_wordml::ContentPart),
     GraphicFrame(GraphicFrame),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(super::picture::Picture),
     Wgp(super::office_word_2010_wordprocessing_group::Wgp),
     Wsp(super::office_word_2010_wordprocessing_shape::Wsp),
@@ -494,7 +494,7 @@ pub struct Wpc {
 }
 
 impl markup::Read for Bg {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bg(element)
     }
 }
@@ -507,7 +507,7 @@ impl markup::Write for Bg {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -520,7 +520,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for GraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame(element)
     }
 }
@@ -533,7 +533,7 @@ impl markup::Write for GraphicFrame {
 }
 
 impl markup::Read for Whole {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::whole(element)
     }
 }
@@ -546,18 +546,18 @@ impl markup::Write for Whole {
 }
 
 impl markup::Read for WordprocessingCanvasContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_W14, "contentPart")) => Self::ContentPart(markup::read(element)),
             Some((NS_WPC, "graphicFrame")) => Self::GraphicFrame(markup::read(element)),
             Some((NS_PIC, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_WPG, "wgp")) => Self::Wgp(markup::read(element)),
             Some((NS_WPS, "wsp")) => Self::Wsp(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -576,7 +576,7 @@ impl markup::Write for WordprocessingCanvasContent {
 }
 
 impl markup::Read for Wpc {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wpc(element)
     }
 }

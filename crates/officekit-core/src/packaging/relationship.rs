@@ -4,11 +4,13 @@
 
 use core::iter;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::{Namespace, QName};
+
 use crate::error::PackageError;
 use crate::packaging::package::DECLARATION;
 use crate::packaging::part_name::PartName;
-use crate::xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
-use crate::xml::name::{Namespace, QName};
 
 #[cfg(test)]
 mod tests;
@@ -87,6 +89,20 @@ impl Relationship {
             TargetMode::External => Ok(Target::External(self.target.clone())),
             TargetMode::Internal => resolve(source_directory, &self.target).map(Target::Part),
         }
+    }
+}
+
+/// The class a package declares through the type of its relationship to its main part: either
+/// spelling of the `officeDocument` type; `None` for any other type.
+#[must_use]
+pub fn class_of_office_document(type_uri: &str) -> Option<ConformanceClass> {
+    let office_document = RelationshipType::OFFICE_DOCUMENT;
+    if type_uri == office_document.strict {
+        Some(ConformanceClass::Strict)
+    } else if type_uri == office_document.transitional {
+        Some(ConformanceClass::Transitional)
+    } else {
+        None
     }
 }
 
@@ -177,10 +193,10 @@ pub(crate) fn resolve(source_directory: &str, target: &str) -> Result<PartName, 
 /// The relationship part that holds `items`.
 pub(crate) fn to_document(items: &[Relationship]) -> Document {
     let mut root = Element::new(QName::unprefixed("Relationships", NAMESPACE));
-    root.namespace_declarations.push(NamespaceDeclaration {
-        prefix: String::new(),
-        uri: NAMESPACE.to_owned(),
-    });
+    root.namespace_declarations.push(NamespaceDeclaration::new(
+        String::new(),
+        NAMESPACE.to_owned(),
+    ));
     for relationship in items {
         let mut attributes = vec![
             ("Id", relationship.id.as_str()),
@@ -193,10 +209,7 @@ pub(crate) fn to_document(items: &[Relationship]) -> Document {
         let mut element = Element::new(QName::unprefixed("Relationship", NAMESPACE));
         element.attributes = attributes
             .into_iter()
-            .map(|(name, value)| Attribute {
-                name: QName::unprefixed(name, ""),
-                value: value.to_owned(),
-            })
+            .map(|(name, value)| Attribute::new(QName::unprefixed(name, ""), value.to_owned()))
             .collect();
         root.children.push(Node::Element(element));
     }

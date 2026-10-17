@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_X: Option<NamespaceId> = Some(118);
@@ -389,7 +389,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -402,7 +402,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for MsForm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ms_form(element)
     }
 }
@@ -415,7 +415,7 @@ impl markup::Write for MsForm {
 }
 
 impl markup::Read for Question {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::question(element)
     }
 }
@@ -428,7 +428,7 @@ impl markup::Write for Question {
 }
 
 impl markup::Read for SyncedQuestionId {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::synced_question_id(element)
     }
 }

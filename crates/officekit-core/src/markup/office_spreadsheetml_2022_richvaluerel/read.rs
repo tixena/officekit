@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlrvrel:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `xlrvrel:rel` into a `Rel`.
 #[must_use]
-pub fn rel(element: &xml::element::Element) -> super::Rel {
+pub fn rel(element: &Element) -> super::Rel {
     let mut node = super::Rel::default();
     let mut reader = markup::Reader::new(element, &super::REL_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn rel(element: &xml::element::Element) -> super::Rel {
 
 /// Read `xlrvrel:richValueRels` into a `RichValueRels`.
 #[must_use]
-pub fn rich_value_rels(element: &xml::element::Element) -> super::RichValueRels {
+pub fn rich_value_rels(element: &Element) -> super::RichValueRels {
     let mut node = super::RichValueRels::default();
     let mut reader = markup::Reader::new(element, &super::RICH_VALUE_RELS_SHAPE);
     for (index, field) in &mut reader {

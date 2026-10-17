@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -433,7 +433,7 @@ pub struct CmLst {
 pub enum CommentContent {
     DeMkLst(super::office_drawing_2013_main_command::DeMkLst),
     GridColMkLst(super::office_drawing_2013_main_command::GridColMkLst),
-    Other(xml::element::Node),
+    Other(Node),
     SldLayoutMkLst(super::office_powerpoint_2013_main_command::SldLayoutMkLst),
     SldMasterMkLst(super::office_powerpoint_2013_main_command::SldMasterMkLst),
     SldMkLst(super::office_powerpoint_2013_main_command::SldMkLst),
@@ -796,7 +796,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Author {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::author(element)
     }
 }
@@ -809,7 +809,7 @@ impl markup::Write for Author {
 }
 
 impl markup::Read for AuthorLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::author_lst(element)
     }
 }
@@ -822,7 +822,7 @@ impl markup::Write for AuthorLst {
 }
 
 impl markup::Read for Cm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cm(element)
     }
 }
@@ -835,7 +835,7 @@ impl markup::Write for Cm {
 }
 
 impl markup::Read for CmLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::cm_lst(element)
     }
 }
@@ -848,11 +848,11 @@ impl markup::Write for CmLst {
 }
 
 impl markup::Read for CommentContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_OAC, "deMkLst")) => Self::DeMkLst(markup::read(element)),
             Some((NS_OAC, "gridColMkLst")) => Self::GridColMkLst(markup::read(element)),
@@ -864,7 +864,7 @@ impl markup::Read for CommentContent {
             Some((NS_OAC, "txBodyMkLst")) => Self::TxBodyMkLst(markup::read(element)),
             Some((NS_OAC, "txMkLst")) => Self::TxMkLst(markup::read(element)),
             Some((NS_P188, "unknownAnchor")) => Self::UnknownAnchor(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -888,7 +888,7 @@ impl markup::Write for CommentContent {
 }
 
 impl markup::Read for CommentRel {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::comment_rel(element)
     }
 }
@@ -951,7 +951,7 @@ impl CommentStatus {
 }
 
 impl markup::Read for ExtLstCommentPropertiesExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_comment_properties_extension_list(element)
     }
 }
@@ -964,7 +964,7 @@ impl markup::Write for ExtLstCommentPropertiesExtensionList {
 }
 
 impl markup::Read for ExtLstExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst_extension_list(element)
     }
 }
@@ -977,7 +977,7 @@ impl markup::Write for ExtLstExtensionList {
 }
 
 impl markup::Read for Pos {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::pos(element)
     }
 }
@@ -990,7 +990,7 @@ impl markup::Write for Pos {
 }
 
 impl markup::Read for Reply {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reply(element)
     }
 }
@@ -1003,7 +1003,7 @@ impl markup::Write for Reply {
 }
 
 impl markup::Read for ReplyLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::reply_lst(element)
     }
 }
@@ -1016,7 +1016,7 @@ impl markup::Write for ReplyLst {
 }
 
 impl markup::Read for TxBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tx_body(element)
     }
 }
@@ -1029,7 +1029,7 @@ impl markup::Write for TxBody {
 }
 
 impl markup::Read for UnknownAnchor {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::unknown_anchor(element)
     }
 }

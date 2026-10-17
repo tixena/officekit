@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -1420,7 +1420,7 @@ pub enum GroupShapeContent {
     ContentPart(super::office_excel_2010_spreadsheet_drawing::ContentPart),
     GraphicFrame(GraphicFrame),
     GroupShape(GroupShape),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(Picture),
     Shape(Shape),
 }
@@ -1558,7 +1558,7 @@ pub enum ObjectContent {
     ContentPart(ContentPart),
     GraphicFrame(GraphicFrame),
     GroupShape(GroupShape),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(Picture),
     Shape(Shape),
 }
@@ -1938,7 +1938,7 @@ pub struct WorksheetDrawing {
 pub enum WorksheetDrawingContent {
     AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSize),
     OneCellAnchorShapeSize(OneCellAnchorShapeSize),
-    Other(xml::element::Node),
+    Other(Node),
     TwoCellAnchorShapeSize(TwoCellAnchorShapeSize),
 }
 
@@ -1955,7 +1955,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for AbsoluteAnchorShapeSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::absolute_anchor_shape_size(element)
     }
 }
@@ -1968,7 +1968,7 @@ impl markup::Write for AbsoluteAnchorShapeSize {
 }
 
 impl markup::Read for ClientData {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::client_data(element)
     }
 }
@@ -1981,7 +1981,7 @@ impl markup::Write for ClientData {
 }
 
 impl markup::Read for Col {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::col(element)
     }
 }
@@ -2017,7 +2017,7 @@ impl ColumnID {
 }
 
 impl markup::Read for ColumnOffset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::column_offset(element)
     }
 }
@@ -2030,7 +2030,7 @@ impl markup::Write for ColumnOffset {
 }
 
 impl markup::Read for ConnectionNonVisualShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection_non_visual_shape_properties(element)
     }
 }
@@ -2043,7 +2043,7 @@ impl markup::Write for ConnectionNonVisualShapeProperties {
 }
 
 impl markup::Read for ConnectionShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::connection_shape(element)
     }
 }
@@ -2056,7 +2056,7 @@ impl markup::Write for ConnectionShape {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -2069,7 +2069,7 @@ impl markup::Write for ContentPart {
 }
 
 impl markup::Read for EndingAnchorPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ending_anchor_point(element)
     }
 }
@@ -2082,7 +2082,7 @@ impl markup::Write for EndingAnchorPoint {
 }
 
 impl markup::Read for GraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphic_frame(element)
     }
 }
@@ -2095,7 +2095,7 @@ impl markup::Write for GraphicFrame {
 }
 
 impl markup::Read for GroupShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape(element)
     }
 }
@@ -2108,11 +2108,11 @@ impl markup::Write for GroupShape {
 }
 
 impl markup::Read for GroupShapeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(markup::read(element)),
             Some((NS_XDR14, "contentPart")) => Self::ContentPart(markup::read(element)),
@@ -2120,7 +2120,7 @@ impl markup::Read for GroupShapeContent {
             Some((NS_XDR, "grpSp")) => Self::GroupShape(markup::read(element)),
             Some((NS_XDR, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_XDR, "sp")) => Self::Shape(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2140,7 +2140,7 @@ impl markup::Write for GroupShapeContent {
 }
 
 impl markup::Read for GroupShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape_properties(element)
     }
 }
@@ -2153,7 +2153,7 @@ impl markup::Write for GroupShapeProperties {
 }
 
 impl markup::Read for NonVisualConnectorShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_connector_shape_drawing_properties(element)
     }
 }
@@ -2166,7 +2166,7 @@ impl markup::Write for NonVisualConnectorShapeDrawingProperties {
 }
 
 impl markup::Read for NonVisualDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
     }
 }
@@ -2179,7 +2179,7 @@ impl markup::Write for NonVisualDrawingProperties {
 }
 
 impl markup::Read for NonVisualGraphicFrameDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_graphic_frame_drawing_properties(element)
     }
 }
@@ -2192,7 +2192,7 @@ impl markup::Write for NonVisualGraphicFrameDrawingProperties {
 }
 
 impl markup::Read for NonVisualGroupShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_group_shape_drawing_properties(element)
     }
 }
@@ -2205,7 +2205,7 @@ impl markup::Write for NonVisualGroupShapeDrawingProperties {
 }
 
 impl markup::Read for NonVisualPictureDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_picture_drawing_properties(element)
     }
 }
@@ -2218,7 +2218,7 @@ impl markup::Write for NonVisualPictureDrawingProperties {
 }
 
 impl markup::Read for NonVisualPropertiesForAConnectionShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_connection_shape(element)
     }
 }
@@ -2231,7 +2231,7 @@ impl markup::Write for NonVisualPropertiesForAConnectionShape {
 }
 
 impl markup::Read for NonVisualPropertiesForAGraphicFrame {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_graphic_frame(element)
     }
 }
@@ -2244,7 +2244,7 @@ impl markup::Write for NonVisualPropertiesForAGraphicFrame {
 }
 
 impl markup::Read for NonVisualPropertiesForAGroupShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_group_shape(element)
     }
 }
@@ -2257,7 +2257,7 @@ impl markup::Write for NonVisualPropertiesForAGroupShape {
 }
 
 impl markup::Read for NonVisualPropertiesForAPicture {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_picture(element)
     }
 }
@@ -2270,7 +2270,7 @@ impl markup::Write for NonVisualPropertiesForAPicture {
 }
 
 impl markup::Read for NonVisualPropertiesForAShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_properties_for_a_shape(element)
     }
 }
@@ -2289,11 +2289,11 @@ impl Default for ObjectContent {
 }
 
 impl markup::Read for ObjectContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(markup::read(element)),
             Some((NS_XDR, "contentPart")) => Self::ContentPart(markup::read(element)),
@@ -2301,7 +2301,7 @@ impl markup::Read for ObjectContent {
             Some((NS_XDR, "grpSp")) => Self::GroupShape(markup::read(element)),
             Some((NS_XDR, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_XDR, "sp")) => Self::Shape(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2321,7 +2321,7 @@ impl markup::Write for ObjectContent {
 }
 
 impl markup::Read for OneCellAnchorShapeSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::one_cell_anchor_shape_size(element)
     }
 }
@@ -2334,7 +2334,7 @@ impl markup::Write for OneCellAnchorShapeSize {
 }
 
 impl markup::Read for Picture {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture(element)
     }
 }
@@ -2347,7 +2347,7 @@ impl markup::Write for Picture {
 }
 
 impl markup::Read for PictureFill {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::picture_fill(element)
     }
 }
@@ -2360,7 +2360,7 @@ impl markup::Write for PictureFill {
 }
 
 impl markup::Read for Position {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::position(element)
     }
 }
@@ -2423,7 +2423,7 @@ impl ResizingBehaviors {
 }
 
 impl markup::Read for Row {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row(element)
     }
 }
@@ -2459,7 +2459,7 @@ impl RowID {
 }
 
 impl markup::Read for RowOffset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::row_offset(element)
     }
 }
@@ -2472,7 +2472,7 @@ impl markup::Write for RowOffset {
 }
 
 impl markup::Read for Shape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape(element)
     }
 }
@@ -2485,7 +2485,7 @@ impl markup::Write for Shape {
 }
 
 impl markup::Read for ShapeExtent {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_extent(element)
     }
 }
@@ -2498,7 +2498,7 @@ impl markup::Write for ShapeExtent {
 }
 
 impl markup::Read for ShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_properties(element)
     }
 }
@@ -2511,7 +2511,7 @@ impl markup::Write for ShapeProperties {
 }
 
 impl markup::Read for ShapeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_style(element)
     }
 }
@@ -2524,7 +2524,7 @@ impl markup::Write for ShapeStyle {
 }
 
 impl markup::Read for ShapeTextBody {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_text_body(element)
     }
 }
@@ -2537,7 +2537,7 @@ impl markup::Write for ShapeTextBody {
 }
 
 impl markup::Read for StartingAnchorPoint {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::starting_anchor_point(element)
     }
 }
@@ -2550,7 +2550,7 @@ impl markup::Write for StartingAnchorPoint {
 }
 
 impl markup::Read for TwoCellAnchorShapeSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::two_cell_anchor_shape_size(element)
     }
 }
@@ -2563,7 +2563,7 @@ impl markup::Write for TwoCellAnchorShapeSize {
 }
 
 impl markup::Read for WorksheetDrawing {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::worksheet_drawing(element)
     }
 }
@@ -2576,18 +2576,18 @@ impl markup::Write for WorksheetDrawing {
 }
 
 impl markup::Read for WorksheetDrawingContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_XDR, "absoluteAnchor")) => {
                 Self::AbsoluteAnchorShapeSize(markup::read(element))
             }
             Some((NS_XDR, "oneCellAnchor")) => Self::OneCellAnchorShapeSize(markup::read(element)),
             Some((NS_XDR, "twoCellAnchor")) => Self::TwoCellAnchorShapeSize(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2604,7 +2604,7 @@ impl markup::Write for WorksheetDrawingContent {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

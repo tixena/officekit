@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_DS: Option<NamespaceId> = Some(46);
@@ -364,7 +364,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for AssociatedXMLSchema {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::associated_xml_schema(element)
     }
 }
@@ -377,7 +377,7 @@ impl markup::Write for AssociatedXMLSchema {
 }
 
 impl markup::Read for CustomXMLDataProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_xml_data_properties(element)
     }
 }
@@ -390,7 +390,7 @@ impl markup::Write for CustomXMLDataProperties {
 }
 
 impl markup::Read for SetOfAssociatedXMLSchemas {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::set_of_associated_xml_schemas(element)
     }
 }

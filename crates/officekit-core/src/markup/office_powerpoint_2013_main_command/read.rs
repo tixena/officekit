@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `pc:animEffectMkLst` into a `AnimEffectMkLst`.
 #[must_use]
-pub fn anim_effect_mk_lst(element: &xml::element::Element) -> super::AnimEffectMkLst {
+pub fn anim_effect_mk_lst(element: &Element) -> super::AnimEffectMkLst {
     let mut node = super::AnimEffectMkLst::default();
     let mut reader = markup::Reader::new(element, &super::ANIM_EFFECT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn anim_effect_mk_lst(element: &xml::element::Element) -> super::AnimEffectM
 
 /// Read `pc:animEffectParentMkLst` into a `AnimEffectParentMkLst`.
 #[must_use]
-pub fn anim_effect_parent_mk_lst(element: &xml::element::Element) -> super::AnimEffectParentMkLst {
+pub fn anim_effect_parent_mk_lst(element: &Element) -> super::AnimEffectParentMkLst {
     let mut node = super::AnimEffectParentMkLst::default();
     let mut reader = markup::Reader::new(element, &super::ANIM_EFFECT_PARENT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -245,7 +245,7 @@ pub fn anim_effect_parent_mk_lst(element: &xml::element::Element) -> super::Anim
 
 /// Read `pc:cXmlMkLst` into a `CXmlMkLst`.
 #[must_use]
-pub fn c_xml_mk_lst(element: &xml::element::Element) -> super::CXmlMkLst {
+pub fn c_xml_mk_lst(element: &Element) -> super::CXmlMkLst {
     let mut node = super::CXmlMkLst::default();
     let mut reader = markup::Reader::new(element, &super::C_XML_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -259,7 +259,7 @@ pub fn c_xml_mk_lst(element: &xml::element::Element) -> super::CXmlMkLst {
 
 /// Read `pc:cmAuthorMkLst` into a `CmAuthorMkLst`.
 #[must_use]
-pub fn cm_author_mk_lst(element: &xml::element::Element) -> super::CmAuthorMkLst {
+pub fn cm_author_mk_lst(element: &Element) -> super::CmAuthorMkLst {
     let mut node = super::CmAuthorMkLst::default();
     let mut reader = markup::Reader::new(element, &super::CM_AUTHOR_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -273,7 +273,7 @@ pub fn cm_author_mk_lst(element: &xml::element::Element) -> super::CmAuthorMkLst
 
 /// Read `pc:cmMkLst` into a `CmMkLst`.
 #[must_use]
-pub fn cm_mk_lst(element: &xml::element::Element) -> super::CmMkLst {
+pub fn cm_mk_lst(element: &Element) -> super::CmMkLst {
     let mut node = super::CmMkLst::default();
     let mut reader = markup::Reader::new(element, &super::CM_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -287,7 +287,7 @@ pub fn cm_mk_lst(element: &xml::element::Element) -> super::CmMkLst {
 
 /// Read `pc:custShowMkLst` into a `CustShowMkLst`.
 #[must_use]
-pub fn cust_show_mk_lst(element: &xml::element::Element) -> super::CustShowMkLst {
+pub fn cust_show_mk_lst(element: &Element) -> super::CustShowMkLst {
     let mut node = super::CustShowMkLst::default();
     let mut reader = markup::Reader::new(element, &super::CUST_SHOW_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -301,7 +301,7 @@ pub fn cust_show_mk_lst(element: &xml::element::Element) -> super::CustShowMkLst
 
 /// Read `pc:designTagMkLst` into a `DesignTagMkLst`.
 #[must_use]
-pub fn design_tag_mk_lst(element: &xml::element::Element) -> super::DesignTagMkLst {
+pub fn design_tag_mk_lst(element: &Element) -> super::DesignTagMkLst {
     let mut node = super::DesignTagMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DESIGN_TAG_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -315,7 +315,7 @@ pub fn design_tag_mk_lst(element: &xml::element::Element) -> super::DesignTagMkL
 
 /// Read `pc:docMk` into a `DocMk`.
 #[must_use]
-pub fn doc_mk(element: &xml::element::Element) -> super::DocMk {
+pub fn doc_mk(element: &Element) -> super::DocMk {
     let reader = markup::Reader::new(element, &super::DOC_MK_SHAPE);
     super::DocMk {
         unknown: reader.finish(),
@@ -324,7 +324,7 @@ pub fn doc_mk(element: &xml::element::Element) -> super::DocMk {
 
 /// Read `pc:docMkLst` into a `DocMkLst`.
 #[must_use]
-pub fn doc_mk_lst(element: &xml::element::Element) -> super::DocMkLst {
+pub fn doc_mk_lst(element: &Element) -> super::DocMkLst {
     let mut node = super::DocMkLst::default();
     let mut reader = markup::Reader::new(element, &super::DOC_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -338,7 +338,7 @@ pub fn doc_mk_lst(element: &xml::element::Element) -> super::DocMkLst {
 
 /// Read `pc:handoutMkLst` into a `HandoutMkLst`.
 #[must_use]
-pub fn handout_mk_lst(element: &xml::element::Element) -> super::HandoutMkLst {
+pub fn handout_mk_lst(element: &Element) -> super::HandoutMkLst {
     let mut node = super::HandoutMkLst::default();
     let mut reader = markup::Reader::new(element, &super::HANDOUT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -352,7 +352,7 @@ pub fn handout_mk_lst(element: &xml::element::Element) -> super::HandoutMkLst {
 
 /// Read `pc:notesMasterMkLst` into a `NotesMasterMkLst`.
 #[must_use]
-pub fn notes_master_mk_lst(element: &xml::element::Element) -> super::NotesMasterMkLst {
+pub fn notes_master_mk_lst(element: &Element) -> super::NotesMasterMkLst {
     let mut node = super::NotesMasterMkLst::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_MASTER_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -366,7 +366,7 @@ pub fn notes_master_mk_lst(element: &xml::element::Element) -> super::NotesMaste
 
 /// Read `pc:notesMkLst` into a `NotesMkLst`.
 #[must_use]
-pub fn notes_mk_lst(element: &xml::element::Element) -> super::NotesMkLst {
+pub fn notes_mk_lst(element: &Element) -> super::NotesMkLst {
     let mut node = super::NotesMkLst::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -380,7 +380,7 @@ pub fn notes_mk_lst(element: &xml::element::Element) -> super::NotesMkLst {
 
 /// Read `pc:notesTxtMkLst` into a `NotesTxtMkLst`.
 #[must_use]
-pub fn notes_txt_mk_lst(element: &xml::element::Element) -> super::NotesTxtMkLst {
+pub fn notes_txt_mk_lst(element: &Element) -> super::NotesTxtMkLst {
     let mut node = super::NotesTxtMkLst::default();
     let mut reader = markup::Reader::new(element, &super::NOTES_TXT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -394,7 +394,7 @@ pub fn notes_txt_mk_lst(element: &xml::element::Element) -> super::NotesTxtMkLst
 
 /// Read `pc:sectionLnkObjMkLst` into a `SectionLnkObjMkLst`.
 #[must_use]
-pub fn section_lnk_obj_mk_lst(element: &xml::element::Element) -> super::SectionLnkObjMkLst {
+pub fn section_lnk_obj_mk_lst(element: &Element) -> super::SectionLnkObjMkLst {
     let mut node = super::SectionLnkObjMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_LNK_OBJ_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -408,7 +408,7 @@ pub fn section_lnk_obj_mk_lst(element: &xml::element::Element) -> super::Section
 
 /// Read `pc:sectionMkLst` into a `SectionMkLst`.
 #[must_use]
-pub fn section_mk_lst(element: &xml::element::Element) -> super::SectionMkLst {
+pub fn section_mk_lst(element: &Element) -> super::SectionMkLst {
     let mut node = super::SectionMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SECTION_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -422,7 +422,7 @@ pub fn section_mk_lst(element: &xml::element::Element) -> super::SectionMkLst {
 
 /// Read `pc:sldBaseMkLst` into a `SldBaseMkLst`.
 #[must_use]
-pub fn sld_base_mk_lst(element: &xml::element::Element) -> super::SldBaseMkLst {
+pub fn sld_base_mk_lst(element: &Element) -> super::SldBaseMkLst {
     let mut node = super::SldBaseMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_BASE_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -436,7 +436,7 @@ pub fn sld_base_mk_lst(element: &xml::element::Element) -> super::SldBaseMkLst {
 
 /// Read `pc:sldLayoutMkLst` into a `SldLayoutMkLst`.
 #[must_use]
-pub fn sld_layout_mk_lst(element: &xml::element::Element) -> super::SldLayoutMkLst {
+pub fn sld_layout_mk_lst(element: &Element) -> super::SldLayoutMkLst {
     let mut node = super::SldLayoutMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_LAYOUT_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -450,7 +450,7 @@ pub fn sld_layout_mk_lst(element: &xml::element::Element) -> super::SldLayoutMkL
 
 /// Read `pc:sldMasterMkLst` into a `SldMasterMkLst`.
 #[must_use]
-pub fn sld_master_mk_lst(element: &xml::element::Element) -> super::SldMasterMkLst {
+pub fn sld_master_mk_lst(element: &Element) -> super::SldMasterMkLst {
     let mut node = super::SldMasterMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_MASTER_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -464,7 +464,7 @@ pub fn sld_master_mk_lst(element: &xml::element::Element) -> super::SldMasterMkL
 
 /// Read `pc:sldMk` into a `SldMk`.
 #[must_use]
-pub fn sld_mk(element: &xml::element::Element) -> super::SldMk {
+pub fn sld_mk(element: &Element) -> super::SldMk {
     let mut node = super::SldMk::default();
     let mut reader = markup::Reader::new(element, &super::SLD_MK_SHAPE);
     for (index, field) in &mut reader {
@@ -480,7 +480,7 @@ pub fn sld_mk(element: &xml::element::Element) -> super::SldMk {
 
 /// Read `pc:sldMkLst` into a `SldMkLst`.
 #[must_use]
-pub fn sld_mk_lst(element: &xml::element::Element) -> super::SldMkLst {
+pub fn sld_mk_lst(element: &Element) -> super::SldMkLst {
     let mut node = super::SldMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -497,7 +497,7 @@ pub fn sld_mk_lst(element: &xml::element::Element) -> super::SldMkLst {
 
 /// Read `pc:sldPosMkLst` into a `SldPosMkLst`.
 #[must_use]
-pub fn sld_pos_mk_lst(element: &xml::element::Element) -> super::SldPosMkLst {
+pub fn sld_pos_mk_lst(element: &Element) -> super::SldPosMkLst {
     let mut node = super::SldPosMkLst::default();
     let mut reader = markup::Reader::new(element, &super::SLD_POS_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -511,7 +511,7 @@ pub fn sld_pos_mk_lst(element: &xml::element::Element) -> super::SldPosMkLst {
 
 /// Read `pc:tagMkLst` into a `TagMkLst`.
 #[must_use]
-pub fn tag_mk_lst(element: &xml::element::Element) -> super::TagMkLst {
+pub fn tag_mk_lst(element: &Element) -> super::TagMkLst {
     let mut node = super::TagMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TAG_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -525,7 +525,7 @@ pub fn tag_mk_lst(element: &xml::element::Element) -> super::TagMkLst {
 
 /// Read `pc:tkAppMkLst` into a `TkAppMkLst`.
 #[must_use]
-pub fn tk_app_mk_lst(element: &xml::element::Element) -> super::TkAppMkLst {
+pub fn tk_app_mk_lst(element: &Element) -> super::TkAppMkLst {
     let mut node = super::TkAppMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TK_APP_MK_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -539,7 +539,7 @@ pub fn tk_app_mk_lst(element: &xml::element::Element) -> super::TkAppMkLst {
 
 /// Read `pc:tocMkLst` into a `TocMkLst`.
 #[must_use]
-pub fn toc_mk_lst(element: &xml::element::Element) -> super::TocMkLst {
+pub fn toc_mk_lst(element: &Element) -> super::TocMkLst {
     let mut node = super::TocMkLst::default();
     let mut reader = markup::Reader::new(element, &super::TOC_MK_LST_SHAPE);
     for (index, field) in &mut reader {

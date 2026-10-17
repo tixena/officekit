@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `x15ac:absPath` into a `AbsPath`.
 #[must_use]
-pub fn abs_path(element: &xml::element::Element) -> super::AbsPath {
+pub fn abs_path(element: &Element) -> super::AbsPath {
     let mut node = super::AbsPath::default();
     let mut reader = markup::Reader::new(element, &super::ABS_PATH_SHAPE);
     for (index, field) in &mut reader {

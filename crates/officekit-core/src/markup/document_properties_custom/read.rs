@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `op:Properties` into a `CustomFileProperties`.
 #[must_use]
-pub fn custom_file_properties(element: &xml::element::Element) -> super::CustomFileProperties {
+pub fn custom_file_properties(element: &Element) -> super::CustomFileProperties {
     let mut node = super::CustomFileProperties::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_FILE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn custom_file_properties(element: &xml::element::Element) -> super::CustomF
 
 /// Read `op:property` into a `CustomFileProperty`.
 #[must_use]
-pub fn custom_file_property(element: &xml::element::Element) -> super::CustomFileProperty {
+pub fn custom_file_property(element: &Element) -> super::CustomFileProperty {
     let mut node = super::CustomFileProperty::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_FILE_PROPERTY_SHAPE);
     for (index, field) in &mut reader {
@@ -250,8 +250,6 @@ pub fn custom_file_property(element: &xml::element::Element) -> super::CustomFil
 
 /// Read one item of `CustomFilePropertyContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn custom_file_property_content(
-    element: &xml::element::Element,
-) -> super::CustomFilePropertyContent {
+pub fn custom_file_property_content(element: &Element) -> super::CustomFilePropertyContent {
     markup::read(element)
 }

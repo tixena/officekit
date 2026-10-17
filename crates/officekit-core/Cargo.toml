@@ -21,6 +21,9 @@ transitional = []
 strict = []
 
 [dependencies]
+# The XML layer: element tree, names, values, markup compatibility, part reader and writer
+officekit-xml.workspace = true
+
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
 # package between an archive and an in-memory filesystem
 os-shim = { workspace = true, features = ["zip"] }

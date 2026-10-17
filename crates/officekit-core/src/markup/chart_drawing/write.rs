@@ -214,14 +214,15 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AbsoluteAnchorShapeSize` as its element, `cdr:absSizeAnchor`.
 #[must_use]
 pub fn absolute_anchor_shape_size(
     node: &super::AbsoluteAnchorShapeSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -235,10 +236,7 @@ pub fn absolute_anchor_shape_size(
 
 /// Write a `ConnectionShape` as its element, `cdr:cxnSp`.
 #[must_use]
-pub fn connection_shape(
-    node: &super::ConnectionShape,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CONNECTION_SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -252,8 +250,8 @@ pub fn connection_shape(
 #[must_use]
 pub fn connector_non_visual_properties(
     node: &super::ConnectorNonVisualProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE,
@@ -266,10 +264,7 @@ pub fn connector_non_visual_properties(
 
 /// Write a `EndingAnchorPoint` as its element, `cdr:to`.
 #[must_use]
-pub fn ending_anchor_point(
-    node: &super::EndingAnchorPoint,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ENDING_ANCHOR_POINT_SHAPE, &node.unknown);
     writer.child(&node.relative_x_coordinate);
     writer.child(&node.relative_y_coordinate);
@@ -278,10 +273,7 @@ pub fn ending_anchor_point(
 
 /// Write a `GraphicFrame` as its element, `cdr:graphicFrame`.
 #[must_use]
-pub fn graphic_frame(
-    node: &super::GraphicFrame,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -293,10 +285,7 @@ pub fn graphic_frame(
 
 /// Write a `GraphicFrameTransform` as its element, `cdr:xfrm`.
 #[must_use]
-pub fn graphic_frame_transform(
-    node: &super::GraphicFrameTransform,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn graphic_frame_transform(node: &super::GraphicFrameTransform, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GRAPHIC_FRAME_TRANSFORM_SHAPE, &node.unknown);
     writer.attribute(0, &node.rot);
@@ -309,7 +298,7 @@ pub fn graphic_frame_transform(
 
 /// Write a `GroupShape` as its element, `cdr:grpSp`.
 #[must_use]
-pub fn group_shape(node: &super::GroupShape, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
     writer.child(&node.non_visual_group_shape_properties);
     writer.child(&node.properties);
@@ -319,10 +308,7 @@ pub fn group_shape(node: &super::GroupShape, scope: &mut markup::Scope) -> xml::
 
 /// Write a `GroupShapeProperties` as its element, `cdr:grpSpPr`.
 #[must_use]
-pub fn group_shape_properties(
-    node: &super::GroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::GROUP_SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
@@ -338,8 +324,8 @@ pub fn group_shape_properties(
 #[must_use]
 pub fn non_visual_connection_shape_drawing_properties(
     node: &super::NonVisualConnectionShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -356,8 +342,8 @@ pub fn non_visual_connection_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -378,8 +364,8 @@ pub fn non_visual_drawing_properties(
 #[must_use]
 pub fn non_visual_graphic_frame_drawing_properties(
     node: &super::NonVisualGraphicFrameDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -394,8 +380,8 @@ pub fn non_visual_graphic_frame_drawing_properties(
 #[must_use]
 pub fn non_visual_graphic_frame_properties(
     node: &super::NonVisualGraphicFrameProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE,
@@ -410,8 +396,8 @@ pub fn non_visual_graphic_frame_properties(
 #[must_use]
 pub fn non_visual_group_shape_drawing_properties(
     node: &super::NonVisualGroupShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -426,8 +412,8 @@ pub fn non_visual_group_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_group_shape_properties(
     node: &super::NonVisualGroupShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -442,8 +428,8 @@ pub fn non_visual_group_shape_properties(
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
     node: &super::NonVisualPictureDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -459,8 +445,8 @@ pub fn non_visual_picture_drawing_properties(
 #[must_use]
 pub fn non_visual_picture_properties(
     node: &super::NonVisualPictureProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
@@ -475,8 +461,8 @@ pub fn non_visual_picture_properties(
 #[must_use]
 pub fn non_visual_shape_drawing_properties(
     node: &super::NonVisualShapeDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -492,8 +478,8 @@ pub fn non_visual_shape_drawing_properties(
 #[must_use]
 pub fn non_visual_shape_properties(
     node: &super::NonVisualShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
@@ -511,7 +497,7 @@ pub fn object(node: &super::ObjectContent, writer: &mut markup::Writer<'_, '_>) 
 
 /// Write a `Picture` as its element, `cdr:pic`.
 #[must_use]
-pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
@@ -524,7 +510,7 @@ pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `PictureFill` as its element, `cdr:blipFill`.
 #[must_use]
-pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
@@ -538,8 +524,8 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml
 #[must_use]
 pub fn relative_anchor_shape_size(
     node: &super::RelativeAnchorShapeSize,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -553,10 +539,7 @@ pub fn relative_anchor_shape_size(
 
 /// Write a `RelativeXCoordinate` as its element, `cdr:x`.
 #[must_use]
-pub fn relative_x_coordinate(
-    node: &super::RelativeXCoordinate,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn relative_x_coordinate(node: &super::RelativeXCoordinate, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RELATIVE_X_COORDINATE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -564,10 +547,7 @@ pub fn relative_x_coordinate(
 
 /// Write a `RelativeYCoordinate` as its element, `cdr:y`.
 #[must_use]
-pub fn relative_y_coordinate(
-    node: &super::RelativeYCoordinate,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn relative_y_coordinate(node: &super::RelativeYCoordinate, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RELATIVE_Y_COORDINATE_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()
@@ -575,7 +555,7 @@ pub fn relative_y_coordinate(
 
 /// Write a `Shape` as its element, `cdr:sp`.
 #[must_use]
-pub fn shape(node: &super::Shape, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.textlink);
@@ -590,7 +570,7 @@ pub fn shape(node: &super::Shape, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ShapeExtent` as its element, `cdr:ext`.
 #[must_use]
-pub fn shape_extent(node: &super::ShapeExtent, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_EXTENT_SHAPE, &node.unknown);
     writer.attribute(0, &node.cx);
     writer.attribute(1, &node.cy);
@@ -599,10 +579,7 @@ pub fn shape_extent(node: &super::ShapeExtent, scope: &mut markup::Scope) -> xml
 
 /// Write a `ShapeProperties` as its element, `cdr:spPr`.
 #[must_use]
-pub fn shape_properties(
-    node: &super::ShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -618,7 +595,7 @@ pub fn shape_properties(
 
 /// Write a `ShapeStyle` as its element, `cdr:style`.
 #[must_use]
-pub fn shape_style(node: &super::ShapeStyle, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
@@ -629,10 +606,7 @@ pub fn shape_style(node: &super::ShapeStyle, scope: &mut markup::Scope) -> xml::
 
 /// Write a `ShapeTextBody` as its element, `cdr:txBody`.
 #[must_use]
-pub fn shape_text_body(
-    node: &super::ShapeTextBody,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_text_body(node: &super::ShapeTextBody, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_TEXT_BODY_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.text_list_styles);
@@ -642,10 +616,7 @@ pub fn shape_text_body(
 
 /// Write a `StartingAnchorPoint` as its element, `cdr:from`.
 #[must_use]
-pub fn starting_anchor_point(
-    node: &super::StartingAnchorPoint,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn starting_anchor_point(node: &super::StartingAnchorPoint, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::STARTING_ANCHOR_POINT_SHAPE, &node.unknown);
     writer.child(&node.relative_x_coordinate);
     writer.child(&node.relative_y_coordinate);

@@ -216,12 +216,12 @@
 //! shared writer, whose element the Strict write then checks and converts.
 
 use crate::class_rules;
-use crate::error::{ReadError, WriteError};
-use crate::markup::Scope;
 use crate::markup::office_spreadsheetml_2020_richdatawebimage::{self, read, write};
 use crate::strict::{self, Strict};
-use crate::xml::element::Element;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::error::{ReadError, WriteError};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::write::Scope;
 
 const NS_XLRDWI: Option<NamespaceId> = Some(142);
 

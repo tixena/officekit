@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExtLst` as its element, `tsle:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()
@@ -225,7 +226,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `Timeslicer` as its element, `tsle:timeslicer`.
 #[must_use]
-pub fn timeslicer(node: &super::Timeslicer, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn timeslicer(node: &super::Timeslicer, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TIMESLICER_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.child(&node.ext_lst);

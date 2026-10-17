@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `MultiLvlStrLit` as its element, `c16ac:multiLvlStrLit`.
 #[must_use]
-pub fn multi_lvl_str_lit(
-    node: &super::MultiLvlStrLit,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn multi_lvl_str_lit(node: &super::MultiLvlStrLit, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MULTI_LVL_STR_LIT_SHAPE, &node.unknown);
     writer.child(&node.point_count);
     writer.child(&node.level);

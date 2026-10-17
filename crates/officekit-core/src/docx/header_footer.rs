@@ -3,6 +3,10 @@
 #[cfg(test)]
 mod tests;
 
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::NamespaceDeclaration;
+use officekit_xml::name::Namespace;
+
 use crate::error::PackageError;
 use crate::file;
 use crate::markup::common_simple_types::OnOffValue;
@@ -16,9 +20,6 @@ use crate::packaging::package::PartRoot;
 use crate::packaging::part_name::PartName;
 use crate::packaging::relationship::{RelatedPart, RelationshipType, Target};
 use crate::parts::{document_settings, footer, header};
-use crate::xml::conformance::ConformanceClass;
-use crate::xml::element::NamespaceDeclaration;
-use crate::xml::name::Namespace;
 
 use super::Docx;
 
@@ -181,10 +182,10 @@ fn declare_relationships(document: &mut Document, class: ConformanceClass) {
         suffix += 1;
         prefix = format!("r{suffix}");
     }
-    declarations.push(NamespaceDeclaration {
+    declarations.push(NamespaceDeclaration::new(
         prefix,
-        uri: namespace.uri(class).to_owned(),
-    });
+        namespace.uri(class).to_owned(),
+    ));
 }
 
 fn is_on(flag: Option<&OnOffValue>) -> bool {

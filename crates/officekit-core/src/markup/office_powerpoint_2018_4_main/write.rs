@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Classification` as its element, `p184:classification`.
 #[must_use]
-pub fn classification(
-    node: &super::Classification,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn classification(node: &super::Classification, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CLASSIFICATION_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

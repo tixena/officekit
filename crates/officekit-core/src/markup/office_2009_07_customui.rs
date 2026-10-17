@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_MSO14: Option<NamespaceId> = Some(58);
@@ -2353,7 +2353,7 @@ pub struct Backstage {
 #[non_exhaustive]
 pub enum BackstageContent {
     ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButton),
-    Other(xml::element::Node),
+    Other(Node),
     TabBackstageTab(TabBackstageTab),
 }
 
@@ -2362,7 +2362,7 @@ pub enum BackstageContent {
 #[non_exhaustive]
 pub enum BackstageGroupsContent {
     GroupBackstageGroup(GroupBackstageGroup),
-    Other(xml::element::Node),
+    Other(Node),
     TaskFormGroup(TaskFormGroup),
     TaskGroup(TaskGroup),
 }
@@ -2374,7 +2374,7 @@ pub enum BackstageMenuGroupContent {
     ButtonBackstageMenuButton(ButtonBackstageMenuButton),
     CheckBoxBackstageMenuCheckBox(CheckBoxBackstageMenuCheckBox),
     MenuBackstageSubMenu(MenuBackstageSubMenu),
-    Other(xml::element::Node),
+    Other(Node),
     ToggleButtonBackstageMenuToggleButton(ToggleButtonBackstageMenuToggleButton),
 }
 
@@ -2420,7 +2420,7 @@ pub enum BoxContent {
     GalleryGallery(Box<GalleryGallery>),
     LabelControlLabelControl(LabelControlLabelControl),
     MenuMenu(MenuMenu),
-    Other(xml::element::Node),
+    Other(Node),
     SplitButtonSplitButton(SplitButtonSplitButton),
     ToggleButtonToggleButton(ToggleButtonToggleButton),
 }
@@ -2648,7 +2648,7 @@ pub enum ButtonGroupContent {
     DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegular),
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
     MenuMenuRegular(MenuMenuRegular),
-    Other(xml::element::Node),
+    Other(Node),
     Separator(Separator),
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
@@ -4676,7 +4676,7 @@ pub enum ContextMenuContent {
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
     MenuMenuRegular(MenuMenuRegular),
     MenuSeparatorMenuSeparatorNoTitle(MenuSeparatorMenuSeparatorNoTitle),
-    Other(xml::element::Node),
+    Other(Node),
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
@@ -5267,7 +5267,7 @@ pub enum GroupContent {
     GalleryGallery(Box<GalleryGallery>),
     LabelControlLabelControl(LabelControlLabelControl),
     MenuMenu(MenuMenu),
-    Other(xml::element::Node),
+    Other(Node),
     Separator(Separator),
     SplitButtonSplitButton(SplitButtonSplitButton),
     ToggleButtonToggleButton(ToggleButtonToggleButton),
@@ -5288,7 +5288,7 @@ pub enum GroupControlsContent {
     ImageControl(ImageControl),
     LabelControlBackstageLabelControl(LabelControlBackstageLabelControl),
     LayoutContainer(LayoutContainer),
-    Other(xml::element::Node),
+    Other(Node),
     RadioGroup(RadioGroup),
 }
 
@@ -5539,7 +5539,7 @@ pub enum MenuContent {
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
     MenuMenuRegular(MenuMenuRegular),
     MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
-    Other(xml::element::Node),
+    Other(Node),
     SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegular),
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
@@ -5726,7 +5726,7 @@ pub enum MenuWithTitleContent {
     GalleryGalleryRegular(Box<GalleryGalleryRegular>),
     MenuMenuWithTitle(MenuMenuWithTitle),
     MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparator),
-    Other(xml::element::Node),
+    Other(Node),
     SplitButtonSplitButtonWithTitle(SplitButtonSplitButtonWithTitle),
     ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegular),
 }
@@ -5745,7 +5745,7 @@ pub struct PrimaryItem {
 pub enum PrimaryItemContent {
     ButtonBackstageRegularButton(ButtonBackstageRegularButton),
     MenuBackstagePrimaryMenu(MenuBackstagePrimaryMenu),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// The tag `mso14:qat`, schema type `CT_Qat` of SDK 3.5.1's data.
@@ -5763,7 +5763,7 @@ pub struct Qat {
 pub enum QuickAccessToolbarItemsContent {
     ButtonButtonRegular(ButtonButtonRegular),
     ControlControlCloneQat(ControlControlCloneQat),
-    Other(xml::element::Node),
+    Other(Node),
     Separator(Separator),
 }
 
@@ -5814,7 +5814,7 @@ pub struct Ribbon {
 #[non_exhaustive]
 pub enum RibbonContent {
     ContextualTabs(ContextualTabs),
-    Other(xml::element::Node),
+    Other(Node),
     Qat(Qat),
     Tabs(Tabs),
 }
@@ -5856,7 +5856,7 @@ pub struct SharedControls {
 #[non_exhaustive]
 pub enum SimpleGroupsContent {
     GroupBackstageGroup(GroupBackstageGroup),
-    Other(xml::element::Node),
+    Other(Node),
     TaskGroup(TaskGroup),
 }
 
@@ -5878,7 +5878,7 @@ pub enum SizeMember {
 #[non_exhaustive]
 pub enum SplitButtonContent {
     ButtonVisibleButton(ButtonVisibleButton),
-    Other(xml::element::Node),
+    Other(Node),
     ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButton),
 }
 
@@ -6781,7 +6781,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for Backstage {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::backstage(element)
     }
 }
@@ -6794,17 +6794,17 @@ impl markup::Write for Backstage {
 }
 
 impl markup::Read for BackstageContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => {
                 Self::ButtonBackstageFastCommandButton(markup::read(element))
             }
             Some((NS_MSO14, "tab")) => Self::TabBackstageTab(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6820,16 +6820,16 @@ impl markup::Write for BackstageContent {
 }
 
 impl markup::Read for BackstageGroupsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(markup::read(element)),
             Some((NS_MSO14, "taskFormGroup")) => Self::TaskFormGroup(markup::read(element)),
             Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6871,11 +6871,11 @@ impl TryFrom<BackstageGroupsContent> for SimpleGroupsContent {
 }
 
 impl markup::Read for BackstageMenuGroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonBackstageMenuButton(markup::read(element)),
             Some((NS_MSO14, "checkBox")) => {
@@ -6885,7 +6885,7 @@ impl markup::Read for BackstageMenuGroupContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonBackstageMenuToggleButton(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -6903,7 +6903,7 @@ impl markup::Write for BackstageMenuGroupContent {
 }
 
 impl markup::Read for BottomItems {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::bottom_items(element)
     }
 }
@@ -6916,7 +6916,7 @@ impl markup::Write for BottomItems {
 }
 
 impl markup::Read for BoxBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::box_box(element)
     }
 }
@@ -6929,11 +6929,11 @@ impl markup::Write for BoxBox {
 }
 
 impl markup::Read for BoxContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "box")) => Self::BoxBox(markup::read(element)),
             Some((NS_MSO14, "button")) => Self::ButtonButton(markup::read(element)),
@@ -6953,7 +6953,7 @@ impl markup::Read for BoxContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButton(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7034,7 +7034,7 @@ impl BoxStyle {
 }
 
 impl markup::Read for ButtonBackstageFastCommandButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_backstage_fast_command_button(element)
     }
 }
@@ -7047,7 +7047,7 @@ impl markup::Write for ButtonBackstageFastCommandButton {
 }
 
 impl markup::Read for ButtonBackstageGroupButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_backstage_group_button(element)
     }
 }
@@ -7060,7 +7060,7 @@ impl markup::Write for ButtonBackstageGroupButton {
 }
 
 impl markup::Read for ButtonBackstageMenuButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_backstage_menu_button(element)
     }
 }
@@ -7073,7 +7073,7 @@ impl markup::Write for ButtonBackstageMenuButton {
 }
 
 impl markup::Read for ButtonBackstageRegularButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_backstage_regular_button(element)
     }
 }
@@ -7086,7 +7086,7 @@ impl markup::Write for ButtonBackstageRegularButton {
 }
 
 impl markup::Read for ButtonButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_button(element)
     }
 }
@@ -7099,7 +7099,7 @@ impl markup::Write for ButtonButton {
 }
 
 impl markup::Read for ButtonButtonRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_button_regular(element)
     }
 }
@@ -7112,7 +7112,7 @@ impl markup::Write for ButtonButtonRegular {
 }
 
 impl markup::Read for ButtonGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_group(element)
     }
 }
@@ -7125,11 +7125,11 @@ impl markup::Write for ButtonGroup {
 }
 
 impl markup::Read for ButtonGroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(markup::read(element)),
             Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(markup::read(element)),
@@ -7147,7 +7147,7 @@ impl markup::Read for ButtonGroupContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButtonRegular(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7169,7 +7169,7 @@ impl markup::Write for ButtonGroupContent {
 }
 
 impl markup::Read for ButtonVisibleButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::button_visible_button(element)
     }
 }
@@ -7182,7 +7182,7 @@ impl markup::Write for ButtonVisibleButton {
 }
 
 impl markup::Read for CategoryTaskFormGroupCategory {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_task_form_group_category(element)
     }
 }
@@ -7195,7 +7195,7 @@ impl markup::Write for CategoryTaskFormGroupCategory {
 }
 
 impl markup::Read for CategoryTaskGroupCategory {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::category_task_group_category(element)
     }
 }
@@ -7208,7 +7208,7 @@ impl markup::Write for CategoryTaskGroupCategory {
 }
 
 impl markup::Read for CheckBoxBackstageCheckBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::check_box_backstage_check_box(element)
     }
 }
@@ -7221,7 +7221,7 @@ impl markup::Write for CheckBoxBackstageCheckBox {
 }
 
 impl markup::Read for CheckBoxBackstageMenuCheckBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::check_box_backstage_menu_check_box(element)
     }
 }
@@ -7234,7 +7234,7 @@ impl markup::Write for CheckBoxBackstageMenuCheckBox {
 }
 
 impl markup::Read for CheckBoxCheckBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::check_box_check_box(element)
     }
 }
@@ -7247,7 +7247,7 @@ impl markup::Write for CheckBoxCheckBox {
 }
 
 impl markup::Read for ComboBoxBackstageComboBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::combo_box_backstage_combo_box(element)
     }
 }
@@ -7260,7 +7260,7 @@ impl markup::Write for ComboBoxBackstageComboBox {
 }
 
 impl markup::Read for ComboBoxComboBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::combo_box_combo_box(element)
     }
 }
@@ -7273,7 +7273,7 @@ impl markup::Write for ComboBoxComboBox {
 }
 
 impl markup::Read for Command {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::command(element)
     }
 }
@@ -7286,7 +7286,7 @@ impl markup::Write for Command {
 }
 
 impl markup::Read for Commands {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::commands(element)
     }
 }
@@ -7299,7 +7299,7 @@ impl markup::Write for Commands {
 }
 
 impl markup::Read for ContextMenu {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::context_menu(element)
     }
 }
@@ -7312,11 +7312,11 @@ impl markup::Write for ContextMenu {
 }
 
 impl markup::Read for ContextMenuContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(markup::read(element)),
             Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(markup::read(element)),
@@ -7337,7 +7337,7 @@ impl markup::Read for ContextMenuContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButtonRegular(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7360,7 +7360,7 @@ impl markup::Write for ContextMenuContent {
 }
 
 impl markup::Read for ContextMenus {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::context_menus(element)
     }
 }
@@ -7373,7 +7373,7 @@ impl markup::Write for ContextMenus {
 }
 
 impl markup::Read for ContextualTabs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::contextual_tabs(element)
     }
 }
@@ -7386,7 +7386,7 @@ impl markup::Write for ContextualTabs {
 }
 
 impl markup::Read for ControlControlClone {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::control_control_clone(element)
     }
 }
@@ -7399,7 +7399,7 @@ impl markup::Write for ControlControlClone {
 }
 
 impl markup::Read for ControlControlCloneQat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::control_control_clone_qat(element)
     }
 }
@@ -7412,7 +7412,7 @@ impl markup::Write for ControlControlCloneQat {
 }
 
 impl markup::Read for ControlControlCloneRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::control_control_clone_regular(element)
     }
 }
@@ -7425,7 +7425,7 @@ impl markup::Write for ControlControlCloneRegular {
 }
 
 impl markup::Read for CustomUI {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom_ui(element)
     }
 }
@@ -7438,7 +7438,7 @@ impl markup::Write for CustomUI {
 }
 
 impl markup::Read for DialogBoxLauncher {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dialog_box_launcher(element)
     }
 }
@@ -7451,7 +7451,7 @@ impl markup::Write for DialogBoxLauncher {
 }
 
 impl markup::Read for DocumentControls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::document_controls(element)
     }
 }
@@ -7464,7 +7464,7 @@ impl markup::Write for DocumentControls {
 }
 
 impl markup::Read for DropDownBackstageDropDown {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_backstage_drop_down(element)
     }
 }
@@ -7477,7 +7477,7 @@ impl markup::Write for DropDownBackstageDropDown {
 }
 
 impl markup::Read for DropDownDropDownRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drop_down_drop_down_regular(element)
     }
 }
@@ -7490,7 +7490,7 @@ impl markup::Write for DropDownDropDownRegular {
 }
 
 impl markup::Read for DynamicMenuDynamicMenu {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dynamic_menu_dynamic_menu(element)
     }
 }
@@ -7503,7 +7503,7 @@ impl markup::Write for DynamicMenuDynamicMenu {
 }
 
 impl markup::Read for DynamicMenuDynamicMenuRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::dynamic_menu_dynamic_menu_regular(element)
     }
 }
@@ -7516,7 +7516,7 @@ impl markup::Write for DynamicMenuDynamicMenuRegular {
 }
 
 impl markup::Read for EditBoxBackstageEditBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::edit_box_backstage_edit_box(element)
     }
 }
@@ -7529,7 +7529,7 @@ impl markup::Write for EditBoxBackstageEditBox {
 }
 
 impl markup::Read for EditBoxEditBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::edit_box_edit_box(element)
     }
 }
@@ -7606,7 +7606,7 @@ impl Expand {
 }
 
 impl markup::Read for FirstColumn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::first_column(element)
     }
 }
@@ -7619,7 +7619,7 @@ impl markup::Write for FirstColumn {
 }
 
 impl markup::Read for GalleryGallery {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gallery_gallery(element)
     }
 }
@@ -7632,7 +7632,7 @@ impl markup::Write for GalleryGallery {
 }
 
 impl markup::Read for GalleryGalleryRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::gallery_gallery_regular(element)
     }
 }
@@ -7698,7 +7698,7 @@ impl GalleryShowInRibbon {
 }
 
 impl markup::Read for GroupBackstageGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_backstage_group(element)
     }
 }
@@ -7711,7 +7711,7 @@ impl markup::Write for GroupBackstageGroup {
 }
 
 impl markup::Read for GroupBox {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_box(element)
     }
 }
@@ -7724,11 +7724,11 @@ impl markup::Write for GroupBox {
 }
 
 impl markup::Read for GroupContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "box")) => Self::BoxBox(markup::read(element)),
             Some((NS_MSO14, "button")) => Self::ButtonButton(markup::read(element)),
@@ -7749,7 +7749,7 @@ impl markup::Read for GroupContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButton(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7825,11 +7825,11 @@ impl TryFrom<GroupContent> for BoxContent {
 }
 
 impl markup::Read for GroupControlsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonBackstageGroupButton(markup::read(element)),
             Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageCheckBox(markup::read(element)),
@@ -7844,7 +7844,7 @@ impl markup::Read for GroupControlsContent {
             }
             Some((NS_MSO14, "layoutContainer")) => Self::LayoutContainer(markup::read(element)),
             Some((NS_MSO14, "radioGroup")) => Self::RadioGroup(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -7869,7 +7869,7 @@ impl markup::Write for GroupControlsContent {
 }
 
 impl markup::Read for GroupGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_group(element)
     }
 }
@@ -7882,7 +7882,7 @@ impl markup::Write for GroupGroup {
 }
 
 impl markup::Read for Hyperlink {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::hyperlink(element)
     }
 }
@@ -7895,7 +7895,7 @@ impl markup::Write for Hyperlink {
 }
 
 impl markup::Read for ImageControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::image_control(element)
     }
 }
@@ -7908,7 +7908,7 @@ impl markup::Write for ImageControl {
 }
 
 impl markup::Read for ItemBackstageItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::item_backstage_item(element)
     }
 }
@@ -7921,7 +7921,7 @@ impl markup::Write for ItemBackstageItem {
 }
 
 impl markup::Read for ItemItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::item_item(element)
     }
 }
@@ -7983,7 +7983,7 @@ impl ItemSize {
 }
 
 impl markup::Read for LabelControlBackstageLabelControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::label_control_backstage_label_control(element)
     }
 }
@@ -7996,7 +7996,7 @@ impl markup::Write for LabelControlBackstageLabelControl {
 }
 
 impl markup::Read for LabelControlLabelControl {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::label_control_label_control(element)
     }
 }
@@ -8062,7 +8062,7 @@ impl LayoutChildren {
 }
 
 impl markup::Read for LayoutContainer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::layout_container(element)
     }
 }
@@ -8075,7 +8075,7 @@ impl markup::Write for LayoutContainer {
 }
 
 impl markup::Read for MenuBackstagePrimaryMenu {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_backstage_primary_menu(element)
     }
 }
@@ -8088,7 +8088,7 @@ impl markup::Write for MenuBackstagePrimaryMenu {
 }
 
 impl markup::Read for MenuBackstageSubMenu {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_backstage_sub_menu(element)
     }
 }
@@ -8101,11 +8101,11 @@ impl markup::Write for MenuBackstageSubMenu {
 }
 
 impl markup::Read for MenuContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(markup::read(element)),
             Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(markup::read(element)),
@@ -8126,7 +8126,7 @@ impl markup::Read for MenuContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButtonRegular(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8149,7 +8149,7 @@ impl markup::Write for MenuContent {
 }
 
 impl markup::Read for MenuGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_group(element)
     }
 }
@@ -8162,7 +8162,7 @@ impl markup::Write for MenuGroup {
 }
 
 impl markup::Read for MenuMenu {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_menu(element)
     }
 }
@@ -8175,7 +8175,7 @@ impl markup::Write for MenuMenu {
 }
 
 impl markup::Read for MenuMenuRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_menu_regular(element)
     }
 }
@@ -8188,7 +8188,7 @@ impl markup::Write for MenuMenuRegular {
 }
 
 impl markup::Read for MenuMenuRoot {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_menu_root(element)
     }
 }
@@ -8201,7 +8201,7 @@ impl markup::Write for MenuMenuRoot {
 }
 
 impl markup::Read for MenuMenuWithTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_menu_with_title(element)
     }
 }
@@ -8214,7 +8214,7 @@ impl markup::Write for MenuMenuWithTitle {
 }
 
 impl markup::Read for MenuSeparatorMenuSeparator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_separator_menu_separator(element)
     }
 }
@@ -8227,7 +8227,7 @@ impl markup::Write for MenuSeparatorMenuSeparator {
 }
 
 impl markup::Read for MenuSeparatorMenuSeparatorNoTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::menu_separator_menu_separator_no_title(element)
     }
 }
@@ -8240,11 +8240,11 @@ impl markup::Write for MenuSeparatorMenuSeparatorNoTitle {
 }
 
 impl markup::Read for MenuWithTitleContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(markup::read(element)),
             Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(markup::read(element)),
@@ -8265,7 +8265,7 @@ impl markup::Read for MenuWithTitleContent {
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonToggleButtonRegular(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8288,7 +8288,7 @@ impl markup::Write for MenuWithTitleContent {
 }
 
 impl markup::Read for PrimaryItem {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::primary_item(element)
     }
 }
@@ -8307,15 +8307,15 @@ impl Default for PrimaryItemContent {
 }
 
 impl markup::Read for PrimaryItemContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonBackstageRegularButton(markup::read(element)),
             Some((NS_MSO14, "menu")) => Self::MenuBackstagePrimaryMenu(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8331,7 +8331,7 @@ impl markup::Write for PrimaryItemContent {
 }
 
 impl markup::Read for Qat {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::qat(element)
     }
 }
@@ -8344,16 +8344,16 @@ impl markup::Write for Qat {
 }
 
 impl markup::Read for QuickAccessToolbarItemsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(markup::read(element)),
             Some((NS_MSO14, "control")) => Self::ControlControlCloneQat(markup::read(element)),
             Some((NS_MSO14, "separator")) => Self::Separator(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8370,7 +8370,7 @@ impl markup::Write for QuickAccessToolbarItemsContent {
 }
 
 impl markup::Read for RadioButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::radio_button(element)
     }
 }
@@ -8383,7 +8383,7 @@ impl markup::Write for RadioButton {
 }
 
 impl markup::Read for RadioGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::radio_group(element)
     }
 }
@@ -8396,7 +8396,7 @@ impl markup::Write for RadioGroup {
 }
 
 impl markup::Read for Ribbon {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ribbon(element)
     }
 }
@@ -8409,16 +8409,16 @@ impl markup::Write for Ribbon {
 }
 
 impl markup::Read for RibbonContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(markup::read(element)),
             Some((NS_MSO14, "qat")) => Self::Qat(markup::read(element)),
             Some((NS_MSO14, "tabs")) => Self::Tabs(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8435,7 +8435,7 @@ impl markup::Write for RibbonContent {
 }
 
 impl markup::Read for SecondColumn {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::second_column(element)
     }
 }
@@ -8448,7 +8448,7 @@ impl markup::Write for SecondColumn {
 }
 
 impl markup::Read for Separator {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::separator(element)
     }
 }
@@ -8461,7 +8461,7 @@ impl markup::Write for Separator {
 }
 
 impl markup::Read for SharedControls {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shared_controls(element)
     }
 }
@@ -8474,15 +8474,15 @@ impl markup::Write for SharedControls {
 }
 
 impl markup::Read for SimpleGroupsContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(markup::read(element)),
             Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8547,17 +8547,17 @@ impl Size {
 }
 
 impl markup::Read for SplitButtonContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_MSO14, "button")) => Self::ButtonVisibleButton(markup::read(element)),
             Some((NS_MSO14, "toggleButton")) => {
                 Self::ToggleButtonVisibleToggleButton(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -8573,7 +8573,7 @@ impl markup::Write for SplitButtonContent {
 }
 
 impl markup::Read for SplitButtonSplitButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::split_button_split_button(element)
     }
 }
@@ -8586,7 +8586,7 @@ impl markup::Write for SplitButtonSplitButton {
 }
 
 impl markup::Read for SplitButtonSplitButtonRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::split_button_split_button_regular(element)
     }
 }
@@ -8599,7 +8599,7 @@ impl markup::Write for SplitButtonSplitButtonRegular {
 }
 
 impl markup::Read for SplitButtonSplitButtonWithTitle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::split_button_split_button_with_title(element)
     }
 }
@@ -8716,7 +8716,7 @@ impl Style2 {
 }
 
 impl markup::Read for TabBackstageTab {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tab_backstage_tab(element)
     }
 }
@@ -8729,7 +8729,7 @@ impl markup::Write for TabBackstageTab {
 }
 
 impl markup::Read for TabSet {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tab_set(element)
     }
 }
@@ -8742,7 +8742,7 @@ impl markup::Write for TabSet {
 }
 
 impl markup::Read for TabTab {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tab_tab(element)
     }
 }
@@ -8755,7 +8755,7 @@ impl markup::Write for TabTab {
 }
 
 impl markup::Read for Tabs {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tabs(element)
     }
 }
@@ -8768,7 +8768,7 @@ impl markup::Write for Tabs {
 }
 
 impl markup::Read for TaskFormGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task_form_group(element)
     }
 }
@@ -8781,7 +8781,7 @@ impl markup::Write for TaskFormGroup {
 }
 
 impl markup::Read for TaskGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task_group(element)
     }
 }
@@ -8859,7 +8859,7 @@ impl TaskSizes {
 }
 
 impl markup::Read for TaskTaskFormGroupTask {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task_task_form_group_task(element)
     }
 }
@@ -8872,7 +8872,7 @@ impl markup::Write for TaskTaskFormGroupTask {
 }
 
 impl markup::Read for TaskTaskGroupTask {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::task_task_group_task(element)
     }
 }
@@ -8885,7 +8885,7 @@ impl markup::Write for TaskTaskGroupTask {
 }
 
 impl markup::Read for ToggleButtonBackstageMenuToggleButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::toggle_button_backstage_menu_toggle_button(element)
     }
 }
@@ -8898,7 +8898,7 @@ impl markup::Write for ToggleButtonBackstageMenuToggleButton {
 }
 
 impl markup::Read for ToggleButtonToggleButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::toggle_button_toggle_button(element)
     }
 }
@@ -8911,7 +8911,7 @@ impl markup::Write for ToggleButtonToggleButton {
 }
 
 impl markup::Read for ToggleButtonToggleButtonRegular {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::toggle_button_toggle_button_regular(element)
     }
 }
@@ -8924,7 +8924,7 @@ impl markup::Write for ToggleButtonToggleButtonRegular {
 }
 
 impl markup::Read for ToggleButtonVisibleToggleButton {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::toggle_button_visible_toggle_button(element)
     }
 }
@@ -8937,7 +8937,7 @@ impl markup::Write for ToggleButtonVisibleToggleButton {
 }
 
 impl markup::Read for TopItems {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_items(element)
     }
 }

@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -516,7 +516,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for CNvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_content_part_pr(element)
     }
 }
@@ -529,7 +529,7 @@ impl markup::Write for CNvContentPartPr {
 }
 
 impl markup::Read for CNvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::c_nv_pr(element)
     }
 }
@@ -542,7 +542,7 @@ impl markup::Write for CNvPr {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -555,7 +555,7 @@ impl markup::Write for ContentPart {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -568,7 +568,7 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for NvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_content_part_pr(element)
     }
 }
@@ -581,7 +581,7 @@ impl markup::Write for NvContentPartPr {
 }
 
 impl markup::Read for NvPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_pr(element)
     }
 }
@@ -594,7 +594,7 @@ impl markup::Write for NvPr {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

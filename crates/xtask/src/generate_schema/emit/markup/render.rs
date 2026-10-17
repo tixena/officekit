@@ -24,6 +24,17 @@ pub const BODY_LINES: usize = 90;
 /// The enum arms one function holds before its match is split.
 pub const CHUNK: usize = 80;
 
+/// The names a module takes from `officekit_xml`, each by a text only its
+/// items' use of that name writes.
+const XML_NAMES: [(&str, &str); 6] = [
+    ("-> Element {", "officekit_xml::element::Element"),
+    ("Node::Element(", "officekit_xml::element::Node"),
+    ("Other(Node)", "officekit_xml::element::Node"),
+    ("element: &Element", "officekit_xml::element::Element"),
+    ("parse::list(", "officekit_xml::values::parse"),
+    ("scope: &mut Scope", "officekit_xml::write::Scope"),
+];
+
 /// The names one module's items take.
 pub struct Names<'catalog> {
     pub catalog: &'catalog Catalog,
@@ -237,8 +248,9 @@ impl Pair<'_> {
 }
 
 /// The imports a module's items need: a module (`crate::markup`), a trait
-/// for its methods (`crate::markup::Write as _`), or one name, which joins
-/// the other names of its module in one `use`.
+/// for its methods (`crate::markup::Write as _`), or one name
+/// (`officekit_xml::element::Element`), which joins the other names of its
+/// module in one `use`.
 #[derive(Default)]
 pub struct Uses {
     paths: BTreeSet<&'static str>,
@@ -250,9 +262,9 @@ impl Uses {
         self.paths.insert(path);
     }
 
-    /// The imports of a file whose items are `body`: the modules it names,
-    /// and the `Write` trait when it calls `write_into` outside an `impl`
-    /// of that trait.
+    /// The imports of a file whose items are `body`: the modules and the
+    /// names of `officekit_xml` it uses, and the `Write` trait when it calls
+    /// `write_into` outside an `impl` of that trait.
     #[must_use]
     pub fn of(body: &str) -> String {
         let mut uses = Self::default();
@@ -260,8 +272,8 @@ impl Uses {
         uses.text()
     }
 
-    /// Import the modules `items` names, and the `Write` trait when
-    /// `helpers`, free functions, call `write_into`.
+    /// Import the modules and the names of `officekit_xml` `items` uses, and
+    /// the `Write` trait when `helpers`, free functions, call `write_into`.
     fn scan(&mut self, items: &str, helpers: &str) {
         if items.contains("markup::") {
             self.add("crate::markup");
@@ -269,8 +281,10 @@ impl Uses {
         if helpers.contains(".write_into(") {
             self.add("crate::markup::Write as _");
         }
-        if items.contains("xml::") {
-            self.add("crate::xml");
+        for (text, path) in XML_NAMES {
+            if items.contains(text) {
+                self.add(path);
+            }
         }
     }
 
@@ -528,7 +542,7 @@ fn module_text(
     parts.items.sort_by(|left, right| left.0.cmp(&right.0));
     if traversal::has_nodes(names) {
         uses.add("crate::stream::transform::Written");
-        uses.add("crate::stream::writer::PartWriter");
+        uses.add("officekit_xml::stream::writer::PartWriter");
         uses.add("std::io");
     }
     let mut rest = parts.statics.clone();
@@ -538,7 +552,7 @@ fn module_text(
     rest.push_str(&parts.helpers);
     uses.scan(&rest, &parts.helpers);
     if parts.namespaces.iter().any(Option::is_some) {
-        uses.add("crate::xml::name::NamespaceId");
+        uses.add("officekit_xml::name::NamespaceId");
     }
     let use_text = uses.text();
     if !use_text.is_empty() {
@@ -824,7 +838,7 @@ fn enum_text(names: &Names<'_>, found: &EnumDef) -> String {
             (variant.clone(), shown)
         })
         .collect();
-    variants.push(("Other".to_owned(), "xml::element::Node".to_owned()));
+    variants.push(("Other".to_owned(), "Node".to_owned()));
     variants.sort();
     let mut out = doc(0, &found.doc);
     out.push_str("#[derive(Clone, Debug, Eq, PartialEq)]\n#[non_exhaustive]\n");
@@ -851,7 +865,7 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         .unwrap_or_default();
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header("markup::Read", &node.name));
-    out.push_str("    fn read(element: &xml::element::Element) -> Self {\n");
+    out.push_str("    fn read(element: &Element) -> Self {\n");
     line(
         "        ",
         &Expr::call(&format!("read::{function}"), vec![Expr::atom("element")]),
@@ -941,13 +955,13 @@ fn enum_read(
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header("markup::Read", &found.name));
     out.push_str(
-        "    fn other(node: xml::element::Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
+        "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
     );
-    out.push_str("    fn read(element: &xml::element::Element) -> Self {\n");
+    out.push_str("    fn read(element: &Element) -> Self {\n");
     let other = Expr::call(
         "Self::Other",
         vec![Expr::call(
-            "xml::element::Node::Element",
+            "Node::Element",
             vec![Expr::atom("element.clone()")],
         )],
     );
@@ -989,7 +1003,7 @@ fn enum_read(
                 layout::signature(
                     0,
                     &format!("fn {helper}"),
-                    &["element: &xml::element::Element".to_owned()],
+                    &["element: &Element".to_owned()],
                     &format!("Option<{}>", found.name)
                 )
             );

@@ -17,16 +17,16 @@ mod properties;
 use alloc::collections::BTreeSet;
 use core::mem;
 
+use officekit_xml::element::{Attribute, Element, Node};
+use officekit_xml::mc::with_declarations;
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::write::{Layout, WriteOptions, is_whitespace_text, preserves_space};
 use properties::{Counted, DRAWING, SPREADSHEET, WORDPROCESSING};
 
 use crate::error::PackageError;
 use crate::packaging::package::{OpenOptions, Package};
 use crate::packaging::part_name::PartName;
-use crate::xml::element::{Attribute, Element, Node};
-use crate::xml::mc::with_declarations;
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, QName};
-use crate::xml::write::{Layout, WriteOptions, is_whitespace_text, preserves_space};
 
 #[cfg(test)]
 mod tests;
@@ -53,10 +53,7 @@ const PACKAGE_CONTENT_TYPES: [&str; 14] = [
 
 /// How a compacted part is written back: compact, every namespace
 /// declaration kept.
-const STORE: WriteOptions = WriteOptions {
-    layout: Layout::Compact,
-    namespace_cleanup: false,
-};
+const STORE: WriteOptions = WriteOptions::new(Layout::Compact, false);
 
 /// The namespace the `xml` prefix is bound to.
 const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
@@ -613,14 +610,14 @@ fn is_xml(content_type: &str) -> bool {
 
 /// An `xml:space` attribute.
 fn space_attribute(value: &str) -> Attribute {
-    Attribute {
-        name: QName {
-            local: "space".to_owned(),
-            namespace: Namespace::from_uri(XML_NAMESPACE),
-            prefix: "xml".to_owned(),
-        },
-        value: value.to_owned(),
-    }
+    Attribute::new(
+        QName::new(
+            "xml".to_owned(),
+            "space".to_owned(),
+            Namespace::from_uri(XML_NAMESPACE),
+        ),
+        value.to_owned(),
+    )
 }
 
 /// The text of a text element as it renders, when it holds only text and no

@@ -18,9 +18,9 @@ use os_shim::mock::MemorySystem;
 use regex::Regex;
 use serde_json::{Value, json};
 
-use crate::xml::element::XmlError;
-use crate::xml::parse::parse;
-use crate::xml::write::{Layout, WriteOptions};
+use officekit_xml::element::XmlError;
+use officekit_xml::parse::parse;
+use officekit_xml::write::{Layout, WriteOptions};
 
 #[cfg(test)]
 mod tests;
@@ -303,10 +303,7 @@ fn relayout(bytes: &[u8], layout: Layout, path: &Path) -> Result<Vec<u8>, Folder
         error,
         path: path.to_path_buf(),
     })?;
-    Ok(document.to_xml(WriteOptions {
-        layout,
-        namespace_cleanup: false,
-    }))
+    Ok(document.to_xml(WriteOptions::new(layout, false)))
 }
 
 /// `bytes` laid out as `layout`, or as they are when there is none.

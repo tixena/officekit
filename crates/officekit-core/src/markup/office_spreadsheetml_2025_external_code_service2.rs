@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_XLECS2: Option<NamespaceId> = Some(134);
@@ -289,7 +289,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for ExternalCodeServiceImageAsInput {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::external_code_service_image_as_input(element)
     }
 }

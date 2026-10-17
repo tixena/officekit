@@ -1,6 +1,7 @@
+use officekit_xml::name::OfficeVersion;
+
 use super::{failures, has_value};
 use crate::validation::schema::types::{Bounds, Check, StringKind, ValueClass};
-use crate::xml::name::OfficeVersion;
 
 const NO_BOUNDS: Bounds = Bounds {
     max_exclusive: None,

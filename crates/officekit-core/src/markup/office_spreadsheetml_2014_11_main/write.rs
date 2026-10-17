@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `CalculatedTimeColumn` as its element, `x16:calculatedTimeColumn`.
 #[must_use]
-pub fn calculated_time_column(
-    node: &super::CalculatedTimeColumn,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn calculated_time_column(node: &super::CalculatedTimeColumn, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::CALCULATED_TIME_COLUMN_SHAPE, &node.unknown);
     writer.attribute(0, &node.column_name);
@@ -232,10 +230,7 @@ pub fn calculated_time_column(
 
 /// Write a `ModelTimeGrouping` as its element, `x16:modelTimeGrouping`.
 #[must_use]
-pub fn model_time_grouping(
-    node: &super::ModelTimeGrouping,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn model_time_grouping(node: &super::ModelTimeGrouping, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MODEL_TIME_GROUPING_SHAPE, &node.unknown);
     writer.attribute(0, &node.table_name);
     writer.attribute(1, &node.column_name);
@@ -246,10 +241,7 @@ pub fn model_time_grouping(
 
 /// Write a `ModelTimeGroupings` as its element, `x16:modelTimeGroupings`.
 #[must_use]
-pub fn model_time_groupings(
-    node: &super::ModelTimeGroupings,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn model_time_groupings(node: &super::ModelTimeGroupings, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::MODEL_TIME_GROUPINGS_SHAPE, &node.unknown);
     writer.child(&node.model_time_grouping);
     writer.finish()

@@ -221,10 +221,10 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::{NamespaceId, OfficeVersion};
-use crate::xml::values::ValueError;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::ValueError;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -811,7 +811,7 @@ pub struct AbsolutePositionOffsetValue(pub String);
 #[non_exhaustive]
 pub enum AnchorContent {
     NoTextWrapping(NoTextWrapping),
-    Other(xml::element::Node),
+    Other(Node),
     SquareWrapping(SquareWrapping),
     ThroughWrapping(ThroughWrapping),
     TightWrapping(TightWrapping),
@@ -1824,7 +1824,7 @@ pub struct DistanceFromText(pub String);
 pub enum DrawingCanvasContent {
     ContentPart(ContentPart),
     GraphicalObjectContainer(GraphicalObjectContainer),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(super::picture::Picture),
     WordprocessingMLShape(WordprocessingMLShape),
     WordprocessingMLShapeGroup(WordprocessingMLShapeGroup),
@@ -1896,7 +1896,7 @@ pub enum GroupShapeContent {
     ContentPart(ContentPart),
     GraphicalObjectContainer(GraphicalObjectContainer),
     GroupShape(GroupShape),
-    Other(xml::element::Node),
+    Other(Node),
     Picture(super::picture::Picture),
     WordprocessingMLShape(WordprocessingMLShape),
 }
@@ -1929,7 +1929,7 @@ pub struct HorizontalPositioning {
 #[non_exhaustive]
 pub enum HorizontalPositioningContent {
     AbsolutePositionOffset(AbsolutePositionOffset),
-    Other(xml::element::Node),
+    Other(Node),
     PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
     RelativeHorizontalAlignment(RelativeHorizontalAlignment),
 }
@@ -2115,7 +2115,7 @@ pub struct RichTextBoxContentContainer {
 pub enum ShapeNonVisualPropertiesContent {
     NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingProperties),
     NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShape),
-    Other(xml::element::Node),
+    Other(Node),
 }
 
 /// 20.4.2.35 `spPr` (Shape Properties): the tag `wp:spPr`, schema type `CT_ShapeProperties`.
@@ -2149,7 +2149,7 @@ pub struct ShapeStyle {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShapeTextContent {
-    Other(xml::element::Node),
+    Other(Node),
     TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbx),
     TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbx),
 }
@@ -2275,7 +2275,7 @@ pub struct VerticalPositioning {
 #[non_exhaustive]
 pub enum VerticalPositioningContent {
     AbsolutePositionOffset(AbsolutePositionOffset),
-    Other(xml::element::Node),
+    Other(Node),
     PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
     RelativeVerticalAlignment(RelativeVerticalAlignment),
 }
@@ -2667,7 +2667,7 @@ pub struct Xfrm {
 }
 
 impl markup::Read for AbsolutePositionOffset {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::absolute_position_offset(element)
     }
 }
@@ -2709,18 +2709,18 @@ impl Default for AnchorContent {
 }
 
 impl markup::Read for AnchorContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "wrapNone")) => Self::NoTextWrapping(markup::read(element)),
             Some((NS_WP, "wrapSquare")) => Self::SquareWrapping(markup::read(element)),
             Some((NS_WP, "wrapThrough")) => Self::ThroughWrapping(markup::read(element)),
             Some((NS_WP, "wrapTight")) => Self::TightWrapping(markup::read(element)),
             Some((NS_WP, "wrapTopAndBottom")) => Self::TopAndBottomWrapping(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2739,7 +2739,7 @@ impl markup::Write for AnchorContent {
 }
 
 impl markup::Read for AnchorForFloatingDrawingMLObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::anchor_for_floating_drawing_ml_object(element)
     }
 }
@@ -2752,7 +2752,7 @@ impl markup::Write for AnchorForFloatingDrawingMLObject {
 }
 
 impl markup::Read for BackgroundFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_formatting(element)
     }
 }
@@ -2765,7 +2765,7 @@ impl markup::Write for BackgroundFormatting {
 }
 
 impl markup::Read for BodyProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::body_properties(element)
     }
 }
@@ -2778,7 +2778,7 @@ impl markup::Write for BodyProperties {
 }
 
 impl markup::Read for CommonDrawingMLNonVisualProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::common_drawing_ml_non_visual_properties(element)
     }
 }
@@ -2791,7 +2791,7 @@ impl markup::Write for CommonDrawingMLNonVisualProperties {
 }
 
 impl markup::Read for ContentPart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::content_part(element)
     }
 }
@@ -2827,18 +2827,18 @@ impl DistanceFromText {
 }
 
 impl markup::Read for DrawingCanvasContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "contentPart")) => Self::ContentPart(markup::read(element)),
             Some((NS_WP, "graphicFrame")) => Self::GraphicalObjectContainer(markup::read(element)),
             Some((NS_PIC, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_WP, "wsp")) => Self::WordprocessingMLShape(markup::read(element)),
             Some((NS_WP, "wgp")) => Self::WordprocessingMLShapeGroup(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2857,7 +2857,7 @@ impl markup::Write for DrawingCanvasContent {
 }
 
 impl markup::Read for DrawingObjectNonVisualProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_object_non_visual_properties(element)
     }
 }
@@ -2870,7 +2870,7 @@ impl markup::Write for DrawingObjectNonVisualProperties {
 }
 
 impl markup::Read for DrawingObjectSize {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::drawing_object_size(element)
     }
 }
@@ -2883,7 +2883,7 @@ impl markup::Write for DrawingObjectSize {
 }
 
 impl markup::Read for ExtensionList {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::extension_list(element)
     }
 }
@@ -2896,7 +2896,7 @@ impl markup::Write for ExtensionList {
 }
 
 impl markup::Read for GraphicalObjectContainer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::graphical_object_container(element)
     }
 }
@@ -2909,7 +2909,7 @@ impl markup::Write for GraphicalObjectContainer {
 }
 
 impl markup::Read for GroupShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape(element)
     }
 }
@@ -2922,18 +2922,18 @@ impl markup::Write for GroupShape {
 }
 
 impl markup::Read for GroupShapeContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "contentPart")) => Self::ContentPart(markup::read(element)),
             Some((NS_WP, "graphicFrame")) => Self::GraphicalObjectContainer(markup::read(element)),
             Some((NS_WP, "grpSp")) => Self::GroupShape(markup::read(element)),
             Some((NS_PIC, "pic")) => Self::Picture(markup::read(element)),
             Some((NS_WP, "wsp")) => Self::WordprocessingMLShape(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -2952,7 +2952,7 @@ impl markup::Write for GroupShapeContent {
 }
 
 impl markup::Read for GroupShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::group_shape_properties(element)
     }
 }
@@ -2965,7 +2965,7 @@ impl markup::Write for GroupShapeProperties {
 }
 
 impl markup::Read for HorizontalPositioning {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::horizontal_positioning(element)
     }
 }
@@ -2984,16 +2984,16 @@ impl Default for HorizontalPositioningContent {
 }
 
 impl markup::Read for HorizontalPositioningContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(markup::read(element)),
             Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(markup::read(element)),
             Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3069,7 +3069,7 @@ impl HorizontalRelativePositioning {
 }
 
 impl markup::Read for InlineDrawingMLObject {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::inline_drawing_ml_object(element)
     }
 }
@@ -3082,7 +3082,7 @@ impl markup::Write for InlineDrawingMLObject {
 }
 
 impl markup::Read for NoTextWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::no_text_wrapping(element)
     }
 }
@@ -3095,7 +3095,7 @@ impl markup::Write for NoTextWrapping {
 }
 
 impl markup::Read for NonVisualConnectorShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_connector_shape_drawing_properties(element)
     }
 }
@@ -3108,7 +3108,7 @@ impl markup::Write for NonVisualConnectorShapeDrawingProperties {
 }
 
 impl markup::Read for NonVisualContentPartDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_content_part_drawing_properties(element)
     }
 }
@@ -3121,7 +3121,7 @@ impl markup::Write for NonVisualContentPartDrawingProperties {
 }
 
 impl markup::Read for NonVisualDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties(element)
     }
 }
@@ -3134,7 +3134,7 @@ impl markup::Write for NonVisualDrawingProperties {
 }
 
 impl markup::Read for NonVisualDrawingPropertiesForAShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_drawing_properties_for_a_shape(element)
     }
 }
@@ -3147,7 +3147,7 @@ impl markup::Write for NonVisualDrawingPropertiesForAShape {
 }
 
 impl markup::Read for NonVisualGraphicFrameDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_graphic_frame_drawing_properties(element)
     }
 }
@@ -3160,7 +3160,7 @@ impl markup::Write for NonVisualGraphicFrameDrawingProperties {
 }
 
 impl markup::Read for NonVisualGroupShapeDrawingProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::non_visual_group_shape_drawing_properties(element)
     }
 }
@@ -3173,7 +3173,7 @@ impl markup::Write for NonVisualGroupShapeDrawingProperties {
 }
 
 impl markup::Read for NvContentPartPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::nv_content_part_pr(element)
     }
 }
@@ -3186,7 +3186,7 @@ impl markup::Write for NvContentPartPr {
 }
 
 impl markup::Read for ObjectExtentsIncludingEffects {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::object_extents_including_effects(element)
     }
 }
@@ -3199,7 +3199,7 @@ impl markup::Write for ObjectExtentsIncludingEffects {
 }
 
 impl markup::Read for RelativeHorizontalAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::relative_horizontal_alignment(element)
     }
 }
@@ -3268,7 +3268,7 @@ impl RelativeHorizontalAlignmentPositions {
 }
 
 impl markup::Read for RelativeVerticalAlignment {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::relative_vertical_alignment(element)
     }
 }
@@ -3281,7 +3281,7 @@ impl markup::Write for RelativeVerticalAlignment {
 }
 
 impl markup::Read for RichTextBoxContentContainer {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::rich_text_box_content_container(element)
     }
 }
@@ -3302,11 +3302,11 @@ impl Default for ShapeNonVisualPropertiesContent {
 }
 
 impl markup::Read for ShapeNonVisualPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "cNvCnPr")) => {
                 Self::NonVisualConnectorShapeDrawingProperties(markup::read(element))
@@ -3314,7 +3314,7 @@ impl markup::Read for ShapeNonVisualPropertiesContent {
             Some((NS_WP, "cNvSpPr")) => {
                 Self::NonVisualDrawingPropertiesForAShape(markup::read(element))
             }
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3330,7 +3330,7 @@ impl markup::Write for ShapeNonVisualPropertiesContent {
 }
 
 impl markup::Read for ShapeProperties {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_properties(element)
     }
 }
@@ -3343,7 +3343,7 @@ impl markup::Write for ShapeProperties {
 }
 
 impl markup::Read for ShapeStyle {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::shape_style(element)
     }
 }
@@ -3356,17 +3356,17 @@ impl markup::Write for ShapeStyle {
 }
 
 impl markup::Read for ShapeTextContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "linkedTxbx")) => {
                 Self::TextualContentsOfShapeLinkedTxbx(markup::read(element))
             }
             Some((NS_WP, "txbx")) => Self::TextualContentsOfShapeTxbx(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3382,7 +3382,7 @@ impl markup::Write for ShapeTextContent {
 }
 
 impl markup::Read for SimplePositioningCoordinates {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::simple_positioning_coordinates(element)
     }
 }
@@ -3395,7 +3395,7 @@ impl markup::Write for SimplePositioningCoordinates {
 }
 
 impl markup::Read for SquareWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::square_wrapping(element)
     }
 }
@@ -3459,7 +3459,7 @@ impl TextWrappingLocation {
 }
 
 impl markup::Read for TextualContentsOfShapeLinkedTxbx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::textual_contents_of_shape_linked_txbx(element)
     }
 }
@@ -3472,7 +3472,7 @@ impl markup::Write for TextualContentsOfShapeLinkedTxbx {
 }
 
 impl markup::Read for TextualContentsOfShapeTxbx {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::textual_contents_of_shape_txbx(element)
     }
 }
@@ -3485,7 +3485,7 @@ impl markup::Write for TextualContentsOfShapeTxbx {
 }
 
 impl markup::Read for ThroughWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::through_wrapping(element)
     }
 }
@@ -3498,7 +3498,7 @@ impl markup::Write for ThroughWrapping {
 }
 
 impl markup::Read for TightWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::tight_wrapping(element)
     }
 }
@@ -3511,7 +3511,7 @@ impl markup::Write for TightWrapping {
 }
 
 impl markup::Read for TopAndBottomWrapping {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::top_and_bottom_wrapping(element)
     }
 }
@@ -3580,7 +3580,7 @@ impl VerticalAlignmentDefinition {
 }
 
 impl markup::Read for VerticalPositioning {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::vertical_positioning(element)
     }
 }
@@ -3599,16 +3599,16 @@ impl Default for VerticalPositioningContent {
 }
 
 impl markup::Read for VerticalPositioningContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(markup::read(element)),
             Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(markup::read(element)),
             Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -3684,7 +3684,7 @@ impl VerticalRelativePositioning {
 }
 
 impl markup::Read for WholeE2OFormatting {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::whole_e2o_formatting(element)
     }
 }
@@ -3697,7 +3697,7 @@ impl markup::Write for WholeE2OFormatting {
 }
 
 impl markup::Read for WordprocessingMLDrawingCanvas {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wordprocessing_ml_drawing_canvas(element)
     }
 }
@@ -3710,7 +3710,7 @@ impl markup::Write for WordprocessingMLDrawingCanvas {
 }
 
 impl markup::Read for WordprocessingMLShape {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wordprocessing_ml_shape(element)
     }
 }
@@ -3723,7 +3723,7 @@ impl markup::Write for WordprocessingMLShape {
 }
 
 impl markup::Read for WordprocessingMLShapeGroup {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wordprocessing_ml_shape_group(element)
     }
 }
@@ -3736,7 +3736,7 @@ impl markup::Write for WordprocessingMLShapeGroup {
 }
 
 impl markup::Read for WrappingPolygon {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wrapping_polygon(element)
     }
 }
@@ -3749,7 +3749,7 @@ impl markup::Write for WrappingPolygon {
 }
 
 impl markup::Read for WrappingPolygonLineEndPosition {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wrapping_polygon_line_end_position(element)
     }
 }
@@ -3762,7 +3762,7 @@ impl markup::Write for WrappingPolygonLineEndPosition {
 }
 
 impl markup::Read for WrappingPolygonStart {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::wrapping_polygon_start(element)
     }
 }
@@ -3775,7 +3775,7 @@ impl markup::Write for WrappingPolygonStart {
 }
 
 impl markup::Read for Xfrm {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::xfrm(element)
     }
 }

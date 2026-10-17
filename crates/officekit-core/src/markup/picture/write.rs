@@ -213,14 +213,15 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `NonVisualDrawingProperties` as its element, `pic:cNvPr`.
 #[must_use]
 pub fn non_visual_drawing_properties(
     node: &super::NonVisualDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -241,8 +242,8 @@ pub fn non_visual_drawing_properties(
 #[must_use]
 pub fn non_visual_picture_drawing_properties(
     node: &super::NonVisualPictureDrawingProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -258,8 +259,8 @@ pub fn non_visual_picture_drawing_properties(
 #[must_use]
 pub fn non_visual_picture_properties(
     node: &super::NonVisualPictureProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
@@ -272,7 +273,7 @@ pub fn non_visual_picture_properties(
 
 /// Write a `Picture` as its element, `pic:pic`.
 #[must_use]
-pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
     writer.child(&node.non_visual_picture_properties);
     writer.child(&node.fill);
@@ -284,7 +285,7 @@ pub fn picture(node: &super::Picture, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `PictureFill` as its element, `pic:blipFill`.
 #[must_use]
-pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
@@ -296,10 +297,7 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut markup::Scope) -> xml
 
 /// Write a `ShapeProperties` as its element, `pic:spPr`.
 #[must_use]
-pub fn shape_properties(
-    node: &super::ShapeProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);

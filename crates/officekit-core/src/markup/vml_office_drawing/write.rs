@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Callout` as its element, `o:callout`.
 #[must_use]
-pub fn callout(node: &super::Callout, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn callout(node: &super::Callout, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CALLOUT_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.on);
@@ -239,7 +240,7 @@ pub fn callout(node: &super::Callout, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `Complex` as its element, `o:complex`.
 #[must_use]
-pub fn complex(node: &super::Complex, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn complex(node: &super::Complex, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMPLEX_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.finish()
@@ -247,10 +248,7 @@ pub fn complex(node: &super::Complex, scope: &mut markup::Scope) -> xml::element
 
 /// Write a `DiagramRelationship` as its element, `o:rel`.
 #[must_use]
-pub fn diagram_relationship(
-    node: &super::DiagramRelationship,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn diagram_relationship(node: &super::DiagramRelationship, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DIAGRAM_RELATIONSHIP_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.idsrc);
@@ -263,8 +261,8 @@ pub fn diagram_relationship(
 #[must_use]
 pub fn diagram_relationship_table(
     node: &super::DiagramRelationshipTable,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::DIAGRAM_RELATIONSHIP_TABLE_SHAPE,
@@ -277,10 +275,7 @@ pub fn diagram_relationship_table(
 
 /// Write a `DigitalSignatureLine` as its element, `o:signatureline`.
 #[must_use]
-pub fn digital_signature_line(
-    node: &super::DigitalSignatureLine,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn digital_signature_line(node: &super::DigitalSignatureLine, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DIGITAL_SIGNATURE_LINE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
@@ -303,8 +298,8 @@ pub fn digital_signature_line(
 #[must_use]
 pub fn embedded_object_alternate_image_request(
     node: &super::EmbeddedObjectAlternateImageRequest,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EMBEDDED_OBJECT_ALTERNATE_IMAGE_REQUEST_SHAPE,
@@ -318,8 +313,8 @@ pub fn embedded_object_alternate_image_request(
 #[must_use]
 pub fn embedded_object_cannot_be_refreshed(
     node: &super::EmbeddedObjectCannotBeRefreshed,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EMBEDDED_OBJECT_CANNOT_BE_REFRESHED_SHAPE,
@@ -331,10 +326,7 @@ pub fn embedded_object_cannot_be_refreshed(
 
 /// Write a `EmbeddedOLEObject` as its element, `o:OLEObject`.
 #[must_use]
-pub fn embedded_ole_object(
-    node: &super::EmbeddedOLEObject,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn embedded_ole_object(node: &super::EmbeddedOLEObject, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EMBEDDED_OLE_OBJECT_SHAPE, &node.unknown);
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.prog_id);
@@ -351,7 +343,7 @@ pub fn embedded_ole_object(
 
 /// Write a `Extrusion` as its element, `o:extrusion`.
 #[must_use]
-pub fn extrusion(node: &super::Extrusion, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn extrusion(node: &super::Extrusion, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXTRUSION_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.on);
@@ -391,7 +383,7 @@ pub fn extrusion(node: &super::Extrusion, scope: &mut markup::Scope) -> xml::ele
 
 /// Write a `Ink` as its element, `o:ink`.
 #[must_use]
-pub fn ink(node: &super::Ink, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ink(node: &super::Ink, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::INK_SHAPE, &node.unknown);
     writer.attribute(0, &node.i);
     writer.attribute(1, &node.annotation);
@@ -403,8 +395,8 @@ pub fn ink(node: &super::Ink, scope: &mut markup::Scope) -> xml::element::Elemen
 #[must_use]
 pub fn most_recently_used_colors(
     node: &super::MostRecentlyUsedColors,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::MOST_RECENTLY_USED_COLORS_SHAPE,
@@ -417,10 +409,7 @@ pub fn most_recently_used_colors(
 
 /// Write a `NewShapeDefaults` as its element, `o:shapedefaults`.
 #[must_use]
-pub fn new_shape_defaults(
-    node: &super::NewShapeDefaults,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn new_shape_defaults(node: &super::NewShapeDefaults, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::NEW_SHAPE_DEFAULTS_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.spidmax);
@@ -444,10 +433,7 @@ pub fn new_shape_defaults_content(
 
 /// Write a `RegroupEntry` as its element, `o:entry`.
 #[must_use]
-pub fn regroup_entry(
-    node: &super::RegroupEntry,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn regroup_entry(node: &super::RegroupEntry, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REGROUP_ENTRY_SHAPE, &node.unknown);
     writer.attribute(0, &node.new);
     writer.attribute(1, &node.old);
@@ -456,7 +442,7 @@ pub fn regroup_entry(
 
 /// Write a `Rule` as its element, `o:r`.
 #[must_use]
-pub fn rule(node: &super::Rule, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rule(node: &super::Rule, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RULE_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.r#type);
@@ -468,7 +454,7 @@ pub fn rule(node: &super::Rule, scope: &mut markup::Scope) -> xml::element::Elem
 
 /// Write a `RuleSet` as its element, `o:rules`.
 #[must_use]
-pub fn rule_set(node: &super::RuleSet, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn rule_set(node: &super::RuleSet, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::RULE_SET_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.child(&node.rule);
@@ -477,10 +463,7 @@ pub fn rule_set(node: &super::RuleSet, scope: &mut markup::Scope) -> xml::elemen
 
 /// Write a `ShapeClippingPath` as its element, `o:clippath`.
 #[must_use]
-pub fn shape_clipping_path(
-    node: &super::ShapeClippingPath,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_clipping_path(node: &super::ShapeClippingPath, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_CLIPPING_PATH_SHAPE, &node.unknown);
     writer.attribute(0, &node.v);
     writer.finish()
@@ -490,8 +473,8 @@ pub fn shape_clipping_path(
 #[must_use]
 pub fn shape_fill_extended_properties(
     node: &super::ShapeFillExtendedProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE,
@@ -504,10 +487,7 @@ pub fn shape_fill_extended_properties(
 
 /// Write a `ShapeGroupingHistory` as its element, `o:regrouptable`.
 #[must_use]
-pub fn shape_grouping_history(
-    node: &super::ShapeGroupingHistory,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_grouping_history(node: &super::ShapeGroupingHistory, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SHAPE_GROUPING_HISTORY_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
@@ -517,7 +497,7 @@ pub fn shape_grouping_history(
 
 /// Write a `ShapeIDMap` as its element, `o:idmap`.
 #[must_use]
-pub fn shape_id_map(node: &super::ShapeIDMap, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn shape_id_map(node: &super::ShapeIDMap, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_ID_MAP_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.data);
@@ -526,10 +506,7 @@ pub fn shape_id_map(node: &super::ShapeIDMap, scope: &mut markup::Scope) -> xml:
 
 /// Write a `ShapeLayoutProperties` as its element, `o:shapelayout`.
 #[must_use]
-pub fn shape_layout_properties(
-    node: &super::ShapeLayoutProperties,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_layout_properties(node: &super::ShapeLayoutProperties, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::SHAPE_LAYOUT_PROPERTIES_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
@@ -548,10 +525,7 @@ pub fn shape_layout_properties_content(
 
 /// Write a `ShapeProtections` as its element, `o:lock`.
 #[must_use]
-pub fn shape_protections(
-    node: &super::ShapeProtections,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_protections(node: &super::ShapeProtections, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_PROTECTIONS_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.position);
@@ -570,10 +544,7 @@ pub fn shape_protections(
 
 /// Write a `ShapeReference` as its element, `o:proxy`.
 #[must_use]
-pub fn shape_reference(
-    node: &super::ShapeReference,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn shape_reference(node: &super::ShapeReference, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SHAPE_REFERENCE_SHAPE, &node.unknown);
     writer.attribute(0, &node.start);
     writer.attribute(1, &node.end);
@@ -584,10 +555,7 @@ pub fn shape_reference(
 
 /// Write a `SkewTransform` as its element, `o:skew`.
 #[must_use]
-pub fn skew_transform(
-    node: &super::SkewTransform,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn skew_transform(node: &super::SkewTransform, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::SKEW_TRANSFORM_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.id);
@@ -602,8 +570,8 @@ pub fn skew_transform(
 #[must_use]
 pub fn storage_for_alternate_math_content(
     node: &super::StorageForAlternateMathContent,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE,
@@ -616,10 +584,7 @@ pub fn storage_for_alternate_math_content(
 
 /// Write a `TextBoxBottomStroke` as its element, `o:bottom`.
 #[must_use]
-pub fn text_box_bottom_stroke(
-    node: &super::TextBoxBottomStroke,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_box_bottom_stroke(node: &super::TextBoxBottomStroke, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::TEXT_BOX_BOTTOM_STROKE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
@@ -654,10 +619,7 @@ pub fn text_box_bottom_stroke(
 
 /// Write a `TextBoxInteriorStroke` as its element, `o:column`.
 #[must_use]
-pub fn text_box_interior_stroke(
-    node: &super::TextBoxInteriorStroke,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_box_interior_stroke(node: &super::TextBoxInteriorStroke, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::TEXT_BOX_INTERIOR_STROKE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
@@ -692,10 +654,7 @@ pub fn text_box_interior_stroke(
 
 /// Write a `TextBoxLeftStroke` as its element, `o:left`.
 #[must_use]
-pub fn text_box_left_stroke(
-    node: &super::TextBoxLeftStroke,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_box_left_stroke(node: &super::TextBoxLeftStroke, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_BOX_LEFT_STROKE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.on);
@@ -729,10 +688,7 @@ pub fn text_box_left_stroke(
 
 /// Write a `TextBoxRightStroke` as its element, `o:right`.
 #[must_use]
-pub fn text_box_right_stroke(
-    node: &super::TextBoxRightStroke,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_box_right_stroke(node: &super::TextBoxRightStroke, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_BOX_RIGHT_STROKE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.on);
@@ -766,10 +722,7 @@ pub fn text_box_right_stroke(
 
 /// Write a `TextBoxTopStroke` as its element, `o:top`.
 #[must_use]
-pub fn text_box_top_stroke(
-    node: &super::TextBoxTopStroke,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn text_box_top_stroke(node: &super::TextBoxTopStroke, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TEXT_BOX_TOP_STROKE_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.on);
@@ -803,10 +756,7 @@ pub fn text_box_top_stroke(
 
 /// Write a `UIDefaultColors` as its element, `o:colormenu`.
 #[must_use]
-pub fn ui_default_colors(
-    node: &super::UIDefaultColors,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ui_default_colors(node: &super::UIDefaultColors, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::UI_DEFAULT_COLORS_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.strokecolor);
@@ -818,7 +768,7 @@ pub fn ui_default_colors(
 
 /// Write a `VMLDiagram` as its element, `o:diagram`.
 #[must_use]
-pub fn vml_diagram(node: &super::VMLDiagram, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn vml_diagram(node: &super::VMLDiagram, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::VML_DIAGRAM_SHAPE, &node.unknown);
     writer.attribute(0, &node.ext);
     writer.attribute(1, &node.dgmstyle);
@@ -838,8 +788,8 @@ pub fn vml_diagram(node: &super::VMLDiagram, scope: &mut markup::Scope) -> xml::
 #[must_use]
 pub fn wordprocessing_ml_field_switches(
     node: &super::WordprocessingMLFieldSwitches,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE,

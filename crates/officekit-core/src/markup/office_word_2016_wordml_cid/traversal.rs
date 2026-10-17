@@ -217,7 +217,7 @@ use std::io;
 
 use crate::markup;
 use crate::stream::transform::{Unchanged, WriteThrough, Written};
-use crate::stream::writer::PartWriter;
+use officekit_xml::stream::writer::PartWriter;
 
 impl markup::Transform for super::CommentId {
     fn transform(&self, ctx: &mut dyn markup::Context) -> Self {

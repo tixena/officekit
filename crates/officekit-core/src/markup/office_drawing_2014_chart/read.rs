@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `c16:bubble3D` into a `Bubble3D`.
 #[must_use]
-pub fn bubble3d(element: &xml::element::Element) -> super::Bubble3D {
+pub fn bubble3d(element: &Element) -> super::Bubble3D {
     let mut node = super::Bubble3D::default();
     let mut reader = markup::Reader::new(element, &super::BUBBLE3D_SHAPE);
     for (index, field) in &mut reader {
@@ -231,9 +231,7 @@ pub fn bubble3d(element: &xml::element::Element) -> super::Bubble3D {
 
 /// Read `c16:categoryFilterException` into a `CategoryFilterException`.
 #[must_use]
-pub fn category_filter_exception(
-    element: &xml::element::Element,
-) -> super::CategoryFilterException {
+pub fn category_filter_exception(element: &Element) -> super::CategoryFilterException {
     let mut node = super::CategoryFilterException::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -254,9 +252,7 @@ pub fn category_filter_exception(
 
 /// Read `c16:categoryFilterExceptions` into a `CategoryFilterExceptions`.
 #[must_use]
-pub fn category_filter_exceptions(
-    element: &xml::element::Element,
-) -> super::CategoryFilterExceptions {
+pub fn category_filter_exceptions(element: &Element) -> super::CategoryFilterExceptions {
     let mut node = super::CategoryFilterExceptions::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_FILTER_EXCEPTIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +266,7 @@ pub fn category_filter_exceptions(
 
 /// Read `c16:dLbl` into a `DLbl`.
 #[must_use]
-pub fn d_lbl(element: &xml::element::Element) -> super::DLbl {
+pub fn d_lbl(element: &Element) -> super::DLbl {
     let mut node = super::DLbl::default();
     let mut reader = markup::Reader::new(element, &super::D_LBL_SHAPE);
     for (index, field) in &mut reader {
@@ -287,7 +283,7 @@ pub fn d_lbl(element: &xml::element::Element) -> super::DLbl {
 
 /// Read `c16:datapointuniqueidmap` into a `Datapointuniqueidmap`.
 #[must_use]
-pub fn datapointuniqueidmap(element: &xml::element::Element) -> super::Datapointuniqueidmap {
+pub fn datapointuniqueidmap(element: &Element) -> super::Datapointuniqueidmap {
     let mut node = super::Datapointuniqueidmap::default();
     let mut reader = markup::Reader::new(element, &super::DATAPOINTUNIQUEIDMAP_SHAPE);
     for (index, field) in &mut reader {
@@ -301,7 +297,7 @@ pub fn datapointuniqueidmap(element: &xml::element::Element) -> super::Datapoint
 
 /// Read `c16:explosion` into a `Explosion`.
 #[must_use]
-pub fn explosion(element: &xml::element::Element) -> super::Explosion {
+pub fn explosion(element: &Element) -> super::Explosion {
     let mut node = super::Explosion::default();
     let mut reader = markup::Reader::new(element, &super::EXPLOSION_SHAPE);
     for (index, field) in &mut reader {
@@ -316,7 +312,7 @@ pub fn explosion(element: &xml::element::Element) -> super::Explosion {
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheMultiLvlStrFilteredLiteralCache`.
 #[must_use]
 pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FilteredLitCacheMultiLvlStrFilteredLiteralCache {
     let mut node = super::FilteredLitCacheMultiLvlStrFilteredLiteralCache::default();
     let mut reader = markup::Reader::new(
@@ -335,7 +331,7 @@ pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheNumFilteredLiteralCache`.
 #[must_use]
 pub fn filtered_lit_cache_num_filtered_literal_cache(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FilteredLitCacheNumFilteredLiteralCache {
     let mut node = super::FilteredLitCacheNumFilteredLiteralCache::default();
     let mut reader = markup::Reader::new(
@@ -354,7 +350,7 @@ pub fn filtered_lit_cache_num_filtered_literal_cache(
 /// Read `c16:filteredLitCache` into a `FilteredLitCacheStrFilteredLiteralCache`.
 #[must_use]
 pub fn filtered_lit_cache_str_filtered_literal_cache(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::FilteredLitCacheStrFilteredLiteralCache {
     let mut node = super::FilteredLitCacheStrFilteredLiteralCache::default();
     let mut reader = markup::Reader::new(
@@ -372,7 +368,7 @@ pub fn filtered_lit_cache_str_filtered_literal_cache(
 
 /// Read `c16:invertIfNegative` into a `InvertIfNegative`.
 #[must_use]
-pub fn invert_if_negative(element: &xml::element::Element) -> super::InvertIfNegative {
+pub fn invert_if_negative(element: &Element) -> super::InvertIfNegative {
     let mut node = super::InvertIfNegative::default();
     let mut reader = markup::Reader::new(element, &super::INVERT_IF_NEGATIVE_SHAPE);
     for (index, field) in &mut reader {
@@ -386,7 +382,7 @@ pub fn invert_if_negative(element: &xml::element::Element) -> super::InvertIfNeg
 
 /// Read `c16:literalDataChart` into a `LiteralDataChart`.
 #[must_use]
-pub fn literal_data_chart(element: &xml::element::Element) -> super::LiteralDataChart {
+pub fn literal_data_chart(element: &Element) -> super::LiteralDataChart {
     let mut node = super::LiteralDataChart::default();
     let mut reader = markup::Reader::new(element, &super::LITERAL_DATA_CHART_SHAPE);
     for (index, field) in &mut reader {
@@ -400,7 +396,7 @@ pub fn literal_data_chart(element: &xml::element::Element) -> super::LiteralData
 
 /// Read `c16:marker` into a `Marker`.
 #[must_use]
-pub fn marker(element: &xml::element::Element) -> super::Marker {
+pub fn marker(element: &Element) -> super::Marker {
     let mut node = super::Marker::default();
     let mut reader = markup::Reader::new(element, &super::MARKER_SHAPE);
     for (index, field) in &mut reader {
@@ -418,7 +414,7 @@ pub fn marker(element: &xml::element::Element) -> super::Marker {
 
 /// Read `c16:multiLvlStrCache` into a `MultiLvlStrCache`.
 #[must_use]
-pub fn multi_lvl_str_cache(element: &xml::element::Element) -> super::MultiLvlStrCache {
+pub fn multi_lvl_str_cache(element: &Element) -> super::MultiLvlStrCache {
     let mut node = super::MultiLvlStrCache::default();
     let mut reader = markup::Reader::new(element, &super::MULTI_LVL_STR_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -435,7 +431,7 @@ pub fn multi_lvl_str_cache(element: &xml::element::Element) -> super::MultiLvlSt
 
 /// Read `c16:numCache` into a `NumCache`.
 #[must_use]
-pub fn num_cache(element: &xml::element::Element) -> super::NumCache {
+pub fn num_cache(element: &Element) -> super::NumCache {
     let mut node = super::NumCache::default();
     let mut reader = markup::Reader::new(element, &super::NUM_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -453,7 +449,7 @@ pub fn num_cache(element: &xml::element::Element) -> super::NumCache {
 
 /// Read `c16:pivotOptions16` into a `PivotOptions16`.
 #[must_use]
-pub fn pivot_options16(element: &xml::element::Element) -> super::PivotOptions16 {
+pub fn pivot_options16(element: &Element) -> super::PivotOptions16 {
     let mut node = super::PivotOptions16::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_OPTIONS16_SHAPE);
     for (index, field) in &mut reader {
@@ -467,7 +463,7 @@ pub fn pivot_options16(element: &xml::element::Element) -> super::PivotOptions16
 
 /// Read `c16:ptentry` into a `Ptentry`.
 #[must_use]
-pub fn ptentry(element: &xml::element::Element) -> super::Ptentry {
+pub fn ptentry(element: &Element) -> super::Ptentry {
     let mut node = super::Ptentry::default();
     let mut reader = markup::Reader::new(element, &super::PTENTRY_SHAPE);
     for (index, field) in &mut reader {
@@ -483,7 +479,7 @@ pub fn ptentry(element: &xml::element::Element) -> super::Ptentry {
 
 /// Read `c16:ptidx` into a `Ptidx`.
 #[must_use]
-pub fn ptidx(element: &xml::element::Element) -> super::Ptidx {
+pub fn ptidx(element: &Element) -> super::Ptidx {
     let mut node = super::Ptidx::default();
     let mut reader = markup::Reader::new(element, &super::PTIDX_SHAPE);
     for (index, field) in &mut reader {
@@ -498,7 +494,7 @@ pub fn ptidx(element: &xml::element::Element) -> super::Ptidx {
 /// Read `c16:showExpandCollapseFieldButtons` into a `ShowExpandCollapseFieldButtons`.
 #[must_use]
 pub fn show_expand_collapse_field_buttons(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ShowExpandCollapseFieldButtons {
     let mut node = super::ShowExpandCollapseFieldButtons::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE);
@@ -513,7 +509,7 @@ pub fn show_expand_collapse_field_buttons(
 
 /// Read `c16:spPr` into a `SpPr`.
 #[must_use]
-pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
+pub fn sp_pr(element: &Element) -> super::SpPr {
     let mut node = super::SpPr::default();
     let mut reader = markup::Reader::new(element, &super::SP_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -536,7 +532,7 @@ pub fn sp_pr(element: &xml::element::Element) -> super::SpPr {
 
 /// Read `c16:strCache` into a `StrCache`.
 #[must_use]
-pub fn str_cache(element: &xml::element::Element) -> super::StrCache {
+pub fn str_cache(element: &Element) -> super::StrCache {
     let mut node = super::StrCache::default();
     let mut reader = markup::Reader::new(element, &super::STR_CACHE_SHAPE);
     for (index, field) in &mut reader {
@@ -553,7 +549,7 @@ pub fn str_cache(element: &xml::element::Element) -> super::StrCache {
 
 /// Read `c16:uniqueID` into a `UniqueID`.
 #[must_use]
-pub fn unique_id(element: &xml::element::Element) -> super::UniqueID {
+pub fn unique_id(element: &Element) -> super::UniqueID {
     let reader = markup::Reader::new(element, &super::UNIQUE_ID_SHAPE);
     super::UniqueID {
         unknown: reader.finish(),
@@ -562,7 +558,7 @@ pub fn unique_id(element: &xml::element::Element) -> super::UniqueID {
 
 /// Read `c16:uniqueId` into a `UniqueId`.
 #[must_use]
-pub fn unique_id_2(element: &xml::element::Element) -> super::UniqueId {
+pub fn unique_id_2(element: &Element) -> super::UniqueId {
     let reader = markup::Reader::new(element, &super::UNIQUE_ID_2_SHAPE);
     super::UniqueId {
         unknown: reader.finish(),

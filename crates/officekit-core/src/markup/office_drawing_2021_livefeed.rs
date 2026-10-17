@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::{Element, Node};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_A: Option<NamespaceId> = Some(0);
@@ -448,7 +448,7 @@ pub enum LiveFeedBackgroundPropertiesContent {
     Blur(Blur),
     Custom(Custom),
     Normal(Normal),
-    Other(xml::element::Node),
+    Other(Node),
     Removed(Removed),
 }
 
@@ -520,7 +520,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for BackgroundProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::background_props(element)
     }
 }
@@ -533,7 +533,7 @@ impl markup::Write for BackgroundProps {
 }
 
 impl markup::Read for Blur {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::blur(element)
     }
 }
@@ -546,7 +546,7 @@ impl markup::Write for Blur {
 }
 
 impl markup::Read for Custom {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::custom(element)
     }
 }
@@ -559,7 +559,7 @@ impl markup::Write for Custom {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }
@@ -572,17 +572,17 @@ impl markup::Write for ExtLst {
 }
 
 impl markup::Read for LiveFeedBackgroundPropertiesContent {
-    fn other(node: xml::element::Node) -> Option<Self> {
+    fn other(node: Node) -> Option<Self> {
         Some(Self::Other(node))
     }
 
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         match markup::name(element) {
             Some((NS_ALF, "Blur")) => Self::Blur(markup::read(element)),
             Some((NS_ALF, "Custom")) => Self::Custom(markup::read(element)),
             Some((NS_ALF, "Normal")) => Self::Normal(markup::read(element)),
             Some((NS_ALF, "Removed")) => Self::Removed(markup::read(element)),
-            _ => Self::Other(xml::element::Node::Element(element.clone())),
+            _ => Self::Other(Node::Element(element.clone())),
         }
     }
 }
@@ -600,7 +600,7 @@ impl markup::Write for LiveFeedBackgroundPropertiesContent {
 }
 
 impl markup::Read for LiveFeedProps {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::live_feed_props(element)
     }
 }
@@ -613,7 +613,7 @@ impl markup::Write for LiveFeedProps {
 }
 
 impl markup::Read for Normal {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::normal(element)
     }
 }
@@ -626,7 +626,7 @@ impl markup::Write for Normal {
 }
 
 impl markup::Read for Removed {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::removed(element)
     }
 }

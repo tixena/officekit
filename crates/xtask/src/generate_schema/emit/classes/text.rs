@@ -62,12 +62,12 @@ pub fn module(
         }
     );
     let _ = writeln!(out, "use crate::class_rules;");
-    let _ = writeln!(out, "use crate::error::{{ReadError, WriteError}};");
-    let _ = writeln!(out, "use crate::markup::Scope;");
     let _ = writeln!(out, "use crate::markup::{module}::{{self, read, write}};");
     let _ = writeln!(out, "use crate::{lower}::{{self, {upper}}};");
-    let _ = writeln!(out, "use crate::xml::element::Element;");
-    let _ = writeln!(out, "use crate::xml::name::NamespaceId;");
+    let _ = writeln!(out, "use officekit_xml::element::Element;");
+    let _ = writeln!(out, "use officekit_xml::error::{{ReadError, WriteError}};");
+    let _ = writeln!(out, "use officekit_xml::name::NamespaceId;");
+    let _ = writeln!(out, "use officekit_xml::write::Scope;");
     let namespaces: BTreeSet<u8> = impls
         .iter()
         .flat_map(|found| {

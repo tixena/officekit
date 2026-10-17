@@ -15,12 +15,12 @@ use officekit_core::packaging::part_name::PartName;
 use officekit_core::packaging::relationship::{Relationship, RelationshipType, TargetMode};
 use officekit_core::parts::{main_document, style_definitions};
 use officekit_core::stream::package_writer::PackageWriter;
-use officekit_core::stream::reader::{PartEvent, PartReader};
 use officekit_core::stream::transform::{WriteThrough as _, Written};
-use officekit_core::stream::writer::PartWriter;
-use officekit_core::xml::element::Element;
-use officekit_core::xml::name::Namespace;
-use officekit_core::xml::write::Layout;
+use officekit_xml::element::Element;
+use officekit_xml::name::Namespace;
+use officekit_xml::stream::reader::PartEvent;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::Layout;
 
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -121,7 +121,7 @@ where
         ),
     );
     let mut part = out.part(&main, main_document::CONTENT_TYPES[0], Layout::Compact)?;
-    let mut reader = PartReader::from_part(template, &main)?;
+    let mut reader = template.part_reader(&main)?;
     while let Some(event) = reader.read_event()? {
         match event {
             PartEvent::Start(start) if is_table(&start) => {

@@ -5,14 +5,15 @@ mod tests;
 
 use core::mem::replace;
 
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::{Namespace, QName};
+use officekit_xml::write::Scope;
+
 use crate::error::PackageError;
 use crate::image::Image;
 use crate::markup::Read as _;
-use crate::markup::Scope;
 use crate::markup::wordprocessing::{TextRun, write};
 use crate::packaging::part_name::PartName;
-use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
-use crate::xml::name::{Namespace, QName};
 
 use super::Docx;
 
@@ -62,10 +63,9 @@ pub fn set_picture(
     let (_, id) = docx.package.add_image(part, image)?;
     let namespace = Namespace::from_uri(RELATIONSHIPS);
     let found = relationships_prefix(drawing, &declarations);
-    let declare = found.is_none().then(|| NamespaceDeclaration {
-        prefix: "r".to_owned(),
-        uri: namespace.uri(class).to_owned(),
-    });
+    let declare = found
+        .is_none()
+        .then(|| NamespaceDeclaration::new("r".to_owned(), namespace.uri(class).to_owned()));
     let prefix = found.unwrap_or_else(|| "r".to_owned());
     let replaced = first_blip(drawing).and_then(|blip| {
         blip.namespace_declarations.extend(declare);
@@ -140,10 +140,10 @@ fn set_embed(blip: &mut Element, prefix: &str, id: String) -> Option<String> {
     {
         return Some(replace(&mut attribute.value, id));
     }
-    blip.attributes.push(Attribute {
-        name: QName::prefixed(prefix, "embed", RELATIONSHIPS),
-        value: id,
-    });
+    blip.attributes.push(Attribute::new(
+        QName::prefixed(prefix, "embed", RELATIONSHIPS),
+        id,
+    ));
     None
 }
 
@@ -153,10 +153,10 @@ fn set(element: &mut Element, local: &str, value: &str) {
     }) {
         value.clone_into(&mut attribute.value);
     } else {
-        element.attributes.push(Attribute {
-            name: QName::unprefixed(local, ""),
-            value: value.to_owned(),
-        });
+        element.attributes.push(Attribute::new(
+            QName::unprefixed(local, ""),
+            value.to_owned(),
+        ));
     }
 }
 

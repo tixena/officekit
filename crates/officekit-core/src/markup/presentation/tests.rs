@@ -1,13 +1,14 @@
 //! A required child is written back as the read element held it.
 
+use officekit_xml::element::Element;
+use officekit_xml::parse::parse;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{Layout, Scope};
+
 use super::{GroupShapeContent, NotesSlideSize, Presentation, read, write};
 use crate::markup::drawing::PositiveCoordinate;
-use crate::markup::{self, Descend, Scope, Transform as _, Visit as _, presentation};
+use crate::markup::{self, Descend, Transform as _, Visit as _, presentation};
 use crate::stream::transform::{Unchanged, WriteThrough};
-use crate::stream::writer::PartWriter;
-use crate::xml::element::Element;
-use crate::xml::parse::parse;
-use crate::xml::write::Layout;
 
 const P: &str = "http://schemas.openxmlformats.org/presentationml/2006/main";
 

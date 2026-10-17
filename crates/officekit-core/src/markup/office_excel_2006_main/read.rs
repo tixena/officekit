@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xne:f` into a `F`.
 #[must_use]
-pub fn f(element: &xml::element::Element) -> super::F {
+pub fn f(element: &Element) -> super::F {
     let mut node = super::F::default();
     let mut reader = markup::Reader::new(element, &super::F_SHAPE);
     for (index, field) in &mut reader {
@@ -231,7 +231,7 @@ pub fn f(element: &xml::element::Element) -> super::F {
 
 /// Read `xne:sqref` into a `Sqref`.
 #[must_use]
-pub fn sqref(element: &xml::element::Element) -> super::Sqref {
+pub fn sqref(element: &Element) -> super::Sqref {
     let mut node = super::Sqref::default();
     let mut reader = markup::Reader::new(element, &super::SQREF_SHAPE);
     for (index, field) in &mut reader {

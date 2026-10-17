@@ -214,11 +214,12 @@
 
 use crate::markup;
 use crate::markup::Write as _;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Author` as its element, `p188:author`.
 #[must_use]
-pub fn author(node: &super::Author, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTHOR_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -231,7 +232,7 @@ pub fn author(node: &super::Author, scope: &mut markup::Scope) -> xml::element::
 
 /// Write a `AuthorLst` as its element, `p188:authorLst`.
 #[must_use]
-pub fn author_lst(node: &super::AuthorLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn author_lst(node: &super::AuthorLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTHOR_LST_SHAPE, &node.unknown);
     writer.child(&node.author);
     writer.finish()
@@ -239,7 +240,7 @@ pub fn author_lst(node: &super::AuthorLst, scope: &mut markup::Scope) -> xml::el
 
 /// Write a `Cm` as its element, `p188:cm`.
 #[must_use]
-pub fn cm(node: &super::Cm, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm(node: &super::Cm, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.author_id);
@@ -263,7 +264,7 @@ pub fn cm(node: &super::Cm, scope: &mut markup::Scope) -> xml::element::Element 
 
 /// Write a `CmLst` as its element, `p188:cmLst`.
 #[must_use]
-pub fn cm_lst(node: &super::CmLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn cm_lst(node: &super::CmLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::CM_LST_SHAPE, &node.unknown);
     writer.child(&node.cm);
     writer.finish()
@@ -276,7 +277,7 @@ pub fn comment(node: &super::CommentContent, writer: &mut markup::Writer<'_, '_>
 
 /// Write a `CommentRel` as its element, `p188:commentRel`.
 #[must_use]
-pub fn comment_rel(node: &super::CommentRel, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn comment_rel(node: &super::CommentRel, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::COMMENT_REL_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.finish()
@@ -286,8 +287,8 @@ pub fn comment_rel(node: &super::CommentRel, scope: &mut markup::Scope) -> xml::
 #[must_use]
 pub fn ext_lst_comment_properties_extension_list(
     node: &super::ExtLstCommentPropertiesExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+    scope: &mut Scope,
+) -> Element {
     let mut writer = markup::Writer::new(
         scope,
         &super::EXT_LST_COMMENT_PROPERTIES_EXTENSION_LIST_SHAPE,
@@ -299,10 +300,7 @@ pub fn ext_lst_comment_properties_extension_list(
 
 /// Write a `ExtLstExtensionList` as its element, `p188:extLst`.
 #[must_use]
-pub fn ext_lst_extension_list(
-    node: &super::ExtLstExtensionList,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn ext_lst_extension_list(node: &super::ExtLstExtensionList, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::EXT_LST_EXTENSION_LIST_SHAPE, &node.unknown);
     writer.child(&node.extension);
@@ -311,7 +309,7 @@ pub fn ext_lst_extension_list(
 
 /// Write a `Pos` as its element, `p188:pos`.
 #[must_use]
-pub fn pos(node: &super::Pos, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn pos(node: &super::Pos, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::POS_SHAPE, &node.unknown);
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -320,7 +318,7 @@ pub fn pos(node: &super::Pos, scope: &mut markup::Scope) -> xml::element::Elemen
 
 /// Write a `Reply` as its element, `p188:reply`.
 #[must_use]
-pub fn reply(node: &super::Reply, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn reply(node: &super::Reply, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REPLY_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.author_id);
@@ -335,7 +333,7 @@ pub fn reply(node: &super::Reply, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `ReplyLst` as its element, `p188:replyLst`.
 #[must_use]
-pub fn reply_lst(node: &super::ReplyLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn reply_lst(node: &super::ReplyLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::REPLY_LST_SHAPE, &node.unknown);
     writer.child(&node.reply);
     writer.finish()
@@ -343,7 +341,7 @@ pub fn reply_lst(node: &super::ReplyLst, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `TxBody` as its element, `p188:txBody`.
 #[must_use]
-pub fn tx_body(node: &super::TxBody, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tx_body(node: &super::TxBody, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TX_BODY_SHAPE, &node.unknown);
     writer.child(&node.properties);
     writer.child(&node.text_list_styles);
@@ -353,9 +351,6 @@ pub fn tx_body(node: &super::TxBody, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `UnknownAnchor` as its element, `p188:unknownAnchor`.
 #[must_use]
-pub fn unknown_anchor(
-    node: &super::UnknownAnchor,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn unknown_anchor(node: &super::UnknownAnchor, scope: &mut Scope) -> Element {
     markup::Writer::new(scope, &super::UNKNOWN_ANCHOR_SHAPE, &node.unknown).finish()
 }

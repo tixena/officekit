@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_C16R3: Option<NamespaceId> = Some(27);
@@ -317,7 +317,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for DataDisplayOptions16 {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::data_display_options16(element)
     }
 }
@@ -330,7 +330,7 @@ impl markup::Write for DataDisplayOptions16 {
 }
 
 impl markup::Read for DispNaAsBlank {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::disp_na_as_blank(element)
     }
 }

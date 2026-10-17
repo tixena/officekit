@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xlpda:pivotCacheDynamicArray` into a `PivotCacheDynamicArray`.
 #[must_use]
-pub fn pivot_cache_dynamic_array(element: &xml::element::Element) -> super::PivotCacheDynamicArray {
+pub fn pivot_cache_dynamic_array(element: &Element) -> super::PivotCacheDynamicArray {
     let mut node = super::PivotCacheDynamicArray::default();
     let mut reader = markup::Reader::new(element, &super::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE);
     for (index, field) in &mut reader {

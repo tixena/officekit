@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `ExternalCodeService` as its element, `xlecs:externalCodeService`.
 #[must_use]
-pub fn external_code_service(
-    node: &super::ExternalCodeService,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn external_code_service(node: &super::ExternalCodeService, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXTERNAL_CODE_SERVICE_SHAPE, &node.unknown);
     writer.attribute(0, &node.auto_show);
     writer.attribute(1, &node.timeout);

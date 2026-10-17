@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p232:cameo` into a `Cameo`.
 #[must_use]
-pub fn cameo(element: &xml::element::Element) -> super::Cameo {
+pub fn cameo(element: &Element) -> super::Cameo {
     let reader = markup::Reader::new(element, &super::CAMEO_SHAPE);
     super::Cameo {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn cameo(element: &xml::element::Element) -> super::Cameo {
 
 /// Read `p232:phTypeExt` into a `PhTypeExt`.
 #[must_use]
-pub fn ph_type_ext(element: &xml::element::Element) -> super::PhTypeExt {
+pub fn ph_type_ext(element: &Element) -> super::PhTypeExt {
     let mut node = super::PhTypeExt::default();
     let mut reader = markup::Reader::new(element, &super::PH_TYPE_EXT_SHAPE);
     for (index, field) in &mut reader {
@@ -240,13 +240,13 @@ pub fn ph_type_ext(element: &xml::element::Element) -> super::PhTypeExt {
 
 /// Read one item of `PlaceholderTypeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn placeholder_type(element: &xml::element::Element) -> super::PlaceholderTypeContent {
+pub fn placeholder_type(element: &Element) -> super::PlaceholderTypeContent {
     markup::read(element)
 }
 
 /// Read `p232:type` into a `Type`.
 #[must_use]
-pub fn r#type(element: &xml::element::Element) -> super::Type {
+pub fn r#type(element: &Element) -> super::Type {
     let mut node = super::Type::default();
     let mut reader = markup::Reader::new(element, &super::TYPE_SHAPE);
     for (index, field) in &mut reader {
@@ -260,7 +260,7 @@ pub fn r#type(element: &xml::element::Element) -> super::Type {
 
 /// Read `p232:unknown` into a `Unknown`.
 #[must_use]
-pub fn unknown(element: &xml::element::Element) -> super::Unknown {
+pub fn unknown(element: &Element) -> super::Unknown {
     let reader = markup::Reader::new(element, &super::UNKNOWN_SHAPE);
     super::Unknown {
         unknown: reader.finish(),

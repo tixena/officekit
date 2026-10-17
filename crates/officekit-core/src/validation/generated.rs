@@ -365,7 +365,7 @@ use super::schema::types::{
 use super::semantic::constraint::{
     Applications, AttributeName, Constraint, ElementName, Registration,
 };
-use crate::xml::name::NamespaceId;
+use officekit_xml::name::NamespaceId;
 
 include!("generated/attributes.rs");
 include!("generated/particles.rs");

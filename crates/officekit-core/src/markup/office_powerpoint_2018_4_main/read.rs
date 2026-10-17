@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `p184:classification` into a `Classification`.
 #[must_use]
-pub fn classification(element: &xml::element::Element) -> super::Classification {
+pub fn classification(element: &Element) -> super::Classification {
     let mut node = super::Classification::default();
     let mut reader = markup::Reader::new(element, &super::CLASSIFICATION_SHAPE);
     for (index, field) in &mut reader {

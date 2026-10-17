@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `xxl21:absoluteUrl` into a `AbsoluteUrl`.
 #[must_use]
-pub fn absolute_url(element: &xml::element::Element) -> super::AbsoluteUrl {
+pub fn absolute_url(element: &Element) -> super::AbsoluteUrl {
     let reader = markup::Reader::new(element, &super::ABSOLUTE_URL_SHAPE);
     super::AbsoluteUrl {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn absolute_url(element: &xml::element::Element) -> super::AbsoluteUrl {
 
 /// Read `xxl21:alternateUrls` into a `AlternateUrls`.
 #[must_use]
-pub fn alternate_urls(element: &xml::element::Element) -> super::AlternateUrls {
+pub fn alternate_urls(element: &Element) -> super::AlternateUrls {
     let mut node = super::AlternateUrls::default();
     let mut reader = markup::Reader::new(element, &super::ALTERNATE_URLS_SHAPE);
     for (index, field) in &mut reader {
@@ -244,7 +244,7 @@ pub fn alternate_urls(element: &xml::element::Element) -> super::AlternateUrls {
 
 /// Read `xxl21:relativeUrl` into a `RelativeUrl`.
 #[must_use]
-pub fn relative_url(element: &xml::element::Element) -> super::RelativeUrl {
+pub fn relative_url(element: &Element) -> super::RelativeUrl {
     let reader = markup::Reader::new(element, &super::RELATIVE_URL_SHAPE);
     super::RelativeUrl {
         unknown: reader.finish(),

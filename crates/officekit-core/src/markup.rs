@@ -14,24 +14,17 @@ use core::num::ParseFloatError;
 use core::{iter, mem, slice};
 use std::io;
 
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::table::NAMESPACES;
+use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName, tag_of};
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::values::{DateTime, Measure, ValueError, matches_pattern, parse};
+use officekit_xml::write::{Scope, is_whitespace_text, qualified};
+
 use crate::stream::transform::{Place, Unchanged, WriteThrough, Written};
-use crate::stream::writer::PartWriter;
-use crate::validation::schema::matches_pattern;
-use crate::xml;
-use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
-use crate::xml::name::table::NAMESPACES;
-use crate::xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
-use crate::xml::values::{DateTime, Measure, ValueError, parse};
-use crate::xml::write::{is_whitespace_text, qualified};
 
 #[cfg(test)]
 mod tests;
-
-/// The prefix declared for a namespace the table does not know.
-const OTHER_PREFIX: &str = "ns";
-
-/// The namespace the `xml` prefix is bound to without a declaration.
-const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
 
 // Not a module: `pub use` is denied, and its traits are `markup::Context` and `markup::Visitor`.
 include!("markup/root.rs");
@@ -175,14 +168,6 @@ pub struct Rebase {
     /// Declared items given in place of `Other` items before the first original declared child.
     leading: usize,
     reached: Positions,
-}
-
-/// The namespace declarations in scope while a typed tree is written: an
-/// element takes a prefix bound to its namespace in either class's URI, or
-/// declares the table's prefix where none is bound.
-#[derive(Debug, Default)]
-pub struct Scope {
-    frames: Vec<Vec<NamespaceDeclaration>>,
 }
 
 /// How a typed node is read and written: its tag, its declared attributes and
@@ -890,112 +875,6 @@ impl Rebase {
     }
 }
 
-impl Scope {
-    /// An attribute of `element` in the namespace `uri` (`None`: unqualified),
-    /// with a prefix in scope, else the table's prefix declared on `element`.
-    /// Called between `element` and `end`.
-    pub fn attribute(
-        &mut self,
-        element: &mut Element,
-        uri: Option<&str>,
-        local: &str,
-        value: &str,
-    ) {
-        let declared = uri.unwrap_or_default();
-        let namespace = Namespace::from_uri(declared);
-        let prefix = if namespace == Namespace::None {
-            String::new()
-        } else {
-            self.bound(&namespace, false)
-                .unwrap_or_else(|| self.declare(element, &namespace, declared))
-        };
-        element.attributes.push(Attribute {
-            name: QName {
-                local: local.to_owned(),
-                namespace,
-                prefix,
-            },
-            value: value.to_owned(),
-        });
-    }
-
-    /// The innermost prefix bound to `namespace` that no inner declaration
-    /// rebinds; `xml` is bound without a declaration. For an element, the
-    /// empty prefix of a default namespace counts.
-    fn bound(&self, namespace: &Namespace, element: bool) -> Option<String> {
-        if binds(XML_NAMESPACE, namespace) {
-            return Some("xml".to_owned());
-        }
-        let mut seen: Vec<&str> = Vec::new();
-        for declaration in self.frames.iter().rev().flatten() {
-            let prefix = declaration.prefix.as_str();
-            if seen.contains(&prefix) {
-                continue;
-            }
-            if (element || !prefix.is_empty()) && binds(&declaration.uri, namespace) {
-                return Some(prefix.to_owned());
-            }
-            seen.push(prefix);
-        }
-        None
-    }
-
-    /// Declare the table's prefix for `namespace`, as `uri`, on `element` and
-    /// in the innermost frame; returns the prefix.
-    fn declare(&mut self, element: &mut Element, namespace: &Namespace, uri: &str) -> String {
-        let prefix = match namespace {
-            Namespace::Known(id) => NAMESPACES
-                .get(usize::from(*id))
-                .map_or(OTHER_PREFIX, |row| row.prefix),
-            Namespace::None => "",
-            Namespace::Other(_) => OTHER_PREFIX,
-        };
-        let declaration = NamespaceDeclaration {
-            prefix: prefix.to_owned(),
-            uri: uri.to_owned(),
-        };
-        if let Some(frame) = self.frames.last_mut() {
-            frame.push(declaration.clone());
-        }
-        element.namespace_declarations.push(declaration);
-        prefix.to_owned()
-    }
-
-    /// An element of the namespace `uri` named `local`, with the node's own
-    /// `declarations`, and the prefix in scope for its namespace, else the
-    /// table's prefix declared on it. Opens a frame `end` closes.
-    pub fn element(
-        &mut self,
-        uri: &str,
-        local: &str,
-        declarations: &[NamespaceDeclaration],
-    ) -> Element {
-        self.frames.push(declarations.to_vec());
-        let namespace = Namespace::from_uri(uri);
-        let mut element = Element::new(QName {
-            local: local.to_owned(),
-            namespace: namespace.clone(),
-            prefix: String::new(),
-        });
-        element.namespace_declarations = declarations.to_vec();
-        element.name.prefix = self
-            .bound(&namespace, true)
-            .unwrap_or_else(|| self.declare(&mut element, &namespace, uri));
-        element
-    }
-
-    /// Close the frame the last `element` or `start` opened.
-    pub fn end(&mut self) {
-        self.frames.pop();
-    }
-
-    /// Open a frame with an element's own declarations, for an element
-    /// written by its name; `end` closes it.
-    pub fn start(&mut self, declarations: &[NamespaceDeclaration]) {
-        self.frames.push(declarations.to_vec());
-    }
-}
-
 impl Slot {
     /// Whether the position takes `element`.
     fn accepts(&self, element: &Element) -> bool {
@@ -1245,16 +1124,17 @@ impl Transform for Element {
     }
 
     fn transform_children(&self, ctx: &mut dyn Context) -> Self {
-        Self {
-            attributes: self.attributes.clone(),
-            children: self
-                .children
-                .iter()
-                .map(|child| child.transform(ctx))
-                .collect(),
-            name: self.name.clone(),
-            namespace_declarations: self.namespace_declarations.clone(),
-        }
+        let mut element = Self::new(self.name.clone());
+        element.attributes.clone_from(&self.attributes);
+        element.children = self
+            .children
+            .iter()
+            .map(|child| child.transform(ctx))
+            .collect();
+        element
+            .namespace_declarations
+            .clone_from(&self.namespace_declarations);
+        element
     }
 }
 
@@ -1380,15 +1260,14 @@ impl<'node> Walk<'node> {
 impl Wildcard {
     /// Whether an element of `namespace` is allowed.
     fn allows(self, namespace: &Namespace) -> bool {
-        match (self, namespace) {
-            (Self::Any, _)
-            | (Self::Local, Namespace::None)
-            | (Self::Not(_), Namespace::Other(_)) => true,
-            (Self::Not(excluded), Namespace::Known(id)) => *id != excluded,
-            (Self::Only(ids), Namespace::Known(id)) => ids.contains(id),
-            (Self::Local, Namespace::Known(_) | Namespace::Other(_))
-            | (Self::Not(_) | Self::Only(_), Namespace::None)
-            | (Self::Only(_), Namespace::Other(_)) => false,
+        match self {
+            Self::Any => true,
+            Self::Local => *namespace == Namespace::None,
+            Self::Not(excluded) => {
+                matches!(namespace, Namespace::Other(_))
+                    || matches!(namespace, Namespace::Known(id) if *id != excluded)
+            }
+            Self::Only(ids) => matches!(namespace, Namespace::Known(id) if ids.contains(id)),
         }
     }
 }
@@ -1489,18 +1368,6 @@ impl<'scope, 'node> Writer<'scope, 'node> {
         if !value.is_empty() {
             self.children.other(Node::Text(value.to_owned()));
         }
-    }
-}
-
-/// Whether a declaration of `uri` binds `namespace`: either class's URI of a
-/// namespace the table knows, else the URI itself.
-fn binds(uri: &str, namespace: &Namespace) -> bool {
-    match namespace {
-        Namespace::Known(id) => NAMESPACES
-            .get(usize::from(*id))
-            .is_some_and(|row| row.uri == uri || row.strict_uri == Some(uri)),
-        Namespace::None => uri.is_empty(),
-        Namespace::Other(other) => **other == *uri,
     }
 }
 
@@ -1654,10 +1521,7 @@ pub fn integer_in(
 /// The error of a text that is no value of its simple type.
 #[must_use]
 pub fn invalid(text: &str, simple_type: &'static str) -> ValueError {
-    ValueError {
-        simple_type,
-        text: text.to_owned(),
-    }
+    ValueError::new(simple_type, text.to_owned())
 }
 
 /// The namespace id of a name in the table; `None` for no namespace and for
@@ -1672,13 +1536,7 @@ const fn known(namespace: &Namespace) -> Option<NamespaceId> {
 
 /// Whether `name` is the tag `tag`.
 fn is_tag(tag: Tag, name: &QName) -> bool {
-    tag.1 == name.local
-        && match (tag.0, &name.namespace) {
-            (None, Namespace::None) => true,
-            (Some(id), Namespace::Known(found)) => id == *found,
-            (None, Namespace::Known(_) | Namespace::Other(_))
-            | (Some(_), Namespace::None | Namespace::Other(_)) => false,
-        }
+    tag.1 == name.local && name.namespace == tag.0.map_or(Namespace::None, Namespace::Known)
 }
 
 /// A universal measure, `2.5cm`, matching one of `patterns`.
@@ -1703,12 +1561,7 @@ pub fn measure(
 /// table does not know.
 #[must_use]
 pub const fn name(element: &Element) -> Option<(Option<NamespaceId>, &str)> {
-    let local = element.name.local.as_str();
-    match &element.name.namespace {
-        Namespace::Known(id) => Some((Some(*id), local)),
-        Namespace::None => Some((None, local)),
-        Namespace::Other(_) => None,
-    }
+    tag_of(&element.name)
 }
 
 /// A percentage, `50%` being 50.0, matching one of `patterns`.

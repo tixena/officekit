@@ -213,14 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `DataDisplayOptions16` as its element, `c16r3:dataDisplayOptions16`.
 #[must_use]
-pub fn data_display_options16(
-    node: &super::DataDisplayOptions16,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn data_display_options16(node: &super::DataDisplayOptions16, scope: &mut Scope) -> Element {
     let mut writer =
         markup::Writer::new(scope, &super::DATA_DISPLAY_OPTIONS16_SHAPE, &node.unknown);
     writer.child(&node.disp_na_as_blank);
@@ -229,10 +227,7 @@ pub fn data_display_options16(
 
 /// Write a `DispNaAsBlank` as its element, `c16r3:dispNaAsBlank`.
 #[must_use]
-pub fn disp_na_as_blank(
-    node: &super::DispNaAsBlank,
-    scope: &mut markup::Scope,
-) -> xml::element::Element {
+pub fn disp_na_as_blank(node: &super::DispNaAsBlank, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::DISP_NA_AS_BLANK_SHAPE, &node.unknown);
     writer.attribute(0, &node.val);
     writer.finish()

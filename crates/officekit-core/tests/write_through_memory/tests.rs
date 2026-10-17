@@ -11,8 +11,8 @@ use officekit_core::markup::wordprocessing::{
 };
 use officekit_core::markup::{self, Descend, Visit as _};
 use officekit_core::stream::transform::{WriteThrough as _, Written};
-use officekit_core::stream::writer::PartWriter;
-use officekit_core::xml::write::Layout;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::Layout;
 
 #[global_allocator]
 static ALLOCATOR: Counting = Counting;

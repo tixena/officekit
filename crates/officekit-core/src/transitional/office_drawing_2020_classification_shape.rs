@@ -216,12 +216,12 @@
 //! shared writer, whose element the Transitional write then checks.
 
 use crate::class_rules;
-use crate::error::{ReadError, WriteError};
-use crate::markup::Scope;
 use crate::markup::office_drawing_2020_classification_shape::{self, read, write};
 use crate::transitional::{self, Transitional};
-use crate::xml::element::Element;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::error::{ReadError, WriteError};
+use officekit_xml::name::NamespaceId;
+use officekit_xml::write::Scope;
 
 const NS_ACLSH: Option<NamespaceId> = Some(8);
 

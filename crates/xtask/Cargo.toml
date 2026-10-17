@@ -32,6 +32,9 @@ serde_json.workspace = true
 # The parity run maps officekit's error codes to SDK 3.5.1's ids.
 officekit-core.workspace = true
 
+# The size of the generic node, which decides the typed tree's boxed arms.
+officekit-xml.workspace = true
+
 # Reads the XSD files the schema model is built from.
 quick-xml.workspace = true
 

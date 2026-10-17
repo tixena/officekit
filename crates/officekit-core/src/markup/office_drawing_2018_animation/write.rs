@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AnimPr` as its element, `aanim:animPr`.
 #[must_use]
-pub fn anim_pr(node: &super::AnimPr, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::ANIM_PR_SHAPE, &node.unknown);
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.length);
@@ -232,7 +233,7 @@ pub fn anim_pr(node: &super::AnimPr, scope: &mut markup::Scope) -> xml::element:
 
 /// Write a `ExtLst` as its element, `aanim:extLst`.
 #[must_use]
-pub fn ext_lst(node: &super::ExtLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
     writer.child(&node.extension);
     writer.finish()

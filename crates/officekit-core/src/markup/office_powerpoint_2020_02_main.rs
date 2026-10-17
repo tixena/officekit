@@ -221,9 +221,9 @@ pub mod write;
 
 use crate::markup;
 use crate::stream::transform::Written;
-use crate::stream::writer::PartWriter;
-use crate::xml;
-use crate::xml::name::NamespaceId;
+use officekit_xml::element::Element;
+use officekit_xml::name::NamespaceId;
+use officekit_xml::stream::writer::PartWriter;
 use std::io;
 
 const NS_P: Option<NamespaceId> = Some(64);
@@ -385,7 +385,7 @@ pub trait Visitor: markup::Visitor {
 }
 
 impl markup::Read for DesignPr {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::design_pr(element)
     }
 }
@@ -398,7 +398,7 @@ impl markup::Write for DesignPr {
 }
 
 impl markup::Read for DesignTag {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::design_tag(element)
     }
 }
@@ -411,7 +411,7 @@ impl markup::Write for DesignTag {
 }
 
 impl markup::Read for DesignTagLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::design_tag_lst(element)
     }
 }
@@ -424,7 +424,7 @@ impl markup::Write for DesignTagLst {
 }
 
 impl markup::Read for ExtLst {
-    fn read(element: &xml::element::Element) -> Self {
+    fn read(element: &Element) -> Self {
         read::ext_lst(element)
     }
 }

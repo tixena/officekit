@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `w14:alpha` into a `Alpha`.
 #[must_use]
-pub fn alpha(element: &xml::element::Element) -> super::Alpha {
+pub fn alpha(element: &Element) -> super::Alpha {
     let reader = markup::Reader::new(element, &super::ALPHA_SHAPE);
     super::Alpha {
         unknown: reader.finish(),
@@ -226,7 +226,7 @@ pub fn alpha(element: &xml::element::Element) -> super::Alpha {
 
 /// Read `w14:bevel` into a `Bevel`.
 #[must_use]
-pub fn bevel(element: &xml::element::Element) -> super::Bevel {
+pub fn bevel(element: &Element) -> super::Bevel {
     let reader = markup::Reader::new(element, &super::BEVEL_SHAPE);
     super::Bevel {
         unknown: reader.finish(),
@@ -235,7 +235,7 @@ pub fn bevel(element: &xml::element::Element) -> super::Bevel {
 
 /// Read `w14:bevelB` into a `BevelB`.
 #[must_use]
-pub fn bevel_b(element: &xml::element::Element) -> super::BevelB {
+pub fn bevel_b(element: &Element) -> super::BevelB {
     let reader = markup::Reader::new(element, &super::BEVEL_B_SHAPE);
     super::BevelB {
         unknown: reader.finish(),
@@ -244,7 +244,7 @@ pub fn bevel_b(element: &xml::element::Element) -> super::BevelB {
 
 /// Read `w14:bevelT` into a `BevelT`.
 #[must_use]
-pub fn bevel_t(element: &xml::element::Element) -> super::BevelT {
+pub fn bevel_t(element: &Element) -> super::BevelT {
     let reader = markup::Reader::new(element, &super::BEVEL_T_SHAPE);
     super::BevelT {
         unknown: reader.finish(),
@@ -253,7 +253,7 @@ pub fn bevel_t(element: &xml::element::Element) -> super::BevelT {
 
 /// Read `w14:cNvContentPartPr` into a `CNvContentPartPr`.
 #[must_use]
-pub fn c_nv_content_part_pr(element: &xml::element::Element) -> super::CNvContentPartPr {
+pub fn c_nv_content_part_pr(element: &Element) -> super::CNvContentPartPr {
     let mut node = super::CNvContentPartPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -270,7 +270,7 @@ pub fn c_nv_content_part_pr(element: &xml::element::Element) -> super::CNvConten
 
 /// Read `w14:cNvPr` into a `CNvPr`.
 #[must_use]
-pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
+pub fn c_nv_pr(element: &Element) -> super::CNvPr {
     let mut node = super::CNvPr::default();
     let mut reader = markup::Reader::new(element, &super::C_NV_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -292,7 +292,7 @@ pub fn c_nv_pr(element: &xml::element::Element) -> super::CNvPr {
 
 /// Read `w14:camera` into a `Camera`.
 #[must_use]
-pub fn camera(element: &xml::element::Element) -> super::Camera {
+pub fn camera(element: &Element) -> super::Camera {
     let mut node = super::Camera::default();
     let mut reader = markup::Reader::new(element, &super::CAMERA_SHAPE);
     for (index, field) in &mut reader {
@@ -306,7 +306,7 @@ pub fn camera(element: &xml::element::Element) -> super::Camera {
 
 /// Read `w14:checkbox` into a `Checkbox`.
 #[must_use]
-pub fn checkbox(element: &xml::element::Element) -> super::Checkbox {
+pub fn checkbox(element: &Element) -> super::Checkbox {
     let mut node = super::Checkbox::default();
     let mut reader = markup::Reader::new(element, &super::CHECKBOX_SHAPE);
     for (index, field) in &mut reader {
@@ -323,7 +323,7 @@ pub fn checkbox(element: &xml::element::Element) -> super::Checkbox {
 
 /// Read `w14:checked` into a `Checked`.
 #[must_use]
-pub fn checked(element: &xml::element::Element) -> super::Checked {
+pub fn checked(element: &Element) -> super::Checked {
     let reader = markup::Reader::new(element, &super::CHECKED_SHAPE);
     super::Checked {
         unknown: reader.finish(),
@@ -332,7 +332,7 @@ pub fn checked(element: &xml::element::Element) -> super::Checked {
 
 /// Read `w14:checkedState` into a `CheckedState`.
 #[must_use]
-pub fn checked_state(element: &xml::element::Element) -> super::CheckedState {
+pub fn checked_state(element: &Element) -> super::CheckedState {
     let reader = markup::Reader::new(element, &super::CHECKED_STATE_SHAPE);
     super::CheckedState {
         unknown: reader.finish(),
@@ -341,7 +341,7 @@ pub fn checked_state(element: &xml::element::Element) -> super::CheckedState {
 
 /// Read `w14:cntxtAlts` into a `CntxtAlts`.
 #[must_use]
-pub fn cntxt_alts(element: &xml::element::Element) -> super::CntxtAlts {
+pub fn cntxt_alts(element: &Element) -> super::CntxtAlts {
     let reader = markup::Reader::new(element, &super::CNTXT_ALTS_SHAPE);
     super::CntxtAlts {
         unknown: reader.finish(),
@@ -350,21 +350,19 @@ pub fn cntxt_alts(element: &xml::element::Element) -> super::CntxtAlts {
 
 /// Read one item of `ColorContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn color(element: &xml::element::Element) -> super::ColorContent {
+pub fn color(element: &Element) -> super::ColorContent {
     markup::read(element)
 }
 
 /// Read one item of `ColorTransformContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn color_transform(element: &xml::element::Element) -> super::ColorTransformContent {
+pub fn color_transform(element: &Element) -> super::ColorTransformContent {
     markup::read(element)
 }
 
 /// Read `w14:conflictDel` into a `ConflictDelRunTrackChange`.
 #[must_use]
-pub fn conflict_del_run_track_change(
-    element: &xml::element::Element,
-) -> super::ConflictDelRunTrackChange {
+pub fn conflict_del_run_track_change(element: &Element) -> super::ConflictDelRunTrackChange {
     let mut node = super::ConflictDelRunTrackChange::default();
     let mut reader = markup::Reader::new(element, &super::CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -382,7 +380,7 @@ pub fn conflict_del_run_track_change(
 
 /// Read `w14:conflictDel` into a `ConflictDelTrackChange`.
 #[must_use]
-pub fn conflict_del_track_change(element: &xml::element::Element) -> super::ConflictDelTrackChange {
+pub fn conflict_del_track_change(element: &Element) -> super::ConflictDelTrackChange {
     let mut node = super::ConflictDelTrackChange::default();
     let mut reader = markup::Reader::new(element, &super::CONFLICT_DEL_TRACK_CHANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -399,9 +397,7 @@ pub fn conflict_del_track_change(element: &xml::element::Element) -> super::Conf
 
 /// Read `w14:conflictIns` into a `ConflictInsRunTrackChange`.
 #[must_use]
-pub fn conflict_ins_run_track_change(
-    element: &xml::element::Element,
-) -> super::ConflictInsRunTrackChange {
+pub fn conflict_ins_run_track_change(element: &Element) -> super::ConflictInsRunTrackChange {
     let mut node = super::ConflictInsRunTrackChange::default();
     let mut reader = markup::Reader::new(element, &super::CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -419,7 +415,7 @@ pub fn conflict_ins_run_track_change(
 
 /// Read `w14:conflictIns` into a `ConflictInsTrackChange`.
 #[must_use]
-pub fn conflict_ins_track_change(element: &xml::element::Element) -> super::ConflictInsTrackChange {
+pub fn conflict_ins_track_change(element: &Element) -> super::ConflictInsTrackChange {
     let mut node = super::ConflictInsTrackChange::default();
     let mut reader = markup::Reader::new(element, &super::CONFLICT_INS_TRACK_CHANGE_SHAPE);
     for (index, field) in &mut reader {
@@ -436,7 +432,7 @@ pub fn conflict_ins_track_change(element: &xml::element::Element) -> super::Conf
 
 /// Read `w14:conflictMode` into a `ConflictMode`.
 #[must_use]
-pub fn conflict_mode(element: &xml::element::Element) -> super::ConflictMode {
+pub fn conflict_mode(element: &Element) -> super::ConflictMode {
     let reader = markup::Reader::new(element, &super::CONFLICT_MODE_SHAPE);
     super::ConflictMode {
         unknown: reader.finish(),
@@ -445,7 +441,7 @@ pub fn conflict_mode(element: &xml::element::Element) -> super::ConflictMode {
 
 /// Read `w14:contentPart` into a `ContentPart`.
 #[must_use]
-pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
+pub fn content_part(element: &Element) -> super::ContentPart {
     let mut node = super::ContentPart::default();
     let mut reader = markup::Reader::new(element, &super::CONTENT_PART_SHAPE);
     for (index, field) in &mut reader {
@@ -464,7 +460,7 @@ pub fn content_part(element: &xml::element::Element) -> super::ContentPart {
 
 /// Read `w14:contourClr` into a `ContourClr`.
 #[must_use]
-pub fn contour_clr(element: &xml::element::Element) -> super::ContourClr {
+pub fn contour_clr(element: &Element) -> super::ContourClr {
     let mut node = super::ContourClr::default();
     let mut reader = markup::Reader::new(element, &super::CONTOUR_CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -478,9 +474,7 @@ pub fn contour_clr(element: &xml::element::Element) -> super::ContourClr {
 
 /// Read `w14:customXmlConflictDelRangeEnd` into a `CustomXmlConflictDelRangeEnd`.
 #[must_use]
-pub fn custom_xml_conflict_del_range_end(
-    element: &xml::element::Element,
-) -> super::CustomXmlConflictDelRangeEnd {
+pub fn custom_xml_conflict_del_range_end(element: &Element) -> super::CustomXmlConflictDelRangeEnd {
     let mut node = super::CustomXmlConflictDelRangeEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE);
     for (index, field) in &mut reader {
@@ -495,7 +489,7 @@ pub fn custom_xml_conflict_del_range_end(
 /// Read `w14:customXmlConflictDelRangeStart` into a `CustomXmlConflictDelRangeStart`.
 #[must_use]
 pub fn custom_xml_conflict_del_range_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXmlConflictDelRangeStart {
     let mut node = super::CustomXmlConflictDelRangeStart::default();
     let mut reader =
@@ -514,9 +508,7 @@ pub fn custom_xml_conflict_del_range_start(
 
 /// Read `w14:customXmlConflictInsRangeEnd` into a `CustomXmlConflictInsRangeEnd`.
 #[must_use]
-pub fn custom_xml_conflict_ins_range_end(
-    element: &xml::element::Element,
-) -> super::CustomXmlConflictInsRangeEnd {
+pub fn custom_xml_conflict_ins_range_end(element: &Element) -> super::CustomXmlConflictInsRangeEnd {
     let mut node = super::CustomXmlConflictInsRangeEnd::default();
     let mut reader = markup::Reader::new(element, &super::CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE);
     for (index, field) in &mut reader {
@@ -531,7 +523,7 @@ pub fn custom_xml_conflict_ins_range_end(
 /// Read `w14:customXmlConflictInsRangeStart` into a `CustomXmlConflictInsRangeStart`.
 #[must_use]
 pub fn custom_xml_conflict_ins_range_start(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::CustomXmlConflictInsRangeStart {
     let mut node = super::CustomXmlConflictInsRangeStart::default();
     let mut reader =
@@ -550,7 +542,7 @@ pub fn custom_xml_conflict_ins_range_start(
 
 /// Read `w14:defaultImageDpi` into a `DefaultImageDpi`.
 #[must_use]
-pub fn default_image_dpi(element: &xml::element::Element) -> super::DefaultImageDpi {
+pub fn default_image_dpi(element: &Element) -> super::DefaultImageDpi {
     let mut node = super::DefaultImageDpi::default();
     let mut reader = markup::Reader::new(element, &super::DEFAULT_IMAGE_DPI_SHAPE);
     for (index, field) in &mut reader {
@@ -564,9 +556,7 @@ pub fn default_image_dpi(element: &xml::element::Element) -> super::DefaultImage
 
 /// Read `w14:discardImageEditingData` into a `DiscardImageEditingData`.
 #[must_use]
-pub fn discard_image_editing_data(
-    element: &xml::element::Element,
-) -> super::DiscardImageEditingData {
+pub fn discard_image_editing_data(element: &Element) -> super::DiscardImageEditingData {
     let reader = markup::Reader::new(element, &super::DISCARD_IMAGE_EDITING_DATA_SHAPE);
     super::DiscardImageEditingData {
         unknown: reader.finish(),
@@ -575,7 +565,7 @@ pub fn discard_image_editing_data(
 
 /// Read `w14:docId` into a `DocId`.
 #[must_use]
-pub fn doc_id(element: &xml::element::Element) -> super::DocId {
+pub fn doc_id(element: &Element) -> super::DocId {
     let mut node = super::DocId::default();
     let mut reader = markup::Reader::new(element, &super::DOC_ID_SHAPE);
     for (index, field) in &mut reader {
@@ -589,7 +579,7 @@ pub fn doc_id(element: &xml::element::Element) -> super::DocId {
 
 /// Read `w14:entityPicker` into a `EntityPicker`.
 #[must_use]
-pub fn entity_picker(element: &xml::element::Element) -> super::EntityPicker {
+pub fn entity_picker(element: &Element) -> super::EntityPicker {
     let reader = markup::Reader::new(element, &super::ENTITY_PICKER_SHAPE);
     super::EntityPicker {
         unknown: reader.finish(),
@@ -598,7 +588,7 @@ pub fn entity_picker(element: &xml::element::Element) -> super::EntityPicker {
 
 /// Read `w14:extLst` into a `ExtLst`.
 #[must_use]
-pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
+pub fn ext_lst(element: &Element) -> super::ExtLst {
     let mut node = super::ExtLst::default();
     let mut reader = markup::Reader::new(element, &super::EXT_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -612,7 +602,7 @@ pub fn ext_lst(element: &xml::element::Element) -> super::ExtLst {
 
 /// Read `w14:extrusionClr` into a `ExtrusionClr`.
 #[must_use]
-pub fn extrusion_clr(element: &xml::element::Element) -> super::ExtrusionClr {
+pub fn extrusion_clr(element: &Element) -> super::ExtrusionClr {
     let mut node = super::ExtrusionClr::default();
     let mut reader = markup::Reader::new(element, &super::EXTRUSION_CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -626,13 +616,13 @@ pub fn extrusion_clr(element: &xml::element::Element) -> super::ExtrusionClr {
 
 /// Read one item of `FillPropertiesContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn fill_properties(element: &xml::element::Element) -> super::FillPropertiesContent {
+pub fn fill_properties(element: &Element) -> super::FillPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w14:fillToRect` into a `FillToRect`.
 #[must_use]
-pub fn fill_to_rect(element: &xml::element::Element) -> super::FillToRect {
+pub fn fill_to_rect(element: &Element) -> super::FillToRect {
     let mut node = super::FillToRect::default();
     let mut reader = markup::Reader::new(element, &super::FILL_TO_RECT_SHAPE);
     for (index, field) in &mut reader {
@@ -650,7 +640,7 @@ pub fn fill_to_rect(element: &xml::element::Element) -> super::FillToRect {
 
 /// Read `w14:glow` into a `Glow`.
 #[must_use]
-pub fn glow(element: &xml::element::Element) -> super::Glow {
+pub fn glow(element: &Element) -> super::Glow {
     let mut node = super::Glow::default();
     let mut reader = markup::Reader::new(element, &super::GLOW_SHAPE);
     for (index, field) in &mut reader {
@@ -666,7 +656,7 @@ pub fn glow(element: &xml::element::Element) -> super::Glow {
 
 /// Read `w14:gradFill` into a `GradFill`.
 #[must_use]
-pub fn grad_fill(element: &xml::element::Element) -> super::GradFill {
+pub fn grad_fill(element: &Element) -> super::GradFill {
     let mut node = super::GradFill::default();
     let mut reader = markup::Reader::new(element, &super::GRAD_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -683,15 +673,13 @@ pub fn grad_fill(element: &xml::element::Element) -> super::GradFill {
 /// Read one item of `GradientFillPropertiesContent` from its element: the arm of its tag, or
 /// `Other`.
 #[must_use]
-pub fn gradient_fill_properties(
-    element: &xml::element::Element,
-) -> super::GradientFillPropertiesContent {
+pub fn gradient_fill_properties(element: &Element) -> super::GradientFillPropertiesContent {
     markup::read(element)
 }
 
 /// Read `w14:gs` into a `Gs`.
 #[must_use]
-pub fn gs(element: &xml::element::Element) -> super::Gs {
+pub fn gs(element: &Element) -> super::Gs {
     let mut node = super::Gs::default();
     let mut reader = markup::Reader::new(element, &super::GS_SHAPE);
     for (index, field) in &mut reader {
@@ -707,7 +695,7 @@ pub fn gs(element: &xml::element::Element) -> super::Gs {
 
 /// Read `w14:gsLst` into a `GsLst`.
 #[must_use]
-pub fn gs_lst(element: &xml::element::Element) -> super::GsLst {
+pub fn gs_lst(element: &Element) -> super::GsLst {
     let mut node = super::GsLst::default();
     let mut reader = markup::Reader::new(element, &super::GS_LST_SHAPE);
     for (index, field) in &mut reader {
@@ -721,7 +709,7 @@ pub fn gs_lst(element: &xml::element::Element) -> super::GsLst {
 
 /// Read `w14:hueMod` into a `HueMod`.
 #[must_use]
-pub fn hue_mod(element: &xml::element::Element) -> super::HueMod {
+pub fn hue_mod(element: &Element) -> super::HueMod {
     let mut node = super::HueMod::default();
     let mut reader = markup::Reader::new(element, &super::HUE_MOD_SHAPE);
     for (index, field) in &mut reader {
@@ -735,7 +723,7 @@ pub fn hue_mod(element: &xml::element::Element) -> super::HueMod {
 
 /// Read `w14:ligatures` into a `Ligatures`.
 #[must_use]
-pub fn ligatures(element: &xml::element::Element) -> super::Ligatures {
+pub fn ligatures(element: &Element) -> super::Ligatures {
     let mut node = super::Ligatures::default();
     let mut reader = markup::Reader::new(element, &super::LIGATURES_SHAPE);
     for (index, field) in &mut reader {
@@ -749,7 +737,7 @@ pub fn ligatures(element: &xml::element::Element) -> super::Ligatures {
 
 /// Read `w14:lightRig` into a `LightRig`.
 #[must_use]
-pub fn light_rig(element: &xml::element::Element) -> super::LightRig {
+pub fn light_rig(element: &Element) -> super::LightRig {
     let mut node = super::LightRig::default();
     let mut reader = markup::Reader::new(element, &super::LIGHT_RIG_SHAPE);
     for (index, field) in &mut reader {
@@ -766,7 +754,7 @@ pub fn light_rig(element: &xml::element::Element) -> super::LightRig {
 
 /// Read `w14:lin` into a `Lin`.
 #[must_use]
-pub fn lin(element: &xml::element::Element) -> super::Lin {
+pub fn lin(element: &Element) -> super::Lin {
     let mut node = super::Lin::default();
     let mut reader = markup::Reader::new(element, &super::LIN_SHAPE);
     for (index, field) in &mut reader {
@@ -782,13 +770,13 @@ pub fn lin(element: &xml::element::Element) -> super::Lin {
 
 /// Read one item of `LineJoinContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn line_join(element: &xml::element::Element) -> super::LineJoinContent {
+pub fn line_join(element: &Element) -> super::LineJoinContent {
     markup::read(element)
 }
 
 /// Read `w14:lum` into a `Lum`.
 #[must_use]
-pub fn lum(element: &xml::element::Element) -> super::Lum {
+pub fn lum(element: &Element) -> super::Lum {
     let reader = markup::Reader::new(element, &super::LUM_SHAPE);
     super::Lum {
         unknown: reader.finish(),
@@ -797,7 +785,7 @@ pub fn lum(element: &xml::element::Element) -> super::Lum {
 
 /// Read `w14:lumMod` into a `LumMod`.
 #[must_use]
-pub fn lum_mod(element: &xml::element::Element) -> super::LumMod {
+pub fn lum_mod(element: &Element) -> super::LumMod {
     let reader = markup::Reader::new(element, &super::LUM_MOD_SHAPE);
     super::LumMod {
         unknown: reader.finish(),
@@ -806,7 +794,7 @@ pub fn lum_mod(element: &xml::element::Element) -> super::LumMod {
 
 /// Read `w14:lumOff` into a `LumOff`.
 #[must_use]
-pub fn lum_off(element: &xml::element::Element) -> super::LumOff {
+pub fn lum_off(element: &Element) -> super::LumOff {
     let reader = markup::Reader::new(element, &super::LUM_OFF_SHAPE);
     super::LumOff {
         unknown: reader.finish(),
@@ -815,7 +803,7 @@ pub fn lum_off(element: &xml::element::Element) -> super::LumOff {
 
 /// Read `w14:miter` into a `Miter`.
 #[must_use]
-pub fn miter(element: &xml::element::Element) -> super::Miter {
+pub fn miter(element: &Element) -> super::Miter {
     let mut node = super::Miter::default();
     let mut reader = markup::Reader::new(element, &super::MITER_SHAPE);
     for (index, field) in &mut reader {
@@ -829,7 +817,7 @@ pub fn miter(element: &xml::element::Element) -> super::Miter {
 
 /// Read `w14:noFill` into a `NoFill`.
 #[must_use]
-pub fn no_fill(element: &xml::element::Element) -> super::NoFill {
+pub fn no_fill(element: &Element) -> super::NoFill {
     let reader = markup::Reader::new(element, &super::NO_FILL_SHAPE);
     super::NoFill {
         unknown: reader.finish(),
@@ -838,7 +826,7 @@ pub fn no_fill(element: &xml::element::Element) -> super::NoFill {
 
 /// Read `w14:numForm` into a `NumForm`.
 #[must_use]
-pub fn num_form(element: &xml::element::Element) -> super::NumForm {
+pub fn num_form(element: &Element) -> super::NumForm {
     let mut node = super::NumForm::default();
     let mut reader = markup::Reader::new(element, &super::NUM_FORM_SHAPE);
     for (index, field) in &mut reader {
@@ -852,7 +840,7 @@ pub fn num_form(element: &xml::element::Element) -> super::NumForm {
 
 /// Read `w14:numSpacing` into a `NumSpacing`.
 #[must_use]
-pub fn num_spacing(element: &xml::element::Element) -> super::NumSpacing {
+pub fn num_spacing(element: &Element) -> super::NumSpacing {
     let mut node = super::NumSpacing::default();
     let mut reader = markup::Reader::new(element, &super::NUM_SPACING_SHAPE);
     for (index, field) in &mut reader {
@@ -866,7 +854,7 @@ pub fn num_spacing(element: &xml::element::Element) -> super::NumSpacing {
 
 /// Read `w14:nvContentPartPr` into a `NvContentPartPr`.
 #[must_use]
-pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPartPr {
+pub fn nv_content_part_pr(element: &Element) -> super::NvContentPartPr {
     let mut node = super::NvContentPartPr::default();
     let mut reader = markup::Reader::new(element, &super::NV_CONTENT_PART_PR_SHAPE);
     for (index, field) in &mut reader {
@@ -882,7 +870,7 @@ pub fn nv_content_part_pr(element: &xml::element::Element) -> super::NvContentPa
 
 /// Read `w14:path` into a `Path`.
 #[must_use]
-pub fn path(element: &xml::element::Element) -> super::Path {
+pub fn path(element: &Element) -> super::Path {
     let mut node = super::Path::default();
     let mut reader = markup::Reader::new(element, &super::PATH_SHAPE);
     for (index, field) in &mut reader {
@@ -898,7 +886,7 @@ pub fn path(element: &xml::element::Element) -> super::Path {
 
 /// Read `w14:props3d` into a `Props3d`.
 #[must_use]
-pub fn props3d(element: &xml::element::Element) -> super::Props3d {
+pub fn props3d(element: &Element) -> super::Props3d {
     let mut node = super::Props3d::default();
     let mut reader = markup::Reader::new(element, &super::PROPS3D_SHAPE);
     for (index, field) in &mut reader {
@@ -919,7 +907,7 @@ pub fn props3d(element: &xml::element::Element) -> super::Props3d {
 
 /// Read `w14:prstDash` into a `PrstDash`.
 #[must_use]
-pub fn prst_dash(element: &xml::element::Element) -> super::PrstDash {
+pub fn prst_dash(element: &Element) -> super::PrstDash {
     let mut node = super::PrstDash::default();
     let mut reader = markup::Reader::new(element, &super::PRST_DASH_SHAPE);
     for (index, field) in &mut reader {
@@ -933,7 +921,7 @@ pub fn prst_dash(element: &xml::element::Element) -> super::PrstDash {
 
 /// Read `w14:reflection` into a `Reflection`.
 #[must_use]
-pub fn reflection(element: &xml::element::Element) -> super::Reflection {
+pub fn reflection(element: &Element) -> super::Reflection {
     let mut node = super::Reflection::default();
     let mut reader = markup::Reader::new(element, &super::REFLECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -960,7 +948,7 @@ pub fn reflection(element: &xml::element::Element) -> super::Reflection {
 
 /// Read `w14:rot` into a `Rot`.
 #[must_use]
-pub fn rot(element: &xml::element::Element) -> super::Rot {
+pub fn rot(element: &Element) -> super::Rot {
     let mut node = super::Rot::default();
     let mut reader = markup::Reader::new(element, &super::ROT_SHAPE);
     for (index, field) in &mut reader {
@@ -977,7 +965,7 @@ pub fn rot(element: &xml::element::Element) -> super::Rot {
 
 /// Read `w14:round` into a `Round`.
 #[must_use]
-pub fn round(element: &xml::element::Element) -> super::Round {
+pub fn round(element: &Element) -> super::Round {
     let reader = markup::Reader::new(element, &super::ROUND_SHAPE);
     super::Round {
         unknown: reader.finish(),
@@ -986,7 +974,7 @@ pub fn round(element: &xml::element::Element) -> super::Round {
 
 /// Read `w14:sat` into a `Sat`.
 #[must_use]
-pub fn sat(element: &xml::element::Element) -> super::Sat {
+pub fn sat(element: &Element) -> super::Sat {
     let reader = markup::Reader::new(element, &super::SAT_SHAPE);
     super::Sat {
         unknown: reader.finish(),
@@ -995,7 +983,7 @@ pub fn sat(element: &xml::element::Element) -> super::Sat {
 
 /// Read `w14:satMod` into a `SatMod`.
 #[must_use]
-pub fn sat_mod(element: &xml::element::Element) -> super::SatMod {
+pub fn sat_mod(element: &Element) -> super::SatMod {
     let reader = markup::Reader::new(element, &super::SAT_MOD_SHAPE);
     super::SatMod {
         unknown: reader.finish(),
@@ -1004,7 +992,7 @@ pub fn sat_mod(element: &xml::element::Element) -> super::SatMod {
 
 /// Read `w14:satOff` into a `SatOff`.
 #[must_use]
-pub fn sat_off(element: &xml::element::Element) -> super::SatOff {
+pub fn sat_off(element: &Element) -> super::SatOff {
     let reader = markup::Reader::new(element, &super::SAT_OFF_SHAPE);
     super::SatOff {
         unknown: reader.finish(),
@@ -1013,7 +1001,7 @@ pub fn sat_off(element: &xml::element::Element) -> super::SatOff {
 
 /// Read `w14:scene3d` into a `Scene3d`.
 #[must_use]
-pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
+pub fn scene3d(element: &Element) -> super::Scene3d {
     let mut node = super::Scene3d::default();
     let mut reader = markup::Reader::new(element, &super::SCENE3D_SHAPE);
     for (index, field) in &mut reader {
@@ -1029,7 +1017,7 @@ pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
 
 /// Read `w14:schemeClr` into a `SchemeClr`.
 #[must_use]
-pub fn scheme_clr(element: &xml::element::Element) -> super::SchemeClr {
+pub fn scheme_clr(element: &Element) -> super::SchemeClr {
     let mut node = super::SchemeClr::default();
     let mut reader = markup::Reader::new(element, &super::SCHEME_CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -1045,7 +1033,7 @@ pub fn scheme_clr(element: &xml::element::Element) -> super::SchemeClr {
 
 /// Read `w14:shade` into a `Shade`.
 #[must_use]
-pub fn shade(element: &xml::element::Element) -> super::Shade {
+pub fn shade(element: &Element) -> super::Shade {
     let reader = markup::Reader::new(element, &super::SHADE_SHAPE);
     super::Shade {
         unknown: reader.finish(),
@@ -1054,7 +1042,7 @@ pub fn shade(element: &xml::element::Element) -> super::Shade {
 
 /// Read `w14:shadow` into a `Shadow`.
 #[must_use]
-pub fn shadow(element: &xml::element::Element) -> super::Shadow {
+pub fn shadow(element: &Element) -> super::Shadow {
     let mut node = super::Shadow::default();
     let mut reader = markup::Reader::new(element, &super::SHADOW_SHAPE);
     for (index, field) in &mut reader {
@@ -1077,7 +1065,7 @@ pub fn shadow(element: &xml::element::Element) -> super::Shadow {
 
 /// Read `w14:solidFill` into a `SolidFill`.
 #[must_use]
-pub fn solid_fill(element: &xml::element::Element) -> super::SolidFill {
+pub fn solid_fill(element: &Element) -> super::SolidFill {
     let mut node = super::SolidFill::default();
     let mut reader = markup::Reader::new(element, &super::SOLID_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -1091,7 +1079,7 @@ pub fn solid_fill(element: &xml::element::Element) -> super::SolidFill {
 
 /// Read `w14:srgbClr` into a `SrgbClr`.
 #[must_use]
-pub fn srgb_clr(element: &xml::element::Element) -> super::SrgbClr {
+pub fn srgb_clr(element: &Element) -> super::SrgbClr {
     let mut node = super::SrgbClr::default();
     let mut reader = markup::Reader::new(element, &super::SRGB_CLR_SHAPE);
     for (index, field) in &mut reader {
@@ -1107,7 +1095,7 @@ pub fn srgb_clr(element: &xml::element::Element) -> super::SrgbClr {
 
 /// Read `w14:styleSet` into a `StyleSet`.
 #[must_use]
-pub fn style_set(element: &xml::element::Element) -> super::StyleSet {
+pub fn style_set(element: &Element) -> super::StyleSet {
     let mut node = super::StyleSet::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_SET_SHAPE);
     for (index, field) in &mut reader {
@@ -1123,7 +1111,7 @@ pub fn style_set(element: &xml::element::Element) -> super::StyleSet {
 
 /// Read `w14:stylisticSets` into a `StylisticSets`.
 #[must_use]
-pub fn stylistic_sets(element: &xml::element::Element) -> super::StylisticSets {
+pub fn stylistic_sets(element: &Element) -> super::StylisticSets {
     let mut node = super::StylisticSets::default();
     let mut reader = markup::Reader::new(element, &super::STYLISTIC_SETS_SHAPE);
     for (index, field) in &mut reader {
@@ -1137,7 +1125,7 @@ pub fn stylistic_sets(element: &xml::element::Element) -> super::StylisticSets {
 
 /// Read `w14:textFill` into a `TextFill`.
 #[must_use]
-pub fn text_fill(element: &xml::element::Element) -> super::TextFill {
+pub fn text_fill(element: &Element) -> super::TextFill {
     let mut node = super::TextFill::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_FILL_SHAPE);
     for (index, field) in &mut reader {
@@ -1151,7 +1139,7 @@ pub fn text_fill(element: &xml::element::Element) -> super::TextFill {
 
 /// Read `w14:textOutline` into a `TextOutline`.
 #[must_use]
-pub fn text_outline(element: &xml::element::Element) -> super::TextOutline {
+pub fn text_outline(element: &Element) -> super::TextOutline {
     let mut node = super::TextOutline::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_OUTLINE_SHAPE);
     for (index, field) in &mut reader {
@@ -1172,7 +1160,7 @@ pub fn text_outline(element: &xml::element::Element) -> super::TextOutline {
 
 /// Read `w14:tint` into a `Tint`.
 #[must_use]
-pub fn tint(element: &xml::element::Element) -> super::Tint {
+pub fn tint(element: &Element) -> super::Tint {
     let reader = markup::Reader::new(element, &super::TINT_SHAPE);
     super::Tint {
         unknown: reader.finish(),
@@ -1181,7 +1169,7 @@ pub fn tint(element: &xml::element::Element) -> super::Tint {
 
 /// Read `w14:uncheckedState` into a `UncheckedState`.
 #[must_use]
-pub fn unchecked_state(element: &xml::element::Element) -> super::UncheckedState {
+pub fn unchecked_state(element: &Element) -> super::UncheckedState {
     let reader = markup::Reader::new(element, &super::UNCHECKED_STATE_SHAPE);
     super::UncheckedState {
         unknown: reader.finish(),
@@ -1190,7 +1178,7 @@ pub fn unchecked_state(element: &xml::element::Element) -> super::UncheckedState
 
 /// Read `w14:xfrm` into a `Xfrm`.
 #[must_use]
-pub fn xfrm(element: &xml::element::Element) -> super::Xfrm {
+pub fn xfrm(element: &Element) -> super::Xfrm {
     let mut node = super::Xfrm::default();
     let mut reader = markup::Reader::new(element, &super::XFRM_SHAPE);
     for (index, field) in &mut reader {

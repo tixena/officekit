@@ -213,11 +213,11 @@
 //! element, its unknown content kept at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
 
 /// Read `dgm:alg` into a `Algorithm`.
 #[must_use]
-pub fn algorithm(element: &xml::element::Element) -> super::Algorithm {
+pub fn algorithm(element: &Element) -> super::Algorithm {
     let mut node = super::Algorithm::default();
     let mut reader = markup::Reader::new(element, &super::ALGORITHM_SHAPE);
     for (index, field) in &mut reader {
@@ -235,7 +235,7 @@ pub fn algorithm(element: &xml::element::Element) -> super::Algorithm {
 
 /// Read `dgm:bg` into a `BackgroundFormatting`.
 #[must_use]
-pub fn background_formatting(element: &xml::element::Element) -> super::BackgroundFormatting {
+pub fn background_formatting(element: &Element) -> super::BackgroundFormatting {
     let mut node = super::BackgroundFormatting::default();
     let mut reader = markup::Reader::new(element, &super::BACKGROUND_FORMATTING_SHAPE);
     for (index, field) in &mut reader {
@@ -251,7 +251,7 @@ pub fn background_formatting(element: &xml::element::Element) -> super::Backgrou
 
 /// Read `dgm:cat` into a `Category`.
 #[must_use]
-pub fn category(element: &xml::element::Element) -> super::Category {
+pub fn category(element: &Element) -> super::Category {
     let mut node = super::Category::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_SHAPE);
     for (index, field) in &mut reader {
@@ -267,7 +267,7 @@ pub fn category(element: &xml::element::Element) -> super::Category {
 
 /// Read `dgm:catLst` into a `CategoryList`.
 #[must_use]
-pub fn category_list(element: &xml::element::Element) -> super::CategoryList {
+pub fn category_list(element: &Element) -> super::CategoryList {
     let mut node = super::CategoryList::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -281,9 +281,7 @@ pub fn category_list(element: &xml::element::Element) -> super::CategoryList {
 
 /// Read `dgm:catLst` into a `CategoryListSDCategories`.
 #[must_use]
-pub fn category_list_sd_categories(
-    element: &xml::element::Element,
-) -> super::CategoryListSDCategories {
+pub fn category_list_sd_categories(element: &Element) -> super::CategoryListSDCategories {
     let mut node = super::CategoryListSDCategories::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_LIST_SD_CATEGORIES_SHAPE);
     for (index, field) in &mut reader {
@@ -297,7 +295,7 @@ pub fn category_list_sd_categories(
 
 /// Read `dgm:cat` into a `CategorySDCategory`.
 #[must_use]
-pub fn category_sd_category(element: &xml::element::Element) -> super::CategorySDCategory {
+pub fn category_sd_category(element: &Element) -> super::CategorySDCategory {
     let mut node = super::CategorySDCategory::default();
     let mut reader = markup::Reader::new(element, &super::CATEGORY_SD_CATEGORY_SHAPE);
     for (index, field) in &mut reader {
@@ -313,7 +311,7 @@ pub fn category_sd_category(element: &xml::element::Element) -> super::CategoryS
 
 /// Read `dgm:choose` into a `ChooseElement`.
 #[must_use]
-pub fn choose_element(element: &xml::element::Element) -> super::ChooseElement {
+pub fn choose_element(element: &Element) -> super::ChooseElement {
     let mut node = super::ChooseElement::default();
     let mut reader = markup::Reader::new(element, &super::CHOOSE_ELEMENT_SHAPE);
     for (index, field) in &mut reader {
@@ -330,7 +328,7 @@ pub fn choose_element(element: &xml::element::Element) -> super::ChooseElement {
 
 /// Read `dgm:cat` into a `ColorTransformCategory`.
 #[must_use]
-pub fn color_transform_category(element: &xml::element::Element) -> super::ColorTransformCategory {
+pub fn color_transform_category(element: &Element) -> super::ColorTransformCategory {
     let mut node = super::ColorTransformCategory::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_CATEGORY_SHAPE);
     for (index, field) in &mut reader {
@@ -346,9 +344,7 @@ pub fn color_transform_category(element: &xml::element::Element) -> super::Color
 
 /// Read `dgm:catLst` into a `ColorTransformCategoryList`.
 #[must_use]
-pub fn color_transform_category_list(
-    element: &xml::element::Element,
-) -> super::ColorTransformCategoryList {
+pub fn color_transform_category_list(element: &Element) -> super::ColorTransformCategoryList {
     let mut node = super::ColorTransformCategoryList::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_CATEGORY_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -363,7 +359,7 @@ pub fn color_transform_category_list(
 /// Read `dgm:colorsDefHdr` into a `ColorTransformDefinitionHeader`.
 #[must_use]
 pub fn color_transform_definition_header(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ColorTransformDefinitionHeader {
     let mut node = super::ColorTransformDefinitionHeader::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE);
@@ -385,9 +381,7 @@ pub fn color_transform_definition_header(
 
 /// Read `dgm:colorsDef` into a `ColorTransformDefinitions`.
 #[must_use]
-pub fn color_transform_definitions(
-    element: &xml::element::Element,
-) -> super::ColorTransformDefinitions {
+pub fn color_transform_definitions(element: &Element) -> super::ColorTransformDefinitions {
     let mut node = super::ColorTransformDefinitions::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_DEFINITIONS_SHAPE);
     for (index, field) in &mut reader {
@@ -408,9 +402,7 @@ pub fn color_transform_definitions(
 
 /// Read `dgm:colorsDefHdrLst` into a `ColorTransformHeaderList`.
 #[must_use]
-pub fn color_transform_header_list(
-    element: &xml::element::Element,
-) -> super::ColorTransformHeaderList {
+pub fn color_transform_header_list(element: &Element) -> super::ColorTransformHeaderList {
     let mut node = super::ColorTransformHeaderList::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_HEADER_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -424,9 +416,7 @@ pub fn color_transform_header_list(
 
 /// Read `dgm:clrData` into a `ColorTransformSampleData`.
 #[must_use]
-pub fn color_transform_sample_data(
-    element: &xml::element::Element,
-) -> super::ColorTransformSampleData {
+pub fn color_transform_sample_data(element: &Element) -> super::ColorTransformSampleData {
     let mut node = super::ColorTransformSampleData::default();
     let mut reader = markup::Reader::new(element, &super::COLOR_TRANSFORM_SAMPLE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -442,7 +432,7 @@ pub fn color_transform_sample_data(
 
 /// Read `dgm:cxn` into a `Connection`.
 #[must_use]
-pub fn connection(element: &xml::element::Element) -> super::Connection {
+pub fn connection(element: &Element) -> super::Connection {
     let mut node = super::Connection::default();
     let mut reader = markup::Reader::new(element, &super::CONNECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -466,7 +456,7 @@ pub fn connection(element: &xml::element::Element) -> super::Connection {
 
 /// Read `dgm:cxnLst` into a `ConnectionList`.
 #[must_use]
-pub fn connection_list(element: &xml::element::Element) -> super::ConnectionList {
+pub fn connection_list(element: &Element) -> super::ConnectionList {
     let mut node = super::ConnectionList::default();
     let mut reader = markup::Reader::new(element, &super::CONNECTION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -480,7 +470,7 @@ pub fn connection_list(element: &xml::element::Element) -> super::ConnectionList
 
 /// Read `dgm:constr` into a `Constraint`.
 #[must_use]
-pub fn constraint(element: &xml::element::Element) -> super::Constraint {
+pub fn constraint(element: &Element) -> super::Constraint {
     let mut node = super::Constraint::default();
     let mut reader = markup::Reader::new(element, &super::CONSTRAINT_SHAPE);
     for (index, field) in &mut reader {
@@ -506,7 +496,7 @@ pub fn constraint(element: &xml::element::Element) -> super::Constraint {
 
 /// Read `dgm:constrLst` into a `ConstraintList`.
 #[must_use]
-pub fn constraint_list(element: &xml::element::Element) -> super::ConstraintList {
+pub fn constraint_list(element: &Element) -> super::ConstraintList {
     let mut node = super::ConstraintList::default();
     let mut reader = markup::Reader::new(element, &super::CONSTRAINT_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -520,7 +510,7 @@ pub fn constraint_list(element: &xml::element::Element) -> super::ConstraintList
 
 /// Read `dgm:dataModel` into a `DataModel`.
 #[must_use]
-pub fn data_model(element: &xml::element::Element) -> super::DataModel {
+pub fn data_model(element: &Element) -> super::DataModel {
     let mut node = super::DataModel::default();
     let mut reader = markup::Reader::new(element, &super::DATA_MODEL_SHAPE);
     for (index, field) in &mut reader {
@@ -539,7 +529,7 @@ pub fn data_model(element: &xml::element::Element) -> super::DataModel {
 
 /// Read `dgm:desc` into a `Description`.
 #[must_use]
-pub fn description(element: &xml::element::Element) -> super::Description {
+pub fn description(element: &Element) -> super::Description {
     let mut node = super::Description::default();
     let mut reader = markup::Reader::new(element, &super::DESCRIPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -555,9 +545,7 @@ pub fn description(element: &xml::element::Element) -> super::Description {
 
 /// Read `dgm:desc` into a `DescriptionCTDescription`.
 #[must_use]
-pub fn description_ct_description(
-    element: &xml::element::Element,
-) -> super::DescriptionCTDescription {
+pub fn description_ct_description(element: &Element) -> super::DescriptionCTDescription {
     let mut node = super::DescriptionCTDescription::default();
     let mut reader = markup::Reader::new(element, &super::DESCRIPTION_CT_DESCRIPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -573,7 +561,7 @@ pub fn description_ct_description(
 
 /// Read `dgm:dir` into a `DiagramDirection`.
 #[must_use]
-pub fn diagram_direction(element: &xml::element::Element) -> super::DiagramDirection {
+pub fn diagram_direction(element: &Element) -> super::DiagramDirection {
     let mut node = super::DiagramDirection::default();
     let mut reader = markup::Reader::new(element, &super::DIAGRAM_DIRECTION_SHAPE);
     for (index, field) in &mut reader {
@@ -587,9 +575,7 @@ pub fn diagram_direction(element: &xml::element::Element) -> super::DiagramDirec
 
 /// Read `dgm:layoutDefHdrLst` into a `DiagramLayoutHeaderList`.
 #[must_use]
-pub fn diagram_layout_header_list(
-    element: &xml::element::Element,
-) -> super::DiagramLayoutHeaderList {
+pub fn diagram_layout_header_list(element: &Element) -> super::DiagramLayoutHeaderList {
     let mut node = super::DiagramLayoutHeaderList::default();
     let mut reader = markup::Reader::new(element, &super::DIAGRAM_LAYOUT_HEADER_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -603,7 +589,7 @@ pub fn diagram_layout_header_list(
 
 /// Read `dgm:effectClrLst` into a `EffectColorList`.
 #[must_use]
-pub fn effect_color_list(element: &xml::element::Element) -> super::EffectColorList {
+pub fn effect_color_list(element: &Element) -> super::EffectColorList {
     let mut node = super::EffectColorList::default();
     let mut reader = markup::Reader::new(element, &super::EFFECT_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -620,7 +606,7 @@ pub fn effect_color_list(element: &xml::element::Element) -> super::EffectColorL
 
 /// Read `dgm:else` into a `Else`.
 #[must_use]
-pub fn r#else(element: &xml::element::Element) -> super::Else {
+pub fn r#else(element: &Element) -> super::Else {
     let mut node = super::Else::default();
     let mut reader = markup::Reader::new(element, &super::ELSE_SHAPE);
     for (index, field) in &mut reader {
@@ -637,7 +623,7 @@ pub fn r#else(element: &xml::element::Element) -> super::Else {
 /// Read `dgm:relIds` into a `ExplicitRelationshipsToDiagramParts`.
 #[must_use]
 pub fn explicit_relationships_to_diagram_parts(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ExplicitRelationshipsToDiagramParts {
     let mut node = super::ExplicitRelationshipsToDiagramParts::default();
     let mut reader = markup::Reader::new(
@@ -659,7 +645,7 @@ pub fn explicit_relationships_to_diagram_parts(
 
 /// Read `dgm:extLst` into a `ExtensionList`.
 #[must_use]
-pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
+pub fn extension_list(element: &Element) -> super::ExtensionList {
     let mut node = super::ExtensionList::default();
     let mut reader = markup::Reader::new(element, &super::EXTENSION_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -673,7 +659,7 @@ pub fn extension_list(element: &xml::element::Element) -> super::ExtensionList {
 
 /// Read `dgm:fillClrLst` into a `FillColorList`.
 #[must_use]
-pub fn fill_color_list(element: &xml::element::Element) -> super::FillColorList {
+pub fn fill_color_list(element: &Element) -> super::FillColorList {
     let mut node = super::FillColorList::default();
     let mut reader = markup::Reader::new(element, &super::FILL_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -690,7 +676,7 @@ pub fn fill_color_list(element: &xml::element::Element) -> super::FillColorList 
 
 /// Read `dgm:forEach` into a `ForEach`.
 #[must_use]
-pub fn for_each(element: &xml::element::Element) -> super::ForEach {
+pub fn for_each(element: &Element) -> super::ForEach {
     let mut node = super::ForEach::default();
     let mut reader = markup::Reader::new(element, &super::FOR_EACH_SHAPE);
     for (index, field) in &mut reader {
@@ -713,7 +699,7 @@ pub fn for_each(element: &xml::element::Element) -> super::ForEach {
 
 /// Read `dgm:if` into a `If`.
 #[must_use]
-pub fn r#if(element: &xml::element::Element) -> super::If {
+pub fn r#if(element: &Element) -> super::If {
     let mut node = super::If::default();
     let mut reader = markup::Reader::new(element, &super::IF_SHAPE);
     for (index, field) in &mut reader {
@@ -739,7 +725,7 @@ pub fn r#if(element: &xml::element::Element) -> super::If {
 
 /// Read `dgm:layoutDef` into a `LayoutDefinition`.
 #[must_use]
-pub fn layout_definition(element: &xml::element::Element) -> super::LayoutDefinition {
+pub fn layout_definition(element: &Element) -> super::LayoutDefinition {
     let mut node = super::LayoutDefinition::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -764,7 +750,7 @@ pub fn layout_definition(element: &xml::element::Element) -> super::LayoutDefini
 
 /// Read `dgm:layoutDefHdr` into a `LayoutDefinitionHeader`.
 #[must_use]
-pub fn layout_definition_header(element: &xml::element::Element) -> super::LayoutDefinitionHeader {
+pub fn layout_definition_header(element: &Element) -> super::LayoutDefinitionHeader {
     let mut node = super::LayoutDefinitionHeader::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_DEFINITION_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -786,13 +772,13 @@ pub fn layout_definition_header(element: &xml::element::Element) -> super::Layou
 
 /// Read one item of `LayoutElementContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn layout_element(element: &xml::element::Element) -> super::LayoutElementContent {
+pub fn layout_element(element: &Element) -> super::LayoutElementContent {
     markup::read(element)
 }
 
 /// Read `dgm:layoutNode` into a `LayoutNode`.
 #[must_use]
-pub fn layout_node(element: &xml::element::Element) -> super::LayoutNode {
+pub fn layout_node(element: &Element) -> super::LayoutNode {
     let mut node = super::LayoutNode::default();
     let mut reader = markup::Reader::new(element, &super::LAYOUT_NODE_SHAPE);
     for (index, field) in &mut reader {
@@ -811,13 +797,13 @@ pub fn layout_node(element: &xml::element::Element) -> super::LayoutNode {
 
 /// Read one item of `LayoutNodeContent` from its element: the arm of its tag, or `Other`.
 #[must_use]
-pub fn layout_node_content(element: &xml::element::Element) -> super::LayoutNodeContent {
+pub fn layout_node_content(element: &Element) -> super::LayoutNodeContent {
     markup::read(element)
 }
 
 /// Read `dgm:animLvl` into a `LevelAnimation`.
 #[must_use]
-pub fn level_animation(element: &xml::element::Element) -> super::LevelAnimation {
+pub fn level_animation(element: &Element) -> super::LevelAnimation {
     let mut node = super::LevelAnimation::default();
     let mut reader = markup::Reader::new(element, &super::LEVEL_ANIMATION_SHAPE);
     for (index, field) in &mut reader {
@@ -831,7 +817,7 @@ pub fn level_animation(element: &xml::element::Element) -> super::LevelAnimation
 
 /// Read `dgm:linClrLst` into a `LineColorList`.
 #[must_use]
-pub fn line_color_list(element: &xml::element::Element) -> super::LineColorList {
+pub fn line_color_list(element: &Element) -> super::LineColorList {
     let mut node = super::LineColorList::default();
     let mut reader = markup::Reader::new(element, &super::LINE_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -848,9 +834,7 @@ pub fn line_color_list(element: &xml::element::Element) -> super::LineColorList 
 
 /// Read `dgm:styleDefHdrLst` into a `ListOfStyleDefinitionHeaders`.
 #[must_use]
-pub fn list_of_style_definition_headers(
-    element: &xml::element::Element,
-) -> super::ListOfStyleDefinitionHeaders {
+pub fn list_of_style_definition_headers(element: &Element) -> super::ListOfStyleDefinitionHeaders {
     let mut node = super::ListOfStyleDefinitionHeaders::default();
     let mut reader = markup::Reader::new(element, &super::LIST_OF_STYLE_DEFINITION_HEADERS_SHAPE);
     for (index, field) in &mut reader {
@@ -864,7 +848,7 @@ pub fn list_of_style_definition_headers(
 
 /// Read `dgm:chMax` into a `MaximumChildren`.
 #[must_use]
-pub fn maximum_children(element: &xml::element::Element) -> super::MaximumChildren {
+pub fn maximum_children(element: &Element) -> super::MaximumChildren {
     let mut node = super::MaximumChildren::default();
     let mut reader = markup::Reader::new(element, &super::MAXIMUM_CHILDREN_SHAPE);
     for (index, field) in &mut reader {
@@ -878,9 +862,7 @@ pub fn maximum_children(element: &xml::element::Element) -> super::MaximumChildr
 
 /// Read `dgm:animOne` into a `OneByOneAnimationString`.
 #[must_use]
-pub fn one_by_one_animation_string(
-    element: &xml::element::Element,
-) -> super::OneByOneAnimationString {
+pub fn one_by_one_animation_string(element: &Element) -> super::OneByOneAnimationString {
     let mut node = super::OneByOneAnimationString::default();
     let mut reader = markup::Reader::new(element, &super::ONE_BY_ONE_ANIMATION_STRING_SHAPE);
     for (index, field) in &mut reader {
@@ -894,9 +876,7 @@ pub fn one_by_one_animation_string(
 
 /// Read `dgm:hierBranch` into a `OrganizationChartBranchStyle`.
 #[must_use]
-pub fn organization_chart_branch_style(
-    element: &xml::element::Element,
-) -> super::OrganizationChartBranchStyle {
+pub fn organization_chart_branch_style(element: &Element) -> super::OrganizationChartBranchStyle {
     let mut node = super::OrganizationChartBranchStyle::default();
     let mut reader = markup::Reader::new(element, &super::ORGANIZATION_CHART_BRANCH_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -910,7 +890,7 @@ pub fn organization_chart_branch_style(
 
 /// Read `dgm:param` into a `Parameter`.
 #[must_use]
-pub fn parameter(element: &xml::element::Element) -> super::Parameter {
+pub fn parameter(element: &Element) -> super::Parameter {
     let mut node = super::Parameter::default();
     let mut reader = markup::Reader::new(element, &super::PARAMETER_SHAPE);
     for (index, field) in &mut reader {
@@ -926,7 +906,7 @@ pub fn parameter(element: &xml::element::Element) -> super::Parameter {
 
 /// Read `dgm:pt` into a `Point`.
 #[must_use]
-pub fn point(element: &xml::element::Element) -> super::Point {
+pub fn point(element: &Element) -> super::Point {
     let mut node = super::Point::default();
     let mut reader = markup::Reader::new(element, &super::POINT_SHAPE);
     for (index, field) in &mut reader {
@@ -947,7 +927,7 @@ pub fn point(element: &xml::element::Element) -> super::Point {
 
 /// Read `dgm:ptLst` into a `PointList`.
 #[must_use]
-pub fn point_list(element: &xml::element::Element) -> super::PointList {
+pub fn point_list(element: &Element) -> super::PointList {
     let mut node = super::PointList::default();
     let mut reader = markup::Reader::new(element, &super::POINT_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -961,9 +941,7 @@ pub fn point_list(element: &xml::element::Element) -> super::PointList {
 
 /// Read `dgm:chPref` into a `PreferredNumberOfChildren`.
 #[must_use]
-pub fn preferred_number_of_children(
-    element: &xml::element::Element,
-) -> super::PreferredNumberOfChildren {
+pub fn preferred_number_of_children(element: &Element) -> super::PreferredNumberOfChildren {
     let mut node = super::PreferredNumberOfChildren::default();
     let mut reader = markup::Reader::new(element, &super::PREFERRED_NUMBER_OF_CHILDREN_SHAPE);
     for (index, field) in &mut reader {
@@ -977,9 +955,7 @@ pub fn preferred_number_of_children(
 
 /// Read `dgm:presLayoutVars` into a `PresentationLayoutVariables`.
 #[must_use]
-pub fn presentation_layout_variables(
-    element: &xml::element::Element,
-) -> super::PresentationLayoutVariables {
+pub fn presentation_layout_variables(element: &Element) -> super::PresentationLayoutVariables {
     let mut node = super::PresentationLayoutVariables::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_LAYOUT_VARIABLES_SHAPE);
     for (index, field) in &mut reader {
@@ -1002,7 +978,7 @@ pub fn presentation_layout_variables(
 
 /// Read `dgm:presOf` into a `PresentationOf`.
 #[must_use]
-pub fn presentation_of(element: &xml::element::Element) -> super::PresentationOf {
+pub fn presentation_of(element: &Element) -> super::PresentationOf {
     let mut node = super::PresentationOf::default();
     let mut reader = markup::Reader::new(element, &super::PRESENTATION_OF_SHAPE);
     for (index, field) in &mut reader {
@@ -1023,7 +999,7 @@ pub fn presentation_of(element: &xml::element::Element) -> super::PresentationOf
 
 /// Read `dgm:prSet` into a `PropertySet`.
 #[must_use]
-pub fn property_set(element: &xml::element::Element) -> super::PropertySet {
+pub fn property_set(element: &Element) -> super::PropertySet {
     let mut node = super::PropertySet::default();
     let mut reader = markup::Reader::new(element, &super::PROPERTY_SET_SHAPE);
     for (index, field) in &mut reader {
@@ -1067,7 +1043,7 @@ pub fn property_set(element: &xml::element::Element) -> super::PropertySet {
 
 /// Read `dgm:rule` into a `Rule`.
 #[must_use]
-pub fn rule(element: &xml::element::Element) -> super::Rule {
+pub fn rule(element: &Element) -> super::Rule {
     let mut node = super::Rule::default();
     let mut reader = markup::Reader::new(element, &super::RULE_SHAPE);
     for (index, field) in &mut reader {
@@ -1089,7 +1065,7 @@ pub fn rule(element: &xml::element::Element) -> super::Rule {
 
 /// Read `dgm:ruleLst` into a `RuleList`.
 #[must_use]
-pub fn rule_list(element: &xml::element::Element) -> super::RuleList {
+pub fn rule_list(element: &Element) -> super::RuleList {
     let mut node = super::RuleList::default();
     let mut reader = markup::Reader::new(element, &super::RULE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1103,7 +1079,7 @@ pub fn rule_list(element: &xml::element::Element) -> super::RuleList {
 
 /// Read `dgm:sampData` into a `SampleData`.
 #[must_use]
-pub fn sample_data(element: &xml::element::Element) -> super::SampleData {
+pub fn sample_data(element: &Element) -> super::SampleData {
     let mut node = super::SampleData::default();
     let mut reader = markup::Reader::new(element, &super::SAMPLE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1119,7 +1095,7 @@ pub fn sample_data(element: &xml::element::Element) -> super::SampleData {
 
 /// Read `dgm:scene3d` into a `Scene3d`.
 #[must_use]
-pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
+pub fn scene3d(element: &Element) -> super::Scene3d {
     let mut node = super::Scene3d::default();
     let mut reader = markup::Reader::new(element, &super::SCENE3D_SHAPE);
     for (index, field) in &mut reader {
@@ -1137,7 +1113,7 @@ pub fn scene3d(element: &xml::element::Element) -> super::Scene3d {
 
 /// Read `dgm:shape` into a `Shape`.
 #[must_use]
-pub fn shape(element: &xml::element::Element) -> super::Shape {
+pub fn shape(element: &Element) -> super::Shape {
     let mut node = super::Shape::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_SHAPE);
     for (index, field) in &mut reader {
@@ -1160,7 +1136,7 @@ pub fn shape(element: &xml::element::Element) -> super::Shape {
 
 /// Read `dgm:adj` into a `ShapeAdjust`.
 #[must_use]
-pub fn shape_adjust(element: &xml::element::Element) -> super::ShapeAdjust {
+pub fn shape_adjust(element: &Element) -> super::ShapeAdjust {
     let mut node = super::ShapeAdjust::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_ADJUST_SHAPE);
     for (index, field) in &mut reader {
@@ -1176,7 +1152,7 @@ pub fn shape_adjust(element: &xml::element::Element) -> super::ShapeAdjust {
 
 /// Read `dgm:adjLst` into a `ShapeAdjustList`.
 #[must_use]
-pub fn shape_adjust_list(element: &xml::element::Element) -> super::ShapeAdjustList {
+pub fn shape_adjust_list(element: &Element) -> super::ShapeAdjustList {
     let mut node = super::ShapeAdjustList::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_ADJUST_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1190,7 +1166,7 @@ pub fn shape_adjust_list(element: &xml::element::Element) -> super::ShapeAdjustL
 
 /// Read `dgm:spPr` into a `ShapeProperties`.
 #[must_use]
-pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperties {
+pub fn shape_properties(element: &Element) -> super::ShapeProperties {
     let mut node = super::ShapeProperties::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1213,7 +1189,7 @@ pub fn shape_properties(element: &xml::element::Element) -> super::ShapeProperti
 
 /// Read `dgm:resizeHandles` into a `ShapeResizeStyle`.
 #[must_use]
-pub fn shape_resize_style(element: &xml::element::Element) -> super::ShapeResizeStyle {
+pub fn shape_resize_style(element: &Element) -> super::ShapeResizeStyle {
     let mut node = super::ShapeResizeStyle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_RESIZE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1227,7 +1203,7 @@ pub fn shape_resize_style(element: &xml::element::Element) -> super::ShapeResize
 
 /// Read `dgm:style` into a `ShapeStyle`.
 #[must_use]
-pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
+pub fn shape_style(element: &Element) -> super::ShapeStyle {
     let mut node = super::ShapeStyle::default();
     let mut reader = markup::Reader::new(element, &super::SHAPE_STYLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1245,7 +1221,7 @@ pub fn shape_style(element: &xml::element::Element) -> super::ShapeStyle {
 
 /// Read `dgm:bulletEnabled` into a `ShowInsertNode`.
 #[must_use]
-pub fn show_insert_node(element: &xml::element::Element) -> super::ShowInsertNode {
+pub fn show_insert_node(element: &Element) -> super::ShowInsertNode {
     let mut node = super::ShowInsertNode::default();
     let mut reader = markup::Reader::new(element, &super::SHOW_INSERT_NODE_SHAPE);
     for (index, field) in &mut reader {
@@ -1260,7 +1236,7 @@ pub fn show_insert_node(element: &xml::element::Element) -> super::ShowInsertNod
 /// Read `dgm:orgChart` into a `ShowOrganizationChartUserInterface`.
 #[must_use]
 pub fn show_organization_chart_user_interface(
-    element: &xml::element::Element,
+    element: &Element,
 ) -> super::ShowOrganizationChartUserInterface {
     let mut node = super::ShowOrganizationChartUserInterface::default();
     let mut reader = markup::Reader::new(
@@ -1278,7 +1254,7 @@ pub fn show_organization_chart_user_interface(
 
 /// Read `dgm:sp3d` into a `Sp3d`.
 #[must_use]
-pub fn sp3d(element: &xml::element::Element) -> super::Sp3d {
+pub fn sp3d(element: &Element) -> super::Sp3d {
     let mut node = super::Sp3d::default();
     let mut reader = markup::Reader::new(element, &super::SP3D_SHAPE);
     for (index, field) in &mut reader {
@@ -1301,7 +1277,7 @@ pub fn sp3d(element: &xml::element::Element) -> super::Sp3d {
 
 /// Read `dgm:styleData` into a `StyleData`.
 #[must_use]
-pub fn style_data(element: &xml::element::Element) -> super::StyleData {
+pub fn style_data(element: &Element) -> super::StyleData {
     let mut node = super::StyleData::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_DATA_SHAPE);
     for (index, field) in &mut reader {
@@ -1317,7 +1293,7 @@ pub fn style_data(element: &xml::element::Element) -> super::StyleData {
 
 /// Read `dgm:styleDef` into a `StyleDefinition`.
 #[must_use]
-pub fn style_definition(element: &xml::element::Element) -> super::StyleDefinition {
+pub fn style_definition(element: &Element) -> super::StyleDefinition {
     let mut node = super::StyleDefinition::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_DEFINITION_SHAPE);
     for (index, field) in &mut reader {
@@ -1339,7 +1315,7 @@ pub fn style_definition(element: &xml::element::Element) -> super::StyleDefiniti
 
 /// Read `dgm:styleDefHdr` into a `StyleDefinitionHeader`.
 #[must_use]
-pub fn style_definition_header(element: &xml::element::Element) -> super::StyleDefinitionHeader {
+pub fn style_definition_header(element: &Element) -> super::StyleDefinitionHeader {
     let mut node = super::StyleDefinitionHeader::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_DEFINITION_HEADER_SHAPE);
     for (index, field) in &mut reader {
@@ -1360,7 +1336,7 @@ pub fn style_definition_header(element: &xml::element::Element) -> super::StyleD
 
 /// Read `dgm:styleLbl` into a `StyleLabel`.
 #[must_use]
-pub fn style_label(element: &xml::element::Element) -> super::StyleLabel {
+pub fn style_label(element: &Element) -> super::StyleLabel {
     let mut node = super::StyleLabel::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -1382,7 +1358,7 @@ pub fn style_label(element: &xml::element::Element) -> super::StyleLabel {
 
 /// Read `dgm:desc` into a `StyleLabelDescription`.
 #[must_use]
-pub fn style_label_description(element: &xml::element::Element) -> super::StyleLabelDescription {
+pub fn style_label_description(element: &Element) -> super::StyleLabelDescription {
     let mut node = super::StyleLabelDescription::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_LABEL_DESCRIPTION_SHAPE);
     for (index, field) in &mut reader {
@@ -1398,7 +1374,7 @@ pub fn style_label_description(element: &xml::element::Element) -> super::StyleL
 
 /// Read `dgm:styleLbl` into a `StyleLabelStyleLabel`.
 #[must_use]
-pub fn style_label_style_label(element: &xml::element::Element) -> super::StyleLabelStyleLabel {
+pub fn style_label_style_label(element: &Element) -> super::StyleLabelStyleLabel {
     let mut node = super::StyleLabelStyleLabel::default();
     let mut reader = markup::Reader::new(element, &super::STYLE_LABEL_STYLE_LABEL_SHAPE);
     for (index, field) in &mut reader {
@@ -1418,7 +1394,7 @@ pub fn style_label_style_label(element: &xml::element::Element) -> super::StyleL
 
 /// Read `dgm:t` into a `TextBody`.
 #[must_use]
-pub fn text_body(element: &xml::element::Element) -> super::TextBody {
+pub fn text_body(element: &Element) -> super::TextBody {
     let mut node = super::TextBody::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_BODY_SHAPE);
     for (index, field) in &mut reader {
@@ -1435,7 +1411,7 @@ pub fn text_body(element: &xml::element::Element) -> super::TextBody {
 
 /// Read `dgm:txEffectClrLst` into a `TextEffectColorList`.
 #[must_use]
-pub fn text_effect_color_list(element: &xml::element::Element) -> super::TextEffectColorList {
+pub fn text_effect_color_list(element: &Element) -> super::TextEffectColorList {
     let mut node = super::TextEffectColorList::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_EFFECT_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1452,7 +1428,7 @@ pub fn text_effect_color_list(element: &xml::element::Element) -> super::TextEff
 
 /// Read `dgm:txFillClrLst` into a `TextFillColorList`.
 #[must_use]
-pub fn text_fill_color_list(element: &xml::element::Element) -> super::TextFillColorList {
+pub fn text_fill_color_list(element: &Element) -> super::TextFillColorList {
     let mut node = super::TextFillColorList::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_FILL_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1469,7 +1445,7 @@ pub fn text_fill_color_list(element: &xml::element::Element) -> super::TextFillC
 
 /// Read `dgm:txLinClrLst` into a `TextLineColorList`.
 #[must_use]
-pub fn text_line_color_list(element: &xml::element::Element) -> super::TextLineColorList {
+pub fn text_line_color_list(element: &Element) -> super::TextLineColorList {
     let mut node = super::TextLineColorList::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_LINE_COLOR_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1486,7 +1462,7 @@ pub fn text_line_color_list(element: &xml::element::Element) -> super::TextLineC
 
 /// Read `dgm:txPr` into a `TextProperties`.
 #[must_use]
-pub fn text_properties(element: &xml::element::Element) -> super::TextProperties {
+pub fn text_properties(element: &Element) -> super::TextProperties {
     let mut node = super::TextProperties::default();
     let mut reader = markup::Reader::new(element, &super::TEXT_PROPERTIES_SHAPE);
     for (index, field) in &mut reader {
@@ -1500,7 +1476,7 @@ pub fn text_properties(element: &xml::element::Element) -> super::TextProperties
 
 /// Read `dgm:title` into a `Title`.
 #[must_use]
-pub fn title(element: &xml::element::Element) -> super::Title {
+pub fn title(element: &Element) -> super::Title {
     let mut node = super::Title::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_SHAPE);
     for (index, field) in &mut reader {
@@ -1516,7 +1492,7 @@ pub fn title(element: &xml::element::Element) -> super::Title {
 
 /// Read `dgm:title` into a `TitleCTName`.
 #[must_use]
-pub fn title_ct_name(element: &xml::element::Element) -> super::TitleCTName {
+pub fn title_ct_name(element: &Element) -> super::TitleCTName {
     let mut node = super::TitleCTName::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_CT_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -1532,7 +1508,7 @@ pub fn title_ct_name(element: &xml::element::Element) -> super::TitleCTName {
 
 /// Read `dgm:title` into a `TitleSDName`.
 #[must_use]
-pub fn title_sd_name(element: &xml::element::Element) -> super::TitleSDName {
+pub fn title_sd_name(element: &Element) -> super::TitleSDName {
     let mut node = super::TitleSDName::default();
     let mut reader = markup::Reader::new(element, &super::TITLE_SD_NAME_SHAPE);
     for (index, field) in &mut reader {
@@ -1548,7 +1524,7 @@ pub fn title_sd_name(element: &xml::element::Element) -> super::TitleSDName {
 
 /// Read `dgm:varLst` into a `VariableList`.
 #[must_use]
-pub fn variable_list(element: &xml::element::Element) -> super::VariableList {
+pub fn variable_list(element: &Element) -> super::VariableList {
     let mut node = super::VariableList::default();
     let mut reader = markup::Reader::new(element, &super::VARIABLE_LIST_SHAPE);
     for (index, field) in &mut reader {
@@ -1571,7 +1547,7 @@ pub fn variable_list(element: &xml::element::Element) -> super::VariableList {
 
 /// Read `dgm:whole` into a `WholeE2OFormatting`.
 #[must_use]
-pub fn whole_e2o_formatting(element: &xml::element::Element) -> super::WholeE2OFormatting {
+pub fn whole_e2o_formatting(element: &Element) -> super::WholeE2OFormatting {
     let mut node = super::WholeE2OFormatting::default();
     let mut reader = markup::Reader::new(element, &super::WHOLE_E2O_FORMATTING_SHAPE);
     for (index, field) in &mut reader {

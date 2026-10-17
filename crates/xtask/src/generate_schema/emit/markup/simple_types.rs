@@ -2,7 +2,7 @@
 //! and its `value` method parses it by the type's kind, section 3.4's table:
 //! an enumeration gives its member enum, a union the first member type that
 //! matches, a list the newtypes of its items, `ST_OnOff` a `bool`, a date an
-//! `xml::values::DateTime`, a string its text once its facets hold.
+//! `officekit_xml::values::DateTime`, a string its text once its facets hold.
 
 use alloc::collections::BTreeMap;
 use core::fmt::Write as _;
@@ -169,7 +169,7 @@ impl Atom {
     const fn value_type(&self) -> (&'static str, Option<&'static str>) {
         match self {
             Self::Boolean => ("bool", None),
-            Self::DateTime => ("DateTime", Some("crate::xml::values::DateTime")),
+            Self::DateTime => ("DateTime", Some("officekit_xml::values::DateTime")),
             Self::Double {
                 max_exclusive: _max_exclusive,
                 max_inclusive: _max_inclusive,
@@ -189,7 +189,7 @@ impl Atom {
             } => ("i64", None),
             Self::Measure {
                 patterns: _patterns,
-            } => ("Measure", Some("crate::xml::values::Measure")),
+            } => ("Measure", Some("officekit_xml::values::Measure")),
             Self::Percentage {
                 patterns: _patterns,
             } => ("f64", None),
@@ -826,7 +826,7 @@ pub fn render(
         layout::impl_header("AsRef<str>", &simple.name),
         layout::impl_header("From<String>", &simple.name)
     );
-    uses.add("crate::xml::values::ValueError");
+    uses.add("officekit_xml::values::ValueError");
     let mut parts = [declared, conversions, String::new()];
     let [output, body, methods] = value_body(names, simple, uses, &mut parts)?;
     let [definitions, mut implementations, statics] = parts;
@@ -895,7 +895,7 @@ fn value_body(
             ]
         }
         Kind::Date => {
-            uses.add("crate::xml::values::DateTime");
+            uses.add("officekit_xml::values::DateTime");
             [
                 "DateTime".to_owned(),
                 expression(&text_call("markup::date_time")),
@@ -925,8 +925,7 @@ fn list_value(names: &Names<'_>, item: Option<&Key>) -> Result<(String, String)>
     let Some(key) = item else {
         return Ok((
             "Vec<String>".to_owned(),
-            "        Ok(xml::values::parse::list(&self.0)\n            .map(str::to_owned)\n            .collect())\n"
-                .to_owned(),
+            "        Ok(parse::list(&self.0).map(str::to_owned).collect())\n".to_owned(),
         ));
     };
     let found = names
@@ -939,7 +938,7 @@ fn list_value(names: &Names<'_>, item: Option<&Key>) -> Result<(String, String)>
     Ok((
         format!("Vec<{path}>"),
         format!(
-            "        let mut items = Vec::new();\n        for item in xml::values::parse::list(&self.0) {{\n            let found = {path}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
+            "        let mut items = Vec::new();\n        for item in parse::list(&self.0) {{\n            let found = {path}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
         ),
     ))
 }
@@ -990,7 +989,7 @@ fn member_impls(simple: &Simple, members: &[Member], uses: &mut Uses) -> String 
             let version = member.introduced.map_or_else(
                 || Expr::atom("None"),
                 |found| {
-                    uses.add("crate::xml::name::OfficeVersion");
+                    uses.add("officekit_xml::name::OfficeVersion");
                     Expr::call("Some", vec![Expr::Atom(format!("OfficeVersion::{found}"))])
                 },
             );
@@ -1001,7 +1000,7 @@ fn member_impls(simple: &Simple, members: &[Member], uses: &mut Uses) -> String 
             ])
         })
         .collect();
-    uses.add("crate::xml::name::OfficeVersion");
+    uses.add("officekit_xml::name::OfficeVersion");
     layout::statement(
         "    const MEMBERS: &markup::Members<Self> = ",
         &Expr::Slice(entries),
@@ -1331,7 +1330,7 @@ fn owned_type(names: &Names<'_>, simple: &Simple, uses: &mut Uses) -> Result<(St
         }
         Kind::OnOff => ("bool".to_owned(), false),
         Kind::Date => {
-            uses.add("crate::xml::values::DateTime");
+            uses.add("officekit_xml::values::DateTime");
             ("DateTime".to_owned(), false)
         }
         Kind::Enumeration(_) | Kind::Union(_) => (

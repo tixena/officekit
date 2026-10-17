@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `Track` as its element, `p173:track`.
 #[must_use]
-pub fn track(node: &super::Track, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn track(node: &super::Track, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRACK_SHAPE, &node.unknown);
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.label);
@@ -229,7 +230,7 @@ pub fn track(node: &super::Track, scope: &mut markup::Scope) -> xml::element::El
 
 /// Write a `TrackLst` as its element, `p173:trackLst`.
 #[must_use]
-pub fn track_lst(node: &super::TrackLst, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn track_lst(node: &super::TrackLst, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRACK_LST_SHAPE, &node.unknown);
     writer.child(&node.track);
     writer.finish()
@@ -237,7 +238,7 @@ pub fn track_lst(node: &super::TrackLst, scope: &mut markup::Scope) -> xml::elem
 
 /// Write a `TracksInfo` as its element, `p173:tracksInfo`.
 #[must_use]
-pub fn tracks_info(node: &super::TracksInfo, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn tracks_info(node: &super::TracksInfo, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::TRACKS_INFO_SHAPE, &node.unknown);
     writer.attribute(0, &node.display_loc);
     writer.child(&node.track_lst);

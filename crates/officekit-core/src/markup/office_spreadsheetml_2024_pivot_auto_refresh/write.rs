@@ -213,11 +213,12 @@
 //! element, its unknown content at its place.
 
 use crate::markup;
-use crate::xml;
+use officekit_xml::element::Element;
+use officekit_xml::write::Scope;
 
 /// Write a `AutoRefresh` as its element, `xlpar:autoRefresh`.
 #[must_use]
-pub fn auto_refresh(node: &super::AutoRefresh, scope: &mut markup::Scope) -> xml::element::Element {
+pub fn auto_refresh(node: &super::AutoRefresh, scope: &mut Scope) -> Element {
     let mut writer = markup::Writer::new(scope, &super::AUTO_REFRESH_SHAPE, &node.unknown);
     writer.text(&node.value);
     writer.finish()

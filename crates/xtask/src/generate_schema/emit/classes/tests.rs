@@ -127,12 +127,12 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
          //! shared writer, whose element the Strict write then checks and converts.\n\
          \n\
          use crate::class_rules;\n\
-         use crate::error::{ReadError, WriteError};\n\
-         use crate::markup::Scope;\n\
          use crate::markup::wordprocessing::{self, read, write};\n\
          use crate::strict::{self, Strict};\n\
-         use crate::xml::element::Element;\n\
-         use crate::xml::name::NamespaceId;\n\
+         use officekit_xml::element::Element;\n\
+         use officekit_xml::error::{ReadError, WriteError};\n\
+         use officekit_xml::name::NamespaceId;\n\
+         use officekit_xml::write::Scope;\n\
          \n\
          const NS_W: Option<NamespaceId> = Some(0);\n\
          \n\
