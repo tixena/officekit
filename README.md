@@ -124,9 +124,9 @@ example); the reason goes to standard error.
 
 ```bash
 just all      # lint, build, test
-just lint     # clippy (restriction + pedantic + nursery denied) in four feature builds, then fmt check
+just lint     # clippy (restriction + pedantic + nursery denied) on the workspace, then officekit-core and officekit-parts in each feature build; fmt check; rustfmt check of every tests.rs
 just build
-just test     # the workspace, then officekit-core and officekit-parts with all features
+just test     # the workspace, then officekit-core and officekit-parts with all features, then officekit-core with strict alone
 just docs     # cargo doc --workspace --no-deps
 just audit    # cargo audit
 ```

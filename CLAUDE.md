@@ -27,6 +27,8 @@ is:
 ```
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
 embedded           a document stored in a part of another
+compact            the merge of neighbouring runs that render the same
+folder             a document as a folder of its parts, and back
 ```
 
 ## Rules
