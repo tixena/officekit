@@ -1,0 +1,15 @@
+[package]
+name = "officekit-markup"
+description = "The typed tree of officekit: one module per Office Open XML namespace, with readers, writers and hooks"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+officekit-xml.workspace = true

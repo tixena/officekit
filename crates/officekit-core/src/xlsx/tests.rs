@@ -1,6 +1,8 @@
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+#[cfg(feature = "strict")]
+use officekit_markup::spreadsheet::WorkbookProperties;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_packaging::package::OpenOptions;
 #[cfg(feature = "strict")]
@@ -18,8 +20,6 @@ use officekit_xml::parse::parse;
 use os_shim::mock::MemorySystem;
 
 use super::Xlsx;
-#[cfg(feature = "strict")]
-use crate::markup::spreadsheet::WorkbookProperties;
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;
@@ -74,10 +74,9 @@ fn saved_strict(date1904: Option<&str>) -> (Element, Element) {
     let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
     if let Some(value) = date1904 {
         let mut workbook = xlsx.workbook().unwrap();
-        workbook.properties = Some(Box::new(WorkbookProperties {
-            date1904: Some(value.to_owned()),
-            ..WorkbookProperties::default()
-        }));
+        let mut properties = WorkbookProperties::default();
+        properties.date1904 = Some(value.to_owned());
+        workbook.properties = Some(Box::new(properties));
         xlsx.set_workbook(&workbook).unwrap();
     }
     let sheet = name("/xl/worksheets/sheet1.xml");
@@ -113,10 +112,9 @@ fn strict_dated(date1904: bool) -> Xlsx {
     assert_eq!(xlsx.conformance_class(), ConformanceClass::Strict);
     if date1904 {
         let mut workbook = xlsx.workbook().unwrap();
-        workbook.properties = Some(Box::new(WorkbookProperties {
-            date1904: Some("1".to_owned()),
-            ..WorkbookProperties::default()
-        }));
+        let mut properties = WorkbookProperties::default();
+        properties.date1904 = Some("1".to_owned());
+        workbook.properties = Some(Box::new(properties));
         xlsx.set_workbook(&workbook).unwrap();
     }
     xlsx.package_mut()
@@ -242,10 +240,9 @@ fn a_strict_save_writes_table_and_pivot_table_filter_dates_in_the_workbook_date_
         let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
         if let Some(value) = date1904 {
             let mut workbook = xlsx.workbook().unwrap();
-            workbook.properties = Some(Box::new(WorkbookProperties {
-                date1904: Some(value.to_owned()),
-                ..WorkbookProperties::default()
-            }));
+            let mut properties = WorkbookProperties::default();
+            properties.date1904 = Some(value.to_owned());
+            workbook.properties = Some(Box::new(properties));
             xlsx.set_workbook(&workbook).unwrap();
         }
         let sheet = name("/xl/worksheets/sheet1.xml");

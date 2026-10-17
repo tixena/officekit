@@ -1,5 +1,6 @@
 #![cfg(feature = "transitional")]
 
+use officekit_markup::wordprocessing::{self, Document, DocumentBody};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::OpenOptions;
 use officekit_packaging::part_name::PartName;
@@ -8,7 +9,6 @@ use officekit_xml::element::Element;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::super::Docx;
-use crate::markup::wordprocessing::{self, Document, DocumentBody};
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
@@ -91,10 +91,8 @@ fn link(docx: &mut Docx, from: &str, id: &str, uri: &str) {
 fn import(target: &mut Docx, source: &Docx) -> (Document, Element) {
     let mut document = target.main_document().unwrap();
     let blocks = target.import_body(&mut document, source).unwrap();
-    let body = DocumentBody {
-        content: blocks,
-        ..DocumentBody::default()
-    };
+    let mut body = DocumentBody::default();
+    body.content = blocks;
     let mut scope = Scope::default();
     scope.start(&document.unknown.namespace_declarations);
     let element = wordprocessing::write::document_body(&body, &mut scope);

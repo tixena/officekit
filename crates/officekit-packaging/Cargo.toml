@@ -26,5 +26,8 @@ thiserror.workspace = true
 imagesize = { version = "0.15", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
 
 [dev-dependencies]
+# The package writer's tests write a typed table through as it is made
+officekit-markup.workspace = true
+
 # Tests build archives whose entries carry data descriptors
 zip.workspace = true

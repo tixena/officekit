@@ -16,13 +16,12 @@ pub mod dates;
 
 use core::cmp::Ordering;
 
+use officekit_markup::Tag;
+use officekit_markup::class_rules::{is, order};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::name::NamespaceId;
-
-use crate::class_rules::{is, order};
-use crate::markup::{self, Tag};
 
 #[cfg(test)]
 mod tests;
@@ -51,7 +50,7 @@ pub trait Transitional: Sized {
 
 /// Fail on a value only Strict has, in `element` or below it.
 fn check(element: &Element) -> Result<(), WriteError> {
-    if let Some(owner) = markup::name(element) {
+    if let Some(owner) = officekit_markup::name(element) {
         let start =
             STRICT_ONLY.partition_point(|(key, _, _, _)| order(*key, owner) == Ordering::Less);
         let end =

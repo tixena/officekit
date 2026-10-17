@@ -6,7 +6,7 @@ use core::cmp::{Ordering, Reverse};
 use core::mem;
 
 use anyhow::{Context as _, Result, bail};
-use officekit_core::markup::Unknown;
+use officekit_markup::Unknown;
 use officekit_xml::element::Node as XmlNode;
 
 use super::enums::{self, Entry, Placements, Position, Row};

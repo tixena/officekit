@@ -121,14 +121,14 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
     assert_eq!(
         module,
         "// header\n\
-         //! The `Strict` impl of every node of `markup::wordprocessing`.\n\
+         //! The `Strict` impl of every node of `officekit_markup::wordprocessing`.\n\
          //!\n\
          //! Each node reads with the reader both classes share and writes with the\n\
          //! shared writer, whose element the Strict write then checks and converts.\n\
          \n\
-         use crate::class_rules;\n\
-         use crate::markup::wordprocessing::{self, read, write};\n\
          use crate::strict::{self, Strict};\n\
+         use officekit_markup::class_rules;\n\
+         use officekit_markup::wordprocessing::{self, read, write};\n\
          use officekit_xml::element::Element;\n\
          use officekit_xml::error::{ReadError, WriteError};\n\
          use officekit_xml::name::NamespaceId;\n\

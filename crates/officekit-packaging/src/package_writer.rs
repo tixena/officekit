@@ -15,6 +15,9 @@ use crate::package::{CONTENT_TYPES_PART, PACKAGE_RELATIONSHIPS_PART, Package};
 use crate::part_name::PartName;
 use crate::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relationship, TargetMode};
 
+#[cfg(test)]
+mod tests;
+
 /// Writes a package part by part into a sink that needs `Write` only.
 ///
 /// Copied and streamed parts go into the zip as they come, each entry

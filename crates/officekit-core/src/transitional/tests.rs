@@ -1,3 +1,5 @@
+use officekit_markup::spreadsheet::{Cell, Worksheet};
+use officekit_markup::wordprocessing::{Document, Paragraph};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Document as Part, Element};
 use officekit_xml::error::{ReadError, WriteError};
@@ -5,8 +7,6 @@ use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
 use super::Transitional;
-use crate::markup::spreadsheet::{Cell, Worksheet};
-use crate::markup::wordprocessing::{Document, Paragraph};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";

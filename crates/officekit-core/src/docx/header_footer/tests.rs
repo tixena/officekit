@@ -1,3 +1,7 @@
+use officekit_markup::wordprocessing::{
+    BlockContent, DocumentFinalSectionProperties, Footer, Header, HeaderOrFooterTypeMember,
+    Paragraph, SectionPropertiesContent,
+};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -6,10 +10,6 @@ use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 
 use crate::docx::Docx;
-use crate::markup::wordprocessing::{
-    BlockContent, DocumentFinalSectionProperties, Footer, Header, HeaderOrFooterTypeMember,
-    Paragraph, SectionPropertiesContent,
-};
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, footer, header};
 
@@ -29,17 +29,15 @@ fn one_paragraph() -> Vec<BlockContent> {
 }
 
 fn a_header() -> Header {
-    Header {
-        content: one_paragraph(),
-        ..Header::default()
-    }
+    let mut header = Header::default();
+    header.content = one_paragraph();
+    header
 }
 
 fn a_footer() -> Footer {
-    Footer {
-        content: one_paragraph(),
-        ..Footer::default()
-    }
+    let mut footer = Footer::default();
+    footer.content = one_paragraph();
+    footer
 }
 
 /// A package whose main part is `body` and whose root declares the relationships namespace under
@@ -126,18 +124,22 @@ fn references(section: &DocumentFinalSectionProperties) -> Vec<(&'static str, St
     section
         .content
         .iter()
-        .filter_map(|item| match item {
-            SectionPropertiesContent::HeaderReference(found) => Some((
-                "header",
-                found.r#type.as_ref().unwrap().0.clone(),
-                found.id.clone().unwrap(),
-            )),
-            SectionPropertiesContent::FooterReference(found) => Some((
-                "footer",
-                found.r#type.as_ref().unwrap().0.clone(),
-                found.id.clone().unwrap(),
-            )),
-            SectionPropertiesContent::Other(_) => None,
+        .filter_map(|item| {
+            if let SectionPropertiesContent::HeaderReference(found) = item {
+                Some((
+                    "header",
+                    found.r#type.as_ref().unwrap().0.clone(),
+                    found.id.clone().unwrap(),
+                ))
+            } else if let SectionPropertiesContent::FooterReference(found) = item {
+                Some((
+                    "footer",
+                    found.r#type.as_ref().unwrap().0.clone(),
+                    found.id.clone().unwrap(),
+                ))
+            } else {
+                None
+            }
         })
         .collect()
 }

@@ -5,6 +5,7 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_markup::presentation::Presentation;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -14,7 +15,6 @@ use os_shim::System;
 
 use crate::compact::{self, Comments};
 use crate::file;
-use crate::markup::presentation::Presentation;
 use crate::new_parts;
 use crate::parts::kinds::PresentationKind;
 use crate::parts::presentation;

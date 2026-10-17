@@ -1,3 +1,5 @@
+use officekit_markup::Read as _;
+use officekit_markup::wordprocessing::{TextRun, write};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::image::{Image, ImageFormat};
 use officekit_packaging::package::{OpenOptions, Package};
@@ -9,8 +11,6 @@ use officekit_xml::write::Scope;
 
 use super::PictureFit;
 use crate::docx::Docx;
-use crate::markup::Read as _;
-use crate::markup::wordprocessing::{TextRun, write};
 use crate::parts::kinds::WordprocessingKind;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";

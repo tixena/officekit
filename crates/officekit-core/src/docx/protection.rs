@@ -7,16 +7,15 @@ mod tests;
 
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
-use officekit_xml::conformance::ConformanceClass;
-use sha1::{Digest as _, Sha1};
-
-use crate::markup::common_simple_types::{
+use officekit_markup::common_simple_types::{
     CryptographicAlgorithmClasses, CryptographicAlgorithmTypes, CryptographicProviderTypes,
     OnOffValue,
 };
-use crate::markup::wordprocessing::{
+use officekit_markup::wordprocessing::{
     DecimalNumberValue, DocumentEditingRestrictions, DocumentProtectionTypesMember,
 };
+use officekit_xml::conformance::ConformanceClass;
+use sha1::{Digest as _, Sha1};
 
 /// The rounds Aspose.Words 24.6.0 runs after the first hash.
 pub const SPIN_COUNT: u32 = 50_000;
@@ -146,21 +145,19 @@ pub fn entry(
     salt: &[u8; 16],
     class: ConformanceClass,
 ) -> DocumentEditingRestrictions {
-    let mut entry = DocumentEditingRestrictions {
-        edit: Some(edit.into()),
-        enforcement: Some(OnOffValue("1".to_owned())),
-        ..DocumentEditingRestrictions::default()
-    };
+    let mut entry = DocumentEditingRestrictions::default();
+    entry.edit = Some(edit.into());
+    entry.enforcement = Some(OnOffValue::from("1".to_owned()));
     if password.is_empty() {
         return entry;
     }
     let salt_text = STANDARD.encode(salt);
-    let spin_count = DecimalNumberValue(SPIN_COUNT.to_string());
+    let spin_count = DecimalNumberValue::from(SPIN_COUNT.to_string());
     if class == ConformanceClass::Transitional {
-        entry.crypt_provider_type = Some(CryptographicProviderTypes("rsaFull".to_owned()));
-        entry.crypt_algorithm_class = Some(CryptographicAlgorithmClasses("hash".to_owned()));
-        entry.crypt_algorithm_type = Some(CryptographicAlgorithmTypes("typeAny".to_owned()));
-        entry.crypt_algorithm_sid = Some(DecimalNumberValue("4".to_owned()));
+        entry.crypt_provider_type = Some(CryptographicProviderTypes::from("rsaFull".to_owned()));
+        entry.crypt_algorithm_class = Some(CryptographicAlgorithmClasses::from("hash".to_owned()));
+        entry.crypt_algorithm_type = Some(CryptographicAlgorithmTypes::from("typeAny".to_owned()));
+        entry.crypt_algorithm_sid = Some(DecimalNumberValue::from("4".to_owned()));
         entry.crypt_spin_count = Some(spin_count);
         entry.hash = Some(STANDARD.encode(legacy_hash(password, salt)));
         entry.salt = Some(salt_text);

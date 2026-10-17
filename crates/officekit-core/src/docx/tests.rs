@@ -2,6 +2,8 @@ use core::slice;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+#[cfg(feature = "strict")]
+use officekit_markup::wordprocessing;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -24,8 +26,6 @@ use os_shim::mock::MemorySystem;
 
 use super::Docx;
 use crate::compact::Comments;
-#[cfg(feature = "strict")]
-use crate::markup::wordprocessing;
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;

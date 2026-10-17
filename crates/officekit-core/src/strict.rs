@@ -18,15 +18,14 @@ include!("strict/modules.rs");
 use core::cmp::Ordering;
 use core::mem;
 
+use officekit_markup::Tag;
+use officekit_markup::class_rules::{BASE_1900, BASE_1904, is, order};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::mc;
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, NamespaceId, QName, tag_of};
-
-use crate::class_rules::{BASE_1900, BASE_1904, is, order};
-use crate::markup::{self, Tag};
 
 #[cfg(test)]
 mod tests;
@@ -299,7 +298,7 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
 /// convert every child element.
 fn convert_children(element: &mut Element) -> Result<(), WriteError> {
     unwrap_word_shapes(element);
-    if let Some(owner) = markup::name(element) {
+    if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(CHILDREN, owner);
         let mut index = 0;
         while let Some(node) = element.children.get(index) {
@@ -347,7 +346,7 @@ fn convert(
             return Err(not_in_class(prefix(id)));
         }
     }
-    if let Some(owner) = markup::name(element) {
+    if let Some(owner) = officekit_markup::name(element) {
         let rules = rules_of(ATTRIBUTES, owner);
         let contextual = parent.map_or(&[][..], |found| contextual_rules(found, owner));
         for (_, attribute, rule) in rules {

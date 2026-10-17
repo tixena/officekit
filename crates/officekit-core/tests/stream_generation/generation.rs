@@ -7,10 +7,10 @@ use core::error::Error;
 use core::slice;
 use std::io::{self, Write};
 
-use officekit_core::markup::wordprocessing::{self, TableRow, Text, read};
-use officekit_core::markup::{self, Descend, Visit as _};
 use officekit_core::parts::{main_document, style_definitions};
-use officekit_core::stream::transform::{WriteThrough as _, Written};
+use officekit_markup::wordprocessing::{self, TableRow, Text, read};
+use officekit_markup::write_through::{WriteThrough as _, Written};
+use officekit_markup::{Descend, Visit as _};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::Package;
 use officekit_packaging::package_writer::PackageWriter;
@@ -41,7 +41,7 @@ struct RepeatRows {
     count: usize,
 }
 
-impl markup::Context for Fill {
+impl officekit_markup::Context for Fill {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
         Some(self)
     }
@@ -55,7 +55,7 @@ impl wordprocessing::Context for Fill {
     }
 }
 
-impl markup::Visitor for FindPlaceholder {
+impl officekit_markup::Visitor for FindPlaceholder {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Visitor> {
         Some(self)
     }
@@ -68,7 +68,7 @@ impl wordprocessing::Visitor for FindPlaceholder {
     }
 }
 
-impl markup::Context for RepeatRows {
+impl officekit_markup::Context for RepeatRows {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
         Some(self)
     }

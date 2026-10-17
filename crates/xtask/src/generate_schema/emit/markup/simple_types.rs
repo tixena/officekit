@@ -873,7 +873,7 @@ fn value_body(
             definitions.push_str(&member_enum(simple, members));
             implementations.push_str(&member_impls(simple, members, uses));
             let call = Expr::call(
-                "markup::member",
+                "crate::member",
                 vec![
                     Expr::Atom(format!("{member_name}::MEMBERS")),
                     Expr::atom("&self.0"),
@@ -890,7 +890,7 @@ fn value_body(
             );
             [
                 "bool".to_owned(),
-                expression(&text_call("markup::on_off")),
+                expression(&text_call("crate::on_off")),
                 String::new(),
             ]
         }
@@ -898,7 +898,7 @@ fn value_body(
             uses.add("officekit_xml::values::DateTime");
             [
                 "DateTime".to_owned(),
-                expression(&text_call("markup::date_time")),
+                expression(&text_call("crate::date_time")),
                 String::new(),
             ]
         }
@@ -1002,13 +1002,13 @@ fn member_impls(simple: &Simple, members: &[Member], uses: &mut Uses) -> String 
         .collect();
     uses.add("officekit_xml::name::OfficeVersion");
     layout::statement(
-        "    const MEMBERS: &markup::Members<Self> = ",
+        "    const MEMBERS: &crate::Members<Self> = ",
         &Expr::Slice(entries),
         &mut out,
     );
     out.push_str(
-        "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {\n        markup::member_text(Self::MEMBERS, self)\n    }\n\
-         \n    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {\n        markup::member_version(Self::MEMBERS, self)\n    }\n}\n",
+        "\n    /// The text the member stands for.\n    #[must_use]\n    pub fn as_str(self) -> &'static str {\n        crate::member_text(Self::MEMBERS, self)\n    }\n\
+         \n    /// The Office version that brought the member, from SDK 3.5.1's data; `None` for\n    /// ECMA-376's own.\n    #[must_use]\n    pub fn introduced(self) -> Option<OfficeVersion> {\n        crate::member_version(Self::MEMBERS, self)\n    }\n}\n",
     );
     out
 }
@@ -1035,8 +1035,8 @@ fn atom_call(
     let text = Expr::atom("&self.0");
     let name = Expr::Atom(layout::string(schema));
     let call = match atom {
-        Atom::Boolean => Expr::call("markup::boolean", vec![text, name]),
-        Atom::DateTime => Expr::call("markup::date_time", vec![text, name]),
+        Atom::Boolean => Expr::call("crate::boolean", vec![text, name]),
+        Atom::DateTime => Expr::call("crate::date_time", vec![text, name]),
         Atom::Double {
             max_exclusive,
             max_inclusive,
@@ -1050,7 +1050,7 @@ fn atom_call(
                 )
             };
             let bounds = Expr::Struct(
-                "markup::Bounds".to_owned(),
+                "crate::Bounds".to_owned(),
                 vec![
                     ("max_exclusive".to_owned(), bound(max_exclusive)),
                     ("max_inclusive".to_owned(), bound(max_inclusive)),
@@ -1058,33 +1058,33 @@ fn atom_call(
                     ("min_inclusive".to_owned(), bound(min_inclusive)),
                 ],
             );
-            let path = static_item(screaming, "BOUNDS: markup::Bounds", &bounds, statics);
+            let path = static_item(screaming, "BOUNDS: crate::Bounds", &bounds, statics);
             Expr::call(
-                "markup::double",
+                "crate::double",
                 vec![text, Expr::Atom(format!("&{path}")), name],
             )
         }
         Atom::Hex { bytes } => Expr::call(
-            "markup::hex",
+            "crate::hex",
             vec![text, Expr::Atom(bytes.to_string()), name],
         ),
         Atom::Integer { max, min, values } if values.is_empty() => {
             let range = [min, max].map(|bound| Expr::Atom(layout::integer(*bound)));
             let [low, high] = range;
-            Expr::call("markup::integer", vec![text, low, high, name])
+            Expr::call("crate::integer", vec![text, low, high, name])
         }
         Atom::Integer {
             max: _max,
             min: _min,
             values,
-        } => Expr::call("markup::integer_in", vec![text, strings(values), name]),
+        } => Expr::call("crate::integer_in", vec![text, strings(values), name]),
         Atom::Measure { patterns } => {
             let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            Expr::call("markup::measure", vec![text, Expr::Atom(path), name])
+            Expr::call("crate::measure", vec![text, Expr::Atom(path), name])
         }
         Atom::Percentage { patterns } => {
             let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            Expr::call("markup::percentage", vec![text, Expr::Atom(path), name])
+            Expr::call("crate::percentage", vec![text, Expr::Atom(path), name])
         }
         Atom::Text {
             length,
@@ -1099,7 +1099,7 @@ fn atom_call(
                 )
             };
             let facets = Expr::Struct(
-                "markup::Facets".to_owned(),
+                "crate::Facets".to_owned(),
                 vec![
                     ("length".to_owned(), count(length)),
                     ("max_length".to_owned(), count(max_length)),
@@ -1107,9 +1107,9 @@ fn atom_call(
                     ("patterns".to_owned(), strings(patterns)),
                 ],
             );
-            let path = static_item(screaming, "FACETS: markup::Facets", &facets, statics);
+            let path = static_item(screaming, "FACETS: crate::Facets", &facets, statics);
             Expr::call(
-                "markup::text",
+                "crate::text",
                 vec![text, Expr::Atom(format!("&{path}")), name],
             )
         }
@@ -1245,7 +1245,7 @@ fn union_value(
         })
     };
     let invalid = Expr::call(
-        "markup::invalid",
+        "crate::invalid",
         vec![Expr::atom("&self.0"), Expr::Atom(layout::string(schema))],
     );
     let mut body = String::new();

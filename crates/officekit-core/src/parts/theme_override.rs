@@ -344,12 +344,12 @@
 //! The module holds its content type, its relationship type, and the load and store of its root,
 //! `a:themeOverride`.
 
-use crate::markup::drawing;
 use crate::part_root::{self, PartRoot};
 #[cfg(feature = "strict")]
 use crate::strict::Strict as _;
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::drawing;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;

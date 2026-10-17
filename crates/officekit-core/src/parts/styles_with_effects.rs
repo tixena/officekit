@@ -344,8 +344,8 @@
 //! The module holds its content type, its relationship type, and the load and store of its root,
 //! `w:styles`.
 
-use crate::markup::wordprocessing;
 use crate::part_root;
+use officekit_markup::wordprocessing;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;

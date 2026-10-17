@@ -52,7 +52,7 @@ pub fn module(
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The `{upper}` impl of every node of `markup::{module}`.\n//!\n\
+        "//! The `{upper}` impl of every node of `officekit_markup::{module}`.\n//!\n\
          //! Each node reads with the reader both classes share and writes with the\n\
          //! shared writer, whose element the {upper} write then {}.\n",
         if class == Class::Strict {
@@ -61,9 +61,12 @@ pub fn module(
             "checks"
         }
     );
-    let _ = writeln!(out, "use crate::class_rules;");
-    let _ = writeln!(out, "use crate::markup::{module}::{{self, read, write}};");
     let _ = writeln!(out, "use crate::{lower}::{{self, {upper}}};");
+    let _ = writeln!(out, "use officekit_markup::class_rules;");
+    let _ = writeln!(
+        out,
+        "use officekit_markup::{module}::{{self, read, write}};"
+    );
     let _ = writeln!(out, "use officekit_xml::element::Element;");
     let _ = writeln!(out, "use officekit_xml::error::{{ReadError, WriteError}};");
     let _ = writeln!(out, "use officekit_xml::name::NamespaceId;");

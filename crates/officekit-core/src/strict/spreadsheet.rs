@@ -210,14 +210,14 @@
 //   021f7654571e30427cd1fd4a0eeb98561f2246fe0d9d0ea36146f3aaa67b4af8  crates/xtask/data/strict_correspondences.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The `Strict` impl of every node of `markup::spreadsheet`.
+//! The `Strict` impl of every node of `officekit_markup::spreadsheet`.
 //!
 //! Each node reads with the reader both classes share and writes with the
 //! shared writer, whose element the Strict write then checks and converts.
 
-use crate::class_rules;
-use crate::markup::spreadsheet::{self, read, write};
 use crate::strict::{self, Strict};
+use officekit_markup::class_rules;
+use officekit_markup::spreadsheet::{self, read, write};
 use officekit_xml::element::Element;
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::name::NamespaceId;

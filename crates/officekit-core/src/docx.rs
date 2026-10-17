@@ -11,6 +11,10 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_markup::wordprocessing::{
+    BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
+    HeaderOrFooterTypeMember, TextRun,
+};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::image::Image;
 use officekit_packaging::package::{OpenOptions, Package};
@@ -22,10 +26,6 @@ use os_shim::System;
 
 use crate::compact::{self, Comments};
 use crate::file;
-use crate::markup::wordprocessing::{
-    BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
-    HeaderOrFooterTypeMember, TextRun,
-};
 use crate::new_parts;
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, header, main_document};

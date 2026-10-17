@@ -1,7 +1,7 @@
 //! The traversals of the typed tree: each namespace's
 //! hook traits, `Context` and `Visitor`; every node's `Transform`, `Visit`,
-//! and `WriteThrough`, and each enum's `markup::Item`, in the namespace's
-//! `traversal.rs`; and the root accessors, one per namespace.
+//! and `WriteThrough`, and each enum's `officekit_markup::Item`, in the
+//! namespace's `traversal.rs`; and the root accessors, one per namespace.
 //!
 //! A struct's hook is its reader's name, its name in snake case; an enum's is
 //! its name without the trailing `Content`, or the full name when that is a
@@ -56,10 +56,8 @@ const ELEMENT_VISITOR_HOOK: &str =
     }
 ";
 
-/// The imports of every `traversal.rs` after `crate::markup`'s.
-const TRAVERSAL_USES: &str = "use crate::stream::transform::{Unchanged, WriteThrough, Written};
-use officekit_xml::stream::writer::PartWriter;
-";
+/// The `write_through` import of every `traversal.rs`.
+const WRITE_THROUGH_USE: &str = "use crate::write_through::{Unchanged, WriteThrough, Written};\n";
 
 /// The name prefixes clippy's `wrong_self_convention` refuses for a method
 /// that takes `&mut self`.
@@ -73,7 +71,7 @@ const BLOCKS: usize = 20;
 const BODY: usize = 8;
 
 /// The parameters of a write-through method after `&self`.
-const WRITE_PARAMETERS: [&str; 2] = ["ctx: &mut dyn markup::Context", "out: &mut PartWriter<'_>"];
+const WRITE_PARAMETERS: [&str; 2] = ["ctx: &mut dyn crate::Context", "out: &mut PartWriter<'_>"];
 
 /// How a field's value is rebuilt: a declared child through the runtime
 /// function of its step, or copied.
@@ -125,7 +123,8 @@ enum Step {
 }
 
 impl Step {
-    /// The method of `markup::Walk` and `markup::Through` this step calls.
+    /// The method of `officekit_markup::Walk` and `officekit_markup::Through`
+    /// this step calls.
     const fn method(self) -> &'static str {
         match self {
             Self::Child => "child",
@@ -292,12 +291,12 @@ pub fn context_trait(names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
              own `transform`, or any number of items, none included, in its place; a write hook \
              answers `Written::No` to leave the node to its tree hook, or writes in its place and \
              answers `Written::Yes`. A context that does not return itself from \
-             `markup::Context::{accessor}` is never asked.",
+             `crate::Context::{accessor}` is never asked.",
             prefix = module.prefix,
             accessor = module.name,
         ),
     );
-    out.push_str(&trait_text("pub trait Context: markup::Context", entries));
+    out.push_str(&trait_text("pub trait Context: crate::Context", entries));
     out
 }
 
@@ -321,8 +320,8 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
                 hook_text(
                     &hook,
                     &["&mut self".to_owned(), format!("_node: &{node}")],
-                    "markup::Descend",
-                    "markup::Descend::Yes",
+                    "crate::Descend",
+                    "crate::Descend::Yes",
                 ),
             )
         })
@@ -332,17 +331,17 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
         &format!(
             "The hooks of a visitor for the `{prefix}` namespace.\n\nOne per node kind, each \
              answering `Descend::Yes` to walk into the node's children or `Descend::No` to skip \
-             them. A visitor that does not return itself from `markup::Visitor::{accessor}` is \
+             them. A visitor that does not return itself from `crate::Visitor::{accessor}` is \
              never asked.",
             prefix = module.prefix,
             accessor = module.name,
         ),
     );
-    out.push_str(&trait_text("pub trait Visitor: markup::Visitor", entries));
+    out.push_str(&trait_text("pub trait Visitor: crate::Visitor", entries));
     out
 }
 
-/// The root hooks, `markup/root.rs`: the root `Context` with its hooks for
+/// The root hooks, `root.rs`: the root `Context` with its hooks for
 /// content the schemas do not declare and one accessor per namespace, and the
 /// root `Visitor` the same way, each in alphabetical order.
 #[must_use]
@@ -367,7 +366,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
     }
     let mut out = String::from(
         "// The root hooks every namespace's `Context` and `Visitor` extend,\n\
-         // brought into `markup` with `include!`.\n\n",
+         // brought into the crate root with `include!`.\n\n",
     );
     out.push_str(&layout::doc(
         0,
@@ -400,8 +399,8 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The traversals of `markup::{}`: each node's `Transform`, `Visit`, and\n\
-         //! `WriteThrough`, and each enum's `markup::Item`, every hook asked through the\n\
+        "//! The traversals of `crate::{}`: each node's `Transform`, `Visit`, and\n\
+         //! `WriteThrough`, and each enum's `crate::Item`, every hook asked through the\n\
          //! namespace's accessor.\n",
         module.name
     );
@@ -436,7 +435,7 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
     impls.sort_by(|left, right| left.0.cmp(right.0));
     // The traits an `impl` of them calls without importing them; free helpers
     // import those they call the methods of.
-    let mut traits = vec!["self"];
+    let mut traits = Vec::new();
     if helpers.contains(".transform(") {
         traits.push("Transform as _");
     }
@@ -444,12 +443,20 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
         traits.push("Visit as _");
     }
     out.push_str("use std::io;\n\n");
-    if traits.len() == 1 {
-        out.push_str("use crate::markup;\n");
-    } else {
-        let _ = writeln!(out, "use crate::markup::{{{}}};", traits.join(", "));
+    // rustfmt sorts one trait's line before `write_through`'s, and a braced
+    // list after it.
+    match traits.as_slice() {
+        [] => out.push_str(WRITE_THROUGH_USE),
+        [only] => {
+            let _ = writeln!(out, "use crate::{only};");
+            out.push_str(WRITE_THROUGH_USE);
+        }
+        _ => {
+            out.push_str(WRITE_THROUGH_USE);
+            let _ = writeln!(out, "use crate::{{{}}};", traits.join(", "));
+        }
     }
-    out.push_str(TRAVERSAL_USES);
+    out.push_str("use officekit_xml::stream::writer::PartWriter;\n");
     for (_, text) in impls {
         out.push_str(&text);
     }
@@ -457,7 +464,7 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
     out
 }
 
-/// `markup::<ask>(<receiver>.<module>(), super::<Hooks>::<hook>, self[, out])`.
+/// `crate::<ask>(<receiver>.<module>(), super::<Hooks>::<hook>, self[, out])`.
 fn ask(ask: &str, receiver: &str, module: &str, hook: &str, out: bool) -> Expr {
     let mut arguments = vec![
         Expr::call(&format!("{receiver}.{module}"), Vec::new()),
@@ -467,12 +474,12 @@ fn ask(ask: &str, receiver: &str, module: &str, hook: &str, out: bool) -> Expr {
     if out {
         arguments.push(Expr::atom("out"));
     }
-    Expr::call(&format!("markup::{ask}"), arguments)
+    Expr::call(&format!("crate::{ask}"), arguments)
 }
 
 /// `transform`, which asks the node's tree hook first.
 fn transform_method(module: &str, hook: &str, out: &mut String) {
-    out.push_str("    fn transform(&self, ctx: &mut dyn markup::Context) -> Self {\n");
+    out.push_str("    fn transform(&self, ctx: &mut dyn crate::Context) -> Self {\n");
     layout::statement(
         "        let node = ",
         &ask(
@@ -489,7 +496,7 @@ fn transform_method(module: &str, hook: &str, out: &mut String) {
 
 /// `visit`, which shows the node to its hook first.
 fn visit_method(module: &str, hook: &str, out: &mut String) {
-    out.push_str("    fn visit(&self, visitor: &mut dyn markup::Visitor) {\n");
+    out.push_str("    fn visit(&self, visitor: &mut dyn crate::Visitor) {\n");
     layout::statement(
         "        let next = ",
         &ask(
@@ -502,7 +509,7 @@ fn visit_method(module: &str, hook: &str, out: &mut String) {
         out,
     );
     out.push_str(
-        "        if next == markup::Descend::Yes {\n            self.visit_children(visitor);\n        }\n    }\n\n",
+        "        if next == crate::Descend::Yes {\n            self.visit_children(visitor);\n        }\n    }\n\n",
     );
 }
 
@@ -565,14 +572,14 @@ fn node_impls(
     let target = format!("super::{}", node.name);
     let prefix = bare(hook);
     out.push('\n');
-    out.push_str(&layout::impl_header("markup::Transform", &target));
+    out.push_str(&layout::impl_header("crate::Transform", &target));
     transform_method(module, hook, out);
-    out.push_str("    fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {\n");
+    out.push_str("    fn transform_children(&self, ctx: &mut dyn crate::Context) -> Self {\n");
     rebuild(node, &target, prefix, out, helpers);
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("markup::Visit", &target));
+    out.push_str(&layout::impl_header("crate::Visit", &target));
     visit_method(module, hook, out);
-    out.push_str("    fn visit_children(&self, visitor: &mut dyn markup::Visitor) {\n");
+    out.push_str("    fn visit_children(&self, visitor: &mut dyn crate::Visitor) {\n");
     walk(node, &target, prefix, out, helpers);
     out.push_str("    }\n}\n\n");
     out.push_str(&layout::impl_header("WriteThrough", &target));
@@ -585,8 +592,8 @@ fn node_impls(
 
 /// The fields `transform_children` rebuilds besides `unknown`, in the order
 /// it rebuilds them, `from` the node it reads: the copied ones, then each
-/// declared child in schema order, the order `markup::Placement` counts them
-/// in, each counting what it became in `rebase`.
+/// declared child in schema order, the order `officekit_markup::Placement`
+/// counts them in, each counting what it became in `rebase`.
 fn rebuilt_fields(node: &Node, from: &str, rebase: &str) -> Vec<(String, Rebuilt)> {
     let mut fields: Vec<(String, Rebuilt)> = node
         .attributes
@@ -600,7 +607,7 @@ fn rebuilt_fields(node: &Node, from: &str, rebase: &str) -> Vec<(String, Rebuilt
         fields.push((
             field.to_owned(),
             Rebuilt::Child(Expr::call(
-                &format!("markup::transform_{}", step.method()),
+                &format!("crate::transform_{}", step.method()),
                 vec![
                     Expr::Atom(format!("&{from}.{field}")),
                     Expr::atom("ctx"),
@@ -615,7 +622,7 @@ fn rebuilt_fields(node: &Node, from: &str, rebase: &str) -> Vec<(String, Rebuilt
 /// The node's unknown content rebuilt, each `Extra` placed by `rebase`.
 fn rebuilt_unknown(rebase: Expr) -> Expr {
     Expr::call(
-        "markup::transform_unknown",
+        "crate::transform_unknown",
         vec![Expr::atom("&self.unknown"), Expr::atom("ctx"), rebase],
     )
 }
@@ -662,12 +669,12 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     let rebase = if counted {
         Expr::atom("&rebase")
     } else {
-        Expr::reference(Expr::call("markup::Rebase::default", Vec::new()))
+        Expr::reference(Expr::call("crate::Rebase::default", Vec::new()))
     };
     let unknown = rebuilt_unknown(rebase);
     let mut body = String::new();
     if counted {
-        body.push_str("        let mut rebase = markup::Rebase::new(&self.unknown);\n");
+        body.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
     }
     let mut literal = vec![("unknown", layout::field(12, "unknown", &unknown))];
     // Numbered, not named after their fields, and with one count of digits:
@@ -719,15 +726,15 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     chunks.push((chunk, chunk_counted));
     out.push_str("        let mut node = Self::default();\n");
     if counted {
-        out.push_str("        let mut rebase = markup::Rebase::new(&self.unknown);\n");
+        out.push_str("        let mut rebase = crate::Rebase::new(&self.unknown);\n");
     }
     for (number, (text, counts)) in chunks.iter().enumerate() {
         let helper = format!("transform_{prefix}_{}", number + 1);
         let mut parameters = vec![format!("from: &{target}"), format!("node: &mut {target}")];
         let mut arguments = vec![Expr::atom("self"), Expr::atom("&mut node")];
         if *counts {
-            parameters.push("ctx: &mut dyn markup::Context".to_owned());
-            parameters.push("rebase: &mut markup::Rebase".to_owned());
+            parameters.push("ctx: &mut dyn crate::Context".to_owned());
+            parameters.push("rebase: &mut crate::Rebase".to_owned());
             arguments.push(Expr::atom("ctx"));
             arguments.push(Expr::atom("&mut rebase"));
         }
@@ -763,7 +770,7 @@ fn steps(node: &Node) -> Vec<(&str, Step)> {
 fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut String) {
     let steps = steps(node);
     if steps.is_empty() {
-        out.push_str("        markup::Walk::new(&self.unknown).finish(visitor);\n");
+        out.push_str("        crate::Walk::new(&self.unknown).finish(visitor);\n");
         return;
     }
     let statement = |from: &str, indent: &str, field: &str, step: Step, text: &mut String| {
@@ -779,7 +786,7 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
             text,
         );
     };
-    out.push_str("        let mut walk = markup::Walk::new(&self.unknown);\n");
+    out.push_str("        let mut walk = crate::Walk::new(&self.unknown);\n");
     let mut body = String::new();
     for (field, step) in &steps {
         statement("self", "        ", field, *step, &mut body);
@@ -808,8 +815,8 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
                 &format!("fn {helper}"),
                 &[
                     format!("node: &{target}"),
-                    "walk: &mut markup::Walk<'_>".to_owned(),
-                    "visitor: &mut dyn markup::Visitor".to_owned(),
+                    "walk: &mut crate::Walk<'_>".to_owned(),
+                    "visitor: &mut dyn crate::Visitor".to_owned(),
                 ],
                 "",
             ));
@@ -886,7 +893,7 @@ fn through(
     layout::statement(
         &format!("        let {binding} = "),
         &Expr::call(
-            "markup::Through::new",
+            "crate::Through::new",
             vec![
                 Expr::atom("out"),
                 Expr::Atom(format!("&super::{shape}")),
@@ -928,11 +935,11 @@ fn through(
 fn through_helper(helper: &str, target: &str, text: &str, out: &mut String, helpers: &mut String) {
     let mut parameters = vec![
         format!("node: &{target}"),
-        "through: &mut markup::Through<'_, '_, '_>".to_owned(),
+        "through: &mut crate::Through<'_, '_, '_>".to_owned(),
     ];
     let mut arguments = String::from("self, &mut through");
     if text.contains("ctx") {
-        parameters.push("ctx: &mut dyn markup::Context".to_owned());
+        parameters.push("ctx: &mut dyn crate::Context".to_owned());
         arguments.push_str(", ctx");
     }
     let fallible = text.contains('?');
@@ -956,8 +963,9 @@ fn through_helper(helper: &str, target: &str, text: &str, out: &mut String, help
     helpers.push_str("}\n");
 }
 
-/// An enum's `markup::Item`, `Transform`, `Visit`, and `WriteThrough`, and
-/// the helpers of an enum with too many arms for one function.
+/// An enum's `officekit_markup::Item`, `Transform`, `Visit`, and
+/// `WriteThrough`, and the helpers of an enum with too many arms for one
+/// function.
 fn enum_impls(
     names: &Names<'_>,
     found: &EnumDef,
@@ -970,7 +978,7 @@ fn enum_impls(
     let target = format!("super::{}", found.name);
     let prefix = bare(hook);
     out.push('\n');
-    out.push_str(&layout::impl_header("markup::Item", &target));
+    out.push_str(&layout::impl_header("crate::Item", &target));
     out.push_str("    fn is_declared(&self) -> bool {\n");
     if found.arms.is_empty() {
         out.push_str("        false\n    }\n");
@@ -979,7 +987,7 @@ fn enum_impls(
     }
     if list {
         out.push_str(
-            "\n    fn items(&self, ctx: &mut dyn markup::Context) -> Option<Vec<Self>> {\n",
+            "\n    fn items(&self, ctx: &mut dyn crate::Context) -> Option<Vec<Self>> {\n",
         );
         layout::line(
             "        ",
@@ -1022,18 +1030,18 @@ fn enum_impls(
     }
     out.push_str("}\n\n");
     let arms = arm_list(found);
-    out.push_str(&layout::impl_header("markup::Transform", &target));
+    out.push_str(&layout::impl_header("crate::Transform", &target));
     transform_method(module, hook, out);
-    out.push_str("    fn transform_children(&self, ctx: &mut dyn markup::Context) -> Self {\n");
+    out.push_str("    fn transform_children(&self, ctx: &mut dyn crate::Context) -> Self {\n");
     if let Some(text) = one_match(found, &arms, Traversal::Transform) {
         out.push_str(&text);
     } else {
         chunked_transform(&target, prefix, &arms, out, helpers);
     }
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("markup::Visit", &target));
+    out.push_str(&layout::impl_header("crate::Visit", &target));
     visit_method(module, hook, out);
-    out.push_str("    fn visit_children(&self, visitor: &mut dyn markup::Visitor) {\n");
+    out.push_str("    fn visit_children(&self, visitor: &mut dyn crate::Visitor) {\n");
     if let Some(text) = one_match(found, &arms, Traversal::Visit) {
         out.push_str(&text);
     } else {
@@ -1175,7 +1183,7 @@ fn chunked_transform(
             &format!("fn {helper}"),
             &[
                 format!("item: &{target}"),
-                "ctx: &mut dyn markup::Context".to_owned(),
+                "ctx: &mut dyn crate::Context".to_owned(),
             ],
             &format!("Option<{target}>"),
         ));
@@ -1236,7 +1244,7 @@ fn chunked_steps(
     } else {
         (
             "visit",
-            vec!["visitor: &mut dyn markup::Visitor".to_owned()],
+            vec!["visitor: &mut dyn crate::Visitor".to_owned()],
             "",
             "",
         )

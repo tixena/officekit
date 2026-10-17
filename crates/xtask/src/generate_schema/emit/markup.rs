@@ -1,6 +1,6 @@
-//! The typed tree: one module per namespace, `markup::<namespace>`.
+//! The typed tree: one module per namespace, `officekit_markup::<namespace>`.
 //!
-//! Each is written to `crates/officekit-core/src/markup/<namespace>.rs` with
+//! Each is written to `crates/officekit-markup/src/<namespace>.rs` with
 //! its readers, writers, and traversals beside it, from the schema model of the
 //! Transitional schemas, SDK 3.5.1's extension types and placements, and the
 //! standard's titles.
@@ -36,7 +36,7 @@ use crate::generate_schema::sdk_data::{DataVersion, SdkData};
 mod tests;
 
 /// The folder of the namespace modules, from the workspace root.
-pub const MARKUP_PATH: &str = "crates/officekit-core/src/markup";
+pub const MARKUP_PATH: &str = "crates/officekit-markup/src";
 
 /// The hand-written table of enum names, from the workspace root.
 pub const ENUM_NAMES_PATH: &str = "crates/xtask/data/enum_names.toml";

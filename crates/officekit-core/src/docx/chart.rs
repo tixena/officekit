@@ -8,6 +8,7 @@ use alloc::collections::btree_map::Entry;
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use officekit_markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -16,7 +17,6 @@ use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 
 use crate::embedded::{self, Embedded};
-use crate::markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
 use crate::parts::{chart, shared_string_table, worksheet};
 use crate::xlsx::Xlsx;
 

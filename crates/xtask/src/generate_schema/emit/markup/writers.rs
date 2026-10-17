@@ -1,7 +1,7 @@
-//! The writers of a namespace module, `markup::<namespace>::write`: one free
-//! function per struct, which hands the runtime's `Writer` each declared
-//! attribute and child in schema order, and one per enum, which writes an
-//! item at its place.
+//! The writers of a namespace module, `officekit_markup::<namespace>::write`:
+//! one free function per struct, which hands the runtime's `Writer` each
+//! declared attribute and child in schema order, and one per enum, which
+//! writes an item at its place.
 
 use core::fmt::Write as _;
 
@@ -21,7 +21,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The writers of `markup::{}`: each struct written as its generic\n\
+        "//! The writers of `crate::{}`: each struct written as its generic\n\
          //! element, its unknown content at its place.",
         module.name
     );
@@ -43,7 +43,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
             &format!("pub fn {function}"),
             &[
                 format!("node: &super::{}", found.name),
-                "writer: &mut markup::Writer<'_, '_>".to_owned(),
+                "writer: &mut crate::Writer<'_, '_>".to_owned(),
             ],
             "",
         ));
@@ -114,7 +114,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
         "Element",
     ));
     let new_writer = Expr::call(
-        "markup::Writer::new",
+        "crate::Writer::new",
         vec![
             Expr::atom("scope"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
@@ -149,7 +149,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
                     &format!("fn {helper}"),
                     &[
                         format!("node: &super::{}", node.name),
-                        "writer: &mut markup::Writer<'_, '_>".to_owned(),
+                        "writer: &mut crate::Writer<'_, '_>".to_owned(),
                     ],
                     ""
                 )

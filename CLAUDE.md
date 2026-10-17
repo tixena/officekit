@@ -8,6 +8,7 @@ in either conformance class, Transitional or Strict.
 
 ```
 crates/officekit-core        library: element trees, file types
+crates/officekit-markup      library: the typed tree, one module per namespace, with transforms and visitors
 crates/officekit-packaging   library: the package, part names, content types, relationships, images
 crates/officekit-validation  library: the validator and its generated tables
 crates/officekit-xml         library: element tree, names, values, part reader and writer
@@ -21,9 +22,7 @@ is:
 
 ```
 docx, xlsx, pptx   the file types: a package with its main part, class, and kind; saves; operations
-markup             the typed tree, one module per namespace, with transforms and visitors
 parts              one module per part type: content type, relationship types, load and store
-stream             a transform written through as it is made
 embedded           a document stored in a part of another
 transitional       the Transitional class: read and write of every node (feature `transitional`)
 strict             the Strict class: read and write of every node (feature `strict`)
@@ -44,10 +43,12 @@ strict             the Strict class: read and write of every node (feature `stri
   default features, and with `strict` alone. Nothing is done until it passes.
   Never add `#[allow]` / `#[expect]` to get past a lint; fix the code or raise
   it.
-- **Generated files are never edited by hand**: everything under `markup/`,
-  `transitional/`, `strict/`, and `parts/` of `officekit-core/src`,
-  `crates/officekit-validation/src/generated/` (and `generated.rs`),
-  `crates/officekit-xml/src/name/table.rs`, and
+- **Generated files are never edited by hand**: everything under
+  `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`,
+  `write_through.rs`, and the unit tests; everything under `transitional/`,
+  `strict/`, and `parts/` of `officekit-core/src`;
+  `crates/officekit-validation/src/generated/` (and `generated.rs`);
+  `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-packaging/src/relationship_type.rs`. Change the generator
   in `crates/xtask` (its hand-written inputs live in `crates/xtask/data/`) and
   run `cargo xtask generate-schema`.

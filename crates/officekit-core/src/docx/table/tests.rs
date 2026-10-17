@@ -1,9 +1,10 @@
+use officekit_markup::wordprocessing::{
+    BookmarkStart, RowLevelStructuredDocumentTag, RowLevelStructuredDocumentTagContent,
+};
+
 use super::{
     BlockContent, ContentCellContent, ContentRowContent, ParagraphContent, Table, TableRow,
-    TableRowPropertiesContent, TextRunContent,
-};
-use crate::markup::wordprocessing::{
-    BookmarkStart, RowLevelStructuredDocumentTag, RowLevelStructuredDocumentTagContent,
+    TableRowPropertiesContent, TableRows as _, TextRunContent,
 };
 use alloc::boxed::Box;
 use alloc::vec::Vec;
@@ -31,10 +32,9 @@ fn row_with_cells(cells: usize) -> TableRow {
 }
 
 fn sdt_row() -> ContentRowContent {
-    ContentRowContent::RowLevelStructuredDocumentTag(RowLevelStructuredDocumentTag {
-        content: Some(Box::new(RowLevelStructuredDocumentTagContent::default())),
-        ..RowLevelStructuredDocumentTag::default()
-    })
+    let mut control = RowLevelStructuredDocumentTag::default();
+    control.content = Some(Box::new(RowLevelStructuredDocumentTagContent::default()));
+    ContentRowContent::RowLevelStructuredDocumentTag(control)
 }
 
 #[test]

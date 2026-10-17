@@ -5,6 +5,9 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_markup::spreadsheet::Workbook;
+#[cfg(feature = "strict")]
+use officekit_markup::{Transform as _, spreadsheet};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -15,9 +18,6 @@ use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::file;
-use crate::markup::spreadsheet::Workbook;
-#[cfg(feature = "strict")]
-use crate::markup::{self, Transform as _, spreadsheet};
 use crate::new_parts;
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
@@ -323,7 +323,7 @@ impl Xlsx {
 }
 
 #[cfg(feature = "strict")]
-impl markup::Context for IsoDates {
+impl officekit_markup::Context for IsoDates {
     fn spreadsheet(&mut self) -> Option<&mut dyn spreadsheet::Context> {
         Some(self)
     }

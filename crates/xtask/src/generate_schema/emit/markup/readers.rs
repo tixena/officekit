@@ -1,7 +1,7 @@
-//! The readers of a namespace module, `markup::<namespace>::read`: one free
-//! function per struct, which takes each declared attribute and child the
-//! runtime's `Reader` hands it, and one per enum, which reads an item by its
-//! tag.
+//! The readers of a namespace module, `officekit_markup::<namespace>::read`:
+//! one free function per struct, which takes each declared attribute and
+//! child the runtime's `Reader` hands it, and one per enum, which reads an
+//! item by its tag.
 
 use core::fmt::Write as _;
 
@@ -21,7 +21,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The readers of `markup::{}`: each struct read from its generic\n\
+        "//! The readers of `crate::{}`: each struct read from its generic\n\
          //! element, its unknown content kept at its place.",
         module.name
     );
@@ -45,7 +45,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
             &["element: &Element".to_owned()],
             &format!("super::{}", found.name),
         ));
-        text.push_str("    markup::read(element)\n}\n");
+        text.push_str("    crate::read(element)\n}\n");
         functions.push((function.clone(), text));
     }
     functions.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
@@ -98,7 +98,7 @@ fn node_reader(names: &Names<'_>, index: usize, function: &str) -> String {
         &format!("super::{}", node.name),
     ));
     let new_reader = Expr::call(
-        "markup::Reader::new",
+        "crate::Reader::new",
         vec![
             Expr::atom("element"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
@@ -157,7 +157,7 @@ fn reader_helpers(function: &str, node_name: &str, arms: &[Expr]) -> String {
                 &[
                     format!("node: &mut super::{node_name}"),
                     "index: usize".to_owned(),
-                    "field: markup::Field<'_>".to_owned(),
+                    "field: crate::Field<'_>".to_owned(),
                 ],
                 ""
             )

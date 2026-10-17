@@ -7,6 +7,7 @@ mod tests;
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
+use officekit_markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -16,7 +17,6 @@ use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use super::Docx;
-use crate::markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
@@ -704,12 +704,10 @@ pub fn import_body(
     })?;
     let target_main = target.main.clone();
     let mut import = Import::new(source, target, document)?;
-    let body = DocumentBody {
-        content: source_document
-            .body
-            .map_or_else(Vec::new, |body| body.content),
-        ..DocumentBody::default()
-    };
+    let mut body = DocumentBody::default();
+    body.content = source_document
+        .body
+        .map_or_else(Vec::new, |source_body| source_body.content);
     let mut scope = Scope::default();
     scope.start(&source_document.unknown.namespace_declarations);
     let mut element = wordprocessing::write::document_body(&body, &mut scope);

@@ -473,6 +473,7 @@ version = "0.1.0"
 dependencies = [
  "base64",
  "clap",
+ "officekit-markup",
  "officekit-packaging",
  "officekit-validation",
  "officekit-xml",
@@ -486,10 +487,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "officekit-markup"
+version = "0.1.0"
+dependencies = [
+ "officekit-xml",
+]
+
+[[package]]
 name = "officekit-packaging"
 version = "0.1.0"
 dependencies = [
  "imagesize",
+ "officekit-markup",
  "officekit-xml",
  "os-shim",
  "thiserror",
@@ -1035,7 +1044,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "officekit-core",
+ "officekit-markup",
  "officekit-packaging",
  "officekit-validation",
  "officekit-xml",

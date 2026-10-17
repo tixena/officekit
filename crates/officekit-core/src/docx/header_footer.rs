@@ -3,6 +3,13 @@
 #[cfg(test)]
 mod tests;
 
+use officekit_markup::common_simple_types::OnOffValue;
+use officekit_markup::wordprocessing::{
+    BlockContent, ContentBlockContent, DifferentEvenOddPageHeadersAndFooters,
+    DifferentFirstPageHeadersAndFooters, Document, DocumentBody, DocumentFinalSectionProperties,
+    DocumentSettings, FooterReference, HeaderOrFooterTypeMember, HeaderReference, Paragraph,
+    SectionPropertiesContent,
+};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
@@ -11,13 +18,6 @@ use officekit_xml::element::NamespaceDeclaration;
 use officekit_xml::name::Namespace;
 
 use crate::file;
-use crate::markup::common_simple_types::OnOffValue;
-use crate::markup::wordprocessing::{
-    BlockContent, ContentBlockContent, DifferentEvenOddPageHeadersAndFooters,
-    DifferentFirstPageHeadersAndFooters, Document, DocumentBody, DocumentFinalSectionProperties,
-    DocumentSettings, FooterReference, HeaderOrFooterTypeMember, HeaderReference, Paragraph,
-    SectionPropertiesContent,
-};
 use crate::part_root::{self, PartRoot};
 use crate::parts::{document_settings, footer, header};
 
@@ -44,16 +44,18 @@ impl Which {
 
     fn item(self, id: String, kind: HeaderOrFooterTypeMember) -> SectionPropertiesContent {
         match self {
-            Self::Footer => SectionPropertiesContent::FooterReference(FooterReference {
-                id: Some(id),
-                r#type: Some(kind.into()),
-                ..FooterReference::default()
-            }),
-            Self::Header => SectionPropertiesContent::HeaderReference(HeaderReference {
-                id: Some(id),
-                r#type: Some(kind.into()),
-                ..HeaderReference::default()
-            }),
+            Self::Footer => {
+                let mut reference = FooterReference::default();
+                reference.id = Some(id);
+                reference.r#type = Some(kind.into());
+                SectionPropertiesContent::FooterReference(reference)
+            }
+            Self::Header => {
+                let mut reference = HeaderReference::default();
+                reference.id = Some(id);
+                reference.r#type = Some(kind.into());
+                SectionPropertiesContent::HeaderReference(reference)
+            }
         }
     }
 
@@ -118,19 +120,17 @@ where
         which.relationship().in_class(docx.class),
     )?;
     let replaced = put_reference(properties, which, kind, id);
-    match kind {
-        HeaderOrFooterTypeMember::First => {
-            if !properties
-                .different_first_page_headers_and_footers
-                .as_ref()
-                .is_some_and(|flag| is_on(flag.val.as_ref()))
-            {
-                properties.different_first_page_headers_and_footers =
-                    Some(Box::new(DifferentFirstPageHeadersAndFooters::default()));
-            }
-        }
-        HeaderOrFooterTypeMember::Even => turn_on_even_and_odd_headers(docx)?,
-        HeaderOrFooterTypeMember::Default => {}
+    if kind == HeaderOrFooterTypeMember::First
+        && !properties
+            .different_first_page_headers_and_footers
+            .as_ref()
+            .is_some_and(|flag| is_on(flag.val.as_ref()))
+    {
+        properties.different_first_page_headers_and_footers =
+            Some(Box::new(DifferentFirstPageHeadersAndFooters::default()));
+    }
+    if kind == HeaderOrFooterTypeMember::Even {
+        turn_on_even_and_odd_headers(docx)?;
     }
     docx.set_main_document(&document)?;
     if let Some(old) = replaced {

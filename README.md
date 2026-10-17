@@ -36,6 +36,7 @@ Built and tested:
 
 ```
 crates/officekit-core        library: element trees, file types
+crates/officekit-markup      library: the typed tree, one module per namespace, with transforms and visitors
 crates/officekit-packaging   library: the package, part names, content types, relationships, images
 crates/officekit-validation  library: the validator and its generated tables
 crates/officekit-xml         library: element tree, names, values, part reader and writer
@@ -49,12 +50,10 @@ crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never ins
 
 | Module | Covers | Holds |
 |---|---|---|
-| `markup` | The typed tree, one module per namespace (`markup::wordprocessing`, `markup::drawing`, ...) | Generated nodes, simple-type newtypes, and enums, with the `Transform` and `Visit` traits and the write-through form of a transform |
 | `parts` | The part types of ECMA-376 Part 1 and of Microsoft's extensions | One generated module per part type: its content type, its relationship type in both classes' spelling, and the load and store of its root |
 | `transitional` | The Transitional conformance class (ECMA-376 Part 1 with the migration features of Part 4) | The generated read and write of every node of the typed tree; the conversion of date cells to number cells before a Transitional save |
 | `strict` | The Strict conformance class (ECMA-376 Part 1) | The generated read and write of every node, and the generated rules that rename, unpack, and refuse what Strict spells differently |
 | `docx`, `xlsx`, `pptx` | The three file types | A package with its main part, its class, and its kind; the saves in either class; the operations over the typed tree |
-| `stream` | Large parts | The write-through form of a transform |
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
@@ -128,9 +127,10 @@ just audit    # cargo audit
 
 ## The generator and its inputs
 
-`cargo xtask generate-schema` writes the typed tree (`markup/`), the
-conformance classes (`transitional/`, `strict/`), and the part modules
-(`parts/`) of `officekit-core`, the validation tables of `officekit-validation`
+`cargo xtask generate-schema` writes the typed tree into
+`crates/officekit-markup/src`, the conformance classes (`transitional/`,
+`strict/`) and the part modules (`parts/`) of `officekit-core`, the
+validation tables of `officekit-validation`
 (`crates/officekit-validation/src/generated/`), the name table of
 `officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and the
 relationship types of `officekit-packaging`

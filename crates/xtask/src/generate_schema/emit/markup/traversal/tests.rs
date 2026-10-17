@@ -59,7 +59,7 @@ fn a_hook_is_its_readers_name_unless_clippy_keeps_its_prefix_for_selfless_method
 #[test]
 fn a_struct_literal_field_too_long_for_its_line_breaks_its_call() {
     let value = Expr::call(
-        "markup::transform_child",
+        "crate::transform_child",
         vec![
             Expr::atom("&self.table_style_conditional_formatting_settings_exception_xyz"),
             Expr::atom("ctx"),
@@ -71,7 +71,7 @@ fn a_struct_literal_field_too_long_for_its_line_breaks_its_call() {
             "table_style_conditional_formatting_settings_exception_xyz",
             &value
         ),
-        "            table_style_conditional_formatting_settings_exception_xyz: markup::transform_child(\n                \
+        "            table_style_conditional_formatting_settings_exception_xyz: crate::transform_child(\n                \
          &self.table_style_conditional_formatting_settings_exception_xyz,\n                ctx,\n            ),\n"
     );
 }
@@ -87,17 +87,17 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     let (out, helpers) = rebuilt(&sample);
     assert_eq!(
         out,
-        "        let mut rebase = markup::Rebase::new(&self.unknown);\n        \
-         let child_1 = markup::transform_child(&self.properties, ctx, &mut rebase);\n        \
-         let child_2 = markup::transform_choice(&self.sup, ctx, &mut rebase);\n        \
-         let child_3 = markup::transform_items(&self.content, ctx, &mut rebase);\n        \
-         let child_4 = markup::transform_child(&self.sub, ctx, &mut rebase);\n        \
+        "        let mut rebase = crate::Rebase::new(&self.unknown);\n        \
+         let child_1 = crate::transform_child(&self.properties, ctx, &mut rebase);\n        \
+         let child_2 = crate::transform_choice(&self.sup, ctx, &mut rebase);\n        \
+         let child_3 = crate::transform_items(&self.content, ctx, &mut rebase);\n        \
+         let child_4 = crate::transform_child(&self.sub, ctx, &mut rebase);\n        \
          Self {\n            \
          content: child_3,\n            \
          properties: child_1,\n            \
          sub: child_4,\n            \
          sup: child_2,\n            \
-         unknown: markup::transform_unknown(&self.unknown, ctx, &rebase),\n            \
+         unknown: crate::transform_unknown(&self.unknown, ctx, &rebase),\n            \
          val: self.val.clone(),\n        \
          }\n"
     );
@@ -110,7 +110,7 @@ fn a_struct_without_children_places_its_unknown_content_as_read() {
     assert_eq!(
         out,
         "        Self {\n            \
-         unknown: markup::transform_unknown(&self.unknown, ctx, &markup::Rebase::default()),\n            \
+         unknown: crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default()),\n            \
          val: self.val.clone(),\n        \
          }\n"
     );
@@ -132,22 +132,22 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     assert_eq!(
         out,
         "        let mut node = Self::default();\n        \
-         let mut rebase = markup::Rebase::new(&self.unknown);\n        \
+         let mut rebase = crate::Rebase::new(&self.unknown);\n        \
          transform_sample_1(self, &mut node, ctx, &mut rebase);\n        \
          transform_sample_2(self, &mut node, ctx, &mut rebase);\n        \
-         node.unknown = markup::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);\n        \
          node\n"
     );
     let mut first = String::from(
         "\nfn transform_sample_1(\n    from: &super::Sample,\n    node: &mut super::Sample,\n    \
-         ctx: &mut dyn markup::Context,\n    rebase: &mut markup::Rebase,\n) {\n    \
+         ctx: &mut dyn crate::Context,\n    rebase: &mut crate::Rebase,\n) {\n    \
          Clone::clone_from(&mut node.val, &from.val);\n",
     );
     // Schema order: the children were given from `item_099` down.
     for index in (0..100_usize).rev().take(3) {
         let _ = writeln!(
             first,
-            "    node.item_{index:03} = markup::transform_child(&from.item_{index:03}, ctx, rebase);"
+            "    node.item_{index:03} = crate::transform_child(&from.item_{index:03}, ctx, rebase);"
         );
     }
     assert!(helpers.starts_with(&first), "{helpers}");

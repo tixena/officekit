@@ -18,8 +18,8 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use clap::Parser;
-use officekit_core::markup::{self, Transform, Visit, presentation, spreadsheet, wordprocessing};
-use officekit_core::stream::transform::{Unchanged, WriteThrough};
+use officekit_markup::write_through::{Unchanged, WriteThrough};
+use officekit_markup::{Transform, Visit, presentation, spreadsheet, wordprocessing};
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_xml::element::Element;
@@ -137,7 +137,7 @@ struct Times {
     write_through: Duration,
 }
 
-impl markup::Visitor for Everything {}
+impl officekit_markup::Visitor for Everything {}
 
 impl Times {
     fn add(&mut self, other: &Self) {

@@ -157,7 +157,7 @@ impl Pair<'_> {
                 &format!("{}(Box::new(item))", functions[0]),
                 &chained(
                     &functions,
-                    "unwrap_or_else(|rest| Self::Other(markup::generic(&*rest)))",
+                    "unwrap_or_else(|rest| Self::Other(crate::generic(&*rest)))",
                 ),
             ));
         }
@@ -247,10 +247,9 @@ impl Pair<'_> {
     }
 }
 
-/// The imports a module's items need: a module (`crate::markup`), a trait
-/// for its methods (`crate::markup::Write as _`), or one name
-/// (`officekit_xml::element::Element`), which joins the other names of its
-/// module in one `use`.
+/// The imports a module's items need: a trait for its methods
+/// (`crate::Write as _`), or one name (`officekit_xml::element::Element`),
+/// which joins the other names of its module in one `use`.
 #[derive(Default)]
 pub struct Uses {
     paths: BTreeSet<&'static str>,
@@ -262,8 +261,8 @@ impl Uses {
         self.paths.insert(path);
     }
 
-    /// The imports of a file whose items are `body`: the modules and the
-    /// names of `officekit_xml` it uses, and the `Write` trait when it calls
+    /// The imports of a file whose items are `body`: the names of
+    /// `officekit_xml` it uses, and the `Write` trait when it calls
     /// `write_into` outside an `impl` of that trait.
     #[must_use]
     pub fn of(body: &str) -> String {
@@ -272,14 +271,11 @@ impl Uses {
         uses.text()
     }
 
-    /// Import the modules and the names of `officekit_xml` `items` uses, and
-    /// the `Write` trait when `helpers`, free functions, call `write_into`.
+    /// Import the names of `officekit_xml` `items` uses, and the `Write`
+    /// trait when `helpers`, free functions, call `write_into`.
     fn scan(&mut self, items: &str, helpers: &str) {
-        if items.contains("markup::") {
-            self.add("crate::markup");
-        }
         if helpers.contains(".write_into(") {
-            self.add("crate::markup::Write as _");
+            self.add("crate::Write as _");
         }
         for (text, path) in XML_NAMES {
             if items.contains(text) {
@@ -433,8 +429,8 @@ where
     }
     let mut modules = String::from(header);
     modules.push_str(
-        "// The namespace modules, `markup::<namespace>`, brought into `markup` with\n\
-         // `include!` ahead of its imports.\n\n",
+        "// The namespace modules, `crate::<namespace>`, brought into the crate root\n\
+         // with `include!` ahead of its imports.\n\n",
     );
     for module in &order {
         let _ = writeln!(modules, "pub mod {};", catalog.modules[*module].name);
@@ -541,7 +537,7 @@ fn module_text(
         .push(("Visitor".to_owned(), traversal::visitor_trait(names)));
     parts.items.sort_by(|left, right| left.0.cmp(&right.0));
     if traversal::has_nodes(names) {
-        uses.add("crate::stream::transform::Written");
+        uses.add("crate::write_through::Written");
         uses.add("officekit_xml::stream::writer::PartWriter");
         uses.add("std::io");
     }
@@ -653,7 +649,7 @@ fn struct_text(names: &Names<'_>, index: usize, node: &Node) -> String {
             }
         }
     }
-    fields.push(("unknown".to_owned(), "markup::Unknown".to_owned()));
+    fields.push(("unknown".to_owned(), "crate::Unknown".to_owned()));
     fields.sort_by(|left, right| bare(&left.0).cmp(bare(&right.0)));
     let mut out = doc(0, &node.doc);
     out.push_str("#[derive(Clone, Debug, Default, Eq, PartialEq)]\n#[non_exhaustive]\n");
@@ -709,9 +705,9 @@ fn shape_text(
                 let slot = match (child.target, child.occurs) {
                     (Target::Node(child_index), occurs) => {
                         let function = match occurs {
-                            Occurs::List => "markup::Slot::list",
-                            Occurs::Optional => "markup::Slot::single",
-                            Occurs::Required => "markup::Slot::required",
+                            Occurs::List => "crate::Slot::list",
+                            Occurs::Optional => "crate::Slot::single",
+                            Occurs::Required => "crate::Slot::required",
                         };
                         let found = &catalog.nodes[child_index];
                         Expr::call(
@@ -726,10 +722,10 @@ fn shape_text(
                     }
                     (Target::Enum(found), occurs) => {
                         let function = match (catalog.enums[found].kind, occurs) {
-                            (EnumKind::All, _) => "markup::Slot::once",
-                            (_, Occurs::List) => "markup::Slot::items",
-                            (_, Occurs::Optional) => "markup::Slot::choice",
-                            (_, Occurs::Required) => "markup::Slot::required_choice",
+                            (EnumKind::All, _) => "crate::Slot::once",
+                            (_, Occurs::List) => "crate::Slot::items",
+                            (_, Occurs::Optional) => "crate::Slot::choice",
+                            (_, Occurs::Required) => "crate::Slot::required_choice",
                         };
                         Expr::call(
                             function,
@@ -743,7 +739,7 @@ fn shape_text(
         }
     };
     let expr = Expr::Struct(
-        "markup::Shape".to_owned(),
+        "crate::Shape".to_owned(),
         vec![
             ("attributes".to_owned(), Expr::Slice(attributes)),
             ("name".to_owned(), own),
@@ -756,7 +752,7 @@ fn shape_text(
     );
     let mut out = String::from("\n");
     statement(
-        &format!("static {}: markup::Shape = ", names.shape(index)),
+        &format!("static {}: crate::Shape = ", names.shape(index)),
         &expr,
         &mut out,
     );
@@ -782,17 +778,17 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
         || Expr::atom("None"),
         |wildcard| {
             let inner = match wildcard {
-                Wildcard::Any => Expr::atom("markup::Wildcard::Any"),
-                Wildcard::Local => Expr::atom("markup::Wildcard::Local"),
+                Wildcard::Any => Expr::atom("crate::Wildcard::Any"),
+                Wildcard::Local => Expr::atom("crate::Wildcard::Local"),
                 Wildcard::Not(id) => {
                     namespaces.insert(Some(*id));
                     Expr::call(
-                        "markup::Wildcard::Not",
+                        "crate::Wildcard::Not",
                         vec![Expr::atom(&layout::integer(i128::from(*id)))],
                     )
                 }
                 Wildcard::Only(ids) => Expr::call(
-                    "markup::Wildcard::Only",
+                    "crate::Wildcard::Only",
                     vec![Expr::Slice(
                         ids.iter()
                             .map(|id| Expr::atom(&layout::integer(i128::from(*id))))
@@ -804,7 +800,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
         },
     );
     let expr = Expr::Struct(
-        "markup::Accept".to_owned(),
+        "crate::Accept".to_owned(),
         vec![
             ("any".to_owned(), any),
             ("tags".to_owned(), Expr::Slice(tags)),
@@ -813,7 +809,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
     let mut out = String::from("\n");
     statement(
         &format!(
-            "pub(crate) static {}_TAGS: markup::Accept = ",
+            "pub(crate) static {}_TAGS: crate::Accept = ",
             names::screaming(&found.name)
         ),
         &expr,
@@ -864,7 +860,7 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         .cloned()
         .unwrap_or_default();
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("markup::Read", &node.name));
+    out.push_str(&layout::impl_header("crate::Read", &node.name));
     out.push_str("    fn read(element: &Element) -> Self {\n");
     line(
         "        ",
@@ -873,8 +869,8 @@ fn node_impls(names: &Names<'_>, index: usize, node: &Node) -> String {
         &mut out,
     );
     out.push_str("    }\n}\n\n");
-    out.push_str(&layout::impl_header("markup::Write", &node.name));
-    out.push_str("    fn write_into(&self, writer: &mut markup::Writer<'_, '_>) {\n");
+    out.push_str(&layout::impl_header("crate::Write", &node.name));
+    out.push_str("    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {\n");
     statement(
         "        let element = ",
         &Expr::call(
@@ -953,7 +949,7 @@ fn enum_read(
 ) -> String {
     let catalog = names.catalog;
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("markup::Read", &found.name));
+    out.push_str(&layout::impl_header("crate::Read", &found.name));
     out.push_str(
         "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
     );
@@ -971,7 +967,7 @@ fn enum_read(
         .map(|(variant, arm)| {
             let node = &catalog.nodes[*arm];
             let key = tag(names, node.namespace, &node.key.tag.local, namespaces);
-            let read = Expr::call("markup::read", vec![Expr::atom("element")]);
+            let read = Expr::call("crate::read", vec![Expr::atom("element")]);
             let value = if found.boxed.contains(arm) {
                 Expr::call("Box::new", vec![read])
             } else {
@@ -983,7 +979,7 @@ fn enum_read(
     if arm_lines.is_empty() {
         line("        ", &other, "", &mut out);
     } else if arm_lines.len() <= CHUNK {
-        out.push_str("        match markup::name(element) {\n");
+        out.push_str("        match crate::name(element) {\n");
         for (pattern, variant, value) in &arm_lines {
             let body = Expr::call(&format!("Self::{variant}"), vec![value.clone()]);
             out.push_str(&layout::arm(12, &Expr::Atom(pattern.clone()), &body, false));
@@ -1007,7 +1003,7 @@ fn enum_read(
                     &format!("Option<{}>", found.name)
                 )
             );
-            helpers.push_str("    let item = match markup::name(element) {\n");
+            helpers.push_str("    let item = match crate::name(element) {\n");
             for (pattern, variant, value) in lines {
                 let body = Expr::call(&format!("{}::{variant}", found.name), vec![value.clone()]);
                 helpers.push_str(&layout::arm(8, &Expr::Atom(pattern.clone()), &body, false));
@@ -1029,8 +1025,8 @@ fn enum_read(
 /// arms, the arms are written by helpers.
 fn enum_write(found: &EnumDef, function: &str, helpers: &mut String) -> String {
     let mut out = String::from("\n");
-    out.push_str(&layout::impl_header("markup::Write", &found.name));
-    out.push_str("    fn write_into(&self, writer: &mut markup::Writer<'_, '_>) {\n");
+    out.push_str(&layout::impl_header("crate::Write", &found.name));
+    out.push_str("    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {\n");
     if found.arms.is_empty() {
         out.push_str(
             "        let Self::Other(node) = self;\n        writer.other(node.clone());\n",
@@ -1072,7 +1068,7 @@ fn enum_write(found: &EnumDef, function: &str, helpers: &mut String) -> String {
                     &format!("fn {helper}"),
                     &[
                         format!("item: &{}", found.name),
-                        "writer: &mut markup::Writer<'_, '_>".to_owned()
+                        "writer: &mut crate::Writer<'_, '_>".to_owned()
                     ],
                     ""
                 )

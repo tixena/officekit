@@ -344,12 +344,12 @@
 //! The module holds its content type, its relationship type, and the load and store of its root,
 //! `x:worksheet`.
 
-use crate::markup::spreadsheet;
 use crate::part_root::{self, PartRoot};
 #[cfg(feature = "strict")]
 use crate::strict::Strict as _;
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_markup::spreadsheet;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;

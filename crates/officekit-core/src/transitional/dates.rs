@@ -7,11 +7,10 @@
 
 use core::mem;
 
+use officekit_markup::class_rules::{BASE_1900, BASE_1904};
+use officekit_markup::spreadsheet::Worksheet;
 use officekit_packaging::part_name::PartName;
 use officekit_xml::values::DateTime;
-
-use crate::class_rules::{BASE_1900, BASE_1904};
-use crate::markup::spreadsheet::Worksheet;
 
 #[cfg(test)]
 mod tests;

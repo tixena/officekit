@@ -24,6 +24,9 @@ strict = []
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
 officekit-xml.workspace = true
 
+# The typed tree: one module per namespace, with readers, writers and hooks
+officekit-markup.workspace = true
+
 # The package layer: the container, part names, content types, relationships, image parts
 officekit-packaging.workspace = true
 

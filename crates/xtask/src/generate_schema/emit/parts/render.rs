@@ -965,11 +965,11 @@ fn uses(root: Option<&RootText>) -> String {
     match root {
         None => "use officekit_packaging::error::PackageError;\nuse officekit_packaging::package::Package;\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n".to_owned(),
         Some(known) if known.shared => format!(
-            "use crate::markup::{};\nuse crate::part_root;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::part_root;\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
         Some(known) => format!(
-            "use crate::markup::{};\nuse crate::part_root::{{self, PartRoot}};\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::part_root::{{self, PartRoot}};\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::{};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

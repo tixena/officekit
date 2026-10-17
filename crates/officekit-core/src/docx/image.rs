@@ -5,15 +5,14 @@ mod tests;
 
 use core::mem::replace;
 
+use officekit_markup::Read as _;
+use officekit_markup::wordprocessing::{TextRun, write};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::image::Image;
 use officekit_packaging::part_name::PartName;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
-
-use crate::markup::Read as _;
-use crate::markup::wordprocessing::{TextRun, write};
 
 use super::Docx;
 

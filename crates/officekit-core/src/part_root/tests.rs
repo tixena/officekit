@@ -1,3 +1,5 @@
+#[cfg(feature = "transitional")]
+use officekit_markup::wordprocessing::Footer;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -9,8 +11,6 @@ use officekit_xml::name::QName;
 use officekit_xml::write::WriteOptions;
 
 use super::{PartRoot, load, store};
-#[cfg(feature = "transitional")]
-use crate::markup::wordprocessing::Footer;
 #[cfg(feature = "transitional")]
 use crate::parts::footer;
 

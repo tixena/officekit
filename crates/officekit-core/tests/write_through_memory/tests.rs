@@ -3,14 +3,14 @@ use core::sync::atomic::{AtomicUsize, Ordering};
 use std::alloc::System;
 use std::io::{self, Write};
 
-use officekit_core::markup::wordprocessing::{
+use officekit_markup::wordprocessing::{
     self, BlockContent, BlockLevelStructuredDocumentTag, BlockLevelStructuredDocumentTagContent,
     ContentBlockContent, ContentCellContent, ContentRowContent, FriendlyName, Paragraph,
     ParagraphContent, StructuredDocumentTagProperties, Table, TableCell, TableRow, Text, TextRun,
     TextRunContent,
 };
-use officekit_core::markup::{self, Descend, Visit as _};
-use officekit_core::stream::transform::{WriteThrough as _, Written};
+use officekit_markup::write_through::{WriteThrough as _, Written};
+use officekit_markup::{Descend, Visit as _};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::Layout;
 
@@ -77,7 +77,7 @@ impl Write for CountingSink {
     }
 }
 
-impl markup::Context for FillControl {
+impl officekit_markup::Context for FillControl {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
         Some(self)
     }
@@ -99,7 +99,7 @@ impl wordprocessing::Context for FillControl {
     }
 }
 
-impl markup::Visitor for FindRepeat {
+impl officekit_markup::Visitor for FindRepeat {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Visitor> {
         Some(self)
     }
@@ -115,7 +115,7 @@ impl wordprocessing::Visitor for FindRepeat {
     }
 }
 
-impl markup::Context for StreamRepeatRows {
+impl officekit_markup::Context for StreamRepeatRows {
     fn wordprocessing(&mut self) -> Option<&mut dyn wordprocessing::Context> {
         Some(self)
     }

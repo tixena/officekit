@@ -1,3 +1,16 @@
+use officekit_markup::drawing::Alpha;
+use officekit_markup::presentation::Presentation;
+use officekit_markup::spreadsheet::{
+    Border, CalculationChainInfo, Cell, DynamicFilter, PivotArea, ProtectedRange,
+    TextImportSettings, Workbook,
+};
+use officekit_markup::wordprocessing::{
+    CharacterSetSupportedByFont, CheckboxFormFieldProperties, CompatibilitySettings, Document,
+    DocumentEditingRestrictions, DropDownListFormFieldProperties, FramesetSplitterProperties,
+    Paragraph, ParagraphConditionalFormatting, ParagraphIndentation, PreferredTableWidth,
+    RunProperties, SuggestedSorting, TableCellBorders,
+    TableStyleConditionalFormattingSettingsException, TextRun,
+};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Document as Part, Element};
 use officekit_xml::error::{ReadError, WriteError};
@@ -5,19 +18,6 @@ use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
 use super::{Strict, iso_date_time};
-use crate::markup::drawing::Alpha;
-use crate::markup::presentation::Presentation;
-use crate::markup::spreadsheet::{
-    Border, CalculationChainInfo, Cell, DynamicFilter, PivotArea, ProtectedRange,
-    TextImportSettings, Workbook,
-};
-use crate::markup::wordprocessing::{
-    CharacterSetSupportedByFont, CheckboxFormFieldProperties, CompatibilitySettings, Document,
-    DocumentEditingRestrictions, DropDownListFormFieldProperties, FramesetSplitterProperties,
-    Paragraph, ParagraphConditionalFormatting, ParagraphIndentation, PreferredTableWidth,
-    RunProperties, SuggestedSorting, TableCellBorders,
-    TableStyleConditionalFormattingSettingsException, TextRun,
-};
 
 const A: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
 const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";

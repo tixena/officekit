@@ -18,14 +18,14 @@ use officekit_core::docx::Docx;
 use officekit_core::docx::chart::ChartRanges;
 use officekit_core::docx::image::PictureFit;
 use officekit_core::embedded::{self, Embedded};
-use officekit_core::markup::Read as _;
-use officekit_core::markup::wordprocessing::{
-    DocumentProtectionTypesMember, Header, HeaderOrFooterTypeMember, TextRun, write,
-};
 use officekit_core::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use officekit_core::parts::{connections, font_table};
 use officekit_core::pptx::Pptx;
 use officekit_core::xlsx::Xlsx;
+use officekit_markup::Read as _;
+use officekit_markup::wordprocessing::{
+    DocumentProtectionTypesMember, Header, HeaderOrFooterTypeMember, TextRun, write,
+};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::image::Image;
 use officekit_packaging::package::{OpenOptions, Package};

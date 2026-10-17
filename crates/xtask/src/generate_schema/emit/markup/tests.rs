@@ -13,14 +13,14 @@ fn a_statement_that_fits_stays_on_one_line() {
     layout::statement(
         "    let mut writer = ",
         &call(
-            "markup::Writer::new",
+            "crate::Writer::new",
             &["scope", "&super::P_SHAPE", "&node.unknown"],
         ),
         &mut out,
     );
     assert_eq!(
         out,
-        "    let mut writer = markup::Writer::new(scope, &super::P_SHAPE, &node.unknown);\n"
+        "    let mut writer = crate::Writer::new(scope, &super::P_SHAPE, &node.unknown);\n"
     );
 }
 
