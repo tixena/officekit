@@ -6,7 +6,7 @@ use officekit_packaging::relationship::RelationshipType;
 use officekit_xml::name::OfficeVersion;
 
 use super::{Validator, document_parts, reachable_parts, rule};
-use crate::validation::error::{ErrorCode, ValidationError};
+use crate::error::{ErrorCode, ValidationError};
 
 const COMMENTS_EXTENDED: &str =
     "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";

@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 
 use clap::{Args, Parser, Subcommand};
 use officekit_core::folder::DEFAULT_SUFFIX;
-use officekit_core::validation::validator::Validator;
+use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
 
 #[derive(Parser)]

@@ -15,8 +15,6 @@
 //! - [`embedded`]: a `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
 //! - [`compact`]: the merge of neighbouring runs that render the same.
 //! - [`folder`]: a `.docx` as a folder of its parts, and back.
-//! - [`validation`]: the checks of a package against the schema of an Office version, and the
-//!   semantic constraints, as static tables and the validator that walks them.
 //!
 //! Every byte that reaches or leaves the operating system does so through an
 //! [`os_shim::System`], so callers choose between the real filesystem and an in-memory one, and
@@ -43,5 +41,4 @@ pub mod stream;
 pub mod strict;
 #[cfg(feature = "transitional")]
 pub mod transitional;
-pub mod validation;
 pub mod xlsx;

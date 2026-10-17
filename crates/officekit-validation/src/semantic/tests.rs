@@ -7,9 +7,9 @@ use regex::Regex;
 
 use super::constraint::Constraint;
 use super::registry::registrations;
-use crate::validation::error::{ErrorCode, Finding};
-use crate::validation::generated::{SCHEMA_TYPES, SEMANTIC_CONSTRAINTS, type_id};
-use crate::validation::validator::Validator;
+use crate::error::{ErrorCode, Finding};
+use crate::generated::{SCHEMA_TYPES, SEMANTIC_CONSTRAINTS, type_id};
+use crate::validator::Validator;
 
 const FOOTER: &str = "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
 const FOOTNOTES: &str =

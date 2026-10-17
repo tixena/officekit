@@ -8,13 +8,13 @@
 //! not declare at all counts too, compared as written, so a merge never drops
 //! formatting officekit does not know.
 
+use officekit_validation::generated::{SCHEMA_TYPES, type_id};
+use officekit_validation::schema::types::SchemaType;
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::Namespace;
 use officekit_xml::write::is_whitespace_text;
 
 use super::prefix;
-use crate::validation::generated::{SCHEMA_TYPES, type_id};
-use crate::validation::schema::types::SchemaType;
 
 #[cfg(test)]
 mod tests;

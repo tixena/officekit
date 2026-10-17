@@ -1,8 +1,8 @@
 use std::path::{Path, PathBuf};
 
-use officekit_core::validation::error::{ErrorCode, Step, ValidationError};
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
+use officekit_validation::error::{ErrorCode, Step, ValidationError};
 use officekit_xml::name::OfficeVersion;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};

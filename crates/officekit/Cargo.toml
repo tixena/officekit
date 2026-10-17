@@ -21,6 +21,9 @@ officekit-core.workspace = true
 # Packages, part names and relationships
 officekit-packaging.workspace = true
 
+# The validator
+officekit-validation.workspace = true
+
 # The Office versions a file is validated against
 officekit-xml.workspace = true
 

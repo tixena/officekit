@@ -7,7 +7,7 @@ use super::types::{
     Bounds, Check, CompositeKind, Particle, SchemaType, StringKind, ValueCheck, ValueClass,
     Versions,
 };
-use crate::validation::generated::{
+use crate::generated::{
     ENUMERATIONS, PART_RULES, SCHEMA_TYPES, TRANSITIONAL_ONLY_NAMESPACES, type_id,
 };
 

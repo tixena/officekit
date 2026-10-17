@@ -8,10 +8,10 @@ use os_shim::System;
 use serde_json::{Value, json};
 
 use officekit_core::folder::{self, DownOptions, UpOptions};
-use officekit_core::validation::error::ValidationError;
-use officekit_core::validation::validator::Validator;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
+use officekit_validation::error::ValidationError;
+use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
 
 use crate::cli::{CatArgs, DownArgs, FormatArgs, PartsArgs, UpArgs, ValidateArgs};

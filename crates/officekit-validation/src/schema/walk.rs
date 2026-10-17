@@ -30,8 +30,8 @@ use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 use super::attributes::{self, Failure, qualified, transitional_only_namespace};
 use super::particle::{self, Child};
 use super::types::{Particle, SchemaType, TypeId, ValueClass};
-use crate::validation::error::{ErrorCode, Errors, Step, ValidationError};
-use crate::validation::generated::SCHEMA_TYPES;
+use crate::error::{ErrorCode, Errors, Step, ValidationError};
+use crate::generated::SCHEMA_TYPES;
 
 #[cfg(test)]
 mod tests;

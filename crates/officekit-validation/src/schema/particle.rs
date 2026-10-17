@@ -12,8 +12,8 @@ use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, OfficeVersion, QName};
 
 use super::types::{AnyNamespace, CompositeKind, Particle, SchemaType, TypeId};
-use crate::validation::error::ErrorCode;
-use crate::validation::generated::SCHEMA_TYPES;
+use crate::error::ErrorCode;
+use crate::generated::SCHEMA_TYPES;
 
 #[cfg(test)]
 mod tests;

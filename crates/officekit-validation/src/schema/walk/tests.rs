@@ -2,8 +2,8 @@ use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_xml::name::OfficeVersion;
 
-use crate::validation::error::{ErrorCode, ValidationError};
-use crate::validation::validator::Validator;
+use crate::error::{ErrorCode, ValidationError};
+use crate::validator::Validator;
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";

@@ -35,8 +35,9 @@ Built and tested:
 ## Layout
 
 ```
-crates/officekit-core        library: element trees, validation, file types
+crates/officekit-core        library: element trees, file types
 crates/officekit-packaging   library: the package, part names, content types, relationships, images
+crates/officekit-validation  library: the validator and its generated tables
 crates/officekit-xml         library: element tree, names, values, part reader and writer
 crates/officekit             CLI binary
 crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never installed
@@ -57,7 +58,6 @@ crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never ins
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
-| `validation` | The checks of a package against an Office version | The schema tables, the semantic constraints, the errors, the package pass over the relationship graph, and the validator |
 
 ## Features
 
@@ -129,10 +129,11 @@ just audit    # cargo audit
 ## The generator and its inputs
 
 `cargo xtask generate-schema` writes the typed tree (`markup/`), the
-conformance classes (`transitional/`, `strict/`), the part modules (`parts/`),
-and the validation tables (`validation/generated/`) of `officekit-core`, the
-name table of `officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and
-the relationship types of `officekit-packaging`
+conformance classes (`transitional/`, `strict/`), and the part modules
+(`parts/`) of `officekit-core`, the validation tables of `officekit-validation`
+(`crates/officekit-validation/src/generated/`), the name table of
+`officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and the
+relationship types of `officekit-packaging`
 (`crates/officekit-packaging/src/relationship_type.rs`).
 Those files are generated and are never edited by hand; change the generator
 in `crates/xtask` and run it again.

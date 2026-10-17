@@ -460,6 +460,7 @@ dependencies = [
  "clap",
  "officekit-core",
  "officekit-packaging",
+ "officekit-validation",
  "officekit-xml",
  "os-shim",
  "serde_json",
@@ -473,6 +474,7 @@ dependencies = [
  "base64",
  "clap",
  "officekit-packaging",
+ "officekit-validation",
  "officekit-xml",
  "os-shim",
  "quick-xml",
@@ -492,6 +494,17 @@ dependencies = [
  "os-shim",
  "thiserror",
  "zip",
+]
+
+[[package]]
+name = "officekit-validation"
+version = "0.1.0"
+dependencies = [
+ "officekit-packaging",
+ "officekit-xml",
+ "os-shim",
+ "regex",
+ "serde_json",
 ]
 
 [[package]]
@@ -1024,6 +1037,7 @@ dependencies = [
  "clap",
  "officekit-core",
  "officekit-packaging",
+ "officekit-validation",
  "officekit-xml",
  "os-shim",
  "quick-xml",

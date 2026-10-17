@@ -7,8 +7,9 @@ in either conformance class, Transitional or Strict.
 ## Layout
 
 ```
-crates/officekit-core        library: element trees, validation, file types
+crates/officekit-core        library: element trees, file types
 crates/officekit-packaging   library: the package, part names, content types, relationships, images
+crates/officekit-validation  library: the validator and its generated tables
 crates/officekit-xml         library: element tree, names, values, part reader and writer
 crates/officekit             CLI binary
 crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never installed
@@ -26,7 +27,6 @@ stream             a transform written through as it is made
 embedded           a document stored in a part of another
 transitional       the Transitional class: read and write of every node (feature `transitional`)
 strict             the Strict class: read and write of every node (feature `strict`)
-validation         schema, markup compatibility, package, and semantic checks
 ```
 
 ## Rules
@@ -45,8 +45,9 @@ validation         schema, markup compatibility, package, and semantic checks
   Never add `#[allow]` / `#[expect]` to get past a lint; fix the code or raise
   it.
 - **Generated files are never edited by hand**: everything under `markup/`,
-  `transitional/`, `strict/`, `parts/`, and `validation/generated/` of
-  `officekit-core/src`, `crates/officekit-xml/src/name/table.rs`, and
+  `transitional/`, `strict/`, and `parts/` of `officekit-core/src`,
+  `crates/officekit-validation/src/generated/` (and `generated.rs`),
+  `crates/officekit-xml/src/name/table.rs`, and
   `crates/officekit-packaging/src/relationship_type.rs`. Change the generator
   in `crates/xtask` (its hand-written inputs live in `crates/xtask/data/`) and
   run `cargo xtask generate-schema`.

@@ -1,4 +1,4 @@
-//! Validation of a package.
+//! `officekit-validation` is the validator of officekit: validation of a package.
 //!
 //! What SDK 3.5.1's schema data says each schema type, attribute, value,
 //! content model, and part allows, and the semantic constraints it registers,
@@ -13,3 +13,5 @@ pub mod package;
 pub mod schema;
 pub mod semantic;
 pub mod validator;
+
+extern crate alloc;

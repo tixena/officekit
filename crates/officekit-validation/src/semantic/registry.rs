@@ -24,15 +24,15 @@ use officekit_xml::name::{Namespace, OfficeVersion};
 use regex::Regex;
 
 use super::constraint::{Application, AttributeName, Constraint, ElementName, Registration, Slot};
-use crate::validation::error::{ErrorCode, Errors, Step, ValidationError};
-use crate::validation::generated::{PART_RULES, SCHEMA_TYPES, SEMANTIC_CONSTRAINTS};
-use crate::validation::package::{DATA_PART_REFERENCES, HYPERLINK};
-use crate::validation::schema::simple_types::has_value;
-use crate::validation::schema::types::{
+use crate::error::{ErrorCode, Errors, Step, ValidationError};
+use crate::generated::{PART_RULES, SCHEMA_TYPES, SEMANTIC_CONSTRAINTS};
+use crate::package::{DATA_PART_REFERENCES, HYPERLINK};
+use crate::schema::simple_types::has_value;
+use crate::schema::types::{
     AttributeConstraint, ChildKind, PartRule, SchemaType, TypeId, ValueClass,
 };
-use crate::validation::schema::walk::{Observer, traverse};
-use crate::validation::validator::{document_rule, transitional_type};
+use crate::schema::walk::{Observer, traverse};
+use crate::validator::{document_rule, transitional_type};
 
 /// The elements counted in a part, by folded part name and the parent they need.
 type CountKey = (String, Option<ElementName>);

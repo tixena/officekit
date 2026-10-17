@@ -6,7 +6,7 @@
 
 use officekit_xml::name::NamespaceId;
 
-use crate::validation::schema::types::{TypeId, Versions};
+use crate::schema::types::{TypeId, Versions};
 
 /// Index into the attributes of the element type a row keys.
 pub type Slot = u8;

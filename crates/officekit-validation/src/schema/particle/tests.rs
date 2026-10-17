@@ -2,9 +2,9 @@ use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, OfficeVersion, QName};
 
 use super::{Child, check};
-use crate::validation::error::ErrorCode;
-use crate::validation::generated::{SCHEMA_TYPES, type_id};
-use crate::validation::schema::types::{CompositeKind, Particle, TypeId};
+use crate::error::ErrorCode;
+use crate::generated::{SCHEMA_TYPES, type_id};
+use crate::schema::types::{CompositeKind, Particle, TypeId};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

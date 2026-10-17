@@ -1,0 +1,29 @@
+[package]
+name = "officekit-validation"
+description = "The validator of officekit: schema, markup compatibility, package, and semantic checks"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+# The XML layer: names, Office versions, and the parsers of simple-type values
+officekit-xml.workspace = true
+
+# The package layer the package pass walks
+officekit-packaging.workspace = true
+
+# The validator's JSON records
+serde_json.workspace = true
+
+# Runs the pattern facets of the validation tables, matched whole.
+regex = "1"
+
+[dev-dependencies]
+# Tests validate packages held in memory
+os-shim.workspace = true

@@ -27,6 +27,9 @@ officekit-xml.workspace = true
 # The package layer: the container, part names, content types, relationships, image parts
 officekit-packaging.workspace = true
 
+# The validation tables the merge of runs reads
+officekit-validation.workspace = true
+
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
 # package between an archive and an in-memory filesystem
 os-shim = { workspace = true, features = ["zip"] }
@@ -34,14 +37,14 @@ os-shim = { workspace = true, features = ["zip"] }
 # Error handling
 thiserror.workspace = true
 
-# The validator's JSON records
+# A folder's manifest is JSON
 serde_json.workspace = true
 
 # Hashes a document-protection password, and writes the hash and salt as text
 sha1 = "0.10"
 base64 = "0.22"
 
-# Runs the pattern facets of the validation tables, matched whole.
+# Cleans a folder name
 regex = "1"
 
 [dev-dependencies]

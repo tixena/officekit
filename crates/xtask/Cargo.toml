@@ -29,8 +29,11 @@ os-shim.workspace = true
 # The SDK's schema data is JSON, and so are the parity run's records.
 serde_json.workspace = true
 
-# The parity run maps officekit's error codes to SDK 3.5.1's ids.
+# The typed tree's `Unknown` node, named by the generator
 officekit-core.workspace = true
+
+# The parity run maps officekit's error codes to SDK 3.5.1's ids.
+officekit-validation.workspace = true
 
 # The size of the generic node, which decides the typed tree's boxed arms.
 officekit-xml.workspace = true

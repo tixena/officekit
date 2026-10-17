@@ -3,9 +3,9 @@ use officekit_xml::name::{Namespace, OfficeVersion};
 use officekit_xml::parse::parse;
 
 use super::{Failure, check, run};
-use crate::validation::error::ErrorCode;
-use crate::validation::generated::{SCHEMA_TYPES, type_id};
-use crate::validation::schema::types::{
+use crate::error::ErrorCode;
+use crate::generated::{SCHEMA_TYPES, type_id};
+use crate::schema::types::{
     AttributeConstraint, Bounds, Check, SchemaType, StringKind, ValueCheck, ValueClass, Versions,
 };
 

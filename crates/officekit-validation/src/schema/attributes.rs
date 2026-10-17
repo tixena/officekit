@@ -17,8 +17,8 @@ use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 
 use super::simple_types::{enumeration, failures, has_value};
 use super::types::{AttributeConstraint, Check, SchemaType, ValueCheck, ValueClass};
-use crate::validation::error::ErrorCode;
-use crate::validation::generated::TRANSITIONAL_ONLY_NAMESPACES;
+use crate::error::ErrorCode;
+use crate::generated::TRANSITIONAL_ONLY_NAMESPACES;
 
 #[cfg(test)]
 mod tests;

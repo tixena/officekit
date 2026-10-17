@@ -14,7 +14,7 @@ use officekit_xml::values::matches_pattern;
 use officekit_xml::values::parse::date_time;
 
 use super::types::{Bounds, Check, Enumeration, StringKind, ValueClass};
-use crate::validation::generated::ENUMERATIONS;
+use crate::generated::ENUMERATIONS;
 
 #[cfg(test)]
 mod tests;

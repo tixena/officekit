@@ -1,5 +1,5 @@
 //! The validation tables: SDK 3.5.1's schema data converted into the rows of
-//! `officekit-core`'s `validation::generated`.
+//! `officekit-validation`'s `generated`.
 //!
 //! Every element, attribute, and enumeration value only Transitional allows is
 //! marked, and every attribute whose Strict type is not its Transitional type
@@ -32,7 +32,7 @@ mod tests;
 
 /// Where the module of the tables is written, from the workspace root; its
 /// five files go into the folder of the same name.
-pub const GENERATED_PATH: &str = "crates/officekit-core/src/validation/generated.rs";
+pub const GENERATED_PATH: &str = "crates/officekit-validation/src/generated.rs";
 
 /// The hand-maintained table of simple types, from the workspace root.
 pub const SIMPLE_TYPES_PATH: &str = "crates/xtask/data/simple_types.toml";
