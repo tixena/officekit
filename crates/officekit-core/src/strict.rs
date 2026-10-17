@@ -8,18 +8,22 @@
 //! they pack, values take Strict's spelling, and content Strict has no form
 //! for fails the write with its name. The rules are keyed by tag, so the
 //! walk also reaches content the typed tree keeps unknown, such as the
-//! branches of `mc:AlternateContent`.
+//! branches of `mc:AlternateContent`. Word's text box, Microsoft's `wps:wsp`
+//! holding `w:txbxContent`, is written as ECMA's `wp:wsp` holding
+//! `wp:txbxContent`, in place of the `mc:AlternateContent` around it.
 
 // The namespace modules, `strict::<namespace>`, generated in a file of their own.
 include!("strict/modules.rs");
 
 use core::cmp::Ordering;
+use core::mem;
 
 use crate::class_rules::{BASE_1900, BASE_1904, is, order, tag_of};
 use crate::error::{ReadError, WriteError};
 use crate::markup::{self, Tag};
 use crate::xml::conformance::ConformanceClass;
 use crate::xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use crate::xml::mc;
 use crate::xml::name::table::NAMESPACES;
 use crate::xml::name::{Namespace, NamespaceId, QName};
 
@@ -31,6 +35,16 @@ const DAY: i128 = 86_400_000;
 
 /// The most decimal places a percentage takes when its row caps none.
 const MAX_PLACES: u32 = 9;
+
+const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+const MARKUP_COMPATIBILITY: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+const WORDPROCESSING_DRAWING: &str =
+    "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+
+/// Microsoft's namespace of Word's shape, `wps`, and the `uri` of a `graphicData` holding one.
+const WORDPROCESSING_SHAPE: &str =
+    "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 
 // The tables of the walk, generated: `ATTRIBUTES`, `CHILDREN`, `CONTEXTUAL`,
 // `ELEMENTS`, `REFUSED_NAMESPACES`, the code tables, and the spellings.
@@ -242,6 +256,24 @@ fn character_set(codes: Codes, text: &str) -> Option<&'static str> {
     }
 }
 
+/// The content of the Choice of the `mc:AlternateContent` `block` that holds Word's shape.
+fn choice_content(block: Element) -> Vec<Node> {
+    let declarations = block.namespace_declarations;
+    block
+        .children
+        .into_iter()
+        .find_map(|node| {
+            if let Node::Element(branch) = node
+                && word_shape_choice(&branch)
+            {
+                Some(branch)
+            } else {
+                None
+            }
+        })
+        .map_or_else(Vec::new, |branch| mc::branch_content(declarations, branch))
+}
+
 /// The date `days` after 1970-01-01 in the proleptic Gregorian calendar:
 /// year, month, and day.
 const fn civil_from_days(days: i64) -> (i64, i64, i64) {
@@ -265,6 +297,7 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
 /// Rename and refuse the children of `element` its tag's rules name, then
 /// convert every child element.
 fn convert_children(element: &mut Element) -> Result<(), WriteError> {
+    unwrap_word_shapes(element);
     if let Some(owner) = markup::name(element) {
         let rules = rules_of(CHILDREN, owner);
         let mut index = 0;
@@ -299,6 +332,12 @@ fn convert(
     element: &mut Element,
     parent: Option<(Option<NamespaceId>, &str)>,
 ) -> Result<(), WriteError> {
+    if named(element, WORDPROCESSING_DRAWING, "anchor")
+        || named(element, WORDPROCESSING_DRAWING, "inline")
+    {
+        let prefix = element.name.prefix.clone();
+        rewrite_word_shapes(element, &prefix);
+    }
     refuse_element(element)?;
     for attribute in &element.attributes {
         if let Namespace::Known(id) = attribute.name.namespace
@@ -382,6 +421,17 @@ fn has_attribute(element: &Element, index: usize, local: &str) -> bool {
         })
 }
 
+/// Whether `element` or an element inside it holds Word's shape.
+fn has_word_shape(element: &Element) -> bool {
+    holds_word_shape(element) || element.child_elements().any(has_word_shape)
+}
+
+/// Whether `element` is a `graphicData` holding Word's shape.
+fn holds_word_shape(element: &Element) -> bool {
+    named(element, DRAWING, "graphicData")
+        && element.attribute(&Namespace::None, "uri") == Some(WORDPROCESSING_SHAPE)
+}
+
 /// The ISO 8601 date-time of a serial date-time's text, to the millisecond.
 ///
 /// The serial counts days from the base date of the 1900 date system, or of
@@ -406,6 +456,11 @@ pub fn iso_date_time(serial: &str, date1904: bool) -> Option<String> {
         text = format!("{text}.{millisecond:03}");
     }
     Some(text)
+}
+
+/// Whether `element` is `local` in the namespace `uri`.
+fn named(element: &Element, uri: &str, local: &str) -> bool {
+    element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
 }
 
 /// The Strict refusal naming `tag`.
@@ -484,6 +539,36 @@ fn rename_child(element: &mut Element, index: usize, before: &[&str], to: &'stat
         element.children.insert(position, moved);
     }
     index + 1
+}
+
+/// Write each of Word's shapes inside `element` as ECMA's `wp:wsp` in `prefix`, the prefix of
+/// the `wp:anchor` or `wp:inline` around it, and give the `graphicData` holding it the `wp`
+/// namespace's Strict URI.
+fn rewrite_word_shapes(element: &mut Element, prefix: &str) {
+    if holds_word_shape(element) {
+        let uri = Namespace::from_uri(WORDPROCESSING_DRAWING)
+            .uri(ConformanceClass::Strict)
+            .to_owned();
+        if let Some(found) = element
+            .attributes
+            .iter_mut()
+            .find(|found| found.name.local == "uri" && found.name.namespace == Namespace::None)
+        {
+            found.value = uri;
+        }
+        for node in &mut element.children {
+            if let Node::Element(shape) = node
+                && named(shape, WORDPROCESSING_SHAPE, "wsp")
+            {
+                to_ecma(shape, prefix);
+            }
+        }
+    }
+    for node in &mut element.children {
+        if let Node::Element(inner) = node {
+            rewrite_word_shapes(inner, prefix);
+        }
+    }
 }
 
 /// The rows of a table keyed by `owner`'s tag.
@@ -588,6 +673,23 @@ fn to_child(element: &mut Element, index: usize, local: &str) {
     element.children.insert(0, Node::Element(child));
 }
 
+/// Word's `wps:wsp` as ECMA's `wp:wsp` in `prefix`: each element of the `wps` namespace takes
+/// `wp`, and the `w:txbxContent` of its text box becomes `wp:txbxContent`.
+fn to_ecma(element: &mut Element, prefix: &str) {
+    let text_box = element.name.local == "txbx";
+    element.name = QName::prefixed(prefix, &element.name.local, WORDPROCESSING_DRAWING);
+    for node in &mut element.children {
+        if let Node::Element(child) = node {
+            if child.name.namespace == Namespace::from_uri(WORDPROCESSING_SHAPE) {
+                to_ecma(child, prefix);
+            }
+            if text_box && named(child, WORDPROCESSING, "txbxContent") {
+                child.name = QName::prefixed(prefix, "txbxContent", WORDPROCESSING_DRAWING);
+            }
+        }
+    }
+}
+
 /// Write the packed attribute at `index` as the attributes its bits name,
 /// each one the element lacks.
 fn unpack(
@@ -637,6 +739,29 @@ fn unpack(
     Ok(())
 }
 
+/// Put, in place of each `mc:AlternateContent` child whose Choice holds Word's shape, that
+/// Choice's content, so the shape is written as ECMA's and the VML fallback goes.
+fn unwrap_word_shapes(element: &mut Element) {
+    if !element
+        .children
+        .iter()
+        .any(|node| matches!(node, Node::Element(block) if word_shape_block(block)))
+    {
+        return;
+    }
+    for node in mem::take(&mut element.children) {
+        let Node::Element(block) = node else {
+            element.children.push(node);
+            continue;
+        };
+        if word_shape_block(&block) {
+            element.children.extend(choice_content(block));
+        } else {
+            element.children.push(Node::Element(block));
+        }
+    }
+}
+
 /// A bare whole number's sign and magnitude: optional sign, digits only.
 fn whole_number(text: &str) -> Option<(bool, u128)> {
     let (negative, digits) = signed(text);
@@ -644,6 +769,17 @@ fn whole_number(text: &str) -> Option<(bool, u128)> {
         return None;
     }
     Some((negative, digits.parse().ok()?))
+}
+
+/// Whether `element` is an `mc:AlternateContent` with a Choice holding Word's shape.
+fn word_shape_block(element: &Element) -> bool {
+    named(element, MARKUP_COMPATIBILITY, "AlternateContent")
+        && element.child_elements().any(word_shape_choice)
+}
+
+/// Whether `element` is an `mc:Choice` holding Word's shape.
+fn word_shape_choice(element: &Element) -> bool {
+    named(element, MARKUP_COMPATIBILITY, "Choice") && has_word_shape(element)
 }
 
 /// The shared writer's element, converted to Strict, with the Strict URI of

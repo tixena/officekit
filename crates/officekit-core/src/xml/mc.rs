@@ -68,12 +68,20 @@ fn alternate_content(block: Element, target: OfficeVersion, scope: &mut Scope) -
         }
     }
     scope.pop();
-    let Some(branch) = chosen.or(fallback) else {
-        return Vec::new();
-    };
+    chosen.or(fallback).map_or_else(Vec::new, |branch| {
+        branch_content(block.namespace_declarations, branch)
+    })
+}
+
+/// The nodes that take the place of an `mc:AlternateContent` block declaring `declarations`
+/// when `branch` is the one chosen: its children, each element given the block's and the
+/// branch's declarations it does not make itself.
+pub(crate) fn branch_content(
+    declarations: Vec<NamespaceDeclaration>,
+    branch: Element,
+) -> Vec<Node> {
     let mut moved: Vec<NamespaceDeclaration> = Vec::new();
-    for declaration in block
-        .namespace_declarations
+    for declaration in declarations
         .into_iter()
         .chain(branch.namespace_declarations)
     {
