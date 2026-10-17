@@ -1,4 +1,4 @@
-//! A required child is written back as the read element held it (D9).
+//! A required child is written back as the read element held it.
 
 use super::{GroupShapeContent, NotesSlideSize, Presentation, read, write};
 use crate::markup::drawing::PositiveCoordinate;
@@ -126,8 +126,7 @@ fn a_required_child_the_element_lacked_is_not_written() {
         assert_eq!(tree(&node.transform(&mut Unchanged)), text);
         assert_eq!(shown(&node), 0);
     }
-    // The unknown child stays last when a list hook lengthens the list after
-    // the two required children the element lacked.
+    // The unknown child stays last when a list hook grows the list past the two absent children.
     let shapes = read::shape_tree(&parsed(&format!(
         "<p:spTree xmlns:p=\"{P}\" xmlns:x=\"urn:x\"><p:sp/><p:extLst/><x:u/></p:spTree>"
     )));

@@ -12,11 +12,9 @@ use crate::xml::element::XmlError;
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum PackageError {
-    /// The file's conformance class has its Cargo feature off (D21).
     #[error("the {0:?} conformance class is not enabled in this build")]
     ClassNotEnabled(ConformanceClass),
 
-    /// A part's content type is not the one the operation needs.
     #[error("the part {part} has the content type {}, not {expected}", or_none(.found.as_deref()))]
     ContentType {
         expected: &'static str,
@@ -24,7 +22,6 @@ pub enum PackageError {
         part: PartName,
     },
 
-    /// `add_relationship` under an id the source part already uses.
     #[error("{} already has a relationship with the id {id}", source_label(.part.as_ref()))]
     DuplicateRelationship {
         id: String,
@@ -32,7 +29,6 @@ pub enum PackageError {
         part: Option<PartName>,
     },
 
-    /// An image part could not be read.
     #[error(transparent)]
     Image(ImageError),
 
@@ -40,11 +36,9 @@ pub enum PackageError {
     #[error(transparent)]
     Io(#[from] io::Error),
 
-    /// The package has no part of this name.
     #[error("the package has no part {0}")]
     MissingPart(PartName),
 
-    /// `remove_relationship` of an id the source part does not have.
     #[error("{} has no relationship with the id {id}", source_label(.part.as_ref()))]
     MissingRelationship {
         id: String,
@@ -52,25 +46,17 @@ pub enum PackageError {
         part: Option<PartName>,
     },
 
-    /// A part's bytes are not a `.docx`, `.xlsx`, or `.pptx` package.
     #[error("the part {part} does not hold a package: {reason}")]
     NotAPackage { part: PartName, reason: String },
 
     /// A name breaks the part-name rules of ECMA-376 Part 2.
     #[error("invalid part name '{name}': {reason}")]
-    PartName {
-        /// The offending name, as given.
-        name: String,
-        /// The rule it breaks.
-        reason: &'static str,
-    },
+    PartName { name: String, reason: &'static str },
 
-    /// A part's tree does not hold what the reader expects of it.
     #[error("cannot read the part {part}: {reason}")]
     Read { part: PartName, reason: String },
 
-    /// A typed root holds content the class it is stored in has no form for,
-    /// so nothing is written (D22).
+    /// A typed root holds content its class has no form for; nothing is written.
     #[error("cannot write the part {part}: {error}")]
     Write { error: WriteError, part: PartName },
 
@@ -80,11 +66,10 @@ pub enum PackageError {
     Xml { error: XmlError, part: PartName },
 }
 
-/// Why a node cannot be written in a conformance class (D22).
+/// Why a node cannot be written in a conformance class.
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum WriteError {
-    /// The element has no form in the class.
     #[error("{tag} has no form in {class:?}")]
     NotInClass {
         class: ConformanceClass,
@@ -96,7 +81,6 @@ pub enum WriteError {
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
 pub enum ReadError {
-    /// The element is not the node's tag.
     #[error("expected the element {expected}, found {found}")]
     UnexpectedTag { expected: String, found: String },
 }

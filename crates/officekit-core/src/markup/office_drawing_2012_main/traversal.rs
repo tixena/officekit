@@ -209,9 +209,9 @@
 //   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-//! The traversals of `markup::office_drawing_2012_main` (D12, D17, D20, D37): each node's
-//! `Transform`, `Visit`, and `WriteThrough`, and each enum's `markup::Item`,
-//! every hook asked through the namespace's accessor.
+//! The traversals of `markup::office_drawing_2012_main`: each node's `Transform`, `Visit`, and
+//! `WriteThrough`, and each enum's `markup::Item`, every hook asked through the
+//! namespace's accessor.
 
 use std::io;
 

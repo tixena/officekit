@@ -209,7 +209,7 @@
 //   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
-// The root hooks every namespace's `Context` and `Visitor` extend (D12),
+// The root hooks every namespace's `Context` and `Visitor` extend,
 // brought into `markup` with `include!`.
 
 /// The root of every context, which each namespace's `Context` extends and no other trait.

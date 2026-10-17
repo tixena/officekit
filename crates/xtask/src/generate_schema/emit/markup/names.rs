@@ -241,7 +241,7 @@ pub fn section_order(left: &str, right: &str) -> Ordering {
     levels(left).cmp(&levels(right))
 }
 
-/// The module of an ECMA-376 schema file (D14): `wml` is `wordprocessing`,
+/// The module of an ECMA-376 schema file: `wml` is `wordprocessing`,
 /// `vml-officeDrawing` is `vml_office_drawing`, `dml-chart` is `chart`.
 #[must_use]
 pub fn ecma_module(file_stem: &str) -> String {
@@ -262,7 +262,7 @@ pub fn ecma_module(file_stem: &str) -> String {
     }
 }
 
-/// The module of a Microsoft extension namespace (D24): its URI's path after
+/// The module of a Microsoft extension namespace: its URI's path after
 /// `http://schemas.microsoft.com/` in snake case.
 #[must_use]
 pub fn extension_module(uri: &str) -> Option<String> {

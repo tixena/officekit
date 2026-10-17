@@ -285,7 +285,7 @@ pub fn context_trait(names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
     let mut out = layout::doc(
         0,
         &format!(
-            "The hooks of a context for the `{prefix}` namespace (D12, D20, D37).\n\nA tree hook \
+            "The hooks of a context for the `{prefix}` namespace.\n\nA tree hook \
              and a write hook per node kind, and a list hook and a list write hook per enum a list \
              holds. A tree hook answers `None` to rebuild the node from its transformed \
              children, or a node in its place; a list hook answers `None` to leave the item to its \
@@ -330,7 +330,7 @@ pub fn visitor_trait(names: &Names<'_>) -> String {
     let mut out = layout::doc(
         0,
         &format!(
-            "The hooks of a visitor for the `{prefix}` namespace (D12).\n\nOne per node kind, each \
+            "The hooks of a visitor for the `{prefix}` namespace.\n\nOne per node kind, each \
              answering `Descend::Yes` to walk into the node's children or `Descend::No` to skip \
              them. A visitor that does not return itself from `markup::Visitor::{accessor}` is \
              never asked.",
@@ -366,7 +366,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
         visitor.push((name.clone(), accessor(name, "Visitor")));
     }
     let mut out = String::from(
-        "// The root hooks every namespace's `Context` and `Visitor` extend (D12),\n\
+        "// The root hooks every namespace's `Context` and `Visitor` extend,\n\
          // brought into `markup` with `include!`.\n\n",
     );
     out.push_str(&layout::doc(
@@ -400,9 +400,9 @@ pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String
     let mut out = String::from(header);
     let _ = writeln!(
         out,
-        "//! The traversals of `markup::{}` (D12, D17, D20, D37): each node's\n\
-         //! `Transform`, `Visit`, and `WriteThrough`, and each enum's `markup::Item`,\n\
-         //! every hook asked through the namespace's accessor.\n",
+        "//! The traversals of `markup::{}`: each node's `Transform`, `Visit`, and\n\
+         //! `WriteThrough`, and each enum's `markup::Item`, every hook asked through the\n\
+         //! namespace's accessor.\n",
         module.name
     );
     let mut impls: Vec<(&str, String)> = Vec::new();

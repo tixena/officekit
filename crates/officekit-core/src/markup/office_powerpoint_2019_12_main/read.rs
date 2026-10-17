@@ -210,7 +210,7 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `markup::office_powerpoint_2019_12_main`: each struct read from its generic
-//! element, its unknown content kept at its place (D8).
+//! element, its unknown content kept at its place.
 
 use crate::markup;
 use crate::xml;

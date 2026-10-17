@@ -104,7 +104,6 @@ pub struct Facets {
 #[derive(Debug)]
 #[non_exhaustive]
 pub enum Field<'element> {
-    /// A declared child element.
     Element(&'element Element),
     /// A node the schemas do not declare, which joins the list of an enum
     /// type at this position as its `Other` item.
@@ -136,7 +135,7 @@ pub struct Placement {
 }
 
 /// Counts a node's declared positions as a traversal reaches them: the
-/// generated code reaches each one once, in schema order (D9).
+/// generated code reaches each one once, in schema order.
 #[derive(Debug, Default)]
 struct Positions {
     next: usize,
@@ -145,7 +144,7 @@ struct Positions {
 /// Reads a typed node's attributes and children in document order.
 ///
 /// Each declared one goes to the generated reader by its index in the node's
-/// `Shape`; what the schemas do not declare stays at its place (D8).
+/// `Shape`; what the schemas do not declare stays at its place.
 #[derive(Debug)]
 pub struct Reader<'element> {
     attributes: slice::Iter<'element, Attribute>,
@@ -167,7 +166,7 @@ pub struct Reader<'element> {
 }
 
 /// How many declared children each original declared child of a node became
-/// in its transform, in document order (D8, D20).
+/// in its transform, in document order.
 #[derive(Debug, Default)]
 pub struct Rebase {
     /// The node's `unknown.absent`.
@@ -225,11 +224,11 @@ enum SlotOccurs {
 /// and its local name.
 pub type Tag = (Option<NamespaceId>, &'static str);
 
-/// Writes a typed node through a `PartWriter` (D37).
+/// Writes a typed node through a `PartWriter`.
 ///
 /// Its declared attributes go in schema order, then the unknown ones, and its
 /// declared children in schema order, each written through, with each list's
-/// `Other` items among them and each `Extra` at its place (D8). An element
+/// `Other` items among them and each `Extra` at its place. An element
 /// nothing is written into ends as an empty tag, as the generic tree writes it.
 pub struct Through<'out, 'sink, 'node> {
     element: Element,
@@ -241,12 +240,12 @@ pub struct Through<'out, 'sink, 'node> {
     unknown: &'node Unknown,
 }
 
-/// What every node carries besides its declared attributes and children (D8).
+/// What every node carries besides its declared attributes and children.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Unknown {
     /// The positions, in its shape's `slots`, of the required single children
-    /// the read element did not hold; a node built in code has none (D8, D9).
+    /// the read element did not hold; a node built in code has none.
     pub absent: Vec<usize>,
     /// Attributes the schemas do not declare, `mc:Ignorable` among them.
     pub attributes: Vec<Attribute>,
@@ -257,7 +256,7 @@ pub struct Unknown {
 
 /// Walks a typed node's children for a visitor in document order: its
 /// declared children in schema order, with each `Extra` before the declared
-/// child its place names and the rest after the last one (D8).
+/// child its place names and the rest after the last one.
 #[derive(Debug)]
 pub struct Walk<'node> {
     known: usize,
@@ -275,13 +274,12 @@ pub enum Wildcard {
     Local,
     /// A namespace other than this one, none excluded.
     Not(NamespaceId),
-    /// These namespaces.
     Only(&'static [NamespaceId]),
 }
 
 /// Writes a typed node: its declared attributes in schema order, then the
 /// unknown ones, and its declared children in schema order with each list's
-/// `Other` items among them and each `Extra` at its place (D8).
+/// `Other` items among them and each `Extra` at its place.
 #[derive(Debug)]
 pub struct Writer<'scope, 'node> {
     children: Children<'node>,
@@ -317,7 +315,7 @@ pub trait Hex: Sized {
 }
 
 /// Every enum of the typed tree: whether an item is one of its arms, and the
-/// list hooks a list of its items asks (D20, D37).
+/// list hooks a list of its items asks.
 pub trait Item: Sized {
     /// Whether the item is one of the enum's arms, not its `Other` node.
     #[must_use]
@@ -351,7 +349,7 @@ pub trait Nodes {
     type Node;
 
     /// Whether the field is one node equal to its type's default: a required
-    /// child the read element did not hold stays so until code sets it (D9).
+    /// child the read element did not hold stays so until code sets it.
     fn is_default(&self) -> bool;
 
     /// The nodes the field holds, in document order.
@@ -379,7 +377,7 @@ pub trait Read: Sized {
 }
 
 /// Every node type: from a reference to a node, an owned node, with the
-/// context deciding what changes (D12).
+/// context deciding what changes.
 pub trait Transform: Sized {
     /// Ask the context about this node; rebuild from transformed children if
     /// it answers `None`.
@@ -673,7 +671,7 @@ impl Placement {
     }
 
     /// An unknown node: it waits for the next declared child. Whitespace-only
-    /// text is dropped, as the layouts of D29 write it.
+    /// text is dropped, as both layouts write it.
     pub fn unknown(&mut self, node: Node) {
         if !is_whitespace_text(&node) {
             self.pending.push(node);
@@ -691,7 +689,7 @@ impl Positions {
 
     /// Whether a traversal skips `field`, at the next declared position, now
     /// reached: the read element did not hold its child and the field still
-    /// holds the default node (D9).
+    /// holds the default node.
     fn skips<F>(&mut self, absent: &[usize], field: &F) -> bool
     where
         F: Nodes,
@@ -1153,7 +1151,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
 
     /// Write a list of an enum type: for each item, after the `Extra`s placed
     /// before it, its list write hook, then its list hook, whose items are
-    /// written as they are, then the item written through (D37).
+    /// written as they are, then the item written through.
     ///
     /// # Errors
     ///
@@ -1836,7 +1834,7 @@ where
 /// transformed; each node counts one declared child in `rebase`.
 ///
 /// The default node of a child the read element did not hold is copied
-/// without asking any hook, and counts none (D9).
+/// without asking any hook, and counts none.
 #[must_use]
 pub fn transform_child<F>(field: &F, ctx: &mut dyn Context, rebase: &mut Rebase) -> F
 where
@@ -1863,7 +1861,7 @@ where
     transform_child(field, ctx, rebase)
 }
 
-/// A list of an enum type rebuilt (D20): each item's list hook first, whose
+/// A list of an enum type rebuilt: each item's list hook first, whose
 /// `Some` puts any number of items, none included, in its place, and the
 /// item's `transform` otherwise.
 ///

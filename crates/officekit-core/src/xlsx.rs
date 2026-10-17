@@ -84,7 +84,7 @@ impl Xlsx {
 
     /// The file `package` holds. Its class is the one its `officeDocument` relationship's type
     /// names, its kind the one its main part's content type names; `options` applies to every part
-    /// the file loads (D5).
+    /// the file loads.
     ///
     /// # Errors
     ///
@@ -151,7 +151,6 @@ impl Xlsx {
         &self.package
     }
 
-    /// The package, to change.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
     }
@@ -208,12 +207,12 @@ impl Xlsx {
         )
     }
 
-    /// The options every store through the file writes with, its saves included (D29).
+    /// The options every store through the file writes with, its saves included.
     pub const fn set_write_options(&mut self, options: WriteOptions) {
         self.write_options = options;
     }
 
-    /// The file's bytes in the Strict class: as they are when it was read Strict (D9), else every
+    /// The file's bytes in the Strict class: as they are when it was read Strict, else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
     /// spelling, and every other part, an embedded workbook among them, as it is. Before a
     /// worksheet, table definition, pivot table, or pivot cache definition is written, each
@@ -224,7 +223,7 @@ impl Xlsx {
     /// # Errors
     ///
     /// [`PackageError::Write`] naming the first part that holds content Strict has no form for
-    /// (D22), and the errors of reading a part and of building the archive.
+    /// and the errors of reading a part and of building the archive.
     #[cfg(feature = "strict")]
     pub fn to_bytes_strict(&self) -> Result<Vec<u8>, PackageError> {
         // A save in the class the file was read in writes the package as it is, so it never reads
@@ -273,7 +272,7 @@ impl Xlsx {
         )
     }
 
-    /// The file's bytes in the Transitional class: as they are when it was read Transitional (D9),
+    /// The file's bytes in the Transitional class: as they are when it was read Transitional,
     /// else every part a part module knows written again in Transitional, every relationship type
     /// in Transitional's spelling, and every other part, an embedded workbook among them, as it is.
     /// Each date cell of a worksheet becomes a number cell in the workbook's date system, with one

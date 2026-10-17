@@ -176,7 +176,7 @@ fn check_file(path: &Path, out: &mut dyn Write) -> Result<(usize, usize), Box<dy
 }
 
 /// A part's root as written compact without the cleanup and read again:
-/// whitespace between elements dropped as the layouts of D29 drop it.
+/// whitespace between elements dropped as both layouts drop it.
 fn compact(document: &Document) -> Result<Element, Box<dyn Error>> {
     let mut options = WriteOptions::default();
     options.layout = Layout::Compact;

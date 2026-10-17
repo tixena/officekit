@@ -42,7 +42,7 @@ pub struct Relationship {
     pub type_uri: String,
 }
 
-/// A relationship type in both classes' spelling (D21); its constants and
+/// A relationship type in both classes' spelling; its constants and
 /// methods are generated, in `relationship_type.rs`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]

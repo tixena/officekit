@@ -13,7 +13,7 @@ use crate::xml::conformance::ConformanceClass;
 use crate::xml::write::WriteOptions;
 
 /// The part a package's `officeDocument` relationship names, that part's content type, and the
-/// class the relationship's type names (D21).
+/// class the relationship's type names.
 pub struct MainPart {
     pub class: ConformanceClass,
     pub content_type: Option<String>,
@@ -96,7 +96,7 @@ where
 
 /// The package's bytes in `to`, read in `from`.
 ///
-/// In `from`, the package as it is (D9). In the other class, a copy: `own` is given each part first
+/// In `from`, the package as it is. In the other class, a copy: `own` is given each part first
 /// and answers whether it stored the part itself; every other part goes through the module its
 /// content type names, loaded with `open` and stored with `write` in `to`, a part no module knows
 /// staying as it is; then every relationship type takes `to`'s spelling.

@@ -21,7 +21,6 @@ pub enum AnyNamespace {
     Other,
     /// `##targetNamespace`: the type's own namespace.
     TargetNamespace,
-    /// A namespace URI.
     Uri(&'static str),
 }
 
@@ -37,9 +36,8 @@ pub struct AttributeConstraint {
     /// `None` for an unprefixed attribute.
     pub namespace: Option<NamespaceId>,
     /// The checks of its Strict type, when that is not its Transitional type:
-    /// a value they refuse exists only in Transitional (D35).
+    /// a value they refuse exists only in Transitional.
     pub strict_checks: Option<&'static [ValueCheck]>,
-    /// Only Transitional declares it (D35).
     pub transitional_only: bool,
 }
 
@@ -78,13 +76,8 @@ pub enum Check {
     Required,
     /// The value's lengths, its lexical kind, and a pattern it matches whole.
     String {
-        /// With `Some(ValueClass::HexBinary)` the value must be hexadecimal
-        /// digits, an even number of them, and `length`, `min_length`, and
-        /// `max_length` count bytes, two digits each; with
-        /// `Some(ValueClass::String)`, as a Strict check names it, they count
-        /// characters; with `None` the class of the attribute decides, as SDK
-        /// 3.5.1 reads a value with a validator that names no type: bytes for
-        /// a hexadecimal or base64 attribute, characters for any other.
+        /// What the lengths count: bytes of hexadecimal digits for `HexBinary`, characters for
+        /// `String`; `None` takes the attribute's class, as SDK 3.5.1 does.
         class: Option<ValueClass>,
         kind: StringKind,
         length: Option<usize>,
@@ -134,7 +127,7 @@ pub enum CompositeKind {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Enumeration {
-    /// Each value, the targets it is a member at, and whether only Transitional allows it (D35).
+    /// Each value, the targets it is a member at, and whether only Transitional allows it.
     pub members: &'static [(&'static str, Versions, bool)],
     /// `w:ST_TblWidth`.
     pub simple_type: &'static str,
@@ -183,9 +176,8 @@ pub enum Particle {
 #[non_exhaustive]
 pub struct SchemaType {
     pub attributes: &'static [AttributeConstraint],
-    /// Each child by namespace and local name, its type, and whether only
-    /// Transitional allows it here (D35); a child's type is resolved from its
-    /// parent, because one tag is a different type under another parent (D2).
+    /// Each child by namespace and local name, its type, and whether only Transitional allows it
+    /// here; the type comes from the parent, since one tag is another type under another parent.
     pub children: &'static [(NamespaceId, &'static str, TypeId, bool)],
     pub name: &'static str,
     /// The content model at each target, equal ones merged.

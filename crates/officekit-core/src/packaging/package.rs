@@ -70,7 +70,7 @@ enum FileKind {
     Relationships(Option<PartName>),
 }
 
-/// What a read does with the parts it parses (D5).
+/// What a read does with the parts it parses.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct OpenOptions {
@@ -86,7 +86,7 @@ pub struct Package {
 }
 
 /// A part's typed root: what a generated part module moves between the
-/// package and the typed tree (D13).
+/// package and the typed tree.
 pub trait PartRoot: Sized {
     /// The root's tag, checked on load.
     const LOCAL_NAME: &'static str;
@@ -103,7 +103,7 @@ pub trait PartRoot: Sized {
     /// # Errors
     ///
     /// [`WriteError::NotInClass`] naming the first element `class` has no
-    /// form for (D22).
+    /// form for.
     fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError>;
 }
 
@@ -364,8 +364,7 @@ impl Package {
 
     /// Unpack the bytes of a zip archive into memory, and parse its
     /// `[Content_Types].xml` and relationship parts. The archive's central
-    /// directory is read, so entries that carry data descriptors load too
-    /// (D15).
+    /// directory is read, so entries that carry data descriptors load too.
     ///
     /// # Errors
     ///
@@ -967,7 +966,7 @@ impl Package {
         self.store_tree(name, content_type, &document, options)
     }
 
-    /// Write a generic tree into a part with the options of D29.
+    /// Write a generic tree into a part, laid out as `options` says.
     ///
     /// # Errors
     ///

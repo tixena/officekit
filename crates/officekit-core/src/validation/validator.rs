@@ -23,9 +23,8 @@ use crate::xml::name::OfficeVersion;
 #[cfg(test)]
 mod tests;
 
-/// The part types SDK 3.5.1 leaves out of each document's vocabulary,
-/// although the part rules reach them, so that each relationship type names
-/// one part type in a document.
+/// The part types SDK 3.5.1 leaves out of each document's vocabulary although the part rules reach
+/// them, so that each relationship type names one part type in a document.
 const LEFT_OUT: &[(&str, &[&str])] = &[
     (
         "PresentationDocument",
@@ -195,7 +194,7 @@ pub(crate) fn document_rule(package: &Package) -> Option<&'static PartRule> {
 }
 
 /// The class the package declares through its `officeDocument`
-/// relationship type (D21).
+/// relationship type.
 fn package_class(package: &Package) -> Option<ConformanceClass> {
     package.related(None).ok()?.into_iter().find_map(|related| {
         if related.type_uri == RelationshipType::OFFICE_DOCUMENT.strict {

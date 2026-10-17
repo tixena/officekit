@@ -20,8 +20,8 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 
 /// Writes one part's XML in order, straight into its sink.
 ///
-/// It writes through `quick-xml`'s writer, in D29's layout: compact, or
-/// pretty, which puts each tag on a line of its own, indented by two spaces,
+/// It writes through `quick-xml`'s writer, in the compact layout or the
+/// pretty one, which puts each tag on a line of its own, indented by two spaces,
 /// unless text comes before it. A start tag waits for the element's first
 /// content, so an element nothing is written into ends as an empty tag. It
 /// keeps the names and namespace declarations of the elements it has started
@@ -167,7 +167,6 @@ impl<'sink> PartWriter<'sink> {
         self.writer.get_mut().write_all(markup)
     }
 
-    /// The namespace declarations in scope.
     pub(crate) const fn scope(&mut self) -> &mut Scope {
         &mut self.scope
     }

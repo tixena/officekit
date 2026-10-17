@@ -737,9 +737,8 @@ impl<'data> Builder<'data> {
         Ok(index)
     }
 
-    /// The field of a child: the child's name without the parent's (D14, as
-    /// refined); an enum's field is `content` when it is the struct's only
-    /// one.
+    /// The field of a child: the child's name without the parent's; an enum's field is `content`
+    /// when it is the struct's only one.
     fn field_name(&mut self, parent: usize, target: Target, enum_slots: usize) -> Result<String> {
         let node = &self.catalog.nodes[parent];
         let words = match target {

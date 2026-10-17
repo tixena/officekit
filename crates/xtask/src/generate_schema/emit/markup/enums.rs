@@ -35,7 +35,7 @@ pub struct Position {
     pub source: String,
 }
 
-/// What the SDK's data places in ECMA types (D24): extension tags that join
+/// What the SDK's data places in ECMA types: extension tags that join
 /// an ECMA choice, tags that become fields, and new choices of extension tags
 /// only.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -43,9 +43,8 @@ pub struct Position {
 pub struct Placements {
     /// An ECMA set to the extension tags added to it, by owner type.
     pub added: BTreeMap<BTreeSet<Entry>, BTreeMap<Name, BTreeSet<Entry>>>,
-    /// An owner type's extension tags that land in a sequence, in the data's
-    /// order: the tag, the ECMA tag before it, and whether it repeats or may
-    /// be absent.
+    /// An owner type's extension tags that land in a sequence, in the data's order, with the ECMA
+    /// tag before each.
     pub fields: BTreeMap<Name, Vec<Placed>>,
     /// New choice positions of extension tags only in ECMA types, with the
     /// ECMA tag before each.
@@ -59,9 +58,7 @@ pub struct Placed {
     /// The ECMA tag before it in the data's order; `None` when it comes first.
     pub after: Option<Name>,
     pub key: Option<NodeKey>,
-    /// Whether it may repeat.
     pub many: bool,
-    /// Whether it may be absent.
     pub optional: bool,
 }
 
@@ -379,11 +376,10 @@ pub fn with_derived(set: &SchemaSet, owner: &Name) -> Vec<Name> {
     found
 }
 
-/// The extension placements of the SDK's data in ECMA types, by the rule of
-/// D24 and D34: an extension tag inside a choice of the data joins the 5th
-/// edition's choice of its owner type that shares the most tags with the ECMA
-/// tags beside it there; one inside no choice, or beside no ECMA tag of any
-/// such choice, is a field; a choice of extension tags only is a new position.
+/// The extension placements of the SDK's data in ECMA types: an extension tag inside a choice of
+/// the data joins the 5th edition's choice of its owner type that shares the most tags with the
+/// ECMA tags beside it there; one inside no choice, or beside no ECMA tag of any such choice, is a
+/// field; a choice of extension tags only is a new position.
 #[must_use]
 pub fn placements(data: &Data<'_>, positions: &[Position]) -> Placements {
     let mut by_owner: BTreeMap<&Name, Vec<&BTreeSet<Entry>>> = BTreeMap::new();

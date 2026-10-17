@@ -60,7 +60,7 @@ include!(\"generated/types.rs\");
 const TRANSITIONAL_ONLY_NAMESPACES: &str = "
 /// The namespace of every Transitional schema file with no Strict file of its
 /// name: in a file that declares Strict, each element and attribute in one
-/// exists only in Transitional (D35).
+/// exists only in Transitional.
 ";
 
 /// The lookup by name that ends `types.rs`.

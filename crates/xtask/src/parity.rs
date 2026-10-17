@@ -257,7 +257,7 @@ fn key(record: &Value, id: &str) -> Key {
 ///
 /// Each officekit error answers one oracle error with its key, so two SDK
 /// 3.5.1 errors with one key need two from officekit; officekit's errors left
-/// over do not count (D25).
+/// over do not count.
 #[must_use]
 pub fn missing<'oracle>(oracle: &'oracle [Value], officekit: &[Value]) -> Vec<&'oracle Value> {
     let mut available: BTreeMap<Key, usize> = BTreeMap::new();
@@ -362,7 +362,7 @@ where
 }
 
 /// SDK 3.5.1's id for one of officekit's codes; `None` for the three codes of
-/// a file that declares Strict (D35).
+/// a file that declares Strict.
 #[must_use]
 pub fn sdk_key(code: ErrorCode) -> Option<&'static str> {
     SDK_KEYS

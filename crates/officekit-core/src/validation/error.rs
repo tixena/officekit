@@ -13,6 +13,8 @@ use crate::xml::name::OfficeVersion;
 #[cfg(test)]
 mod tests;
 
+/// Writes `ErrorCode` from rows of a code, its finding, and its message template: the enum, `ALL`,
+/// and each code's name, finding, parse from its name, and template.
 macro_rules! codes {
     ($($code:ident, $kind:ident, $template:literal;)*) => {
         /// officekit's codes: one per error SDK 3.5.1 can report, and the three for a file that declares Strict that it does not.
@@ -56,7 +58,7 @@ macro_rules! codes {
     };
 }
 
-/// The errors a validation has found, up to a cap (D4).
+/// The errors a validation has found, up to a cap.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct Errors {
@@ -144,7 +146,6 @@ impl Step {
 }
 
 codes! {
-    // Schema: the content model, attributes, and values.
     RepeatedChildInAllGroup, Schema, "the child {child} appears more than once in a group that allows each child once";
     ValueNotInUnion, Schema, "the attribute {attribute} has the value \"{value}\", which none of its type's member types accepts";
     InvalidAttributeValue, Schema, "the attribute {attribute} has the value \"{value}\": {detail}";
@@ -157,7 +158,6 @@ codes! {
     MissingRootElement, Schema, "the part {part} has no root element";
     UndeclaredAttribute, Schema, "the attribute {attribute} is not declared for this element in the target version";
     UnexpectedChild, Schema, "the element holds {child} where it does not expect it{expected}";
-    // Semantic: rules between values, across the document, and through relationships.
     AttributeMustBeAbsentUnlessValue, Semantic, "the attribute {attribute} must be absent unless {other} is {value}";
     AttributeMustBeAbsentForValue, Semantic, "the attribute {attribute} must be absent when {other} is {value}";
     AttributeCannotBeOmitted, Schema, "the attribute {attribute} is missing and cannot be omitted";
@@ -171,7 +171,6 @@ codes! {
     RelationshipNotFound, Semantic, "{attribute} refers to the relationship {id}, which does not exist";
     WrongRelationshipType, Semantic, "{attribute} refers to the relationship {id}, whose type is not {type}";
     DuplicateAttributeValue, Semantic, "the attribute {attribute} has the value \"{value}\", which another element already has";
-    // Markup compatibility.
     UnprefixedAttributeOnAlternateContent, MarkupCompatibility, "the attribute {attribute} on mc:AlternateContent has no prefix";
     UndeclaredPrefixInIgnorable, MarkupCompatibility, "mc:Ignorable \"{value}\" names a prefix that is not declared";
     UndeclaredPrefixInMustUnderstand, MarkupCompatibility, "mc:MustUnderstand \"{value}\" names a prefix that is not declared";
@@ -185,13 +184,12 @@ codes! {
     AlternateContentWithoutChoice, MarkupCompatibility, "an mc:AlternateContent holds no mc:Choice, or its first child is not an mc:Choice";
     UnexpectedChildInAlternateContent, MarkupCompatibility, "an mc:AlternateContent holds a child after its mc:Fallback, or one that is neither mc:Choice nor mc:Fallback";
     NestedAlternateContent, MarkupCompatibility, "an mc:AlternateContent sits directly inside another";
-    // Package: which parts relate to which.
     DataPartNotAllowed, Package, "the part {part} cannot relate to the data part {target}";
     UnknownPartOfStandardType, Package, "the part {part} has a relationship type of the standard, which officekit expects a part module for";
     DuplicatePart, Package, "the part {part} can relate to only one {target}";
     PartNotAllowed, Package, "the part {part} cannot relate to the part {target}";
     MissingRequiredPart, Package, "the required part {part} is missing";
-    // A file that declares Strict, checked against Strict (D35); SDK 3.5.1 has none of these.
+    // Only for a file that declares Strict; SDK 3.5.1 has none of these.
     TransitionalOnlyElement, Schema, "the element {element} exists only in Transitional, and the file declares Strict";
     TransitionalOnlyAttribute, Schema, "the attribute {attribute} exists only in Transitional, and the file declares Strict";
     TransitionalOnlyValue, Schema, "the value \"{value}\" of {attribute} exists only in Transitional, and the file declares Strict";

@@ -210,4 +210,4 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `markup::common_simple_types`: each struct read from its generic
-//! element, its unknown content kept at its place (D8).
+//! element, its unknown content kept at its place.

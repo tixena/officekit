@@ -310,7 +310,7 @@ pub fn describe(
     }
 }
 
-/// Name a newtype by its title (D14), an override winning; a type with no
+/// Name a newtype by its title, an override winning; a type with no
 /// title, or one of the data, takes its local name without `ST_`.
 ///
 /// # Errors

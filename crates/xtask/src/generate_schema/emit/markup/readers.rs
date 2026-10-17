@@ -22,7 +22,7 @@ pub fn text(header: &str, names: &Names<'_>) -> String {
     let _ = writeln!(
         out,
         "//! The readers of `markup::{}`: each struct read from its generic\n\
-         //! element, its unknown content kept at its place (D8).",
+         //! element, its unknown content kept at its place.",
         module.name
     );
     let mut functions: Vec<(String, String)> = Vec::new();

@@ -14,7 +14,7 @@ mod tests;
 /// Index into the generated namespace table.
 pub type NamespaceId = u8;
 
-/// The Office versions officekit targets (D23).
+/// An Office version officekit validates against, Office 2010 to Microsoft 365.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum OfficeVersion {
@@ -27,7 +27,7 @@ pub enum OfficeVersion {
 }
 
 /// A name's namespace: none, one the table knows by either class's URI, or any
-/// other URI kept as written (D8, D23).
+/// other URI kept as written.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[non_exhaustive]
 pub enum Namespace {

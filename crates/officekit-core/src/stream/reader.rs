@@ -21,16 +21,13 @@ mod tests;
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PartEvent {
-    /// The XML declaration as it is written, `xml version="1.0"
-    /// encoding="UTF-8" standalone="yes"`.
+    /// The XML declaration's text as written, without `<?` and `?>`.
     Declaration(String),
-    /// The end of the element the last unmatched `Start` began.
     End,
     /// Text, a comment, CDATA, a processing instruction, or an element with
     /// no content (`<x/>`).
     Node(Node),
-    /// The start of an element: its name, attributes, and namespace
-    /// declarations, with no children.
+    /// An element's start: the element with its attributes and declarations, and no children.
     Start(Element),
 }
 
@@ -44,7 +41,6 @@ pub enum PartEvent {
 /// [`parse`]: crate::xml::parse::parse
 pub struct PartReader<R: BufRead> {
     buffer: Vec<u8>,
-    /// The elements started and not ended.
     depth: usize,
     /// The event read past the end of a text node, given next.
     next: Option<PartEvent>,
@@ -183,7 +179,7 @@ impl<R: BufRead> PartReader<R> {
 impl PartReader<Cursor<Vec<u8>>> {
     /// A reader of the part `name` of `package` as its tree writes it with
     /// [`WriteOptions::default`]: compact, with every namespace declaration
-    /// nothing uses removed (D29), so a part streamed from it declares only
+    /// nothing uses removed, so a part streamed from it declares only
     /// the prefixes it uses.
     ///
     /// # Errors

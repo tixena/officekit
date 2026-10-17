@@ -258,7 +258,7 @@ pub struct AssociatedXMLSchema {
     pub uri: Option<String>,
 }
 
-/// The hooks of a context for the `ds` namespace (D12, D20, D37).
+/// The hooks of a context for the `ds` namespace.
 ///
 /// A tree hook and a write hook per node kind, and a list hook and a list write hook per enum a
 /// list holds. A tree hook answers `None` to rebuild the node from its transformed children, or a
@@ -341,7 +341,7 @@ pub struct SetOfAssociatedXMLSchemas {
     pub unknown: markup::Unknown,
 }
 
-/// The hooks of a visitor for the `ds` namespace (D12).
+/// The hooks of a visitor for the `ds` namespace.
 ///
 /// One per node kind, each answering `Descend::Yes` to walk into the node's children or
 /// `Descend::No` to skip them. A visitor that does not return itself from

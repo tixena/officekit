@@ -136,7 +136,7 @@ impl<W: Write> PackageWriter<W> {
     /// Register `content_type` for the part `name` and start its zip entry;
     /// the part is written through the returned writer, and ends when the
     /// next part starts or the package finishes. No namespace cleanup runs on
-    /// it: its root declares the prefixes it is given (D31).
+    /// it: its root declares the prefixes it is given.
     ///
     /// # Errors
     ///

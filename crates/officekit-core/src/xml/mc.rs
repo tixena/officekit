@@ -13,7 +13,6 @@ use super::parse::{Scope, split_qualified};
 #[cfg(test)]
 mod tests;
 
-/// The markup-compatibility namespace.
 const MC_NAMESPACE: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 
 /// The `mc` attributes in force on an element: the namespaces `mc:Ignorable`
@@ -24,7 +23,7 @@ struct Context {
     process_content: BTreeSet<(Namespace, String)>,
 }
 
-/// What a read does with markup compatibility (D5).
+/// What a read does with markup compatibility.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum MarkupCompatibility {
@@ -32,9 +31,8 @@ pub enum MarkupCompatibility {
     /// file has them.
     #[default]
     Keep,
-    /// Each `mc:AlternateContent` becomes its first `mc:Choice` that `target`
-    /// understands, else its `mc:Fallback`; ignorable content `target` does not
-    /// understand is dropped, or unwrapped when `mc:ProcessContent` names it.
+    /// Each `mc:AlternateContent` becomes its first `mc:Choice` `target` understands, or its
+    /// `mc:Fallback`; ignorable content `target` lacks goes, or is unwrapped by `mc:ProcessContent`.
     Process { target: OfficeVersion },
 }
 
@@ -42,7 +40,6 @@ pub enum MarkupCompatibility {
 enum Outcome {
     /// It goes, with its subtree.
     Drop,
-    /// It stays.
     Keep,
     /// Its children take its place.
     Unwrap,

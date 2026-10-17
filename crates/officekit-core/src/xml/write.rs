@@ -23,24 +23,22 @@ const PREFIX_LISTS: [&str; 2] = ["Ignorable", "MustUnderstand"];
 /// The `mc` lists whose items are qualified names.
 const QUALIFIED_LISTS: [&str; 3] = ["PreserveAttributes", "PreserveElements", "ProcessContent"];
 
-/// How a part is laid out when written (D29). Both layouts write the prolog,
-/// the epilog, and the XML declaration as read.
+/// How a part is laid out when written.
+///
+/// Both layouts write the prolog, the epilog, and the XML declaration as read, and neither changes
+/// whitespace inside an `xml:space="preserve"` scope, which an inner `xml:space="default"` ends.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Layout {
-    /// Every whitespace-only text node inside the root is dropped, unless an
-    /// enclosing element declares `xml:space="preserve"`, which an inner
-    /// `xml:space="default"` ends.
+    /// Every whitespace-only text node inside the root is dropped.
     #[default]
     Compact,
-    /// Every child of an element whose children include no text or CDATA
-    /// goes on a line of its own, indented by two spaces, except inside an
-    /// `xml:space="preserve"` scope, which an inner `xml:space="default"`
-    /// ends; every text node passes through.
+    /// Each child of an element whose children include no text or CDATA goes on a line of its
+    /// own, indented by two spaces; text passes through.
     Pretty,
 }
 
-/// The two options of writing a part from a tree (D29).
+/// The two options of writing a part from a tree.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct WriteOptions {

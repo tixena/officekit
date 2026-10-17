@@ -46551,7 +46551,7 @@ pub static SCHEMA_TYPES: &[SchemaType] = &[
 
 /// The namespace of every Transitional schema file with no Strict file of its
 /// name: in a file that declares Strict, each element and attribute in one
-/// exists only in Transitional (D35).
+/// exists only in Transitional.
 pub static TRANSITIONAL_ONLY_NAMESPACES: &[NamespaceId] = &[60, 87, 95, 98, 162];
 
 /// The id of the type the data names `name`, `w:CT_TblCellMar/w:tblCellMar`.

@@ -151,7 +151,7 @@ impl Docx {
 
     /// The file `package` holds. Its class is the one its `officeDocument` relationship's type
     /// names, its kind the one its main part's content type names; `options` applies to every part
-    /// the file loads (D5).
+    /// the file loads.
     ///
     /// # Errors
     ///
@@ -272,7 +272,6 @@ impl Docx {
         &self.package
     }
 
-    /// The package, to change.
     pub const fn package_mut(&mut self) -> &mut Package {
         &mut self.package
     }
@@ -470,19 +469,19 @@ impl Docx {
         image::set_picture(self, part, run, image, fit)
     }
 
-    /// The options every store through the file writes with, its saves included (D29).
+    /// The options every store through the file writes with, its saves included.
     pub const fn set_write_options(&mut self, options: WriteOptions) {
         self.write_options = options;
     }
 
-    /// The file's bytes in the Strict class: as they are when it was read Strict (D9), else every
+    /// The file's bytes in the Strict class: as they are when it was read Strict, else every
     /// part a part module knows written again in Strict, every relationship type in Strict's
     /// spelling, and every other part as it is.
     ///
     /// # Errors
     ///
     /// [`PackageError::Write`] naming the first part that holds content Strict has no form for
-    /// (D22), and the errors of reading a part and of building the archive.
+    /// and the errors of reading a part and of building the archive.
     #[cfg(feature = "strict")]
     pub fn to_bytes_strict(&self) -> Result<Vec<u8>, PackageError> {
         file::to_bytes_in_class(
@@ -495,7 +494,7 @@ impl Docx {
         )
     }
 
-    /// The file's bytes in the Transitional class: as they are when it was read Transitional (D9),
+    /// The file's bytes in the Transitional class: as they are when it was read Transitional,
     /// else every part a part module knows written again in Transitional, every relationship type
     /// in Transitional's spelling, and every other part as it is. The list of warnings is empty:
     /// an embedded workbook is a part carried as it is.

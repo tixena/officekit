@@ -5,7 +5,8 @@ mod tests;
 
 use crate::parts::main_document;
 
-/// The two conformance classes (D21).
+/// A package's conformance class: Strict (ECMA-376 Part 1), or Transitional (Part 1 with the
+/// migration features of Part 4).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[non_exhaustive]
 pub enum ConformanceClass {

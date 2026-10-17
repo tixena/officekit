@@ -1,4 +1,4 @@
-//! Strict date cells in a Transitional save (D22).
+//! Strict date cells in a Transitional save.
 //!
 //! Transitional has no date cell type, so each date cell (`t="d"`) becomes a
 //! number cell holding the date's serial date-time in the workbook's date

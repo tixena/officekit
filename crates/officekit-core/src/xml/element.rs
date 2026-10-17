@@ -69,11 +69,8 @@ pub enum XmlError {
     /// declaration, which a part never has.
     #[error("malformed XML: {0}")]
     Malformed(String),
-    /// `mc:MustUnderstand` names a prefix whose namespace the target Office
-    /// version does not understand.
     #[error("mc:MustUnderstand names `{prefix}`, which the target does not understand")]
     MustUnderstand { prefix: String },
-    /// A prefix used in a name has no namespace declaration in scope.
     #[error("undeclared namespace prefix `{0}`")]
     UndeclaredPrefix(String),
 }
@@ -90,7 +87,7 @@ impl Document {
         }
     }
 
-    /// Apply markup compatibility to the tree (D5).
+    /// Apply markup compatibility to the tree.
     ///
     /// # Errors
     ///
@@ -102,7 +99,6 @@ impl Document {
         mc::apply(self, mode)
     }
 
-    /// Serialize with the options of D29.
     #[must_use]
     pub fn to_xml(&self, options: WriteOptions) -> Vec<u8> {
         write::document(self, options)
@@ -110,7 +106,6 @@ impl Document {
 }
 
 impl Element {
-    /// The value of the attribute with this namespace and local name.
     #[must_use]
     pub fn attribute(&self, namespace: &Namespace, local: &str) -> Option<&str> {
         self.attributes
@@ -121,7 +116,6 @@ impl Element {
             .map(|attribute| attribute.value.as_str())
     }
 
-    /// The children that are elements, in order.
     pub fn child_elements(&self) -> impl Iterator<Item = &Self> {
         self.children.iter().filter_map(|node| {
             if let Node::Element(element) = node {
