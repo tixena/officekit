@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/thememl/2012/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,21 +228,21 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_THM15: Option<NamespaceId> = Some(93);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_THM15, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static THEME_FAMILY_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_FAMILY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "id"), (None, "vid")],
     name: (NS_THM15, "themeFamily"),
     slots: &[crate::Slot::single((NS_THM15, "extLst"))],
     text: false,
 };
 
-static THEME_VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "vid"),
@@ -256,7 +255,7 @@ static THEME_VARIANT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THEME_VARIANT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_VARIANT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_THM15, "themeVariantLst"),
     slots: &[crate::Slot::list((NS_THM15, "themeVariant"))],

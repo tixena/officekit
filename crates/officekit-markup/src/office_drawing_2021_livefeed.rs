@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2021/livefeed`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,42 +227,42 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_ALF: Option<NamespaceId> = Some(13);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static BLUR_SHAPE: crate::Shape = crate::Shape {
+pub static BLUR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "Blur"),
     slots: &[crate::Slot::single((NS_ALF, "extLst"))],
     text: false,
 };
 
-static CUSTOM_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "Custom"),
     slots: &[crate::Slot::single((NS_ALF, "extLst"))],
     text: false,
 };
 
-static NORMAL_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "Normal"),
     slots: &[crate::Slot::single((NS_ALF, "extLst"))],
     text: false,
 };
 
-static REMOVED_SHAPE: crate::Shape = crate::Shape {
+pub static REMOVED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "Removed"),
     slots: &[crate::Slot::single((NS_ALF, "extLst"))],
     text: false,
 };
 
-static BACKGROUND_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "backgroundProps"),
     slots: &[
@@ -273,7 +272,7 @@ static BACKGROUND_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIVE_FEED_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static LIVE_FEED_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ALF, "liveFeedProps"),
     slots: &[

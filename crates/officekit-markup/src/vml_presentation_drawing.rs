@@ -216,10 +216,9 @@
 //! The namespace is `urn:schemas-microsoft-com:office:powerpoint`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,14 +226,14 @@ use std::io;
 
 const NS_PVML: Option<NamespaceId> = Some(87);
 
-static INK_ANNOTATION_FLAG_SHAPE: crate::Shape = crate::Shape {
+pub static INK_ANNOTATION_FLAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PVML, "iscomment"),
     slots: &[],
     text: false,
 };
 
-static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static VML_DIAGRAM_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_PVML, "textdata"),
     slots: &[],

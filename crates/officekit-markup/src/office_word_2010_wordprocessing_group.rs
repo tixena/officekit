@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingGroup`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -231,7 +230,7 @@ const NS_W14: Option<NamespaceId> = Some(99);
 const NS_WPG: Option<NamespaceId> = Some(116);
 const NS_WPS: Option<NamespaceId> = Some(117);
 
-static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_WPG, "grpSpPr"),
     slots: &[
@@ -244,7 +243,7 @@ static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -261,7 +260,7 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_FR_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_FR_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "cNvFrPr"),
     slots: &[
@@ -271,7 +270,7 @@ static C_NV_FR_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "cNvGrpSpPr"),
     slots: &[
@@ -281,14 +280,14 @@ static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_WPG, "xfrm"),
     slots: &[
@@ -298,7 +297,7 @@ static XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "graphicFrame"),
     slots: &[
@@ -311,7 +310,7 @@ static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRP_SP_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "grpSp"),
     slots: &[
@@ -324,7 +323,7 @@ static GRP_SP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WGP_SHAPE: crate::Shape = crate::Shape {
+pub static WGP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPG, "wgp"),
     slots: &[

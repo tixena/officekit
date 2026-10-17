@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2012/chartStyle`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,14 +228,14 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_CS: Option<NamespaceId> = Some(37);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_CS, "spPr"),
     slots: &[
@@ -252,7 +251,7 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BODY_PR_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "spcFirstLastPara"),
@@ -285,7 +284,7 @@ static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DEF_R_PR_SHAPE: crate::Shape = crate::Shape {
+pub static DEF_R_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "kumimoji"),
         (None, "lang"),
@@ -327,28 +326,28 @@ static DEF_R_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "categoryAxis"),
     slots: &[],
     text: false,
 };
 
-static SERIES_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static SERIES_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "seriesAxis"),
     slots: &[],
     text: false,
 };
 
-static VALUE_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_AXIS_AXIS_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "valueAxis"),
     slots: &[],
     text: false,
 };
 
-static CHART_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_CS, "chartStyle"),
     slots: &[
@@ -388,7 +387,7 @@ static CHART_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "id")],
     name: (NS_CS, "colorStyle"),
     slots: &[
@@ -399,7 +398,7 @@ static COLOR_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VARIATION_SHAPE: crate::Shape = crate::Shape {
+pub static VARIATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "variation"),
     slots: &[crate::Slot::items(
@@ -408,7 +407,7 @@ static VARIATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "position"),
         (None, "value"),
@@ -422,7 +421,7 @@ static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "overlap"),
         (None, "gapWidth"),
@@ -438,7 +437,7 @@ static DATA_SERIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_TABLE_DATA_TABLE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_TABLE_DATA_TABLE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "legendKeys"),
         (None, "horizontalBorder"),
@@ -450,7 +449,7 @@ static DATA_TABLE_DATA_TABLE_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FONT_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx"), (None, "mods")],
     name: (NS_CS, "fontRef"),
     slots: &[
@@ -460,7 +459,7 @@ static FONT_REF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEGEND_LEGEND_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static LEGEND_LEGEND_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "visible"),
         (None, "includeInLayout"),
@@ -471,14 +470,14 @@ static LEGEND_LEGEND_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT_MARKER_LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT_MARKER_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "symbol"), (None, "size")],
     name: (NS_CS, "dataPointMarkerLayout"),
     slots: &[],
     text: false,
 };
 
-static STYLE_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CS, "styleClr"),
     slots: &[crate::Slot::items(
@@ -487,7 +486,7 @@ static STYLE_CLR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "axisTitle"),
     slots: &[
@@ -504,7 +503,7 @@ static AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "categoryAxis"),
     slots: &[
@@ -521,7 +520,7 @@ static CATEGORY_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHART_AREA_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_AREA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "chartArea"),
     slots: &[
@@ -538,7 +537,7 @@ static CHART_AREA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataLabel"),
     slots: &[
@@ -555,7 +554,7 @@ static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_LABEL_CALLOUT_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABEL_CALLOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataLabelCallout"),
     slots: &[
@@ -572,7 +571,7 @@ static DATA_LABEL_CALLOUT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataPoint"),
     slots: &[
@@ -589,7 +588,7 @@ static DATA_POINT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT3D_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataPoint3D"),
     slots: &[
@@ -606,7 +605,7 @@ static DATA_POINT3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataPointLine"),
     slots: &[
@@ -623,7 +622,7 @@ static DATA_POINT_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT_MARKER_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT_MARKER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataPointMarker"),
     slots: &[
@@ -640,7 +639,7 @@ static DATA_POINT_MARKER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_POINT_WIREFRAME_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_POINT_WIREFRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataPointWireframe"),
     slots: &[
@@ -657,7 +656,7 @@ static DATA_POINT_WIREFRAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_TABLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_TABLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dataTable"),
     slots: &[
@@ -674,7 +673,7 @@ static DATA_TABLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DOWN_BAR_SHAPE: crate::Shape = crate::Shape {
+pub static DOWN_BAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "downBar"),
     slots: &[
@@ -691,7 +690,7 @@ static DOWN_BAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DROP_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "dropLine"),
     slots: &[
@@ -708,7 +707,7 @@ static DROP_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ERROR_BAR_SHAPE: crate::Shape = crate::Shape {
+pub static ERROR_BAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "errorBar"),
     slots: &[
@@ -725,7 +724,7 @@ static ERROR_BAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FLOOR_SHAPE: crate::Shape = crate::Shape {
+pub static FLOOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "floor"),
     slots: &[
@@ -742,7 +741,7 @@ static FLOOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRIDLINE_MAJOR_SHAPE: crate::Shape = crate::Shape {
+pub static GRIDLINE_MAJOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "gridlineMajor"),
     slots: &[
@@ -759,7 +758,7 @@ static GRIDLINE_MAJOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRIDLINE_MINOR_SHAPE: crate::Shape = crate::Shape {
+pub static GRIDLINE_MINOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "gridlineMinor"),
     slots: &[
@@ -776,7 +775,7 @@ static GRIDLINE_MINOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HI_LO_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static HI_LO_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "hiLoLine"),
     slots: &[
@@ -793,7 +792,7 @@ static HI_LO_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEADER_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static LEADER_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "leaderLine"),
     slots: &[
@@ -810,7 +809,7 @@ static LEADER_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEGEND_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static LEGEND_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "legend"),
     slots: &[
@@ -827,7 +826,7 @@ static LEGEND_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
+pub static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "plotArea"),
     slots: &[
@@ -844,7 +843,7 @@ static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLOT_AREA3D_SHAPE: crate::Shape = crate::Shape {
+pub static PLOT_AREA3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "plotArea3D"),
     slots: &[
@@ -861,7 +860,7 @@ static PLOT_AREA3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SERIES_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static SERIES_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "seriesAxis"),
     slots: &[
@@ -878,7 +877,7 @@ static SERIES_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SERIES_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static SERIES_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "seriesLine"),
     slots: &[
@@ -895,7 +894,7 @@ static SERIES_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TITLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "title"),
     slots: &[
@@ -912,7 +911,7 @@ static TITLE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TRENDLINE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static TRENDLINE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "trendline"),
     slots: &[
@@ -929,7 +928,7 @@ static TRENDLINE_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TRENDLINE_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static TRENDLINE_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "trendlineLabel"),
     slots: &[
@@ -946,7 +945,7 @@ static TRENDLINE_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UP_BAR_SHAPE: crate::Shape = crate::Shape {
+pub static UP_BAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "upBar"),
     slots: &[
@@ -963,7 +962,7 @@ static UP_BAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VALUE_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "valueAxis"),
     slots: &[
@@ -980,7 +979,7 @@ static VALUE_AXIS_STYLE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WALL_SHAPE: crate::Shape = crate::Shape {
+pub static WALL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "wall"),
     slots: &[
@@ -997,7 +996,7 @@ static WALL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_REF_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "effectRef"),
     slots: &[
@@ -1007,7 +1006,7 @@ static EFFECT_REF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILL_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "fillRef"),
     slots: &[
@@ -1017,7 +1016,7 @@ static FILL_REF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LN_REF_SHAPE: crate::Shape = crate::Shape {
+pub static LN_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "lnRef"),
     slots: &[
@@ -1027,21 +1026,21 @@ static LN_REF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TITLE_TITLE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_TITLE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "position")],
     name: (NS_CS, "title"),
     slots: &[],
     text: false,
 };
 
-static TRENDLINE_TRENDLINE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static TRENDLINE_TRENDLINE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "add"), (None, "equation"), (None, "rsquared")],
     name: (NS_CS, "trendline"),
     slots: &[],
     text: false,
 };
 
-static VIEW3D_SHAPE: crate::Shape = crate::Shape {
+pub static VIEW3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rotX"),
         (None, "rotY"),
@@ -1055,7 +1054,7 @@ static VIEW3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_WIDTH_SCALE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_WIDTH_SCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CS, "lineWidthScale"),
     slots: &[],

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/webextensions/webextension/2010/11`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_WE: Option<NamespaceId> = Some(108);
 
-static SNAPSHOT_SHAPE: crate::Shape = crate::Shape {
+pub static SNAPSHOT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link"), (None, "cstate")],
     name: (NS_WE, "snapshot"),
     slots: &[
@@ -239,14 +238,14 @@ static SNAPSHOT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WE, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static WEBEXTENSION_SHAPE: crate::Shape = crate::Shape {
+pub static WEBEXTENSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "frozen")],
     name: (NS_WE, "webextension"),
     slots: &[
@@ -260,35 +259,35 @@ static WEBEXTENSION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BINDING_SHAPE: crate::Shape = crate::Shape {
+pub static BINDING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "type"), (None, "appref")],
     name: (NS_WE, "binding"),
     slots: &[crate::Slot::single((NS_WE, "extLst"))],
     text: false,
 };
 
-static BINDINGS_SHAPE: crate::Shape = crate::Shape {
+pub static BINDINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WE, "bindings"),
     slots: &[crate::Slot::list((NS_WE, "binding"))],
     text: false,
 };
 
-static PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "value")],
     name: (NS_WE, "property"),
     slots: &[],
     text: false,
 };
 
-static PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WE, "properties"),
     slots: &[crate::Slot::list((NS_WE, "property"))],
     text: false,
 };
 
-static REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "version"),
@@ -300,14 +299,14 @@ static REFERENCE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ALTERNATE_REFERENCES_SHAPE: crate::Shape = crate::Shape {
+pub static ALTERNATE_REFERENCES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WE, "alternateReferences"),
     slots: &[crate::Slot::list((NS_WE, "reference"))],
     text: false,
 };
 
-static WEBEXTENSIONREF_SHAPE: crate::Shape = crate::Shape {
+pub static WEBEXTENSIONREF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_WE, "webextensionref"),
     slots: &[],

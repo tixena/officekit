@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2024/pivotAutoRefresh`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_XLPAR: Option<NamespaceId> = Some(136);
 
-static AUTO_REFRESH_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_REFRESH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPAR, "autoRefresh"),
     slots: &[],

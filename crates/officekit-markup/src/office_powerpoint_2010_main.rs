@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2010/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -232,7 +231,7 @@ const NS_P: Option<NamespaceId> = Some(64);
 const NS_P14: Option<NamespaceId> = Some(65);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isComment")],
     name: (NS_P14, "cNvContentPartPr"),
     slots: &[
@@ -242,7 +241,7 @@ static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LASER_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static LASER_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "laserClr"),
     slots: &[crate::Slot::required_choice(
@@ -251,7 +250,7 @@ static LASER_CLR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -268,7 +267,7 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_P14, "xfrm"),
     slots: &[
@@ -278,14 +277,14 @@ static XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BROWSE_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static BROWSE_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "showStatus")],
     name: (NS_P14, "browseMode"),
     slots: &[],
     text: false,
 };
 
-static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "nvContentPartPr"),
     slots: &[
@@ -296,91 +295,91 @@ static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DEFAULT_IMAGE_DPI_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_IMAGE_DPI_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P14, "defaultImageDpi"),
     slots: &[],
     text: false,
 };
 
-static DISCARD_IMAGE_EDIT_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static DISCARD_IMAGE_EDIT_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P14, "discardImageEditData"),
     slots: &[],
     text: false,
 };
 
-static FLYTHROUGH_SHAPE: crate::Shape = crate::Shape {
+pub static FLYTHROUGH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir"), (None, "hasBounce")],
     name: (NS_P14, "flythrough"),
     slots: &[],
     text: false,
 };
 
-static GLITTER_SHAPE: crate::Shape = crate::Shape {
+pub static GLITTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir"), (None, "pattern")],
     name: (NS_P14, "glitter"),
     slots: &[],
     text: false,
 };
 
-static TRACE_PT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TRACE_PT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "tracePtLst"),
     slots: &[crate::Slot::list((NS_P14, "tracePt"))],
     text: false,
 };
 
-static LASER_TRACE_LST_SHAPE: crate::Shape = crate::Shape {
+pub static LASER_TRACE_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "laserTraceLst"),
     slots: &[crate::Slot::list((NS_P14, "tracePtLst"))],
     text: false,
 };
 
-static TRACE_PT_SHAPE: crate::Shape = crate::Shape {
+pub static TRACE_PT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t"), (None, "x"), (None, "y")],
     name: (NS_P14, "tracePt"),
     slots: &[],
     text: false,
 };
 
-static CONVEYOR_SHAPE: crate::Shape = crate::Shape {
+pub static CONVEYOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "conveyor"),
     slots: &[],
     text: false,
 };
 
-static FERRIS_SHAPE: crate::Shape = crate::Shape {
+pub static FERRIS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "ferris"),
     slots: &[],
     text: false,
 };
 
-static FLIP_SHAPE: crate::Shape = crate::Shape {
+pub static FLIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "flip"),
     slots: &[],
     text: false,
 };
 
-static GALLERY_SHAPE: crate::Shape = crate::Shape {
+pub static GALLERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "gallery"),
     slots: &[],
     text: false,
 };
 
-static SWITCH_SHAPE: crate::Shape = crate::Shape {
+pub static SWITCH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "switch"),
     slots: &[],
     text: false,
 };
 
-static MEDIA_SHAPE: crate::Shape = crate::Shape {
+pub static MEDIA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link")],
     name: (NS_P14, "media"),
     slots: &[
@@ -392,119 +391,119 @@ static MEDIA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BMK_SHAPE: crate::Shape = crate::Shape {
+pub static BMK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "time")],
     name: (NS_P14, "bmk"),
     slots: &[],
     text: false,
 };
 
-static BMK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static BMK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "bmkLst"),
     slots: &[crate::Slot::list((NS_P14, "bmk"))],
     text: false,
 };
 
-static BMK_TGT_SHAPE: crate::Shape = crate::Shape {
+pub static BMK_TGT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid"), (None, "bmkName")],
     name: (NS_P14, "bmkTgt"),
     slots: &[],
     text: false,
 };
 
-static FADE_SHAPE: crate::Shape = crate::Shape {
+pub static FADE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "in"), (None, "out")],
     name: (NS_P14, "fade"),
     slots: &[],
     text: false,
 };
 
-static PAUSE_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static PAUSE_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "pauseEvt"),
     slots: &[],
     text: false,
 };
 
-static PLAY_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static PLAY_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "playEvt"),
     slots: &[],
     text: false,
 };
 
-static RESUME_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static RESUME_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "resumeEvt"),
     slots: &[],
     text: false,
 };
 
-static STOP_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static STOP_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "stopEvt"),
     slots: &[],
     text: false,
 };
 
-static SEEK_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static SEEK_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "time"), (None, "objId"), (None, "seek")],
     name: (NS_P14, "seekEvt"),
     slots: &[],
     text: false,
 };
 
-static TRIM_SHAPE: crate::Shape = crate::Shape {
+pub static TRIM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "st"), (None, "end")],
     name: (NS_P14, "trim"),
     slots: &[],
     text: false,
 };
 
-static NULL_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static NULL_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "time"), (None, "objId")],
     name: (NS_P14, "nullEvt"),
     slots: &[],
     text: false,
 };
 
-static PRISM_SHAPE: crate::Shape = crate::Shape {
+pub static PRISM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir"), (None, "isContent"), (None, "isInverted")],
     name: (NS_P14, "prism"),
     slots: &[],
     text: false,
 };
 
-static CREATION_ID_SHAPE: crate::Shape = crate::Shape {
+pub static CREATION_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "creationId"),
     slots: &[],
     text: false,
 };
 
-static MOD_ID_SHAPE: crate::Shape = crate::Shape {
+pub static MOD_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "modId"),
     slots: &[],
     text: false,
 };
 
-static REVEAL_SHAPE: crate::Shape = crate::Shape {
+pub static REVEAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "thruBlk"), (None, "dir")],
     name: (NS_P14, "reveal"),
     slots: &[],
     text: false,
 };
 
-static RIPPLE_SHAPE: crate::Shape = crate::Shape {
+pub static RIPPLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "ripple"),
     slots: &[],
     text: false,
 };
 
-static SECTION_SECTION_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_SECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "id")],
     name: (NS_P14, "section"),
     slots: &[
@@ -514,70 +513,70 @@ static SECTION_SECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SECTION_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "sectionLst"),
     slots: &[crate::Slot::list((NS_P14, "section"))],
     text: false,
 };
 
-static SECTION_SECTION_OLD_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_SECTION_OLD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "slideIdLst"), (None, "id")],
     name: (NS_P14, "section"),
     slots: &[crate::Slot::single((NS_P14, "extLst"))],
     text: false,
 };
 
-static SECTION_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "sectionPr"),
     slots: &[crate::Slot::list((NS_P14, "section"))],
     text: false,
 };
 
-static SLD_ID_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_ID_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "sldIdLst"),
     slots: &[crate::Slot::list((NS_P14, "sldId"))],
     text: false,
 };
 
-static SLD_ID_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_P14, "sldId"),
     slots: &[],
     text: false,
 };
 
-static SHOW_EVT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_EVT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "showEvtLst"),
     slots: &[crate::Slot::items(&SHOW_EVENT_RECORD_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static SHOW_MEDIA_CTRLS_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_MEDIA_CTRLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P14, "showMediaCtrls"),
     slots: &[],
     text: false,
 };
 
-static SHRED_SHAPE: crate::Shape = crate::Shape {
+pub static SHRED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pattern"), (None, "dir")],
     name: (NS_P14, "shred"),
     slots: &[],
     text: false,
 };
 
-static TRIGGER_EVT_SHAPE: crate::Shape = crate::Shape {
+pub static TRIGGER_EVT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "time"), (None, "objId")],
     name: (NS_P14, "triggerEvt"),
     slots: &[],
     text: false,
 };
 
-static NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isPhoto"), (None, "userDrawn")],
     name: (NS_P14, "nvPr"),
     slots: &[
@@ -589,70 +588,70 @@ static NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FLASH_SHAPE: crate::Shape = crate::Shape {
+pub static FLASH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "flash"),
     slots: &[],
     text: false,
 };
 
-static HONEYCOMB_SHAPE: crate::Shape = crate::Shape {
+pub static HONEYCOMB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "honeycomb"),
     slots: &[],
     text: false,
 };
 
-static EXT_LST_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P14, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],
     text: false,
 };
 
-static EXT_LST_EXTENSION_LIST_MODIFY_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_EXTENSION_LIST_MODIFY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "mod")],
     name: (NS_P14, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],
     text: false,
 };
 
-static WARP_SHAPE: crate::Shape = crate::Shape {
+pub static WARP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "warp"),
     slots: &[],
     text: false,
 };
 
-static DOORS_SHAPE: crate::Shape = crate::Shape {
+pub static DOORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "doors"),
     slots: &[],
     text: false,
 };
 
-static WINDOW_SHAPE: crate::Shape = crate::Shape {
+pub static WINDOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "window"),
     slots: &[],
     text: false,
 };
 
-static PAN_SHAPE: crate::Shape = crate::Shape {
+pub static PAN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "pan"),
     slots: &[],
     text: false,
 };
 
-static VORTEX_SHAPE: crate::Shape = crate::Shape {
+pub static VORTEX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P14, "vortex"),
     slots: &[],
     text: false,
 };
 
-static WHEEL_REVERSE_SHAPE: crate::Shape = crate::Shape {
+pub static WHEEL_REVERSE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spokes")],
     name: (NS_P14, "wheelReverse"),
     slots: &[],

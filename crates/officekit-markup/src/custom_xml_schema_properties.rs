@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/schemaLibrary/2006/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_SL: Option<NamespaceId> = Some(90);
 
-static CUSTOM_XML_SCHEMA_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_SCHEMA_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_SL, "uri"),
         (NS_SL, "manifestLocation"),
@@ -239,7 +238,7 @@ static CUSTOM_XML_SCHEMA_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_SL, "schemaLibrary"),
     slots: &[crate::Slot::list((NS_SL, "schema"))],

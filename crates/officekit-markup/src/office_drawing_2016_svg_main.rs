@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2016/SVG/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_ASVG: Option<NamespaceId> = Some(19);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static SVG_BLIP_SHAPE: crate::Shape = crate::Shape {
+pub static SVG_BLIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link")],
     name: (NS_ASVG, "svgBlip"),
     slots: &[],

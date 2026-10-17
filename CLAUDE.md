@@ -8,10 +8,11 @@ in either conformance class, Transitional or Strict.
 
 ```
 crates/officekit-core          library: element trees, file types
-crates/officekit-markup        library: the typed tree, one module per namespace, with transforms and visitors
+crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
 crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit-core)
 crates/officekit-transitional  library: the Transitional class: read and write of every node (feature `transitional` of officekit-core)
+crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
 crates/officekit-validation    library: the validator and its generated tables
 crates/officekit-xml           library: element tree, names, values, part reader and writer
 crates/officekit               CLI binary
@@ -44,11 +45,12 @@ embedded           a document stored in a part of another
   Never add `#[allow]` / `#[expect]` to get past a lint; fix the code or raise
   it.
 - **Generated files are never edited by hand**: everything under
-  `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`,
-  `write_through.rs`, and the unit tests; everything under
-  `crates/officekit-strict/src` but `lib.rs` and the unit tests; everything
-  under `crates/officekit-transitional/src` but `lib.rs`, `dates.rs`, and the
-  unit tests; everything under `parts/` of `officekit-core/src`;
+  `crates/officekit-markup/src` but `lib.rs`, `class_rules.rs`, and the unit
+  tests; everything under `crates/officekit-strict/src` but `lib.rs` and the
+  unit tests; everything under `crates/officekit-transitional/src` but
+  `lib.rs`, `dates.rs`, and the unit tests; everything under
+  `crates/officekit-traversal/src` but `lib.rs` and the unit tests; everything
+  under `parts/` of `officekit-core/src`;
   `crates/officekit-validation/src/generated/` (and `generated.rs`);
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-packaging/src/relationship_type.rs`. Change the generator

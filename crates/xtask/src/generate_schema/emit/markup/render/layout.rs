@@ -588,20 +588,6 @@ fn literal(path: &str, fields: &[(String, Expr)], shape: Shape) -> Option<String
     Some(out)
 }
 
-/// One field of a struct literal laid out a field per line, at `indent`:
-/// `name: value,`, the value on the field's line when it fits there, else on
-/// the next line one step in.
-#[must_use]
-pub fn field(indent: usize, name: &str, value: &Expr) -> String {
-    let mut out = String::new();
-    pad(indent, &mut out);
-    let text = field_value(Shape::indented(indent), name, value)
-        .unwrap_or_else(|| format!("{name}: {}", value.one_line()));
-    out.push_str(&text);
-    out.push_str(",\n");
-    out
-}
-
 /// A struct literal's field, `name: value`, on the line `nested` gives it.
 fn field_value(nested: Shape, name: &str, value: &Expr) -> Option<String> {
     let after = nested

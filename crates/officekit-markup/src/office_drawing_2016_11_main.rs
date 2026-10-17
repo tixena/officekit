@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2016/11/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_A1611: Option<NamespaceId> = Some(4);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static PIC_ATTR_SRC_URL_SHAPE: crate::Shape = crate::Shape {
+pub static PIC_ATTR_SRC_URL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_A1611, "picAttrSrcUrl"),
     slots: &[],

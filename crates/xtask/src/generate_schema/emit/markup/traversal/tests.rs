@@ -1,9 +1,9 @@
 use core::fmt::Write as _;
 
-use super::super::render::layout::{self, Expr};
+use super::super::render::layout::Expr;
 use super::super::structs::{Attribute, Body, Child, Node, Occurs, Target, Value};
 use super::super::{NodeKey, Source};
-use super::{hook_name, rebuild};
+use super::{Rebuilt, assigned_field, hook_name, rebuild};
 use crate::generate_schema::model::Name;
 
 /// A struct with the attribute `val` and `children`, in schema order.
@@ -42,7 +42,7 @@ fn child(field: &str, target: Target, occurs: Occurs) -> Child {
 fn rebuilt(node: &Node) -> (String, String) {
     let mut out = String::new();
     let mut helpers = String::new();
-    rebuild(node, "super::Sample", "sample", &mut out, &mut helpers);
+    rebuild(node, "x::Sample", "sample", &mut out, &mut helpers);
     (out, helpers)
 }
 
@@ -57,22 +57,28 @@ fn a_hook_is_its_readers_name_unless_clippy_keeps_its_prefix_for_selfless_method
 }
 
 #[test]
-fn a_struct_literal_field_too_long_for_its_line_breaks_its_call() {
+fn an_assigned_field_too_long_for_its_line_breaks_its_call() {
     let value = Expr::call(
         "crate::transform_child",
         vec![
             Expr::atom("&self.table_style_conditional_formatting_settings_exception_xyz"),
             Expr::atom("ctx"),
+            Expr::atom("&mut rebase"),
         ],
     );
+    let mut out = String::new();
+    assigned_field(
+        "        ",
+        "self",
+        "table_style_conditional_formatting_settings_exception_xyz",
+        &Rebuilt::Child(value),
+        &mut out,
+    );
     assert_eq!(
-        layout::field(
-            12,
-            "table_style_conditional_formatting_settings_exception_xyz",
-            &value
-        ),
-        "            table_style_conditional_formatting_settings_exception_xyz: crate::transform_child(\n                \
-         &self.table_style_conditional_formatting_settings_exception_xyz,\n                ctx,\n            ),\n"
+        out,
+        "        node.table_style_conditional_formatting_settings_exception_xyz = crate::transform_child(\n            \
+         &self.table_style_conditional_formatting_settings_exception_xyz,\n            ctx,\n            \
+         &mut rebase,\n        );\n"
     );
 }
 
@@ -87,19 +93,15 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     let (out, helpers) = rebuilt(&sample);
     assert_eq!(
         out,
-        "        let mut rebase = crate::Rebase::new(&self.unknown);\n        \
-         let child_1 = crate::transform_child(&self.properties, ctx, &mut rebase);\n        \
-         let child_2 = crate::transform_choice(&self.sup, ctx, &mut rebase);\n        \
-         let child_3 = crate::transform_items(&self.content, ctx, &mut rebase);\n        \
-         let child_4 = crate::transform_child(&self.sub, ctx, &mut rebase);\n        \
-         Self {\n            \
-         content: child_3,\n            \
-         properties: child_1,\n            \
-         sub: child_4,\n            \
-         sup: child_2,\n            \
-         unknown: crate::transform_unknown(&self.unknown, ctx, &rebase),\n            \
-         val: self.val.clone(),\n        \
-         }\n"
+        "        let mut node = Self::default();\n        \
+         let mut rebase = crate::Rebase::new(&self.unknown);\n        \
+         Clone::clone_from(&mut node.val, &self.val);\n        \
+         node.properties = crate::transform_child(&self.properties, ctx, &mut rebase);\n        \
+         node.sup = crate::transform_choice(&self.sup, ctx, &mut rebase);\n        \
+         node.content = crate::transform_items(&self.content, ctx, &mut rebase);\n        \
+         node.sub = crate::transform_child(&self.sub, ctx, &mut rebase);\n        \
+         node.unknown = crate::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         node\n"
     );
     assert_eq!(helpers, "");
 }
@@ -109,10 +111,10 @@ fn a_struct_without_children_places_its_unknown_content_as_read() {
     let (out, _) = rebuilt(&node(Vec::new()));
     assert_eq!(
         out,
-        "        Self {\n            \
-         unknown: crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default()),\n            \
-         val: self.val.clone(),\n        \
-         }\n"
+        "        let mut node = Self::default();\n        \
+         Clone::clone_from(&mut node.val, &self.val);\n        \
+         node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());\n        \
+         node\n"
     );
 }
 
@@ -139,8 +141,8 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
          node\n"
     );
     let mut first = String::from(
-        "\nfn transform_sample_1(\n    from: &super::Sample,\n    node: &mut super::Sample,\n    \
-         ctx: &mut dyn crate::Context,\n    rebase: &mut crate::Rebase,\n) {\n    \
+        "\nfn transform_sample_1(\n    from: &x::Sample,\n    node: &mut x::Sample,\n    \
+         ctx: &mut dyn officekit_markup::Context,\n    rebase: &mut crate::Rebase,\n) {\n    \
          Clone::clone_from(&mut node.val, &from.val);\n",
     );
     // Schema order: the children were given from `item_099` down.

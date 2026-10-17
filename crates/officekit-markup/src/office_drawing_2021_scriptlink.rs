@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2021/scriptlink`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_ASL: Option<NamespaceId> = Some(18);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASL, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static SCRIPT_LINK_SHAPE: crate::Shape = crate::Shape {
+pub static SCRIPT_LINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_ASL, "scriptLink"),
     slots: &[crate::Slot::single((NS_ASL, "extLst"))],

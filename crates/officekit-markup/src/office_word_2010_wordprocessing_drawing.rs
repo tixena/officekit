@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,42 +227,42 @@ use std::io;
 
 const NS_WP14: Option<NamespaceId> = Some(113);
 
-static PCT_POS_H_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static PCT_POS_H_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP14, "pctPosHOffset"),
     slots: &[],
     text: true,
 };
 
-static PCT_POS_V_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static PCT_POS_V_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP14, "pctPosVOffset"),
     slots: &[],
     text: true,
 };
 
-static PCT_HEIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static PCT_HEIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP14, "pctHeight"),
     slots: &[],
     text: true,
 };
 
-static PCT_WIDTH_SHAPE: crate::Shape = crate::Shape {
+pub static PCT_WIDTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP14, "pctWidth"),
     slots: &[],
     text: true,
 };
 
-static SIZE_REL_H_SHAPE: crate::Shape = crate::Shape {
+pub static SIZE_REL_H_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP14, "sizeRelH"),
     slots: &[crate::Slot::required((NS_WP14, "pctWidth"))],
     text: false,
 };
 
-static SIZE_REL_V_SHAPE: crate::Shape = crate::Shape {
+pub static SIZE_REL_V_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP14, "sizeRelV"),
     slots: &[crate::Slot::required((NS_WP14, "pctHeight"))],

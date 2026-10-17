@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2014/revision`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -233,7 +232,7 @@ const NS_X14: Option<NamespaceId> = Some(120);
 const NS_XNE: Option<NamespaceId> = Some(149);
 const NS_XR: Option<NamespaceId> = Some(153);
 
-static SPARKLINE_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static SPARKLINE_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "manualMax"),
         (None, "manualMin"),
@@ -269,7 +268,7 @@ static SPARKLINE_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ref")],
     name: (NS_XR, "autoFilter"),
     slots: &[
@@ -280,7 +279,7 @@ static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMENTS_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "comments"),
     slots: &[
@@ -291,7 +290,7 @@ static COMMENTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_VALIDATION_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_VALIDATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "errorStyle"),
@@ -316,7 +315,7 @@ static DATA_VALIDATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DXF_SHAPE: crate::Shape = crate::Shape {
+pub static DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "dxf"),
     slots: &[
@@ -331,14 +330,14 @@ static DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "ref"),
         (NS_R, "id"),
@@ -351,7 +350,7 @@ static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IS_SHAPE: crate::Shape = crate::Shape {
+pub static IS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "is"),
     slots: &[
@@ -363,7 +362,7 @@ static IS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIVOT_TABLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "cacheId"),
@@ -457,63 +456,63 @@ static PIVOT_TABLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static F_SHAPE: crate::Shape = crate::Shape {
+pub static F_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "f"),
     slots: &[],
     text: true,
 };
 
-static FORMULA_SHAPE: crate::Shape = crate::Shape {
+pub static FORMULA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "formula"),
     slots: &[],
     text: true,
 };
 
-static V_SHAPE: crate::Shape = crate::Shape {
+pub static V_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "v"),
     slots: &[],
     text: true,
 };
 
-static CCSE_SHAPE: crate::Shape = crate::Shape {
+pub static CCSE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "r"), (None, "t"), (None, "x"), (None, "w")],
     name: (NS_XR, "ccse"),
     slots: &[crate::Slot::list((NS_XR, "c"))],
     text: false,
 };
 
-static FREEZE_PANES_SHAPE: crate::Shape = crate::Shape {
+pub static FREEZE_PANES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sheetViewUid")],
     name: (NS_XR, "freezePanes"),
     slots: &[],
     text: false,
 };
 
-static HIDE_UNHIDE_SHEET_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_UNHIDE_SHEET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "hide")],
     name: (NS_XR, "hideUnhideSheet"),
     slots: &[],
     text: false,
 };
 
-static OUTLINE_SHAPE: crate::Shape = crate::Shape {
+pub static OUTLINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isCollapsed"), (None, "level")],
     name: (NS_XR, "outline"),
     slots: &[],
     text: false,
 };
 
-static OUTLINES_SHAPE: crate::Shape = crate::Shape {
+pub static OUTLINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isRow")],
     name: (NS_XR, "outlines"),
     slots: &[crate::Slot::list((NS_XR, "outline"))],
     text: false,
 };
 
-static REF_SHAPE: crate::Shape = crate::Shape {
+pub static REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "n"),
         (None, "ajt"),
@@ -528,21 +527,21 @@ static REF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FUTURE_SHAPE: crate::Shape = crate::Shape {
+pub static FUTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "future"),
     slots: &[],
     text: false,
 };
 
-static REFMAP_SHAPE: crate::Shape = crate::Shape {
+pub static REFMAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "refmap"),
     slots: &[crate::Slot::items(&REFERENCE_MAP_CONTENT_TAGS)],
     text: false,
 };
 
-static OART_ANCHOR_SHAPE: crate::Shape = crate::Shape {
+pub static OART_ANCHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "n"),
         (None, "ajt"),
@@ -564,7 +563,7 @@ static OART_ANCHOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEST_SHAPE: crate::Shape = crate::Shape {
+pub static TEST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "n"),
         (None, "ajt"),
@@ -576,7 +575,7 @@ static TEST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_SHAPE: crate::Shape = crate::Shape {
+pub static C_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t"), (None, "nop"), (None, "tick"), (None, "rep")],
     name: (NS_XR, "c"),
     slots: &[
@@ -587,7 +586,7 @@ static C_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRC_SHAPE: crate::Shape = crate::Shape {
+pub static XRRC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "listUid"),
         (None, "rev"),
@@ -608,7 +607,7 @@ static XRRC_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRCO_SHAPE: crate::Shape = crate::Shape {
+pub static XRRCO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -624,7 +623,7 @@ static XRRCO_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRR_DEF_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_DEF_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -651,7 +650,7 @@ static XRR_DEF_NAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRDO_SHAPE: crate::Shape = crate::Shape {
+pub static XRRDO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -664,7 +663,7 @@ static XRRDO_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRF_SHAPE: crate::Shape = crate::Shape {
+pub static XRRF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -694,7 +693,7 @@ static XRRF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRFTR_SHAPE: crate::Shape = crate::Shape {
+pub static XRRFTR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -708,7 +707,7 @@ static XRRFTR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HDR_REV_EX_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static HDR_REV_EX_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_R, "id"),
         (None, "minRev"),
@@ -720,7 +719,7 @@ static HDR_REV_EX_HEADER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REV_HDRS_SHAPE: crate::Shape = crate::Shape {
+pub static REV_HDRS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "minRev"),
         (None, "maxRev"),
@@ -732,7 +731,7 @@ static REV_HDRS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRM_SHAPE: crate::Shape = crate::Shape {
+pub static XRRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -748,7 +747,7 @@ static XRRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRRC_SHAPE: crate::Shape = crate::Shape {
+pub static XRRRC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -764,7 +763,7 @@ static XRRRC_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRR_SHEET_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_SHEET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -781,21 +780,21 @@ static XRR_SHEET_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REV_STREAM_SHAPE: crate::Shape = crate::Shape {
+pub static REV_STREAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "revStream"),
     slots: &[crate::Slot::items(&REVISION_STREAM_CONTENT_TAGS)],
     text: false,
 };
 
-static XRRTEST_SHAPE: crate::Shape = crate::Shape {
+pub static XRRTEST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "xrrtest"),
     slots: &[],
     text: false,
 };
 
-static XRR_TRIM_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_TRIM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -808,7 +807,7 @@ static XRR_TRIM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRR_USPT_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_USPT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -821,7 +820,7 @@ static XRR_USPT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRRG_SHAPE: crate::Shape = crate::Shape {
+pub static XRRG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -834,7 +833,7 @@ static XRRG_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRR_LIST_EXP_R_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_LIST_EXP_R_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -849,7 +848,7 @@ static XRR_LIST_EXP_R_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XRR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static XRR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rev"),
         (None, "uid"),
@@ -870,28 +869,28 @@ static XRR_LIST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REVISION_PTR_SHAPE: crate::Shape = crate::Shape {
+pub static REVISION_PTR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "revIDLastSave"), (None, "documentId")],
     name: (NS_XR, "revisionPtr"),
     slots: &[],
     text: false,
 };
 
-static BODY_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "body"),
     slots: &[crate::Slot::required_choice(&REVISION_STATE_CONTENT_TAGS)],
     text: false,
 };
 
-static LINK_SHAPE: crate::Shape = crate::Shape {
+pub static LINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_XR, "link"),
     slots: &[],
     text: false,
 };
 
-static ROW_COL_VISUAL_OPS_SHAPE: crate::Shape = crate::Shape {
+pub static ROW_COL_VISUAL_OPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "action"),
         (None, "isRow"),
@@ -903,7 +902,7 @@ static ROW_COL_VISUAL_OPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHEET_UID_SHAPE: crate::Shape = crate::Shape {
+pub static SHEET_UID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "n"),
         (None, "ajt"),
@@ -916,14 +915,14 @@ static SHEET_UID_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHOW_GRIDLINES_HEADINGS_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_GRIDLINES_HEADINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "showGridLines"), (None, "showRowCol")],
     name: (NS_XR, "showGridlinesHeadings"),
     slots: &[],
     text: false,
 };
 
-static HDR_STATE_BASED_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static HDR_STATE_BASED_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "uid"),
         (None, "eft"),
@@ -936,7 +935,7 @@ static HDR_STATE_BASED_HEADER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OBJECT_STATE_SHAPE: crate::Shape = crate::Shape {
+pub static OBJECT_STATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XR, "objectState"),
     slots: &[crate::Slot::required_choice(

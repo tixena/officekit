@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2018/8/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -233,14 +232,14 @@ const NS_P188: Option<NamespaceId> = Some(71);
 const NS_PC: Option<NamespaceId> = Some(81);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static POS_SHAPE: crate::Shape = crate::Shape {
+pub static POS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P188, "pos"),
     slots: &[],
     text: false,
 };
 
-static TX_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static TX_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "txBody"),
     slots: &[
@@ -251,7 +250,7 @@ static TX_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUTHOR_SHAPE: crate::Shape = crate::Shape {
+pub static AUTHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -264,14 +263,14 @@ static AUTHOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUTHOR_LST_SHAPE: crate::Shape = crate::Shape {
+pub static AUTHOR_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "authorLst"),
     slots: &[crate::Slot::list((NS_P188, "author"))],
     text: false,
 };
 
-static CM_SHAPE: crate::Shape = crate::Shape {
+pub static CM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "authorId"),
@@ -297,28 +296,28 @@ static CM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CM_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CM_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "cmLst"),
     slots: &[crate::Slot::list((NS_P188, "cm"))],
     text: false,
 };
 
-static EXT_LST_COMMENT_PROPERTIES_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_COMMENT_PROPERTIES_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],
     text: false,
 };
 
-static COMMENT_REL_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_REL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P188, "commentRel"),
     slots: &[],
     text: false,
 };
 
-static REPLY_SHAPE: crate::Shape = crate::Shape {
+pub static REPLY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "authorId"),
@@ -335,21 +334,21 @@ static REPLY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REPLY_LST_SHAPE: crate::Shape = crate::Shape {
+pub static REPLY_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "replyLst"),
     slots: &[crate::Slot::list((NS_P188, "reply"))],
     text: false,
 };
 
-static UNKNOWN_ANCHOR_SHAPE: crate::Shape = crate::Shape {
+pub static UNKNOWN_ANCHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "unknownAnchor"),
     slots: &[],
     text: false,
 };
 
-static EXT_LST_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P188, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],

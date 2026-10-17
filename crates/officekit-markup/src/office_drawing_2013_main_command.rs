@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2013/main/command`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_OAC: Option<NamespaceId> = Some(61);
 
-static BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dpi"), (None, "rotWithShape")],
     name: (NS_OAC, "blipFill"),
     slots: &[
@@ -240,35 +239,35 @@ static BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOUNDS_SHAPE: crate::Shape = crate::Shape {
+pub static BOUNDS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_OAC, "bounds"),
     slots: &[],
     text: false,
 };
 
-static END_CXN_CONNECTION_SHAPE: crate::Shape = crate::Shape {
+pub static END_CXN_CONNECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "idx")],
     name: (NS_OAC, "endCxn"),
     slots: &[],
     text: false,
 };
 
-static ST_CXN_CONNECTION_SHAPE: crate::Shape = crate::Shape {
+pub static ST_CXN_CONNECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "idx")],
     name: (NS_OAC, "stCxn"),
     slots: &[],
     text: false,
 };
 
-static FONT_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_OAC, "fontRef"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_OAC, "grpSpPr"),
     slots: &[
@@ -281,7 +280,7 @@ static GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_OAC, "lineProps"),
     slots: &[
@@ -295,7 +294,7 @@ static LINE_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -312,7 +311,7 @@ static C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_GRP_SP_PR_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_GRP_SP_PR_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "cNvGrpSpPr"),
     slots: &[
@@ -322,14 +321,14 @@ static C_NV_GRP_SP_PR_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::Shape =
     text: false,
 };
 
-static OFF_SHAPE: crate::Shape = crate::Shape {
+pub static OFF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_OAC, "off"),
     slots: &[],
     text: false,
 };
 
-static SP_PR_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_OAC, "spPr"),
     slots: &[
@@ -345,28 +344,28 @@ static SP_PR_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_REF_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_OAC, "effectRef"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_OAC, "fillRef"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static LN_REF_SHAPE: crate::Shape = crate::Shape {
+pub static LN_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_OAC, "lnRef"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static BODY_PR_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "spcFirstLastPara"),
@@ -399,7 +398,7 @@ static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static P_PR_SHAPE: crate::Shape = crate::Shape {
+pub static P_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -429,7 +428,7 @@ static P_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_OAC, "xfrm"),
     slots: &[
@@ -439,7 +438,7 @@ static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMPRESS_PIC_PR_SHAPE: crate::Shape = crate::Shape {
+pub static COMPRESS_PIC_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "removeCrop"),
         (None, "useLocalDpi"),
@@ -450,14 +449,14 @@ static COMPRESS_PIC_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CXN_SP_MK_SHAPE: crate::Shape = crate::Shape {
+pub static CXN_SP_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "cxnSpMk"),
     slots: &[],
     text: false,
 };
 
-static CXN_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CXN_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "cxnSpMkLst"),
     slots: &[crate::Slot::items(
@@ -466,7 +465,7 @@ static CXN_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "dcMkLst"),
     slots: &[crate::Slot::items(
@@ -475,7 +474,7 @@ static DC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DE_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DE_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "deMasterMkLst"),
     slots: &[crate::Slot::items(
@@ -484,7 +483,7 @@ static DE_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DE_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DE_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "deMkLst"),
     slots: &[crate::Slot::items(
@@ -493,7 +492,7 @@ static DE_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DE_SRC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DE_SRC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "deSrcMkLst"),
     slots: &[crate::Slot::items(
@@ -502,7 +501,7 @@ static DE_SRC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DE_TGT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DE_TGT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "deTgtMkLst"),
     slots: &[crate::Slot::items(
@@ -511,14 +510,14 @@ static DE_TGT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DE_PKG_SHAPE: crate::Shape = crate::Shape {
+pub static DE_PKG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "dePkg"),
     slots: &[],
     text: false,
 };
 
-static DG_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "dgMkLst"),
     slots: &[crate::Slot::items(
@@ -527,7 +526,7 @@ static DG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "drSelLst"),
     slots: &[crate::Slot::items(
@@ -536,7 +535,7 @@ static DR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EDITOR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EDITOR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "editorSelLst"),
     slots: &[crate::Slot::items(
@@ -545,210 +544,210 @@ static EDITOR_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BW_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static BW_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "bwMode"),
     slots: &[],
     text: false,
 };
 
-static DPI_SHAPE: crate::Shape = crate::Shape {
+pub static DPI_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "dpi"),
     slots: &[],
     text: false,
 };
 
-static EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "effect"),
     slots: &[],
     text: false,
 };
 
-static END_CXN_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static END_CXN_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "endCxn"),
     slots: &[],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "extLst"),
     slots: &[],
     text: false,
 };
 
-static FILL_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "fill"),
     slots: &[],
     text: false,
 };
 
-static FILL_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "fillMode"),
     slots: &[],
     text: false,
 };
 
-static GEOM_SHAPE: crate::Shape = crate::Shape {
+pub static GEOM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "geom"),
     slots: &[],
     text: false,
 };
 
-static HLINK_CLICK_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_CLICK_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlinkClick"),
     slots: &[],
     text: false,
 };
 
-static HLINK_HOVER_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_HOVER_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlinkHover"),
     slots: &[],
     text: false,
 };
 
-static LF_PR_SHAPE: crate::Shape = crate::Shape {
+pub static LF_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "lfPr"),
     slots: &[],
     text: false,
 };
 
-static LN_SHAPE: crate::Shape = crate::Shape {
+pub static LN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "ln"),
     slots: &[],
     text: false,
 };
 
-static NO_ADJUST_HANDLES_SHAPE: crate::Shape = crate::Shape {
+pub static NO_ADJUST_HANDLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noAdjustHandles"),
     slots: &[],
     text: false,
 };
 
-static NO_CHANGE_ARROWHEADS_SHAPE: crate::Shape = crate::Shape {
+pub static NO_CHANGE_ARROWHEADS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noChangeArrowheads"),
     slots: &[],
     text: false,
 };
 
-static NO_CHANGE_ASPECT_SHAPE: crate::Shape = crate::Shape {
+pub static NO_CHANGE_ASPECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noChangeAspect"),
     slots: &[],
     text: false,
 };
 
-static NO_CHANGE_SHAPE_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static NO_CHANGE_SHAPE_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noChangeShapeType"),
     slots: &[],
     text: false,
 };
 
-static NO_EDIT_POINTS_SHAPE: crate::Shape = crate::Shape {
+pub static NO_EDIT_POINTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noEditPoints"),
     slots: &[],
     text: false,
 };
 
-static NO_GRP_SHAPE: crate::Shape = crate::Shape {
+pub static NO_GRP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noGrp"),
     slots: &[],
     text: false,
 };
 
-static NO_MOVE_SHAPE: crate::Shape = crate::Shape {
+pub static NO_MOVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noMove"),
     slots: &[],
     text: false,
 };
 
-static NO_RESIZE_SHAPE: crate::Shape = crate::Shape {
+pub static NO_RESIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noResize"),
     slots: &[],
     text: false,
 };
 
-static NO_ROT_SHAPE: crate::Shape = crate::Shape {
+pub static NO_ROT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noRot"),
     slots: &[],
     text: false,
 };
 
-static NO_SELECT_SHAPE: crate::Shape = crate::Shape {
+pub static NO_SELECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "noSelect"),
     slots: &[],
     text: false,
 };
 
-static ROT_WITH_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static ROT_WITH_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "rotWithShape"),
     slots: &[],
     text: false,
 };
 
-static SCENE3D_SHAPE: crate::Shape = crate::Shape {
+pub static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "scene3d"),
     slots: &[],
     text: false,
 };
 
-static SP3D_SHAPE: crate::Shape = crate::Shape {
+pub static SP3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "sp3d"),
     slots: &[],
     text: false,
 };
 
-static SRC_RECT_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static SRC_RECT_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "srcRect"),
     slots: &[],
     text: false,
 };
 
-static ST_CXN_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static ST_CXN_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "stCxn"),
     slots: &[],
     text: false,
 };
 
-static XFRM_EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "xfrm"),
     slots: &[],
     text: false,
 };
 
-static GRAPHIC_FRAME_MK_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "graphicFrameMk"),
     slots: &[],
     text: false,
 };
 
-static GRAPHIC_FRAME_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "graphicFrameMkLst"),
     slots: &[crate::Slot::items(
@@ -757,7 +756,7 @@ static GRAPHIC_FRAME_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "graphicParentMkLst"),
     slots: &[crate::Slot::items(
@@ -766,7 +765,7 @@ static GRAPHIC_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRP_CMD_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_CMD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "verId"), (None, "preventRegroup"), (None, "grpId")],
     name: (NS_OAC, "grpCmd"),
     slots: &[
@@ -779,14 +778,14 @@ static GRP_CMD_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRP_SP_MK_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "grpSpMk"),
     slots: &[],
     text: false,
 };
 
-static GRP_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "grpSpMkLst"),
     slots: &[crate::Slot::items(
@@ -795,7 +794,7 @@ static GRP_SP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HLINK_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlinkMkLst"),
     slots: &[crate::Slot::items(
@@ -804,56 +803,56 @@ static HLINK_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HLINK_CLICK_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_CLICK_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlinkClick"),
     slots: &[crate::Slot::single((NS_OAC, "sndData"))],
     text: false,
 };
 
-static HLINK_HOVER_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_HOVER_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlinkHover"),
     slots: &[crate::Slot::single((NS_OAC, "sndData"))],
     text: false,
 };
 
-static IMG_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "imgData"),
     slots: &[],
     text: true,
 };
 
-static ORIG_IMG_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static ORIG_IMG_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "origImgData"),
     slots: &[],
     text: true,
 };
 
-static SND_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static SND_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "sndData"),
     slots: &[],
     text: true,
 };
 
-static IMG_LINK_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_LINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "tgt")],
     name: (NS_OAC, "imgLink"),
     slots: &[],
     text: false,
 };
 
-static INK_MK_SHAPE: crate::Shape = crate::Shape {
+pub static INK_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "inkMk"),
     slots: &[],
     text: false,
 };
 
-static INK_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static INK_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "inkMkLst"),
     slots: &[crate::Slot::items(
@@ -862,7 +861,7 @@ static INK_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MODEL3D_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL3D_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "model3DMkLst"),
     slots: &[crate::Slot::items(
@@ -871,7 +870,7 @@ static MODEL3D_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HLINK_MODIFY_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_MODIFY_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlink"),
     slots: &[
@@ -881,7 +880,7 @@ static HLINK_MODIFY_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_CXN_SP_PR_MODIFY_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CXN_SP_PR_MODIFY_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -902,7 +901,7 @@ static C_NV_CXN_SP_PR_MODIFY_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = cr
     text: false,
 };
 
-static C_NV_PR_MODIFY_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_MODIFY_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "descr"),
@@ -916,7 +915,7 @@ static C_NV_PR_MODIFY_NON_VISUAL_DRAWING_PROPS_SHAPE: crate::Shape = crate::Shap
     text: false,
 };
 
-static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -936,7 +935,7 @@ static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_GRAPHIC_FRAME_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_GRAPHIC_FRAME_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noDrilldown"),
@@ -950,7 +949,7 @@ static C_NV_GRAPHIC_FRAME_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_GRP_SP_PR_MODIFY_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::Shape =
+pub static C_NV_GRP_SP_PR_MODIFY_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::Shape =
     crate::Shape {
         attributes: &[
             (None, "noGrp"),
@@ -966,7 +965,7 @@ static C_NV_GRP_SP_PR_MODIFY_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE: crate::
         text: false,
     };
 
-static C_NV_INK_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_INK_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -985,7 +984,7 @@ static C_NV_INK_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PIC_PR_MODIFY_NON_VISUAL_PICTURE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PIC_PR_MODIFY_NON_VISUAL_PICTURE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -1005,7 +1004,7 @@ static C_NV_PIC_PR_MODIFY_NON_VISUAL_PICTURE_PROPS_SHAPE: crate::Shape = crate::
     text: false,
 };
 
-static STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "style"),
     slots: &[
@@ -1017,7 +1016,7 @@ static STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_MODIFY_TRANSFORM_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_MODIFY_TRANSFORM_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "x"),
         (None, "y"),
@@ -1032,14 +1031,14 @@ static XFRM_MODIFY_TRANSFORM_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIC_MK_SHAPE: crate::Shape = crate::Shape {
+pub static PIC_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "picMk"),
     slots: &[],
     text: false,
 };
 
-static PIC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static PIC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "picMkLst"),
     slots: &[crate::Slot::items(
@@ -1048,21 +1047,21 @@ static PIC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILL_RECT_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_RECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "fillRect"),
     slots: &[],
     text: false,
 };
 
-static SRC_RECT_RELATIVE_RECT_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static SRC_RECT_RELATIVE_RECT_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "srcRect"),
     slots: &[],
     text: false,
 };
 
-static BLIP_FILL_RESET_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BLIP_FILL_RESET_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "blipFill"),
     slots: &[
@@ -1074,7 +1073,7 @@ static BLIP_FILL_RESET_BLIP_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRP_SP_PR_RESET_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_PR_RESET_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "grpSpPr"),
     slots: &[
@@ -1088,7 +1087,7 @@ static GRP_SP_PR_RESET_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape
     text: false,
 };
 
-static HLINK_RESET_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static HLINK_RESET_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "hlink"),
     slots: &[
@@ -1098,7 +1097,7 @@ static HLINK_RESET_HYPERLINK_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_CXN_SP_PR_RESET_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CXN_SP_PR_RESET_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "cNvCxnSpPr"),
     slots: &[
@@ -1118,14 +1117,14 @@ static C_NV_CXN_SP_PR_RESET_NON_VISUAL_CONNECTOR_PROPS_SHAPE: crate::Shape = cra
     text: false,
 };
 
-static C_NV_PIC_PR_RESET_NON_VISUAL_PICTURE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PIC_PR_RESET_NON_VISUAL_PICTURE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "cNvPicPr"),
     slots: &[crate::Slot::single((NS_OAC, "lfPr"))],
     text: false,
 };
 
-static SP_PR_RESET_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_RESET_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "spPr"),
     slots: &[
@@ -1142,14 +1141,14 @@ static SP_PR_RESET_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IMG_URL_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_URL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "src"), (None, "linkage")],
     name: (NS_OAC, "imgUrl"),
     slots: &[],
     text: false,
 };
 
-static SVG_BLIP_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SVG_BLIP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "svgBlipMkLst"),
     slots: &[crate::Slot::items(
@@ -1158,14 +1157,14 @@ static SVG_BLIP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP_MK_SHAPE: crate::Shape = crate::Shape {
+pub static SP_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "creationId")],
     name: (NS_OAC, "spMk"),
     slots: &[],
     text: false,
 };
 
-static SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "spMkLst"),
     slots: &[crate::Slot::items(
@@ -1174,7 +1173,7 @@ static SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "spMkLst"),
     slots: &[crate::Slot::items(
@@ -1183,7 +1182,7 @@ static SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "tcMkLst"),
     slots: &[crate::Slot::items(
@@ -1192,7 +1191,7 @@ static TC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRID_COL_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static GRID_COL_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "gridColMkLst"),
     slots: &[crate::Slot::items(
@@ -1201,7 +1200,7 @@ static GRID_COL_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TBL_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TBL_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "tblMkLst"),
     slots: &[crate::Slot::items(
@@ -1210,7 +1209,7 @@ static TBL_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TR_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TR_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "trMkLst"),
     slots: &[crate::Slot::items(
@@ -1219,7 +1218,7 @@ static TR_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_BODY_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TX_BODY_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "txBodyMkLst"),
     slots: &[crate::Slot::items(
@@ -1228,21 +1227,21 @@ static TX_BODY_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_BODY_PKG_SHAPE: crate::Shape = crate::Shape {
+pub static TX_BODY_PKG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "txBodyPkg"),
     slots: &[],
     text: false,
 };
 
-static CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE: crate::Shape = crate::Shape {
+pub static CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "len"), (None, "hash")],
     name: (NS_OAC, "context"),
     slots: &[],
     text: false,
 };
 
-static TX_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TX_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "txMkLst"),
     slots: &[crate::Slot::items(
@@ -1251,7 +1250,7 @@ static TX_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VIEW_SEL_LST_SHAPE: crate::Shape = crate::Shape {
+pub static VIEW_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "viewSelLst"),
     slots: &[crate::Slot::items(
@@ -1260,14 +1259,14 @@ static VIEW_SEL_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RESET_SHAPE: crate::Shape = crate::Shape {
+pub static RESET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "reset"),
     slots: &[],
     text: true,
 };
 
-static USE_BOUNDS_SHAPE: crate::Shape = crate::Shape {
+pub static USE_BOUNDS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OAC, "useBounds"),
     slots: &[],

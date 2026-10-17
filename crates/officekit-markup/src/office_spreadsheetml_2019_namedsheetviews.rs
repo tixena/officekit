@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XNSV: Option<NamespaceId> = Some(150);
 
-static SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
+pub static SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "descending"),
         (None, "sortBy"),
@@ -243,7 +242,7 @@ static SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DXF_SHAPE: crate::Shape = crate::Shape {
+pub static DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XNSV, "dxf"),
     slots: &[
@@ -258,14 +257,14 @@ static DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XNSV, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "colId"),
         (None, "hiddenButton"),
@@ -278,7 +277,7 @@ static FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "richSortKey"),
         (None, "descending"),
@@ -294,7 +293,7 @@ static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLUMN_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static COLUMN_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "colId"), (None, "id")],
     name: (NS_XNSV, "columnFilter"),
     slots: &[
@@ -305,7 +304,7 @@ static COLUMN_FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NAMED_SHEET_VIEW_SHAPE: crate::Shape = crate::Shape {
+pub static NAMED_SHEET_VIEW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "id")],
     name: (NS_XNSV, "namedSheetView"),
     slots: &[
@@ -315,7 +314,7 @@ static NAMED_SHEET_VIEW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NAMED_SHEET_VIEWS_SHAPE: crate::Shape = crate::Shape {
+pub static NAMED_SHEET_VIEWS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XNSV, "namedSheetViews"),
     slots: &[
@@ -325,7 +324,7 @@ static NAMED_SHEET_VIEWS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NSV_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static NSV_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "filterId"), (None, "ref"), (None, "tableId")],
     name: (NS_XNSV, "nsvFilter"),
     slots: &[
@@ -336,7 +335,7 @@ static NSV_FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SORT_RULE_SHAPE: crate::Shape = crate::Shape {
+pub static SORT_RULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "colId"), (None, "id")],
     name: (NS_XNSV, "sortRule"),
     slots: &[
@@ -346,7 +345,7 @@ static SORT_RULE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SORT_RULES_SHAPE: crate::Shape = crate::Shape {
+pub static SORT_RULES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sortMethod"), (None, "caseSensitive")],
     name: (NS_XNSV, "sortRules"),
     slots: &[

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,14 +226,14 @@ use std::io;
 
 const NS_XCALCF: Option<NamespaceId> = Some(127);
 
-static FEATURE_SHAPE: crate::Shape = crate::Shape {
+pub static FEATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_XCALCF, "feature"),
     slots: &[],
     text: false,
 };
 
-static CALC_FEATURES_SHAPE: crate::Shape = crate::Shape {
+pub static CALC_FEATURES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XCALCF, "calcFeatures"),
     slots: &[crate::Slot::list((NS_XCALCF, "feature"))],

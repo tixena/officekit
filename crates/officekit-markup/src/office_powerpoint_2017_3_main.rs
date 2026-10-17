@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2017/3/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ use std::io;
 const NS_P173: Option<NamespaceId> = Some(69);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static TRACK_SHAPE: crate::Shape = crate::Shape {
+pub static TRACK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "label"),
@@ -242,14 +241,14 @@ static TRACK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TRACK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TRACK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P173, "trackLst"),
     slots: &[crate::Slot::list((NS_P173, "track"))],
     text: false,
 };
 
-static TRACKS_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static TRACKS_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "displayLoc")],
     name: (NS_P173, "tracksInfo"),
     slots: &[crate::Slot::single((NS_P173, "trackLst"))],

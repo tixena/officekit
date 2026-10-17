@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/2009/07/customui`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 
 const NS_MSO14: Option<NamespaceId> = Some(58);
 
-static BACKSTAGE_SHAPE: crate::Shape = crate::Shape {
+pub static BACKSTAGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "onShow"), (None, "onHide")],
     name: (NS_MSO14, "backstage"),
     slots: &[crate::Slot::items(&BACKSTAGE_CONTENT_TAGS)],
     text: false,
 };
 
-static CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "expand"),
         (None, "description"),
@@ -263,7 +262,7 @@ static CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -290,7 +289,7 @@ static COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -321,7 +320,7 @@ static DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -346,7 +345,7 @@ static EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "idMso"),
         (None, "insertAfterMso"),
@@ -375,7 +374,7 @@ static BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_BACKSTAGE_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_BACKSTAGE_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -405,7 +404,7 @@ static GROUP_BACKSTAGE_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "expand"),
         (None, "style"),
@@ -435,28 +434,28 @@ static BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FIRST_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "firstColumn"),
     slots: &[crate::Slot::items(&BACKSTAGE_GROUPS_CONTENT_TAGS)],
     text: false,
 };
 
-static ITEM_BACKSTAGE_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static ITEM_BACKSTAGE_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "item"),
     slots: &[],
     text: false,
 };
 
-static RADIO_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static RADIO_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "radioButton"),
     slots: &[],
     text: false,
 };
 
-static LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -476,7 +475,7 @@ static LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "description"),
         (None, "getDescription"),
@@ -502,7 +501,7 @@ static BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "description"),
         (None, "getDescription"),
@@ -525,7 +524,7 @@ static CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -539,7 +538,7 @@ static MENU_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "image"),
         (None, "imageMso"),
@@ -565,7 +564,7 @@ static TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::S
     text: false,
 };
 
-static MENU_BACKSTAGE_PRIMARY_MENU_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_BACKSTAGE_PRIMARY_MENU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "screentip"),
         (None, "getScreentip"),
@@ -591,7 +590,7 @@ static MENU_BACKSTAGE_PRIMARY_MENU_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "screentip"),
         (None, "getScreentip"),
@@ -619,7 +618,7 @@ static BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_BACKSTAGE_SUB_MENU_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_BACKSTAGE_SUB_MENU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "description"),
         (None, "getDescription"),
@@ -643,7 +642,7 @@ static MENU_BACKSTAGE_SUB_MENU_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TAB_BACKSTAGE_TAB_SHAPE: crate::Shape = crate::Shape {
+pub static TAB_BACKSTAGE_TAB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -677,7 +676,7 @@ static TAB_BACKSTAGE_TAB_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOX_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static BOX_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -695,7 +694,7 @@ static BOX_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -735,7 +734,7 @@ static BUTTON_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -752,7 +751,7 @@ static BUTTON_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "onAction"),
         (None, "enabled"),
@@ -790,7 +789,7 @@ static BUTTON_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHECK_BOX_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static CHECK_BOX_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "getPressed"),
         (None, "onAction"),
@@ -822,7 +821,7 @@ static CHECK_BOX_CHECK_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMBO_BOX_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static COMBO_BOX_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showItemImage"),
         (None, "getItemCount"),
@@ -869,7 +868,7 @@ static COMBO_BOX_COMBO_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMAND_SHAPE: crate::Shape = crate::Shape {
+pub static COMMAND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "onAction"),
         (None, "enabled"),
@@ -881,35 +880,35 @@ static COMMAND_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMANDS_SHAPE: crate::Shape = crate::Shape {
+pub static COMMANDS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "commands"),
     slots: &[crate::Slot::list((NS_MSO14, "command"))],
     text: false,
 };
 
-static CONTEXT_MENU_SHAPE: crate::Shape = crate::Shape {
+pub static CONTEXT_MENU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idMso")],
     name: (NS_MSO14, "contextMenu"),
     slots: &[crate::Slot::items(&CONTEXT_MENU_CONTENT_TAGS)],
     text: false,
 };
 
-static CONTEXT_MENUS_SHAPE: crate::Shape = crate::Shape {
+pub static CONTEXT_MENUS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "contextMenus"),
     slots: &[crate::Slot::list((NS_MSO14, "contextMenu"))],
     text: false,
 };
 
-static CONTEXTUAL_TABS_SHAPE: crate::Shape = crate::Shape {
+pub static CONTEXTUAL_TABS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "contextualTabs"),
     slots: &[crate::Slot::list((NS_MSO14, "tabSet"))],
     text: false,
 };
 
-static CONTROL_CONTROL_CLONE_SHAPE: crate::Shape = crate::Shape {
+pub static CONTROL_CONTROL_CLONE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -947,7 +946,7 @@ static CONTROL_CONTROL_CLONE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONTROL_CONTROL_CLONE_QAT_SHAPE: crate::Shape = crate::Shape {
+pub static CONTROL_CONTROL_CLONE_QAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -985,7 +984,7 @@ static CONTROL_CONTROL_CLONE_QAT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONTROL_CONTROL_CLONE_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static CONTROL_CONTROL_CLONE_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "idQ"),
         (None, "tag"),
@@ -1019,7 +1018,7 @@ static CONTROL_CONTROL_CLONE_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CUSTOM_UI_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_UI_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "onLoad"), (None, "loadImage")],
     name: (NS_MSO14, "customUI"),
     slots: &[
@@ -1031,14 +1030,14 @@ static CUSTOM_UI_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIALOG_BOX_LAUNCHER_SHAPE: crate::Shape = crate::Shape {
+pub static DIALOG_BOX_LAUNCHER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "dialogBoxLauncher"),
     slots: &[crate::Slot::required((NS_MSO14, "button"))],
     text: false,
 };
 
-static DROP_DOWN_DROP_DOWN_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_DOWN_DROP_DOWN_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "onAction"),
         (None, "enabled"),
@@ -1088,7 +1087,7 @@ static DROP_DOWN_DROP_DOWN_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DYNAMIC_MENU_DYNAMIC_MENU_SHAPE: crate::Shape = crate::Shape {
+pub static DYNAMIC_MENU_DYNAMIC_MENU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -1129,7 +1128,7 @@ static DYNAMIC_MENU_DYNAMIC_MENU_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "description"),
         (None, "getDescription"),
@@ -1168,7 +1167,7 @@ static DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EDIT_BOX_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static EDIT_BOX_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "enabled"),
         (None, "getEnabled"),
@@ -1207,7 +1206,7 @@ static EDIT_BOX_EDIT_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GALLERY_GALLERY_SHAPE: crate::Shape = crate::Shape {
+pub static GALLERY_GALLERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -1269,7 +1268,7 @@ static GALLERY_GALLERY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GALLERY_GALLERY_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static GALLERY_GALLERY_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "description"),
         (None, "getDescription"),
@@ -1329,7 +1328,7 @@ static GALLERY_GALLERY_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1363,7 +1362,7 @@ static GROUP_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1377,21 +1376,21 @@ static GROUP_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOTTOM_ITEMS_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_ITEMS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "bottomItems"),
     slots: &[crate::Slot::items(&GROUP_CONTROLS_CONTENT_TAGS)],
     text: false,
 };
 
-static TOP_ITEMS_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_ITEMS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "topItems"),
     slots: &[crate::Slot::items(&GROUP_CONTROLS_CONTENT_TAGS)],
     text: false,
 };
 
-static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1422,7 +1421,7 @@ static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IMAGE_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static IMAGE_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1442,7 +1441,7 @@ static IMAGE_CONTROL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ITEM_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static ITEM_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "label"),
@@ -1456,7 +1455,7 @@ static ITEM_ITEM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LABEL_CONTROL_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static LABEL_CONTROL_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1484,7 +1483,7 @@ static LABEL_CONTROL_LABEL_CONTROL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LAYOUT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1498,7 +1497,7 @@ static LAYOUT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_MENU_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_MENU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -1538,7 +1537,7 @@ static MENU_MENU_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "itemSize"),
         (None, "description"),
@@ -1576,14 +1575,14 @@ static MENU_MENU_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_MENU_ROOT_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_MENU_ROOT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "title"), (None, "getTitle"), (None, "itemSize")],
     name: (NS_MSO14, "menu"),
     slots: &[crate::Slot::items(&MENU_CONTENT_TAGS)],
     text: false,
 };
 
-static MENU_SEPARATOR_MENU_SEPARATOR_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_SEPARATOR_MENU_SEPARATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1600,7 +1599,7 @@ static MENU_SEPARATOR_MENU_SEPARATOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1615,7 +1614,7 @@ static MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE: crate::Shape = crate::Shape
     text: false,
 };
 
-static MENU_MENU_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static MENU_MENU_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1653,14 +1652,14 @@ static MENU_MENU_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRIMARY_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static PRIMARY_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "primaryItem"),
     slots: &[crate::Slot::required_choice(&PRIMARY_ITEM_CONTENT_TAGS)],
     text: false,
 };
 
-static QAT_SHAPE: crate::Shape = crate::Shape {
+pub static QAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "qat"),
     slots: &[
@@ -1670,21 +1669,21 @@ static QAT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DOCUMENT_CONTROLS_SHAPE: crate::Shape = crate::Shape {
+pub static DOCUMENT_CONTROLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "documentControls"),
     slots: &[crate::Slot::items(&QUICK_ACCESS_TOOLBAR_ITEMS_CONTENT_TAGS)],
     text: false,
 };
 
-static SHARED_CONTROLS_SHAPE: crate::Shape = crate::Shape {
+pub static SHARED_CONTROLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "sharedControls"),
     slots: &[crate::Slot::items(&QUICK_ACCESS_TOOLBAR_ITEMS_CONTENT_TAGS)],
     text: false,
 };
 
-static RADIO_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static RADIO_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1710,14 +1709,14 @@ static RADIO_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RIBBON_SHAPE: crate::Shape = crate::Shape {
+pub static RIBBON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "startFromScratch")],
     name: (NS_MSO14, "ribbon"),
     slots: &[crate::Slot::once(&RIBBON_CONTENT_TAGS)],
     text: false,
 };
 
-static SEPARATOR_SHAPE: crate::Shape = crate::Shape {
+pub static SEPARATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1734,14 +1733,14 @@ static SEPARATOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SECOND_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static SECOND_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "secondColumn"),
     slots: &[crate::Slot::items(&SIMPLE_GROUPS_CONTENT_TAGS)],
     text: false,
 };
 
-static SPLIT_BUTTON_SPLIT_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static SPLIT_BUTTON_SPLIT_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -1770,7 +1769,7 @@ static SPLIT_BUTTON_SPLIT_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "enabled"),
         (None, "getEnabled"),
@@ -1797,7 +1796,7 @@ static SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "enabled"),
         (None, "getEnabled"),
@@ -1824,7 +1823,7 @@ static SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TAB_TAB_SHAPE: crate::Shape = crate::Shape {
+pub static TAB_TAB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1846,21 +1845,21 @@ static TAB_TAB_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TAB_SET_SHAPE: crate::Shape = crate::Shape {
+pub static TAB_SET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idMso"), (None, "visible"), (None, "getVisible")],
     name: (NS_MSO14, "tabSet"),
     slots: &[crate::Slot::list((NS_MSO14, "tab"))],
     text: false,
 };
 
-static TABS_SHAPE: crate::Shape = crate::Shape {
+pub static TABS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_MSO14, "tabs"),
     slots: &[crate::Slot::list((NS_MSO14, "tab"))],
     text: false,
 };
 
-static TASK_FORM_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_FORM_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1881,7 +1880,7 @@ static TASK_FORM_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1901,7 +1900,7 @@ static CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TASK_TASK_FORM_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_TASK_FORM_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1930,7 +1929,7 @@ static TASK_TASK_FORM_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TASK_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1955,7 +1954,7 @@ static TASK_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_TASK_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_TASK_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -1975,7 +1974,7 @@ static CATEGORY_TASK_GROUP_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TASK_TASK_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_TASK_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "idQ"),
@@ -2006,7 +2005,7 @@ static TASK_TASK_GROUP_TASK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "size"),
         (None, "getSize"),
@@ -2047,7 +2046,7 @@ static TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
+pub static TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "getPressed"),
         (None, "onAction"),
@@ -2086,7 +2085,7 @@ static TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUTTON_VISIBLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static BUTTON_VISIBLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "onAction"),
         (None, "enabled"),
@@ -2122,7 +2121,7 @@ static BUTTON_VISIBLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "getPressed"),
         (None, "onAction"),

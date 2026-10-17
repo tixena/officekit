@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/pivotVersionInfo`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,28 +226,28 @@ use std::io;
 
 const NS_XXPVI: Option<NamespaceId> = Some(167);
 
-static LAST_REFRESH_FEATURE_SHAPE: crate::Shape = crate::Shape {
+pub static LAST_REFRESH_FEATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPVI, "lastRefreshFeature"),
     slots: &[],
     text: true,
 };
 
-static LAST_UPDATE_FEATURE_SHAPE: crate::Shape = crate::Shape {
+pub static LAST_UPDATE_FEATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPVI, "lastUpdateFeature"),
     slots: &[],
     text: true,
 };
 
-static REQUIRED_FEATURE_SHAPE: crate::Shape = crate::Shape {
+pub static REQUIRED_FEATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPVI, "requiredFeature"),
     slots: &[],
     text: true,
 };
 
-static CACHE_VERSION_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static CACHE_VERSION_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPVI, "cacheVersionInfo"),
     slots: &[
@@ -258,7 +257,7 @@ static CACHE_VERSION_INFO_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIVOT_VERSION_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_VERSION_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPVI, "pivotVersionInfo"),
     slots: &[

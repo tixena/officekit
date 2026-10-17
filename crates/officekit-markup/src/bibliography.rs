@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/bibliography`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,350 +227,350 @@ use std::io;
 
 const NS_B: Option<NamespaceId> = Some(21);
 
-static ABBREVIATED_CASE_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static ABBREVIATED_CASE_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "AbbreviatedCaseNumber"),
     slots: &[],
     text: true,
 };
 
-static ALBUM_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static ALBUM_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "AlbumTitle"),
     slots: &[],
     text: true,
 };
 
-static ARTIST_SHAPE: crate::Shape = crate::Shape {
+pub static ARTIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Artist"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static CONTRIBUTORS_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CONTRIBUTORS_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Author"),
     slots: &[crate::Slot::items(&CONTRIBUTORS_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static AUTHOR_SHAPE: crate::Shape = crate::Shape {
+pub static AUTHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Author"),
     slots: &[crate::Slot::choice(&NAME_OR_CORPORATE_CONTENT_TAGS)],
     text: false,
 };
 
-static BOOK_AUTHOR_SHAPE: crate::Shape = crate::Shape {
+pub static BOOK_AUTHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "BookAuthor"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static BOOK_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static BOOK_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "BookTitle"),
     slots: &[],
     text: true,
 };
 
-static BROADCAST_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static BROADCAST_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "BroadcastTitle"),
     slots: &[],
     text: true,
 };
 
-static BROADCASTER_SHAPE: crate::Shape = crate::Shape {
+pub static BROADCASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Broadcaster"),
     slots: &[],
     text: true,
 };
 
-static CASE_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static CASE_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "CaseNumber"),
     slots: &[],
     text: true,
 };
 
-static CHAPTER_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static CHAPTER_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ChapterNumber"),
     slots: &[],
     text: true,
 };
 
-static CITY_SHAPE: crate::Shape = crate::Shape {
+pub static CITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "City"),
     slots: &[],
     text: true,
 };
 
-static COMMENTS_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Comments"),
     slots: &[],
     text: true,
 };
 
-static COMPILER_SHAPE: crate::Shape = crate::Shape {
+pub static COMPILER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Compiler"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static COMPOSER_SHAPE: crate::Shape = crate::Shape {
+pub static COMPOSER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Composer"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static CONDUCTOR_SHAPE: crate::Shape = crate::Shape {
+pub static CONDUCTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Conductor"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ConferenceName"),
     slots: &[],
     text: true,
 };
 
-static CORPORATE_AUTHOR_SHAPE: crate::Shape = crate::Shape {
+pub static CORPORATE_AUTHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Corporate"),
     slots: &[],
     text: true,
 };
 
-static COUNSEL_SHAPE: crate::Shape = crate::Shape {
+pub static COUNSEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Counsel"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static COUNTRY_OR_REGION_SHAPE: crate::Shape = crate::Shape {
+pub static COUNTRY_OR_REGION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "CountryRegion"),
     slots: &[],
     text: true,
 };
 
-static COURT_SHAPE: crate::Shape = crate::Shape {
+pub static COURT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Court"),
     slots: &[],
     text: true,
 };
 
-static DAY_SHAPE: crate::Shape = crate::Shape {
+pub static DAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Day"),
     slots: &[],
     text: true,
 };
 
-static DAY_ACCESSED_SHAPE: crate::Shape = crate::Shape {
+pub static DAY_ACCESSED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "DayAccessed"),
     slots: &[],
     text: true,
 };
 
-static DEPARTMENT_SHAPE: crate::Shape = crate::Shape {
+pub static DEPARTMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Department"),
     slots: &[],
     text: true,
 };
 
-static DIRECTOR_SHAPE: crate::Shape = crate::Shape {
+pub static DIRECTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Director"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static DISTRIBUTOR_SHAPE: crate::Shape = crate::Shape {
+pub static DISTRIBUTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Distributor"),
     slots: &[],
     text: true,
 };
 
-static EDITOR_EDITION_SHAPE: crate::Shape = crate::Shape {
+pub static EDITOR_EDITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Edition"),
     slots: &[],
     text: true,
 };
 
-static EDITOR_SHAPE: crate::Shape = crate::Shape {
+pub static EDITOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Editor"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static PERSONS_FIRST_OR_GIVEN_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static PERSONS_FIRST_OR_GIVEN_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "First"),
     slots: &[],
     text: true,
 };
 
-static GUID_SHAPE: crate::Shape = crate::Shape {
+pub static GUID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Guid"),
     slots: &[],
     text: true,
 };
 
-static INSTITUTION_SHAPE: crate::Shape = crate::Shape {
+pub static INSTITUTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Institution"),
     slots: &[],
     text: true,
 };
 
-static INTERNET_SITE_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static INTERNET_SITE_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "InternetSiteTitle"),
     slots: &[],
     text: true,
 };
 
-static INTERVIEWEE_SHAPE: crate::Shape = crate::Shape {
+pub static INTERVIEWEE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Interviewee"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static INTERVIEWER_SHAPE: crate::Shape = crate::Shape {
+pub static INTERVIEWER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Interviewer"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static INVENTOR_SHAPE: crate::Shape = crate::Shape {
+pub static INVENTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Inventor"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static ISSUE_SHAPE: crate::Shape = crate::Shape {
+pub static ISSUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Issue"),
     slots: &[],
     text: true,
 };
 
-static JOURNAL_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static JOURNAL_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "JournalName"),
     slots: &[],
     text: true,
 };
 
-static LOCALE_ID_SHAPE: crate::Shape = crate::Shape {
+pub static LOCALE_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "LCID"),
     slots: &[],
     text: true,
 };
 
-static PERSONS_LAST_OR_FAMILY_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static PERSONS_LAST_OR_FAMILY_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Last"),
     slots: &[],
     text: true,
 };
 
-static MEDIUM_SHAPE: crate::Shape = crate::Shape {
+pub static MEDIUM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Medium"),
     slots: &[],
     text: true,
 };
 
-static PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Middle"),
     slots: &[],
     text: true,
 };
 
-static MONTH_SHAPE: crate::Shape = crate::Shape {
+pub static MONTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Month"),
     slots: &[],
     text: true,
 };
 
-static MONTH_ACCESSED_SHAPE: crate::Shape = crate::Shape {
+pub static MONTH_ACCESSED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "MonthAccessed"),
     slots: &[],
     text: true,
 };
 
-static NAME_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static NAME_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "NameList"),
     slots: &[crate::Slot::list((NS_B, "Person"))],
     text: false,
 };
 
-static NUMBER_OF_VOLUMES_SHAPE: crate::Shape = crate::Shape {
+pub static NUMBER_OF_VOLUMES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "NumberVolumes"),
     slots: &[],
     text: true,
 };
 
-static PAGES_SHAPE: crate::Shape = crate::Shape {
+pub static PAGES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Pages"),
     slots: &[],
     text: true,
 };
 
-static PATENT_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static PATENT_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "PatentNumber"),
     slots: &[],
     text: true,
 };
 
-static PERFORMER_SHAPE: crate::Shape = crate::Shape {
+pub static PERFORMER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Performer"),
     slots: &[crate::Slot::choice(&NAME_OR_CORPORATE_CONTENT_TAGS)],
     text: false,
 };
 
-static PERIODICAL_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static PERIODICAL_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "PeriodicalTitle"),
     slots: &[],
     text: true,
 };
 
-static PERSON_SHAPE: crate::Shape = crate::Shape {
+pub static PERSON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Person"),
     slots: &[
@@ -582,182 +581,182 @@ static PERSON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRODUCER_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static PRODUCER_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ProducerName"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static PRODUCTION_COMPANY_SHAPE: crate::Shape = crate::Shape {
+pub static PRODUCTION_COMPANY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ProductionCompany"),
     slots: &[],
     text: true,
 };
 
-static PUBLICATION_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static PUBLICATION_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "PublicationTitle"),
     slots: &[],
     text: true,
 };
 
-static PUBLISHER_SHAPE: crate::Shape = crate::Shape {
+pub static PUBLISHER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Publisher"),
     slots: &[],
     text: true,
 };
 
-static RECORDING_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static RECORDING_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "RecordingNumber"),
     slots: &[],
     text: true,
 };
 
-static REFERENCE_ORDER_SHAPE: crate::Shape = crate::Shape {
+pub static REFERENCE_ORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "RefOrder"),
     slots: &[],
     text: true,
 };
 
-static REPORTER_SHAPE: crate::Shape = crate::Shape {
+pub static REPORTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Reporter"),
     slots: &[],
     text: true,
 };
 
-static SHORT_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHORT_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ShortTitle"),
     slots: &[],
     text: true,
 };
 
-static SOURCE_SHAPE: crate::Shape = crate::Shape {
+pub static SOURCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Source"),
     slots: &[crate::Slot::items(&SOURCE_CONTENT_TAGS)],
     text: false,
 };
 
-static SOURCE_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static SOURCE_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "SourceType"),
     slots: &[],
     text: true,
 };
 
-static SOURCES_SHAPE: crate::Shape = crate::Shape {
+pub static SOURCES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "SelectedStyle"), (None, "StyleName"), (None, "URI")],
     name: (NS_B, "Sources"),
     slots: &[crate::Slot::list((NS_B, "Source"))],
     text: false,
 };
 
-static STANDARD_NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static STANDARD_NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "StandardNumber"),
     slots: &[],
     text: true,
 };
 
-static STATE_OR_PROVINCE_SHAPE: crate::Shape = crate::Shape {
+pub static STATE_OR_PROVINCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "StateProvince"),
     slots: &[],
     text: true,
 };
 
-static STATION_SHAPE: crate::Shape = crate::Shape {
+pub static STATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Station"),
     slots: &[],
     text: true,
 };
 
-static TAG_SHAPE: crate::Shape = crate::Shape {
+pub static TAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Tag"),
     slots: &[],
     text: true,
 };
 
-static THEATER_SHAPE: crate::Shape = crate::Shape {
+pub static THEATER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Theater"),
     slots: &[],
     text: true,
 };
 
-static THESIS_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static THESIS_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "ThesisType"),
     slots: &[],
     text: true,
 };
 
-static TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Title"),
     slots: &[],
     text: true,
 };
 
-static TRANSLATOR_SHAPE: crate::Shape = crate::Shape {
+pub static TRANSLATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Translator"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static PATENT_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static PATENT_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Type"),
     slots: &[],
     text: true,
 };
 
-static URL_SHAPE: crate::Shape = crate::Shape {
+pub static URL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "URL"),
     slots: &[],
     text: true,
 };
 
-static VERSION_SHAPE: crate::Shape = crate::Shape {
+pub static VERSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Version"),
     slots: &[],
     text: true,
 };
 
-static VOLUME_SHAPE: crate::Shape = crate::Shape {
+pub static VOLUME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Volume"),
     slots: &[],
     text: true,
 };
 
-static WRITER_SHAPE: crate::Shape = crate::Shape {
+pub static WRITER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Writer"),
     slots: &[crate::Slot::required((NS_B, "NameList"))],
     text: false,
 };
 
-static YEAR_SHAPE: crate::Shape = crate::Shape {
+pub static YEAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "Year"),
     slots: &[],
     text: true,
 };
 
-static YEAR_ACCESSED_SHAPE: crate::Shape = crate::Shape {
+pub static YEAR_ACCESSED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_B, "YearAccessed"),
     slots: &[],

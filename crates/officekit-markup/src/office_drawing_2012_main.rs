@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2012/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 
 const NS_A15: Option<NamespaceId> = Some(2);
 
-static BACKGROUND_PR_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bwMode"),
         (None, "bwPure"),
@@ -240,21 +239,21 @@ static BACKGROUND_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_GROUP_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isLegacyGroup")],
     name: (NS_A15, "nonVisualGroupProps"),
     slots: &[],
     text: false,
 };
 
-static OBJECT_PR_SHAPE: crate::Shape = crate::Shape {
+pub static OBJECT_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "objectId"), (None, "isActiveX"), (None, "linkType")],
     name: (NS_A15, "objectPr"),
     slots: &[],
     text: false,
 };
 
-static SIGNATURE_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static SIGNATURE_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "isSignatureLine"),
         (None, "id"),

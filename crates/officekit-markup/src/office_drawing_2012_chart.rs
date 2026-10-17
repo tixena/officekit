@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2012/chart`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
 const NS_C15: Option<NamespaceId> = Some(24);
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_C15, "spPr"),
     slots: &[
@@ -245,7 +244,7 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "categoryFilterException"),
     slots: &[
@@ -260,21 +259,21 @@ static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_FILTER_EXCEPTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_FILTER_EXCEPTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "categoryFilterExceptions"),
     slots: &[crate::Slot::list((NS_C15, "categoryFilterException"))],
     text: false,
 };
 
-static DLBL_FIELD_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static DLBL_FIELD_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "dlblFieldTable"),
     slots: &[crate::Slot::list((NS_C15, "dlblFTEntry"))],
     text: false,
 };
 
-static DLBL_FT_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static DLBL_FT_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "dlblFTEntry"),
     slots: &[
@@ -285,98 +284,98 @@ static DLBL_FT_ENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILTERED_AREA_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_AREA_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredAreaSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_BAR_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_BAR_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredBarSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_BUBBLE_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_BUBBLE_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredBubbleSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_CATEGORY_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_CATEGORY_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredCategoryTitle"),
     slots: &[crate::Slot::required((NS_C15, "cat"))],
     text: false,
 };
 
-static FILTERED_LINE_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_LINE_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredLineSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_PIE_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_PIE_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredPieSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_RADAR_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_RADAR_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredRadarSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_SCATTER_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_SCATTER_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredScatterSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FILTERED_SERIES_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_SERIES_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredSeriesTitle"),
     slots: &[crate::Slot::required((NS_C15, "tx"))],
     text: false,
 };
 
-static FILTERED_SURFACE_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_SURFACE_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "filteredSurfaceSeries"),
     slots: &[crate::Slot::required((NS_C15, "ser"))],
     text: false,
 };
 
-static FORMULA_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FORMULA_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "formulaRef"),
     slots: &[crate::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
-static FULL_REF_SHAPE: crate::Shape = crate::Shape {
+pub static FULL_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "fullRef"),
     slots: &[crate::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
-static LEVEL_REF_SHAPE: crate::Shape = crate::Shape {
+pub static LEVEL_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "levelRef"),
     slots: &[crate::Slot::required((NS_C15, "sqref"))],
     text: false,
 };
 
-static DATALABELS_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static DATALABELS_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "datalabelsRange"),
     slots: &[
@@ -386,7 +385,7 @@ static DATALABELS_RANGE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_AREA_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_AREA_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -406,7 +405,7 @@ static SER_AREA_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CAT_SHAPE: crate::Shape = crate::Shape {
+pub static CAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "cat"),
     slots: &[crate::Slot::required_choice(
@@ -415,7 +414,7 @@ static CAT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_BAR_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_BAR_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -437,49 +436,49 @@ static SER_BAR_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUTO_CAT_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_CAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "autoCat"),
     slots: &[],
     text: false,
 };
 
-static BUBBLE3D_SHAPE: crate::Shape = crate::Shape {
+pub static BUBBLE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "bubble3D"),
     slots: &[],
     text: false,
 };
 
-static INVERT_IF_NEGATIVE_SHAPE: crate::Shape = crate::Shape {
+pub static INVERT_IF_NEGATIVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "invertIfNegative"),
     slots: &[],
     text: false,
 };
 
-static SHOW_DATA_LABELS_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_DATA_LABELS_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "showDataLabelsRange"),
     slots: &[],
     text: false,
 };
 
-static SHOW_LEADER_LINES_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_LEADER_LINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "showLeaderLines"),
     slots: &[],
     text: false,
 };
 
-static X_FOR_SAVE_SHAPE: crate::Shape = crate::Shape {
+pub static X_FOR_SAVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "xForSave"),
     slots: &[],
     text: false,
 };
 
-static SER_BUBBLE_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_BUBBLE_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -501,14 +500,14 @@ static SER_BUBBLE_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEADER_LINES_SHAPE: crate::Shape = crate::Shape {
+pub static LEADER_LINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "leaderLines"),
     slots: &[crate::Slot::single((NS_C, "spPr"))],
     text: false,
 };
 
-static D_LBL_SHAPE: crate::Shape = crate::Shape {
+pub static D_LBL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "dLbl"),
     slots: &[
@@ -519,7 +518,7 @@ static D_LBL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "layout"),
     slots: &[
@@ -529,7 +528,7 @@ static LAYOUT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_LINE_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_LINE_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -550,7 +549,7 @@ static SER_LINE_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MARKER_SHAPE: crate::Shape = crate::Shape {
+pub static MARKER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "marker"),
     slots: &[
@@ -562,14 +561,14 @@ static MARKER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NUM_FMT_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_FMT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "formatCode"), (None, "sourceLinked")],
     name: (NS_C15, "numFmt"),
     slots: &[],
     text: false,
 };
 
-static SER_PIE_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_PIE_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -587,7 +586,7 @@ static SER_PIE_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIVOT_SOURCE_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_SOURCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "pivotSource"),
     slots: &[
@@ -598,7 +597,7 @@ static PIVOT_SOURCE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_RADAR_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_RADAR_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -616,7 +615,7 @@ static SER_RADAR_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_SCATTER_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_SCATTER_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -637,7 +636,7 @@ static SER_SCATTER_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DLBL_FIELD_TABLE_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static DLBL_FIELD_TABLE_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "dlblFieldTableCache"),
     slots: &[
@@ -648,7 +647,7 @@ static DLBL_FIELD_TABLE_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DLBL_RANGE_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static DLBL_RANGE_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "dlblRangeCache"),
     slots: &[
@@ -659,7 +658,7 @@ static DLBL_RANGE_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SER_SURFACE_SER_SHAPE: crate::Shape = crate::Shape {
+pub static SER_SURFACE_SER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "ser"),
     slots: &[
@@ -674,7 +673,7 @@ static SER_SURFACE_SER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_SHAPE: crate::Shape = crate::Shape {
+pub static TX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "tx"),
     slots: &[crate::Slot::required_choice(
@@ -683,28 +682,28 @@ static TX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXPLOSION_SHAPE: crate::Shape = crate::Shape {
+pub static EXPLOSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C15, "explosion"),
     slots: &[],
     text: false,
 };
 
-static F_SHAPE: crate::Shape = crate::Shape {
+pub static F_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "f"),
     slots: &[],
     text: true,
 };
 
-static SQREF_SHAPE: crate::Shape = crate::Shape {
+pub static SQREF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "sqref"),
     slots: &[],
     text: true,
 };
 
-static TXFLD_GUID_SHAPE: crate::Shape = crate::Shape {
+pub static TXFLD_GUID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C15, "txfldGUID"),
     slots: &[],

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2008/diagram`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DSP: Option<NamespaceId> = Some(47);
 
-static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_DSP, "grpSpPr"),
     slots: &[
@@ -241,7 +240,7 @@ static GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -258,7 +257,7 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_DSP, "cNvSpPr"),
     slots: &[
@@ -268,7 +267,7 @@ static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "cNvGrpSpPr"),
     slots: &[
@@ -278,14 +277,14 @@ static C_NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_DSP, "spPr"),
     slots: &[
@@ -301,7 +300,7 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "style"),
     slots: &[
@@ -313,7 +312,7 @@ static STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static TX_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "txBody"),
     slots: &[
@@ -324,7 +323,7 @@ static TX_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static TX_XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_DSP, "txXfrm"),
     slots: &[
@@ -334,21 +333,21 @@ static TX_XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_MODEL_EXT_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_MODEL_EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "relId"), (None, "minVer")],
     name: (NS_DSP, "dataModelExt"),
     slots: &[],
     text: false,
 };
 
-static DRAWING_SHAPE: crate::Shape = crate::Shape {
+pub static DRAWING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "drawing"),
     slots: &[crate::Slot::required((NS_DSP, "spTree"))],
     text: false,
 };
 
-static GRP_SP_SHAPE: crate::Shape = crate::Shape {
+pub static GRP_SP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "grpSp"),
     slots: &[
@@ -360,7 +359,7 @@ static GRP_SP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP_TREE_SHAPE: crate::Shape = crate::Shape {
+pub static SP_TREE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "spTree"),
     slots: &[
@@ -372,7 +371,7 @@ static SP_TREE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "nvGrpSpPr"),
     slots: &[
@@ -382,7 +381,7 @@ static NV_GRP_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP_SHAPE: crate::Shape = crate::Shape {
+pub static SP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "modelId")],
     name: (NS_DSP, "sp"),
     slots: &[
@@ -396,7 +395,7 @@ static SP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DSP, "nvSpPr"),
     slots: &[

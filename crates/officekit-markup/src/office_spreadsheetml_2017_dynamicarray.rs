@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/dynamicarray`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XDA: Option<NamespaceId> = Some(128);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XDA, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static DYNAMIC_ARRAY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static DYNAMIC_ARRAY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "fDynamic"), (None, "fCollapsed")],
     name: (NS_XDA, "dynamicArrayProperties"),
     slots: &[crate::Slot::single((NS_XDA, "extLst"))],

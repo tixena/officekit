@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2017/decorative`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_ADEC: Option<NamespaceId> = Some(9);
 
-static DECORATIVE_SHAPE: crate::Shape = crate::Shape {
+pub static DECORATIVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_ADEC, "decorative"),
     slots: &[],

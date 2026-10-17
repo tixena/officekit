@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,21 +228,21 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRD: Option<NamespaceId> = Some(140);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static K_SHAPE: crate::Shape = crate::Shape {
+pub static K_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "t")],
     name: (NS_XLRD, "k"),
     slots: &[],
     text: false,
 };
 
-static RV_SHAPE: crate::Shape = crate::Shape {
+pub static RV_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "s")],
     name: (NS_XLRD, "rv"),
     slots: &[
@@ -253,14 +252,14 @@ static RV_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RVB_SHAPE: crate::Shape = crate::Shape {
+pub static RVB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i")],
     name: (NS_XLRD, "rvb"),
     slots: &[],
     text: false,
 };
 
-static RV_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static RV_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD, "rvData"),
     slots: &[
@@ -270,21 +269,21 @@ static RV_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FB_SHAPE: crate::Shape = crate::Shape {
+pub static FB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t")],
     name: (NS_XLRD, "fb"),
     slots: &[],
     text: true,
 };
 
-static S_SHAPE: crate::Shape = crate::Shape {
+pub static S_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t")],
     name: (NS_XLRD, "s"),
     slots: &[crate::Slot::list((NS_XLRD, "k"))],
     text: false,
 };
 
-static RV_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
+pub static RV_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD, "rvStructures"),
     slots: &[
@@ -294,7 +293,7 @@ static RV_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static V_SHAPE: crate::Shape = crate::Shape {
+pub static V_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD, "v"),
     slots: &[],

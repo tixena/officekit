@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/extended-properties`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,147 +227,147 @@ use std::io;
 const NS_AP: Option<NamespaceId> = Some(16);
 const NS_VT: Option<NamespaceId> = Some(96);
 
-static APPLICATION_VERSION_SHAPE: crate::Shape = crate::Shape {
+pub static APPLICATION_VERSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "AppVersion"),
     slots: &[],
     text: true,
 };
 
-static APPLICATION_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static APPLICATION_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Application"),
     slots: &[],
     text: true,
 };
 
-static TOTAL_NUMBER_OF_CHARACTERS_SHAPE: crate::Shape = crate::Shape {
+pub static TOTAL_NUMBER_OF_CHARACTERS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Characters"),
     slots: &[],
     text: true,
 };
 
-static CHARACTERS_WITH_SPACES_SHAPE: crate::Shape = crate::Shape {
+pub static CHARACTERS_WITH_SPACES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "CharactersWithSpaces"),
     slots: &[],
     text: true,
 };
 
-static NAME_OF_COMPANY_SHAPE: crate::Shape = crate::Shape {
+pub static NAME_OF_COMPANY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Company"),
     slots: &[],
     text: true,
 };
 
-static DIGITAL_SIGNATURE_SHAPE: crate::Shape = crate::Shape {
+pub static DIGITAL_SIGNATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "DigSig"),
     slots: &[crate::Slot::required((NS_VT, "blob"))],
     text: false,
 };
 
-static DOCUMENT_SECURITY_SHAPE: crate::Shape = crate::Shape {
+pub static DOCUMENT_SECURITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "DocSecurity"),
     slots: &[],
     text: true,
 };
 
-static HYPERLINK_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "HLinks"),
     slots: &[crate::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 
-static HEADING_PAIRS_SHAPE: crate::Shape = crate::Shape {
+pub static HEADING_PAIRS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "HeadingPairs"),
     slots: &[crate::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 
-static NUMBER_OF_HIDDEN_SLIDES_SHAPE: crate::Shape = crate::Shape {
+pub static NUMBER_OF_HIDDEN_SLIDES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "HiddenSlides"),
     slots: &[],
     text: true,
 };
 
-static RELATIVE_HYPERLINK_BASE_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_HYPERLINK_BASE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "HyperlinkBase"),
     slots: &[],
     text: true,
 };
 
-static HYPERLINKS_CHANGED_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINKS_CHANGED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "HyperlinksChanged"),
     slots: &[],
     text: true,
 };
 
-static NUMBER_OF_LINES_SHAPE: crate::Shape = crate::Shape {
+pub static NUMBER_OF_LINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Lines"),
     slots: &[],
     text: true,
 };
 
-static LINKS_UP_TO_DATE_SHAPE: crate::Shape = crate::Shape {
+pub static LINKS_UP_TO_DATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "LinksUpToDate"),
     slots: &[],
     text: true,
 };
 
-static TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE: crate::Shape = crate::Shape {
+pub static TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "MMClips"),
     slots: &[],
     text: true,
 };
 
-static NAME_OF_MANAGER_SHAPE: crate::Shape = crate::Shape {
+pub static NAME_OF_MANAGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Manager"),
     slots: &[],
     text: true,
 };
 
-static NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE: crate::Shape = crate::Shape {
+pub static NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Notes"),
     slots: &[],
     text: true,
 };
 
-static TOTAL_NUMBER_OF_PAGES_SHAPE: crate::Shape = crate::Shape {
+pub static TOTAL_NUMBER_OF_PAGES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Pages"),
     slots: &[],
     text: true,
 };
 
-static TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE: crate::Shape = crate::Shape {
+pub static TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Paragraphs"),
     slots: &[],
     text: true,
 };
 
-static INTENDED_FORMAT_OF_PRESENTATION_SHAPE: crate::Shape = crate::Shape {
+pub static INTENDED_FORMAT_OF_PRESENTATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "PresentationFormat"),
     slots: &[],
     text: true,
 };
 
-static APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Properties"),
     slots: &[crate::Slot::once(
@@ -377,49 +376,49 @@ static APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THUMBNAIL_DISPLAY_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static THUMBNAIL_DISPLAY_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "ScaleCrop"),
     slots: &[],
     text: true,
 };
 
-static SHARED_DOCUMENT_SHAPE: crate::Shape = crate::Shape {
+pub static SHARED_DOCUMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "SharedDoc"),
     slots: &[],
     text: true,
 };
 
-static SLIDES_METADATA_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDES_METADATA_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Slides"),
     slots: &[],
     text: true,
 };
 
-static NAME_OF_DOCUMENT_TEMPLATE_SHAPE: crate::Shape = crate::Shape {
+pub static NAME_OF_DOCUMENT_TEMPLATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Template"),
     slots: &[],
     text: true,
 };
 
-static PART_TITLES_SHAPE: crate::Shape = crate::Shape {
+pub static PART_TITLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "TitlesOfParts"),
     slots: &[crate::Slot::required((NS_VT, "vector"))],
     text: false,
 };
 
-static TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "TotalTime"),
     slots: &[],
     text: true,
 };
 
-static WORD_COUNT_SHAPE: crate::Shape = crate::Shape {
+pub static WORD_COUNT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AP, "Words"),
     slots: &[],

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRDWI: Option<NamespaceId> = Some(142);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static WEB_IMAGE_SRD_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_IMAGE_SRD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "webImageSrd"),
     slots: &[
@@ -246,28 +245,28 @@ static WEB_IMAGE_SRD_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ADDRESS_SHAPE: crate::Shape = crate::Shape {
+pub static ADDRESS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "address"),
     slots: &[],
     text: false,
 };
 
-static BLIP_SHAPE: crate::Shape = crate::Shape {
+pub static BLIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "blip"),
     slots: &[],
     text: false,
 };
 
-static MORE_IMAGES_ADDRESS_SHAPE: crate::Shape = crate::Shape {
+pub static MORE_IMAGES_ADDRESS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "moreImagesAddress"),
     slots: &[],
     text: false,
 };
 
-static WEB_IMAGES_SRD_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_IMAGES_SRD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRDWI, "webImagesSrd"),
     slots: &[

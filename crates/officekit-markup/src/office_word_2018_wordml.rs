@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2018/wordml`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_W16CUR: Option<NamespaceId> = Some(103);
 
-static EXT_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W16CUR, "uri")],
     name: (NS_W16CUR, "ext"),
     slots: &[crate::Slot::required_choice(

@@ -18,10 +18,10 @@ use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use clap::Parser;
-use officekit_markup::write_through::{Unchanged, WriteThrough};
-use officekit_markup::{Transform, Visit, presentation, spreadsheet, wordprocessing};
+use officekit_markup::{presentation, spreadsheet, wordprocessing};
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_traversal::{Transform, Unchanged, Visit, WriteThrough};
 use officekit_xml::element::Element;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{Layout, Scope};

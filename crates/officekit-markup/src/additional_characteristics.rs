@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/characteristics`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 
 const NS_AC: Option<NamespaceId> = Some(7);
 
-static SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE: crate::Shape = crate::Shape {
+pub static SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AC, "additionalCharacteristics"),
     slots: &[crate::Slot::list((NS_AC, "characteristic"))],
     text: false,
 };
 
-static SINGLE_CHARACTERISTIC_SHAPE: crate::Shape = crate::Shape {
+pub static SINGLE_CHARACTERISTIC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "relation"),

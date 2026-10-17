@@ -216,13 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/presentationml/2006/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-#[cfg(test)]
-mod tests;
-
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -235,7 +231,7 @@ const NS_P14: Option<NamespaceId> = Some(65);
 const NS_P15: Option<NamespaceId> = Some(66);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static ANIMATE_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "by"),
         (None, "from"),
@@ -252,7 +248,7 @@ static ANIMATE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIMATE_COLOR_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_COLOR_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "clrSpc"), (None, "dir")],
     name: (NS_P, "animClr"),
     slots: &[
@@ -264,7 +260,7 @@ static ANIMATE_COLOR_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIMATE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "transition"), (None, "filter"), (None, "prLst")],
     name: (NS_P, "animEffect"),
     slots: &[
@@ -274,7 +270,7 @@ static ANIMATE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIMATE_MOTION_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_MOTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "origin"),
         (None, "path"),
@@ -294,7 +290,7 @@ static ANIMATE_MOTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIMATE_ROTATION_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_ROTATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "by"),
         (None, "from"),
@@ -306,7 +302,7 @@ static ANIMATE_ROTATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIMATE_SCALE_SHAPE: crate::Shape = crate::Shape {
+pub static ANIMATE_SCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "zoomContents"), (NS_P14, "bounceEnd")],
     name: (NS_P, "animScale"),
     slots: &[
@@ -318,42 +314,42 @@ static ANIMATE_SCALE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ATTRIBUTE_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static ATTRIBUTE_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "attrName"),
     slots: &[],
     text: true,
 };
 
-static ATTRIBUTE_NAME_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static ATTRIBUTE_NAME_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "attrNameLst"),
     slots: &[crate::Slot::list((NS_P, "attrName"))],
     text: false,
 };
 
-static AUDIO_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isNarration")],
     name: (NS_P, "audio"),
     slots: &[crate::Slot::required((NS_P, "cMediaNode"))],
     text: false,
 };
 
-static SLIDE_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_P, "bg"),
     slots: &[crate::Slot::required_choice(&SLIDE_BACKGROUND_CONTENT_TAGS)],
     text: false,
 };
 
-static BACKGROUND_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "bg"),
     slots: &[],
     text: false,
 };
 
-static BACKGROUND_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "shadeToTitle")],
     name: (NS_P, "bgPr"),
     slots: &[
@@ -364,21 +360,21 @@ static BACKGROUND_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BACKGROUND_STYLE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_STYLE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_P, "bgRef"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static BUILD_AS_ONE_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_AS_ONE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "bldAsOne"),
     slots: &[],
     text: false,
 };
 
-static BUILD_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spid"),
         (None, "grpId"),
@@ -390,21 +386,21 @@ static BUILD_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUILD_GRAPHICS_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_GRAPHICS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid"), (None, "grpId"), (None, "uiExpand")],
     name: (NS_P, "bldGraphic"),
     slots: &[crate::Slot::required_choice(&BUILD_GRAPHICS_CONTENT_TAGS)],
     text: false,
 };
 
-static BUILD_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "bldLst"),
     slots: &[crate::Slot::items(&BUILD_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static BUILD_EMBEDDED_CHART_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_EMBEDDED_CHART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spid"),
         (None, "grpId"),
@@ -417,7 +413,7 @@ static BUILD_EMBEDDED_CHART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUILD_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spid"),
         (None, "grpId"),
@@ -434,7 +430,7 @@ static BUILD_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BUILD_SUB_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_SUB_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "bldSub"),
     slots: &[crate::Slot::required_choice(
@@ -443,14 +439,14 @@ static BUILD_SUB_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BLINDS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static BLINDS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "blinds"),
     slots: &[],
     text: false,
 };
 
-static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dpi"), (None, "rotWithShape")],
     name: (NS_P, "blipFill"),
     slots: &[
@@ -461,7 +457,7 @@ static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "bodyStyle"),
     slots: &[
@@ -480,49 +476,49 @@ static SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOLD_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static BOLD_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "bold"),
     slots: &[],
     text: false,
 };
 
-static BOLD_ITALIC_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static BOLD_ITALIC_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "boldItalic"),
     slots: &[],
     text: false,
 };
 
-static BOOLEAN_VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static BOOLEAN_VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "boolVal"),
     slots: &[],
     text: false,
 };
 
-static BROWSE_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static BROWSE_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "showScrollbar")],
     name: (NS_P, "browse"),
     slots: &[],
     text: false,
 };
 
-static BY_SHAPE: crate::Shape = crate::Shape {
+pub static BY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "by"),
     slots: &[crate::Slot::required_choice(&ANIMATE_COLOR_BY_CONTENT_TAGS)],
     text: false,
 };
 
-static BY_TL_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static BY_TL_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "by"),
     slots: &[],
     text: false,
 };
 
-static COMMON_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "additive"),
         (None, "accumulate"),
@@ -542,7 +538,7 @@ static COMMON_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMON_MEDIA_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_MEDIA_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "vol"),
         (None, "mute"),
@@ -557,7 +553,7 @@ static COMMON_MEDIA_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cNvCxnSpPr"),
     slots: &[
@@ -569,7 +565,7 @@ static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate
     text: false,
 };
 
-static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cNvGraphicFramePr"),
     slots: &[
@@ -579,7 +575,7 @@ static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::
     text: false,
 };
 
-static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cNvGrpSpPr"),
     slots: &[
@@ -589,7 +585,7 @@ static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "preferRelativeResize")],
     name: (NS_P, "cNvPicPr"),
     slots: &[
@@ -599,7 +595,7 @@ static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -616,7 +612,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_P, "cNvSpPr"),
     slots: &[
@@ -626,7 +622,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static COMMON_SLIDE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_SLIDE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_P, "cSld"),
     slots: &[
@@ -639,7 +635,7 @@ static COMMON_SLIDE_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMON_SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "snapToGrid"),
         (None, "snapToObjects"),
@@ -653,7 +649,7 @@ static COMMON_SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMON_TIME_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_TIME_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "presetID"),
@@ -692,7 +688,7 @@ static COMMON_TIME_NODE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMON_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "varScale")],
     name: (NS_P, "cViewPr"),
     slots: &[
@@ -702,35 +698,35 @@ static COMMON_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHARACTER_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CHARACTER_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "st"), (None, "end")],
     name: (NS_P, "charRg"),
     slots: &[],
     text: false,
 };
 
-static CHECKER_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKER_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "checker"),
     slots: &[],
     text: false,
 };
 
-static CHILDREN_TIME_NODE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CHILDREN_TIME_NODE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "childTnLst"),
     slots: &[crate::Slot::items(&TIME_NODE_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static CIRCLE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static CIRCLE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "circle"),
     slots: &[],
     text: false,
 };
 
-static COLOR_SCHEME_MAP_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_SCHEME_MAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bg1"),
         (None, "tx1"),
@@ -750,7 +746,7 @@ static COLOR_SCHEME_MAP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_SCHEME_MAP_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_SCHEME_MAP_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "clrMapOvr"),
     slots: &[crate::Slot::required_choice(
@@ -759,14 +755,14 @@ static COLOR_SCHEME_MAP_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_MRU_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_MRU_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "clrMru"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static COLOR_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "clrVal"),
     slots: &[crate::Slot::required_choice(
@@ -775,7 +771,7 @@ static COLOR_VALUE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMENT_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "authorId"), (None, "dt"), (None, "idx")],
     name: (NS_P, "cm"),
     slots: &[
@@ -786,7 +782,7 @@ static COMMENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMENT_AUTHOR_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_AUTHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -799,49 +795,49 @@ static COMMENT_AUTHOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_OF_COMMENT_AUTHORS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_COMMENT_AUTHORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cmAuthorLst"),
     slots: &[crate::Slot::list((NS_P, "cmAuthor"))],
     text: false,
 };
 
-static COMMENT_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cmLst"),
     slots: &[crate::Slot::list((NS_P, "cm"))],
     text: false,
 };
 
-static COMMAND_SHAPE: crate::Shape = crate::Shape {
+pub static COMMAND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "cmd")],
     name: (NS_P, "cmd"),
     slots: &[crate::Slot::required((NS_P, "cBhvr"))],
     text: false,
 };
 
-static COMB_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static COMB_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "comb"),
     slots: &[],
     text: false,
 };
 
-static CONDITION_SHAPE: crate::Shape = crate::Shape {
+pub static CONDITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "evt"), (None, "delay")],
     name: (NS_P, "cond"),
     slots: &[crate::Slot::choice(&TIME_CONDITION_CONTENT_TAGS)],
     text: false,
 };
 
-static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "contentPart"),
     slots: &[],
     text: false,
 };
 
-static EMBEDDED_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spid"),
         (None, "name"),
@@ -858,28 +854,28 @@ static EMBEDDED_CONTROL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_OF_CONTROLS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_CONTROLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "controls"),
     slots: &[crate::Slot::list((NS_P, "control"))],
     text: false,
 };
 
-static COVER_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static COVER_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "cover"),
     slots: &[],
     text: false,
 };
 
-static CUSTOMER_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOMER_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "custData"),
     slots: &[],
     text: false,
 };
 
-static CUSTOMER_DATA_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOMER_DATA_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "custDataLst"),
     slots: &[
@@ -889,7 +885,7 @@ static CUSTOMER_DATA_LIST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CUSTOM_SHOW_CUSTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_SHOW_CUSTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "id")],
     name: (NS_P, "custShow"),
     slots: &[
@@ -899,28 +895,28 @@ static CUSTOM_SHOW_CUSTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CUSTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_P, "custShow"),
     slots: &[],
     text: false,
 };
 
-static LIST_OF_CUSTOM_SHOWS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_CUSTOM_SHOWS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "custShowLst"),
     slots: &[crate::Slot::list((NS_P, "custShow"))],
     text: false,
 };
 
-static CUT_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static CUT_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "thruBlk")],
     name: (NS_P, "cut"),
     slots: &[],
     text: false,
 };
 
-static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "cxnSp"),
     slots: &[
@@ -932,7 +928,7 @@ static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "defaultTextStyle"),
     slots: &[
@@ -951,28 +947,28 @@ static PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIAMOND_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static DIAMOND_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "diamond"),
     slots: &[],
     text: false,
 };
 
-static DISSOLVE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static DISSOLVE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "dissolve"),
     slots: &[],
     text: false,
 };
 
-static EMBEDDED_OBJECT_OR_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_OBJECT_OR_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "followColorScheme")],
     name: (NS_P, "embed"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "embeddedFont"),
     slots: &[
@@ -985,42 +981,42 @@ static EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EMBEDDED_FONT_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_FONT_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "embeddedFontLst"),
     slots: &[crate::Slot::list((NS_P, "embeddedFont"))],
     text: false,
 };
 
-static END_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static END_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "endCondLst"),
     slots: &[crate::Slot::list((NS_P, "cond"))],
     text: false,
 };
 
-static STOP_SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
+pub static STOP_SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "endSnd"),
     slots: &[],
     text: false,
 };
 
-static END_SYNC_SHAPE: crate::Shape = crate::Shape {
+pub static END_SYNC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "evt"), (None, "delay")],
     name: (NS_P, "endSync"),
     slots: &[crate::Slot::choice(&TIME_CONDITION_CONTENT_TAGS)],
     text: false,
 };
 
-static EXCLUSIVE_SHAPE: crate::Shape = crate::Shape {
+pub static EXCLUSIVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "excl"),
     slots: &[crate::Slot::required((NS_P, "cTn"))],
     text: false,
 };
 
-static EXTENSION_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_P, "ext"),
     slots: &[crate::Slot::items(
@@ -1029,35 +1025,35 @@ static EXTENSION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],
     text: false,
 };
 
-static EXTENSION_LIST_WITH_MODIFICATION_FLAG_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_LIST_WITH_MODIFICATION_FLAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "mod")],
     name: (NS_P, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],
     text: false,
 };
 
-static FADE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static FADE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "thruBlk")],
     name: (NS_P, "fade"),
     slots: &[],
     text: false,
 };
 
-static FLOAT_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static FLOAT_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "fltVal"),
     slots: &[],
     text: false,
 };
 
-static EMBEDDED_FONT_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_FONT_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -1069,7 +1065,7 @@ static EMBEDDED_FONT_NAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FROM_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static FROM_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "from"),
     slots: &[crate::Slot::required_choice(
@@ -1078,14 +1074,14 @@ static FROM_COLOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FROM_TL_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static FROM_TL_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "from"),
     slots: &[],
     text: false,
 };
 
-static GRAPHIC_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "graphicEl"),
     slots: &[crate::Slot::required_choice(
@@ -1094,7 +1090,7 @@ static GRAPHIC_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_P, "graphicFrame"),
     slots: &[
@@ -1106,14 +1102,14 @@ static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRID_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static GRID_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_P, "gridSpacing"),
     slots: &[],
     text: false,
 };
 
-static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "grpSp"),
     slots: &[
@@ -1125,7 +1121,7 @@ static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_P, "grpSpPr"),
     slots: &[
@@ -1138,21 +1134,21 @@ static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static A_GUIDE_SHAPE: crate::Shape = crate::Shape {
+pub static A_GUIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "orient"), (None, "pos")],
     name: (NS_P, "guide"),
     slots: &[],
     text: false,
 };
 
-static LIST_OF_GUIDES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_GUIDES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "guideLst"),
     slots: &[crate::Slot::list((NS_P, "guide"))],
     text: false,
 };
 
-static HANDOUT_MASTER_SHAPE: crate::Shape = crate::Shape {
+pub static HANDOUT_MASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "handoutMaster"),
     slots: &[
@@ -1164,35 +1160,35 @@ static HANDOUT_MASTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HANDOUT_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
+pub static HANDOUT_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "handoutMasterId"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static LIST_OF_HANDOUT_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_HANDOUT_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "handoutMasterIdLst"),
     slots: &[crate::Slot::single((NS_P, "handoutMasterId"))],
     text: false,
 };
 
-static HEADER_FOOTER_INFORMATION_FOR_A_SLIDE_MASTER_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_FOOTER_INFORMATION_FOR_A_SLIDE_MASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sldNum"), (None, "hdr"), (None, "ftr"), (None, "dt")],
     name: (NS_P, "hf"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static HSL_SHAPE: crate::Shape = crate::Shape {
+pub static HSL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "h"), (None, "s"), (None, "l")],
     name: (NS_P, "hsl"),
     slots: &[],
     text: false,
 };
 
-static HTML_PUBLISHING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static HTML_PUBLISHING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showSpeakerNotes"),
         (None, "target"),
@@ -1207,35 +1203,35 @@ static HTML_PUBLISHING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static INK_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static INK_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid")],
     name: (NS_P, "inkTgt"),
     slots: &[],
     text: false,
 };
 
-static INTEGER_SHAPE: crate::Shape = crate::Shape {
+pub static INTEGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "intVal"),
     slots: &[],
     text: false,
 };
 
-static ITALIC_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static ITALIC_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "italic"),
     slots: &[],
     text: false,
 };
 
-static ITERATE_SHAPE: crate::Shape = crate::Shape {
+pub static ITERATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "backwards")],
     name: (NS_P, "iterate"),
     slots: &[crate::Slot::required_choice(&ITERATE_CONTENT_TAGS)],
     text: false,
 };
 
-static KINSOKU_SETTINGS_SHAPE: crate::Shape = crate::Shape {
+pub static KINSOKU_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "lang"),
         (None, "invalStChars"),
@@ -1246,21 +1242,21 @@ static KINSOKU_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static KIOSK_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static KIOSK_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "restart")],
     name: (NS_P, "kiosk"),
     slots: &[],
     text: false,
 };
 
-static LINKED_OBJECT_OR_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static LINKED_OBJECT_OR_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "updateAutomatic")],
     name: (NS_P, "link"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static MODIFICATION_VERIFIER_SHAPE: crate::Shape = crate::Shape {
+pub static MODIFICATION_VERIFIER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "algorithmName"),
         (None, "hashValue"),
@@ -1284,21 +1280,21 @@ static MODIFICATION_VERIFIER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NEWSFLASH_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static NEWSFLASH_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "newsflash"),
     slots: &[],
     text: false,
 };
 
-static NEXT_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static NEXT_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nextCondLst"),
     slots: &[crate::Slot::list((NS_P, "cond"))],
     text: false,
 };
 
-static NORMAL_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showOutlineIcons"),
         (None, "snapVertSplitter"),
@@ -1315,7 +1311,7 @@ static NORMAL_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_SLIDE_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_SLIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "showMasterSp"), (None, "showMasterPhAnim")],
     name: (NS_P, "notes"),
     slots: &[
@@ -1326,7 +1322,7 @@ static NOTES_SLIDE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_MASTER_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_MASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "notesMaster"),
     slots: &[
@@ -1339,21 +1335,21 @@ static NOTES_MASTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "notesMasterId"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static LIST_OF_NOTES_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_NOTES_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "notesMasterIdLst"),
     slots: &[crate::Slot::single((NS_P, "notesMasterId"))],
     text: false,
 };
 
-static NOTES_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "notesStyle"),
     slots: &[
@@ -1372,14 +1368,14 @@ static NOTES_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_SLIDE_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_SLIDE_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_P, "notesSz"),
     slots: &[],
     text: false,
 };
 
-static NOTES_TEXT_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_TEXT_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "notesTextViewPr"),
     slots: &[
@@ -1389,7 +1385,7 @@ static NOTES_TEXT_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "notesViewPr"),
     slots: &[
@@ -1399,7 +1395,7 @@ static NOTES_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nvCxnSpPr"),
     slots: &[
@@ -1410,7 +1406,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate:
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nvGraphicFramePr"),
     slots: &[
@@ -1421,7 +1417,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nvGrpSpPr"),
     slots: &[
@@ -1432,7 +1428,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shap
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nvPicPr"),
     slots: &[
@@ -1443,7 +1439,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isPhoto"), (None, "userDrawn")],
     name: (NS_P, "nvPr"),
     slots: &[
@@ -1455,7 +1451,7 @@ static NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "nvSpPr"),
     slots: &[
@@ -1466,14 +1462,14 @@ static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EMBEDDED_CHART_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_CHART_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "lvl")],
     name: (NS_P, "oleChartEl"),
     slots: &[],
     text: false,
 };
 
-static EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spid"),
         (None, "name"),
@@ -1491,14 +1487,14 @@ static EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VIEW_ORIGIN_SHAPE: crate::Shape = crate::Shape {
+pub static VIEW_ORIGIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "origin"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "otherStyle"),
     slots: &[
@@ -1517,7 +1513,7 @@ static SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OUTLINE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static OUTLINE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "outlineViewPr"),
     slots: &[
@@ -1528,21 +1524,21 @@ static OUTLINE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PARAGRAPH_TEXT_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static PARAGRAPH_TEXT_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "st"), (None, "end")],
     name: (NS_P, "pRg"),
     slots: &[],
     text: false,
 };
 
-static PARALLEL_TIME_NODE_SHAPE: crate::Shape = crate::Shape {
+pub static PARALLEL_TIME_NODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "par"),
     slots: &[crate::Slot::required((NS_P, "cTn"))],
     text: false,
 };
 
-static PEN_COLOR_FOR_SLIDE_SHOW_SHAPE: crate::Shape = crate::Shape {
+pub static PEN_COLOR_FOR_SLIDE_SHOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "penClr"),
     slots: &[crate::Slot::required_choice(
@@ -1551,7 +1547,7 @@ static PEN_COLOR_FOR_SLIDE_SHOW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLACEHOLDER_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static PLACEHOLDER_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "orient"),
@@ -1564,7 +1560,7 @@ static PLACEHOLDER_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PHOTO_ALBUM_INFORMATION_SHAPE: crate::Shape = crate::Shape {
+pub static PHOTO_ALBUM_INFORMATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bw"),
         (None, "showCaptions"),
@@ -1576,7 +1572,7 @@ static PHOTO_ALBUM_INFORMATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "pic"),
     slots: &[
@@ -1589,28 +1585,28 @@ static PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLUS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static PLUS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "plus"),
     slots: &[],
     text: false,
 };
 
-static COMMENT_POSITION_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_POSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "pos"),
     slots: &[],
     text: false,
 };
 
-static PRESENTER_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTER_SLIDE_SHOW_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "present"),
     slots: &[],
     text: false,
 };
 
-static PRESENTATION_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "serverZoom"),
         (None, "firstSlideNum"),
@@ -1646,7 +1642,7 @@ static PRESENTATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_WIDE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_WIDE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "presentationPr"),
     slots: &[
@@ -1660,14 +1656,14 @@ static PRESENTATION_WIDE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PREVIOUS_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static PREVIOUS_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "prevCondLst"),
     slots: &[crate::Slot::list((NS_P, "cond"))],
     text: false,
 };
 
-static PRINTING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PRINTING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "prnWhat"),
         (None, "clrMode"),
@@ -1680,7 +1676,7 @@ static PRINTING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PROGRESS_SHAPE: crate::Shape = crate::Shape {
+pub static PROGRESS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "progress"),
     slots: &[crate::Slot::required_choice(
@@ -1689,77 +1685,77 @@ static PROGRESS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PULL_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static PULL_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "pull"),
     slots: &[],
     text: false,
 };
 
-static PUSH_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static PUSH_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "push"),
     slots: &[],
     text: false,
 };
 
-static ROTATION_CENTER_SHAPE: crate::Shape = crate::Shape {
+pub static ROTATION_CENTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "rCtr"),
     slots: &[],
     text: false,
 };
 
-static RANDOM_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static RANDOM_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "random"),
     slots: &[],
     text: false,
 };
 
-static RANDOM_BAR_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static RANDOM_BAR_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "randomBar"),
     slots: &[],
     text: false,
 };
 
-static REGULAR_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static REGULAR_EMBEDDED_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "regular"),
     slots: &[],
     text: false,
 };
 
-static NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sz"), (None, "autoAdjust")],
     name: (NS_P, "restoredLeft"),
     slots: &[],
     text: false,
 };
 
-static NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sz"), (None, "autoAdjust")],
     name: (NS_P, "restoredTop"),
     slots: &[],
     text: false,
 };
 
-static RGB_SHAPE: crate::Shape = crate::Shape {
+pub static RGB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "r"), (None, "g"), (None, "b")],
     name: (NS_P, "rgb"),
     slots: &[],
     text: false,
 };
 
-static RUNTIME_NODE_TRIGGER_CHOICE_SHAPE: crate::Shape = crate::Shape {
+pub static RUNTIME_NODE_TRIGGER_CHOICE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "rtn"),
     slots: &[],
     text: false,
 };
 
-static VIEW_SCALE_SHAPE: crate::Shape = crate::Shape {
+pub static VIEW_SCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "scale"),
     slots: &[
@@ -1769,7 +1765,7 @@ static VIEW_SCALE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SEQUENCE_TIME_NODE_SHAPE: crate::Shape = crate::Shape {
+pub static SEQUENCE_TIME_NODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "concurrent"), (None, "prevAc"), (None, "nextAc")],
     name: (NS_P, "seq"),
     slots: &[
@@ -1780,7 +1776,7 @@ static SEQUENCE_TIME_NODE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SET_TIME_NODE_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
+pub static SET_TIME_NODE_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "set"),
     slots: &[
@@ -1790,7 +1786,7 @@ static SET_TIME_NODE_BEHAVIOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "loop"),
         (None, "showNarration"),
@@ -1807,14 +1803,14 @@ static PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_SLIDE_OUTLINE_VIEW_SLIDE_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_SLIDE_OUTLINE_VIEW_SLIDE_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id"), (None, "collapse")],
     name: (NS_P, "sld"),
     slots: &[],
     text: false,
 };
 
-static PRESENTATION_SLIDE_SLIDE_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_SLIDE_SLIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showMasterSp"),
         (None, "showMasterPhAnim"),
@@ -1831,35 +1827,35 @@ static PRESENTATION_SLIDE_SLIDE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_SLIDE_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_SLIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "sld"),
     slots: &[],
     text: false,
 };
 
-static ALL_SLIDES_SHAPE: crate::Shape = crate::Shape {
+pub static ALL_SLIDES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldAll"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_ID_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (NS_R, "id")],
     name: (NS_P, "sldId"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static LIST_OF_SLIDE_I_DS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SLIDE_I_DS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldIdLst"),
     slots: &[crate::Slot::list((NS_P, "sldId"))],
     text: false,
 };
 
-static SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showMasterSp"),
         (None, "showMasterPhAnim"),
@@ -1880,35 +1876,35 @@ static SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLIDE_LAYOUT_ID_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_LAYOUT_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (NS_R, "id")],
     name: (NS_P, "sldLayoutId"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static LIST_OF_SLIDE_LAYOUTS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SLIDE_LAYOUTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldLayoutIdLst"),
     slots: &[crate::Slot::list((NS_P, "sldLayoutId"))],
     text: false,
 };
 
-static LIST_OF_PRESENTATION_SLIDES_OUTLINE_VIEW_SLIDE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_PRESENTATION_SLIDES_OUTLINE_VIEW_SLIDE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldLst"),
     slots: &[crate::Slot::list((NS_P, "sld"))],
     text: false,
 };
 
-static LIST_OF_PRESENTATION_SLIDES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_PRESENTATION_SLIDES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldLst"),
     slots: &[crate::Slot::list((NS_P, "sld"))],
     text: false,
 };
 
-static SLIDE_MASTER_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "preserve")],
     name: (NS_P, "sldMaster"),
     slots: &[
@@ -1924,28 +1920,28 @@ static SLIDE_MASTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLIDE_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (NS_R, "id")],
     name: (NS_P, "sldMasterId"),
     slots: &[crate::Slot::single((NS_P, "extLst"))],
     text: false,
 };
 
-static LIST_OF_SLIDE_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SLIDE_MASTER_I_DS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldMasterIdLst"),
     slots: &[crate::Slot::list((NS_P, "sldMasterId"))],
     text: false,
 };
 
-static SLIDE_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "st"), (None, "end")],
     name: (NS_P, "sldRg"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "serverSldId"),
         (None, "serverSldModifiedTime"),
@@ -1956,21 +1952,21 @@ static SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_SLIDE_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_SLIDE_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy"), (None, "type")],
     name: (NS_P, "sldSz"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sldTgt"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "slideViewPr"),
     slots: &[
@@ -1980,35 +1976,35 @@ static SLIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SMART_TAGS_SHAPE: crate::Shape = crate::Shape {
+pub static SMART_TAGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "smartTags"),
     slots: &[],
     text: false,
 };
 
-static SOUND_SHAPE: crate::Shape = crate::Shape {
+pub static SOUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (None, "name")],
     name: (NS_P, "snd"),
     slots: &[],
     text: false,
 };
 
-static SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
+pub static SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "sndAc"),
     slots: &[crate::Slot::required_choice(&SOUND_ACTION_CONTENT_TAGS)],
     text: false,
 };
 
-static SOUND_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static SOUND_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (None, "name")],
     name: (NS_P, "sndTgt"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_SORTER_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_SORTER_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "showFormatting")],
     name: (NS_P, "sorterViewPr"),
     slots: &[
@@ -2018,7 +2014,7 @@ static SLIDE_SORTER_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useBgFill")],
     name: (NS_P, "sp"),
     slots: &[
@@ -2031,7 +2027,7 @@ static SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_P, "spPr"),
     slots: &[
@@ -2047,14 +2043,14 @@ static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid")],
     name: (NS_P, "spTgt"),
     slots: &[crate::Slot::choice(&SHAPE_TARGET_CONTENT_TAGS)],
     text: false,
 };
 
-static SHAPE_TREE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TREE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "spTree"),
     slots: &[
@@ -2066,42 +2062,42 @@ static SHAPE_TREE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPLIT_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static SPLIT_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "orient"), (None, "dir")],
     name: (NS_P, "split"),
     slots: &[],
     text: false,
 };
 
-static START_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static START_CONDITIONS_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "stCondLst"),
     slots: &[crate::Slot::list((NS_P, "cond"))],
     text: false,
 };
 
-static START_SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
+pub static START_SOUND_ACTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "loop")],
     name: (NS_P, "stSnd"),
     slots: &[crate::Slot::required((NS_P, "snd"))],
     text: false,
 };
 
-static STRING_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static STRING_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "strVal"),
     slots: &[],
     text: false,
 };
 
-static STRIPS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static STRIPS_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "strips"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "style"),
     slots: &[
@@ -2113,70 +2109,70 @@ static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUBSHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static SUBSHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid")],
     name: (NS_P, "subSp"),
     slots: &[],
     text: false,
 };
 
-static SUB_TIME_NODES_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static SUB_TIME_NODES_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "subTnLst"),
     slots: &[crate::Slot::items(&TIME_NODE_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE: crate::Shape = crate::Shape {
+pub static PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "val")],
     name: (NS_P, "tag"),
     slots: &[],
     text: false,
 };
 
-static PROGRAMMABLE_TAB_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static PROGRAMMABLE_TAB_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "tagLst"),
     slots: &[crate::Slot::list((NS_P, "tag"))],
     text: false,
 };
 
-static CUSTOMER_DATA_TAGS_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOMER_DATA_TAGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_P, "tags"),
     slots: &[],
     text: false,
 };
 
-static TIME_ANIMATE_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_ANIMATE_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "tm"), (None, "fmla")],
     name: (NS_P, "tav"),
     slots: &[crate::Slot::single((NS_P, "val"))],
     text: false,
 };
 
-static TIME_ANIMATED_VALUE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_ANIMATED_VALUE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "tavLst"),
     slots: &[crate::Slot::list((NS_P, "tav"))],
     text: false,
 };
 
-static COMMENTS_TEXT_CONTENT_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_TEXT_CONTENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "text"),
     slots: &[],
     text: true,
 };
 
-static TARGET_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static TARGET_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "tgtEl"),
     slots: &[crate::Slot::required_choice(&TARGET_ELEMENT_CONTENT_TAGS)],
     text: false,
 };
 
-static SLIDE_TIMING_INFORMATION_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_TIMING_INFORMATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "timing"),
     slots: &[
@@ -2187,7 +2183,7 @@ static SLIDE_TIMING_INFORMATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "titleStyle"),
     slots: &[
@@ -2206,49 +2202,49 @@ static SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TIME_ABSOLUTE_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_ABSOLUTE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "tmAbs"),
     slots: &[],
     text: false,
 };
 
-static TIME_PERCENTAGE_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_PERCENTAGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "tmPct"),
     slots: &[],
     text: false,
 };
 
-static TEMPLATE_EFFECTS_TMPL_SHAPE: crate::Shape = crate::Shape {
+pub static TEMPLATE_EFFECTS_TMPL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lvl")],
     name: (NS_P, "tmpl"),
     slots: &[crate::Slot::required((NS_P, "tnLst"))],
     text: false,
 };
 
-static TEMPLATE_EFFECTS_TMPL_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TEMPLATE_EFFECTS_TMPL_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "tmplLst"),
     slots: &[crate::Slot::list((NS_P, "tmpl"))],
     text: false,
 };
 
-static TIME_NODE_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_NODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P, "tn"),
     slots: &[],
     text: false,
 };
 
-static TIME_NODE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TIME_NODE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "tnLst"),
     slots: &[crate::Slot::items(&TIME_NODE_LIST_CONTENT_TAGS)],
     text: false,
 };
 
-static TO_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static TO_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "to"),
     slots: &[crate::Slot::required_choice(
@@ -2257,7 +2253,7 @@ static TO_COLOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TO_TL_ANIM_VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static TO_TL_ANIM_VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "to"),
     slots: &[crate::Slot::required_choice(
@@ -2266,14 +2262,14 @@ static TO_TL_ANIM_VARIANT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TO_SHAPE: crate::Shape = crate::Shape {
+pub static TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_P, "to"),
     slots: &[],
     text: false,
 };
 
-static SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "spd"),
         (None, "advClick"),
@@ -2289,7 +2285,7 @@ static SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "txBody"),
     slots: &[
@@ -2300,14 +2296,14 @@ static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "txEl"),
     slots: &[crate::Slot::choice(&TEXT_ELEMENT_CONTENT_TAGS)],
     text: false,
 };
 
-static SLIDE_MASTER_TEXT_STYLES_SHAPE: crate::Shape = crate::Shape {
+pub static SLIDE_MASTER_TEXT_STYLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "txStyles"),
     slots: &[
@@ -2319,7 +2315,7 @@ static SLIDE_MASTER_TEXT_STYLES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "val"),
     slots: &[crate::Slot::required_choice(
@@ -2328,14 +2324,14 @@ static VALUE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VIDEO_SHAPE: crate::Shape = crate::Shape {
+pub static VIDEO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "fullScrn")],
     name: (NS_P, "video"),
     slots: &[crate::Slot::required((NS_P, "cMediaNode"))],
     text: false,
 };
 
-static PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lastView"), (None, "showComments")],
     name: (NS_P, "viewPr"),
     slots: &[
@@ -2351,7 +2347,7 @@ static PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WEB_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "showAnimation"),
         (None, "resizeGraphics"),
@@ -2368,28 +2364,28 @@ static WEB_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WEDGE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static WEDGE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P, "wedge"),
     slots: &[],
     text: false,
 };
 
-static WHEEL_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static WHEEL_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spokes")],
     name: (NS_P, "wheel"),
     slots: &[],
     text: false,
 };
 
-static WIPE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static WIPE_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "wipe"),
     slots: &[],
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_P, "xfrm"),
     slots: &[
@@ -2399,7 +2395,7 @@ static XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ZOOM_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
+pub static ZOOM_SLIDE_TRANSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dir")],
     name: (NS_P, "zoom"),
     slots: &[],

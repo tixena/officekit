@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2020/02/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P202: Option<NamespaceId> = Some(73);
 
-static DESIGN_PR_SHAPE: crate::Shape = crate::Shape {
+pub static DESIGN_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "edtDesignElem")],
     name: (NS_P202, "designPr"),
     slots: &[
@@ -238,21 +237,21 @@ static DESIGN_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DESIGN_TAG_SHAPE: crate::Shape = crate::Shape {
+pub static DESIGN_TAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "val")],
     name: (NS_P202, "designTag"),
     slots: &[],
     text: false,
 };
 
-static DESIGN_TAG_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DESIGN_TAG_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P202, "designTagLst"),
     slots: &[crate::Slot::list((NS_P202, "designTag"))],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P202, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],

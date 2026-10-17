@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2012/wordprocessingDrawing`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_WP15: Option<NamespaceId> = Some(114);
 
-static WEB_VIDEO_PR_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_VIDEO_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "embeddedHtml"), (None, "h"), (None, "w")],
     name: (NS_WP15, "webVideoPr"),
     slots: &[],

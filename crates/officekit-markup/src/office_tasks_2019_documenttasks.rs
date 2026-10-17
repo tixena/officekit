@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/tasks/2019/documenttasks`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,21 +227,21 @@ use std::io;
 const NS_OEL: Option<NamespaceId> = Some(62);
 const NS_T: Option<NamespaceId> = Some(92);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "extLst"),
     slots: &[crate::Slot::list((NS_OEL, "ext"))],
     text: false,
 };
 
-static COMMENT_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_T, "Comment"),
     slots: &[],
     text: false,
 };
 
-static TASK_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_T, "Task"),
     slots: &[
@@ -253,7 +252,7 @@ static TASK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANCHOR_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Anchor"),
     slots: &[
@@ -263,28 +262,28 @@ static ANCHOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CREATE_SHAPE: crate::Shape = crate::Shape {
+pub static CREATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Create"),
     slots: &[],
     text: false,
 };
 
-static DELETE_SHAPE: crate::Shape = crate::Shape {
+pub static DELETE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Delete"),
     slots: &[],
     text: false,
 };
 
-static HISTORY_SHAPE: crate::Shape = crate::Shape {
+pub static HISTORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "History"),
     slots: &[crate::Slot::list((NS_T, "Event"))],
     text: false,
 };
 
-static EVENT_SHAPE: crate::Shape = crate::Shape {
+pub static EVENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "time"), (None, "id")],
     name: (NS_T, "Event"),
     slots: &[
@@ -296,77 +295,77 @@ static EVENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRIORITY_SHAPE: crate::Shape = crate::Shape {
+pub static PRIORITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "value")],
     name: (NS_T, "Priority"),
     slots: &[],
     text: false,
 };
 
-static PROGRESS_SHAPE: crate::Shape = crate::Shape {
+pub static PROGRESS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "percentComplete")],
     name: (NS_T, "Progress"),
     slots: &[],
     text: false,
 };
 
-static SCHEDULE_SHAPE: crate::Shape = crate::Shape {
+pub static SCHEDULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "startDate"), (None, "dueDate")],
     name: (NS_T, "Schedule"),
     slots: &[],
     text: false,
 };
 
-static SET_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static SET_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "title")],
     name: (NS_T, "SetTitle"),
     slots: &[],
     text: false,
 };
 
-static UNASSIGN_ALL_SHAPE: crate::Shape = crate::Shape {
+pub static UNASSIGN_ALL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "UnassignAll"),
     slots: &[],
     text: false,
 };
 
-static UNDELETE_SHAPE: crate::Shape = crate::Shape {
+pub static UNDELETE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Undelete"),
     slots: &[],
     text: false,
 };
 
-static UNDO_SHAPE: crate::Shape = crate::Shape {
+pub static UNDO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_T, "Undo"),
     slots: &[],
     text: false,
 };
 
-static ASSIGN_SHAPE: crate::Shape = crate::Shape {
+pub static ASSIGN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Assign"),
     slots: &[],
     text: false,
 };
 
-static ATTRIBUTION_SHAPE: crate::Shape = crate::Shape {
+pub static ATTRIBUTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Attribution"),
     slots: &[],
     text: false,
 };
 
-static UNASSIGN_SHAPE: crate::Shape = crate::Shape {
+pub static UNASSIGN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Unassign"),
     slots: &[],
     text: false,
 };
 
-static TASKS_SHAPE: crate::Shape = crate::Shape {
+pub static TASKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_T, "Tasks"),
     slots: &[

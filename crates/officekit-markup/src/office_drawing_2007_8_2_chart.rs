@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2007/8/2/chart`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_C14: Option<NamespaceId> = Some(23);
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_C14, "spPr"),
     slots: &[
@@ -244,63 +243,63 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DROP_ZONE_CATEGORIES_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_ZONE_CATEGORIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "dropZoneCategories"),
     slots: &[],
     text: false,
 };
 
-static DROP_ZONE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_ZONE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "dropZoneData"),
     slots: &[],
     text: false,
 };
 
-static DROP_ZONE_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_ZONE_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "dropZoneFilter"),
     slots: &[],
     text: false,
 };
 
-static DROP_ZONE_SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_ZONE_SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "dropZoneSeries"),
     slots: &[],
     text: false,
 };
 
-static DROP_ZONES_VISIBLE_SHAPE: crate::Shape = crate::Shape {
+pub static DROP_ZONES_VISIBLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "dropZonesVisible"),
     slots: &[],
     text: false,
 };
 
-static IN_SKETCH_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static IN_SKETCH_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "inSketchMode"),
     slots: &[],
     text: false,
 };
 
-static SHOW_SKETCH_BTN_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_SKETCH_BTN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C14, "showSketchBtn"),
     slots: &[],
     text: false,
 };
 
-static INVERT_SOLID_FILL_FMT_SHAPE: crate::Shape = crate::Shape {
+pub static INVERT_SOLID_FILL_FMT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "invertSolidFillFmt"),
     slots: &[crate::Slot::required((NS_C14, "spPr"))],
     text: false,
 };
 
-static PIVOT_OPTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_OPTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "pivotOptions"),
     slots: &[
@@ -313,7 +312,7 @@ static PIVOT_OPTIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SKETCH_OPTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static SKETCH_OPTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C14, "sketchOptions"),
     slots: &[
@@ -323,7 +322,7 @@ static SKETCH_OPTIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C14, "style"),
     slots: &[],

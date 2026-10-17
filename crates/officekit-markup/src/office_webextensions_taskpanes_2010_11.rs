@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,21 +228,21 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_WETP: Option<NamespaceId> = Some(109);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WETP, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static WEBEXTENSIONREF_SHAPE: crate::Shape = crate::Shape {
+pub static WEBEXTENSIONREF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_WETP, "webextensionref"),
     slots: &[],
     text: false,
 };
 
-static TASKPANE_SHAPE: crate::Shape = crate::Shape {
+pub static TASKPANE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "dockstate"),
         (None, "visibility"),
@@ -259,7 +258,7 @@ static TASKPANE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TASKPANES_SHAPE: crate::Shape = crate::Shape {
+pub static TASKPANES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WETP, "taskpanes"),
     slots: &[crate::Slot::list((NS_WETP, "taskpane"))],

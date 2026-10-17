@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2020/classificationShape`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 
 const NS_ACLSH: Option<NamespaceId> = Some(8);
 
-static CLASSIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static CLASSIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "classificationOutcomeType")],
     name: (NS_ACLSH, "classification"),
     slots: &[],

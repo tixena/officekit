@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/roamingSettings`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_PROAM: Option<NamespaceId> = Some(78);
 
-static PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PROAM, "props"),
     slots: &[
@@ -237,14 +236,14 @@ static PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static KEY_SHAPE: crate::Shape = crate::Shape {
+pub static KEY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PROAM, "key"),
     slots: &[],
     text: true,
 };
 
-static VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PROAM, "value"),
     slots: &[],

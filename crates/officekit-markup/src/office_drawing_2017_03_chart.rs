@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2017/03/chart`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,14 +226,14 @@ use std::io;
 
 const NS_C16R3: Option<NamespaceId> = Some(27);
 
-static DISP_NA_AS_BLANK_SHAPE: crate::Shape = crate::Shape {
+pub static DISP_NA_AS_BLANK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_C16R3, "val")],
     name: (NS_C16R3, "dispNaAsBlank"),
     slots: &[],
     text: false,
 };
 
-static DATA_DISPLAY_OPTIONS16_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_DISPLAY_OPTIONS16_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16R3, "dataDisplayOptions16"),
     slots: &[crate::Slot::single((NS_C16R3, "dispNaAsBlank"))],

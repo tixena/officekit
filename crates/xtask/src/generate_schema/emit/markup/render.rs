@@ -416,12 +416,6 @@ where
             folder.join(name).join("read.rs"),
             readers::text(header, &names),
         ));
-        if traversal::has_nodes(&names) {
-            files.push((
-                folder.join(name).join("traversal.rs"),
-                traversal::text(header, &names, &listed),
-            ));
-        }
         files.push((
             folder.join(name).join("write.rs"),
             writers::text(header, &names),
@@ -518,11 +512,7 @@ fn module_text(
          //! `write`.\n//!\n//! The namespace is `{}`.\n",
         module.prefix, module.uri
     );
-    if traversal::has_nodes(names) {
-        out.push_str("pub mod read;\nmod traversal;\npub mod write;\n");
-    } else {
-        out.push_str("pub mod read;\npub mod write;\n");
-    }
+    out.push_str("pub mod read;\npub mod write;\n");
     if tests {
         out.push_str("\n#[cfg(test)]\nmod tests;\n");
     }
@@ -537,7 +527,7 @@ fn module_text(
         .push(("Visitor".to_owned(), traversal::visitor_trait(names)));
     parts.items.sort_by(|left, right| left.0.cmp(&right.0));
     if traversal::has_nodes(names) {
-        uses.add("crate::write_through::Written");
+        uses.add("crate::Written");
         uses.add("officekit_xml::stream::writer::PartWriter");
         uses.add("std::io");
     }
@@ -752,7 +742,7 @@ fn shape_text(
     );
     let mut out = String::from("\n");
     statement(
-        &format!("static {}: crate::Shape = ", names.shape(index)),
+        &format!("pub static {}: crate::Shape = ", names.shape(index)),
         &expr,
         &mut out,
     );

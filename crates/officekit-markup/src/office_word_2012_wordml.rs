@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ use std::io;
 const NS_W: Option<NamespaceId> = Some(97);
 const NS_W15: Option<NamespaceId> = Some(100);
 
-static COMMENT_EX_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_EX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W15, "paraId"),
         (NS_W15, "paraIdParent"),
@@ -240,49 +239,49 @@ static COMMENT_EX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMMENTS_EX_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_EX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W15, "commentsEx"),
     slots: &[crate::Slot::list((NS_W15, "commentEx"))],
     text: false,
 };
 
-static DOC_ID_SHAPE: crate::Shape = crate::Shape {
+pub static DOC_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W15, "val")],
     name: (NS_W15, "docId"),
     slots: &[],
     text: false,
 };
 
-static PEOPLE_SHAPE: crate::Shape = crate::Shape {
+pub static PEOPLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W15, "people"),
     slots: &[crate::Slot::list((NS_W15, "person"))],
     text: false,
 };
 
-static PERSON_SHAPE: crate::Shape = crate::Shape {
+pub static PERSON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W15, "author")],
     name: (NS_W15, "person"),
     slots: &[crate::Slot::single((NS_W15, "presenceInfo"))],
     text: false,
 };
 
-static PRESENCE_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENCE_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W15, "providerId"), (NS_W15, "userId")],
     name: (NS_W15, "presenceInfo"),
     slots: &[],
     text: false,
 };
 
-static APPEARANCE_SHAPE: crate::Shape = crate::Shape {
+pub static APPEARANCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W15, "val")],
     name: (NS_W15, "appearance"),
     slots: &[],
     text: false,
 };
 
-static REPEATING_SECTION_SHAPE: crate::Shape = crate::Shape {
+pub static REPEATING_SECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W15, "repeatingSection"),
     slots: &[
@@ -292,7 +291,7 @@ static REPEATING_SECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W, "val"),
         (NS_W, "themeColor"),
@@ -304,7 +303,7 @@ static COLOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_BINDING_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_BINDING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W, "prefixMappings"),
         (NS_W, "xpath"),
@@ -315,56 +314,56 @@ static DATA_BINDING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FOOTNOTE_COLUMNS_SHAPE: crate::Shape = crate::Shape {
+pub static FOOTNOTE_COLUMNS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "footnoteColumns"),
     slots: &[],
     text: false,
 };
 
-static REPEATING_SECTION_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static REPEATING_SECTION_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W15, "repeatingSectionItem"),
     slots: &[],
     text: false,
 };
 
-static CHART_TRACKING_REF_BASED_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_TRACKING_REF_BASED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "chartTrackingRefBased"),
     slots: &[],
     text: false,
 };
 
-static COLLAPSED_SHAPE: crate::Shape = crate::Shape {
+pub static COLLAPSED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "collapsed"),
     slots: &[],
     text: false,
 };
 
-static DO_NOT_ALLOW_INSERT_DELETE_SECTION_SHAPE: crate::Shape = crate::Shape {
+pub static DO_NOT_ALLOW_INSERT_DELETE_SECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "doNotAllowInsertDeleteSection"),
     slots: &[],
     text: false,
 };
 
-static WEB_EXTENSION_CREATED_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_EXTENSION_CREATED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "webExtensionCreated"),
     slots: &[],
     text: false,
 };
 
-static WEB_EXTENSION_LINKED_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_EXTENSION_LINKED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "webExtensionLinked"),
     slots: &[],
     text: false,
 };
 
-static SECTION_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "val")],
     name: (NS_W15, "sectionTitle"),
     slots: &[],

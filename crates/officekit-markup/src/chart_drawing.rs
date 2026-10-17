@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/chartDrawing`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -230,7 +229,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_CDR: Option<NamespaceId> = Some(29);
 const NS_CDR14: Option<NamespaceId> = Some(30);
 
-static ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "absSizeAnchor"),
     slots: &[
@@ -241,7 +240,7 @@ static ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dpi"), (None, "rotWithShape")],
     name: (NS_CDR, "blipFill"),
     slots: &[
@@ -252,7 +251,7 @@ static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "cNvCxnSpPr"),
     slots: &[
@@ -264,7 +263,7 @@ static NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crat
     text: false,
 };
 
-static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "cNvGraphicFramePr"),
     slots: &[
@@ -274,7 +273,7 @@ static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::
     text: false,
 };
 
-static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "cNvGrpSpPr"),
     slots: &[
@@ -284,7 +283,7 @@ static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "preferRelativeResize")],
     name: (NS_CDR, "cNvPicPr"),
     slots: &[
@@ -294,7 +293,7 @@ static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -311,7 +310,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_CDR, "cNvSpPr"),
     slots: &[
@@ -321,7 +320,7 @@ static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "cxnSp"),
     slots: &[
@@ -332,14 +331,14 @@ static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_EXTENT_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_EXTENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_CDR, "ext"),
     slots: &[],
     text: false,
 };
 
-static STARTING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static STARTING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "from"),
     slots: &[
@@ -349,7 +348,7 @@ static STARTING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "graphicFrame"),
     slots: &[
@@ -360,7 +359,7 @@ static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "grpSp"),
     slots: &[
@@ -371,7 +370,7 @@ static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_CDR, "grpSpPr"),
     slots: &[
@@ -384,7 +383,7 @@ static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "nvCxnSpPr"),
     slots: &[
@@ -394,7 +393,7 @@ static CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "nvGraphicFramePr"),
     slots: &[
@@ -404,7 +403,7 @@ static NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "nvGrpSpPr"),
     slots: &[
@@ -414,7 +413,7 @@ static NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "nvPicPr"),
     slots: &[
@@ -424,7 +423,7 @@ static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "nvSpPr"),
     slots: &[
@@ -434,7 +433,7 @@ static NON_VISUAL_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_CDR, "pic"),
     slots: &[
@@ -446,7 +445,7 @@ static PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "relSizeAnchor"),
     slots: &[
@@ -457,7 +456,7 @@ static RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "macro"),
         (None, "textlink"),
@@ -474,7 +473,7 @@ static SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_CDR, "spPr"),
     slots: &[
@@ -490,7 +489,7 @@ static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "style"),
     slots: &[
@@ -502,7 +501,7 @@ static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ENDING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static ENDING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "to"),
     slots: &[
@@ -512,7 +511,7 @@ static ENDING_ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "txBody"),
     slots: &[
@@ -523,14 +522,14 @@ static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RELATIVE_X_COORDINATE_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_X_COORDINATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "x"),
     slots: &[],
     text: true,
 };
 
-static GRAPHIC_FRAME_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_CDR, "xfrm"),
     slots: &[
@@ -540,7 +539,7 @@ static GRAPHIC_FRAME_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RELATIVE_Y_COORDINATE_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_Y_COORDINATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CDR, "y"),
     slots: &[],

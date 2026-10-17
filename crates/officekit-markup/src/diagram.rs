@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/diagram`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -230,21 +229,21 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_DGM: Option<NamespaceId> = Some(42);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static SHAPE_ADJUST_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_ADJUST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx"), (None, "val")],
     name: (NS_DGM, "adj"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_ADJUST_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_ADJUST_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "adjLst"),
     slots: &[crate::Slot::list((NS_DGM, "adj"))],
     text: false,
 };
 
-static ALGORITHM_SHAPE: crate::Shape = crate::Shape {
+pub static ALGORITHM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "rev")],
     name: (NS_DGM, "alg"),
     slots: &[
@@ -254,21 +253,21 @@ static ALGORITHM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEVEL_ANIMATION_SHAPE: crate::Shape = crate::Shape {
+pub static LEVEL_ANIMATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "animLvl"),
     slots: &[],
     text: false,
 };
 
-static ONE_BY_ONE_ANIMATION_STRING_SHAPE: crate::Shape = crate::Shape {
+pub static ONE_BY_ONE_ANIMATION_STRING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "animOne"),
     slots: &[],
     text: false,
 };
 
-static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "bg"),
     slots: &[
@@ -278,70 +277,70 @@ static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHOW_INSERT_NODE_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_INSERT_NODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "bulletEnabled"),
     slots: &[],
     text: false,
 };
 
-static COLOR_TRANSFORM_CATEGORY_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "pri")],
     name: (NS_DGM, "cat"),
     slots: &[],
     text: false,
 };
 
-static CATEGORY_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "pri")],
     name: (NS_DGM, "cat"),
     slots: &[],
     text: false,
 };
 
-static CATEGORY_SD_CATEGORY_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_SD_CATEGORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "pri")],
     name: (NS_DGM, "cat"),
     slots: &[],
     text: false,
 };
 
-static COLOR_TRANSFORM_CATEGORY_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_CATEGORY_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "catLst"),
     slots: &[crate::Slot::list((NS_DGM, "cat"))],
     text: false,
 };
 
-static CATEGORY_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "catLst"),
     slots: &[crate::Slot::list((NS_DGM, "cat"))],
     text: false,
 };
 
-static CATEGORY_LIST_SD_CATEGORIES_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_LIST_SD_CATEGORIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "catLst"),
     slots: &[crate::Slot::list((NS_DGM, "cat"))],
     text: false,
 };
 
-static MAXIMUM_CHILDREN_SHAPE: crate::Shape = crate::Shape {
+pub static MAXIMUM_CHILDREN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "chMax"),
     slots: &[],
     text: false,
 };
 
-static PREFERRED_NUMBER_OF_CHILDREN_SHAPE: crate::Shape = crate::Shape {
+pub static PREFERRED_NUMBER_OF_CHILDREN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "chPref"),
     slots: &[],
     text: false,
 };
 
-static CHOOSE_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static CHOOSE_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_DGM, "choose"),
     slots: &[
@@ -351,14 +350,14 @@ static CHOOSE_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_TRANSFORM_SAMPLE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_SAMPLE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useDef")],
     name: (NS_DGM, "clrData"),
     slots: &[crate::Slot::single((NS_DGM, "dataModel"))],
     text: false,
 };
 
-static COLOR_TRANSFORM_DEFINITIONS_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_DEFINITIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueId"), (None, "minVer")],
     name: (NS_DGM, "colorsDef"),
     slots: &[
@@ -371,7 +370,7 @@ static COLOR_TRANSFORM_DEFINITIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueId"), (None, "minVer"), (None, "resId")],
     name: (NS_DGM, "colorsDefHdr"),
     slots: &[
@@ -383,14 +382,14 @@ static COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLOR_TRANSFORM_HEADER_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TRANSFORM_HEADER_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "colorsDefHdrLst"),
     slots: &[crate::Slot::list((NS_DGM, "colorsDefHdr"))],
     text: false,
 };
 
-static CONSTRAINT_SHAPE: crate::Shape = crate::Shape {
+pub static CONSTRAINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "for"),
@@ -409,14 +408,14 @@ static CONSTRAINT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONSTRAINT_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CONSTRAINT_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "constrLst"),
     slots: &[crate::Slot::list((NS_DGM, "constr"))],
     text: false,
 };
 
-static CONNECTION_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "modelId"),
         (None, "type"),
@@ -433,14 +432,14 @@ static CONNECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONNECTION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "cxnLst"),
     slots: &[crate::Slot::list((NS_DGM, "cxn"))],
     text: false,
 };
 
-static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "dataModel"),
     slots: &[
@@ -453,63 +452,63 @@ static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DESCRIPTION_CT_DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
+pub static DESCRIPTION_CT_DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "desc"),
     slots: &[],
     text: false,
 };
 
-static DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
+pub static DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "desc"),
     slots: &[],
     text: false,
 };
 
-static STYLE_LABEL_DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_LABEL_DESCRIPTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "desc"),
     slots: &[],
     text: false,
 };
 
-static DIAGRAM_DIRECTION_SHAPE: crate::Shape = crate::Shape {
+pub static DIAGRAM_DIRECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "dir"),
     slots: &[],
     text: false,
 };
 
-static EFFECT_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "effectClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ELSE_SHAPE: crate::Shape = crate::Shape {
+pub static ELSE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_DGM, "else"),
     slots: &[crate::Slot::items(&LAYOUT_ELEMENT_CONTENT_TAGS)],
     text: false,
 };
 
-static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static FILL_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "fillClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FOR_EACH_SHAPE: crate::Shape = crate::Shape {
+pub static FOR_EACH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "ref"),
@@ -525,14 +524,14 @@ static FOR_EACH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ORGANIZATION_CHART_BRANCH_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static ORGANIZATION_CHART_BRANCH_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "hierBranch"),
     slots: &[],
     text: false,
 };
 
-static IF_SHAPE: crate::Shape = crate::Shape {
+pub static IF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "axis"),
@@ -551,7 +550,7 @@ static IF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LAYOUT_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueId"), (None, "minVer"), (None, "defStyle")],
     name: (NS_DGM, "layoutDef"),
     slots: &[
@@ -567,7 +566,7 @@ static LAYOUT_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LAYOUT_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "uniqueId"),
         (None, "minVer"),
@@ -584,14 +583,14 @@ static LAYOUT_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIAGRAM_LAYOUT_HEADER_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static DIAGRAM_LAYOUT_HEADER_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "layoutDefHdrLst"),
     slots: &[crate::Slot::list((NS_DGM, "layoutDefHdr"))],
     text: false,
 };
 
-static LAYOUT_NODE_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_NODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "styleLbl"),
@@ -603,28 +602,28 @@ static LAYOUT_NODE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "linClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static SHOW_ORGANIZATION_CHART_USER_INTERFACE_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_ORGANIZATION_CHART_USER_INTERFACE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "orgChart"),
     slots: &[],
     text: false,
 };
 
-static PARAMETER_SHAPE: crate::Shape = crate::Shape {
+pub static PARAMETER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "val")],
     name: (NS_DGM, "param"),
     slots: &[],
     text: false,
 };
 
-static PROPERTY_SET_SHAPE: crate::Shape = crate::Shape {
+pub static PROPERTY_SET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "presAssocID"),
         (None, "presName"),
@@ -663,7 +662,7 @@ static PROPERTY_SET_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_LAYOUT_VARIABLES_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_LAYOUT_VARIABLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "presLayoutVars"),
     slots: &[
@@ -680,7 +679,7 @@ static PRESENTATION_LAYOUT_VARIABLES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRESENTATION_OF_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENTATION_OF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "axis"),
         (None, "ptType"),
@@ -694,7 +693,7 @@ static PRESENTATION_OF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static POINT_SHAPE: crate::Shape = crate::Shape {
+pub static POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "modelId"), (None, "type"), (None, "cxnId")],
     name: (NS_DGM, "pt"),
     slots: &[
@@ -706,28 +705,28 @@ static POINT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static POINT_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static POINT_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "ptLst"),
     slots: &[crate::Slot::list((NS_DGM, "pt"))],
     text: false,
 };
 
-static EXPLICIT_RELATIONSHIPS_TO_DIAGRAM_PARTS_SHAPE: crate::Shape = crate::Shape {
+pub static EXPLICIT_RELATIONSHIPS_TO_DIAGRAM_PARTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "dm"), (NS_R, "lo"), (NS_R, "qs"), (NS_R, "cs")],
     name: (NS_DGM, "relIds"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_RESIZE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_RESIZE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM, "resizeHandles"),
     slots: &[],
     text: false,
 };
 
-static RULE_SHAPE: crate::Shape = crate::Shape {
+pub static RULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "for"),
@@ -742,21 +741,21 @@ static RULE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RULE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static RULE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "ruleLst"),
     slots: &[crate::Slot::list((NS_DGM, "rule"))],
     text: false,
 };
 
-static SAMPLE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static SAMPLE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useDef")],
     name: (NS_DGM, "sampData"),
     slots: &[crate::Slot::single((NS_DGM, "dataModel"))],
     text: false,
 };
 
-static SCENE3D_SHAPE: crate::Shape = crate::Shape {
+pub static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "scene3d"),
     slots: &[
@@ -768,7 +767,7 @@ static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "type"),
@@ -786,7 +785,7 @@ static SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP3D_SHAPE: crate::Shape = crate::Shape {
+pub static SP3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "z"),
         (None, "extrusionH"),
@@ -804,7 +803,7 @@ static SP3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_DGM, "spPr"),
     slots: &[
@@ -820,7 +819,7 @@ static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "style"),
     slots: &[
@@ -832,14 +831,14 @@ static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useDef")],
     name: (NS_DGM, "styleData"),
     slots: &[crate::Slot::single((NS_DGM, "dataModel"))],
     text: false,
 };
 
-static STYLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueId"), (None, "minVer")],
     name: (NS_DGM, "styleDef"),
     slots: &[
@@ -853,7 +852,7 @@ static STYLE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueId"), (None, "minVer"), (None, "resId")],
     name: (NS_DGM, "styleDefHdr"),
     slots: &[
@@ -865,14 +864,14 @@ static STYLE_DEFINITION_HEADER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_OF_STYLE_DEFINITION_HEADERS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_STYLE_DEFINITION_HEADERS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "styleDefHdrLst"),
     slots: &[crate::Slot::list((NS_DGM, "styleDefHdr"))],
     text: false,
 };
 
-static STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_DGM, "styleLbl"),
     slots: &[
@@ -887,7 +886,7 @@ static STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_LABEL_STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_LABEL_STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_DGM, "styleLbl"),
     slots: &[
@@ -900,7 +899,7 @@ static STYLE_LABEL_STYLE_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "t"),
     slots: &[
@@ -911,56 +910,56 @@ static TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TITLE_CT_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_CT_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "title"),
     slots: &[],
     text: false,
 };
 
-static TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "title"),
     slots: &[],
     text: false,
 };
 
-static TITLE_SD_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_SD_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lang"), (None, "val")],
     name: (NS_DGM, "title"),
     slots: &[],
     text: false,
 };
 
-static TEXT_EFFECT_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_EFFECT_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "txEffectClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static TEXT_FILL_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_FILL_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "txFillClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static TEXT_LINE_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_LINE_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "meth"), (None, "hueDir")],
     name: (NS_DGM, "txLinClrLst"),
     slots: &[crate::Slot::items(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static TEXT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "txPr"),
     slots: &[crate::Slot::choice(&super::drawing::TEXT3D_CONTENT_TAGS)],
     text: false,
 };
 
-static VARIABLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static VARIABLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "varLst"),
     slots: &[
@@ -977,7 +976,7 @@ static VARIABLE_LIST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WHOLE_E2O_FORMATTING_SHAPE: crate::Shape = crate::Shape {
+pub static WHOLE_E2O_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM, "whole"),
     slots: &[

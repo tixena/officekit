@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2010/diagram`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_DGM14: Option<NamespaceId> = Some(43);
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -245,7 +244,7 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RECOLOR_IMG_SHAPE: crate::Shape = crate::Shape {
+pub static RECOLOR_IMG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_DGM14, "recolorImg"),
     slots: &[],

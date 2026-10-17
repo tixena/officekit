@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2024/pivotDynamicArrays`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_XLPDA: Option<NamespaceId> = Some(138);
 
-static PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ref")],
     name: (NS_XLPDA, "pivotCacheDynamicArray"),
     slots: &[],

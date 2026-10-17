@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2013/main/command`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_PC: Option<NamespaceId> = Some(81);
 
-static ANIM_EFFECT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static ANIM_EFFECT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "animEffectMkLst"),
     slots: &[crate::Slot::items(
@@ -236,7 +235,7 @@ static ANIM_EFFECT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ANIM_EFFECT_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static ANIM_EFFECT_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "animEffectParentMkLst"),
     slots: &[crate::Slot::items(
@@ -245,7 +244,7 @@ static ANIM_EFFECT_PARENT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CM_AUTHOR_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CM_AUTHOR_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "cmAuthorMkLst"),
     slots: &[crate::Slot::items(
@@ -254,7 +253,7 @@ static CM_AUTHOR_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CM_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CM_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "cmMkLst"),
     slots: &[crate::Slot::items(
@@ -263,7 +262,7 @@ static CM_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CUST_SHOW_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CUST_SHOW_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "custShowMkLst"),
     slots: &[crate::Slot::items(
@@ -272,7 +271,7 @@ static CUST_SHOW_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_XML_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static C_XML_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "cXmlMkLst"),
     slots: &[crate::Slot::items(
@@ -281,7 +280,7 @@ static C_XML_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DESIGN_TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DESIGN_TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "designTagMkLst"),
     slots: &[crate::Slot::items(
@@ -290,14 +289,14 @@ static DESIGN_TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DOC_MK_SHAPE: crate::Shape = crate::Shape {
+pub static DOC_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "docMk"),
     slots: &[],
     text: false,
 };
 
-static DOC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static DOC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "docMkLst"),
     slots: &[crate::Slot::items(
@@ -306,7 +305,7 @@ static DOC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HANDOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static HANDOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "handoutMkLst"),
     slots: &[crate::Slot::items(
@@ -315,7 +314,7 @@ static HANDOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sldMasterMkLst"),
     slots: &[crate::Slot::items(
@@ -324,7 +323,7 @@ static SLD_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "notesMasterMkLst"),
     slots: &[crate::Slot::items(
@@ -333,7 +332,7 @@ static NOTES_MASTER_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "notesMkLst"),
     slots: &[crate::Slot::items(
@@ -342,7 +341,7 @@ static NOTES_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_TXT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_TXT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "notesTxtMkLst"),
     slots: &[crate::Slot::items(
@@ -351,7 +350,7 @@ static NOTES_TXT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TK_APP_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TK_APP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "tkAppMkLst"),
     slots: &[crate::Slot::items(
@@ -360,7 +359,7 @@ static TK_APP_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SECTION_LNK_OBJ_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_LNK_OBJ_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sectionLnkObjMkLst"),
     slots: &[crate::Slot::items(
@@ -369,7 +368,7 @@ static SECTION_LNK_OBJ_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SECTION_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SECTION_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sectionMkLst"),
     slots: &[crate::Slot::items(
@@ -378,7 +377,7 @@ static SECTION_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_BASE_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_BASE_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sldBaseMkLst"),
     slots: &[crate::Slot::items(
@@ -387,7 +386,7 @@ static SLD_BASE_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_LAYOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_LAYOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sldLayoutMkLst"),
     slots: &[crate::Slot::items(
@@ -396,14 +395,14 @@ static SLD_LAYOUT_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_MK_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cId"), (None, "sldId")],
     name: (NS_PC, "sldMk"),
     slots: &[],
     text: false,
 };
 
-static SLD_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sldMkLst"),
     slots: &[
@@ -414,7 +413,7 @@ static SLD_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_POS_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_POS_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "sldPosMkLst"),
     slots: &[crate::Slot::items(
@@ -423,7 +422,7 @@ static SLD_POS_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "tagMkLst"),
     slots: &[crate::Slot::items(
@@ -432,7 +431,7 @@ static TAG_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOC_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static TOC_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC, "tocMkLst"),
     slots: &[crate::Slot::items(

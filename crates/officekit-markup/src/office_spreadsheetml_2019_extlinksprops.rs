@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2019/extlinksprops`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_XXLNP: Option<NamespaceId> = Some(165);
 
-static EXTERNAL_LINKS_PR_SHAPE: crate::Shape = crate::Shape {
+pub static EXTERNAL_LINKS_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "autoRefresh")],
     name: (NS_XXLNP, "externalLinksPr"),
     slots: &[],

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2025/pivotDataSource`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_XLPDS: Option<NamespaceId> = Some(139);
 const NS_XNE: Option<NamespaceId> = Some(149);
 
-static PIVOT_CACHE_DATA_SOURCE_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_CACHE_DATA_SOURCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ref")],
     name: (NS_XLPDS, "pivotCacheDataSource"),
     slots: &[crate::Slot::single((NS_XNE, "f"))],

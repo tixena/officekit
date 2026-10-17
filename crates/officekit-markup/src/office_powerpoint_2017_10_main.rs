@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2017/10/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_P1710: Option<NamespaceId> = Some(68);
 
-static READONLY_RECOMMENDED_SHAPE: crate::Shape = crate::Shape {
+pub static READONLY_RECOMMENDED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P1710, "readonlyRecommended"),
     slots: &[],

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2016/pivotdefaultlayout`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_XPDL: Option<NamespaceId> = Some(151);
 
-static PIVOT_TABLE_DEFINITION16_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_DEFINITION16_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "EnabledSubtotalsDefault"),
         (None, "SubtotalsOnTopDefault"),

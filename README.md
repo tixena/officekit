@@ -36,10 +36,11 @@ Built and tested:
 
 ```
 crates/officekit-core          library: element trees, file types
-crates/officekit-markup        library: the typed tree, one module per namespace, with transforms and visitors
+crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-packaging     library: the package, part names, content types, relationships, images
 crates/officekit-strict        library: the Strict class: read and write of every node
 crates/officekit-transitional  library: the Transitional class: read and write of every node, date-cell conversion
+crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
 crates/officekit-validation    library: the validator and its generated tables
 crates/officekit-xml           library: element tree, names, values, part reader and writer
 crates/officekit               CLI binary
@@ -129,7 +130,8 @@ just audit    # cargo audit
 ## The generator and its inputs
 
 `cargo xtask generate-schema` writes the typed tree into
-`crates/officekit-markup/src`, the conformance classes into
+`crates/officekit-markup/src`, its traversals into
+`crates/officekit-traversal/src`, the conformance classes into
 `crates/officekit-transitional/src` and `crates/officekit-strict/src`, the
 part modules (`parts/`) of `officekit-core`, the validation tables of
 `officekit-validation`

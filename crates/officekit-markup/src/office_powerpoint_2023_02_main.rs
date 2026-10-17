@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2023/02/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,28 +226,28 @@ use std::io;
 
 const NS_P232: Option<NamespaceId> = Some(77);
 
-static TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P232, "type"),
     slots: &[crate::Slot::required_choice(&PLACEHOLDER_TYPE_CONTENT_TAGS)],
     text: false,
 };
 
-static PH_TYPE_EXT_SHAPE: crate::Shape = crate::Shape {
+pub static PH_TYPE_EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P232, "phTypeExt"),
     slots: &[crate::Slot::required((NS_P232, "type"))],
     text: false,
 };
 
-static CAMEO_SHAPE: crate::Shape = crate::Shape {
+pub static CAMEO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P232, "cameo"),
     slots: &[],
     text: false,
 };
 
-static UNKNOWN_SHAPE: crate::Shape = crate::Shape {
+pub static UNKNOWN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P232, "unknown"),
     slots: &[],

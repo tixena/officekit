@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2022/08/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P228: Option<NamespaceId> = Some(76);
 
-static COMMENT_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_P228, "comment"),
     slots: &[],
     text: false,
 };
 
-static ANCHR_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "anchr"),
     slots: &[
@@ -245,21 +244,21 @@ static ANCHR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ASGN_SHAPE: crate::Shape = crate::Shape {
+pub static ASGN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "asgn"),
     slots: &[],
     text: false,
 };
 
-static ATRBTN_SHAPE: crate::Shape = crate::Shape {
+pub static ATRBTN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "atrbtn"),
     slots: &[],
     text: false,
 };
 
-static TASK_DETAILS_SHAPE: crate::Shape = crate::Shape {
+pub static TASK_DETAILS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "deleted"), (None, "inactive")],
     name: (NS_P228, "taskDetails"),
     slots: &[
@@ -269,14 +268,14 @@ static TASK_DETAILS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HISTORY_SHAPE: crate::Shape = crate::Shape {
+pub static HISTORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "history"),
     slots: &[crate::Slot::list((NS_P228, "event"))],
     text: false,
 };
 
-static EVENT_SHAPE: crate::Shape = crate::Shape {
+pub static EVENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "time"), (None, "id")],
     name: (NS_P228, "event"),
     slots: &[
@@ -288,56 +287,56 @@ static EVENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PCNT_CMPLT_SHAPE: crate::Shape = crate::Shape {
+pub static PCNT_CMPLT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P228, "pcntCmplt"),
     slots: &[],
     text: false,
 };
 
-static DATE_SHAPE: crate::Shape = crate::Shape {
+pub static DATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "stDt"), (None, "endDt")],
     name: (NS_P228, "date"),
     slots: &[],
     text: false,
 };
 
-static TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P228, "title"),
     slots: &[],
     text: false,
 };
 
-static UNDO_SHAPE: crate::Shape = crate::Shape {
+pub static UNDO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_P228, "undo"),
     slots: &[],
     text: false,
 };
 
-static UNKNOWN_SHAPE: crate::Shape = crate::Shape {
+pub static UNKNOWN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "unknown"),
     slots: &[],
     text: false,
 };
 
-static ADD_SHAPE: crate::Shape = crate::Shape {
+pub static ADD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "add"),
     slots: &[],
     text: false,
 };
 
-static UNASGN_ALL_SHAPE: crate::Shape = crate::Shape {
+pub static UNASGN_ALL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "unasgnAll"),
     slots: &[],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P228, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],

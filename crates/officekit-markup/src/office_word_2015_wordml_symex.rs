@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2015/wordml/symex`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_W16SE: Option<NamespaceId> = Some(107);
 
-static SYM_EX_SHAPE: crate::Shape = crate::Shape {
+pub static SYM_EX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W16SE, "font"), (NS_W16SE, "char")],
     name: (NS_W16SE, "symEx"),
     slots: &[],

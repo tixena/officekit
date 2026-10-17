@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/richvaluerel`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,21 +228,21 @@ const NS_R: Option<NamespaceId> = Some(88);
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRVREL: Option<NamespaceId> = Some(144);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRVREL, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static REL_SHAPE: crate::Shape = crate::Shape {
+pub static REL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_XLRVREL, "rel"),
     slots: &[],
     text: false,
 };
 
-static RICH_VALUE_RELS_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_VALUE_RELS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRVREL, "richValueRels"),
     slots: &[

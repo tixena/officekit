@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/2019/extlst`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_OEL: Option<NamespaceId> = Some(62);
 
-static EXT_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_OEL, "ext"),
     slots: &[crate::Slot::required_choice(

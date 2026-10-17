@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/excel/2006/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,14 +226,14 @@ use std::io;
 
 const NS_XNE: Option<NamespaceId> = Some(149);
 
-static F_SHAPE: crate::Shape = crate::Shape {
+pub static F_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XNE, "f"),
     slots: &[],
     text: true,
 };
 
-static SQREF_SHAPE: crate::Shape = crate::Shape {
+pub static SQREF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XNE, "sqref"),
     slots: &[],

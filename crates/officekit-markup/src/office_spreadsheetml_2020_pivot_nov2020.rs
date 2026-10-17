@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,21 +226,21 @@ use std::io;
 
 const NS_XXPIM: Option<NamespaceId> = Some(166);
 
-static IMPLICIT_MEASURE_SUPPORT_SHAPE: crate::Shape = crate::Shape {
+pub static IMPLICIT_MEASURE_SUPPORT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XXPIM, "implicitMeasureSupport"),
     slots: &[],
     text: true,
 };
 
-static DATA_FIELD_FUTURE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_FIELD_FUTURE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "version"), (None, "sourceField")],
     name: (NS_XXPIM, "dataFieldFutureData"),
     slots: &[],
     text: false,
 };
 
-static IGNORABLE_AFTER_VERSION_SHAPE: crate::Shape = crate::Shape {
+pub static IGNORABLE_AFTER_VERSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "version")],
     name: (NS_XXPIM, "ignorableAfterVersion"),
     slots: &[],

@@ -477,6 +477,7 @@ dependencies = [
  "officekit-packaging",
  "officekit-strict",
  "officekit-transitional",
+ "officekit-traversal",
  "officekit-validation",
  "officekit-xml",
  "os-shim",
@@ -501,6 +502,7 @@ version = "0.1.0"
 dependencies = [
  "imagesize",
  "officekit-markup",
+ "officekit-traversal",
  "officekit-xml",
  "os-shim",
  "thiserror",
@@ -521,6 +523,14 @@ version = "0.1.0"
 dependencies = [
  "officekit-markup",
  "officekit-packaging",
+ "officekit-xml",
+]
+
+[[package]]
+name = "officekit-traversal"
+version = "0.1.0"
+dependencies = [
+ "officekit-markup",
  "officekit-xml",
 ]
 

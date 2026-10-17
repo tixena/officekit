@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordml`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -232,7 +231,7 @@ const NS_R: Option<NamespaceId> = Some(88);
 const NS_W: Option<NamespaceId> = Some(97);
 const NS_W14: Option<NamespaceId> = Some(99);
 
-static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isComment")],
     name: (NS_W14, "cNvContentPartPr"),
     slots: &[
@@ -242,7 +241,7 @@ static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -259,14 +258,14 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_W14, "xfrm"),
     slots: &[
@@ -276,63 +275,63 @@ static XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BEVEL_B_SHAPE: crate::Shape = crate::Shape {
+pub static BEVEL_B_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "bevelB"),
     slots: &[],
     text: false,
 };
 
-static BEVEL_T_SHAPE: crate::Shape = crate::Shape {
+pub static BEVEL_T_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "bevelT"),
     slots: &[],
     text: false,
 };
 
-static CAMERA_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "prst")],
     name: (NS_W14, "camera"),
     slots: &[],
     text: false,
 };
 
-static CONTOUR_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static CONTOUR_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "contourClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static EXTRUSION_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static EXTRUSION_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "extrusionClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static DEFAULT_IMAGE_DPI_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_IMAGE_DPI_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "defaultImageDpi"),
     slots: &[],
     text: false,
 };
 
-static TEXT_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "textFill"),
     slots: &[crate::Slot::choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static GLOW_SHAPE: crate::Shape = crate::Shape {
+pub static GLOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "rad")],
     name: (NS_W14, "glow"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static GRAD_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static GRAD_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "gradFill"),
     slots: &[
@@ -342,182 +341,182 @@ static GRAD_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GS_SHAPE: crate::Shape = crate::Shape {
+pub static GS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "pos")],
     name: (NS_W14, "gs"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static GS_LST_SHAPE: crate::Shape = crate::Shape {
+pub static GS_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "gsLst"),
     slots: &[crate::Slot::list((NS_W14, "gs"))],
     text: false,
 };
 
-static LIGATURES_SHAPE: crate::Shape = crate::Shape {
+pub static LIGATURES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "ligatures"),
     slots: &[],
     text: false,
 };
 
-static LIGHT_RIG_SHAPE: crate::Shape = crate::Shape {
+pub static LIGHT_RIG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "rig"), (NS_W14, "dir")],
     name: (NS_W14, "lightRig"),
     slots: &[crate::Slot::single((NS_W14, "rot"))],
     text: false,
 };
 
-static MITER_SHAPE: crate::Shape = crate::Shape {
+pub static MITER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "lim")],
     name: (NS_W14, "miter"),
     slots: &[],
     text: false,
 };
 
-static LIN_SHAPE: crate::Shape = crate::Shape {
+pub static LIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "ang"), (NS_W14, "scaled")],
     name: (NS_W14, "lin"),
     slots: &[],
     text: false,
 };
 
-static DOC_ID_SHAPE: crate::Shape = crate::Shape {
+pub static DOC_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "docId"),
     slots: &[],
     text: false,
 };
 
-static NUM_FORM_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_FORM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "numForm"),
     slots: &[],
     text: false,
 };
 
-static NUM_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "numSpacing"),
     slots: &[],
     text: false,
 };
 
-static CHECKED_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "checked"),
     slots: &[],
     text: false,
 };
 
-static CNTXT_ALTS_SHAPE: crate::Shape = crate::Shape {
+pub static CNTXT_ALTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "cntxtAlts"),
     slots: &[],
     text: false,
 };
 
-static CONFLICT_MODE_SHAPE: crate::Shape = crate::Shape {
+pub static CONFLICT_MODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "conflictMode"),
     slots: &[],
     text: false,
 };
 
-static DISCARD_IMAGE_EDITING_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static DISCARD_IMAGE_EDITING_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "discardImageEditingData"),
     slots: &[],
     text: false,
 };
 
-static PATH_SHAPE: crate::Shape = crate::Shape {
+pub static PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "path")],
     name: (NS_W14, "path"),
     slots: &[crate::Slot::single((NS_W14, "fillToRect"))],
     text: false,
 };
 
-static LUM_SHAPE: crate::Shape = crate::Shape {
+pub static LUM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "lum"),
     slots: &[],
     text: false,
 };
 
-static LUM_MOD_SHAPE: crate::Shape = crate::Shape {
+pub static LUM_MOD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "lumMod"),
     slots: &[],
     text: false,
 };
 
-static LUM_OFF_SHAPE: crate::Shape = crate::Shape {
+pub static LUM_OFF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "lumOff"),
     slots: &[],
     text: false,
 };
 
-static SAT_SHAPE: crate::Shape = crate::Shape {
+pub static SAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "sat"),
     slots: &[],
     text: false,
 };
 
-static SAT_MOD_SHAPE: crate::Shape = crate::Shape {
+pub static SAT_MOD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "satMod"),
     slots: &[],
     text: false,
 };
 
-static SAT_OFF_SHAPE: crate::Shape = crate::Shape {
+pub static SAT_OFF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "satOff"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "alpha"),
     slots: &[],
     text: false,
 };
 
-static SHADE_SHAPE: crate::Shape = crate::Shape {
+pub static SHADE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "shade"),
     slots: &[],
     text: false,
 };
 
-static TINT_SHAPE: crate::Shape = crate::Shape {
+pub static TINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "tint"),
     slots: &[],
     text: false,
 };
 
-static HUE_MOD_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_MOD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "hueMod"),
     slots: &[],
     text: false,
 };
 
-static PRST_DASH_SHAPE: crate::Shape = crate::Shape {
+pub static PRST_DASH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "prstDash"),
     slots: &[],
     text: false,
 };
 
-static PROPS3D_SHAPE: crate::Shape = crate::Shape {
+pub static PROPS3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W14, "extrusionH"),
         (NS_W14, "contourW"),
@@ -533,7 +532,7 @@ static PROPS3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REFLECTION_SHAPE: crate::Shape = crate::Shape {
+pub static REFLECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W14, "blurRad"),
         (NS_W14, "stA"),
@@ -554,21 +553,21 @@ static REFLECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILL_TO_RECT_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_TO_RECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "l"), (NS_W14, "t"), (NS_W14, "r"), (NS_W14, "b")],
     name: (NS_W14, "fillToRect"),
     slots: &[],
     text: false,
 };
 
-static SRGB_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static SRGB_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "srgbClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static SCENE3D_SHAPE: crate::Shape = crate::Shape {
+pub static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "scene3d"),
     slots: &[
@@ -578,14 +577,14 @@ static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SCHEME_CLR_SHAPE: crate::Shape = crate::Shape {
+pub static SCHEME_CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "val")],
     name: (NS_W14, "schemeClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static CHECKBOX_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKBOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "checkbox"),
     slots: &[
@@ -596,21 +595,21 @@ static CHECKBOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHECKED_STATE_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKED_STATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "checkedState"),
     slots: &[],
     text: false,
 };
 
-static UNCHECKED_STATE_SHAPE: crate::Shape = crate::Shape {
+pub static UNCHECKED_STATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "uncheckedState"),
     slots: &[],
     text: false,
 };
 
-static SHADOW_SHAPE: crate::Shape = crate::Shape {
+pub static SHADOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W14, "blurRad"),
         (NS_W14, "dist"),
@@ -626,35 +625,35 @@ static SHADOW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SOLID_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static SOLID_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "solidFill"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ROT_SHAPE: crate::Shape = crate::Shape {
+pub static ROT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "lat"), (NS_W14, "lon"), (NS_W14, "rev")],
     name: (NS_W14, "rot"),
     slots: &[],
     text: false,
 };
 
-static STYLE_SET_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_SET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "id"), (NS_W14, "val")],
     name: (NS_W14, "styleSet"),
     slots: &[],
     text: false,
 };
 
-static STYLISTIC_SETS_SHAPE: crate::Shape = crate::Shape {
+pub static STYLISTIC_SETS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "stylisticSets"),
     slots: &[crate::Slot::list((NS_W14, "styleSet"))],
     text: false,
 };
 
-static TEXT_OUTLINE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_OUTLINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_W14, "w"),
         (NS_W14, "cap"),
@@ -670,7 +669,7 @@ static TEXT_OUTLINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W14, "bwMode"), (NS_R, "id")],
     name: (NS_W14, "contentPart"),
     slots: &[
@@ -681,7 +680,7 @@ static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "nvContentPartPr"),
     slots: &[
@@ -691,49 +690,49 @@ static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static BEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "bevel"),
     slots: &[],
     text: false,
 };
 
-static ENTITY_PICKER_SHAPE: crate::Shape = crate::Shape {
+pub static ENTITY_PICKER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "entityPicker"),
     slots: &[],
     text: false,
 };
 
-static NO_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static NO_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "noFill"),
     slots: &[],
     text: false,
 };
 
-static ROUND_SHAPE: crate::Shape = crate::Shape {
+pub static ROUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W14, "round"),
     slots: &[],
     text: false,
 };
 
-static CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id")],
     name: (NS_W14, "customXmlConflictDelRangeEnd"),
     slots: &[],
     text: false,
 };
 
-static CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id")],
     name: (NS_W14, "customXmlConflictInsRangeEnd"),
     slots: &[],
     text: false,
 };
 
-static CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "conflictDel"),
     slots: &[crate::Slot::items(
@@ -742,7 +741,7 @@ static CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "conflictIns"),
     slots: &[crate::Slot::items(
@@ -751,28 +750,28 @@ static CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONFLICT_DEL_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CONFLICT_DEL_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "conflictDel"),
     slots: &[],
     text: false,
 };
 
-static CONFLICT_INS_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CONFLICT_INS_TRACK_CHANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "conflictIns"),
     slots: &[],
     text: false,
 };
 
-static CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "customXmlConflictDelRangeStart"),
     slots: &[],
     text: false,
 };
 
-static CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W, "id"), (NS_W, "author"), (NS_W, "date")],
     name: (NS_W14, "customXmlConflictInsRangeStart"),
     slots: &[],

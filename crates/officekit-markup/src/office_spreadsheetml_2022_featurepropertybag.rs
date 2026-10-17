@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XFPB: Option<NamespaceId> = Some(131);
 
-static DXF_SHAPE: crate::Shape = crate::Shape {
+pub static DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "dxf"),
     slots: &[
@@ -243,56 +242,56 @@ static DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static A_SHAPE: crate::Shape = crate::Shape {
+pub static A_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "a"),
     slots: &[crate::Slot::items(&ARRAY_FEATURE_PROPERTY_CONTENT_TAGS)],
     text: false,
 };
 
-static BAG_EXT_SHAPE: crate::Shape = crate::Shape {
+pub static BAG_EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "bagExt"),
     slots: &[crate::Slot::single((NS_XFPB, "extLst"))],
     text: false,
 };
 
-static BAG_ID_BAG_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static BAG_ID_BAG_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "bagId"),
     slots: &[],
     text: true,
 };
 
-static B_BOOL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static B_BOOL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "b"),
     slots: &[],
     text: true,
 };
 
-static DXF_COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static DXF_COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i")],
     name: (NS_XFPB, "DXFComplement"),
     slots: &[],
     text: false,
 };
 
-static D_DECIMAL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static D_DECIMAL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "d"),
     slots: &[],
     text: true,
 };
 
-static BAG_SHAPE: crate::Shape = crate::Shape {
+pub static BAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "extRef"),
@@ -304,7 +303,7 @@ static BAG_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FEATURE_PROPERTY_BAGS_SHAPE: crate::Shape = crate::Shape {
+pub static FEATURE_PROPERTY_BAGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XFPB, "FeaturePropertyBags"),
     slots: &[
@@ -315,7 +314,7 @@ static FEATURE_PROPERTY_BAGS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FPBS_SHAPE: crate::Shape = crate::Shape {
+pub static FPBS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "fpbs"),
     slots: &[
@@ -326,21 +325,21 @@ static FPBS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static I_INT_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static I_INT_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "i"),
     slots: &[],
     text: true,
 };
 
-static REL_REL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static REL_REL_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "rel"),
     slots: &[],
     text: true,
 };
 
-static REVDXF_SHAPE: crate::Shape = crate::Shape {
+pub static REVDXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "revdxf"),
     slots: &[
@@ -350,14 +349,14 @@ static REVDXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static S_STRING_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static S_STRING_FEATURE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "k")],
     name: (NS_XFPB, "s"),
     slots: &[],
     text: true,
 };
 
-static COLUMN_BODY_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static COLUMN_BODY_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnBodyRevDxf"),
     slots: &[
@@ -367,7 +366,7 @@ static COLUMN_BODY_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLUMN_HEADER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static COLUMN_HEADER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnHeaderRevDxf"),
     slots: &[
@@ -377,7 +376,7 @@ static COLUMN_HEADER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COLUMN_TOTALS_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static COLUMN_TOTALS_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "columnTotalsRevDxf"),
     slots: &[
@@ -387,7 +386,7 @@ static COLUMN_TOTALS_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "dataRevDxf"),
     slots: &[
@@ -397,7 +396,7 @@ static DATA_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HEADER_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "headerRowBorderRevDxf"),
     slots: &[
@@ -407,7 +406,7 @@ static HEADER_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HEADER_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "headerRowRevDxf"),
     slots: &[
@@ -417,7 +416,7 @@ static HEADER_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "tableBorderRevDxf"),
     slots: &[
@@ -427,7 +426,7 @@ static TABLE_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOTALS_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static TOTALS_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "totalsRowBorderRevDxf"),
     slots: &[
@@ -437,7 +436,7 @@ static TOTALS_ROW_BORDER_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOTALS_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
+pub static TOTALS_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "totalsRowRevDxf"),
     slots: &[
@@ -447,49 +446,49 @@ static TOTALS_ROW_REV_DXF_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XF_COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static XF_COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i")],
     name: (NS_XFPB, "xfComplement"),
     slots: &[],
     text: false,
 };
 
-static B_BOOLEAN_SHAPE: crate::Shape = crate::Shape {
+pub static B_BOOLEAN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "b"),
     slots: &[],
     text: true,
 };
 
-static D_DOUBLE_SHAPE: crate::Shape = crate::Shape {
+pub static D_DOUBLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "d"),
     slots: &[],
     text: true,
 };
 
-static I_INTEGER_SHAPE: crate::Shape = crate::Shape {
+pub static I_INTEGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "i"),
     slots: &[],
     text: true,
 };
 
-static REL_STRING_SHAPE: crate::Shape = crate::Shape {
+pub static REL_STRING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "rel"),
     slots: &[],
     text: true,
 };
 
-static S_STRING_SHAPE: crate::Shape = crate::Shape {
+pub static S_STRING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "s"),
     slots: &[],
     text: true,
 };
 
-static BAG_ID_UNSIGNED_INT_SHAPE: crate::Shape = crate::Shape {
+pub static BAG_ID_UNSIGNED_INT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XFPB, "bagId"),
     slots: &[],

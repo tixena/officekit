@@ -2,8 +2,8 @@ use core::slice;
 use std::io::{self, Write};
 
 use officekit_markup::wordprocessing::{self, TableRow, Text, read};
-use officekit_markup::write_through::{WriteThrough as _, Written};
-use officekit_markup::{Descend, Visit as _};
+use officekit_markup::{Descend, Written};
+use officekit_traversal::{Visit as _, WriteThrough as _};
 use officekit_xml::element::{Element, NamespaceDeclaration, Node};
 use officekit_xml::name::Namespace;
 use officekit_xml::stream::reader::PartEvent;

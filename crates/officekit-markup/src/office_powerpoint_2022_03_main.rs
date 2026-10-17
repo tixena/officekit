@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2022/03/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,28 +227,28 @@ use std::io;
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P223: Option<NamespaceId> = Some(75);
 
-static RXN_SHAPE: crate::Shape = crate::Shape {
+pub static RXN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type")],
     name: (NS_P223, "rxn"),
     slots: &[crate::Slot::list((NS_P223, "instance"))],
     text: false,
 };
 
-static INSTANCE_SHAPE: crate::Shape = crate::Shape {
+pub static INSTANCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "time"), (None, "authorId")],
     name: (NS_P223, "instance"),
     slots: &[crate::Slot::single((NS_P223, "extLst"))],
     text: false,
 };
 
-static REACTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static REACTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P223, "reactions"),
     slots: &[crate::Slot::list((NS_P223, "rxn"))],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P223, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],

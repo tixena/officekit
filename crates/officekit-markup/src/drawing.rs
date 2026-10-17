@@ -216,11 +216,10 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
 use crate::Write as _;
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -254,56 +253,56 @@ const NS_X: Option<NamespaceId> = Some(118);
 const NS_XDR: Option<NamespaceId> = Some(129);
 const NS_XVML: Option<NamespaceId> = Some(162);
 
-static ACCENT1_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT1_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent1"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ACCENT2_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent2"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ACCENT3_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT3_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent3"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ACCENT4_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT4_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent4"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ACCENT5_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT5_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent5"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ACCENT6_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT6_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "accent6"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static LIST_OF_SHAPE_ADJUST_HANDLES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SHAPE_ADJUST_HANDLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "ahLst"),
     slots: &[crate::Slot::items(&SHAPE_ADJUST_HANDLES_CONTENT_TAGS)],
     text: false,
 };
 
-static POLAR_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
+pub static POLAR_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "gdRefR"),
         (None, "minR"),
@@ -317,7 +316,7 @@ static POLAR_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XY_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
+pub static XY_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "gdRefX"),
         (None, "minX"),
@@ -331,98 +330,98 @@ static XY_ADJUST_HANDLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ALPHA_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "alpha"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_BI_LEVEL_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_BI_LEVEL_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "thresh")],
     name: (NS_A, "alphaBiLevel"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_CEILING_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_CEILING_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "alphaCeiling"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_FLOOR_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_FLOOR_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "alphaFloor"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_INVERSE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_INVERSE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "alphaInv"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static ALPHA_MODULATE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_MODULATE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "alphaMod"),
     slots: &[crate::Slot::required((NS_A, "cont"))],
     text: false,
 };
 
-static ALPHA_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "alphaMod"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_MODULATE_FIXED_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_MODULATE_FIXED_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "amt")],
     name: (NS_A, "alphaModFix"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "alphaOff"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_INSET_OUTSET_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_INSET_OUTSET_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rad")],
     name: (NS_A, "alphaOutset"),
     slots: &[],
     text: false,
 };
 
-static ALPHA_REPLACE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static ALPHA_REPLACE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "a")],
     name: (NS_A, "alphaRepl"),
     slots: &[],
     text: false,
 };
 
-static ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHOR_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y"), (None, "z")],
     name: (NS_A, "anchor"),
     slots: &[],
     text: false,
 };
 
-static DRAW_ARC_TO_SHAPE: crate::Shape = crate::Shape {
+pub static DRAW_ARC_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "wR"), (None, "hR"), (None, "stAng"), (None, "swAng")],
     name: (NS_A, "arcTo"),
     slots: &[],
     text: false,
 };
 
-static AUDIO_FROM_CD_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_FROM_CD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "audioCd"),
     slots: &[
@@ -433,21 +432,21 @@ static AUDIO_FROM_CD_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUDIO_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "link"), (None, "contentType")],
     name: (NS_A, "audioFile"),
     slots: &[crate::Slot::single((NS_A, "extLst"))],
     text: false,
 };
 
-static LIST_OF_SHAPE_ADJUST_VALUES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SHAPE_ADJUST_VALUES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "avLst"),
     slots: &[crate::Slot::list((NS_A, "gd"))],
     text: false,
 };
 
-static BACKDROP_PLANE_SHAPE: crate::Shape = crate::Shape {
+pub static BACKDROP_PLANE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "backdrop"),
     slots: &[
@@ -459,7 +458,7 @@ static BACKDROP_PLANE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BAND1HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
+pub static BAND1HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "band1H"),
     slots: &[
@@ -469,7 +468,7 @@ static BAND1HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BAND1VERTICAL_SHAPE: crate::Shape = crate::Shape {
+pub static BAND1VERTICAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "band1V"),
     slots: &[
@@ -479,7 +478,7 @@ static BAND1VERTICAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BAND2HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
+pub static BAND2HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "band2H"),
     slots: &[
@@ -489,7 +488,7 @@ static BAND2HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BAND2VERTICAL_SHAPE: crate::Shape = crate::Shape {
+pub static BAND2VERTICAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "band2V"),
     slots: &[
@@ -499,77 +498,77 @@ static BAND2VERTICAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static BEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "h"), (None, "prst")],
     name: (NS_A, "bevel"),
     slots: &[],
     text: false,
 };
 
-static LINE_JOIN_BEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_JOIN_BEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "bevel"),
     slots: &[],
     text: false,
 };
 
-static BOTTOM_BEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_BEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "h"), (None, "prst")],
     name: (NS_A, "bevelB"),
     slots: &[],
     text: false,
 };
 
-static TOP_BEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_BEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "h"), (None, "prst")],
     name: (NS_A, "bevelT"),
     slots: &[],
     text: false,
 };
 
-static BACKGROUND_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "bgClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static BACKGROUND_FILL_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_FILL_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "bgFillStyleLst"),
     slots: &[crate::Slot::items(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static BI_LEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static BI_LEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "thresh")],
     name: (NS_A, "biLevel"),
     slots: &[],
     text: false,
 };
 
-static BUILD_CHART_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_CHART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bld"), (None, "animBg")],
     name: (NS_A, "bldChart"),
     slots: &[],
     text: false,
 };
 
-static BUILD_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
+pub static BUILD_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bld"), (None, "rev")],
     name: (NS_A, "bldDgm"),
     slots: &[],
     text: false,
 };
 
-static BLEND_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static BLEND_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "blend")],
     name: (NS_A, "blend"),
     slots: &[crate::Slot::required((NS_A, "cont"))],
     text: false,
 };
 
-static BLIP_SHAPE: crate::Shape = crate::Shape {
+pub static BLIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link"), (None, "cstate")],
     name: (NS_A, "blip"),
     slots: &[
@@ -579,7 +578,7 @@ static BLIP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dpi"), (None, "rotWithShape")],
     name: (NS_A, "blipFill"),
     slots: &[
@@ -590,35 +589,35 @@ static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BLUE_SHAPE: crate::Shape = crate::Shape {
+pub static BLUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "blue"),
     slots: &[],
     text: false,
 };
 
-static BLUE_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static BLUE_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "blueMod"),
     slots: &[],
     text: false,
 };
 
-static BLUE_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static BLUE_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "blueOff"),
     slots: &[],
     text: false,
 };
 
-static BLUR_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static BLUR_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rad"), (None, "grow")],
     name: (NS_A, "blur"),
     slots: &[],
     text: false,
 };
 
-static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "spcFirstLastPara"),
@@ -651,7 +650,7 @@ static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOTTOM_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "bottom"),
     slots: &[crate::Slot::required_choice(
@@ -660,49 +659,49 @@ static BOTTOM_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_LINE_BREAK_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_LINE_BREAK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "br"),
     slots: &[crate::Slot::single((NS_A, "rPr"))],
     text: false,
 };
 
-static AUTO_NUMBERED_BULLET_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_NUMBERED_BULLET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "startAt")],
     name: (NS_A, "buAutoNum"),
     slots: &[],
     text: false,
 };
 
-static PICTURE_BULLET_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_BULLET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buBlip"),
     slots: &[crate::Slot::required((NS_A, "blip"))],
     text: false,
 };
 
-static CHARACTER_BULLET_SHAPE: crate::Shape = crate::Shape {
+pub static CHARACTER_BULLET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "char")],
     name: (NS_A, "buChar"),
     slots: &[],
     text: false,
 };
 
-static COLOR_SPECIFIED_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_SPECIFIED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FOLLOW_TEXT_BU_CLR_TX_SHAPE: crate::Shape = crate::Shape {
+pub static FOLLOW_TEXT_BU_CLR_TX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buClrTx"),
     slots: &[],
     text: false,
 };
 
-static SPECIFIED_SHAPE: crate::Shape = crate::Shape {
+pub static SPECIFIED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -714,42 +713,42 @@ static SPECIFIED_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FOLLOW_TEXT_BU_FONT_TX_SHAPE: crate::Shape = crate::Shape {
+pub static FOLLOW_TEXT_BU_FONT_TX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buFontTx"),
     slots: &[],
     text: false,
 };
 
-static NO_BULLET_SHAPE: crate::Shape = crate::Shape {
+pub static NO_BULLET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buNone"),
     slots: &[],
     text: false,
 };
 
-static BULLET_SIZE_PERCENTAGE_SHAPE: crate::Shape = crate::Shape {
+pub static BULLET_SIZE_PERCENTAGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "buSzPct"),
     slots: &[],
     text: false,
 };
 
-static BULLET_SIZE_POINTS_SHAPE: crate::Shape = crate::Shape {
+pub static BULLET_SIZE_POINTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "buSzPts"),
     slots: &[],
     text: false,
 };
 
-static BULLET_SIZE_FOLLOWS_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static BULLET_SIZE_FOLLOWS_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "buSzTx"),
     slots: &[],
     text: false,
 };
 
-static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cNvCxnSpPr"),
     slots: &[
@@ -761,7 +760,7 @@ static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate
     text: false,
 };
 
-static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cNvGraphicFramePr"),
     slots: &[
@@ -771,7 +770,7 @@ static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::
     text: false,
 };
 
-static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cNvGrpSpPr"),
     slots: &[
@@ -781,7 +780,7 @@ static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "preferRelativeResize")],
     name: (NS_A, "cNvPicPr"),
     slots: &[
@@ -791,7 +790,7 @@ static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -808,7 +807,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_A, "cNvSpPr"),
     slots: &[
@@ -818,14 +817,14 @@ static NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CAMERA_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst"), (None, "fov"), (None, "zoom")],
     name: (NS_A, "camera"),
     slots: &[crate::Slot::single((NS_A, "rot"))],
     text: false,
 };
 
-static CELL3D_SHAPE: crate::Shape = crate::Shape {
+pub static CELL3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prstMaterial")],
     name: (NS_A, "cell3D"),
     slots: &[
@@ -836,21 +835,21 @@ static CELL3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHILD_EXTENTS_SHAPE: crate::Shape = crate::Shape {
+pub static CHILD_EXTENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_A, "chExt"),
     slots: &[],
     text: false,
 };
 
-static CHILD_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static CHILD_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_A, "chOff"),
     slots: &[],
     text: false,
 };
 
-static CHART_TO_ANIMATE_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_TO_ANIMATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "seriesIdx"),
         (None, "categoryIdx"),
@@ -861,14 +860,14 @@ static CHART_TO_ANIMATE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CLOSE_SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
+pub static CLOSE_SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "close"),
     slots: &[],
     text: false,
 };
 
-static COLOR_CHANGE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_CHANGE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useA")],
     name: (NS_A, "clrChange"),
     slots: &[
@@ -878,14 +877,14 @@ static COLOR_CHANGE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHANGE_COLOR_FROM_SHAPE: crate::Shape = crate::Shape {
+pub static CHANGE_COLOR_FROM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "clrFrom"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static COLOR_MAP_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_MAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bg1"),
         (None, "tx1"),
@@ -905,14 +904,14 @@ static COLOR_MAP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SOLID_COLOR_REPLACEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static SOLID_COLOR_REPLACEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "clrRepl"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "clrScheme"),
     slots: &[
@@ -933,35 +932,35 @@ static COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHANGE_COLOR_TO_SHAPE: crate::Shape = crate::Shape {
+pub static CHANGE_COLOR_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "clrTo"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static COMPLEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "comp"),
     slots: &[],
     text: false,
 };
 
-static EFFECT_CONTAINER_CONT_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_CONTAINER_CONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "name")],
     name: (NS_A, "cont"),
     slots: &[crate::Slot::items(&EFFECT_CONTAINER_CONTENT_TAGS)],
     text: false,
 };
 
-static CONTOUR_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static CONTOUR_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "contourClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static CONTENT_PART_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -979,7 +978,7 @@ static CONTENT_PART_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMPLEX_SCRIPT_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static COMPLEX_SCRIPT_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -991,35 +990,35 @@ static COMPLEX_SCRIPT_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DRAW_CUBIC_BEZIER_CURVE_TO_SHAPE: crate::Shape = crate::Shape {
+pub static DRAW_CUBIC_BEZIER_CURVE_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cubicBezTo"),
     slots: &[crate::Slot::list((NS_A, "pt"))],
     text: false,
 };
 
-static CUSTOM_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "custClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static CUSTOM_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_COLOR_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "custClrLst"),
     slots: &[crate::Slot::list((NS_A, "custClr"))],
     text: false,
 };
 
-static CUSTOM_DASH_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_DASH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "custDash"),
     slots: &[crate::Slot::list((NS_A, "ds"))],
     text: false,
 };
 
-static CUSTOM_GEOMETRY_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_GEOMETRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "custGeom"),
     slots: &[
@@ -1033,21 +1032,21 @@ static CUSTOM_GEOMETRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_CONNECTION_SITE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_CONNECTION_SITE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ang")],
     name: (NS_A, "cxn"),
     slots: &[crate::Slot::required((NS_A, "pos"))],
     text: false,
 };
 
-static LIST_OF_SHAPE_CONNECTION_SITES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SHAPE_CONNECTION_SITES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cxnLst"),
     slots: &[crate::Slot::list((NS_A, "cxn"))],
     text: false,
 };
 
-static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "cxnSp"),
     slots: &[
@@ -1059,7 +1058,7 @@ static CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONNECTION_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -1077,7 +1076,7 @@ static CONNECTION_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DEFAULT_PARAGRAPH_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_PARAGRAPH_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -1107,7 +1106,7 @@ static DEFAULT_PARAGRAPH_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DEFAULT_TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "kumimoji"),
         (None, "lang"),
@@ -1149,42 +1148,42 @@ static DEFAULT_TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIAGRAM_TO_ANIMATE_SHAPE: crate::Shape = crate::Shape {
+pub static DIAGRAM_TO_ANIMATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "bldStep")],
     name: (NS_A, "dgm"),
     slots: &[],
     text: false,
 };
 
-static DARK1_SHAPE: crate::Shape = crate::Shape {
+pub static DARK1_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "dk1"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static DARK2_SHAPE: crate::Shape = crate::Shape {
+pub static DARK2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "dk2"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static DASH_STOP_SHAPE: crate::Shape = crate::Shape {
+pub static DASH_STOP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "d"), (None, "sp")],
     name: (NS_A, "ds"),
     slots: &[],
     text: false,
 };
 
-static DUOTONE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static DUOTONE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "duotone"),
     slots: &[crate::Slot::items(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static EAST_ASIAN_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static EAST_ASIAN_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -1196,7 +1195,7 @@ static EAST_ASIAN_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "effect"),
     slots: &[crate::Slot::required_choice(
@@ -1205,21 +1204,21 @@ static EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_EFFECT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_EFFECT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ref")],
     name: (NS_A, "effect"),
     slots: &[],
     text: false,
 };
 
-static EFFECT_CONTAINER_EFFECT_DAG_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_CONTAINER_EFFECT_DAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "name")],
     name: (NS_A, "effectDag"),
     slots: &[crate::Slot::items(&EFFECT_CONTAINER_CONTENT_TAGS)],
     text: false,
 };
 
-static EFFECT_CONTAINER_EFFECT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_CONTAINER_EFFECT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "effectLst"),
     slots: &[
@@ -1235,14 +1234,14 @@ static EFFECT_CONTAINER_EFFECT_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_A, "effectRef"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static EFFECT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "effectStyle"),
     slots: &[
@@ -1253,28 +1252,28 @@ static EFFECT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EFFECT_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EFFECT_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "effectStyleLst"),
     slots: &[crate::Slot::list((NS_A, "effectStyle"))],
     text: false,
 };
 
-static AUDIO_END_TIME_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_END_TIME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "track"), (None, "time")],
     name: (NS_A, "end"),
     slots: &[],
     text: false,
 };
 
-static CONNECTION_END_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_END_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "idx")],
     name: (NS_A, "endCxn"),
     slots: &[],
     text: false,
 };
 
-static END_PARAGRAPH_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static END_PARAGRAPH_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "kumimoji"),
         (None, "lang"),
@@ -1316,28 +1315,28 @@ static END_PARAGRAPH_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXTENSION_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_A, "ext"),
     slots: &[crate::Slot::items(&ANY_ELEMENT_CONTENT_TAGS)],
     text: false,
 };
 
-static EXTENTS_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_A, "ext"),
     slots: &[],
     text: false,
 };
 
-static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static EXTRA_COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
+pub static EXTRA_COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "extraClrScheme"),
     slots: &[
@@ -1347,77 +1346,77 @@ static EXTRA_COLOR_SCHEME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXTRA_COLOR_SCHEME_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXTRA_COLOR_SCHEME_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "extraClrSchemeLst"),
     slots: &[crate::Slot::list((NS_A, "extraClrScheme"))],
     text: false,
 };
 
-static EXTRUSION_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static EXTRUSION_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "extrusionClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FOREGROUND_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static FOREGROUND_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "fgClr"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_FILL_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_FILL_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "fill"),
     slots: &[crate::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "fill"),
     slots: &[crate::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_OVERLAY_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_OVERLAY_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "blend")],
     name: (NS_A, "fillOverlay"),
     slots: &[crate::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_A, "fillRect"),
     slots: &[],
     text: false,
 };
 
-static FILL_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_A, "fillRef"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "fillStyleLst"),
     slots: &[crate::Slot::items(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static FILL_TO_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static FILL_TO_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_A, "fillToRect"),
     slots: &[],
     text: false,
 };
 
-static FIRST_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "firstCol"),
     slots: &[
@@ -1427,7 +1426,7 @@ static FIRST_COLUMN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FIRST_ROW_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_ROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "firstRow"),
     slots: &[
@@ -1437,14 +1436,14 @@ static FIRST_ROW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NO_TEXT_IN3D_SCENE_SHAPE: crate::Shape = crate::Shape {
+pub static NO_TEXT_IN3D_SCENE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "z")],
     name: (NS_A, "flatTx"),
     slots: &[],
     text: false,
 };
 
-static TEXT_FIELD_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_FIELD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "type")],
     name: (NS_A, "fld"),
     slots: &[
@@ -1455,7 +1454,7 @@ static TEXT_FIELD_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FORMAT_SCHEME_SHAPE: crate::Shape = crate::Shape {
+pub static FORMAT_SCHEME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "fmtScheme"),
     slots: &[
@@ -1467,14 +1466,14 @@ static FORMAT_SCHEME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FOLLOWED_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static FOLLOWED_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "folHlink"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FONT_FONT_COLLECTION_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_FONT_COLLECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "font"),
     slots: &[
@@ -1487,21 +1486,21 @@ static FONT_FONT_COLLECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FONT_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "script"), (None, "typeface")],
     name: (NS_A, "font"),
     slots: &[],
     text: false,
 };
 
-static FONT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_A, "fontRef"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static FONT_SCHEME_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_SCHEME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_A, "fontScheme"),
     slots: &[
@@ -1512,35 +1511,35 @@ static FONT_SCHEME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GAMMA_SHAPE: crate::Shape = crate::Shape {
+pub static GAMMA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "gamma"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_GUIDE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_GUIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "fmla")],
     name: (NS_A, "gd"),
     slots: &[],
     text: false,
 };
 
-static LIST_OF_SHAPE_GUIDES_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SHAPE_GUIDES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "gdLst"),
     slots: &[crate::Slot::list((NS_A, "gd"))],
     text: false,
 };
 
-static GLOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static GLOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rad")],
     name: (NS_A, "glow"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static GRADIENT_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static GRADIENT_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "flip"), (None, "rotWithShape")],
     name: (NS_A, "gradFill"),
     slots: &[
@@ -1551,21 +1550,21 @@ static GRADIENT_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "graphic"),
     slots: &[crate::Slot::required((NS_A, "graphicData"))],
     text: false,
 };
 
-static GRAPHIC_OBJECT_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_OBJECT_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_A, "graphicData"),
     slots: &[crate::Slot::items(&ANY_ELEMENT_CONTENT_TAGS)],
     text: false,
 };
 
-static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "graphicFrame"),
     slots: &[
@@ -1577,7 +1576,7 @@ static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_FRAME_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noDrilldown"),
@@ -1591,56 +1590,56 @@ static GRAPHIC_FRAME_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAY_SHAPE: crate::Shape = crate::Shape {
+pub static GRAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "gray"),
     slots: &[],
     text: false,
 };
 
-static GRAY_SCALE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static GRAY_SCALE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "grayscl"),
     slots: &[],
     text: false,
 };
 
-static GREEN_SHAPE: crate::Shape = crate::Shape {
+pub static GREEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "green"),
     slots: &[],
     text: false,
 };
 
-static GREEN_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static GREEN_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "greenMod"),
     slots: &[],
     text: false,
 };
 
-static GREEN_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static GREEN_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "greenOff"),
     slots: &[],
     text: false,
 };
 
-static TABLE_GRID_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_GRID_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w")],
     name: (NS_A, "gridCol"),
     slots: &[crate::Slot::single((NS_A, "extLst"))],
     text: false,
 };
 
-static GROUP_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "grpFill"),
     slots: &[],
     text: false,
 };
 
-static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "grpSp"),
     slots: &[
@@ -1652,7 +1651,7 @@ static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noUngrp"),
@@ -1667,7 +1666,7 @@ static GROUP_SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_A, "grpSpPr"),
     slots: &[
@@ -1680,56 +1679,56 @@ static VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRADIENT_STOPS_SHAPE: crate::Shape = crate::Shape {
+pub static GRADIENT_STOPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pos")],
     name: (NS_A, "gs"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static GRADIENT_STOP_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static GRADIENT_STOP_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "gsLst"),
     slots: &[crate::Slot::list((NS_A, "gs"))],
     text: false,
 };
 
-static LINE_HEAD_END_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_HEAD_END_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "w"), (None, "len")],
     name: (NS_A, "headEnd"),
     slots: &[],
     text: false,
 };
 
-static HEADER_CELL_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_CELL_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "header"),
     slots: &[],
     text: true,
 };
 
-static HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "headers"),
     slots: &[crate::Slot::list((NS_A, "header"))],
     text: false,
 };
 
-static HIGHLIGHT_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static HIGHLIGHT_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "highlight"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "hlink"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static CLICK_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static CLICK_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_R, "id"),
         (None, "invalidUrl"),
@@ -1748,7 +1747,7 @@ static CLICK_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HYPERLINK_FOR_HOVER_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_FOR_HOVER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_R, "id"),
         (None, "invalidUrl"),
@@ -1767,7 +1766,7 @@ static HYPERLINK_FOR_HOVER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MOUSE_OVER_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static MOUSE_OVER_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_R, "id"),
         (None, "invalidUrl"),
@@ -1786,49 +1785,49 @@ static MOUSE_OVER_HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HUE_SATURATION_LUMINANCE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_SATURATION_LUMINANCE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "hue"), (None, "sat"), (None, "lum")],
     name: (NS_A, "hsl"),
     slots: &[],
     text: false,
 };
 
-static HUE_SATURATION_LUMINANCE_COLOR_MODEL_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_SATURATION_LUMINANCE_COLOR_MODEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "hue"), (None, "sat"), (None, "lum")],
     name: (NS_A, "hslClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static HUE_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "hue"),
     slots: &[],
     text: false,
 };
 
-static HUE_MODULATE_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_MODULATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "hueMod"),
     slots: &[],
     text: false,
 };
 
-static HUE_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static HUE_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "hueOff"),
     slots: &[],
     text: false,
 };
 
-static INNER_SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static INNER_SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "blurRad"), (None, "dist"), (None, "dir")],
     name: (NS_A, "innerShdw"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static INSIDE_HORIZONTAL_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static INSIDE_HORIZONTAL_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "insideH"),
     slots: &[crate::Slot::required_choice(
@@ -1837,7 +1836,7 @@ static INSIDE_HORIZONTAL_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static INSIDE_VERTICAL_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static INSIDE_VERTICAL_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "insideV"),
     slots: &[crate::Slot::required_choice(
@@ -1846,21 +1845,21 @@ static INSIDE_VERTICAL_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static INVERSE_SHAPE: crate::Shape = crate::Shape {
+pub static INVERSE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "inv"),
     slots: &[],
     text: false,
 };
 
-static INVERSE_GAMMA_SHAPE: crate::Shape = crate::Shape {
+pub static INVERSE_GAMMA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "invGamma"),
     slots: &[],
     text: false,
 };
 
-static LAST_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static LAST_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lastCol"),
     slots: &[
@@ -1870,7 +1869,7 @@ static LAST_COLUMN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LAST_ROW_SHAPE: crate::Shape = crate::Shape {
+pub static LAST_ROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lastRow"),
     slots: &[
@@ -1880,7 +1879,7 @@ static LAST_ROW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LATIN_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static LATIN_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -1892,7 +1891,7 @@ static LATIN_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "left"),
     slots: &[crate::Slot::required_choice(
@@ -1901,21 +1900,21 @@ static LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIGHT_RIG_SHAPE: crate::Shape = crate::Shape {
+pub static LIGHT_RIG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rig"), (None, "dir")],
     name: (NS_A, "lightRig"),
     slots: &[crate::Slot::single((NS_A, "rot"))],
     text: false,
 };
 
-static LINEAR_GRADIENT_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static LINEAR_GRADIENT_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ang"), (None, "scaled")],
     name: (NS_A, "lin"),
     slots: &[],
     text: false,
 };
 
-static OUTLINE_SHAPE: crate::Shape = crate::Shape {
+pub static OUTLINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "ln"),
     slots: &[
@@ -1929,7 +1928,7 @@ static OUTLINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOTTOM_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnB"),
     slots: &[
@@ -1943,7 +1942,7 @@ static BOTTOM_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOTTOM_LEFT_TO_TOP_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_LEFT_TO_TOP_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnBlToTr"),
     slots: &[
@@ -1957,7 +1956,7 @@ static BOTTOM_LEFT_TO_TOP_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = cra
     text: false,
 };
 
-static LINE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lnDef"),
     slots: &[
@@ -1970,7 +1969,7 @@ static LINE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEFT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static LEFT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnL"),
     slots: &[
@@ -1984,7 +1983,7 @@ static LEFT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnR"),
     slots: &[
@@ -1998,28 +1997,28 @@ static RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_A, "lnRef"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static LINE_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lnSpc"),
     slots: &[crate::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
-static LINE_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lnStyleLst"),
     slots: &[crate::Slot::list((NS_A, "ln"))],
     text: false,
 };
 
-static TOP_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnT"),
     slots: &[
@@ -2033,7 +2032,7 @@ static TOP_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "lnTlToBr"),
     slots: &[
@@ -2047,14 +2046,14 @@ static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE: crate::Shape = cra
     text: false,
 };
 
-static DRAW_LINE_TO_SHAPE: crate::Shape = crate::Shape {
+pub static DRAW_LINE_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lnTo"),
     slots: &[crate::Slot::required((NS_A, "pt"))],
     text: false,
 };
 
-static TEXT_LIST_STYLES_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_LIST_STYLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lstStyle"),
     slots: &[
@@ -2073,49 +2072,49 @@ static TEXT_LIST_STYLES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIGHT1_SHAPE: crate::Shape = crate::Shape {
+pub static LIGHT1_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lt1"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static LIGHT2_SHAPE: crate::Shape = crate::Shape {
+pub static LIGHT2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "lt2"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static LUMINANCE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static LUMINANCE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bright"), (None, "contrast")],
     name: (NS_A, "lum"),
     slots: &[],
     text: false,
 };
 
-static LUMINANCE_SHAPE: crate::Shape = crate::Shape {
+pub static LUMINANCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "lum"),
     slots: &[],
     text: false,
 };
 
-static LUMINANCE_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static LUMINANCE_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "lumMod"),
     slots: &[],
     text: false,
 };
 
-static LUMINANCE_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static LUMINANCE_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "lumOff"),
     slots: &[],
     text: false,
 };
 
-static LIST_LEVEL1TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL1TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2145,7 +2144,7 @@ static LIST_LEVEL1TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL2TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL2TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2175,7 +2174,7 @@ static LIST_LEVEL2TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL3TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL3TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2205,7 +2204,7 @@ static LIST_LEVEL3TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL4TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL4TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2235,7 +2234,7 @@ static LIST_LEVEL4TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL5TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL5TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2265,7 +2264,7 @@ static LIST_LEVEL5TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL6TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL6TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2295,7 +2294,7 @@ static LIST_LEVEL6TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL7TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL7TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2325,7 +2324,7 @@ static LIST_LEVEL7TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL8TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL8TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2355,7 +2354,7 @@ static LIST_LEVEL8TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIST_LEVEL9TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_LEVEL9TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2385,7 +2384,7 @@ static LIST_LEVEL9TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MAJOR_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static MAJOR_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "majorFont"),
     slots: &[
@@ -2398,14 +2397,14 @@ static MAJOR_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MASTER_COLOR_MAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static MASTER_COLOR_MAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "masterClrMapping"),
     slots: &[],
     text: false,
 };
 
-static MINOR_FONTS_SHAPE: crate::Shape = crate::Shape {
+pub static MINOR_FONTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "minorFont"),
     slots: &[
@@ -2418,21 +2417,21 @@ static MINOR_FONTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MITER_LINE_JOIN_SHAPE: crate::Shape = crate::Shape {
+pub static MITER_LINE_JOIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lim")],
     name: (NS_A, "miter"),
     slots: &[],
     text: false,
 };
 
-static MOVE_PATH_TO_SHAPE: crate::Shape = crate::Shape {
+pub static MOVE_PATH_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "moveTo"),
     slots: &[crate::Slot::required((NS_A, "pt"))],
     text: false,
 };
 
-static NORTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static NORTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "neCell"),
     slots: &[
@@ -2442,35 +2441,35 @@ static NORTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NO_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
+pub static NO_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "noAutofit"),
     slots: &[],
     text: false,
 };
 
-static NO_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static NO_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "noFill"),
     slots: &[],
     text: false,
 };
 
-static NORMAL_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dx"), (None, "dy"), (None, "dz")],
     name: (NS_A, "norm"),
     slots: &[],
     text: false,
 };
 
-static NORMAL_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "fontScale"), (None, "lnSpcReduction")],
     name: (NS_A, "normAutofit"),
     slots: &[],
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nvCxnSpPr"),
     slots: &[
@@ -2480,7 +2479,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE: crate::Shape = crate:
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nvGraphicFramePr"),
     slots: &[
@@ -2490,7 +2489,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nvGrpSpPr"),
     slots: &[
@@ -2500,7 +2499,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE: crate::Shape = crate::Shap
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nvPicPr"),
     slots: &[
@@ -2510,7 +2509,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nvSpPr"),
     slots: &[
@@ -2520,7 +2519,7 @@ static NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NORTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static NORTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "nwCell"),
     slots: &[
@@ -2530,7 +2529,7 @@ static NORTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OBJECT_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
+pub static OBJECT_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "objectDefaults"),
     slots: &[
@@ -2542,14 +2541,14 @@ static OBJECT_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_A, "off"),
     slots: &[],
     text: false,
 };
 
-static OUTER_SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static OUTER_SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "blurRad"),
         (None, "dist"),
@@ -2566,7 +2565,7 @@ static OUTER_SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OVERRIDE_COLOR_MAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static OVERRIDE_COLOR_MAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bg1"),
         (None, "tx1"),
@@ -2586,7 +2585,7 @@ static OVERRIDE_COLOR_MAPPING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_PARAGRAPHS_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_PARAGRAPHS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "p"),
     slots: &[
@@ -2597,7 +2596,7 @@ static TEXT_PARAGRAPHS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_PARAGRAPH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_PARAGRAPH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -2627,7 +2626,7 @@ static TEXT_PARAGRAPH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "w"),
         (None, "h"),
@@ -2640,21 +2639,21 @@ static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PATH_GRADIENT_SHAPE: crate::Shape = crate::Shape {
+pub static PATH_GRADIENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "path")],
     name: (NS_A, "path"),
     slots: &[crate::Slot::single((NS_A, "fillToRect"))],
     text: false,
 };
 
-static LIST_OF_SHAPE_PATHS_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_OF_SHAPE_PATHS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "pathLst"),
     slots: &[crate::Slot::list((NS_A, "path"))],
     text: false,
 };
 
-static PATTERN_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static PATTERN_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst")],
     name: (NS_A, "pattFill"),
     slots: &[
@@ -2664,7 +2663,7 @@ static PATTERN_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "pic"),
     slots: &[
@@ -2677,7 +2676,7 @@ static PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -2696,70 +2695,70 @@ static PICTURE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_POSITION_COORDINATE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_POSITION_COORDINATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_A, "pos"),
     slots: &[],
     text: false,
 };
 
-static PRESET_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static PRESET_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "prstClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static PRESET_DASH_SHAPE: crate::Shape = crate::Shape {
+pub static PRESET_DASH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "prstDash"),
     slots: &[],
     text: false,
 };
 
-static PRESET_GEOMETRY_SHAPE: crate::Shape = crate::Shape {
+pub static PRESET_GEOMETRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst")],
     name: (NS_A, "prstGeom"),
     slots: &[crate::Slot::single((NS_A, "avLst"))],
     text: false,
 };
 
-static PRESET_SHADOW_SHAPE: crate::Shape = crate::Shape {
+pub static PRESET_SHADOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst"), (None, "dist"), (None, "dir")],
     name: (NS_A, "prstShdw"),
     slots: &[crate::Slot::required_choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static PRESET_TEXT_WARP_SHAPE: crate::Shape = crate::Shape {
+pub static PRESET_TEXT_WARP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst")],
     name: (NS_A, "prstTxWarp"),
     slots: &[crate::Slot::single((NS_A, "avLst"))],
     text: false,
 };
 
-static SHAPE_PATH_POINT_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PATH_POINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_A, "pt"),
     slots: &[],
     text: false,
 };
 
-static DRAW_QUADRATIC_BEZIER_CURVE_TO_SHAPE: crate::Shape = crate::Shape {
+pub static DRAW_QUADRATIC_BEZIER_CURVE_TO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "quadBezTo"),
     slots: &[crate::Slot::list((NS_A, "pt"))],
     text: false,
 };
 
-static QUICK_TIME_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
+pub static QUICK_TIME_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "link")],
     name: (NS_A, "quickTimeFile"),
     slots: &[crate::Slot::single((NS_A, "extLst"))],
     text: false,
 };
 
-static TEXT_RUN_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_RUN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "r"),
     slots: &[
@@ -2769,7 +2768,7 @@ static TEXT_RUN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "kumimoji"),
         (None, "lang"),
@@ -2811,35 +2810,35 @@ static TEXT_RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TEXT_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TEXT_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_A, "rect"),
     slots: &[],
     text: false,
 };
 
-static RED_SHAPE: crate::Shape = crate::Shape {
+pub static RED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "red"),
     slots: &[],
     text: false,
 };
 
-static RED_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static RED_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "redMod"),
     slots: &[],
     text: false,
 };
 
-static RED_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static RED_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "redOff"),
     slots: &[],
     text: false,
 };
 
-static REFLECTION_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static REFLECTION_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "blurRad"),
         (None, "stA"),
@@ -2861,14 +2860,14 @@ static REFLECTION_EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RELATIVE_OFFSET_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_OFFSET_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "tx"), (None, "ty")],
     name: (NS_A, "relOff"),
     slots: &[],
     text: false,
 };
 
-static RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "right"),
     slots: &[crate::Slot::required_choice(
@@ -2877,49 +2876,49 @@ static RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ROTATION_SHAPE: crate::Shape = crate::Shape {
+pub static ROTATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lat"), (None, "lon"), (None, "rev")],
     name: (NS_A, "rot"),
     slots: &[],
     text: false,
 };
 
-static ROUND_LINE_JOIN_SHAPE: crate::Shape = crate::Shape {
+pub static ROUND_LINE_JOIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "round"),
     slots: &[],
     text: false,
 };
 
-static RIGHT_TO_LEFT_RUN_SHAPE: crate::Shape = crate::Shape {
+pub static RIGHT_TO_LEFT_RUN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "rtl"),
     slots: &[],
     text: false,
 };
 
-static SATURATION_SHAPE: crate::Shape = crate::Shape {
+pub static SATURATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "sat"),
     slots: &[],
     text: false,
 };
 
-static SATURATION_MODULATION_SHAPE: crate::Shape = crate::Shape {
+pub static SATURATION_MODULATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "satMod"),
     slots: &[],
     text: false,
 };
 
-static SATURATION_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static SATURATION_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "satOff"),
     slots: &[],
     text: false,
 };
 
-static SCENE3D_SHAPE: crate::Shape = crate::Shape {
+pub static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "scene3d"),
     slots: &[
@@ -2931,21 +2930,21 @@ static SCENE3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SCHEME_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static SCHEME_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "schemeClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static RGB_COLOR_MODEL_PERCENTAGE_VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static RGB_COLOR_MODEL_PERCENTAGE_VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "r"), (None, "g"), (None, "b")],
     name: (NS_A, "scrgbClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static SOUTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static SOUTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "seCell"),
     slots: &[
@@ -2955,35 +2954,35 @@ static SOUTHEAST_CELL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHADE_SHAPE: crate::Shape = crate::Shape {
+pub static SHADE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "shade"),
     slots: &[],
     text: false,
 };
 
-static HYPERLINK_SOUND_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_SOUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (None, "name")],
     name: (NS_A, "snd"),
     slots: &[],
     text: false,
 };
 
-static SOFT_EDGE_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static SOFT_EDGE_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rad")],
     name: (NS_A, "softEdge"),
     slots: &[],
     text: false,
 };
 
-static SOLID_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static SOLID_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "solidFill"),
     slots: &[crate::Slot::choice(&COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "sp"),
     slots: &[
@@ -2996,7 +2995,7 @@ static SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static APPLY3D_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static APPLY3D_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "z"),
         (None, "extrusionH"),
@@ -3014,14 +3013,14 @@ static APPLY3D_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_AUTO_FIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "spAutoFit"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "spDef"),
     slots: &[
@@ -3034,7 +3033,7 @@ static SHAPE_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -3053,7 +3052,7 @@ static SHAPE_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_A, "spPr"),
     slots: &[
@@ -3069,70 +3068,70 @@ static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPACE_AFTER_SHAPE: crate::Shape = crate::Shape {
+pub static SPACE_AFTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "spcAft"),
     slots: &[crate::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
-static SPACE_BEFORE_SHAPE: crate::Shape = crate::Shape {
+pub static SPACE_BEFORE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "spcBef"),
     slots: &[crate::Slot::required_choice(&TEXT_SPACING_CONTENT_TAGS)],
     text: false,
 };
 
-static SPACING_PERCENT_SHAPE: crate::Shape = crate::Shape {
+pub static SPACING_PERCENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "spcPct"),
     slots: &[],
     text: false,
 };
 
-static SPACING_POINTS_SHAPE: crate::Shape = crate::Shape {
+pub static SPACING_POINTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "spcPts"),
     slots: &[],
     text: false,
 };
 
-static SOURCE_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static SOURCE_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_A, "srcRect"),
     slots: &[],
     text: false,
 };
 
-static RGB_COLOR_MODEL_HEX_VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static RGB_COLOR_MODEL_HEX_VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val"), (NS_A14, "legacySpreadsheetColorIndex")],
     name: (NS_A, "srgbClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static AUDIO_START_TIME_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_START_TIME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "track"), (None, "time")],
     name: (NS_A, "st"),
     slots: &[],
     text: false,
 };
 
-static CONNECTION_START_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_START_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "idx")],
     name: (NS_A, "stCxn"),
     slots: &[],
     text: false,
 };
 
-static STRETCH_SHAPE: crate::Shape = crate::Shape {
+pub static STRETCH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "stretch"),
     slots: &[crate::Slot::single((NS_A, "fillRect"))],
     text: false,
 };
 
-static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "style"),
     slots: &[
@@ -3144,7 +3143,7 @@ static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SOUTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static SOUTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "swCell"),
     slots: &[
@@ -3154,21 +3153,21 @@ static SOUTHWEST_CELL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HORIZONTAL_RATIO_SHAPE: crate::Shape = crate::Shape {
+pub static HORIZONTAL_RATIO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "d")],
     name: (NS_A, "sx"),
     slots: &[],
     text: false,
 };
 
-static VERTICAL_RATIO_SHAPE: crate::Shape = crate::Shape {
+pub static VERTICAL_RATIO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "d")],
     name: (NS_A, "sy"),
     slots: &[],
     text: false,
 };
 
-static SYMBOL_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static SYMBOL_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "typeface"),
         (None, "panose"),
@@ -3180,35 +3179,35 @@ static SYMBOL_FONT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SYSTEM_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static SYSTEM_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val"), (None, "lastClr")],
     name: (NS_A, "sysClr"),
     slots: &[crate::Slot::items(&COLOR_TRANSFORM_CONTENT_TAGS)],
     text: false,
 };
 
-static TEXT_STRING_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_STRING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "t"),
     slots: &[],
     text: true,
 };
 
-static TAB_STOP_SHAPE: crate::Shape = crate::Shape {
+pub static TAB_STOP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pos"), (None, "algn")],
     name: (NS_A, "tab"),
     slots: &[],
     text: false,
 };
 
-static TAB_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TAB_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tabLst"),
     slots: &[crate::Slot::list((NS_A, "tab"))],
     text: false,
 };
 
-static TABLE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "styleId"), (None, "styleName")],
     name: (NS_A, "tableStyle"),
     slots: &[
@@ -3231,21 +3230,21 @@ static TABLE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_STYLE_ID_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_STYLE_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tableStyleId"),
     slots: &[],
     text: true,
 };
 
-static TAIL_LINE_END_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TAIL_LINE_END_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "w"), (None, "len")],
     name: (NS_A, "tailEnd"),
     slots: &[],
     text: false,
 };
 
-static TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tbl"),
     slots: &[
@@ -3256,7 +3255,7 @@ static TABLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tblBg"),
     slots: &[
@@ -3266,14 +3265,14 @@ static TABLE_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_GRID_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_GRID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tblGrid"),
     slots: &[crate::Slot::list((NS_A, "gridCol"))],
     text: false,
 };
 
-static TABLE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rtl"),
         (None, "firstRow"),
@@ -3293,7 +3292,7 @@ static TABLE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_STYLE_TBL_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_STYLE_TBL_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "styleId"), (None, "styleName")],
     name: (NS_A, "tblStyle"),
     slots: &[
@@ -3316,14 +3315,14 @@ static TABLE_STYLE_TBL_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_STYLE_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "def")],
     name: (NS_A, "tblStyleLst"),
     slots: &[crate::Slot::list((NS_A, "tblStyle"))],
     text: false,
 };
 
-static TABLE_CELL_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_CELL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rowSpan"),
         (None, "gridSpan"),
@@ -3340,7 +3339,7 @@ static TABLE_CELL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_CELL_BORDERS_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_CELL_BORDERS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tcBdr"),
     slots: &[
@@ -3357,7 +3356,7 @@ static TABLE_CELL_BORDERS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_CELL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_CELL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "marL"),
         (None, "marR"),
@@ -3384,7 +3383,7 @@ static TABLE_CELL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_CELL_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_CELL_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tcStyle"),
     slots: &[
@@ -3395,7 +3394,7 @@ static TABLE_CELL_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_CELL_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_CELL_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "b"), (None, "i")],
     name: (NS_A, "tcTxStyle"),
     slots: &[
@@ -3406,7 +3405,7 @@ static TABLE_CELL_TEXT_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THEME_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (NS_THM15, "id")],
     name: (NS_A, "theme"),
     slots: &[
@@ -3419,7 +3418,7 @@ static THEME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THEME_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "themeElements"),
     slots: &[
@@ -3431,14 +3430,14 @@ static THEME_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THEME_MANAGER_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_MANAGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "themeManager"),
     slots: &[],
     text: false,
 };
 
-static THEME_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
+pub static THEME_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "themeOverride"),
     slots: &[
@@ -3449,7 +3448,7 @@ static THEME_OVERRIDE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TILE_SHAPE: crate::Shape = crate::Shape {
+pub static TILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "tx"),
         (None, "ty"),
@@ -3463,28 +3462,28 @@ static TILE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TILE_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static TILE_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_A, "tileRect"),
     slots: &[],
     text: false,
 };
 
-static TINT_SHAPE: crate::Shape = crate::Shape {
+pub static TINT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A, "tint"),
     slots: &[],
     text: false,
 };
 
-static TINT_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static TINT_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "hue"), (None, "amt")],
     name: (NS_A, "tint"),
     slots: &[],
     text: false,
 };
 
-static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tl2br"),
     slots: &[crate::Slot::required_choice(
@@ -3493,7 +3492,7 @@ static TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOP_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "top"),
     slots: &[crate::Slot::required_choice(
@@ -3502,7 +3501,7 @@ static TOP_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_ROW_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_ROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "h")],
     name: (NS_A, "tr"),
     slots: &[
@@ -3512,7 +3511,7 @@ static TABLE_ROW_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "tr2bl"),
     slots: &[crate::Slot::required_choice(
@@ -3521,7 +3520,7 @@ static TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "txBody"),
     slots: &[
@@ -3532,7 +3531,7 @@ static SHAPE_TEXT_BODY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_DEFAULT_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "txDef"),
     slots: &[
@@ -3545,7 +3544,7 @@ static TEXT_DEFAULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "txSp"),
     slots: &[
@@ -3556,21 +3555,21 @@ static TEXT_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNDERLINE_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static UNDERLINE_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "uFill"),
     slots: &[crate::Slot::required_choice(&FILL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static UNDERLINE_FILL_PROPERTIES_FOLLOW_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static UNDERLINE_FILL_PROPERTIES_FOLLOW_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "uFillTx"),
     slots: &[],
     text: false,
 };
 
-static UNDERLINE_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static UNDERLINE_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A, "uLn"),
     slots: &[
@@ -3584,42 +3583,42 @@ static UNDERLINE_STROKE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNDERLINE_FOLLOWS_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static UNDERLINE_FOLLOWS_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "uLnTx"),
     slots: &[],
     text: false,
 };
 
-static UP_VECTOR_SHAPE: crate::Shape = crate::Shape {
+pub static UP_VECTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dx"), (None, "dy"), (None, "dz")],
     name: (NS_A, "up"),
     slots: &[],
     text: false,
 };
 
-static USE_SHAPE_TEXT_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static USE_SHAPE_TEXT_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "useSpRect"),
     slots: &[],
     text: false,
 };
 
-static VIDEO_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
+pub static VIDEO_FROM_FILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "link"), (None, "contentType")],
     name: (NS_A, "videoFile"),
     slots: &[crate::Slot::single((NS_A, "extLst"))],
     text: false,
 };
 
-static AUDIO_FROM_WAV_FILE_SHAPE: crate::Shape = crate::Shape {
+pub static AUDIO_FROM_WAV_FILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (None, "name")],
     name: (NS_A, "wavAudioFile"),
     slots: &[],
     text: false,
 };
 
-static WHOLE_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static WHOLE_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A, "wholeTbl"),
     slots: &[
@@ -3629,7 +3628,7 @@ static WHOLE_TABLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_GROUP_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_GROUP_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_A, "xfrm"),
     slots: &[
@@ -3641,7 +3640,7 @@ static XFRM_GROUP_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_A, "xfrm"),
     slots: &[
@@ -3651,7 +3650,7 @@ static XFRM_TRANSFORM2D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TRANSFORM_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static TRANSFORM_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "sx"),
         (None, "sy"),

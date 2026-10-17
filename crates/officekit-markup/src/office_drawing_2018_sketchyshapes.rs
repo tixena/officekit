@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2018/sketchyshapes`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,42 +227,42 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_ASK: Option<NamespaceId> = Some(17);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static LINE_SKETCH_CURVED_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SKETCH_CURVED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "lineSketchCurved"),
     slots: &[],
     text: false,
 };
 
-static LINE_SKETCH_FREEHAND_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SKETCH_FREEHAND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "lineSketchFreehand"),
     slots: &[],
     text: false,
 };
 
-static LINE_SKETCH_NONE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SKETCH_NONE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "lineSketchNone"),
     slots: &[],
     text: false,
 };
 
-static LINE_SKETCH_SCRIBBLE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SKETCH_SCRIBBLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "lineSketchScribble"),
     slots: &[],
     text: false,
 };
 
-static LINE_SKETCH_STYLE_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SKETCH_STYLE_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sd")],
     name: (NS_ASK, "lineSketchStyleProps"),
     slots: &[
@@ -275,7 +274,7 @@ static LINE_SKETCH_STYLE_PROPS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "type"),
     slots: &[crate::Slot::choice(
@@ -284,7 +283,7 @@ static TYPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SEED_SHAPE: crate::Shape = crate::Shape {
+pub static SEED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_ASK, "seed"),
     slots: &[],

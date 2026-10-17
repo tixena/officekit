@@ -216,10 +216,9 @@
 //! The namespace is `urn:schemas-microsoft-com:vml`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -234,7 +233,7 @@ const NS_W: Option<NamespaceId> = Some(97);
 const NS_W10: Option<NamespaceId> = Some(98);
 const NS_XVML: Option<NamespaceId> = Some(162);
 
-static ARC_SEGMENT_SHAPE: crate::Shape = crate::Shape {
+pub static ARC_SEGMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -297,7 +296,7 @@ static ARC_SEGMENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DOCUMENT_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
+pub static DOCUMENT_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "filled"),
@@ -312,7 +311,7 @@ static DOCUMENT_BACKGROUND_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BEZIER_CURVE_SHAPE: crate::Shape = crate::Shape {
+pub static BEZIER_CURVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -377,14 +376,14 @@ static BEZIER_CURVE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SINGLE_FORMULA_SHAPE: crate::Shape = crate::Shape {
+pub static SINGLE_FORMULA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "eqn")],
     name: (NS_V, "f"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "type"),
@@ -419,14 +418,14 @@ static SHAPE_FILL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SET_OF_FORMULAS_SHAPE: crate::Shape = crate::Shape {
+pub static SET_OF_FORMULAS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_V, "formulas"),
     slots: &[crate::Slot::list((NS_V, "f"))],
     text: false,
 };
 
-static SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -473,7 +472,7 @@ static SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_HANDLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_HANDLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "position"),
         (None, "polar"),
@@ -490,14 +489,14 @@ static SHAPE_HANDLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SET_OF_HANDLES_SHAPE: crate::Shape = crate::Shape {
+pub static SET_OF_HANDLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_V, "handles"),
     slots: &[crate::Slot::list((NS_V, "h"))],
     text: false,
 };
 
-static IMAGE_FILE_SHAPE: crate::Shape = crate::Shape {
+pub static IMAGE_FILE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -568,7 +567,7 @@ static IMAGE_FILE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IMAGE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static IMAGE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "src"),
@@ -600,7 +599,7 @@ static IMAGE_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -663,7 +662,7 @@ static LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OVAL_SHAPE: crate::Shape = crate::Shape {
+pub static OVAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -724,7 +723,7 @@ static OVAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "v"),
@@ -747,7 +746,7 @@ static SHAPE_PATH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MULTIPLE_PATH_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static MULTIPLE_PATH_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -809,7 +808,7 @@ static MULTIPLE_PATH_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -870,7 +869,7 @@ static RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ROUNDED_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
+pub static ROUNDED_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -932,7 +931,7 @@ static ROUNDED_RECTANGLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "on"),
@@ -951,7 +950,7 @@ static SHADOW_EFFECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -1017,7 +1016,7 @@ static SHAPE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_TEMPLATE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_TEMPLATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -1084,7 +1083,7 @@ static SHAPE_TEMPLATE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINE_STROKE_SETTINGS_SHAPE: crate::Shape = crate::Shape {
+pub static LINE_STROKE_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "on"),
@@ -1127,7 +1126,7 @@ static LINE_STROKE_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),
@@ -1140,7 +1139,7 @@ static TEXT_BOX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_LAYOUT_PATH_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_LAYOUT_PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "style"),

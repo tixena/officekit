@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/customXml`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,21 +226,21 @@ use std::io;
 
 const NS_DS: Option<NamespaceId> = Some(46);
 
-static CUSTOM_XML_DATA_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_XML_DATA_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_DS, "itemID")],
     name: (NS_DS, "datastoreItem"),
     slots: &[crate::Slot::single((NS_DS, "schemaRefs"))],
     text: false,
 };
 
-static ASSOCIATED_XML_SCHEMA_SHAPE: crate::Shape = crate::Shape {
+pub static ASSOCIATED_XML_SCHEMA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_DS, "uri")],
     name: (NS_DS, "schemaRef"),
     slots: &[],
     text: false,
 };
 
-static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
+pub static SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DS, "schemaRefs"),
     slots: &[crate::Slot::list((NS_DS, "schemaRef"))],

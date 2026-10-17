@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2016/wordml/cid`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,14 +226,14 @@ use std::io;
 
 const NS_W16CID: Option<NamespaceId> = Some(102);
 
-static COMMENT_ID_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_W16CID, "paraId"), (NS_W16CID, "durableId")],
     name: (NS_W16CID, "commentId"),
     slots: &[],
     text: false,
 };
 
-static COMMENTS_IDS_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_IDS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W16CID, "commentsIds"),
     slots: &[crate::Slot::list((NS_W16CID, "commentId"))],

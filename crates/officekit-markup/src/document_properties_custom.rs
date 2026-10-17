@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_OP: Option<NamespaceId> = Some(63);
 const NS_VT: Option<NamespaceId> = Some(96);
 
-static CUSTOM_FILE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_FILE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_OP, "Properties"),
     slots: &[crate::Slot::list((NS_OP, "property"))],
     text: false,
 };
 
-static CUSTOM_FILE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_FILE_PROPERTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "fmtid"),
         (None, "pid"),

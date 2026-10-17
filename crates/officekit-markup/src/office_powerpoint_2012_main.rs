@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2012/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_P: Option<NamespaceId> = Some(64);
 const NS_P15: Option<NamespaceId> = Some(66);
 
-static CLR_SHAPE: crate::Shape = crate::Shape {
+pub static CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P15, "clr"),
     slots: &[crate::Slot::required_choice(
@@ -237,21 +236,21 @@ static CLR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHART_TRACKING_REF_BASED_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_TRACKING_REF_BASED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_P15, "chartTrackingRefBased"),
     slots: &[],
     text: false,
 };
 
-static THREADING_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static THREADING_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "timeZoneBias")],
     name: (NS_P15, "threadingInfo"),
     slots: &[crate::Slot::single((NS_P15, "parentCm"))],
     text: false,
 };
 
-static GUIDE_SHAPE: crate::Shape = crate::Shape {
+pub static GUIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -267,7 +266,7 @@ static GUIDE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NOTES_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
+pub static NOTES_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P15, "notesGuideLst"),
     slots: &[
@@ -277,7 +276,7 @@ static NOTES_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SLD_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
+pub static SLD_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P15, "sldGuideLst"),
     slots: &[
@@ -287,28 +286,28 @@ static SLD_GUIDE_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PARENT_CM_SHAPE: crate::Shape = crate::Shape {
+pub static PARENT_CM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "authorId"), (None, "idx")],
     name: (NS_P15, "parentCm"),
     slots: &[],
     text: false,
 };
 
-static PRESENCE_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static PRESENCE_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "userId"), (None, "providerId")],
     name: (NS_P15, "presenceInfo"),
     slots: &[],
     text: false,
 };
 
-static PRST_TRANS_SHAPE: crate::Shape = crate::Shape {
+pub static PRST_TRANS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prst"), (None, "invX"), (None, "invY")],
     name: (NS_P15, "prstTrans"),
     slots: &[],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_P15, "extLst"),
     slots: &[crate::Slot::list((NS_P, "ext"))],

@@ -9,13 +9,13 @@ use std::io::{self, Write};
 
 use officekit_core::parts::{main_document, style_definitions};
 use officekit_markup::wordprocessing::{self, TableRow, Text, read};
-use officekit_markup::write_through::{WriteThrough as _, Written};
-use officekit_markup::{Descend, Visit as _};
+use officekit_markup::{Descend, Written};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::Package;
 use officekit_packaging::package_writer::PackageWriter;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::{Relationship, RelationshipType, TargetMode};
+use officekit_traversal::{Visit as _, WriteThrough as _};
 use officekit_xml::element::Element;
 use officekit_xml::name::Namespace;
 use officekit_xml::stream::reader::PartEvent;

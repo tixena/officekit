@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -229,28 +228,28 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLRD2: Option<NamespaceId> = Some(141);
 
-static DXFS_SHAPE: crate::Shape = crate::Shape {
+pub static DXFS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "dxfs"),
     slots: &[crate::Slot::list((NS_X, "dxf"))],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static A_ARRAY_SHAPE: crate::Shape = crate::Shape {
+pub static A_ARRAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "r"), (None, "c")],
     name: (NS_XLRD2, "a"),
     slots: &[crate::Slot::list((NS_XLRD2, "v"))],
     text: false,
 };
 
-static ARRAY_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static ARRAY_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "arrayData"),
     slots: &[
@@ -260,28 +259,28 @@ static ARRAY_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static V_ARRAY_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static V_ARRAY_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t")],
     name: (NS_XLRD2, "v"),
     slots: &[],
     text: true,
 };
 
-static CUSTOM_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "key"), (None, "operator"), (None, "val")],
     name: (NS_XLRD2, "customFilter"),
     slots: &[],
     text: false,
 };
 
-static CUSTOM_FILTERS_SHAPE: crate::Shape = crate::Shape {
+pub static CUSTOM_FILTERS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "and")],
     name: (NS_XLRD2, "customFilters"),
     slots: &[crate::Slot::items(&CUSTOM_RICH_FILTERS_CONTENT_TAGS)],
     text: false,
 };
 
-static DYNAMIC_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static DYNAMIC_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "key"),
         (None, "type"),
@@ -295,7 +294,7 @@ static DYNAMIC_FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATE_GROUP_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static DATE_GROUP_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "key"),
         (None, "year"),
@@ -311,7 +310,7 @@ static DATE_GROUP_ITEM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "key"),
         (None, "val"),
@@ -323,14 +322,14 @@ static FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILTER_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static FILTER_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "filterColumn"),
     slots: &[crate::Slot::choice(&RICH_FILTER_COLUMN_CONTENT_TAGS)],
     text: false,
 };
 
-static FILTERS_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "filters"),
     slots: &[
@@ -341,21 +340,21 @@ static FILTERS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RICH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "richProperties"),
     slots: &[crate::Slot::list((NS_XLRD2, "rPr"))],
     text: false,
 };
 
-static R_PR_SHAPE: crate::Shape = crate::Shape {
+pub static R_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "t")],
     name: (NS_XLRD2, "rPr"),
     slots: &[],
     text: false,
 };
 
-static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "richSortKey"),
         (None, "descending"),
@@ -371,28 +370,28 @@ static RICH_SORT_CONDITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static R_STY_SHAPE: crate::Shape = crate::Shape {
+pub static R_STY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dxfid")],
     name: (NS_XLRD2, "rSty"),
     slots: &[crate::Slot::list((NS_XLRD2, "rpv"))],
     text: false,
 };
 
-static RPV_SHAPE: crate::Shape = crate::Shape {
+pub static RPV_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i")],
     name: (NS_XLRD2, "rpv"),
     slots: &[],
     text: true,
 };
 
-static RICH_STYLES_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_STYLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "richStyles"),
     slots: &[crate::Slot::list((NS_XLRD2, "rSty"))],
     text: false,
 };
 
-static RICH_STYLE_SHEET_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_STYLE_SHEET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "richStyleSheet"),
     slots: &[
@@ -404,7 +403,7 @@ static RICH_STYLE_SHEET_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TOP10_SHAPE: crate::Shape = crate::Shape {
+pub static TOP10_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "key"),
         (None, "top"),
@@ -417,7 +416,7 @@ static TOP10_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GLOBAL_SHAPE: crate::Shape = crate::Shape {
+pub static GLOBAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "global"),
     slots: &[
@@ -427,7 +426,7 @@ static GLOBAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_XLRD2, "type"),
     slots: &[
@@ -437,35 +436,35 @@ static TYPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static KEY_FLAGS_SHAPE: crate::Shape = crate::Shape {
+pub static KEY_FLAGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "keyFlags"),
     slots: &[crate::Slot::list((NS_XLRD2, "key"))],
     text: false,
 };
 
-static KEY_SHAPE: crate::Shape = crate::Shape {
+pub static KEY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_XLRD2, "key"),
     slots: &[crate::Slot::list((NS_XLRD2, "flag"))],
     text: false,
 };
 
-static FLAG_SHAPE: crate::Shape = crate::Shape {
+pub static FLAG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "value")],
     name: (NS_XLRD2, "flag"),
     slots: &[],
     text: false,
 };
 
-static TYPES_SHAPE: crate::Shape = crate::Shape {
+pub static TYPES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "types"),
     slots: &[crate::Slot::list((NS_XLRD2, "type"))],
     text: false,
 };
 
-static RV_TYPES_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static RV_TYPES_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "rvTypesInfo"),
     slots: &[
@@ -476,21 +475,21 @@ static RV_TYPES_INFO_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPB_SHAPE: crate::Shape = crate::Shape {
+pub static SPB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "s")],
     name: (NS_XLRD2, "spb"),
     slots: &[crate::Slot::list((NS_XLRD2, "v"))],
     text: false,
 };
 
-static A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE: crate::Shape = crate::Shape {
+pub static A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "a"),
     slots: &[crate::Slot::list((NS_XLRD2, "v"))],
     text: false,
 };
 
-static SPB_ARRAYS_SHAPE: crate::Shape = crate::Shape {
+pub static SPB_ARRAYS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "spbArrays"),
     slots: &[
@@ -500,14 +499,14 @@ static SPB_ARRAYS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t")],
     name: (NS_XLRD2, "v"),
     slots: &[],
     text: true,
 };
 
-static SPB_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static SPB_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "spbData"),
     slots: &[
@@ -517,21 +516,21 @@ static SPB_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static K_SHAPE: crate::Shape = crate::Shape {
+pub static K_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "t")],
     name: (NS_XLRD2, "k"),
     slots: &[],
     text: false,
 };
 
-static S_SHAPE: crate::Shape = crate::Shape {
+pub static S_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "s"),
     slots: &[crate::Slot::list((NS_XLRD2, "k"))],
     text: false,
 };
 
-static SPB_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
+pub static SPB_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_XLRD2, "spbStructures"),
     slots: &[
@@ -541,14 +540,14 @@ static SPB_STRUCTURES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "v"),
     slots: &[],
     text: true,
 };
 
-static SUPPORTING_PROPERTY_BAGS_SHAPE: crate::Shape = crate::Shape {
+pub static SUPPORTING_PROPERTY_BAGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLRD2, "supportingPropertyBags"),
     slots: &[

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingShape`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_W: Option<NamespaceId> = Some(97);
 const NS_WPS: Option<NamespaceId> = Some(117);
 
-static C_NV_CN_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CN_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPS, "cNvCnPr"),
     slots: &[
@@ -241,7 +240,7 @@ static C_NV_CN_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -258,7 +257,7 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_WPS, "cNvSpPr"),
     slots: &[
@@ -268,14 +267,14 @@ static C_NV_SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPS, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_WPS, "spPr"),
     slots: &[
@@ -291,7 +290,7 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPS, "style"),
     slots: &[
@@ -303,7 +302,7 @@ static STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BODY_PR_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "spcFirstLastPara"),
@@ -336,14 +335,14 @@ static BODY_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LINKED_TXBX_SHAPE: crate::Shape = crate::Shape {
+pub static LINKED_TXBX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "seq")],
     name: (NS_WPS, "linkedTxbx"),
     slots: &[crate::Slot::single((NS_WPS, "extLst"))],
     text: false,
 };
 
-static TXBX_SHAPE: crate::Shape = crate::Shape {
+pub static TXBX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_WPS, "txbx"),
     slots: &[
@@ -353,7 +352,7 @@ static TXBX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WSP_SHAPE: crate::Shape = crate::Shape {
+pub static WSP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "normalEastAsianFlow")],
     name: (NS_WPS, "wsp"),
     slots: &[

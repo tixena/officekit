@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/2020/mipLabelMetadata`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,7 +226,7 @@ use std::io;
 
 const NS_CLBL: Option<NamespaceId> = Some(31);
 
-static EXT_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_CLBL, "ext"),
     slots: &[crate::Slot::required_choice(
@@ -236,14 +235,14 @@ static EXT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CLBL, "extLst"),
     slots: &[crate::Slot::list((NS_CLBL, "ext"))],
     text: false,
 };
 
-static LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "enabled"),
@@ -260,7 +259,7 @@ static LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LABEL_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static LABEL_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CLBL, "labelList"),
     slots: &[

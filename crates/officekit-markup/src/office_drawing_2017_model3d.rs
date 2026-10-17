@@ -216,11 +216,10 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2017/model3d`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
 use crate::Write as _;
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -253,14 +252,14 @@ const NS_X: Option<NamespaceId> = Some(118);
 const NS_XDR: Option<NamespaceId> = Some(129);
 const NS_XVML: Option<NamespaceId> = Some(162);
 
-static ATTR_SRC_URL_SHAPE: crate::Shape = crate::Shape {
+pub static ATTR_SRC_URL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_AM3D, "attrSrcUrl"),
     slots: &[],
     text: false,
 };
 
-static BLIP_SHAPE: crate::Shape = crate::Shape {
+pub static BLIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link"), (None, "cstate")],
     name: (NS_AM3D, "blip"),
     slots: &[
@@ -270,7 +269,7 @@ static BLIP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CLR_SHAPE: crate::Shape = crate::Shape {
+pub static CLR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "clr"),
     slots: &[crate::Slot::required_choice(
@@ -279,49 +278,49 @@ static CLR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static LOOK_AT_SHAPE: crate::Shape = crate::Shape {
+pub static LOOK_AT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y"), (None, "z")],
     name: (NS_AM3D, "lookAt"),
     slots: &[],
     text: false,
 };
 
-static POS_SHAPE: crate::Shape = crate::Shape {
+pub static POS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y"), (None, "z")],
     name: (NS_AM3D, "pos"),
     slots: &[],
     text: false,
 };
 
-static SX_SHAPE: crate::Shape = crate::Shape {
+pub static SX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "d")],
     name: (NS_AM3D, "sx"),
     slots: &[],
     text: false,
 };
 
-static SY_SHAPE: crate::Shape = crate::Shape {
+pub static SY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "d")],
     name: (NS_AM3D, "sy"),
     slots: &[],
     text: false,
 };
 
-static SZ_RATIO_SHAPE: crate::Shape = crate::Shape {
+pub static SZ_RATIO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "n"), (None, "d")],
     name: (NS_AM3D, "sz"),
     slots: &[],
     text: false,
 };
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_AM3D, "spPr"),
     slots: &[
@@ -337,28 +336,28 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static POST_TRANS_SHAPE: crate::Shape = crate::Shape {
+pub static POST_TRANS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dx"), (None, "dy"), (None, "dz")],
     name: (NS_AM3D, "postTrans"),
     slots: &[],
     text: false,
 };
 
-static PRE_TRANS_SHAPE: crate::Shape = crate::Shape {
+pub static PRE_TRANS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dx"), (None, "dy"), (None, "dz")],
     name: (NS_AM3D, "preTrans"),
     slots: &[],
     text: false,
 };
 
-static UP_SHAPE: crate::Shape = crate::Shape {
+pub static UP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dx"), (None, "dy"), (None, "dz")],
     name: (NS_AM3D, "up"),
     slots: &[],
     text: false,
 };
 
-static AMBIENT_LIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static AMBIENT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "enabled")],
     name: (NS_AM3D, "ambientLight"),
     slots: &[
@@ -369,7 +368,7 @@ static AMBIENT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIR_LIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static DIR_LIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "enabled"), (None, "angularRad")],
     name: (NS_AM3D, "dirLight"),
     slots: &[
@@ -382,7 +381,7 @@ static DIR_LIGHT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MODEL3D_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed"), (NS_R, "link")],
     name: (NS_AM3D, "model3d"),
     slots: &[
@@ -399,7 +398,7 @@ static MODEL3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CAMERA_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "camera"),
     slots: &[
@@ -412,7 +411,7 @@ static CAMERA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_AM3D, "ext"),
     slots: &[crate::Slot::required_choice(
@@ -421,21 +420,21 @@ static EXT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "extLst"),
     slots: &[crate::Slot::list((NS_AM3D, "ext"))],
     text: false,
 };
 
-static RASTER_SHAPE: crate::Shape = crate::Shape {
+pub static RASTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rName"), (None, "rVer")],
     name: (NS_AM3D, "raster"),
     slots: &[crate::Slot::single((NS_AM3D, "blip"))],
     text: false,
 };
 
-static TRANS_SHAPE: crate::Shape = crate::Shape {
+pub static TRANS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "trans"),
     slots: &[
@@ -449,14 +448,14 @@ static TRANS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OBJ_VIEWPORT_SHAPE: crate::Shape = crate::Shape {
+pub static OBJ_VIEWPORT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "viewportSz")],
     name: (NS_AM3D, "objViewport"),
     slots: &[crate::Slot::single((NS_AM3D, "extLst"))],
     text: false,
 };
 
-static ORTHOGRAPHIC_SHAPE: crate::Shape = crate::Shape {
+pub static ORTHOGRAPHIC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "orthographic"),
     slots: &[
@@ -466,14 +465,14 @@ static ORTHOGRAPHIC_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PERSPECTIVE_SHAPE: crate::Shape = crate::Shape {
+pub static PERSPECTIVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "fov")],
     name: (NS_AM3D, "perspective"),
     slots: &[crate::Slot::single((NS_AM3D, "extLst"))],
     text: false,
 };
 
-static PT_LIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static PT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "enabled"), (None, "rad")],
     name: (NS_AM3D, "ptLight"),
     slots: &[
@@ -485,42 +484,42 @@ static PT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ILLUMINANCE_SHAPE: crate::Shape = crate::Shape {
+pub static ILLUMINANCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "illuminance"),
     slots: &[],
     text: false,
 };
 
-static INTENSITY_SHAPE: crate::Shape = crate::Shape {
+pub static INTENSITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "intensity"),
     slots: &[],
     text: false,
 };
 
-static METER_PER_MODEL_UNIT_SHAPE: crate::Shape = crate::Shape {
+pub static METER_PER_MODEL_UNIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "meterPerModelUnit"),
     slots: &[],
     text: false,
 };
 
-static SZ_POSITIVE_RATIO_SHAPE: crate::Shape = crate::Shape {
+pub static SZ_POSITIVE_RATIO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "sz"),
     slots: &[],
     text: false,
 };
 
-static ROT_SHAPE: crate::Shape = crate::Shape {
+pub static ROT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ax"), (None, "ay"), (None, "az")],
     name: (NS_AM3D, "rot"),
     slots: &[],
     text: false,
 };
 
-static SCALE_SHAPE: crate::Shape = crate::Shape {
+pub static SCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "scale"),
     slots: &[
@@ -531,7 +530,7 @@ static SCALE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SPOT_LIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static SPOT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "enabled"), (None, "rad"), (None, "spotAng")],
     name: (NS_AM3D, "spotLight"),
     slots: &[
@@ -544,14 +543,14 @@ static SPOT_LIGHT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNK_LIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static UNK_LIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "unkLight"),
     slots: &[],
     text: false,
 };
 
-static WIN_VIEWPORT_SHAPE: crate::Shape = crate::Shape {
+pub static WIN_VIEWPORT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AM3D, "winViewport"),
     slots: &[crate::Slot::single((NS_AM3D, "extLst"))],

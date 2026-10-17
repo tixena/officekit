@@ -1,7 +1,8 @@
 //! The typed tree: one module per namespace, `officekit_markup::<namespace>`.
 //!
 //! Each is written to `crates/officekit-markup/src/<namespace>.rs` with
-//! its readers, writers, and traversals beside it, from the schema model of the
+//! its readers and writers beside it, and its traversals to
+//! `crates/officekit-traversal/src/<namespace>.rs`, from the schema model of the
 //! Transitional schemas, SDK 3.5.1's extension types and placements, and the
 //! standard's titles.
 //!
@@ -37,6 +38,9 @@ mod tests;
 
 /// The folder of the namespace modules, from the workspace root.
 pub const MARKUP_PATH: &str = "crates/officekit-markup/src";
+
+/// The folder of the traversal modules, from the workspace root.
+pub const TRAVERSAL_PATH: &str = "crates/officekit-traversal/src";
 
 /// The hand-written table of enum names, from the workspace root.
 pub const ENUM_NAMES_PATH: &str = "crates/xtask/data/enum_names.toml";
@@ -267,8 +271,13 @@ where
             (Path::new(NAME_OVERRIDES_PATH), overrides_text.as_bytes()),
         ],
     )?;
-    let folder = Path::new(MARKUP_PATH);
-    for (path, text) in render::files(system, &header, &catalog, folder)? {
+    let mut files = render::files(system, &header, &catalog, Path::new(MARKUP_PATH))?;
+    files.extend(traversal::files(
+        &header,
+        &catalog,
+        Path::new(TRAVERSAL_PATH),
+    )?);
+    for (path, text) in files {
         if let Some(parent) = path.parent() {
             system
                 .create_dir_all(parent)

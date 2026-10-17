@@ -216,10 +216,9 @@
 //! The namespace is `urn:schemas-microsoft-com:office:word`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,42 +227,42 @@ use std::io;
 
 const NS_W10: Option<NamespaceId> = Some(98);
 
-static ANCHOR_LOCATION_IS_LOCKED_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHOR_LOCATION_IS_LOCKED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_W10, "anchorlock"),
     slots: &[],
     text: false,
 };
 
-static BOTTOM_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static BOTTOM_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "width"), (None, "shadow")],
     name: (NS_W10, "borderbottom"),
     slots: &[],
     text: false,
 };
 
-static LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static LEFT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "width"), (None, "shadow")],
     name: (NS_W10, "borderleft"),
     slots: &[],
     text: false,
 };
 
-static RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static RIGHT_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "width"), (None, "shadow")],
     name: (NS_W10, "borderright"),
     slots: &[],
     text: false,
 };
 
-static TOP_BORDER_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_BORDER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "width"), (None, "shadow")],
     name: (NS_W10, "bordertop"),
     slots: &[],
     text: false,
 };
 
-static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "type"),
         (None, "side"),

@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -227,35 +226,35 @@ use std::io;
 
 const NS_A16: Option<NamespaceId> = Some(3);
 
-static CXN_DE_REFS_SHAPE: crate::Shape = crate::Shape {
+pub static CXN_DE_REFS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "st"), (None, "end")],
     name: (NS_A16, "cxnDERefs"),
     slots: &[],
     text: false,
 };
 
-static CREATION_ID_SHAPE: crate::Shape = crate::Shape {
+pub static CREATION_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_A16, "creationId"),
     slots: &[],
     text: false,
 };
 
-static COL_ID_SHAPE: crate::Shape = crate::Shape {
+pub static COL_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A16, "colId"),
     slots: &[],
     text: false,
 };
 
-static ROW_ID_SHAPE: crate::Shape = crate::Shape {
+pub static ROW_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A16, "rowId"),
     slots: &[],
     text: false,
 };
 
-static PRED_DE_REF_SHAPE: crate::Shape = crate::Shape {
+pub static PRED_DE_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pred")],
     name: (NS_A16, "predDERef"),
     slots: &[],

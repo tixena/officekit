@@ -1,6 +1,3 @@
-#[path = "traversal_tests.rs"]
-mod traversal_tests;
-
 use officekit_xml::element::Node;
 use officekit_xml::name::OfficeVersion;
 use officekit_xml::stream::reader::{PartEvent, PartReader};

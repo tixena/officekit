@@ -216,10 +216,9 @@
 //! The namespace is `urn:schemas-microsoft-com:office:excel`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,476 +227,476 @@ use std::io;
 
 const NS_XVML: Option<NamespaceId> = Some(162);
 
-static PRIMARY_KEYBOARD_ACCELERATOR_SHAPE: crate::Shape = crate::Shape {
+pub static PRIMARY_KEYBOARD_ACCELERATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Accel"),
     slots: &[],
     text: true,
 };
 
-static SECONDARY_KEYBOARD_ACCELERATOR_SHAPE: crate::Shape = crate::Shape {
+pub static SECONDARY_KEYBOARD_ACCELERATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Accel2"),
     slots: &[],
     text: true,
 };
 
-static ANCHOR_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Anchor"),
     slots: &[],
     text: true,
 };
 
-static AUTO_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "AutoFill"),
     slots: &[],
     text: true,
 };
 
-static AUTO_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "AutoLine"),
     slots: &[],
     text: true,
 };
 
-static AUTOMATICALLY_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static AUTOMATICALLY_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "AutoPict"),
     slots: &[],
     text: true,
 };
 
-static FONT_AUTO_SCALE_SHAPE: crate::Shape = crate::Shape {
+pub static FONT_AUTO_SCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "AutoScale"),
     slots: &[],
     text: true,
 };
 
-static CLIPBOARD_FORMAT_SHAPE: crate::Shape = crate::Shape {
+pub static CLIPBOARD_FORMAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "CF"),
     slots: &[],
     text: true,
 };
 
-static CAMERA_TOOL_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_TOOL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Camera"),
     slots: &[],
     text: true,
 };
 
-static CANCEL_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static CANCEL_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Cancel"),
     slots: &[],
     text: true,
 };
 
-static CHECKED_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Checked"),
     slots: &[],
     text: true,
 };
 
-static ATTACHED_OBJECT_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static ATTACHED_OBJECT_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ObjectType")],
     name: (NS_XVML, "ClientData"),
     slots: &[crate::Slot::items(&ATTACHED_OBJECT_DATA_CONTENT_TAGS)],
     text: false,
 };
 
-static COMMENTS_COLUMN_IS_HIDDEN_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_COLUMN_IS_HIDDEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ColHidden"),
     slots: &[],
     text: true,
 };
 
-static DROPDOWN_COLOR_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static DROPDOWN_COLOR_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Colored"),
     slots: &[],
     text: true,
 };
 
-static COMMENT_COLUMN_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_COLUMN_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Column"),
     slots: &[],
     text: true,
 };
 
-static DYNAMIC_DATA_EXCHANGE_SHAPE: crate::Shape = crate::Shape {
+pub static DYNAMIC_DATA_EXCHANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "DDE"),
     slots: &[],
     text: true,
 };
 
-static DEFAULT_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Default"),
     slots: &[],
     text: true,
 };
 
-static DEFAULT_SIZE_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_SIZE_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "DefaultSize"),
     slots: &[],
     text: true,
 };
 
-static MACRO_DISABLE_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static MACRO_DISABLE_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Disabled"),
     slots: &[],
     text: true,
 };
 
-static DISMISS_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static DISMISS_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Dismiss"),
     slots: &[],
     text: true,
 };
 
-static DROPDOWN_MAXIMUM_LINES_SHAPE: crate::Shape = crate::Shape {
+pub static DROPDOWN_MAXIMUM_LINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "DropLines"),
     slots: &[],
     text: true,
 };
 
-static DROPDOWN_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static DROPDOWN_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "DropStyle"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_WIDTH_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_WIDTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Dx"),
     slots: &[],
     text: true,
 };
 
-static FIRST_RADIO_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_RADIO_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FirstButton"),
     slots: &[],
     text: true,
 };
 
-static LINKED_FORMULA_GROUP_BOX_SHAPE: crate::Shape = crate::Shape {
+pub static LINKED_FORMULA_GROUP_BOX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaGroup"),
     slots: &[],
     text: true,
 };
 
-static LINKED_FORMULA_SHAPE: crate::Shape = crate::Shape {
+pub static LINKED_FORMULA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaLink"),
     slots: &[],
     text: true,
 };
 
-static REFERENCE_TO_CUSTOM_FUNCTION_SHAPE: crate::Shape = crate::Shape {
+pub static REFERENCE_TO_CUSTOM_FUNCTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaMacro"),
     slots: &[],
     text: true,
 };
 
-static CAMERA_SOURCE_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_SOURCE_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaPict"),
     slots: &[],
     text: true,
 };
 
-static LIST_ITEMS_SOURCE_RANGE_SHAPE: crate::Shape = crate::Shape {
+pub static LIST_ITEMS_SOURCE_RANGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaRange"),
     slots: &[],
     text: true,
 };
 
-static TEXT_FORMULA_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_FORMULA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "FmlaTxbx"),
     slots: &[],
     text: true,
 };
 
-static HELP_BUTTON_SHAPE: crate::Shape = crate::Shape {
+pub static HELP_BUTTON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Help"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_ORIENTATION_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_ORIENTATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Horiz"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_INCREMENT_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_INCREMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Inc"),
     slots: &[],
     text: true,
 };
 
-static FAR_EAST_ALIGNMENT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static FAR_EAST_ALIGNMENT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "JustLastX"),
     slots: &[],
     text: true,
 };
 
-static CALLBACK_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static CALLBACK_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "LCT"),
     slots: &[],
     text: true,
 };
 
-static NON_LINKED_LIST_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static NON_LINKED_LIST_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ListItem"),
     slots: &[],
     text: true,
 };
 
-static TEXT_LOCK_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_LOCK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "LockText"),
     slots: &[],
     text: true,
 };
 
-static LOCK_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static LOCK_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Locked"),
     slots: &[],
     text: true,
 };
 
-static EMBEDDED_CONTROL_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_CONTROL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "MapOCX"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_MAXIMUM_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_MAXIMUM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Max"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_MINIMUM_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_MINIMUM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Min"),
     slots: &[],
     text: true,
 };
 
-static MOVE_WITH_CELLS_SHAPE: crate::Shape = crate::Shape {
+pub static MOVE_WITH_CELLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "MoveWithCells"),
     slots: &[],
     text: true,
 };
 
-static MULTI_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static MULTI_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "MultiLine"),
     slots: &[],
     text: true,
 };
 
-static MULTIPLE_SELECTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static MULTIPLE_SELECTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "MultiSel"),
     slots: &[],
     text: true,
 };
 
-static DISABLE3D_NO_THREE_D_SHAPE: crate::Shape = crate::Shape {
+pub static DISABLE3D_NO_THREE_D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "NoThreeD"),
     slots: &[],
     text: true,
 };
 
-static DISABLE3D_NO_THREE_D2_SHAPE: crate::Shape = crate::Shape {
+pub static DISABLE3D_NO_THREE_D2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "NoThreeD2"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_PAGE_INCREMENT_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_PAGE_INCREMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Page"),
     slots: &[],
     text: true,
 };
 
-static PRINT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static PRINT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "PrintObject"),
     slots: &[],
     text: true,
 };
 
-static RECALCULATION_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static RECALCULATION_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "RecalcAlways"),
     slots: &[],
     text: true,
 };
 
-static COMMENT_ROW_TARGET_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_ROW_TARGET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Row"),
     slots: &[],
     text: true,
 };
 
-static COMMENTS_ROW_IS_HIDDEN_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENTS_ROW_IS_HIDDEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "RowHidden"),
     slots: &[],
     text: true,
 };
 
-static HTML_SCRIPT_ATTRIBUTES_SHAPE: crate::Shape = crate::Shape {
+pub static HTML_SCRIPT_ATTRIBUTES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ScriptExtended"),
     slots: &[],
     text: true,
 };
 
-static HTML_SCRIPT_LANGUAGE_SHAPE: crate::Shape = crate::Shape {
+pub static HTML_SCRIPT_LANGUAGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ScriptLanguage"),
     slots: &[],
     text: true,
 };
 
-static HTML_SCRIPT_LOCATION_SHAPE: crate::Shape = crate::Shape {
+pub static HTML_SCRIPT_LOCATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ScriptLocation"),
     slots: &[],
     text: true,
 };
 
-static HTML_SCRIPT_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static HTML_SCRIPT_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ScriptText"),
     slots: &[],
     text: true,
 };
 
-static PASSWORD_EDIT_SHAPE: crate::Shape = crate::Shape {
+pub static PASSWORD_EDIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "SecretEdit"),
     slots: &[],
     text: true,
 };
 
-static SELECTED_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static SELECTED_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Sel"),
     slots: &[],
     text: true,
 };
 
-static SELECTION_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static SELECTION_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "SelType"),
     slots: &[],
     text: true,
 };
 
-static RESIZE_WITH_CELLS_SHAPE: crate::Shape = crate::Shape {
+pub static RESIZE_WITH_CELLS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "SizeWithCells"),
     slots: &[],
     text: true,
 };
 
-static HORIZONTAL_TEXT_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
+pub static HORIZONTAL_TEXT_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "TextHAlign"),
     slots: &[],
     text: true,
 };
 
-static VERTICAL_TEXT_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
+pub static VERTICAL_TEXT_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "TextVAlign"),
     slots: &[],
     text: true,
 };
 
-static UI_OBJECT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static UI_OBJECT_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "UIObj"),
     slots: &[],
     text: true,
 };
 
-static VERTICAL_SCROLL_SHAPE: crate::Shape = crate::Shape {
+pub static VERTICAL_SCROLL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "VScroll"),
     slots: &[],
     text: true,
 };
 
-static VALIDATION_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static VALIDATION_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "VTEdit"),
     slots: &[],
     text: true,
 };
 
-static SCROLL_BAR_POSITION_SHAPE: crate::Shape = crate::Shape {
+pub static SCROLL_BAR_POSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Val"),
     slots: &[],
     text: true,
 };
 
-static VALID_ID_SHAPE: crate::Shape = crate::Shape {
+pub static VALID_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "ValidIds"),
     slots: &[],
     text: true,
 };
 
-static COMMENT_VISIBILITY_TOGGLE_SHAPE: crate::Shape = crate::Shape {
+pub static COMMENT_VISIBILITY_TOGGLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "Visible"),
     slots: &[],
     text: true,
 };
 
-static MINIMUM_WIDTH_SHAPE: crate::Shape = crate::Shape {
+pub static MINIMUM_WIDTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XVML, "WidthMin"),
     slots: &[],

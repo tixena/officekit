@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chartex`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -230,7 +229,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_CX: Option<NamespaceId> = Some(39);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static CLR_MAP_OVR_SHAPE: crate::Shape = crate::Shape {
+pub static CLR_MAP_OVR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "bg1"),
         (None, "tx1"),
@@ -250,7 +249,7 @@ static CLR_MAP_OVR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_CX, "spPr"),
     slots: &[
@@ -266,28 +265,28 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MAX_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static MAX_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "maxColor"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static MID_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static MID_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "midColor"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static MIN_COLOR_SHAPE: crate::Shape = crate::Shape {
+pub static MIN_COLOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "minColor"),
     slots: &[crate::Slot::choice(&super::drawing::COLOR_CONTENT_TAGS)],
     text: false,
 };
 
-static RICH_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "rich"),
     slots: &[
@@ -298,7 +297,7 @@ static RICH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TX_PR_SHAPE: crate::Shape = crate::Shape {
+pub static TX_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "txPr"),
     slots: &[
@@ -309,14 +308,14 @@ static TX_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IDX_SHAPE: crate::Shape = crate::Shape {
+pub static IDX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "idx"),
     slots: &[],
     text: false,
 };
 
-static ADDRESS_SHAPE: crate::Shape = crate::Shape {
+pub static ADDRESS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "address1"),
         (None, "countryRegion"),
@@ -331,14 +330,14 @@ static ADDRESS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AGGREGATION_SHAPE: crate::Shape = crate::Shape {
+pub static AGGREGATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "aggregation"),
     slots: &[],
     text: false,
 };
 
-static AXIS_SHAPE: crate::Shape = crate::Shape {
+pub static AXIS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "hidden")],
     name: (NS_CX, "axis"),
     slots: &[
@@ -358,7 +357,7 @@ static AXIS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TITLE_AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "title"),
     slots: &[
@@ -371,7 +370,7 @@ static TITLE_AXIS_TITLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNITS_SHAPE: crate::Shape = crate::Shape {
+pub static UNITS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "unit")],
     name: (NS_CX, "units"),
     slots: &[
@@ -381,7 +380,7 @@ static UNITS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNITS_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static UNITS_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "unitsLabel"),
     slots: &[
@@ -393,7 +392,7 @@ static UNITS_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BINNING_SHAPE: crate::Shape = crate::Shape {
+pub static BINNING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "intervalClosed"),
         (None, "underflow"),
@@ -404,14 +403,14 @@ static BINNING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CAT_SCALING_SHAPE: crate::Shape = crate::Shape {
+pub static CAT_SCALING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "gapWidth")],
     name: (NS_CX, "catScaling"),
     slots: &[],
     text: false,
 };
 
-static CHART_CHART_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_CHART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "chart"),
     slots: &[
@@ -423,7 +422,7 @@ static CHART_CHART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHART_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "chartData"),
     slots: &[
@@ -434,7 +433,7 @@ static CHART_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CHART_SPACE_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_SPACE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "version"),
         (None, "featureList"),
@@ -454,7 +453,7 @@ static CHART_SPACE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TITLE_CHART_TITLE_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_CHART_TITLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pos"), (None, "align"), (None, "overlay")],
     name: (NS_CX, "title"),
     slots: &[
@@ -467,7 +466,7 @@ static TITLE_CHART_TITLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CLEAR_SHAPE: crate::Shape = crate::Shape {
+pub static CLEAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "clear"),
     slots: &[
@@ -480,14 +479,14 @@ static CLEAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COPYRIGHTS_SHAPE: crate::Shape = crate::Shape {
+pub static COPYRIGHTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "copyrights"),
     slots: &[crate::Slot::list((NS_CX, "copyright"))],
     text: false,
 };
 
-static DATA_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_CX, "data"),
     slots: &[
@@ -497,14 +496,14 @@ static DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_ID_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "dataId"),
     slots: &[],
     text: false,
 };
 
-static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx"), (None, "pos")],
     name: (NS_CX, "dataLabel"),
     slots: &[
@@ -518,14 +517,14 @@ static DATA_LABEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_LABEL_HIDDEN_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABEL_HIDDEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_CX, "dataLabelHidden"),
     slots: &[],
     text: false,
 };
 
-static VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE: crate::Shape = crate::Shape {
+pub static VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "seriesName"),
         (None, "categoryName"),
@@ -536,7 +535,7 @@ static VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pos")],
     name: (NS_CX, "dataLabels"),
     slots: &[
@@ -552,7 +551,7 @@ static DATA_LABELS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_PT_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_PT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_CX, "dataPt"),
     slots: &[
@@ -562,7 +561,7 @@ static DATA_PT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uri")],
     name: (NS_CX, "ext"),
     slots: &[crate::Slot::required_choice(
@@ -571,28 +570,28 @@ static EXT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "extLst"),
     slots: &[crate::Slot::list((NS_CX, "ext"))],
     text: false,
 };
 
-static EXTERNAL_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static EXTERNAL_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id"), (NS_CX, "autoUpdate")],
     name: (NS_CX, "externalData"),
     slots: &[],
     text: false,
 };
 
-static EXTREME_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static EXTREME_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "extremeValue"),
     slots: &[],
     text: false,
 };
 
-static FMT_OVR_SHAPE: crate::Shape = crate::Shape {
+pub static FMT_OVR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_CX, "fmtOvr"),
     slots: &[
@@ -602,49 +601,49 @@ static FMT_OVR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FMT_OVRS_SHAPE: crate::Shape = crate::Shape {
+pub static FMT_OVRS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "fmtOvrs"),
     slots: &[crate::Slot::list((NS_CX, "fmtOvr"))],
     text: false,
 };
 
-static F_SHAPE: crate::Shape = crate::Shape {
+pub static F_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "f"),
     slots: &[],
     text: true,
 };
 
-static NF_SHAPE: crate::Shape = crate::Shape {
+pub static NF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "nf"),
     slots: &[],
     text: true,
 };
 
-static GEO_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "provider")],
     name: (NS_CX, "geoCache"),
     slots: &[crate::Slot::items(&GEOGRAPHY_CACHE_CONTENT_TAGS)],
     text: false,
 };
 
-static GEO_CHILD_ENTITIES_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CHILD_ENTITIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoChildEntities"),
     slots: &[crate::Slot::list((NS_CX, "geoHierarchyEntity"))],
     text: false,
 };
 
-static GEO_CHILD_ENTITIES_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CHILD_ENTITIES_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityId")],
     name: (NS_CX, "geoChildEntitiesQuery"),
     slots: &[crate::Slot::single((NS_CX, "geoChildTypes"))],
     text: false,
 };
 
-static GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoChildEntitiesQueryResult"),
     slots: &[
@@ -654,21 +653,21 @@ static GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoChildEntitiesQueryResults"),
     slots: &[crate::Slot::list((NS_CX, "geoChildEntitiesQueryResult"))],
     text: false,
 };
 
-static GEO_CHILD_TYPES_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_CHILD_TYPES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoChildTypes"),
     slots: &[crate::Slot::list((NS_CX, "entityType"))],
     text: false,
 };
 
-static GEO_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "entityName"),
         (None, "entityId"),
@@ -685,14 +684,14 @@ static GEO_DATA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_DATA_ENTITY_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_ENTITY_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityType"), (None, "entityId")],
     name: (NS_CX, "geoDataEntityQuery"),
     slots: &[],
     text: false,
 };
 
-static GEO_DATA_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoDataEntityQueryResult"),
     slots: &[
@@ -702,14 +701,14 @@ static GEO_DATA_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoDataEntityQueryResults"),
     slots: &[crate::Slot::list((NS_CX, "geoDataEntityQueryResult"))],
     text: false,
 };
 
-static GEO_DATA_POINT_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_POINT_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "entityType"),
         (None, "latitude"),
@@ -720,14 +719,14 @@ static GEO_DATA_POINT_QUERY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityType"), (None, "entityId")],
     name: (NS_CX, "geoDataPointToEntityQuery"),
     slots: &[],
     text: false,
 };
 
-static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoDataPointToEntityQueryResult"),
     slots: &[
@@ -737,7 +736,7 @@ static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoDataPointToEntityQueryResults"),
     slots: &[crate::Slot::list((
@@ -747,14 +746,14 @@ static GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape
     text: false,
 };
 
-static GEO_ENTITY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_ENTITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityName"), (None, "entityType")],
     name: (NS_CX, "geoEntity"),
     slots: &[],
     text: false,
 };
 
-static GEO_HIERARCHY_ENTITY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_HIERARCHY_ENTITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "entityName"),
         (None, "entityId"),
@@ -765,7 +764,7 @@ static GEO_HIERARCHY_ENTITY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_LOCATION_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_LOCATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "latitude"),
         (None, "longitude"),
@@ -777,7 +776,7 @@ static GEO_LOCATION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_LOCATION_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_LOCATION_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "countryRegion"),
         (None, "adminDistrict1"),
@@ -790,7 +789,7 @@ static GEO_LOCATION_QUERY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_LOCATION_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_LOCATION_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoLocationQueryResult"),
     slots: &[
@@ -800,28 +799,28 @@ static GEO_LOCATION_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_LOCATION_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_LOCATION_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoLocationQueryResults"),
     slots: &[crate::Slot::list((NS_CX, "geoLocationQueryResult"))],
     text: false,
 };
 
-static GEO_LOCATIONS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_LOCATIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoLocations"),
     slots: &[crate::Slot::single((NS_CX, "geoLocation"))],
     text: false,
 };
 
-static GEO_PARENT_ENTITIES_QUERY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_PARENT_ENTITIES_QUERY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityId")],
     name: (NS_CX, "geoParentEntitiesQuery"),
     slots: &[],
     text: false,
 };
 
-static GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoParentEntitiesQueryResult"),
     slots: &[
@@ -832,35 +831,35 @@ static GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoParentEntitiesQueryResults"),
     slots: &[crate::Slot::list((NS_CX, "geoParentEntitiesQueryResult"))],
     text: false,
 };
 
-static GEO_PARENT_ENTITY_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_PARENT_ENTITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "entityId")],
     name: (NS_CX, "geoParentEntity"),
     slots: &[],
     text: false,
 };
 
-static GEO_POLYGON_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_POLYGON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "polygonId"), (None, "numPoints"), (None, "pcaRings")],
     name: (NS_CX, "geoPolygon"),
     slots: &[],
     text: false,
 };
 
-static GEO_POLYGONS_SHAPE: crate::Shape = crate::Shape {
+pub static GEO_POLYGONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "geoPolygons"),
     slots: &[crate::Slot::list((NS_CX, "geoPolygon"))],
     text: false,
 };
 
-static GEOGRAPHY_SHAPE: crate::Shape = crate::Shape {
+pub static GEOGRAPHY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "projectionType"),
         (None, "viewedRegionType"),
@@ -873,7 +872,7 @@ static GEOGRAPHY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MAJOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
+pub static MAJOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "majorGridlines"),
     slots: &[
@@ -883,7 +882,7 @@ static MAJOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MINOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
+pub static MINOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "minorGridlines"),
     slots: &[
@@ -893,7 +892,7 @@ static MINOR_GRIDLINES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HEADER_FOOTER_SHAPE: crate::Shape = crate::Shape {
+pub static HEADER_FOOTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "alignWithMargins"),
         (None, "differentOddEven"),
@@ -911,7 +910,7 @@ static HEADER_FOOTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LEGEND_SHAPE: crate::Shape = crate::Shape {
+pub static LEGEND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "pos"), (None, "align"), (None, "overlay")],
     name: (NS_CX, "legend"),
     slots: &[
@@ -923,49 +922,49 @@ static LEGEND_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NUMBER_SHAPE: crate::Shape = crate::Shape {
+pub static NUMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "number"),
     slots: &[],
     text: false,
 };
 
-static NUM_FMT_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_FMT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "formatCode"), (None, "sourceLinked")],
     name: (NS_CX, "numFmt"),
     slots: &[],
     text: false,
 };
 
-static NUM_DIM_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_DIM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type")],
     name: (NS_CX, "numDim"),
     slots: &[crate::Slot::items(&NUMERIC_DIMENSION_CONTENT_TAGS)],
     text: false,
 };
 
-static LVL_NUMERIC_LEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static LVL_NUMERIC_LEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ptCount"), (None, "formatCode"), (None, "name")],
     name: (NS_CX, "lvl"),
     slots: &[crate::Slot::list((NS_CX, "pt"))],
     text: false,
 };
 
-static PT_NUMERIC_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static PT_NUMERIC_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_CX, "pt"),
     slots: &[],
     text: true,
 };
 
-static OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "top"), (None, "left")],
     name: (NS_CX, "offset"),
     slots: &[],
     text: false,
 };
 
-static PAGE_MARGINS_SHAPE: crate::Shape = crate::Shape {
+pub static PAGE_MARGINS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "l"),
         (None, "r"),
@@ -979,7 +978,7 @@ static PAGE_MARGINS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PAGE_SETUP_SHAPE: crate::Shape = crate::Shape {
+pub static PAGE_SETUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "paperSize"),
         (None, "firstPageNumber"),
@@ -996,21 +995,21 @@ static PAGE_SETUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PARENT_LABEL_LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static PARENT_LABEL_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "parentLabelLayout"),
     slots: &[],
     text: false,
 };
 
-static PERCENT_SHAPE: crate::Shape = crate::Shape {
+pub static PERCENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "percent"),
     slots: &[],
     text: false,
 };
 
-static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
+pub static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "plotArea"),
     slots: &[
@@ -1022,7 +1021,7 @@ static PLOT_AREA_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLOT_AREA_REGION_SHAPE: crate::Shape = crate::Shape {
+pub static PLOT_AREA_REGION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "plotAreaRegion"),
     slots: &[
@@ -1033,7 +1032,7 @@ static PLOT_AREA_REGION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLOT_SURFACE_SHAPE: crate::Shape = crate::Shape {
+pub static PLOT_SURFACE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "plotSurface"),
     slots: &[
@@ -1043,7 +1042,7 @@ static PLOT_SURFACE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRINT_SETTINGS_SHAPE: crate::Shape = crate::Shape {
+pub static PRINT_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "printSettings"),
     slots: &[
@@ -1054,21 +1053,21 @@ static PRINT_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REGION_LABEL_LAYOUT_SHAPE: crate::Shape = crate::Shape {
+pub static REGION_LABEL_LAYOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_CX, "regionLabelLayout"),
     slots: &[],
     text: false,
 };
 
-static CHART_REL_ID_SHAPE: crate::Shape = crate::Shape {
+pub static CHART_REL_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_CX, "chart"),
     slots: &[],
     text: false,
 };
 
-static SERIES_SHAPE: crate::Shape = crate::Shape {
+pub static SERIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "layoutId"),
         (None, "hidden"),
@@ -1092,7 +1091,7 @@ static SERIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE: crate::Shape = crate::Shape {
+pub static VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "connectorLines"),
         (None, "meanLine"),
@@ -1105,7 +1104,7 @@ static VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE: crate::Shape = crate::Shape
     text: false,
 };
 
-static LAYOUT_PR_SHAPE: crate::Shape = crate::Shape {
+pub static LAYOUT_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "layoutPr"),
     slots: &[
@@ -1121,77 +1120,77 @@ static LAYOUT_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STATISTICS_SHAPE: crate::Shape = crate::Shape {
+pub static STATISTICS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "quartileMethod")],
     name: (NS_CX, "statistics"),
     slots: &[],
     text: false,
 };
 
-static STR_DIM_SHAPE: crate::Shape = crate::Shape {
+pub static STR_DIM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type")],
     name: (NS_CX, "strDim"),
     slots: &[crate::Slot::items(&STRING_DIMENSION_CONTENT_TAGS)],
     text: false,
 };
 
-static LVL_STRING_LEVEL_SHAPE: crate::Shape = crate::Shape {
+pub static LVL_STRING_LEVEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ptCount"), (None, "name")],
     name: (NS_CX, "lvl"),
     slots: &[crate::Slot::list((NS_CX, "pt"))],
     text: false,
 };
 
-static PT_STRING_VALUE_SHAPE: crate::Shape = crate::Shape {
+pub static PT_STRING_VALUE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "idx")],
     name: (NS_CX, "pt"),
     slots: &[],
     text: true,
 };
 
-static SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
+pub static SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "subtotals"),
     slots: &[crate::Slot::list((NS_CX, "idx"))],
     text: false,
 };
 
-static TX_SHAPE: crate::Shape = crate::Shape {
+pub static TX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "tx"),
     slots: &[crate::Slot::required_choice(&TEXT_CONTENT_TAGS)],
     text: false,
 };
 
-static TX_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static TX_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "txData"),
     slots: &[crate::Slot::required_choice(&TEXT_DATA_CONTENT_TAGS)],
     text: false,
 };
 
-static TICK_LABELS_SHAPE: crate::Shape = crate::Shape {
+pub static TICK_LABELS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "tickLabels"),
     slots: &[crate::Slot::single((NS_CX, "extLst"))],
     text: false,
 };
 
-static MAJOR_TICK_MARKS_SHAPE: crate::Shape = crate::Shape {
+pub static MAJOR_TICK_MARKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "majorTickMarks"),
     slots: &[crate::Slot::single((NS_CX, "extLst"))],
     text: false,
 };
 
-static MINOR_TICK_MARKS_SHAPE: crate::Shape = crate::Shape {
+pub static MINOR_TICK_MARKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "minorTickMarks"),
     slots: &[crate::Slot::single((NS_CX, "extLst"))],
     text: false,
 };
 
-static VAL_SCALING_SHAPE: crate::Shape = crate::Shape {
+pub static VAL_SCALING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "max"),
         (None, "min"),
@@ -1203,7 +1202,7 @@ static VAL_SCALING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MAX_SHAPE: crate::Shape = crate::Shape {
+pub static MAX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "max"),
     slots: &[crate::Slot::required_choice(
@@ -1212,7 +1211,7 @@ static MAX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MIN_SHAPE: crate::Shape = crate::Shape {
+pub static MIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "min"),
     slots: &[crate::Slot::required_choice(
@@ -1221,7 +1220,7 @@ static MIN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MID_SHAPE: crate::Shape = crate::Shape {
+pub static MID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "mid"),
     slots: &[crate::Slot::required_choice(
@@ -1230,7 +1229,7 @@ static MID_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VALUE_COLOR_POSITIONS_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_COLOR_POSITIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_CX, "valueColorPositions"),
     slots: &[
@@ -1241,7 +1240,7 @@ static VALUE_COLOR_POSITIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VALUE_COLORS_SHAPE: crate::Shape = crate::Shape {
+pub static VALUE_COLORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "valueColors"),
     slots: &[
@@ -1252,105 +1251,105 @@ static VALUE_COLORS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AXIS_ID_SHAPE: crate::Shape = crate::Shape {
+pub static AXIS_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "axisId"),
     slots: &[],
     text: true,
 };
 
-static ENTITY_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static ENTITY_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "entityType"),
     slots: &[],
     text: true,
 };
 
-static BINARY_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "binary"),
     slots: &[],
     text: true,
 };
 
-static BIN_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static BIN_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "binSize"),
     slots: &[],
     text: true,
 };
 
-static COPYRIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static COPYRIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "copyright"),
     slots: &[],
     text: true,
 };
 
-static EVEN_FOOTER_SHAPE: crate::Shape = crate::Shape {
+pub static EVEN_FOOTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "evenFooter"),
     slots: &[],
     text: true,
 };
 
-static EVEN_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static EVEN_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "evenHeader"),
     slots: &[],
     text: true,
 };
 
-static FIRST_FOOTER_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_FOOTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "firstFooter"),
     slots: &[],
     text: true,
 };
 
-static FIRST_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static FIRST_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "firstHeader"),
     slots: &[],
     text: true,
 };
 
-static ODD_FOOTER_SHAPE: crate::Shape = crate::Shape {
+pub static ODD_FOOTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "oddFooter"),
     slots: &[],
     text: true,
 };
 
-static ODD_HEADER_SHAPE: crate::Shape = crate::Shape {
+pub static ODD_HEADER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "oddHeader"),
     slots: &[],
     text: true,
 };
 
-static SEPARATOR_SHAPE: crate::Shape = crate::Shape {
+pub static SEPARATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "separator"),
     slots: &[],
     text: true,
 };
 
-static V_SHAPE: crate::Shape = crate::Shape {
+pub static V_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "v"),
     slots: &[],
     text: true,
 };
 
-static BIN_COUNT_SHAPE: crate::Shape = crate::Shape {
+pub static BIN_COUNT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "binCount"),
     slots: &[],
     text: true,
 };
 
-static OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE: crate::Shape = crate::Shape {
+pub static OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_CX, "openxmlsdk_49BECFFA_3B03_4D13_8272_D6CCB22579E3"),
     slots: &[],

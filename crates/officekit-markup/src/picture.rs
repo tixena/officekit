@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/picture`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
 const NS_PIC14: Option<NamespaceId> = Some(85);
 
-static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "dpi"), (None, "rotWithShape")],
     name: (NS_PIC, "blipFill"),
     slots: &[
@@ -240,7 +239,7 @@ static PICTURE_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "preferRelativeResize")],
     name: (NS_PIC, "cNvPicPr"),
     slots: &[
@@ -250,7 +249,7 @@ static NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -267,7 +266,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PIC, "nvPicPr"),
     slots: &[
@@ -277,7 +276,7 @@ static NON_VISUAL_PICTURE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PICTURE_SHAPE: crate::Shape = crate::Shape {
+pub static PICTURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PIC, "pic"),
     slots: &[
@@ -290,7 +289,7 @@ static PICTURE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_PIC, "spPr"),
     slots: &[

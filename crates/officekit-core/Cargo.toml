@@ -18,7 +18,7 @@ required-features = ["strict", "transitional"]
 [features]
 default = ["transitional"]
 transitional = ["dep:officekit-transitional"]
-strict = ["dep:officekit-strict"]
+strict = ["dep:officekit-strict", "dep:officekit-traversal"]
 
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
@@ -26,6 +26,9 @@ officekit-xml.workspace = true
 
 # The typed tree: one module per namespace, with readers, writers and hooks
 officekit-markup.workspace = true
+
+# The traversals of the typed tree: the Strict read of a workbook transforms it
+officekit-traversal = { workspace = true, optional = true }
 
 # The package layer: the container, part names, content types, relationships, image parts
 officekit-packaging.workspace = true
@@ -57,6 +60,9 @@ base64 = "0.22"
 regex = "1"
 
 [dev-dependencies]
+# The write-through tests and the timing example walk the typed tree
+officekit-traversal.workspace = true
+
 # The round-trip example takes its folder from the command line
 clap.workspace = true
 

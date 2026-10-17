@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2020/threadedcomments2`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,21 +227,21 @@ use std::io;
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XLTC2: Option<NamespaceId> = Some(146);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLTC2, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
+pub static HYPERLINK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "startIndex"), (None, "length"), (None, "url")],
     name: (NS_XLTC2, "hyperlink"),
     slots: &[crate::Slot::single((NS_XLTC2, "extLst"))],
     text: false,
 };
 
-static CHECKSUM_SHAPE: crate::Shape = crate::Shape {
+pub static CHECKSUM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLTC2, "checksum"),
     slots: &[],

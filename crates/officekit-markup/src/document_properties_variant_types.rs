@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,238 +227,238 @@ use std::io;
 
 const NS_VT: Option<NamespaceId> = Some(96);
 
-static ARRAY_SHAPE: crate::Shape = crate::Shape {
+pub static ARRAY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lBounds"), (None, "uBounds"), (None, "baseType")],
     name: (NS_VT, "array"),
     slots: &[crate::Slot::items(&ARRAY_CONTENT_TAGS)],
     text: false,
 };
 
-static BINARY_BLOB_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_BLOB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "blob"),
     slots: &[],
     text: true,
 };
 
-static BOOLEAN_SHAPE: crate::Shape = crate::Shape {
+pub static BOOLEAN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "bool"),
     slots: &[],
     text: true,
 };
 
-static BASIC_STRING_SHAPE: crate::Shape = crate::Shape {
+pub static BASIC_STRING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "bstr"),
     slots: &[],
     text: true,
 };
 
-static CLASS_ID_SHAPE: crate::Shape = crate::Shape {
+pub static CLASS_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "clsid"),
     slots: &[],
     text: true,
 };
 
-static CURRENCY_SHAPE: crate::Shape = crate::Shape {
+pub static CURRENCY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "cy"),
     slots: &[],
     text: true,
 };
 
-static DATE_AND_TIME_SHAPE: crate::Shape = crate::Shape {
+pub static DATE_AND_TIME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "date"),
     slots: &[],
     text: true,
 };
 
-static DECIMAL_SHAPE: crate::Shape = crate::Shape {
+pub static DECIMAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "decimal"),
     slots: &[],
     text: true,
 };
 
-static EMPTY_SHAPE: crate::Shape = crate::Shape {
+pub static EMPTY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "empty"),
     slots: &[],
     text: false,
 };
 
-static ERROR_STATUS_CODE_SHAPE: crate::Shape = crate::Shape {
+pub static ERROR_STATUS_CODE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "error"),
     slots: &[],
     text: true,
 };
 
-static FILE_TIME_SHAPE: crate::Shape = crate::Shape {
+pub static FILE_TIME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "filetime"),
     slots: &[],
     text: true,
 };
 
-static I1_SHAPE: crate::Shape = crate::Shape {
+pub static I1_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "i1"),
     slots: &[],
     text: true,
 };
 
-static I2_SHAPE: crate::Shape = crate::Shape {
+pub static I2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "i2"),
     slots: &[],
     text: true,
 };
 
-static I4_SHAPE: crate::Shape = crate::Shape {
+pub static I4_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "i4"),
     slots: &[],
     text: true,
 };
 
-static I8_SHAPE: crate::Shape = crate::Shape {
+pub static I8_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "i8"),
     slots: &[],
     text: true,
 };
 
-static INTEGER_SHAPE: crate::Shape = crate::Shape {
+pub static INTEGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "int"),
     slots: &[],
     text: true,
 };
 
-static LPSTR_SHAPE: crate::Shape = crate::Shape {
+pub static LPSTR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "lpstr"),
     slots: &[],
     text: true,
 };
 
-static LPWSTR_SHAPE: crate::Shape = crate::Shape {
+pub static LPWSTR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "lpwstr"),
     slots: &[],
     text: true,
 };
 
-static NULL_SHAPE: crate::Shape = crate::Shape {
+pub static NULL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "null"),
     slots: &[],
     text: false,
 };
 
-static BINARY_BLOB_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_BLOB_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "oblob"),
     slots: &[],
     text: true,
 };
 
-static BINARY_STORAGE_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_STORAGE_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ostorage"),
     slots: &[],
     text: true,
 };
 
-static BINARY_STREAM_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_STREAM_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ostream"),
     slots: &[],
     text: true,
 };
 
-static R4_SHAPE: crate::Shape = crate::Shape {
+pub static R4_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "r4"),
     slots: &[],
     text: true,
 };
 
-static R8_SHAPE: crate::Shape = crate::Shape {
+pub static R8_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "r8"),
     slots: &[],
     text: true,
 };
 
-static BINARY_STORAGE_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_STORAGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "storage"),
     slots: &[],
     text: true,
 };
 
-static BINARY_STREAM_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_STREAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "stream"),
     slots: &[],
     text: true,
 };
 
-static UI1_SHAPE: crate::Shape = crate::Shape {
+pub static UI1_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ui1"),
     slots: &[],
     text: true,
 };
 
-static UI2_SHAPE: crate::Shape = crate::Shape {
+pub static UI2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ui2"),
     slots: &[],
     text: true,
 };
 
-static UI4_SHAPE: crate::Shape = crate::Shape {
+pub static UI4_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ui4"),
     slots: &[],
     text: true,
 };
 
-static UI8_SHAPE: crate::Shape = crate::Shape {
+pub static UI8_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "ui8"),
     slots: &[],
     text: true,
 };
 
-static UNSIGNED_INTEGER_SHAPE: crate::Shape = crate::Shape {
+pub static UNSIGNED_INTEGER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "uint"),
     slots: &[],
     text: true,
 };
 
-static VARIANT_SHAPE: crate::Shape = crate::Shape {
+pub static VARIANT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_VT, "variant"),
     slots: &[crate::Slot::required_choice(&VARIANT_CONTENT_TAGS)],
     text: false,
 };
 
-static VECTOR_SHAPE: crate::Shape = crate::Shape {
+pub static VECTOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "baseType"), (None, "size")],
     name: (NS_VT, "vector"),
     slots: &[crate::Slot::items(&VECTOR_CONTENT_TAGS)],
     text: false,
 };
 
-static BINARY_VERSIONED_STREAM_SHAPE: crate::Shape = crate::Shape {
+pub static BINARY_VERSIONED_STREAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "version")],
     name: (NS_VT, "vstream"),
     slots: &[],

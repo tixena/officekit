@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/excel/2010/spreadsheetDrawing`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -230,7 +229,7 @@ const NS_A14: Option<NamespaceId> = Some(1);
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_XDR14: Option<NamespaceId> = Some(130);
 
-static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isComment")],
     name: (NS_XDR14, "cNvContentPartPr"),
     slots: &[
@@ -240,7 +239,7 @@ static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -257,14 +256,14 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XDR14, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_XDR14, "xfrm"),
     slots: &[
@@ -274,14 +273,14 @@ static XFRM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "macro"), (None, "fPublished")],
     name: (NS_XDR14, "nvPr"),
     slots: &[],
     text: false,
 };
 
-static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id"), (None, "bwMode")],
     name: (NS_XDR14, "contentPart"),
     slots: &[
@@ -293,7 +292,7 @@ static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XDR14, "nvContentPartPr"),
     slots: &[

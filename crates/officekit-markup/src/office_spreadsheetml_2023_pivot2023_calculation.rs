@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,56 +227,56 @@ use std::io;
 
 const NS_XLPCALC: Option<NamespaceId> = Some(137);
 
-static AGGREGATION_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static AGGREGATION_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "aggregationType"), (None, "sourceField")],
     name: (NS_XLPCALC, "aggregationInfo"),
     slots: &[],
     text: false,
 };
 
-static FEATURE_SUPPORT_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static FEATURE_SUPPORT_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "featureName")],
     name: (NS_XLPCALC, "featureSupportInfo"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPCALC, "pivotAreaReferenceSubtotals"),
     slots: &[crate::Slot::list((NS_XLPCALC, "subtotal"))],
     text: false,
 };
 
-static PIVOT_FIELD_SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_FIELD_SUBTOTALS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPCALC, "pivotFieldSubtotals"),
     slots: &[crate::Slot::list((NS_XLPCALC, "subtotal"))],
     text: false,
 };
 
-static SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE: crate::Shape = crate::Shape {
+pub static SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPCALC, "subtotal"),
     slots: &[],
     text: false,
 };
 
-static SUBTOTAL_LINE_ITEM_SHAPE: crate::Shape = crate::Shape {
+pub static SUBTOTAL_LINE_ITEM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPCALC, "subtotalLineItem"),
     slots: &[],
     text: false,
 };
 
-static SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "subtotalType")],
     name: (NS_XLPCALC, "subtotal"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_XLPCALC, "pivotFieldSubtotalLineItems"),
     slots: &[crate::Slot::list((NS_XLPCALC, "subtotalLineItem"))],

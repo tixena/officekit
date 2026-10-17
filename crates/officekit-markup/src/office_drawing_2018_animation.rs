@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2018/animation`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_AANIM: Option<NamespaceId> = Some(6);
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_AANIM, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static ANIM_PR_SHAPE: crate::Shape = crate::Shape {
+pub static ANIM_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "length"),

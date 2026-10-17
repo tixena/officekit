@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chart`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,7 +228,7 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_C: Option<NamespaceId> = Some(22);
 const NS_C16: Option<NamespaceId> = Some(25);
 
-static SP_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SP_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_C16, "spPr"),
     slots: &[
@@ -245,14 +244,14 @@ static SP_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE: crate::Shape = crate::Shape {
+pub static SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C16, "showExpandCollapseFieldButtons"),
     slots: &[],
     text: false,
 };
 
-static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "categoryFilterException"),
     slots: &[
@@ -267,21 +266,21 @@ static CATEGORY_FILTER_EXCEPTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CATEGORY_FILTER_EXCEPTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static CATEGORY_FILTER_EXCEPTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "categoryFilterExceptions"),
     slots: &[crate::Slot::list((NS_C16, "categoryFilterException"))],
     text: false,
 };
 
-static DATAPOINTUNIQUEIDMAP_SHAPE: crate::Shape = crate::Shape {
+pub static DATAPOINTUNIQUEIDMAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "datapointuniqueidmap"),
     slots: &[crate::Slot::list((NS_C16, "ptentry"))],
     text: false,
 };
 
-static PTENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static PTENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "ptentry"),
     slots: &[
@@ -291,42 +290,43 @@ static PTENTRY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UNIQUE_ID_SHAPE: crate::Shape = crate::Shape {
+pub static UNIQUE_ID_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "uniqueID"),
     slots: &[],
     text: false,
 };
 
-static UNIQUE_ID_2_SHAPE: crate::Shape = crate::Shape {
+pub static UNIQUE_ID_2_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "uniqueId"),
     slots: &[],
     text: false,
 };
 
-static LITERAL_DATA_CHART_SHAPE: crate::Shape = crate::Shape {
+pub static LITERAL_DATA_CHART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C16, "literalDataChart"),
     slots: &[],
     text: false,
 };
 
-static FILTERED_LIT_CACHE_MULTI_LVL_STR_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape = crate::Shape {
-    attributes: &[],
-    name: (NS_C16, "filteredLitCache"),
-    slots: &[crate::Slot::required((NS_C16, "multiLvlStrCache"))],
-    text: false,
-};
+pub static FILTERED_LIT_CACHE_MULTI_LVL_STR_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape =
+    crate::Shape {
+        attributes: &[],
+        name: (NS_C16, "filteredLitCache"),
+        slots: &[crate::Slot::required((NS_C16, "multiLvlStrCache"))],
+        text: false,
+    };
 
-static FILTERED_LIT_CACHE_NUM_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_LIT_CACHE_NUM_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "filteredLitCache"),
     slots: &[crate::Slot::required((NS_C16, "numCache"))],
     text: false,
 };
 
-static PIVOT_OPTIONS16_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_OPTIONS16_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "pivotOptions16"),
     slots: &[crate::Slot::single((
@@ -336,28 +336,28 @@ static PIVOT_OPTIONS16_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FILTERED_LIT_CACHE_STR_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static FILTERED_LIT_CACHE_STR_FILTERED_LITERAL_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "filteredLitCache"),
     slots: &[crate::Slot::required((NS_C16, "strCache"))],
     text: false,
 };
 
-static BUBBLE3D_SHAPE: crate::Shape = crate::Shape {
+pub static BUBBLE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C16, "bubble3D"),
     slots: &[],
     text: false,
 };
 
-static INVERT_IF_NEGATIVE_SHAPE: crate::Shape = crate::Shape {
+pub static INVERT_IF_NEGATIVE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C16, "invertIfNegative"),
     slots: &[],
     text: false,
 };
 
-static D_LBL_SHAPE: crate::Shape = crate::Shape {
+pub static D_LBL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "dLbl"),
     slots: &[
@@ -368,7 +368,7 @@ static D_LBL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MARKER_SHAPE: crate::Shape = crate::Shape {
+pub static MARKER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "marker"),
     slots: &[
@@ -380,7 +380,7 @@ static MARKER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MULTI_LVL_STR_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static MULTI_LVL_STR_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "multiLvlStrCache"),
     slots: &[
@@ -391,7 +391,7 @@ static MULTI_LVL_STR_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NUM_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static NUM_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "numCache"),
     slots: &[
@@ -403,7 +403,7 @@ static NUM_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static STR_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static STR_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "strCache"),
     slots: &[
@@ -414,14 +414,14 @@ static STR_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXPLOSION_SHAPE: crate::Shape = crate::Shape {
+pub static EXPLOSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_C16, "explosion"),
     slots: &[],
     text: false,
 };
 
-static PTIDX_SHAPE: crate::Shape = crate::Shape {
+pub static PTIDX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16, "ptidx"),
     slots: &[],

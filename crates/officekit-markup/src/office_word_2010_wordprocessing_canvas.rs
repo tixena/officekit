@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -232,7 +231,7 @@ const NS_WPC: Option<NamespaceId> = Some(115);
 const NS_WPG: Option<NamespaceId> = Some(116);
 const NS_WPS: Option<NamespaceId> = Some(117);
 
-static BG_SHAPE: crate::Shape = crate::Shape {
+pub static BG_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPC, "bg"),
     slots: &[
@@ -242,14 +241,14 @@ static BG_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPC, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static WHOLE_SHAPE: crate::Shape = crate::Shape {
+pub static WHOLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPC, "whole"),
     slots: &[
@@ -259,7 +258,7 @@ static WHOLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WPC_SHAPE: crate::Shape = crate::Shape {
+pub static WPC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPC, "wpc"),
     slots: &[
@@ -271,7 +270,7 @@ static WPC_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHIC_FRAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WPC, "graphicFrame"),
     slots: &[

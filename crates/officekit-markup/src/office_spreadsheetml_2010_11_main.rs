@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2010/11/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -232,42 +231,42 @@ const NS_X14: Option<NamespaceId> = Some(120);
 const NS_X15: Option<NamespaceId> = Some(122);
 const NS_XNE: Option<NamespaceId> = Some(149);
 
-static SLICER_CACHE_PIVOT_TABLES_SHAPE: crate::Shape = crate::Shape {
+pub static SLICER_CACHE_PIVOT_TABLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "slicerCachePivotTables"),
     slots: &[crate::Slot::list((NS_X14, "pivotTable"))],
     text: false,
 };
 
-static SLICER_CACHES_SHAPE: crate::Shape = crate::Shape {
+pub static SLICER_CACHES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "slicerCaches"),
     slots: &[crate::Slot::list((NS_X14, "slicerCache"))],
     text: false,
 };
 
-static CACHE_HIERARCHY_SHAPE: crate::Shape = crate::Shape {
+pub static CACHE_HIERARCHY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "aggregatedColumn")],
     name: (NS_X15, "cacheHierarchy"),
     slots: &[],
     text: false,
 };
 
-static CACHED_UNIQUE_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static CACHED_UNIQUE_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "index"), (None, "name")],
     name: (NS_X15, "cachedUniqueName"),
     slots: &[],
     text: false,
 };
 
-static CACHED_UNIQUE_NAMES_SHAPE: crate::Shape = crate::Shape {
+pub static CACHED_UNIQUE_NAMES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "cachedUniqueNames"),
     slots: &[crate::Slot::list((NS_X15, "cachedUniqueName"))],
     text: false,
 };
 
-static CALCULATED_MEMBER_SHAPE: crate::Shape = crate::Shape {
+pub static CALCULATED_MEMBER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "measureGroup"),
         (None, "numberFormat"),
@@ -278,7 +277,7 @@ static CALCULATED_MEMBER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONNECTION_SHAPE: crate::Shape = crate::Shape {
+pub static CONNECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "model"),
@@ -297,21 +296,21 @@ static CONNECTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DATA_FEED_PR_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_FEED_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "connection")],
     name: (NS_X15, "dataFeedPr"),
     slots: &[crate::Slot::required((NS_X15, "dbTables"))],
     text: false,
 };
 
-static DATA_FIELD_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_FIELD_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isCountDistinct")],
     name: (NS_X15, "dataField"),
     slots: &[],
     text: false,
 };
 
-static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
+pub static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "minVersionLoad")],
     name: (NS_X15, "dataModel"),
     slots: &[
@@ -322,35 +321,35 @@ static DATA_MODEL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DB_COMMAND_SHAPE: crate::Shape = crate::Shape {
+pub static DB_COMMAND_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "text")],
     name: (NS_X15, "dbCommand"),
     slots: &[],
     text: false,
 };
 
-static DB_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static DB_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_X15, "dbTable"),
     slots: &[],
     text: false,
 };
 
-static DB_TABLES_SHAPE: crate::Shape = crate::Shape {
+pub static DB_TABLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "dbTables"),
     slots: &[crate::Slot::list((NS_X15, "dbTable"))],
     text: false,
 };
 
-static ACTIVE_TAB_TOP_LEVEL_ENTITY_SHAPE: crate::Shape = crate::Shape {
+pub static ACTIVE_TAB_TOP_LEVEL_ENTITY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "type")],
     name: (NS_X15, "activeTabTopLevelEntity"),
     slots: &[],
     text: false,
 };
 
-static MODEL_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "fromTable"),
         (None, "fromColumn"),
@@ -362,35 +361,35 @@ static MODEL_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MODEL_RELATIONSHIPS_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL_RELATIONSHIPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "modelRelationships"),
     slots: &[crate::Slot::list((NS_X15, "modelRelationship"))],
     text: false,
 };
 
-static MODEL_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "name"), (None, "connection")],
     name: (NS_X15, "modelTable"),
     slots: &[],
     text: false,
 };
 
-static MODEL_TABLES_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL_TABLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "modelTables"),
     slots: &[crate::Slot::list((NS_X15, "modelTable"))],
     text: false,
 };
 
-static MODEL_TEXT_PR_SHAPE: crate::Shape = crate::Shape {
+pub static MODEL_TEXT_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "headers")],
     name: (NS_X15, "modelTextPr"),
     slots: &[],
     text: false,
 };
 
-static MOVING_PERIOD_STATE_SHAPE: crate::Shape = crate::Shape {
+pub static MOVING_PERIOD_STATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "referenceDateBegin"),
         (None, "referencePeriod"),
@@ -403,21 +402,21 @@ static MOVING_PERIOD_STATE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OLEDB_PR_SHAPE: crate::Shape = crate::Shape {
+pub static OLEDB_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "connection")],
     name: (NS_X15, "oledbPr"),
     slots: &[crate::Slot::required_choice(&DATABASE_SOURCE_CONTENT_TAGS)],
     text: false,
 };
 
-static PIVOT_CACHE_DECOUPLED_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_CACHE_DECOUPLED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "decoupled")],
     name: (NS_X15, "pivotCacheDecoupled"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_CACHE_ID_VERSION_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_CACHE_ID_VERSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "cacheIdSupportedVersion"),
         (None, "cacheIdCreatedVersion"),
@@ -427,49 +426,49 @@ static PIVOT_CACHE_ID_VERSION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIVOT_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "useWholeDay")],
     name: (NS_X15, "pivotFilter"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_ROW_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_ROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "r"), (None, "count")],
     name: (NS_X15, "pivotRow"),
     slots: &[crate::Slot::list((NS_X15, "c"))],
     text: false,
 };
 
-static PIVOT_TABLE_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rowCount"), (None, "columnCount"), (None, "cacheId")],
     name: (NS_X15, "pivotTableData"),
     slots: &[crate::Slot::required((NS_X15, "pivotRow"))],
     text: false,
 };
 
-static PIVOT_TABLE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_X15, "pivotTableReference"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_TABLE_REFERENCES_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_REFERENCES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "pivotTableReferences"),
     slots: &[crate::Slot::list((NS_X15, "pivotTableReference"))],
     text: false,
 };
 
-static PIVOT_TABLE_SERVER_FORMATS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_SERVER_FORMATS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_X15, "pivotTableServerFormats"),
     slots: &[crate::Slot::list((NS_X15, "serverFormat"))],
     text: false,
 };
 
-static PIVOT_TABLE_UI_SETTINGS_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_UI_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sourceDataName"), (None, "relNeededHidden")],
     name: (NS_X15, "pivotTableUISettings"),
     slots: &[
@@ -479,7 +478,7 @@ static PIVOT_TABLE_UI_SETTINGS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_SHAPE: crate::Shape = crate::Shape {
+pub static C_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i"), (None, "t")],
     name: (NS_X15, "c"),
     slots: &[
@@ -489,7 +488,7 @@ static C_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static X_SHAPE: crate::Shape = crate::Shape {
+pub static X_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "in"),
         (None, "bc"),
@@ -504,7 +503,7 @@ static X_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static QUERY_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static QUERY_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "clipped"),
         (None, "sourceDataName"),
@@ -515,28 +514,28 @@ static QUERY_TABLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RANGE_PR_SHAPE: crate::Shape = crate::Shape {
+pub static RANGE_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sourceName")],
     name: (NS_X15, "rangePr"),
     slots: &[],
     text: false,
 };
 
-static SLICER_CACHE_HIDE_ITEMS_WITH_NO_DATA_SHAPE: crate::Shape = crate::Shape {
+pub static SLICER_CACHE_HIDE_ITEMS_WITH_NO_DATA_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_X15, "slicerCacheHideItemsWithNoData"),
     slots: &[crate::Slot::list((NS_X15, "slicerCacheOlapLevelName"))],
     text: false,
 };
 
-static SLICER_CACHE_OLAP_LEVEL_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static SLICER_CACHE_OLAP_LEVEL_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "uniqueName"), (None, "count")],
     name: (NS_X15, "slicerCacheOlapLevelName"),
     slots: &[],
     text: false,
 };
 
-static SURVEY_SHAPE: crate::Shape = crate::Shape {
+pub static SURVEY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "guid"),
@@ -554,42 +553,42 @@ static SURVEY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DESCRIPTION_PR_SHAPE: crate::Shape = crate::Shape {
+pub static DESCRIPTION_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "descriptionPr"),
     slots: &[crate::Slot::single((NS_X15, "extLst"))],
     text: false,
 };
 
-static QUESTION_PR_SHAPE: crate::Shape = crate::Shape {
+pub static QUESTION_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "questionPr"),
     slots: &[crate::Slot::single((NS_X15, "extLst"))],
     text: false,
 };
 
-static QUESTIONS_PR_SHAPE: crate::Shape = crate::Shape {
+pub static QUESTIONS_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "questionsPr"),
     slots: &[crate::Slot::single((NS_X15, "extLst"))],
     text: false,
 };
 
-static SURVEY_PR_SHAPE: crate::Shape = crate::Shape {
+pub static SURVEY_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "surveyPr"),
     slots: &[crate::Slot::single((NS_X15, "extLst"))],
     text: false,
 };
 
-static TITLE_PR_SHAPE: crate::Shape = crate::Shape {
+pub static TITLE_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "titlePr"),
     slots: &[crate::Slot::single((NS_X15, "extLst"))],
     text: false,
 };
 
-static QUESTION_SHAPE: crate::Shape = crate::Shape {
+pub static QUESTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "binding"),
         (None, "text"),
@@ -609,7 +608,7 @@ static QUESTION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static QUESTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static QUESTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "questions"),
     slots: &[
@@ -619,7 +618,7 @@ static QUESTIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TABLE_SLICER_CACHE_SHAPE: crate::Shape = crate::Shape {
+pub static TABLE_SLICER_CACHE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "tableId"),
         (None, "column"),
@@ -632,7 +631,7 @@ static TABLE_SLICER_CACHE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TIMELINE_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "name"),
         (None, "cache"),
@@ -651,7 +650,7 @@ static TIMELINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TIMELINE_CACHE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_CACHE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name"), (None, "sourceName")],
     name: (NS_X15, "timelineCacheDefinition"),
     slots: &[
@@ -662,70 +661,70 @@ static TIMELINE_CACHE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PIVOT_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "tabId"), (None, "name")],
     name: (NS_X15, "pivotTable"),
     slots: &[],
     text: false,
 };
 
-static PIVOT_TABLES_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_TABLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "pivotTables"),
     slots: &[crate::Slot::list((NS_X15, "pivotTable"))],
     text: false,
 };
 
-static TIMELINE_CACHE_REF_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_CACHE_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_X15, "timelineCacheRef"),
     slots: &[],
     text: false,
 };
 
-static TIMELINE_CACHE_REFS_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_CACHE_REFS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "timelineCacheRefs"),
     slots: &[crate::Slot::list((NS_X15, "timelineCacheRef"))],
     text: false,
 };
 
-static TIMELINE_PIVOT_CACHE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_PIVOT_CACHE_DEFINITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "timelineData")],
     name: (NS_X15, "timelinePivotCacheDefinition"),
     slots: &[],
     text: false,
 };
 
-static BOUNDS_SHAPE: crate::Shape = crate::Shape {
+pub static BOUNDS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "bounds"),
     slots: &[],
     text: false,
 };
 
-static SELECTION_SHAPE: crate::Shape = crate::Shape {
+pub static SELECTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "selection"),
     slots: &[],
     text: false,
 };
 
-static TIMELINE_REF_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_REF_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "id")],
     name: (NS_X15, "timelineRef"),
     slots: &[],
     text: false,
 };
 
-static TIMELINE_REFS_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_REFS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "timelineRefs"),
     slots: &[crate::Slot::list((NS_X15, "timelineRef"))],
     text: false,
 };
 
-static STATE_SHAPE: crate::Shape = crate::Shape {
+pub static STATE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "singleRangeFilterState"),
         (None, "minimalRefreshVersion"),
@@ -746,63 +745,63 @@ static STATE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TIMELINE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "name")],
     name: (NS_X15, "timelineStyle"),
     slots: &[crate::Slot::single((NS_X15, "timelineStyleElements"))],
     text: false,
 };
 
-static TIMELINE_STYLE_ELEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_STYLE_ELEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "type"), (None, "dxfId")],
     name: (NS_X15, "timelineStyleElement"),
     slots: &[],
     text: false,
 };
 
-static TIMELINE_STYLE_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_STYLE_ELEMENTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "timelineStyleElements"),
     slots: &[crate::Slot::list((NS_X15, "timelineStyleElement"))],
     text: false,
 };
 
-static TIMELINE_STYLES_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_STYLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "defaultTimelineStyle")],
     name: (NS_X15, "timelineStyles"),
     slots: &[crate::Slot::list((NS_X15, "timelineStyle"))],
     text: false,
 };
 
-static TIMELINES_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "timelines"),
     slots: &[crate::Slot::list((NS_X15, "timeline"))],
     text: false,
 };
 
-static WEB_EXTENSION_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_EXTENSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "appRef")],
     name: (NS_X15, "webExtension"),
     slots: &[crate::Slot::required((NS_XNE, "f"))],
     text: false,
 };
 
-static WEB_EXTENSIONS_SHAPE: crate::Shape = crate::Shape {
+pub static WEB_EXTENSIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "webExtensions"),
     slots: &[crate::Slot::list((NS_X15, "webExtension"))],
     text: false,
 };
 
-static WORKBOOK_PR_SHAPE: crate::Shape = crate::Shape {
+pub static WORKBOOK_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "chartTrackingRefBase")],
     name: (NS_X15, "workbookPr"),
     slots: &[],
     text: false,
 };
 
-static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "ref")],
     name: (NS_X15, "autoFilter"),
     slots: &[
@@ -813,42 +812,42 @@ static AUTO_FILTER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DXFS_SHAPE: crate::Shape = crate::Shape {
+pub static DXFS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "count")],
     name: (NS_X15, "dxfs"),
     slots: &[crate::Slot::list((NS_X, "dxf"))],
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "extLst"),
     slots: &[crate::Slot::list((NS_X, "ext"))],
     text: false,
 };
 
-static PIVOT_CACHES_SHAPE: crate::Shape = crate::Shape {
+pub static PIVOT_CACHES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "pivotCaches"),
     slots: &[crate::Slot::list((NS_X, "pivotCache"))],
     text: false,
 };
 
-static TIMELINE_CACHE_PIVOT_CACHES_SHAPE: crate::Shape = crate::Shape {
+pub static TIMELINE_CACHE_PIVOT_CACHES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "timelineCachePivotCaches"),
     slots: &[crate::Slot::list((NS_X, "pivotCache"))],
     text: false,
 };
 
-static SERVER_FORMAT_SHAPE: crate::Shape = crate::Shape {
+pub static SERVER_FORMAT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "culture"), (None, "format")],
     name: (NS_X15, "serverFormat"),
     slots: &[],
     text: false,
 };
 
-static TEXT_PR_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "prompt"),
         (None, "fileType"),
@@ -872,7 +871,7 @@ static TEXT_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static V_SHAPE: crate::Shape = crate::Shape {
+pub static V_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_X15, "v"),
     slots: &[],

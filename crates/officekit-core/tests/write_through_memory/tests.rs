@@ -9,8 +9,8 @@ use officekit_markup::wordprocessing::{
     ParagraphContent, StructuredDocumentTagProperties, Table, TableCell, TableRow, Text, TextRun,
     TextRunContent,
 };
-use officekit_markup::write_through::{WriteThrough as _, Written};
-use officekit_markup::{Descend, Visit as _};
+use officekit_markup::{Descend, Written};
+use officekit_traversal::{Visit as _, WriteThrough as _};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::Layout;
 

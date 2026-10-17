@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/powerpoint/2019/9/main/command`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,14 +227,14 @@ use std::io;
 const NS_PC: Option<NamespaceId> = Some(81);
 const NS_PC2: Option<NamespaceId> = Some(82);
 
-static CM_RPLY_MK_SHAPE: crate::Shape = crate::Shape {
+pub static CM_RPLY_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_PC2, "cmRplyMk"),
     slots: &[],
     text: false,
 };
 
-static CM_RPLY_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CM_RPLY_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC2, "cmRplyMkLst"),
     slots: &[
@@ -245,14 +244,14 @@ static CM_RPLY_MK_LST_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CM_MK_SHAPE: crate::Shape = crate::Shape {
+pub static CM_MK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_PC2, "cmMK"),
     slots: &[],
     text: false,
 };
 
-static CM_MK_LST_SHAPE: crate::Shape = crate::Shape {
+pub static CM_MK_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_PC2, "cmMkLst"),
     slots: &[

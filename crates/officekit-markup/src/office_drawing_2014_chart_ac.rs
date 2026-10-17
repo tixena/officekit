@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2014/chart/ac`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 const NS_C: Option<NamespaceId> = Some(22);
 const NS_C16AC: Option<NamespaceId> = Some(26);
 
-static MULTI_LVL_STR_LIT_SHAPE: crate::Shape = crate::Shape {
+pub static MULTI_LVL_STR_LIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_C16AC, "multiLvlStrLit"),
     slots: &[

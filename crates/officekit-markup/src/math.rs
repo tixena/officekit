@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/math`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -231,7 +230,7 @@ const NS_W: Option<NamespaceId> = Some(97);
 const NS_W14: Option<NamespaceId> = Some(99);
 const NS_XML: Option<NamespaceId> = Some(148);
 
-static ACCENT_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "acc"),
     slots: &[
@@ -241,7 +240,7 @@ static ACCENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ACCENT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static ACCENT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "accPr"),
     slots: &[
@@ -251,35 +250,35 @@ static ACCENT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
+pub static ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "aln"),
     slots: &[],
     text: false,
 };
 
-static ALIGN_SCRIPTS_SHAPE: crate::Shape = crate::Shape {
+pub static ALIGN_SCRIPTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "alnScr"),
     slots: &[],
     text: false,
 };
 
-static ARGUMENT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static ARGUMENT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "argPr"),
     slots: &[crate::Slot::single((NS_M, "argSz"))],
     text: false,
 };
 
-static ARGUMENT_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static ARGUMENT_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "argSz"),
     slots: &[],
     text: false,
 };
 
-static BAR_SHAPE: crate::Shape = crate::Shape {
+pub static BAR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "bar"),
     slots: &[
@@ -289,7 +288,7 @@ static BAR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BAR_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BAR_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "barPr"),
     slots: &[
@@ -299,21 +298,21 @@ static BAR_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MATRIX_BASE_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_BASE_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "baseJc"),
     slots: &[],
     text: false,
 };
 
-static DELIMITER_BEGINNING_CHARACTER_SHAPE: crate::Shape = crate::Shape {
+pub static DELIMITER_BEGINNING_CHARACTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "begChr"),
     slots: &[],
     text: false,
 };
 
-static BORDER_BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "borderBox"),
     slots: &[
@@ -323,7 +322,7 @@ static BORDER_BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BORDER_BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "borderBoxPr"),
     slots: &[
@@ -340,7 +339,7 @@ static BORDER_BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "box"),
     slots: &[
@@ -350,7 +349,7 @@ static BOX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "boxPr"),
     slots: &[
@@ -364,70 +363,70 @@ static BOX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BREAK_SHAPE: crate::Shape = crate::Shape {
+pub static BREAK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "alnAt")],
     name: (NS_M, "brk"),
     slots: &[],
     text: false,
 };
 
-static BREAK_ON_BINARY_OPERATORS_SHAPE: crate::Shape = crate::Shape {
+pub static BREAK_ON_BINARY_OPERATORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "brkBin"),
     slots: &[],
     text: false,
 };
 
-static BREAK_ON_BINARY_SUBTRACTION_SHAPE: crate::Shape = crate::Shape {
+pub static BREAK_ON_BINARY_SUBTRACTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "brkBinSub"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_COLUMN_GAP_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_GAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "cGp"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_COLUMN_GAP_RULE_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_GAP_RULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "cGpRule"),
     slots: &[],
     text: false,
 };
 
-static MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE: crate::Shape = crate::Shape {
+pub static MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "cSp"),
     slots: &[],
     text: false,
 };
 
-static CHARACTER_SHAPE: crate::Shape = crate::Shape {
+pub static CHARACTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "chr"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_COLUMN_COUNT_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_COUNT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "count"),
     slots: &[],
     text: false,
 };
 
-static CONTROL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static CONTROL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "ctrlPr"),
     slots: &[crate::Slot::choice(&CONTROL_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static DELIMITER_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static DELIMITER_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "d"),
     slots: &[
@@ -437,7 +436,7 @@ static DELIMITER_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DELIMITER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static DELIMITER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "dPr"),
     slots: &[
@@ -451,14 +450,14 @@ static DELIMITER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DEFAULT_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static DEFAULT_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "defJc"),
     slots: &[],
     text: false,
 };
 
-static DEGREE_SHAPE: crate::Shape = crate::Shape {
+pub static DEGREE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "deg"),
     slots: &[
@@ -469,14 +468,14 @@ static DEGREE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HIDE_DEGREE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_DEGREE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "degHide"),
     slots: &[],
     text: false,
 };
 
-static DENOMINATOR_SHAPE: crate::Shape = crate::Shape {
+pub static DENOMINATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "den"),
     slots: &[
@@ -487,21 +486,21 @@ static DENOMINATOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIFFERENTIAL_SHAPE: crate::Shape = crate::Shape {
+pub static DIFFERENTIAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "diff"),
     slots: &[],
     text: false,
 };
 
-static USE_DISPLAY_MATH_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
+pub static USE_DISPLAY_MATH_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "dispDef"),
     slots: &[],
     text: false,
 };
 
-static E_SHAPE: crate::Shape = crate::Shape {
+pub static E_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "e"),
     slots: &[
@@ -512,14 +511,14 @@ static E_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DELIMITER_ENDING_CHARACTER_SHAPE: crate::Shape = crate::Shape {
+pub static DELIMITER_ENDING_CHARACTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "endChr"),
     slots: &[],
     text: false,
 };
 
-static ARRAY_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static ARRAY_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "eqArr"),
     slots: &[
@@ -529,7 +528,7 @@ static ARRAY_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ARRAY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static ARRAY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "eqArrPr"),
     slots: &[
@@ -543,7 +542,7 @@ static ARRAY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FRACTION_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static FRACTION_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "f"),
     slots: &[
@@ -554,7 +553,7 @@ static FRACTION_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FUNCTION_NAME_SHAPE: crate::Shape = crate::Shape {
+pub static FUNCTION_NAME_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "fName"),
     slots: &[
@@ -565,7 +564,7 @@ static FUNCTION_NAME_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FRACTION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static FRACTION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "fPr"),
     slots: &[
@@ -575,7 +574,7 @@ static FRACTION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FUNCTION_APPLY_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static FUNCTION_APPLY_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "func"),
     slots: &[
@@ -586,14 +585,14 @@ static FUNCTION_APPLY_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static FUNCTION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static FUNCTION_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "funcPr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static GROUP_CHARACTER_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_CHARACTER_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "groupChr"),
     slots: &[
@@ -603,7 +602,7 @@ static GROUP_CHARACTER_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_CHARACTER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_CHARACTER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "groupChrPr"),
     slots: &[
@@ -615,77 +614,77 @@ static GROUP_CHARACTER_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROW_SHAPE: crate::Shape = crate::Shape {
+pub static GROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "grow"),
     slots: &[],
     text: false,
 };
 
-static HIDE_BOTTOM_EDGE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_BOTTOM_EDGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "hideBot"),
     slots: &[],
     text: false,
 };
 
-static HIDE_LEFT_EDGE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_LEFT_EDGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "hideLeft"),
     slots: &[],
     text: false,
 };
 
-static HIDE_RIGHT_EDGE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_RIGHT_EDGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "hideRight"),
     slots: &[],
     text: false,
 };
 
-static HIDE_TOP_EDGE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDE_TOP_EDGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "hideTop"),
     slots: &[],
     text: false,
 };
 
-static INTEGRAL_LIMIT_LOCATIONS_SHAPE: crate::Shape = crate::Shape {
+pub static INTEGRAL_LIMIT_LOCATIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "intLim"),
     slots: &[],
     text: false,
 };
 
-static INTER_EQUATION_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static INTER_EQUATION_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "interSp"),
     slots: &[],
     text: false,
 };
 
-static INTRA_EQUATION_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static INTRA_EQUATION_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "intraSp"),
     slots: &[],
     text: false,
 };
 
-static JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "jc"),
     slots: &[],
     text: false,
 };
 
-static LEFT_MARGIN_SHAPE: crate::Shape = crate::Shape {
+pub static LEFT_MARGIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "lMargin"),
     slots: &[],
     text: false,
 };
 
-static LIMIT_SHAPE: crate::Shape = crate::Shape {
+pub static LIMIT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "lim"),
     slots: &[
@@ -696,14 +695,14 @@ static LIMIT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LIM_LOC_SHAPE: crate::Shape = crate::Shape {
+pub static LIM_LOC_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "limLoc"),
     slots: &[],
     text: false,
 };
 
-static LOWER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static LOWER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "limLow"),
     slots: &[
@@ -714,14 +713,14 @@ static LOWER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static LOWER_LIMIT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static LOWER_LIMIT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "limLowPr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static UPPER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static UPPER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "limUpp"),
     slots: &[
@@ -732,21 +731,21 @@ static UPPER_LIMIT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static UPPER_LIMIT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static UPPER_LIMIT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "limUppPr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static LITERAL_SHAPE: crate::Shape = crate::Shape {
+pub static LITERAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "lit"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "m"),
     slots: &[
@@ -756,7 +755,7 @@ static MATRIX_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MATRIX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mPr"),
     slots: &[
@@ -773,14 +772,14 @@ static MATRIX_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MATH_FONT_SHAPE: crate::Shape = crate::Shape {
+pub static MATH_FONT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "mathFont"),
     slots: &[],
     text: false,
 };
 
-static MATH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static MATH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mathPr"),
     slots: &[
@@ -803,28 +802,28 @@ static MATH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MAXIMUM_DISTRIBUTION_SHAPE: crate::Shape = crate::Shape {
+pub static MAXIMUM_DISTRIBUTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "maxDist"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_COLUMN_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mc"),
     slots: &[crate::Slot::single((NS_M, "mcPr"))],
     text: false,
 };
 
-static MATRIX_COLUMN_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "mcJc"),
     slots: &[],
     text: false,
 };
 
-static MATRIX_COLUMN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mcPr"),
     slots: &[
@@ -834,21 +833,21 @@ static MATRIX_COLUMN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MATRIX_COLUMNS_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_COLUMNS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mcs"),
     slots: &[crate::Slot::list((NS_M, "mc"))],
     text: false,
 };
 
-static MATRIX_ROW_SHAPE: crate::Shape = crate::Shape {
+pub static MATRIX_ROW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "mr"),
     slots: &[crate::Slot::list((NS_M, "e"))],
     text: false,
 };
 
-static NARY_SHAPE: crate::Shape = crate::Shape {
+pub static NARY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "nary"),
     slots: &[
@@ -860,14 +859,14 @@ static NARY_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NARY_LIM_SHAPE: crate::Shape = crate::Shape {
+pub static NARY_LIM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "naryLim"),
     slots: &[],
     text: false,
 };
 
-static NARY_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NARY_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "naryPr"),
     slots: &[
@@ -881,21 +880,21 @@ static NARY_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NO_BREAK_SHAPE: crate::Shape = crate::Shape {
+pub static NO_BREAK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "noBreak"),
     slots: &[],
     text: false,
 };
 
-static NORMAL_TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static NORMAL_TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "nor"),
     slots: &[],
     text: false,
 };
 
-static NUMERATOR_SHAPE: crate::Shape = crate::Shape {
+pub static NUMERATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "num"),
     slots: &[
@@ -906,14 +905,14 @@ static NUMERATOR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OFFICE_MATH_SHAPE: crate::Shape = crate::Shape {
+pub static OFFICE_MATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "oMath"),
     slots: &[crate::Slot::items(&OFFICE_MATH_CONTENT_TAGS)],
     text: false,
 };
 
-static OFFICE_MATH_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
+pub static OFFICE_MATH_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "oMathPara"),
     slots: &[
@@ -929,28 +928,28 @@ static OFFICE_MATH_PARAGRAPH_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "oMathParaPr"),
     slots: &[crate::Slot::single((NS_M, "jc"))],
     text: false,
 };
 
-static OBJECT_DISTRIBUTION_SHAPE: crate::Shape = crate::Shape {
+pub static OBJECT_DISTRIBUTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "objDist"),
     slots: &[],
     text: false,
 };
 
-static OPERATOR_EMULATOR_SHAPE: crate::Shape = crate::Shape {
+pub static OPERATOR_EMULATOR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "opEmu"),
     slots: &[],
     text: false,
 };
 
-static PHANTOM_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "phant"),
     slots: &[
@@ -960,7 +959,7 @@ static PHANTOM_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PHANTOM_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "phantPr"),
     slots: &[
@@ -974,35 +973,35 @@ static PHANTOM_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PLC_HIDE_SHAPE: crate::Shape = crate::Shape {
+pub static PLC_HIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "plcHide"),
     slots: &[],
     text: false,
 };
 
-static POSITION_SHAPE: crate::Shape = crate::Shape {
+pub static POSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "pos"),
     slots: &[],
     text: false,
 };
 
-static POST_PARAGRAPH_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static POST_PARAGRAPH_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "postSp"),
     slots: &[],
     text: false,
 };
 
-static PRE_PARAGRAPH_SPACING_SHAPE: crate::Shape = crate::Shape {
+pub static PRE_PARAGRAPH_SPACING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "preSp"),
     slots: &[],
     text: false,
 };
 
-static RUN_SHAPE: crate::Shape = crate::Shape {
+pub static RUN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "r"),
     slots: &[
@@ -1013,14 +1012,14 @@ static RUN_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RIGHT_MARGIN_SHAPE: crate::Shape = crate::Shape {
+pub static RIGHT_MARGIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "rMargin"),
     slots: &[],
     text: false,
 };
 
-static RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "rPr"),
     slots: &[
@@ -1032,21 +1031,21 @@ static RUN_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static R_SP_SHAPE: crate::Shape = crate::Shape {
+pub static R_SP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "rSp"),
     slots: &[],
     text: false,
 };
 
-static ROW_SPACING_RULE_SHAPE: crate::Shape = crate::Shape {
+pub static ROW_SPACING_RULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "rSpRule"),
     slots: &[],
     text: false,
 };
 
-static RADICAL_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static RADICAL_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "rad"),
     slots: &[
@@ -1057,7 +1056,7 @@ static RADICAL_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RADICAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static RADICAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "radPr"),
     slots: &[
@@ -1067,7 +1066,7 @@ static RADICAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sPre"),
     slots: &[
@@ -1079,14 +1078,14 @@ static PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sPrePr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static SUBSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static SUBSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSub"),
     slots: &[
@@ -1097,14 +1096,14 @@ static SUBSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUBSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SUBSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSubPr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSubSup"),
     slots: &[
@@ -1116,7 +1115,7 @@ static SUB_SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUB_SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SUB_SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSubSupPr"),
     slots: &[
@@ -1126,7 +1125,7 @@ static SUB_SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSup"),
     slots: &[
@@ -1137,84 +1136,84 @@ static SUPERSCRIPT_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SUPERSCRIPT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sSupPr"),
     slots: &[crate::Slot::single((NS_M, "ctrlPr"))],
     text: false,
 };
 
-static SCRIPT_SHAPE: crate::Shape = crate::Shape {
+pub static SCRIPT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "scr"),
     slots: &[],
     text: false,
 };
 
-static DELIMITER_SEPARATOR_CHARACTER_SHAPE: crate::Shape = crate::Shape {
+pub static DELIMITER_SEPARATOR_CHARACTER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "sepChr"),
     slots: &[],
     text: false,
 };
 
-static PHANTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_SHOW_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "show"),
     slots: &[],
     text: false,
 };
 
-static SHP_SHAPE: crate::Shape = crate::Shape {
+pub static SHP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "shp"),
     slots: &[],
     text: false,
 };
 
-static SMALL_FRACTION_SHAPE: crate::Shape = crate::Shape {
+pub static SMALL_FRACTION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "smallFrac"),
     slots: &[],
     text: false,
 };
 
-static BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "strikeBLTR"),
     slots: &[],
     text: false,
 };
 
-static BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "strikeH"),
     slots: &[],
     text: false,
 };
 
-static BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "strikeTLBR"),
     slots: &[],
     text: false,
 };
 
-static BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE: crate::Shape = crate::Shape {
+pub static BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "strikeV"),
     slots: &[],
     text: false,
 };
 
-static STY_SHAPE: crate::Shape = crate::Shape {
+pub static STY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "sty"),
     slots: &[],
     text: false,
 };
 
-static SUB_SHAPE: crate::Shape = crate::Shape {
+pub static SUB_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sub"),
     slots: &[
@@ -1225,14 +1224,14 @@ static SUB_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUB_HIDE_SHAPE: crate::Shape = crate::Shape {
+pub static SUB_HIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "subHide"),
     slots: &[],
     text: false,
 };
 
-static SUP_SHAPE: crate::Shape = crate::Shape {
+pub static SUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_M, "sup"),
     slots: &[
@@ -1243,70 +1242,70 @@ static SUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SUP_HIDE_SHAPE: crate::Shape = crate::Shape {
+pub static SUP_HIDE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "supHide"),
     slots: &[],
     text: false,
 };
 
-static TEXT_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_XML, "space")],
     name: (NS_M, "t"),
     slots: &[],
     text: true,
 };
 
-static TRANSP_SHAPE: crate::Shape = crate::Shape {
+pub static TRANSP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "transp"),
     slots: &[],
     text: false,
 };
 
-static FRACTION_TYPE_SHAPE: crate::Shape = crate::Shape {
+pub static FRACTION_TYPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "type"),
     slots: &[],
     text: false,
 };
 
-static VERTICAL_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
+pub static VERTICAL_JUSTIFICATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "vertJc"),
     slots: &[],
     text: false,
 };
 
-static WRAP_INDENT_SHAPE: crate::Shape = crate::Shape {
+pub static WRAP_INDENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "wrapIndent"),
     slots: &[],
     text: false,
 };
 
-static WRAP_RIGHT_SHAPE: crate::Shape = crate::Shape {
+pub static WRAP_RIGHT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "wrapRight"),
     slots: &[],
     text: false,
 };
 
-static PHANTOM_ZERO_ASCENT_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_ZERO_ASCENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "zeroAsc"),
     slots: &[],
     text: false,
 };
 
-static PHANTOM_ZERO_DESCENT_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_ZERO_DESCENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "zeroDesc"),
     slots: &[],
     text: false,
 };
 
-static PHANTOM_ZERO_WIDTH_SHAPE: crate::Shape = crate::Shape {
+pub static PHANTOM_ZERO_WIDTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_M, "val")],
     name: (NS_M, "zeroWid"),
     slots: &[],

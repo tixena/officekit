@@ -5,9 +5,9 @@ mod tests;
 
 use std::path::Path;
 
-use officekit_markup::spreadsheet::Workbook;
 #[cfg(feature = "strict")]
-use officekit_markup::{Transform as _, spreadsheet};
+use officekit_markup::spreadsheet;
+use officekit_markup::spreadsheet::Workbook;
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
@@ -15,6 +15,8 @@ use officekit_packaging::part_name::PartName;
 use officekit_strict::iso_date_time;
 #[cfg(feature = "transitional")]
 use officekit_transitional::dates::{SaveWarning, convert_date_cells};
+#[cfg(feature = "strict")]
+use officekit_traversal::Transform as _;
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;

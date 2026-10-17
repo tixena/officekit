@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -232,21 +231,21 @@ const NS_R: Option<NamespaceId> = Some(88);
 const NS_WP: Option<NamespaceId> = Some(112);
 const NS_WP14: Option<NamespaceId> = Some(113);
 
-static RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "align"),
     slots: &[],
     text: true,
 };
 
-static RELATIVE_VERTICAL_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
+pub static RELATIVE_VERTICAL_ALIGNMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "align"),
     slots: &[],
     text: true,
 };
 
-static ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "distT"),
         (None, "distB"),
@@ -279,7 +278,7 @@ static ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape 
     text: false,
 };
 
-static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "bg"),
     slots: &[
@@ -289,7 +288,7 @@ static BACKGROUND_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "rot"),
         (None, "spcFirstLastPara"),
@@ -322,7 +321,7 @@ static BODY_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "cNvCnPr"),
     slots: &[
@@ -334,7 +333,7 @@ static NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate
     text: false,
 };
 
-static NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isComment")],
     name: (NS_WP, "cNvContentPartPr"),
     slots: &[
@@ -344,7 +343,7 @@ static NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::S
     text: false,
 };
 
-static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "cNvFrPr"),
     slots: &[
@@ -354,7 +353,7 @@ static NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::
     text: false,
 };
 
-static COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "cNvGraphicFramePr"),
     slots: &[
@@ -364,7 +363,7 @@ static COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shap
     text: false,
 };
 
-static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "cNvGrpSpPr"),
     slots: &[
@@ -374,7 +373,7 @@ static NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -391,7 +390,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "txBox")],
     name: (NS_WP, "cNvSpPr"),
     slots: &[
@@ -401,7 +400,7 @@ static NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE: crate::Shape = crate::Sh
     text: false,
 };
 
-static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode"), (NS_R, "id")],
     name: (NS_WP, "contentPart"),
     slots: &[
@@ -412,7 +411,7 @@ static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -429,28 +428,28 @@ static DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE: crate::Shape = crate::Shape {
+pub static OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "l"), (None, "t"), (None, "r"), (None, "b")],
     name: (NS_WP, "effectExtent"),
     slots: &[],
     text: false,
 };
 
-static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
+pub static EXTENSION_LIST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static DRAWING_OBJECT_SIZE_SHAPE: crate::Shape = crate::Shape {
+pub static DRAWING_OBJECT_SIZE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cx"), (None, "cy")],
     name: (NS_WP, "extent"),
     slots: &[],
     text: false,
 };
 
-static GRAPHICAL_OBJECT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
+pub static GRAPHICAL_OBJECT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "graphicFrame"),
     slots: &[
@@ -463,7 +462,7 @@ static GRAPHICAL_OBJECT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "grpSp"),
     slots: &[
@@ -476,7 +475,7 @@ static GROUP_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_WP, "grpSpPr"),
     slots: &[
@@ -489,7 +488,7 @@ static GROUP_SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static INLINE_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static INLINE_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "distT"),
         (None, "distB"),
@@ -509,21 +508,21 @@ static INLINE_DRAWING_ML_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WRAPPING_POLYGON_LINE_END_POSITION_SHAPE: crate::Shape = crate::Shape {
+pub static WRAPPING_POLYGON_LINE_END_POSITION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_WP, "lineTo"),
     slots: &[],
     text: false,
 };
 
-static TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE: crate::Shape = crate::Shape {
+pub static TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "seq")],
     name: (NS_WP, "linkedTxbx"),
     slots: &[crate::Slot::single((NS_WP, "extLst"))],
     text: false,
 };
 
-static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "nvContentPartPr"),
     slots: &[
@@ -533,14 +532,14 @@ static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static ABSOLUTE_POSITION_OFFSET_SHAPE: crate::Shape = crate::Shape {
+pub static ABSOLUTE_POSITION_OFFSET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "posOffset"),
     slots: &[],
     text: true,
 };
 
-static HORIZONTAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
+pub static HORIZONTAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP, "positionH"),
     slots: &[crate::Slot::required_choice(
@@ -549,7 +548,7 @@ static HORIZONTAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static VERTICAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
+pub static VERTICAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "relativeFrom")],
     name: (NS_WP, "positionV"),
     slots: &[crate::Slot::required_choice(
@@ -558,14 +557,14 @@ static VERTICAL_POSITIONING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SIMPLE_POSITIONING_COORDINATES_SHAPE: crate::Shape = crate::Shape {
+pub static SIMPLE_POSITIONING_COORDINATES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_WP, "simplePos"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode")],
     name: (NS_WP, "spPr"),
     slots: &[
@@ -581,14 +580,14 @@ static SHAPE_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WRAPPING_POLYGON_START_SHAPE: crate::Shape = crate::Shape {
+pub static WRAPPING_POLYGON_START_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x"), (None, "y")],
     name: (NS_WP, "start"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "style"),
     slots: &[
@@ -600,7 +599,7 @@ static SHAPE_STYLE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE: crate::Shape = crate::Shape {
+pub static TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id")],
     name: (NS_WP, "txbx"),
     slots: &[
@@ -610,7 +609,7 @@ static TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
+pub static RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "txbxContent"),
     slots: &[crate::Slot::items(
@@ -619,7 +618,7 @@ static RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WORDPROCESSING_ML_SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
+pub static WORDPROCESSING_ML_SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "wgp"),
     slots: &[
@@ -632,7 +631,7 @@ static WORDPROCESSING_ML_SHAPE_GROUP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WHOLE_E2O_FORMATTING_SHAPE: crate::Shape = crate::Shape {
+pub static WHOLE_E2O_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "whole"),
     slots: &[
@@ -642,7 +641,7 @@ static WHOLE_E2O_FORMATTING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE: crate::Shape = crate::Shape {
+pub static WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "wpc"),
     slots: &[
@@ -654,14 +653,14 @@ static WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NO_TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static NO_TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_WP, "wrapNone"),
     slots: &[],
     text: false,
 };
 
-static WRAPPING_POLYGON_SHAPE: crate::Shape = crate::Shape {
+pub static WRAPPING_POLYGON_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "edited")],
     name: (NS_WP, "wrapPolygon"),
     slots: &[
@@ -671,7 +670,7 @@ static WRAPPING_POLYGON_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SQUARE_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static SQUARE_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "wrapText"),
         (None, "distT"),
@@ -684,28 +683,28 @@ static SQUARE_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static THROUGH_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static THROUGH_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "wrapText"), (None, "distL"), (None, "distR")],
     name: (NS_WP, "wrapThrough"),
     slots: &[crate::Slot::required((NS_WP, "wrapPolygon"))],
     text: false,
 };
 
-static TIGHT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static TIGHT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "wrapText"), (None, "distL"), (None, "distR")],
     name: (NS_WP, "wrapTight"),
     slots: &[crate::Slot::required((NS_WP, "wrapPolygon"))],
     text: false,
 };
 
-static TOP_AND_BOTTOM_WRAPPING_SHAPE: crate::Shape = crate::Shape {
+pub static TOP_AND_BOTTOM_WRAPPING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "distT"), (None, "distB")],
     name: (NS_WP, "wrapTopAndBottom"),
     slots: &[crate::Slot::single((NS_WP, "effectExtent"))],
     text: false,
 };
 
-static WORDPROCESSING_ML_SHAPE_SHAPE: crate::Shape = crate::Shape {
+pub static WORDPROCESSING_ML_SHAPE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "normalEastAsianFlow")],
     name: (NS_WP, "wsp"),
     slots: &[
@@ -720,7 +719,7 @@ static WORDPROCESSING_ML_SHAPE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_WP, "xfrm"),
     slots: &[

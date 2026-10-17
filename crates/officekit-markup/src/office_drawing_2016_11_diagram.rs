@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2016/11/diagram`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::Element;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -228,7 +227,7 @@ use std::io;
 
 const NS_DGM1611: Option<NamespaceId> = Some(44);
 
-static BU_PR_SHAPE: crate::Shape = crate::Shape {
+pub static BU_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "prefix"), (None, "leadZeros")],
     name: (NS_DGM1611, "buPr"),
     slots: &[crate::Slot::required_choice(
@@ -237,14 +236,14 @@ static BU_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static AUTO_BU_NODE_INFO_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_BU_NODE_INFO_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "lvl"), (None, "ptType")],
     name: (NS_DGM1611, "autoBuNodeInfo"),
     slots: &[crate::Slot::required((NS_DGM1611, "buPr"))],
     text: false,
 };
 
-static AUTO_BU_NODE_INFO_LST_SHAPE: crate::Shape = crate::Shape {
+pub static AUTO_BU_NODE_INFO_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_DGM1611, "autoBuNodeInfoLst"),
     slots: &[crate::Slot::list((NS_DGM1611, "autoBuNodeInfo"))],

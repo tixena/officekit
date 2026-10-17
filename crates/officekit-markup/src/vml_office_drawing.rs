@@ -216,10 +216,9 @@
 //! The namespace is `urn:schemas-microsoft-com:office:office`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -230,28 +229,28 @@ const NS_O: Option<NamespaceId> = Some(60);
 const NS_R: Option<NamespaceId> = Some(88);
 const NS_V: Option<NamespaceId> = Some(95);
 
-static WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE: crate::Shape = crate::Shape {
+pub static WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_O, "FieldCodes"),
     slots: &[],
     text: true,
 };
 
-static EMBEDDED_OBJECT_ALTERNATE_IMAGE_REQUEST_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_OBJECT_ALTERNATE_IMAGE_REQUEST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_O, "LinkType"),
     slots: &[],
     text: true,
 };
 
-static EMBEDDED_OBJECT_CANNOT_BE_REFRESHED_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_OBJECT_CANNOT_BE_REFRESHED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_O, "LockedField"),
     slots: &[],
     text: true,
 };
 
-static EMBEDDED_OLE_OBJECT_SHAPE: crate::Shape = crate::Shape {
+pub static EMBEDDED_OLE_OBJECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "Type"),
         (None, "ProgID"),
@@ -270,7 +269,7 @@ static EMBEDDED_OLE_OBJECT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_BOX_BOTTOM_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_BOTTOM_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -305,7 +304,7 @@ static TEXT_BOX_BOTTOM_STROKE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CALLOUT_SHAPE: crate::Shape = crate::Shape {
+pub static CALLOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -327,14 +326,14 @@ static CALLOUT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_CLIPPING_PATH_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_CLIPPING_PATH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_O, "v")],
     name: (NS_O, "clippath"),
     slots: &[],
     text: false,
 };
 
-static UI_DEFAULT_COLORS_SHAPE: crate::Shape = crate::Shape {
+pub static UI_DEFAULT_COLORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "strokecolor"),
@@ -347,14 +346,14 @@ static UI_DEFAULT_COLORS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static MOST_RECENTLY_USED_COLORS_SHAPE: crate::Shape = crate::Shape {
+pub static MOST_RECENTLY_USED_COLORS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext"), (None, "colors")],
     name: (NS_O, "colormru"),
     slots: &[],
     text: false,
 };
 
-static TEXT_BOX_INTERIOR_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_INTERIOR_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -389,14 +388,14 @@ static TEXT_BOX_INTERIOR_STROKE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static COMPLEX_SHAPE: crate::Shape = crate::Shape {
+pub static COMPLEX_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext")],
     name: (NS_O, "complex"),
     slots: &[],
     text: false,
 };
 
-static VML_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
+pub static VML_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "dgmstyle"),
@@ -414,14 +413,14 @@ static VML_DIAGRAM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static REGROUP_ENTRY_SHAPE: crate::Shape = crate::Shape {
+pub static REGROUP_ENTRY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "new"), (None, "old")],
     name: (NS_O, "entry"),
     slots: &[],
     text: false,
 };
 
-static STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE: crate::Shape = crate::Shape {
+pub static STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "contentType")],
     name: (NS_O, "equationxml"),
     slots: &[crate::Slot::required_choice(
@@ -430,7 +429,7 @@ static STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXTRUSION_SHAPE: crate::Shape = crate::Shape {
+pub static EXTRUSION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -471,28 +470,28 @@ static EXTRUSION_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext"), (None, "type")],
     name: (NS_O, "fill"),
     slots: &[],
     text: false,
 };
 
-static SHAPE_ID_MAP_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_ID_MAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext"), (None, "data")],
     name: (NS_O, "idmap"),
     slots: &[],
     text: false,
 };
 
-static INK_SHAPE: crate::Shape = crate::Shape {
+pub static INK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "i"), (None, "annotation"), (None, "contentType")],
     name: (NS_O, "ink"),
     slots: &[],
     text: false,
 };
 
-static TEXT_BOX_LEFT_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_LEFT_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -527,7 +526,7 @@ static TEXT_BOX_LEFT_STROKE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_PROTECTIONS_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_PROTECTIONS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "position"),
@@ -547,7 +546,7 @@ static SHAPE_PROTECTIONS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "start"),
         (None, "end"),
@@ -559,21 +558,21 @@ static SHAPE_REFERENCE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RULE_SHAPE: crate::Shape = crate::Shape {
+pub static RULE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "id"), (None, "type"), (None, "how"), (None, "idref")],
     name: (NS_O, "r"),
     slots: &[crate::Slot::list((NS_O, "proxy"))],
     text: false,
 };
 
-static SHAPE_GROUPING_HISTORY_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_GROUPING_HISTORY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext")],
     name: (NS_O, "regrouptable"),
     slots: &[crate::Slot::list((NS_O, "entry"))],
     text: false,
 };
 
-static DIAGRAM_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
+pub static DIAGRAM_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "idsrc"),
@@ -585,14 +584,14 @@ static DIAGRAM_RELATIONSHIP_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static DIAGRAM_RELATIONSHIP_TABLE_SHAPE: crate::Shape = crate::Shape {
+pub static DIAGRAM_RELATIONSHIP_TABLE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext")],
     name: (NS_O, "relationtable"),
     slots: &[crate::Slot::list((NS_O, "rel"))],
     text: false,
 };
 
-static TEXT_BOX_RIGHT_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_RIGHT_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),
@@ -627,14 +626,14 @@ static TEXT_BOX_RIGHT_STROKE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static RULE_SET_SHAPE: crate::Shape = crate::Shape {
+pub static RULE_SET_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext")],
     name: (NS_O, "rules"),
     slots: &[crate::Slot::list((NS_O, "r"))],
     text: false,
 };
 
-static NEW_SHAPE_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
+pub static NEW_SHAPE_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "spidmax"),
@@ -650,14 +649,14 @@ static NEW_SHAPE_DEFAULTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SHAPE_LAYOUT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
+pub static SHAPE_LAYOUT_PROPERTIES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_V, "ext")],
     name: (NS_O, "shapelayout"),
     slots: &[crate::Slot::once(&SHAPE_LAYOUT_PROPERTIES_CONTENT_TAGS)],
     text: false,
 };
 
-static DIGITAL_SIGNATURE_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static DIGITAL_SIGNATURE_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "issignatureline"),
@@ -678,7 +677,7 @@ static DIGITAL_SIGNATURE_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static SKEW_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
+pub static SKEW_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "id"),
@@ -692,7 +691,7 @@ static SKEW_TRANSFORM_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static TEXT_BOX_TOP_STROKE_SHAPE: crate::Shape = crate::Shape {
+pub static TEXT_BOX_TOP_STROKE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (NS_V, "ext"),
         (None, "on"),

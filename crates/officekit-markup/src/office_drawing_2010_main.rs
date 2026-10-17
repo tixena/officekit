@@ -216,10 +216,9 @@
 //! The namespace is `http://schemas.microsoft.com/office/drawing/2010/main`.
 
 pub mod read;
-mod traversal;
 pub mod write;
 
-use crate::write_through::Written;
+use crate::Written;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::name::NamespaceId;
 use officekit_xml::stream::writer::PartWriter;
@@ -229,21 +228,21 @@ const NS_A: Option<NamespaceId> = Some(0);
 const NS_A14: Option<NamespaceId> = Some(1);
 const NS_R: Option<NamespaceId> = Some(88);
 
-static CAMERA_TOOL_SHAPE: crate::Shape = crate::Shape {
+pub static CAMERA_TOOL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "cellRange"), (None, "spid")],
     name: (NS_A14, "cameraTool"),
     slots: &[],
     text: false,
 };
 
-static COMPAT_EXT_SHAPE: crate::Shape = crate::Shape {
+pub static COMPAT_EXT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "spid")],
     name: (NS_A14, "compatExt"),
     slots: &[],
     text: false,
 };
 
-static CP_LOCKS_SHAPE: crate::Shape = crate::Shape {
+pub static CP_LOCKS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "noGrp"),
         (None, "noSelect"),
@@ -261,7 +260,7 @@ static CP_LOCKS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
+pub static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bwMode"), (NS_R, "id")],
     name: (NS_A14, "contentPart"),
     slots: &[
@@ -272,7 +271,7 @@ static CONTENT_PART_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "nvContentPartPr"),
     slots: &[
@@ -282,14 +281,14 @@ static NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IS_CANVAS_SHAPE: crate::Shape = crate::Shape {
+pub static IS_CANVAS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A14, "isCanvas"),
     slots: &[],
     text: false,
 };
 
-static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "isComment")],
     name: (NS_A14, "cNvContentPartPr"),
     slots: &[
@@ -299,21 +298,21 @@ static C_NV_CONTENT_PART_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static IMG_PROPS_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_PROPS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "imgProps"),
     slots: &[crate::Slot::required((NS_A14, "imgLayer"))],
     text: false,
 };
 
-static IMG_EFFECT_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_EFFECT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "visible")],
     name: (NS_A14, "imgEffect"),
     slots: &[crate::Slot::required_choice(&PICTURE_EFFECT_CONTENT_TAGS)],
     text: false,
 };
 
-static BACKGROUND_REMOVAL_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_REMOVAL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "t"), (None, "b"), (None, "l"), (None, "r")],
     name: (NS_A14, "backgroundRemoval"),
     slots: &[
@@ -323,231 +322,231 @@ static BACKGROUND_REMOVAL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static BACKGROUND_MARK_SHAPE: crate::Shape = crate::Shape {
+pub static BACKGROUND_MARK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x1"), (None, "y1"), (None, "x2"), (None, "y2")],
     name: (NS_A14, "backgroundMark"),
     slots: &[],
     text: false,
 };
 
-static FOREGROUND_MARK_SHAPE: crate::Shape = crate::Shape {
+pub static FOREGROUND_MARK_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "x1"), (None, "y1"), (None, "x2"), (None, "y2")],
     name: (NS_A14, "foregroundMark"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_BLUR_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_BLUR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "radius")],
     name: (NS_A14, "artisticBlur"),
     slots: &[],
     text: false,
 };
 
-static BRIGHTNESS_CONTRAST_SHAPE: crate::Shape = crate::Shape {
+pub static BRIGHTNESS_CONTRAST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "bright"), (None, "contrast")],
     name: (NS_A14, "brightnessContrast"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_CEMENT_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_CEMENT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "crackSpacing")],
     name: (NS_A14, "artisticCement"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_CHALK_SKETCH_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_CHALK_SKETCH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pressure")],
     name: (NS_A14, "artisticChalkSketch"),
     slots: &[],
     text: false,
 };
 
-static COLOR_TEMPERATURE_SHAPE: crate::Shape = crate::Shape {
+pub static COLOR_TEMPERATURE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "colorTemp")],
     name: (NS_A14, "colorTemperature"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_CRISSCROSS_ETCHING_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_CRISSCROSS_ETCHING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pressure")],
     name: (NS_A14, "artisticCrisscrossEtching"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_CUTOUT_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_CUTOUT_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "numberOfShades")],
     name: (NS_A14, "artisticCutout"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_FILM_GRAIN_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_FILM_GRAIN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "grainSize")],
     name: (NS_A14, "artisticFilmGrain"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_GLASS_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_GLASS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "scaling")],
     name: (NS_A14, "artisticGlass"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_GLOW_DIFFUSED_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_GLOW_DIFFUSED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "intensity")],
     name: (NS_A14, "artisticGlowDiffused"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_GLOW_EDGES_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_GLOW_EDGES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "smoothness")],
     name: (NS_A14, "artisticGlowEdges"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_LIGHT_SCREEN_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_LIGHT_SCREEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "gridSize")],
     name: (NS_A14, "artisticLightScreen"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_LINE_DRAWING_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_LINE_DRAWING_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pencilSize")],
     name: (NS_A14, "artisticLineDrawing"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_MARKER_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_MARKER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "size")],
     name: (NS_A14, "artisticMarker"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_MOSIAIC_BUBBLES_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_MOSIAIC_BUBBLES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pressure")],
     name: (NS_A14, "artisticMosiaicBubbles"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PAINT_BRUSH_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PAINT_BRUSH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "brushSize")],
     name: (NS_A14, "artisticPaintBrush"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PAINT_STROKES_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PAINT_STROKES_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "intensity")],
     name: (NS_A14, "artisticPaintStrokes"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PASTELS_SMOOTH_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PASTELS_SMOOTH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "scaling")],
     name: (NS_A14, "artisticPastelsSmooth"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PENCIL_GRAYSCALE_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PENCIL_GRAYSCALE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pencilSize")],
     name: (NS_A14, "artisticPencilGrayscale"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PENCIL_SKETCH_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PENCIL_SKETCH_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "pressure")],
     name: (NS_A14, "artisticPencilSketch"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PHOTOCOPY_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PHOTOCOPY_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "detail")],
     name: (NS_A14, "artisticPhotocopy"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_PLASTIC_WRAP_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_PLASTIC_WRAP_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "smoothness")],
     name: (NS_A14, "artisticPlasticWrap"),
     slots: &[],
     text: false,
 };
 
-static SATURATION_SHAPE: crate::Shape = crate::Shape {
+pub static SATURATION_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "sat")],
     name: (NS_A14, "saturation"),
     slots: &[],
     text: false,
 };
 
-static SHARPEN_SOFTEN_SHAPE: crate::Shape = crate::Shape {
+pub static SHARPEN_SOFTEN_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "amount")],
     name: (NS_A14, "sharpenSoften"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_TEXTURIZER_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_TEXTURIZER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "scaling")],
     name: (NS_A14, "artisticTexturizer"),
     slots: &[],
     text: false,
 };
 
-static ARTISTIC_WATERCOLOR_SPONGE_SHAPE: crate::Shape = crate::Shape {
+pub static ARTISTIC_WATERCOLOR_SPONGE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "trans"), (None, "brushSize")],
     name: (NS_A14, "artisticWatercolorSponge"),
     slots: &[],
     text: false,
 };
 
-static IMG_LAYER_SHAPE: crate::Shape = crate::Shape {
+pub static IMG_LAYER_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(NS_R, "embed")],
     name: (NS_A14, "imgLayer"),
     slots: &[crate::Slot::list((NS_A14, "imgEffect"))],
     text: false,
 };
 
-static SHADOW_OBSCURED_SHAPE: crate::Shape = crate::Shape {
+pub static SHADOW_OBSCURED_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A14, "shadowObscured"),
     slots: &[],
     text: false,
 };
 
-static M_SHAPE: crate::Shape = crate::Shape {
+pub static M_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "m"),
     slots: &[],
     text: false,
 };
 
-static USE_LOCAL_DPI_SHAPE: crate::Shape = crate::Shape {
+pub static USE_LOCAL_DPI_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "val")],
     name: (NS_A14, "useLocalDpi"),
     slots: &[],
     text: false,
 };
 
-static HIDDEN_EFFECTS_SHAPE: crate::Shape = crate::Shape {
+pub static HIDDEN_EFFECTS_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenEffects"),
     slots: &[crate::Slot::required_choice(
@@ -556,7 +555,7 @@ static HIDDEN_EFFECTS_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HIDDEN_FILL_SHAPE: crate::Shape = crate::Shape {
+pub static HIDDEN_FILL_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenFill"),
     slots: &[crate::Slot::required_choice(
@@ -565,7 +564,7 @@ static HIDDEN_FILL_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HIDDEN_LINE_SHAPE: crate::Shape = crate::Shape {
+pub static HIDDEN_LINE_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "w"), (None, "cap"), (None, "cmpd"), (None, "algn")],
     name: (NS_A14, "hiddenLine"),
     slots: &[
@@ -579,7 +578,7 @@ static HIDDEN_LINE_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
+pub static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "id"),
         (None, "name"),
@@ -596,14 +595,14 @@ static C_NV_PR_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static EXT_LST_SHAPE: crate::Shape = crate::Shape {
+pub static EXT_LST_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "extLst"),
     slots: &[crate::Slot::list((NS_A, "ext"))],
     text: false,
 };
 
-static HIDDEN_SCENE3D_SHAPE: crate::Shape = crate::Shape {
+pub static HIDDEN_SCENE3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[],
     name: (NS_A14, "hiddenScene3d"),
     slots: &[
@@ -615,7 +614,7 @@ static HIDDEN_SCENE3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static HIDDEN_SP3D_SHAPE: crate::Shape = crate::Shape {
+pub static HIDDEN_SP3D_SHAPE: crate::Shape = crate::Shape {
     attributes: &[
         (None, "z"),
         (None, "extrusionH"),
@@ -633,7 +632,7 @@ static HIDDEN_SP3D_SHAPE: crate::Shape = crate::Shape {
     text: false,
 };
 
-static XFRM_SHAPE: crate::Shape = crate::Shape {
+pub static XFRM_SHAPE: crate::Shape = crate::Shape {
     attributes: &[(None, "rot"), (None, "flipH"), (None, "flipV")],
     name: (NS_A14, "xfrm"),
     slots: &[
