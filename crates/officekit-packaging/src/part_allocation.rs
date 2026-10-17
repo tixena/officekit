@@ -4,7 +4,7 @@
 use alloc::collections::BTreeSet;
 
 use crate::error::PackageError;
-use crate::packaging::part_name::PartName;
+use crate::part_name::PartName;
 
 #[cfg(test)]
 mod tests;

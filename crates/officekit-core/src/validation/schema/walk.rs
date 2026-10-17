@@ -21,6 +21,7 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_packaging::part_name::PartName;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::mc::is_mc;
 use officekit_xml::name::table::NAMESPACES;
@@ -29,7 +30,6 @@ use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName};
 use super::attributes::{self, Failure, qualified, transitional_only_namespace};
 use super::particle::{self, Child};
 use super::types::{Particle, SchemaType, TypeId, ValueClass};
-use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Errors, Step, ValidationError};
 use crate::validation::generated::SCHEMA_TYPES;
 

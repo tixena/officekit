@@ -9,8 +9,8 @@ use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration,
 use officekit_xml::name::{Namespace, QName};
 
 use crate::error::PackageError;
-use crate::packaging::package::DECLARATION;
-use crate::packaging::part_name::PartName;
+use crate::package::DECLARATION;
+use crate::part_name::PartName;
 
 #[cfg(test)]
 mod tests;
@@ -19,7 +19,7 @@ mod tests;
 pub(crate) const NAMESPACE: &str = "http://schemas.openxmlformats.org/package/2006/relationships";
 
 /// The content type of a relationship part, the `rels` extension's `Default`.
-pub(crate) const RELATIONSHIPS_CONTENT_TYPE: &str =
+pub const RELATIONSHIPS_CONTENT_TYPE: &str =
     "application/vnd.openxmlformats-package.relationships+xml";
 
 /// A relationship with its target resolved and the target part's content type.

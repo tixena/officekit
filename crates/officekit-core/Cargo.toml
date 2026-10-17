@@ -24,21 +24,18 @@ strict = []
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
 officekit-xml.workspace = true
 
+# The package layer: the container, part names, content types, relationships, image parts
+officekit-packaging.workspace = true
+
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
 # package between an archive and an in-memory filesystem
 os-shim = { workspace = true, features = ["zip"] }
-
-# Reads and writes the XML of every part
-quick-xml.workspace = true
 
 # Error handling
 thiserror.workspace = true
 
 # The validator's JSON records
 serde_json.workspace = true
-
-# Reads an image's pixel size from its header; no pixel decoding
-imagesize = { version = "0.15", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
 
 # Hashes a document-protection password, and writes the hash and salt as text
 sha1 = "0.10"
@@ -50,6 +47,9 @@ regex = "1"
 [dev-dependencies]
 # The round-trip example takes its folder from the command line
 clap.workspace = true
+
+# The round-trip example reads parts event by event
+quick-xml.workspace = true
 
 # Tests build archives whose entries carry data descriptors
 zip.workspace = true

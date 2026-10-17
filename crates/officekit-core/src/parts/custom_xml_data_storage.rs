@@ -343,10 +343,10 @@
 //!
 //! The module holds its content type, its relationship type, and the load of its bytes.
 
-use crate::error::PackageError;
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
 
 /// The content type Part 1 lists.
 pub const CONTENT_TYPE: &str = "application/xml";

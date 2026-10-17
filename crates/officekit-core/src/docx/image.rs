@@ -5,15 +5,15 @@ mod tests;
 
 use core::mem::replace;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::image::Image;
+use officekit_packaging::part_name::PartName;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
-use crate::error::PackageError;
-use crate::image::Image;
 use crate::markup::Read as _;
 use crate::markup::wordprocessing::{TextRun, write};
-use crate::packaging::part_name::PartName;
 
 use super::Docx;
 
@@ -37,7 +37,7 @@ pub enum PictureFit {
 ///
 /// # Errors
 ///
-/// [`PackageError::Read`] when the run holds no picture, and the errors of [`Package::add_image`](crate::packaging::package::Package::add_image).
+/// [`PackageError::Read`] when the run holds no picture, and the errors of [`Package::add_image`](officekit_packaging::package::Package::add_image).
 pub fn set_picture(
     docx: &mut Docx,
     part: &PartName,

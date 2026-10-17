@@ -1,7 +1,8 @@
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
+
 use super::{ChartRanges, Docx};
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{chart, shared_string_table, workbook, worksheet};
 

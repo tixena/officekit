@@ -1,22 +1,22 @@
 use core::slice;
 use std::io::{self, Write};
 
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::package_writer::PackageWriter;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{
+    RELATIONSHIPS_CONTENT_TYPE, Relationship, Target, TargetMode,
+};
 use officekit_xml::element::{Element, NamespaceDeclaration, Node};
 use officekit_xml::name::Namespace;
 use officekit_xml::stream::reader::PartEvent;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::Layout;
 
-use super::PackageWriter;
+use super::transform::{WriteThrough as _, Written};
 use crate::markup::wordprocessing::{self, TableRow, Text, read};
 use crate::markup::{self, Descend, Visit as _};
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{
-    RELATIONSHIPS_CONTENT_TYPE, Relationship, Target, TargetMode,
-};
 use crate::parts::{main_document, style_definitions};
-use crate::stream::transform::{WriteThrough as _, Written};
 
 const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n";
 const STYLES: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n\

@@ -4,8 +4,8 @@
 use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
 
-use crate::packaging::package::DECLARATION;
-use crate::packaging::part_name::PartName;
+use crate::package::DECLARATION;
+use crate::part_name::PartName;
 
 #[cfg(test)]
 mod tests;

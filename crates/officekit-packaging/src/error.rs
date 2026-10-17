@@ -7,7 +7,7 @@ use officekit_xml::element::XmlError;
 use officekit_xml::error::WriteError;
 
 use crate::image::ImageError;
-use crate::packaging::part_name::PartName;
+use crate::part_name::PartName;
 
 /// Failure while opening, reading, editing, or writing a package.
 #[derive(Debug, thiserror::Error)]

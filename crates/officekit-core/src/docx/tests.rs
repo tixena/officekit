@@ -2,6 +2,10 @@ use core::slice;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::error::WriteError;
@@ -20,12 +24,8 @@ use os_shim::mock::MemorySystem;
 
 use super::Docx;
 use crate::compact::Comments;
-use crate::error::PackageError;
 #[cfg(feature = "strict")]
 use crate::markup::wordprocessing;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::kinds::WordprocessingKind;
@@ -274,10 +274,9 @@ fn open_options_apply_to_the_parts_the_file_loads() {
         .unwrap()
         .main_document()
         .unwrap();
-    let options = OpenOptions {
-        markup_compatibility: MarkupCompatibility::Process {
-            target: OfficeVersion::Office2010,
-        },
+    let mut options = OpenOptions::default();
+    options.markup_compatibility = MarkupCompatibility::Process {
+        target: OfficeVersion::Office2010,
     };
     let processed = Docx::from_bytes(bytes, options)
         .unwrap()

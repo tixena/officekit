@@ -7,16 +7,16 @@ mod tests;
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::{Attribute, Document as Part, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use super::Docx;
-use crate::error::PackageError;
 use crate::markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
-use crate::packaging::package::{DECLARATION, OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
@@ -213,9 +213,10 @@ impl<'docx> Import<'docx> {
             .set_part_bytes(&copy, &content_type, &bytes)?;
         self.parts.insert(part.folded(), copy.clone());
         for related in self.source.package.related(Some(part))? {
-            let target = match related.target {
-                Target::External(uri) => Target::External(uri),
-                Target::Part(inner) => Target::Part(self.copy_part(&inner)?),
+            let target = if let Target::Part(inner) = related.target {
+                Target::Part(self.copy_part(&inner)?)
+            } else {
+                related.target
             };
             self.target.package.add_relationship(
                 Some(&copy),
@@ -404,18 +405,17 @@ impl<'docx> Import<'docx> {
         else {
             return Ok(id.to_owned());
         };
-        let mapped = match related.target {
-            Target::External(uri) => {
-                self.target
-                    .package
-                    .relate_external(Some(to), &uri, &related.type_uri)?
-            }
-            Target::Part(part) => {
-                let copy = self.copy_part(&part)?;
-                self.target
-                    .package
-                    .relate(Some(to), &copy, &related.type_uri)?
-            }
+        let mapped = if let Target::Part(part) = &related.target {
+            let copy = self.copy_part(part)?;
+            self.target
+                .package
+                .relate(Some(to), &copy, &related.type_uri)?
+        } else if let Target::External(uri) = &related.target {
+            self.target
+                .package
+                .relate_external(Some(to), uri, &related.type_uri)?
+        } else {
+            return Ok(id.to_owned());
         };
         self.relationships.insert(key, mapped.clone());
         Ok(mapped)
@@ -656,9 +656,12 @@ fn first_part(
     Ok(package
         .related_by_type(Some(main), &kind.relationship())?
         .into_iter()
-        .find_map(|related| match related.target {
-            Target::Part(part) => Some(part),
-            Target::External(_) => None,
+        .find_map(|related| {
+            if let Target::Part(part) = related.target {
+                Some(part)
+            } else {
+                None
+            }
         }))
 }
 

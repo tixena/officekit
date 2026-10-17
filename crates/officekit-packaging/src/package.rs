@@ -9,7 +9,6 @@ use std::path::{Path, PathBuf};
 
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
-use officekit_xml::error::WriteError;
 use officekit_xml::mc::MarkupCompatibility;
 use officekit_xml::name::QName;
 use officekit_xml::parse::parse;
@@ -18,23 +17,15 @@ use officekit_xml::write::WriteOptions;
 use os_shim::System;
 use os_shim::mock::MemorySystem;
 
-use crate::docx::Docx;
-use crate::embedded::Embedded;
+use crate::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::error::PackageError;
-use crate::file;
 use crate::image::{Image, ImageFormat};
-use crate::packaging::content_types::{ContentTypes, XML_CONTENT_TYPE};
-use crate::packaging::part_allocation;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{
+use crate::part_allocation;
+use crate::part_name::PartName;
+use crate::relationship::{
     self, RELATIONSHIPS_CONTENT_TYPE, RelatedPart, Relationship, RelationshipType, Target,
-    TargetMode,
+    TargetMode, class_of_office_document,
 };
-use crate::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
-use crate::pptx::Pptx;
-#[cfg(feature = "transitional")]
-use crate::transitional::dates::SaveWarning;
-use crate::xlsx::Xlsx;
 
 #[cfg(test)]
 mod tests;
@@ -72,6 +63,15 @@ enum FileKind {
     Relationships(Option<PartName>),
 }
 
+/// The part a package's `officeDocument` relationship names, that part's content type, and the
+/// class the relationship's type names.
+#[non_exhaustive]
+pub struct MainPart {
+    pub class: ConformanceClass,
+    pub content_type: Option<String>,
+    pub name: PartName,
+}
+
 /// What a read does with the parts it parses.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 #[non_exhaustive]
@@ -85,28 +85,6 @@ pub struct Package {
     fs: MemorySystem,
     /// Keyed by the folded source part name, `""` for the package itself.
     relationships: BTreeMap<String, RelationshipSet>,
-}
-
-/// A part's typed root: what a generated part module moves between the
-/// package and the typed tree.
-pub trait PartRoot: Sized {
-    /// The root's tag, checked on load.
-    const LOCAL_NAME: &'static str;
-
-    /// Build the typed root from the part's tree.
-    ///
-    /// # Errors
-    ///
-    /// A description of the first element or value the typed root cannot hold.
-    fn from_tree(root: &Element) -> Result<Self, String>;
-
-    /// The part's tree in `class`.
-    ///
-    /// # Errors
-    ///
-    /// [`WriteError::NotInClass`] naming the first element `class` has no
-    /// form for.
-    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError>;
 }
 
 /// The relationships of one source, as its relationship part holds them.
@@ -164,7 +142,6 @@ impl Package {
     ///
     /// # Errors
     ///
-    /// [`PackageError::ClassNotEnabled`] for a package whose class has its feature off;
     /// [`PackageError::PartName`] for a source folder that gives no valid part name;
     /// [`PackageError::Io`] when the memory filesystem refuses a write.
     pub fn add_image(
@@ -172,7 +149,7 @@ impl Package {
         source: &PartName,
         image: &Image,
     ) -> Result<(PartName, String), PackageError> {
-        let class = match file::main_part(self) {
+        let class = match self.main_part() {
             Ok(main) => main.class,
             Err(PackageError::MissingPart(_)) => ConformanceClass::Transitional,
             Err(error) => return Err(error),
@@ -300,48 +277,6 @@ impl Package {
         Self::from_bytes(self.to_bytes()?)
     }
 
-    /// Open the document a part holds, by its main part's content type.
-    ///
-    /// # Errors
-    ///
-    /// [`PackageError::NotAPackage`] for bytes that are not a `.docx`, `.xlsx`, or `.pptx`, an OLE
-    /// object for one; [`PackageError::MissingPart`] when the package has no such part; the errors
-    /// of the file type's `from_package`.
-    pub fn embedded(
-        &self,
-        name: &PartName,
-        options: OpenOptions,
-    ) -> Result<Embedded, PackageError> {
-        let not_a_package = |reason: String| PackageError::NotAPackage {
-            part: name.clone(),
-            reason,
-        };
-        let package = Self::from_bytes(self.part_bytes(name)?)
-            .map_err(|error| not_a_package(error.to_string()))?;
-        let main = file::main_part(&package).map_err(|error| not_a_package(error.to_string()))?;
-        let content_type = main.content_type.as_deref();
-        if WordprocessingKind::ALL
-            .iter()
-            .any(|kind| Some(kind.main_content_type()) == content_type)
-        {
-            Docx::from_package(package, options).map(Embedded::Docx)
-        } else if SpreadsheetKind::ALL
-            .iter()
-            .any(|kind| Some(kind.main_content_type()) == content_type)
-        {
-            Xlsx::from_package(package, options).map(Embedded::Xlsx)
-        } else if PresentationKind::ALL
-            .iter()
-            .any(|kind| Some(kind.main_content_type()) == content_type)
-        {
-            Pptx::from_package(package, options).map(Embedded::Pptx)
-        } else {
-            Err(not_a_package(format!(
-                "the main part's content type is {content_type:?}"
-            )))
-        }
-    }
-
     /// Every file of the memory filesystem, by path.
     fn files(&self) -> Result<Vec<String>, PackageError> {
         Ok(self
@@ -422,35 +357,6 @@ impl Package {
         Ok(Image::with_format(format, self.part_bytes(name)?))
     }
 
-    /// Any part's typed root by part name; the root's tag must be
-    /// `R::LOCAL_NAME`.
-    ///
-    /// # Errors
-    ///
-    /// The errors of [`load_tree`](Self::load_tree), and
-    /// [`PackageError::Read`] when the root is another tag or holds what `R`
-    /// cannot.
-    pub fn load<R>(&self, name: &PartName, options: OpenOptions) -> Result<R, PackageError>
-    where
-        R: PartRoot,
-    {
-        let document = self.load_tree(name, options)?;
-        if document.root.name.local != R::LOCAL_NAME {
-            return Err(PackageError::Read {
-                part: name.clone(),
-                reason: format!(
-                    "the root is <{}>, not <{}>",
-                    document.root.name.local,
-                    R::LOCAL_NAME
-                ),
-            });
-        }
-        R::from_tree(&document.root).map_err(|reason| PackageError::Read {
-            part: name.clone(),
-            reason,
-        })
-    }
-
     /// The generic tree of any XML part, with markup compatibility applied as
     /// `options` says.
     ///
@@ -485,6 +391,28 @@ impl Package {
             .into_iter()
             .find(|file| file.to_ascii_lowercase() == folded)
             .map(PathBuf::from))
+    }
+
+    /// The main part, by the `officeDocument` relationship in either class's spelling.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::MissingPart`] naming the package's relationship part when no relationship of
+    /// that type names a part of the package; the errors of [`Package::related`].
+    pub fn main_part(&self) -> Result<MainPart, PackageError> {
+        let relationships = PartName::new(PACKAGE_RELATIONSHIPS_PART)?;
+        let found = self.related(None)?.into_iter().find_map(|related| {
+            let class = class_of_office_document(&related.type_uri)?;
+            match related.target {
+                Target::Part(name) => Some(MainPart {
+                    class,
+                    content_type: related.content_type,
+                    name,
+                }),
+                Target::External(_) => None,
+            }
+        });
+        found.ok_or(PackageError::MissingPart(relationships))
     }
 
     /// A package with no parts: its `[Content_Types].xml` holds no entry.
@@ -793,57 +721,6 @@ impl Package {
         Ok(())
     }
 
-    /// Write a document back into the part, saved as Strict; the part keeps its name and content
-    /// type.
-    ///
-    /// # Errors
-    ///
-    /// The errors of the document's own save; [`PackageError::MissingPart`] when the package has
-    /// no such part.
-    #[cfg(feature = "strict")]
-    pub fn set_embedded_strict(
-        &mut self,
-        name: &PartName,
-        document: &Embedded,
-    ) -> Result<(), PackageError> {
-        let bytes = match document {
-            Embedded::Docx(docx) => docx.to_bytes_strict()?,
-            Embedded::Pptx(pptx) => pptx.to_bytes_strict()?,
-            Embedded::Xlsx(xlsx) => xlsx.to_bytes_strict()?,
-        };
-        let content_type = self
-            .content_type(name)
-            .ok_or_else(|| PackageError::MissingPart(name.clone()))?
-            .to_owned();
-        self.set_part_bytes(name, &content_type, &bytes)
-    }
-
-    /// Write a document back into the part, saved as Transitional; the part keeps its name and
-    /// content type. Returns the save's warnings.
-    ///
-    /// # Errors
-    ///
-    /// The errors of the document's own save; [`PackageError::MissingPart`] when the package has
-    /// no such part.
-    #[cfg(feature = "transitional")]
-    pub fn set_embedded_transitional(
-        &mut self,
-        name: &PartName,
-        document: &Embedded,
-    ) -> Result<Vec<SaveWarning>, PackageError> {
-        let (bytes, warnings) = match document {
-            Embedded::Docx(docx) => docx.to_bytes_transitional()?,
-            Embedded::Pptx(pptx) => pptx.to_bytes_transitional()?,
-            Embedded::Xlsx(xlsx) => xlsx.to_bytes_transitional()?,
-        };
-        let content_type = self
-            .content_type(name)
-            .ok_or_else(|| PackageError::MissingPart(name.clone()))?
-            .to_owned();
-        self.set_part_bytes(name, &content_type, &bytes)?;
-        Ok(warnings)
-    }
-
     /// Put an image in place of the one a part holds. Of the same format, the bytes are replaced.
     /// Of another, the image moves to the old stem with the first free number and the new
     /// extension in the same folder, every relationship to the old part targets the new one under
@@ -948,41 +825,6 @@ impl Package {
         Ok(())
     }
 
-    /// Store a typed root in `class`, every namespace declared with that
-    /// class's URI; the part's XML declaration, prolog, and epilog are kept
-    /// when it has them.
-    ///
-    /// # Errors
-    ///
-    /// [`PackageError::Write`] when the root holds content `class` has no
-    /// form for, and nothing is written; the errors of
-    /// [`store_tree`](Self::store_tree).
-    pub fn store<R>(
-        &mut self,
-        name: &PartName,
-        content_type: &str,
-        root: &R,
-        class: ConformanceClass,
-        options: WriteOptions,
-    ) -> Result<(), PackageError>
-    where
-        R: PartRoot,
-    {
-        let mut tree = root.to_tree(class).map_err(|error| PackageError::Write {
-            error,
-            part: name.clone(),
-        })?;
-        tree.set_class(class);
-        let document = match self.tree_at(name) {
-            Ok(mut previous) => {
-                previous.root = tree;
-                previous
-            }
-            Err(_) => Document::new(DECLARATION, tree),
-        };
-        self.store_tree(name, content_type, &document, options)
-    }
-
     /// Write a generic tree into a part, laid out as `options` says.
     ///
     /// # Errors
@@ -1016,8 +858,13 @@ impl Package {
         Ok(self.fs.to_zip_vec(Path::new("/"))?)
     }
 
-    /// Parse the part called `name`.
-    fn tree_at(&self, name: &PartName) -> Result<Document, PackageError> {
+    /// Parse the part called `name`, its markup compatibility left as written.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`part_bytes`](Self::part_bytes); [`PackageError::Xml`] for a part that is
+    /// not well-formed.
+    pub fn tree_at(&self, name: &PartName) -> Result<Document, PackageError> {
         parse(&self.part_bytes(name)?).map_err(|error| PackageError::Xml {
             error,
             part: name.clone(),

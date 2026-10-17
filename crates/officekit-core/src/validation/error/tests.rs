@@ -1,8 +1,8 @@
+use officekit_packaging::part_name::PartName;
 use officekit_xml::name::OfficeVersion;
 use serde_json::json;
 
 use super::{ErrorCode, Errors, Finding, Step, ValidationError, target_name};
-use crate::packaging::part_name::PartName;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

@@ -1,0 +1,30 @@
+[package]
+name = "officekit-packaging"
+description = "The package layer of officekit: the Open Packaging Conventions container, part names, content types, relationships, image parts, and a package written part by part"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+# The XML layer: the element tree every content-types and relationship part parses into
+officekit-xml.workspace = true
+
+# System abstraction (filesystem, env, temp dirs); its zip feature moves a
+# package between an archive and an in-memory filesystem
+os-shim = { workspace = true, features = ["zip"] }
+
+# Error handling
+thiserror.workspace = true
+
+# Reads an image's pixel size from its header; no pixel decoding
+imagesize = { version = "0.15", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
+
+[dev-dependencies]
+# Tests build archives whose entries carry data descriptors
+zip.workspace = true

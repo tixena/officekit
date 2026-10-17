@@ -9,14 +9,11 @@ use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::Layout;
 use os_shim::archive::ZipStreamWriter;
 
+use crate::content_types;
 use crate::error::PackageError;
-use crate::packaging::content_types;
-use crate::packaging::package::{CONTENT_TYPES_PART, PACKAGE_RELATIONSHIPS_PART, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relationship, TargetMode};
-
-#[cfg(test)]
-mod tests;
+use crate::package::{CONTENT_TYPES_PART, PACKAGE_RELATIONSHIPS_PART, Package};
+use crate::part_name::PartName;
+use crate::relationship::{self, RELATIONSHIPS_CONTENT_TYPE, Relationship, TargetMode};
 
 /// Writes a package part by part into a sink that needs `Write` only.
 ///

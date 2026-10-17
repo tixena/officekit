@@ -5,20 +5,20 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
-use crate::error::PackageError;
 use crate::file;
 use crate::markup::spreadsheet::Workbook;
 #[cfg(feature = "strict")]
 use crate::markup::{self, Transform as _, spreadsheet};
 use crate::new_parts;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;
@@ -195,7 +195,7 @@ impl Xlsx {
     ///
     /// # Errors
     ///
-    /// The errors of [`Package::store`].
+    /// The errors of [`part_root::store`](crate::part_root::store).
     pub fn set_workbook(&mut self, workbook: &Workbook) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

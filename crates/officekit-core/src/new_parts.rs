@@ -1,13 +1,13 @@
 //! The parts a new file of each type starts with: the fewest a Word, Excel, or `PowerPoint` file
 //! needs to open, written Transitional.
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{DECLARATION, Package};
+use officekit_packaging::part_name::PartName;
 use officekit_xml::element::Document;
 use officekit_xml::parse::parse;
 use officekit_xml::write::WriteOptions;
 
-use crate::error::PackageError;
-use crate::packaging::package::{DECLARATION, Package};
-use crate::packaging::part_name::PartName;
 use crate::parts::{
     main_document, presentation, slide_layout, slide_master, theme, workbook, worksheet,
 };

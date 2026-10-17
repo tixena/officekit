@@ -1,12 +1,12 @@
 use alloc::collections::BTreeSet;
 
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
 use officekit_xml::name::OfficeVersion;
 use regex::Regex;
 
 use super::constraint::Constraint;
 use super::registry::registrations;
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Finding};
 use crate::validation::generated::{SCHEMA_TYPES, SEMANTIC_CONSTRAINTS, type_id};
 use crate::validation::validator::Validator;

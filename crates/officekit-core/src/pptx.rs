@@ -5,17 +5,17 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::compact::{self, Comments};
-use crate::error::PackageError;
 use crate::file;
 use crate::markup::presentation::Presentation;
 use crate::new_parts;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
 use crate::parts::kinds::PresentationKind;
 use crate::parts::presentation;
 #[cfg(feature = "transitional")]
@@ -202,7 +202,7 @@ impl Pptx {
     ///
     /// # Errors
     ///
-    /// The errors of [`Package::store`].
+    /// The errors of [`part_root::store`](crate::part_root::store).
     pub fn set_presentation(&mut self, presentation: &Presentation) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

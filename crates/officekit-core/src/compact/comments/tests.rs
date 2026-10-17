@@ -1,8 +1,9 @@
 use core::fmt::{self, Write as _};
 
+use officekit_packaging::package::Package;
+
 use crate::compact::tests::{HEADER, MAIN, W, name, package, text};
 use crate::compact::{Comments, Compaction, compact_package};
-use crate::packaging::package::Package;
 
 const W14: &str = r#"xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml""#;
 const W15: &str = r#"xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml""#;

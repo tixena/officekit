@@ -1,11 +1,11 @@
 use std::path::Path;
 
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
 use officekit_xml::name::OfficeVersion;
 use os_shim::mock::MemorySystem;
 
 use super::check;
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
 use crate::validation::error::{ErrorCode, Errors, Finding, ValidationError};
 use crate::validation::validator::Validator;
 

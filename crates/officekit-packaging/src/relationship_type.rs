@@ -345,7 +345,7 @@
 //! Part 1 states the Strict type of each part and Part 4 the Transitional one; the types of the
 //! parts Part 2 defines and of Microsoft's extensions are one URI in both classes.
 
-use crate::packaging::relationship::RelationshipType;
+use crate::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
 
 impl RelationshipType {

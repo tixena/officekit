@@ -1,28 +1,20 @@
 //! What the three file types share: the main part, its class, and its kind on open; the store of a
 //! typed root in the file's class; and the bytes of the file in a class.
 
+use officekit_packaging::error::PackageError;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_packaging::package::OpenOptions;
+use officekit_packaging::package::{MainPart, Package};
+use officekit_packaging::part_name::PartName;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 
-use crate::error::PackageError;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::packaging::package::OpenOptions;
-use crate::packaging::package::{PACKAGE_RELATIONSHIPS_PART, Package, PartRoot};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{Target, class_of_office_document};
+use crate::part_root::{self, PartRoot};
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts;
 
 #[cfg(test)]
 mod tests;
-
-/// The part a package's `officeDocument` relationship names, that part's content type, and the
-/// class the relationship's type names.
-pub struct MainPart {
-    pub class: ConformanceClass,
-    pub content_type: Option<String>,
-    pub name: PartName,
-}
 
 /// Whether this build reads and writes `class`: its feature is on.
 const fn class_enabled(class: ConformanceClass) -> bool {
@@ -60,23 +52,10 @@ where
 ///
 /// # Errors
 ///
-/// [`PackageError::MissingPart`] naming the package's relationship part when no relationship of
-/// that type names a part of the package; [`PackageError::ClassNotEnabled`] when the class's
-/// feature is off; the errors of [`Package::related`].
+/// [`PackageError::ClassNotEnabled`] when the class's feature is off; the errors of
+/// [`Package::main_part`].
 pub fn main_part(package: &Package) -> Result<MainPart, PackageError> {
-    let relationships = PartName::new(PACKAGE_RELATIONSHIPS_PART)?;
-    let found = package.related(None)?.into_iter().find_map(|related| {
-        let class = class_of_office_document(&related.type_uri)?;
-        match related.target {
-            Target::Part(name) => Some(MainPart {
-                class,
-                content_type: related.content_type,
-                name,
-            }),
-            Target::External(_) => None,
-        }
-    });
-    let main = found.ok_or(PackageError::MissingPart(relationships))?;
+    let main = package.main_part()?;
     if !class_enabled(main.class) {
         return Err(PackageError::ClassNotEnabled(main.class));
     }
@@ -88,7 +67,7 @@ pub fn main_part(package: &Package) -> Result<MainPart, PackageError> {
 ///
 /// # Errors
 ///
-/// The errors of [`Package::store`].
+/// The errors of [`part_root::store`].
 pub fn store<R>(
     package: &mut Package,
     name: &PartName,
@@ -101,7 +80,7 @@ where
     R: PartRoot,
 {
     let content_type = package.content_type(name).unwrap_or(fallback).to_owned();
-    package.store(name, &content_type, root, class, options)
+    part_root::store(package, name, &content_type, root, class, options)
 }
 
 /// The package's bytes in `to`, read in `from`.

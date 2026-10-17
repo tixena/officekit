@@ -8,7 +8,7 @@ use super::{
     Relationship, RelationshipType, Target, TargetMode, class_of_office_document, parse, relative,
     resolve, to_document,
 };
-use crate::packaging::part_name::PartName;
+use crate::part_name::PartName;
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()

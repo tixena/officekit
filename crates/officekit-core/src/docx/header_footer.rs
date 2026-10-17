@@ -3,11 +3,13 @@
 #[cfg(test)]
 mod tests;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::NamespaceDeclaration;
 use officekit_xml::name::Namespace;
 
-use crate::error::PackageError;
 use crate::file;
 use crate::markup::common_simple_types::OnOffValue;
 use crate::markup::wordprocessing::{
@@ -16,9 +18,7 @@ use crate::markup::wordprocessing::{
     DocumentSettings, FooterReference, HeaderOrFooterTypeMember, HeaderReference, Paragraph,
     SectionPropertiesContent,
 };
-use crate::packaging::package::PartRoot;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelatedPart, RelationshipType, Target};
+use crate::part_root::{self, PartRoot};
 use crate::parts::{document_settings, footer, header};
 
 use super::Docx;
@@ -104,7 +104,8 @@ where
     let properties =
         nth_section(&mut document, section).ok_or_else(|| no_section(&main, section))?;
     let name = docx.package.free_part_name(which.template())?;
-    docx.package.store(
+    part_root::store(
+        &mut docx.package,
         &name,
         which.content_type(),
         root,
@@ -354,9 +355,12 @@ fn turn_on_even_and_odd_headers(docx: &mut Docx) -> Result<(), PackageError> {
         .package
         .related_by_type(Some(&docx.main), &RelationshipType::SETTINGS)?
         .into_iter()
-        .find_map(|related: RelatedPart| match related.target {
-            Target::Part(name) => Some(name),
-            Target::External(_) => None,
+        .find_map(|related: RelatedPart| {
+            if let Target::Part(name) = related.target {
+                Some(name)
+            } else {
+                None
+            }
         });
     let (name, mut settings) = if let Some(found) = existing {
         let loaded = document_settings::load(&docx.package, &found, docx.options)?;
@@ -378,7 +382,8 @@ fn turn_on_even_and_odd_headers(docx: &mut Docx) -> Result<(), PackageError> {
     settings.different_even_odd_page_headers_and_footers =
         Some(Box::new(DifferentEvenOddPageHeadersAndFooters::default()));
     if is_new {
-        docx.package.store(
+        part_root::store(
+            &mut docx.package,
             &name,
             document_settings::CONTENT_TYPE,
             &settings,

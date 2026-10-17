@@ -17,20 +17,20 @@ use clap::Parser;
 use officekit_core::docx::Docx;
 use officekit_core::docx::chart::ChartRanges;
 use officekit_core::docx::image::PictureFit;
-use officekit_core::embedded::Embedded;
-use officekit_core::error::PackageError;
-use officekit_core::image::Image;
+use officekit_core::embedded::{self, Embedded};
 use officekit_core::markup::Read as _;
 use officekit_core::markup::wordprocessing::{
     DocumentProtectionTypesMember, Header, HeaderOrFooterTypeMember, TextRun, write,
 };
-use officekit_core::packaging::package::{OpenOptions, Package};
-use officekit_core::packaging::part_name::PartName;
-use officekit_core::packaging::relationship::{RelationshipType, Target};
 use officekit_core::parts::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use officekit_core::parts::{connections, font_table};
 use officekit_core::pptx::Pptx;
 use officekit_core::xlsx::Xlsx;
+use officekit_packaging::error::PackageError;
+use officekit_packaging::image::Image;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::error::WriteError;
@@ -184,9 +184,8 @@ struct Checks {
 impl Checks {
     fn chart_workbook_with(docx: &mut Docx, rows: &str) -> Outcome {
         let workbook_part = PartName::new(CHART_WORKBOOK)?;
-        let Embedded::Xlsx(mut xlsx) = docx
-            .package()
-            .embedded(&workbook_part, OpenOptions::default())?
+        let Embedded::Xlsx(mut xlsx) =
+            embedded::open(docx.package(), &workbook_part, OpenOptions::default())?
         else {
             return Err("the chart's embedded document is not a workbook".into());
         };
@@ -200,8 +199,7 @@ impl Checks {
             .to_owned();
         xlsx.package_mut()
             .set_part_bytes(&sheet, &content_type, edited.as_bytes())?;
-        docx.package_mut()
-            .set_embedded_transitional(&workbook_part, &Embedded::Xlsx(xlsx))?;
+        embedded::store_transitional(docx.package_mut(), &workbook_part, &Embedded::Xlsx(xlsx))?;
         Ok(())
     }
 

@@ -11,22 +11,22 @@ mod tests;
 
 use std::path::Path;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::image::Image;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
 
 use crate::compact::{self, Comments};
-use crate::error::PackageError;
 use crate::file;
-use crate::image::Image;
 use crate::markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,
 };
 use crate::new_parts;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelatedPart, RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, header, main_document};
 #[cfg(feature = "transitional")]
@@ -284,7 +284,8 @@ impl Docx {
     /// # Errors
     ///
     /// The errors of [`Package::related_by_type`], [`Package::free_part_name`],
-    /// [`Package::relate`], [`document_settings::load`], and [`Package::store`].
+    /// [`Package::relate`], [`document_settings::load`], and
+    /// [`part_root::store`](crate::part_root::store).
     pub fn protect(
         &mut self,
         edit: DocumentProtectionTypesMember,
@@ -296,9 +297,12 @@ impl Docx {
             .package
             .related_by_type(Some(&self.main), &RelationshipType::SETTINGS)?
             .into_iter()
-            .find_map(|related| match related.target {
-                Target::Part(name) => Some(name),
-                Target::External(_) => None,
+            .find_map(|related| {
+                if let Target::Part(name) = related.target {
+                    Some(name)
+                } else {
+                    None
+                }
             });
         let (name, mut settings) = if let Some(name) = existing {
             let settings = document_settings::load(&self.package, &name, self.options)?;
@@ -420,7 +424,7 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// The errors of [`Package::store`].
+    /// The errors of [`part_root::store`](crate::part_root::store).
     pub fn set_header(&mut self, name: &PartName, content: &Header) -> Result<(), PackageError> {
         file::store(
             &mut self.package,
@@ -436,7 +440,7 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// The errors of [`Package::store`].
+    /// The errors of [`part_root::store`](crate::part_root::store).
     pub fn set_main_document(&mut self, document: &Document) -> Result<(), PackageError> {
         file::store(
             &mut self.package,

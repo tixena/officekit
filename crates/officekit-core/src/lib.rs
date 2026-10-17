@@ -1,26 +1,22 @@
 //! `officekit-core` reads, edits, writes, and validates Office Open XML files (`.docx`, `.xlsx`,
 //! `.pptx`) in either conformance class.
 //!
-//! - [`packaging`]: the package, its parts, content types, and relationships, held in an os-shim
-//!   in-memory filesystem.
 //! - [`markup`]: the typed tree, one module per namespace, with the `Transform` and `Visit` traits
 //!   and the write-through form of a transform.
 //! - [`parts`]: one module per part type, with its content type, its relationship type in both
 //!   classes' spelling, and the load and store of its root.
+//! - [`part_root`]: a part's typed root, and its load from and store into a package.
 //! - `transitional` and `strict`, each behind the feature of its name: the read and write of
 //!   every node of the typed tree in that conformance class.
 //! - [`docx`], [`xlsx`], and [`pptx`]: the file types. Each opens a package with its main part,
 //!   its class, and its kind, saves it in either class, and holds the operations over the typed
 //!   tree.
-//! - [`stream`]: the write-through form of a transform, and a package written part by part into a
-//!   sink that cannot seek.
-//! - [`image`]: image parts as images: a format, the bytes, and the pixel size.
+//! - [`stream`]: the write-through form of a transform.
 //! - [`embedded`]: a `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
 //! - [`compact`]: the merge of neighbouring runs that render the same.
 //! - [`folder`]: a `.docx` as a folder of its parts, and back.
 //! - [`validation`]: the checks of a package against the schema of an Office version, and the
 //!   semantic constraints, as static tables and the validator that walks them.
-//! - [`error`]: the failures of the packaging layer.
 //!
 //! Every byte that reaches or leaves the operating system does so through an
 //! [`os_shim::System`], so callers choose between the real filesystem and an in-memory one, and
@@ -35,13 +31,11 @@ mod class_rules;
 pub mod compact;
 pub mod docx;
 pub mod embedded;
-pub mod error;
 mod file;
 pub mod folder;
-pub mod image;
 pub mod markup;
 mod new_parts;
-pub mod packaging;
+pub mod part_root;
 pub mod parts;
 pub mod pptx;
 pub mod stream;

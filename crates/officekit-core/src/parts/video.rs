@@ -343,10 +343,10 @@
 //!
 //! The module holds its relationship type and the load of its bytes.
 
-use crate::error::PackageError;
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
 
 /// Part 1, 15.2.17, and Part 4, 13.2.17.
 pub const RELATIONSHIP_TYPE: RelationshipType = RelationshipType::VIDEO;

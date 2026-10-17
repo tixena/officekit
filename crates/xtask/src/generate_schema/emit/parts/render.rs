@@ -170,8 +170,14 @@ const THROUGH: &str =
         R: PartRoot,
     {
         let root = load(self.package, self.name, self.open)?;
-        self.package
-            .store(self.name, self.content_type, &root, self.class, self.write)
+        part_root::store(
+            self.package,
+            self.name,
+            self.content_type,
+            &root,
+            self.class,
+            self.write,
+        )
     }
 }
 ";
@@ -180,13 +186,13 @@ const THROUGH: &str =
 const RESTORE_THROUGH_MODULE: &str = "
 /// Store the part `name` again in `class` through the module its content type names.
 ///
-/// The module's `load` reads the part with `open`, and [`Package::store`] writes its typed root with
-/// `write`. A content type several modules list goes by the part's root element; a part no module
-/// with a typed root takes is left as it is.
+/// The module's `load` reads the part with `open`, and [`part_root::store`] writes its typed root
+/// with `write`. A content type several modules list goes by the part's root element; a part no
+/// module with a typed root takes is left as it is.
 ///
 /// # Errors
 ///
-/// The errors of the module's `load` and of [`Package::store`], and [`PackageError::Xml`] for a
+/// The errors of the module's `load` and of [`part_root::store`], and [`PackageError::Xml`] for a
 /// part of a content type several modules list that is not well-formed.
 pub fn restore_through_module(
     package: &mut Package,
@@ -411,7 +417,7 @@ fn list(words: &[String]) -> String {
 /// A typed module's `load`.
 fn load_text(path: &str) -> String {
     let mut out = String::from(
-        "\n/// The part's typed root, read from either class.\n///\n/// # Errors\n///\n/// The errors of [`Package::load`].\n",
+        "\n/// The part's typed root, read from either class.\n///\n/// # Errors\n///\n/// The errors of [`part_root::load`].\n",
     );
     out.push_str(&layout::signature(
         0,
@@ -423,7 +429,7 @@ fn load_text(path: &str) -> String {
         ],
         &format!("Result<{path}, PackageError>"),
     ));
-    out.push_str("    package.load(name, options)\n}\n");
+    out.push_str("    part_root::load(package, name, options)\n}\n");
     out
 }
 
@@ -660,7 +666,7 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
     };
     let _ = write!(
         out,
-        "\nuse crate::error::PackageError;\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
+        "\nuse crate::part_root::{{self, PartRoot}};\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
     );
     out.push_str(&layout::doc(
         0,
@@ -808,7 +814,7 @@ fn all_constant(joined: &Joined, out: &mut String) {
     );
 }
 
-/// `packaging/relationship_type.rs`: the one inherent `impl` of
+/// `officekit-packaging`'s `relationship_type.rs`: the one inherent `impl` of
 /// `RelationshipType`, a constant per type, then its methods.
 fn relationship_types(header: &str, joined: &Joined) -> String {
     let mut out = String::from(header);
@@ -816,7 +822,7 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
         "The relationship types of every part module and of the sections of Part 1 that define no part, in both classes' spelling.\n\nPart 1 states the Strict type of each part and Part 4 the Transitional one; the types of the parts Part 2 defines and of Microsoft's extensions are one URI in both classes.",
     ));
     out.push_str(
-        "\nuse crate::packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
+        "\nuse crate::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\n\nimpl RelationshipType {\n",
     );
     let mut all_written = false;
     for constant in &joined.constants {
@@ -911,7 +917,7 @@ fn store_text(path: &str, fallback: &str) -> String {
     ] {
         let _ = write!(
             out,
-            "\n/// Store `root` into the part in the {class} class; the part keeps its\n/// content type, or takes this module's.\n///\n/// # Errors\n///\n/// The errors of [`Package::store`].\n#[cfg(feature = \"{feature}\")]\n"
+            "\n/// Store `root` into the part in the {class} class; the part keeps its\n/// content type, or takes this module's.\n///\n/// # Errors\n///\n/// The errors of [`part_root::store`].\n#[cfg(feature = \"{feature}\")]\n"
         );
         out.push_str(&layout::signature(
             0,
@@ -935,9 +941,10 @@ fn store_text(path: &str, fallback: &str) -> String {
         ));
         layout::line(
             "    ",
-            &Expr::Method(
-                "package.store".to_owned(),
+            &Expr::call(
+                "part_root::store",
                 vec![
+                    Expr::atom("package"),
                     Expr::atom("name"),
                     Expr::atom("&content_type"),
                     Expr::atom("root"),
@@ -956,13 +963,13 @@ fn store_text(path: &str, fallback: &str) -> String {
 /// A module's `use` lines.
 fn uses(root: Option<&RootText>) -> String {
     match root {
-        None => "use crate::error::PackageError;\nuse crate::packaging::package::Package;\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n".to_owned(),
+        None => "use officekit_packaging::error::PackageError;\nuse officekit_packaging::package::Package;\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n".to_owned(),
         Some(known) if known.shared => format!(
-            "use crate::error::PackageError;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::markup::{};\nuse crate::part_root;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\n{EITHER_CLASS}use officekit_xml::conformance::ConformanceClass;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
         Some(known) => format!(
-            "use crate::error::PackageError;\nuse crate::markup::{};\nuse crate::packaging::package::{{OpenOptions, Package, PartRoot}};\nuse crate::packaging::part_name::PartName;\nuse crate::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::markup::{};\nuse crate::part_root::{{self, PartRoot}};\n{STRICT_ONLY}use crate::strict::Strict as _;\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

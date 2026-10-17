@@ -35,10 +35,11 @@ Built and tested:
 ## Layout
 
 ```
-crates/officekit-core   library: packaging, element trees, validation, file types
-crates/officekit-xml    library: element tree, names, values, part reader and writer
-crates/officekit        CLI binary
-crates/xtask            dev tooling (`cargo xtask <subcommand>`), never installed
+crates/officekit-core        library: element trees, validation, file types
+crates/officekit-packaging   library: the package, part names, content types, relationships, images
+crates/officekit-xml         library: element tree, names, values, part reader and writer
+crates/officekit             CLI binary
+crates/xtask                 dev tooling (`cargo xtask <subcommand>`), never installed
 ```
 
 ## Modules
@@ -47,14 +48,12 @@ crates/xtask            dev tooling (`cargo xtask <subcommand>`), never installe
 
 | Module | Covers | Holds |
 |---|---|---|
-| `packaging` | The Open Packaging Conventions (ECMA-376 Part 2), the container under every Office document | Part names, content types, relationships, and the package held in an os-shim in-memory filesystem |
 | `markup` | The typed tree, one module per namespace (`markup::wordprocessing`, `markup::drawing`, ...) | Generated nodes, simple-type newtypes, and enums, with the `Transform` and `Visit` traits and the write-through form of a transform |
 | `parts` | The part types of ECMA-376 Part 1 and of Microsoft's extensions | One generated module per part type: its content type, its relationship type in both classes' spelling, and the load and store of its root |
 | `transitional` | The Transitional conformance class (ECMA-376 Part 1 with the migration features of Part 4) | The generated read and write of every node of the typed tree; the conversion of date cells to number cells before a Transitional save |
 | `strict` | The Strict conformance class (ECMA-376 Part 1) | The generated read and write of every node, and the generated rules that rename, unpack, and refuse what Strict spells differently |
 | `docx`, `xlsx`, `pptx` | The three file types | A package with its main part, its class, and its kind; the saves in either class; the operations over the typed tree |
-| `stream` | Large parts and packages | The write-through form of a transform, and a package written part by part into a sink that cannot seek |
-| `image` | Image parts | A format, the bytes, and the pixel size read from the header |
+| `stream` | Large parts | The write-through form of a transform |
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
@@ -131,8 +130,10 @@ just audit    # cargo audit
 
 `cargo xtask generate-schema` writes the typed tree (`markup/`), the
 conformance classes (`transitional/`, `strict/`), the part modules (`parts/`),
-and the validation tables (`validation/generated/`) of `officekit-core`, and
-the name table of `officekit-xml` (`crates/officekit-xml/src/name/table.rs`).
+and the validation tables (`validation/generated/`) of `officekit-core`, the
+name table of `officekit-xml` (`crates/officekit-xml/src/name/table.rs`), and
+the relationship types of `officekit-packaging`
+(`crates/officekit-packaging/src/relationship_type.rs`).
 Those files are generated and are never edited by hand; change the generator
 in `crates/xtask` and run it again.
 The generator's hand-written inputs live in `crates/xtask/data/`.

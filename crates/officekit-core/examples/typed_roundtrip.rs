@@ -15,7 +15,7 @@ use std::path::{Path, PathBuf};
 
 use clap::Parser;
 use officekit_core::markup::{presentation, spreadsheet, wordprocessing};
-use officekit_core::packaging::package::{OpenOptions, Package};
+use officekit_packaging::package::{OpenOptions, Package};
 use officekit_xml::element::{Document, Element, Node};
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, Scope, WriteOptions};

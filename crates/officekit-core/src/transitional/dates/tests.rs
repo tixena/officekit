@@ -1,3 +1,4 @@
+use officekit_packaging::part_name::PartName;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Document as Part;
 use officekit_xml::error::WriteError;
@@ -7,7 +8,6 @@ use officekit_xml::write::{Layout, WriteOptions};
 
 use super::{SaveWarning, cell_date, convert_date_cells, serial_date_time};
 use crate::markup::spreadsheet::Worksheet;
-use crate::packaging::part_name::PartName;
 use crate::transitional::Transitional as _;
 
 const X: &str = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";

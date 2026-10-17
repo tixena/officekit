@@ -4,13 +4,13 @@
 
 use alloc::collections::{BTreeMap, BTreeSet};
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::{Element, Node};
 
 use super::{STORE, is, prefix};
-use crate::error::PackageError;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 
 #[cfg(test)]
 mod tests;
@@ -19,40 +19,28 @@ mod tests;
 const COMMENTS: Entries = Entries {
     entry: ("w", "comment"),
     key: ("w", "id"),
-    relationship: RelationshipType {
-        strict: "http://purl.oclc.org/ooxml/officeDocument/relationships/comments",
-        transitional: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
-    },
+    relationship: RelationshipType::COMMENTS,
 };
 
 /// The commentsExtensible part: `w16cex:commentExtensible` by the durable id.
 const COMMENTS_EXTENSIBLE: Entries = Entries {
     entry: ("w16cex", "commentExtensible"),
     key: ("w16cex", "durableId"),
-    relationship: RelationshipType {
-        strict: "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
-        transitional: "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible",
-    },
+    relationship: RelationshipType::COMMENTS_EXTENSIBLE,
 };
 
 /// The commentsExtended part: `w15:commentEx` by the paragraph id.
 const COMMENTS_EXTENDED: Entries = Entries {
     entry: ("w15", "commentEx"),
     key: ("w15", "paraId"),
-    relationship: RelationshipType {
-        strict: "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
-        transitional: "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
-    },
+    relationship: RelationshipType::COMMENTS_EXTENDED,
 };
 
 /// The commentsIds part: `w16cid:commentId` by the paragraph id.
 const COMMENTS_IDS: Entries = Entries {
     entry: ("w16cid", "commentId"),
     key: ("w16cid", "paraId"),
-    relationship: RelationshipType {
-        strict: "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
-        transitional: "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds",
-    },
+    relationship: RelationshipType::COMMENTS_IDS,
 };
 
 /// A part that records each comment in a child of its root.

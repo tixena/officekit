@@ -5,10 +5,9 @@ use alloc::borrow::ToOwned as _;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_packaging::part_name::PartName;
 use officekit_xml::name::OfficeVersion;
 use serde_json::{Value, json};
-
-use crate::packaging::part_name::PartName;
 
 #[cfg(test)]
 mod tests;

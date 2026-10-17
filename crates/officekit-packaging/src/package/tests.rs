@@ -3,25 +3,19 @@ use std::io::{Cursor, Write as _};
 use std::path::Path;
 
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::{Element, NamespaceDeclaration, Node};
-use officekit_xml::error::WriteError;
 use officekit_xml::mc::MarkupCompatibility;
-use officekit_xml::name::{OfficeVersion, QName};
+use officekit_xml::name::OfficeVersion;
 use officekit_xml::stream::writer::PartWriter;
-use officekit_xml::write::{Layout, WriteOptions};
+use officekit_xml::write::Layout;
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 use zip::write::{SimpleFileOptions, StreamWriter, ZipWriter};
 
-use super::{OpenOptions, Package, PartRoot};
+use super::{OpenOptions, Package};
 use crate::error::PackageError;
 use crate::image::{Image, ImageFormat, PixelSize};
-#[cfg(feature = "transitional")]
-use crate::markup::wordprocessing::Footer;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target, TargetMode};
-#[cfg(feature = "transitional")]
-use crate::parts::footer;
+use crate::part_name::PartName;
+use crate::relationship::{RelationshipType, Target, TargetMode};
 
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
@@ -32,7 +26,6 @@ const HYPERLINK: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 const PACKAGE_TYPE: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package";
-const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const IMAGE_RELATIONSHIP: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
 const PNG_PREFIX: [u8; 16] = *b"\x89PNG\r\n\x1a\n\0\0\0\rIHDR";
@@ -46,52 +39,6 @@ const PORTRAIT: [u8; 8] = [0, 0, 6, 0x1B, 0, 0, 8, 2];
 const SQUARE: [u8; 4] = [1, 0xC8, 1, 0xC8];
 const SMALL: [u8; 4] = [0, 8, 0, 8];
 const TINY: [u8; 8] = [0, 0, 0, 1, 0, 0, 0, 1];
-
-/// A typed root for the tests: `<w:note>` holding its text.
-#[derive(Debug, PartialEq, Eq)]
-struct Note {
-    text: String,
-}
-
-impl PartRoot for Note {
-    const LOCAL_NAME: &'static str = "note";
-
-    fn from_tree(root: &Element) -> Result<Self, String> {
-        match root.children.as_slice() {
-            [] => Ok(Self {
-                text: String::new(),
-            }),
-            [Node::Text(text)] => Ok(Self { text: text.clone() }),
-            _ => Err("a note holds text only".to_owned()),
-        }
-    }
-
-    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
-        let mut root = Element::new(QName::prefixed("w", "note", WORDPROCESSING));
-        root.namespace_declarations.push(NamespaceDeclaration::new(
-            "w".to_owned(),
-            WORDPROCESSING.to_owned(),
-        ));
-        root.children.push(Node::Text(self.text.clone()));
-        Ok(root)
-    }
-}
-
-/// A typed root for the tests that Strict has no form for: `<w:pict>`.
-#[derive(Debug)]
-struct Picture;
-
-impl PartRoot for Picture {
-    const LOCAL_NAME: &'static str = "pict";
-
-    fn from_tree(_root: &Element) -> Result<Self, String> {
-        Ok(Self)
-    }
-
-    fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
-        Err(WriteError::NotInClass { class, tag: "pict" })
-    }
-}
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
@@ -753,99 +700,6 @@ fn load_tree_applies_markup_compatibility_as_the_options_say() {
 }
 
 #[test]
-fn a_typed_root_stores_in_a_class_and_loads_back() {
-    let mut package = Package::new();
-    let part = name("/word/note.xml");
-    let note = Note {
-        text: "hello".to_owned(),
-    };
-    package
-        .store(
-            &part,
-            "application/xml",
-            &note,
-            ConformanceClass::Strict,
-            WriteOptions::default(),
-        )
-        .unwrap();
-    let text = String::from_utf8(package.part_bytes(&part).unwrap()).unwrap();
-    assert_eq!(
-        text,
-        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:note xmlns:w=\"http://purl.oclc.org/ooxml/wordprocessingml/main\">hello</w:note>"
-    );
-    assert_eq!(
-        package.load::<Note>(&part, OpenOptions::default()).unwrap(),
-        note
-    );
-}
-
-#[test]
-fn storing_a_typed_root_keeps_the_parts_prolog() {
-    let mut package = Package::new();
-    let part = name("/word/note.xml");
-    package
-        .set_part_bytes(&part, "application/xml", b"<?xml version=\"1.0\"?>\n<!-- kept --><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"/>")
-        .unwrap();
-    let note = Note {
-        text: "new".to_owned(),
-    };
-    package
-        .store(
-            &part,
-            "application/xml",
-            &note,
-            ConformanceClass::Transitional,
-            WriteOptions::default(),
-        )
-        .unwrap();
-    assert_eq!(
-        String::from_utf8(package.part_bytes(&part).unwrap()).unwrap(),
-        "<?xml version=\"1.0\"?>\n<!-- kept --><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">new</w:note>"
-    );
-}
-
-#[test]
-fn a_root_the_class_refuses_is_a_write_error_and_writes_nothing() {
-    let mut package = Package::new();
-    let part = name("/word/pict.xml");
-    let error = package
-        .store(
-            &part,
-            "application/xml",
-            &Picture,
-            ConformanceClass::Strict,
-            WriteOptions::default(),
-        )
-        .unwrap_err();
-    assert!(
-        matches!(
-            &error,
-            PackageError::Write {
-                error: WriteError::NotInClass {
-                    class: ConformanceClass::Strict,
-                    tag: "pict",
-                },
-                part: written,
-            } if written.as_str() == "/word/pict.xml"
-        ),
-        "got {error:?}"
-    );
-    assert!(!package.contains(&part));
-    assert_eq!(package.content_type(&part), None);
-}
-
-#[test]
-fn loading_a_root_of_another_tag_is_a_read_error() {
-    let error = document()
-        .load::<Note>(&name("/word/document.xml"), OpenOptions::default())
-        .unwrap_err();
-    assert!(
-        matches!(&error, PackageError::Read { part, reason } if part.as_str() == "/word/document.xml" && reason == "the root is <document>, not <note>"),
-        "got {error:?}"
-    );
-}
-
-#[test]
 fn duplicate_is_independent_of_the_original() {
     let original = document();
     let mut copy = original.duplicate().unwrap();
@@ -1081,7 +935,6 @@ fn add_image_takes_the_first_free_name_in_the_sources_media_folder() {
     assert_eq!(related[0].target, Target::Part(first));
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn add_image_relates_with_the_type_of_the_packages_class() {
     let mut package = document();
@@ -1108,29 +961,6 @@ fn an_absent_part_has_no_content_type_whatever_its_extension_defaults_to() {
         Some("application/xml")
     );
     assert_eq!(package.content_type(&name("/word/x.xml")), None);
-}
-
-#[cfg(feature = "transitional")]
-#[test]
-fn a_generated_store_of_a_new_part_registers_the_modules_content_type() {
-    let mut package = Package::new();
-    package
-        .set_part_bytes(&name("/customXml/item1.xml"), "application/xml", b"<a/>")
-        .unwrap();
-    let footer = name("/word/footer1.xml");
-    footer::store_transitional(
-        &mut package,
-        &footer,
-        &Footer::default(),
-        WriteOptions::default(),
-    )
-    .unwrap();
-    assert_eq!(package.content_type(&footer), Some(footer::CONTENT_TYPE));
-    assert!(
-        package
-            .content_type_overrides()
-            .contains(&(footer, footer::CONTENT_TYPE.to_owned()))
-    );
 }
 
 #[test]

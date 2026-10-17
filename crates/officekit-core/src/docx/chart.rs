@@ -8,15 +8,15 @@ use alloc::collections::btree_map::Entry;
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 
-use crate::embedded::Embedded;
-use crate::error::PackageError;
+use crate::embedded::{self, Embedded};
 use crate::markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::{chart, shared_string_table, worksheet};
 use crate::xlsx::Xlsx;
 
@@ -115,22 +115,25 @@ impl Workbook {
             .iter()
             .filter_map(|sheet| {
                 let (name, id) = (sheet.name.as_ref()?, sheet.id.as_ref()?);
-                related
-                    .iter()
-                    .find(|part| &part.id == id)
-                    .and_then(|part| match &part.target {
-                        Target::Part(target) => Some((name.clone(), target.clone())),
-                        Target::External(_) => None,
-                    })
+                related.iter().find(|part| &part.id == id).and_then(|part| {
+                    if let Target::Part(target) = &part.target {
+                        Some((name.clone(), target.clone()))
+                    } else {
+                        None
+                    }
+                })
             })
             .collect();
         let shared = match xlsx
             .package()
             .related_by_type(Some(&main), &RelationshipType::SHARED_STRINGS)?
             .into_iter()
-            .find_map(|related_part| match related_part.target {
-                Target::Part(target) => Some(target),
-                Target::External(_) => None,
+            .find_map(|related_part| {
+                if let Target::Part(target) = related_part.target {
+                    Some(target)
+                } else {
+                    None
+                }
             }) {
             Some(part) => shared_string_table::load(xlsx.package(), &part, options)?
                 .string_item
@@ -177,15 +180,18 @@ pub fn refresh(docx: &mut Docx, name: &PartName, ranges: ChartRanges) -> Result<
         .package
         .related_by_type(Some(name), &RelationshipType::PACKAGE)?
         .into_iter()
-        .find_map(|related| match related.target {
-            Target::Part(target) => Some(target),
-            Target::External(_) => None,
+        .find_map(|related| {
+            if let Target::Part(target) = related.target {
+                Some(target)
+            } else {
+                None
+            }
         })
         .ok_or_else(|| PackageError::Read {
             part: name.clone(),
             reason: "the chart embeds no workbook".to_owned(),
         })?;
-    let Embedded::Xlsx(xlsx) = docx.package.embedded(&workbook_part, docx.options)? else {
+    let Embedded::Xlsx(xlsx) = embedded::open(&docx.package, &workbook_part, docx.options)? else {
         return Err(PackageError::Read {
             part: workbook_part,
             reason: "the document the chart embeds is not a workbook".to_owned(),

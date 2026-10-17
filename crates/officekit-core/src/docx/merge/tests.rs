@@ -1,14 +1,14 @@
 #![cfg(feature = "transitional")]
 
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::OpenOptions;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::Element;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
 use super::super::Docx;
-use crate::error::PackageError;
 use crate::markup::wordprocessing::{self, Document, DocumentBody};
-use crate::packaging::package::OpenOptions;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
@@ -134,9 +134,12 @@ fn related_text(docx: &Docx, relationship: &RelationshipType) -> (PartName, Stri
         .related_by_type(Some(docx.main_document_part()), relationship)
         .unwrap()
         .into_iter()
-        .find_map(|related| match related.target {
-            Target::Part(part) => Some(part),
-            Target::External(_) => None,
+        .find_map(|related| {
+            if let Target::Part(part) = related.target {
+                Some(part)
+            } else {
+                None
+            }
         })
         .unwrap();
     let text = String::from_utf8(docx.package().part_bytes(&part).unwrap()).unwrap();

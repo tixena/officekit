@@ -344,15 +344,16 @@
 //! The module holds its content type, its relationship type, and the load and store of its root,
 //! `xlrd2:spbStructures`.
 
-use crate::error::PackageError;
 use crate::markup::office_spreadsheetml_2017_richdata2;
-use crate::packaging::package::{OpenOptions, Package, PartRoot};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
+use crate::part_root::{self, PartRoot};
 #[cfg(feature = "strict")]
 use crate::strict::Strict as _;
 #[cfg(feature = "transitional")]
 use crate::transitional::Transitional as _;
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::error::WriteError;
@@ -400,13 +401,13 @@ fn shared_tree(root: &office_spreadsheetml_2017_richdata2::SpbStructures) -> Ele
 ///
 /// # Errors
 ///
-/// The errors of [`Package::load`].
+/// The errors of [`part_root::load`].
 pub fn load(
     package: &Package,
     name: &PartName,
     options: OpenOptions,
 ) -> Result<office_spreadsheetml_2017_richdata2::SpbStructures, PackageError> {
-    package.load(name, options)
+    part_root::load(package, name, options)
 }
 
 /// Store `root` into the part in the Strict class; the part keeps its
@@ -414,7 +415,7 @@ pub fn load(
 ///
 /// # Errors
 ///
-/// The errors of [`Package::store`].
+/// The errors of [`part_root::store`].
 #[cfg(feature = "strict")]
 pub fn store_strict(
     package: &mut Package,
@@ -426,7 +427,14 @@ pub fn store_strict(
         .content_type(name)
         .unwrap_or(CONTENT_TYPE)
         .to_owned();
-    package.store(name, &content_type, root, ConformanceClass::Strict, options)
+    part_root::store(
+        package,
+        name,
+        &content_type,
+        root,
+        ConformanceClass::Strict,
+        options,
+    )
 }
 
 /// Store `root` into the part in the Transitional class; the part keeps its
@@ -434,7 +442,7 @@ pub fn store_strict(
 ///
 /// # Errors
 ///
-/// The errors of [`Package::store`].
+/// The errors of [`part_root::store`].
 #[cfg(feature = "transitional")]
 pub fn store_transitional(
     package: &mut Package,
@@ -446,7 +454,8 @@ pub fn store_transitional(
         .content_type(name)
         .unwrap_or(CONTENT_TYPE)
         .to_owned();
-    package.store(
+    part_root::store(
+        package,
         name,
         &content_type,
         root,

@@ -1,16 +1,16 @@
+use officekit_packaging::error::PackageError;
+use officekit_packaging::image::{Image, ImageFormat};
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::element::Element;
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use super::PictureFit;
 use crate::docx::Docx;
-use crate::error::PackageError;
-use crate::image::{Image, ImageFormat};
 use crate::markup::Read as _;
 use crate::markup::wordprocessing::{TextRun, write};
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";

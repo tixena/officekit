@@ -459,6 +459,7 @@ dependencies = [
  "assert_cmd",
  "clap",
  "officekit-core",
+ "officekit-packaging",
  "officekit-xml",
  "os-shim",
  "serde_json",
@@ -471,13 +472,24 @@ version = "0.1.0"
 dependencies = [
  "base64",
  "clap",
- "imagesize",
+ "officekit-packaging",
  "officekit-xml",
  "os-shim",
  "quick-xml",
  "regex",
  "serde_json",
  "sha1",
+ "thiserror",
+ "zip",
+]
+
+[[package]]
+name = "officekit-packaging"
+version = "0.1.0"
+dependencies = [
+ "imagesize",
+ "officekit-xml",
+ "os-shim",
  "thiserror",
  "zip",
 ]
@@ -1011,6 +1023,7 @@ dependencies = [
  "anyhow",
  "clap",
  "officekit-core",
+ "officekit-packaging",
  "officekit-xml",
  "os-shim",
  "quick-xml",

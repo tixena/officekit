@@ -1,5 +1,11 @@
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
+#[cfg(all(feature = "transitional", feature = "strict"))]
+use officekit_packaging::package::OpenOptions;
+#[cfg(feature = "transitional")]
+use officekit_packaging::part_name::PartName;
+#[cfg(feature = "transitional")]
+use officekit_packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
 
@@ -8,12 +14,6 @@ use super::{hash, legacy_hash};
 use crate::docx::Docx;
 #[cfg(feature = "transitional")]
 use crate::markup::wordprocessing::DocumentProtectionTypesMember;
-#[cfg(all(feature = "transitional", feature = "strict"))]
-use crate::packaging::package::OpenOptions;
-#[cfg(feature = "transitional")]
-use crate::packaging::part_name::PartName;
-#[cfg(feature = "transitional")]
-use crate::packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "transitional")]
 use crate::parts::document_settings;
 #[cfg(feature = "transitional")]

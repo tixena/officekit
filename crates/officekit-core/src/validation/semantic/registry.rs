@@ -15,15 +15,15 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelatedPart, Target};
 use officekit_xml::element::{Document, Element};
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, OfficeVersion};
 use regex::Regex;
 
 use super::constraint::{Application, AttributeName, Constraint, ElementName, Registration, Slot};
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelatedPart, Target};
 use crate::validation::error::{ErrorCode, Errors, Step, ValidationError};
 use crate::validation::generated::{PART_RULES, SCHEMA_TYPES, SEMANTIC_CONSTRAINTS};
 use crate::validation::package::{DATA_PART_REFERENCES, HYPERLINK};
@@ -776,11 +776,14 @@ fn descend(
             .relationships_of(source.as_ref())
             .into_iter()
             .filter_map(Result::ok)
-            .find_map(|related| match related.target {
-                Target::Part(part) if transitional_type(&related.type_uri) == relationship_type => {
+            .find_map(|related| {
+                if let Target::Part(part) = related.target
+                    && transitional_type(&related.type_uri) == relationship_type
+                {
                     Some(part)
+                } else {
+                    None
                 }
-                Target::External(_) | Target::Part(_) => None,
             })?;
         source = Some(found);
         source_rule = child_rule;

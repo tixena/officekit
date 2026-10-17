@@ -1,7 +1,12 @@
-use super::Embedded;
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
+
+#[cfg(feature = "strict")]
+use super::store_strict;
+#[cfg(feature = "transitional")]
+use super::store_transitional;
+use super::{Embedded, open};
 use crate::parts::kinds::SpreadsheetKind;
 use crate::parts::worksheet::CONTENT_TYPE as WORKSHEET;
 use crate::xlsx::Xlsx;
@@ -59,7 +64,7 @@ fn document_with_workbook() -> (Package, PartName) {
 #[test]
 fn the_workbook_of_a_document_opens_as_xlsx() {
     let (package, part) = document_with_workbook();
-    let workbook = workbook_of(package.embedded(&part, OpenOptions::default()).unwrap());
+    let workbook = workbook_of(open(&package, &part, OpenOptions::default()).unwrap());
     assert_eq!(
         workbook.package().part_bytes(&name(SHEET)).unwrap(),
         sheet_with(1, 2)
@@ -70,18 +75,16 @@ fn the_workbook_of_a_document_opens_as_xlsx() {
 #[test]
 fn a_workbook_edit_writes_back_with_its_edit() {
     let (mut package, part) = document_with_workbook();
-    let mut workbook = workbook_of(package.embedded(&part, OpenOptions::default()).unwrap());
+    let mut workbook = workbook_of(open(&package, &part, OpenOptions::default()).unwrap());
     workbook
         .package_mut()
         .set_part_bytes(&name(SHEET), WORKSHEET, &sheet_with(42, 17))
         .unwrap();
-    let warnings = package
-        .set_embedded_transitional(&part, &Embedded::Xlsx(workbook))
-        .unwrap();
+    let warnings = store_transitional(&mut package, &part, &Embedded::Xlsx(workbook)).unwrap();
     assert_eq!(warnings, []);
     assert_eq!(package.content_type(&part), Some(WORKBOOK_TYPE));
     let reopened = Package::from_bytes(package.to_bytes().unwrap()).unwrap();
-    let again = workbook_of(reopened.embedded(&part, OpenOptions::default()).unwrap());
+    let again = workbook_of(open(&reopened, &part, OpenOptions::default()).unwrap());
     assert_eq!(
         again.package().part_bytes(&name(SHEET)).unwrap(),
         sheet_with(42, 17)
@@ -92,11 +95,11 @@ fn a_workbook_edit_writes_back_with_its_edit() {
 #[test]
 fn a_workbook_written_back_strict_reopens_as_xlsx() {
     let (mut package, part) = document_with_workbook();
-    let embedded = package.embedded(&part, OpenOptions::default()).unwrap();
-    package.set_embedded_strict(&part, &embedded).unwrap();
+    let embedded = open(&package, &part, OpenOptions::default()).unwrap();
+    store_strict(&mut package, &part, &embedded).unwrap();
     assert_eq!(package.content_type(&part), Some(WORKBOOK_TYPE));
     assert!(matches!(
-        package.embedded(&part, OpenOptions::default()).unwrap(),
+        open(&package, &part, OpenOptions::default()).unwrap(),
         Embedded::Xlsx(_)
     ));
 }
@@ -112,7 +115,7 @@ fn bytes_that_are_not_a_package_are_not_a_package() {
             b"\xD0\xCF\x11\xE0 not a zip",
         )
         .unwrap();
-    let error = package.embedded(&ole, OpenOptions::default()).unwrap_err();
+    let error = open(&package, &ole, OpenOptions::default()).unwrap_err();
     assert!(
         error
             .to_string()
@@ -127,9 +130,7 @@ fn a_zip_without_a_main_part_is_not_a_package() {
     package
         .set_part_bytes(&empty, WORKBOOK_TYPE, &Package::new().to_bytes().unwrap())
         .unwrap();
-    let error = package
-        .embedded(&empty, OpenOptions::default())
-        .unwrap_err();
+    let error = open(&package, &empty, OpenOptions::default()).unwrap_err();
     assert!(
         error
             .to_string()
@@ -152,9 +153,7 @@ fn a_package_of_another_main_part_is_not_a_package() {
     package
         .set_part_bytes(&other, WORKBOOK_TYPE, &inner.to_bytes().unwrap())
         .unwrap();
-    let error = package
-        .embedded(&other, OpenOptions::default())
-        .unwrap_err();
+    let error = open(&package, &other, OpenOptions::default()).unwrap_err();
     assert!(
         error
             .to_string()

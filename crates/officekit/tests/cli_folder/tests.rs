@@ -7,8 +7,8 @@ use os_shim::System as _;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
-use officekit_core::packaging::package::Package;
-use officekit_core::packaging::part_name::PartName;
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
 
 fn run(args: &[&str]) -> Output {
     Command::cargo_bin("officekit")

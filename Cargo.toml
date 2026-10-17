@@ -1,6 +1,6 @@
 [workspace]
-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-xml", "crates/xtask"]
-default-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-xml"]
+members = ["crates/officekit", "crates/officekit-core", "crates/officekit-packaging", "crates/officekit-xml", "crates/xtask"]
+default-members = ["crates/officekit", "crates/officekit-core", "crates/officekit-packaging", "crates/officekit-xml"]
 resolver = "2"
 
 [workspace.package]
@@ -13,6 +13,7 @@ repository = "https://github.com/eburgos/officekit"
 
 [workspace.dependencies]
 officekit-core = { path = "crates/officekit-core" }
+officekit-packaging = { path = "crates/officekit-packaging" }
 officekit-xml = { path = "crates/officekit-xml" }
 
 # CLI framework

@@ -1,6 +1,12 @@
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use officekit_packaging::package::OpenOptions;
+#[cfg(feature = "strict")]
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "strict")]
 use officekit_xml::element::Element;
@@ -14,12 +20,6 @@ use os_shim::mock::MemorySystem;
 use super::Xlsx;
 #[cfg(feature = "strict")]
 use crate::markup::spreadsheet::WorkbookProperties;
-#[cfg(any(feature = "strict", feature = "transitional"))]
-use crate::packaging::package::OpenOptions;
-#[cfg(feature = "strict")]
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;

@@ -6,15 +6,15 @@ use alloc::collections::BTreeSet;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::Target;
 use officekit_xml::name::OfficeVersion;
 
 use super::error::{ErrorCode, Errors, ValidationError};
 use super::generated::PART_RULES;
 use super::schema::types::{ChildKind, ChildPart, PartRule};
 use super::validator::{document_parts, document_rule, part_rule, transitional_type};
-use crate::packaging::package::Package;
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::Target;
 
 #[cfg(test)]
 mod tests;

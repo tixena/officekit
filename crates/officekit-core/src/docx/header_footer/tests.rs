@@ -1,15 +1,15 @@
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::{RelationshipType, Target};
 #[cfg(feature = "strict")]
 use officekit_xml::conformance::ConformanceClass;
 
 use crate::docx::Docx;
-use crate::error::PackageError;
 use crate::markup::wordprocessing::{
     BlockContent, DocumentFinalSectionProperties, Footer, Header, HeaderOrFooterTypeMember,
     Paragraph, SectionPropertiesContent,
 };
-use crate::packaging::package::{OpenOptions, Package};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::{RelationshipType, Target};
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{document_settings, footer, header};
 

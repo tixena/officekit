@@ -481,10 +481,11 @@ pub mod worksheet_threaded_comments;
 #[cfg(test)]
 mod tests;
 
-use crate::error::PackageError;
-use crate::packaging::package::{OpenOptions, Package, PartRoot};
-use crate::packaging::part_name::PartName;
-use crate::packaging::relationship::RelationshipType;
+use crate::part_root::{self, PartRoot};
+use officekit_packaging::error::PackageError;
+use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::error::WriteError;
@@ -1611,8 +1612,14 @@ impl Restore<'_> {
         R: PartRoot,
     {
         let root = load(self.package, self.name, self.open)?;
-        self.package
-            .store(self.name, self.content_type, &root, self.class, self.write)
+        part_root::store(
+            self.package,
+            self.name,
+            self.content_type,
+            &root,
+            self.class,
+            self.write,
+        )
     }
 }
 
@@ -1633,13 +1640,13 @@ fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(),
 
 /// Store the part `name` again in `class` through the module its content type names.
 ///
-/// The module's `load` reads the part with `open`, and [`Package::store`] writes its typed root with
-/// `write`. A content type several modules list goes by the part's root element; a part no module
-/// with a typed root takes is left as it is.
+/// The module's `load` reads the part with `open`, and [`part_root::store`] writes its typed root
+/// with `write`. A content type several modules list goes by the part's root element; a part no
+/// module with a typed root takes is left as it is.
 ///
 /// # Errors
 ///
-/// The errors of the module's `load` and of [`Package::store`], and [`PackageError::Xml`] for a
+/// The errors of the module's `load` and of [`part_root::store`], and [`PackageError::Xml`] for a
 /// part of a content type several modules list that is not well-formed.
 pub fn restore_through_module(
     package: &mut Package,

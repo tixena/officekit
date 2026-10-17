@@ -43,3 +43,7 @@ toml = { version = "1", default-features = false, features = ["parse", "serde", 
 
 # SHA-256 of the committed tables, for the header of every generated file.
 sha2 = "0.10"
+
+[dev-dependencies]
+# The parity tests name the parts of their records.
+officekit-packaging.workspace = true
