@@ -1,5 +1,5 @@
 use core::alloc::{GlobalAlloc, Layout as Allocation};
-use core::sync::atomic::{AtomicUsize, Ordering};
+use core::cell::Cell;
 use std::alloc::System;
 use std::io::{self, Write};
 
@@ -17,11 +17,17 @@ use officekit_xml::write::Layout;
 #[global_allocator]
 static ALLOCATOR: Counting = Counting;
 
-/// The bytes the heap holds.
-static LIVE: AtomicUsize = AtomicUsize::new(0);
+thread_local! {
+    /// Whether this thread's allocations are counted.
+    static COUNTING: Cell<bool> = const { Cell::new(false) };
 
-/// The most bytes the heap held since the last reset.
-static PEAK: AtomicUsize = AtomicUsize::new(0);
+    /// The bytes this thread allocated and has not freed since counting began;
+    /// frees of bytes allocated before it make the count negative.
+    static LIVE: Cell<isize> = const { Cell::new(0) };
+
+    /// The most `LIVE` reached since counting began.
+    static PEAK: Cell<isize> = const { Cell::new(0) };
+}
 
 /// The system allocator, counting the bytes it holds.
 struct Counting;
@@ -53,14 +59,13 @@ unsafe impl GlobalAlloc for Counting {
         // SAFETY: the caller's contract for `alloc` is passed on as it is.
         let pointer = unsafe { System.alloc(layout) };
         if !pointer.is_null() {
-            let live = LIVE.fetch_add(layout.size(), Ordering::SeqCst) + layout.size();
-            PEAK.fetch_max(live, Ordering::SeqCst);
+            count(isize::try_from(layout.size()).unwrap_or(isize::MAX));
         }
         pointer
     }
 
     unsafe fn dealloc(&self, ptr: *mut u8, layout: Allocation) {
-        LIVE.fetch_sub(layout.size(), Ordering::SeqCst);
+        count(-isize::try_from(layout.size()).unwrap_or(isize::MAX));
         // SAFETY: the caller's contract for `dealloc` is passed on as it is.
         unsafe { System.dealloc(ptr, layout) }
     }
@@ -144,6 +149,15 @@ impl wordprocessing::Context for StreamRepeatRows {
     }
 }
 
+/// Adds `change` bytes to this thread's count while it counts.
+fn count(change: isize) {
+    if COUNTING.get() {
+        let live = LIVE.get().saturating_add(change);
+        LIVE.set(live);
+        PEAK.set(PEAK.get().max(live));
+    }
+}
+
 /// Whether a content control is aliased "repeat".
 fn is_repeat(sdt: &BlockLevelStructuredDocumentTag) -> bool {
     sdt.properties
@@ -163,19 +177,20 @@ fn paragraph(value: &str) -> Paragraph {
     paragraph
 }
 
-/// The most heap the write uses above what was live before it, and the
+/// The most heap the write uses above what this thread held before it, and the
 /// bytes it wrote.
 fn peak_heap_while_writing(table: &Table, count: usize) -> (usize, usize) {
     let mut sink = CountingSink(0);
-    let before = LIVE.load(Ordering::SeqCst);
-    PEAK.store(before, Ordering::SeqCst);
-    table
-        .write_through(
-            &mut StreamRepeatRows { count },
-            &mut PartWriter::new(&mut sink, Layout::Compact),
-        )
-        .unwrap();
-    (PEAK.load(Ordering::SeqCst) - before, sink.0)
+    LIVE.set(0);
+    PEAK.set(0);
+    COUNTING.set(true);
+    let written = table.write_through(
+        &mut StreamRepeatRows { count },
+        &mut PartWriter::new(&mut sink, Layout::Compact),
+    );
+    COUNTING.set(false);
+    written.unwrap();
+    (usize::try_from(PEAK.get()).unwrap(), sink.0)
 }
 
 fn row(block: BlockContent) -> ContentRowContent {
