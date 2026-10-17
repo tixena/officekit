@@ -216,8 +216,8 @@
 //! shared writer, whose element the Transitional write then checks.
 
 use crate::Transitional;
-use officekit_markup::class_rules;
 use officekit_markup::additional_characteristics::{self, read, write};
+use officekit_markup::class_rules;
 use officekit_xml::element::Element;
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::name::NamespaceId;

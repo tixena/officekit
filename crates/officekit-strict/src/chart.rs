@@ -216,8 +216,8 @@
 //! shared writer, whose element the Strict write then checks and converts.
 
 use crate::Strict;
-use officekit_markup::class_rules;
 use officekit_markup::chart::{self, read, write};
+use officekit_markup::class_rules;
 use officekit_xml::element::Element;
 use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::name::NamespaceId;

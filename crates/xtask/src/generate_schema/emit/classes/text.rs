@@ -62,11 +62,21 @@ pub fn module(
         }
     );
     let _ = writeln!(out, "use crate::{upper};");
-    let _ = writeln!(out, "use officekit_markup::class_rules;");
-    let _ = writeln!(
-        out,
-        "use officekit_markup::{module}::{{self, read, write}};"
-    );
+    let flat = format!("use officekit_markup::{module}::{{self, read, write}};");
+    // rustfmt breaks a braced import whose line, semicolon included, reaches the width.
+    let own = if flat.len() >= layout::MAX_WIDTH {
+        format!("use officekit_markup::{module}::{{\n    self, read, write,\n}};")
+    } else {
+        flat
+    };
+    let shared = "use officekit_markup::class_rules;".to_owned();
+    let (first, second) = if module < "class_rules" {
+        (own, shared)
+    } else {
+        (shared, own)
+    };
+    let _ = writeln!(out, "{first}");
+    let _ = writeln!(out, "{second}");
     let _ = writeln!(out, "use officekit_xml::element::Element;");
     let _ = writeln!(out, "use officekit_xml::error::{{ReadError, WriteError}};");
     let _ = writeln!(out, "use officekit_xml::name::NamespaceId;");

@@ -930,11 +930,7 @@ pub trait Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_element(
-        &mut self,
-        _node: &Element,
-        _out: &mut PartWriter<'_>,
-    ) -> io::Result<Written> {
+    fn write_element(&mut self, _node: &Element, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 }

@@ -96,6 +96,31 @@ fn a_prefix_the_namespace_table_lacks_is_an_error() {
 }
 
 #[test]
+fn a_module_sorting_before_class_rules_imports_its_own_first() {
+    let module = text::module("// header\n", Class::Strict, "chart", &[], &[]);
+    assert!(
+        module.contains(
+            "use crate::Strict;\n\
+             use officekit_markup::chart::{self, read, write};\n\
+             use officekit_markup::class_rules;\n"
+        ),
+        "{module}"
+    );
+}
+
+#[test]
+fn a_module_line_past_the_width_is_braced_across_three_lines() {
+    let name = "office_spreadsheetml_2024_workbook_compatibility_version";
+    let module = text::module("// header\n", Class::Strict, name, &[], &[]);
+    let expected = format!(
+        "use crate::Strict;\n\
+         use officekit_markup::class_rules;\n\
+         use officekit_markup::{name}::{{\n    self, read, write,\n}};\n"
+    );
+    assert!(module.contains(&expected), "{module}");
+}
+
+#[test]
 fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
     let impls = [
         Impl {
