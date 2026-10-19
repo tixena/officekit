@@ -1439,3 +1439,28 @@ fn a_hyperlink_field_s_l_switch_names_a_bookmark_or_an_address_s_fragment() {
         "[Q3](#q3-results), [plan](#2024-plan), [part](https://x.example#part_two), plain\n"
     );
 }
+
+#[test]
+fn a_bold_stretch_next_to_punctuation_comes_back_bold() {
+    let body = [
+        format!("<w:p>{}{}</w:p>", run("MONTO SOLICITUD"), bold_run(":")),
+        format!("<w:p>{}{}{}</w:p>", run("a"), bold_run("(bold)"), run("b")),
+        format!("<w:p>{}{}</w:p>", bold_run("bold."), run("b")),
+    ]
+    .concat();
+    assert_eq!(
+        archie(&word(&body)).body.sections,
+        no_heading(alloc::vec![
+            paragraph_of(alloc::vec![
+                text("MONTO SOLICITUD"),
+                strong(alloc::vec![text(":")])
+            ]),
+            paragraph_of(alloc::vec![
+                text("a"),
+                strong(alloc::vec![text("(bold)")]),
+                text("b")
+            ]),
+            paragraph_of(alloc::vec![strong(alloc::vec![text("bold.")]), text("b")]),
+        ])
+    );
+}

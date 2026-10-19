@@ -85,7 +85,7 @@ dependencies = [
 [[package]]
 name = "archie-core"
 version = "0.1.0"
-source = "git+https://github.com/tixena/archie.git#3b4ec6025b1fbfdbc4f5041cdc025e253e2b96c6"
+source = "git+https://github.com/tixena/archie.git#3b853b7fffc7533cc8dd0abc9abe504b12aba862"
 dependencies = [
  "chrono",
  "indexmap",
