@@ -2,6 +2,7 @@
 
 mod from_word;
 mod parts;
+mod picture;
 #[cfg(test)]
 mod tests;
 mod to_word;
@@ -107,11 +108,12 @@ fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), Markd
 ///
 /// # Errors
 ///
+/// [`MarkdownError::Image`] when a picture cannot be read or is in no format it stores,
 /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null, and
 /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
 pub(crate) fn from_archie<S, E>(
-    _system: &S,
-    _base: &Path,
+    system: &S,
+    base: &Path,
     document: &Document<E>,
     options: MarkdownOptions,
 ) -> Result<Docx, MarkdownError>
@@ -124,7 +126,7 @@ where
     parts::add_styles(docx.package_mut(), &main)?;
     let mut root = docx.main_document()?;
     root.body.get_or_insert_with(Box::default).content =
-        to_word::blocks(&document.body, docx.package_mut(), &main)?;
+        to_word::blocks(system, base, &document.body, docx.package_mut(), &main)?;
     docx.set_main_document(&root)?;
     if options.frontmatter
         && let Some(mapping) = &document.frontmatter

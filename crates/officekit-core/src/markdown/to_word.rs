@@ -1,16 +1,19 @@
-//! archie's blocks and inline nodes as Word paragraphs, runs, lists, tables and hyperlinks.
+//! archie's blocks and inline nodes as Word paragraphs, runs, lists, tables, hyperlinks and
+//! pictures.
 
 use alloc::boxed::Box;
 use alloc::collections::BTreeSet;
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem};
+use std::path::Path;
 
 use archie_core::parser::ast::{
     Alignment, Block, Continues, Inline, Item, Line, Link, LinkInline, List, MarkdownBlock,
     Paragraph as ArchieParagraph, Section, Table as ArchieTable, TableRow as ArchieTableRow,
 };
 use archie_core::parser::extension::Extension;
+use officekit_markup::Read as _;
 use officekit_markup::wordprocessing::{
     AnchorForImportedExternalContent, BlockContent, Bold, BookmarkEnd, BookmarkStart,
     BorderStylesMember, Break, ContentCellContent, ContentRowContent, GridColumnDefinition,
@@ -24,26 +27,60 @@ use officekit_markup::wordprocessing::{
     TableWidthUnitsMember, Text, TextRun, TextRunContent,
 };
 use officekit_packaging::error::PackageError;
+use officekit_packaging::image::{Image, PixelSize};
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+use officekit_xml::name::QName;
+use os_shim::System;
 
+use super::MarkdownError;
 use super::parts::{
     self, CODE, DEEPEST_HEADING, DEEPEST_LEVEL, HYPERLINK, LIST_PARAGRAPH, PREFORMATTED, QUOTE,
     TABLE_GRID,
 };
+use super::picture::{self, Picture};
 
 /// The longest bookmark name Word takes.
 const BOOKMARK_LENGTH: usize = 40;
+
+const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+
+/// The EMU in a pixel at 96 pixels an inch.
+const EMU_PER_PIXEL: u64 = 9_525;
 
 const HTML_CONTENT_TYPE: &str = "text/html";
 
 /// The names the part of an HTML block takes, from `/word/htmlChunk1.html`.
 const HTML_PART: &str = "/word/htmlChunk{}.html";
 
+const PICTURE: &str = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+
+const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+
+const SVG: &str = "http://schemas.microsoft.com/office/drawing/2016/SVG/main";
+
+/// The `a:ext` URI of the extension that names a picture's SVG.
+const SVG_EXTENSION: &str = "{96DAC541-7B7A-43D3-8B79-37D633B846F1}";
+
+/// The text width of a page, 6.5 inches, in EMU: the widest frame a picture gets, and the side of
+/// the square frame of a picture whose size is not known.
+const TEXT_WIDTH: u64 = 5_943_600;
+
+const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+
+const WORDPROCESSING_DRAWING: &str =
+    "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+
 /// The Word blocks written so far, and what the walk keeps from one block to the next.
-struct Body<'package> {
+struct Body<'package, S>
+where
+    S: ?Sized,
+{
+    /// The folder local picture targets are read relative to.
+    base: &'package Path,
     blocks: Vec<BlockContent>,
     bookmarks: Bookmarks,
     /// The depth of the list item whose later blocks are being written.
@@ -54,10 +91,15 @@ struct Body<'package> {
     /// The first number of each ordered list so far; `None` until the walk meets a list.
     numbering: Option<Vec<u64>>,
     package: &'package mut Package,
+    pictures: Pictures,
+    system: &'package S,
 }
 
-impl Body<'_> {
-    fn block<E>(&mut self, block: &Block<E>) -> Result<(), PackageError>
+impl<S> Body<'_, S>
+where
+    S: System + ?Sized,
+{
+    fn block<E>(&mut self, block: &Block<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -80,7 +122,7 @@ impl Body<'_> {
         &mut self,
         body: &MarkdownBlock<E>,
         alignment: Option<Alignment>,
-    ) -> Result<TableCell, PackageError>
+    ) -> Result<TableCell, MarkdownError>
     where
         E: Extension,
     {
@@ -129,7 +171,12 @@ impl Body<'_> {
 
     /// A list item at `depth`, numbered by `instance`: its first paragraph numbered, or an empty
     /// numbered paragraph when it starts with another block, then its later blocks.
-    fn item<E>(&mut self, item: &Item<E>, depth: usize, instance: usize) -> Result<(), PackageError>
+    fn item<E>(
+        &mut self,
+        item: &Item<E>,
+        depth: usize,
+        instance: usize,
+    ) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -161,7 +208,7 @@ impl Body<'_> {
 
     /// A list one level deeper than the item it is in: numbering instance
     /// [`parts::BULLET_INSTANCE`] for bullets, an instance of its own when ordered.
-    fn list<E>(&mut self, list: &List<E>) -> Result<(), PackageError>
+    fn list<E>(&mut self, list: &List<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -178,7 +225,7 @@ impl Body<'_> {
     }
 
     /// The sections of `block`, from depth 1.
-    fn markdown_block<E>(&mut self, block: &MarkdownBlock<E>) -> Result<(), PackageError>
+    fn markdown_block<E>(&mut self, block: &MarkdownBlock<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -190,7 +237,7 @@ impl Body<'_> {
 
     /// One paragraph of `paragraph`'s lines, each after the one before and a space, or no space
     /// when the one before ends in a hard line break.
-    fn paragraph<E>(&mut self, paragraph: &ArchieParagraph<E>) -> Result<(), PackageError>
+    fn paragraph<E>(&mut self, paragraph: &ArchieParagraph<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -234,19 +281,22 @@ impl Body<'_> {
         self.blocks.push(BlockContent::Paragraph(paragraph));
     }
 
-    /// An empty writer of runs, relating links from the main part.
-    const fn runs(&mut self) -> Runs<'_> {
+    /// An empty writer of runs, relating links and pictures from the main part.
+    const fn runs(&mut self) -> Runs<'_, S> {
         Runs {
+            base: self.base,
             content: Vec::new(),
             link: None,
             main: self.main,
             package: &mut *self.package,
+            pictures: &mut self.pictures,
+            system: self.system,
         }
     }
 
     /// The section's heading at `depth`, between the start and the end of its bookmark, then its
     /// blocks, then its subsections one level deeper.
-    fn section<E>(&mut self, section: &Section<E>, depth: usize) -> Result<(), PackageError>
+    fn section<E>(&mut self, section: &Section<E>, depth: usize) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -276,7 +326,7 @@ impl Body<'_> {
 
     /// A table styled `TableGrid` of automatic width, as many columns wide as its widest row: its
     /// head rows, then its other rows.
-    fn table<E>(&mut self, table: &ArchieTable<E>) -> Result<(), PackageError>
+    fn table<E>(&mut self, table: &ArchieTable<E>) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -323,7 +373,7 @@ impl Body<'_> {
         head: bool,
         columns: usize,
         alignments: &[Alignment],
-    ) -> Result<TableRow, PackageError>
+    ) -> Result<TableRow, MarkdownError>
     where
         E: Extension,
     {
@@ -424,17 +474,38 @@ impl Format {
     }
 }
 
-/// The runs of one paragraph, written so far, and the package its links are related in.
-struct Runs<'package> {
+/// What the walk counts of the pictures it writes.
+#[derive(Default)]
+struct Pictures {
+    /// The pictures written so far: the next one's `wp:docPr` id is one more.
+    count: usize,
+    /// The image parts stored so far: the next one is `media/image{n}`, `n` one more, whatever its
+    /// extension.
+    parts: usize,
+}
+
+/// The runs of one paragraph, written so far, and the package its links and pictures are related
+/// in.
+struct Runs<'package, S>
+where
+    S: ?Sized,
+{
+    /// The folder local picture targets are read relative to.
+    base: &'package Path,
     content: Vec<ParagraphContent>,
     /// The hyperlink the runs go into while a link is written, kept open while the link goes on
     /// into the next line.
     link: Option<Hyperlink>,
     main: &'package PartName,
     package: &'package mut Package,
+    pictures: &'package mut Pictures,
+    system: &'package S,
 }
 
-impl Runs<'_> {
+impl<S> Runs<'_, S>
+where
+    S: System + ?Sized,
+{
     /// An empty `w:hyperlink` for `link`, its title as the tooltip: to the bookmark its anchor
     /// names when its target starts with `#`, else to its target, as written, through an external
     /// relationship from the main part.
@@ -456,7 +527,7 @@ impl Runs<'_> {
         Ok(hyperlink)
     }
 
-    fn inline<E>(&mut self, inline: &Inline<E>, format: Format) -> Result<(), PackageError>
+    fn inline<E>(&mut self, inline: &Inline<E>, format: Format) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -475,6 +546,9 @@ impl Runs<'_> {
                     ..format
                 },
             )?,
+            Inline::Image(image) => {
+                self.picture(&image.target, &image.alt, image.title.as_deref(), format)?;
+            }
             Inline::LineBreak(_) => self.line_break(format),
             Inline::Link(link) => self.link(link, format)?,
             Inline::Strong(strong) => self.inlines(
@@ -485,12 +559,12 @@ impl Runs<'_> {
                 },
             )?,
             Inline::Text(text) => self.text(&text.value, format),
-            Inline::Html(_) | Inline::Image(_) | _ => {}
+            Inline::Html(_) | _ => {}
         }
         Ok(())
     }
 
-    fn inlines<E>(&mut self, inlines: &[Inline<E>], format: Format) -> Result<(), PackageError>
+    fn inlines<E>(&mut self, inlines: &[Inline<E>], format: Format) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -514,7 +588,7 @@ impl Runs<'_> {
     /// A `w:hyperlink` around the link's runs. A link written across lines, which archie cuts into
     /// one piece per line, is one hyperlink: its first piece opens it, the space that joins the
     /// lines and the later pieces go into it, and its last piece closes it.
-    fn link<E>(&mut self, link: &Link<E>, format: Format) -> Result<(), PackageError>
+    fn link<E>(&mut self, link: &Link<E>, format: Format) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -529,7 +603,7 @@ impl Runs<'_> {
         };
         self.link = Some(hyperlink);
         for child in &link.children {
-            self.link_inline(child, format);
+            self.link_inline(child, format)?;
         }
         if !matches!(link.continues, Continues::Next | Continues::Both) {
             self.content
@@ -539,7 +613,11 @@ impl Runs<'_> {
     }
 
     /// A node of a link's text, as the runs the same node outside a link gives.
-    fn link_inline<E>(&mut self, inline: &LinkInline<E>, format: Format)
+    fn link_inline<E>(
+        &mut self,
+        inline: &LinkInline<E>,
+        format: Format,
+    ) -> Result<(), MarkdownError>
     where
         E: Extension,
     {
@@ -559,8 +637,11 @@ impl Runs<'_> {
                             italic: true,
                             ..format
                         },
-                    );
+                    )?;
                 }
+            }
+            LinkInline::Image(image) => {
+                self.picture(&image.target, &image.alt, image.title.as_deref(), format)?;
             }
             LinkInline::LineBreak(_) => self.line_break(format),
             LinkInline::Strong(strong) => {
@@ -571,12 +652,44 @@ impl Runs<'_> {
                             bold: true,
                             ..format
                         },
-                    );
+                    )?;
                 }
             }
             LinkInline::Text(text) => self.text(&text.value, format),
-            LinkInline::Html(_) | LinkInline::Image(_) | _ => {}
+            LinkInline::Html(_) | _ => {}
         }
+        Ok(())
+    }
+
+    /// A run holding a `w:drawing` of the picture `target` names, `alt` its description and
+    /// `title` its title: an image part named through `r:embed`, beside an SVG part for an SVG, or
+    /// a web address named through `r:link`.
+    fn picture(
+        &mut self,
+        target: &str,
+        alt: &str,
+        title: Option<&str>,
+        format: Format,
+    ) -> Result<(), MarkdownError> {
+        let (blip, size) = match picture::read(self.system, self.base, target)? {
+            Picture::Linked(address) => {
+                let id = self.package.relate_external(
+                    Some(self.main),
+                    &address,
+                    RelationshipType::IMAGE.in_class(ConformanceClass::Transitional),
+                )?;
+                (blip("link", id, None), None)
+            }
+            Picture::Stored { shown, svg } => {
+                let id = self.store(&shown)?;
+                let svg_id = svg.map(|image| self.store(&image)).transpose()?;
+                (blip("embed", id, svg_id), shown.pixel_size())
+            }
+        };
+        self.pictures.count += 1;
+        let drawing = drawing_run(self.pictures.count, alt, title, blip, frame(size));
+        self.run(TextRun::read(&drawing).content, format);
+        Ok(())
     }
 
     /// A run of `content`; inside a link it goes into the hyperlink, styled `Hyperlink` unless it
@@ -595,6 +708,25 @@ impl Runs<'_> {
             run.properties = format.properties();
             self.content.push(ParagraphContent::TextRun(run));
         }
+    }
+
+    /// Store `image` as the next image part, `media/image{n}` beside the main part and related
+    /// from it; returns the relationship id.
+    fn store(&mut self, image: &Image) -> Result<String, PackageError> {
+        self.pictures.parts += 1;
+        let name = PartName::new(&format!(
+            "{}/media/image{}.{}",
+            self.main.directory(),
+            self.pictures.parts,
+            image.format().extension()
+        ))?;
+        self.package
+            .set_part_bytes(&name, image.content_type(), image.bytes())?;
+        self.package.relate(
+            Some(self.main),
+            &name,
+            RelationshipType::IMAGE.in_class(ConformanceClass::Transitional),
+        )
     }
 
     /// One run of `value`: a tab in it is a `w:tab`, a line ending a `w:br`. Empty text writes
@@ -634,22 +766,64 @@ fn anchor(text: &str) -> String {
         .collect()
 }
 
-/// The Word blocks of `body`, its sections from depth 1. Its links and HTML blocks are related
-/// from `main` in `package`, and the numbering part is added when it holds a list.
+/// `a:blip`, naming its image through `r:{reference}`, `r:embed` or `r:link`, of relationship
+/// `id`, and for an SVG the SVG part through the `asvg:svgBlip` extension of relationship `svg`.
+/// The extension is kept as written, so `asvg:svgBlip` declares the prefixes it uses.
+fn blip(reference: &str, id: String, svg: Option<String>) -> Element {
+    let mut blip = element(DRAWING, "a", "blip", &[], Vec::new());
+    blip.attributes.push(Attribute::new(
+        QName::prefixed("r", reference, RELATIONSHIPS),
+        id,
+    ));
+    if let Some(svg_id) = svg {
+        let mut svg_blip = element(SVG, "asvg", "svgBlip", &[], Vec::new());
+        svg_blip.namespace_declarations = alloc::vec![
+            NamespaceDeclaration::new("asvg".to_owned(), SVG.to_owned()),
+            NamespaceDeclaration::new("r".to_owned(), RELATIONSHIPS.to_owned()),
+        ];
+        svg_blip.attributes.push(Attribute::new(
+            QName::prefixed("r", "embed", RELATIONSHIPS),
+            svg_id,
+        ));
+        let extension = element(
+            DRAWING,
+            "a",
+            "ext",
+            &[("uri", SVG_EXTENSION)],
+            alloc::vec![svg_blip],
+        );
+        blip.children.push(Node::Element(element(
+            DRAWING,
+            "a",
+            "extLst",
+            &[],
+            alloc::vec![extension],
+        )));
+    }
+    blip
+}
+
+/// The Word blocks of `body`, its sections from depth 1. Its links, pictures and HTML blocks are
+/// related from `main` in `package`, local pictures read through `system` relative to `base`, and
+/// the numbering part is added when it holds a list.
 ///
 /// # Errors
 ///
-/// The errors of [`Package::relate_external`], [`Package::add_part`] and
+/// The errors of [`picture::read`], [`Package::relate_external`], [`Package::add_part`] and
 /// [`parts::add_numbering`].
-pub fn blocks<E>(
+pub fn blocks<S, E>(
+    system: &S,
+    base: &Path,
     body: &MarkdownBlock<E>,
     package: &mut Package,
     main: &PartName,
-) -> Result<Vec<BlockContent>, PackageError>
+) -> Result<Vec<BlockContent>, MarkdownError>
 where
+    S: System + ?Sized,
     E: Extension,
 {
     let mut writer = Body {
+        base,
         blocks: Vec::new(),
         bookmarks: Bookmarks::default(),
         item: None,
@@ -657,6 +831,8 @@ where
         number: None,
         numbering: None,
         package,
+        pictures: Pictures::default(),
+        system,
     };
     writer.markdown_block(body)?;
     if let Some(starts) = &writer.numbering {
@@ -681,6 +857,72 @@ fn bookmark_name(anchor: &str) -> String {
         .collect()
 }
 
+/// A `w:r` holding the `w:drawing` of picture `number`, counting from 1: an inline picture of
+/// `blip`, in a frame `cx` by `cy` EMU, whose `wp:docPr` holds `alt` as its description and
+/// `title`, when there is one, as its title.
+fn drawing_run(
+    number: usize,
+    alt: &str,
+    title: Option<&str>,
+    blip: Element,
+    (cx, cy): (u64, u64),
+) -> Element {
+    let id = number.to_string();
+    let name = format!("Picture {number}");
+    let (width, height) = (cx.to_string(), cy.to_string());
+    let extent = [("cx", width.as_str()), ("cy", height.as_str())];
+    let mut properties = alloc::vec![("id", id.as_str()), ("name", name.as_str()), ("descr", alt)];
+    properties.extend(title.map(|text| ("title", text)));
+    let inline = element(
+        WORDPROCESSING_DRAWING,
+        "wp",
+        "inline",
+        &[],
+        alloc::vec![
+            element(WORDPROCESSING_DRAWING, "wp", "extent", &extent, Vec::new()),
+            element(
+                WORDPROCESSING_DRAWING,
+                "wp",
+                "docPr",
+                &properties,
+                Vec::new()
+            ),
+            graphic(&id, &name, blip, &extent),
+        ],
+    );
+    element(
+        WORDPROCESSING,
+        "w",
+        "r",
+        &[],
+        alloc::vec![element(
+            WORDPROCESSING,
+            "w",
+            "drawing",
+            &[],
+            alloc::vec![inline]
+        )],
+    )
+}
+
+/// The element `prefix:local` of the namespace `uri`, holding `attributes`, each an unqualified
+/// name and its value, and `children`.
+fn element(
+    uri: &str,
+    prefix: &str,
+    local: &str,
+    attributes: &[(&str, &str)],
+    children: Vec<Element>,
+) -> Element {
+    let mut element = Element::new(QName::prefixed(prefix, local, uri));
+    element.attributes = attributes
+        .iter()
+        .map(|&(name, value)| Attribute::new(QName::unprefixed(name, ""), value.to_owned()))
+        .collect();
+    element.children = children.into_iter().map(Node::Element).collect();
+    element
+}
+
 /// Whether the last of `inlines`, or the last node inside it, is a hard line break.
 fn ends_in_break<E>(inlines: &[Inline<E>]) -> bool
 where
@@ -693,6 +935,103 @@ where
         Inline::Strong(strong) => ends_in_break(&strong.children),
         Inline::Code(_) | Inline::Html(_) | Inline::Image(_) | Inline::Text(_) | _ => false,
     })
+}
+
+/// `a:graphic` holding the `pic:pic` of `blip`, its `pic:cNvPr` of `id` and `name`, stretched
+/// over a rectangle of `extent`, its `cx` and `cy`.
+fn graphic(id: &str, name: &str, blip: Element, extent: &[(&str, &str)]) -> Element {
+    let non_visual = element(
+        PICTURE,
+        "pic",
+        "nvPicPr",
+        &[],
+        alloc::vec![
+            element(
+                PICTURE,
+                "pic",
+                "cNvPr",
+                &[("id", id), ("name", name)],
+                Vec::new()
+            ),
+            element(PICTURE, "pic", "cNvPicPr", &[], Vec::new()),
+        ],
+    );
+    let fill = element(
+        PICTURE,
+        "pic",
+        "blipFill",
+        &[],
+        alloc::vec![
+            blip,
+            element(
+                DRAWING,
+                "a",
+                "stretch",
+                &[],
+                alloc::vec![element(DRAWING, "a", "fillRect", &[], Vec::new())]
+            ),
+        ],
+    );
+    let shape = element(
+        PICTURE,
+        "pic",
+        "spPr",
+        &[],
+        alloc::vec![
+            element(
+                DRAWING,
+                "a",
+                "xfrm",
+                &[],
+                alloc::vec![
+                    element(DRAWING, "a", "off", &[("x", "0"), ("y", "0")], Vec::new()),
+                    element(DRAWING, "a", "ext", extent, Vec::new()),
+                ]
+            ),
+            element(
+                DRAWING,
+                "a",
+                "prstGeom",
+                &[("prst", "rect")],
+                alloc::vec![element(DRAWING, "a", "avLst", &[], Vec::new())]
+            ),
+        ],
+    );
+    let picture = element(
+        PICTURE,
+        "pic",
+        "pic",
+        &[],
+        alloc::vec![non_visual, fill, shape],
+    );
+    element(
+        DRAWING,
+        "a",
+        "graphic",
+        &[],
+        alloc::vec![element(
+            DRAWING,
+            "a",
+            "graphicData",
+            &[("uri", PICTURE)],
+            alloc::vec![picture]
+        )],
+    )
+}
+
+/// The frame of a picture `size` pixels big, `cx` and `cy` in EMU: 9,525 EMU a pixel, scaled
+/// down to [`TEXT_WIDTH`] keeping its proportions when wider; a square [`TEXT_WIDTH`] wide when its
+/// size is not known.
+fn frame(size: Option<PixelSize>) -> (u64, u64) {
+    let Some(pixels) = size else {
+        return (TEXT_WIDTH, TEXT_WIDTH);
+    };
+    let (width, height) = (u64::from(pixels.width), u64::from(pixels.height));
+    if width * EMU_PER_PIXEL > TEXT_WIDTH {
+        (TEXT_WIDTH, height * TEXT_WIDTH / width)
+    } else {
+        (width * EMU_PER_PIXEL, height * EMU_PER_PIXEL)
+    }
 }
 
 /// The text of a heading's `inlines`, without their formatting.

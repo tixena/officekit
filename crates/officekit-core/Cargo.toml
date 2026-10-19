@@ -19,7 +19,7 @@ required-features = ["strict", "transitional"]
 default = ["transitional"]
 transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
 strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
-markdown = ["transitional", "dep:archie-core"]
+markdown = ["transitional", "dep:archie-core", "dep:image-webp", "dep:png", "dep:resvg"]
 
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
@@ -65,6 +65,11 @@ regex = "1"
 
 # Markdown documents as a typed tree
 archie-core = { workspace = true, optional = true }
+
+# Pictures: an SVG rendered to the PNG Word keeps beside it, a WebP decoded to PNG
+image-webp = { workspace = true, optional = true }
+png = { workspace = true, optional = true }
+resvg = { workspace = true, optional = true }
 
 [dev-dependencies]
 # The write-through tests and the timing example walk the typed tree

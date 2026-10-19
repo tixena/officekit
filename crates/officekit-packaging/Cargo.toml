@@ -23,7 +23,7 @@ os-shim = { workspace = true, features = ["zip"] }
 thiserror.workspace = true
 
 # Reads an image's pixel size from its header; no pixel decoding
-imagesize = { version = "0.15", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
+imagesize = "0.15"
 
 [dev-dependencies]
 # The package writer's tests write a typed table through as it is made

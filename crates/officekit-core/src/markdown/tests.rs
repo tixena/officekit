@@ -1,6 +1,6 @@
 use alloc::string::String;
 use alloc::vec::Vec;
-use std::io::ErrorKind;
+use std::io::{Cursor, ErrorKind};
 use std::path::Path;
 
 use archie_core::parser::ast::{
@@ -8,6 +8,9 @@ use archie_core::parser::ast::{
     Paragraph as ArchieParagraph, Section, Table as ArchieTable, TableCell as ArchieTableCell,
     TableFormat, TableRow as ArchieTableRow, Text,
 };
+use base64::Engine as _;
+use base64::engine::general_purpose::STANDARD;
+use image_webp::{ColorType as WebPColor, WebPEncoder};
 use officekit_markup::wordprocessing::{
     BlockContent, ContentCellContent, ContentRowContent, Paragraph, ParagraphContent,
     RunPropertiesContent, StyleDefinition, Table, TableCell, TableRow, TableRowPropertiesContent,
@@ -20,9 +23,11 @@ use officekit_parts::numbering_definitions;
 use officekit_parts::style_definitions::{self, CONTENT_TYPE, RELATIONSHIP_TYPE};
 use officekit_validation::validator::Validator;
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::name::OfficeVersion;
+use officekit_xml::element::Element;
+use officekit_xml::name::{Namespace, OfficeVersion};
 use os_shim::System as _;
 use os_shim::mock::MemorySystem;
+use png::{BitDepth, ColorType, Decoder, Encoder};
 
 use super::{FRONTMATTER_RELATIONSHIP, MarkdownError, MarkdownOptions, from_markdown};
 use crate::docx::Docx;
@@ -57,6 +62,24 @@ const LINK_SAMPLE: &str = "+++\ntitle = \"Q3\"\n+++\n# Q3 results\n\nSee [the da
 /// The sample of the design of lists and tables: an ordered list holding a bullet list, and a
 /// table of a head row and a row, aligned left and right.
 const LIST_SAMPLE: &str = "1. one\n   - inner\n2. two\n\n| Region | Revenue |\n| :----- | ------: |\n| North  | 1,200   |\n";
+
+const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+const PICTURE: &str = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const SVG: &str = "http://schemas.microsoft.com/office/drawing/2016/SVG/main";
+const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+const WORDPROCESSING_DRAWING: &str =
+    "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+
+/// The SVG of the design's sample of pictures: a blue rectangle 120 by 80.
+const DIAGRAM: &str = r##"<svg xmlns="http://www.w3.org/2000/svg" width="120" height="80"><rect width="120" height="80" fill="#2b6cb0"/></svg>"##;
+
+/// [`DIAGRAM`] percent-encoded in a `data:` address.
+const DIAGRAM_ADDRESS: &str = "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%2280%22%3E%3Crect%20width=%22120%22%20height=%2280%22%20fill=%22%232b6cb0%22/%3E%3C/svg%3E";
+
+/// The design's sample of pictures: a PNG 300 by 100, an SVG, a WebP 4 by 3, and a picture on the
+/// web, read from `/n/p.md`.
+const PICTURE_SAMPLE: &str = "![Logo](logo.png) ![Diagram](diagram.svg) ![Team](team.webp) ![Web](https://example.com/a.png)\n";
 
 /// Each block as a line: a paragraph as [`paragraph_line`] writes it; a table as `tbl`, its style,
 /// its width type and its column count, then a line per row, `tr` (`tr header` for a row marked
@@ -494,6 +517,156 @@ fn row_cells(row: &TableRow) -> Vec<TableCell> {
         .collect()
 }
 
+/// The value of the unqualified attribute `local` of `element`, `-` when it has none.
+fn attribute<'tree>(element: &'tree Element, local: &str) -> &'tree str {
+    element.attribute(&Namespace::None, local).unwrap_or("-")
+}
+
+/// Every element of the namespace `uri` named `local` at `element` and below it, in document
+/// order, added to `found`.
+fn descendants<'tree>(
+    element: &'tree Element,
+    uri: &str,
+    local: &str,
+    found: &mut Vec<&'tree Element>,
+) {
+    if element.name.local == local && element.name.namespace == Namespace::from_uri(uri) {
+        found.push(element);
+    }
+    for child in element.child_elements() {
+        descendants(child, uri, local, found);
+    }
+}
+
+/// The first element [`descendants`] finds.
+fn first<'tree>(element: &'tree Element, uri: &str, local: &str) -> Option<&'tree Element> {
+    let mut found = Vec::new();
+    descendants(element, uri, local, &mut found);
+    found.first().copied()
+}
+
+/// A memory filesystem holding `source` at `/n/p.md`, and each of `files`, a name and its bytes,
+/// in `/n`.
+fn picture_notes(source: &str, files: &[(&str, &[u8])]) -> MemorySystem {
+    let system = MemorySystem::new();
+    system.create_dir_all(Path::new("/n")).unwrap();
+    system
+        .write(Path::new("/n/p.md"), source.as_bytes())
+        .unwrap();
+    for &(name, bytes) in files {
+        system.write(&Path::new("/n").join(name), bytes).unwrap();
+    }
+    system
+}
+
+/// The Word document `/n/p.md` of `system` converts to, written and opened again.
+fn picture_docx(system: &MemorySystem) -> Docx {
+    reopened(&from_markdown(system, Path::new("/n/p.md"), MarkdownOptions::default()).unwrap())
+}
+
+/// A picture as its `wp:docPr` id, name, description and title; its frame, `cx` by `cy`; and the
+/// target of each relationship its `a:blip` names, as `embed=` or `link=`, and of its
+/// `asvg:svgBlip`, as `svg=`. Its `pic:cNvPr` must match its `wp:docPr`, and its `a:xfrm` extent
+/// its `wp:extent`.
+fn picture_line(drawing: &Element, relationships: &[Relationship]) -> String {
+    let properties = first(drawing, WORDPROCESSING_DRAWING, "docPr").unwrap();
+    let non_visual = first(drawing, PICTURE, "cNvPr").unwrap();
+    assert_eq!(
+        (attribute(non_visual, "id"), attribute(non_visual, "name")),
+        (attribute(properties, "id"), attribute(properties, "name"))
+    );
+    let extent = first(drawing, WORDPROCESSING_DRAWING, "extent").unwrap();
+    let transform = first(first(drawing, DRAWING, "xfrm").unwrap(), DRAWING, "ext").unwrap();
+    assert_eq!(
+        (attribute(transform, "cx"), attribute(transform, "cy")),
+        (attribute(extent, "cx"), attribute(extent, "cy"))
+    );
+    let relationship = Namespace::from_uri(RELATIONSHIPS);
+    let blip = first(drawing, DRAWING, "blip").unwrap();
+    let named: Vec<String> = blip
+        .attributes
+        .iter()
+        .filter(|named| named.name.namespace == relationship)
+        .map(|named| {
+            format!(
+                "{}={}",
+                named.name.local,
+                target_of(relationships, Some(&named.value))
+            )
+        })
+        .collect();
+    let svg = first(blip, SVG, "svgBlip").map_or_else(String::new, |svg_blip| {
+        format!(
+            " svg={}",
+            target_of(relationships, svg_blip.attribute(&relationship, "embed"))
+        )
+    });
+    format!(
+        "{} {:?} {:?} {:?} {}x{} {}{svg}",
+        attribute(properties, "id"),
+        attribute(properties, "name"),
+        attribute(properties, "descr"),
+        attribute(properties, "title"),
+        attribute(extent, "cx"),
+        attribute(extent, "cy"),
+        named.join(" ")
+    )
+}
+
+/// Each picture of the main document, as [`picture_line`] writes it.
+fn pictures(docx: &Docx) -> Vec<String> {
+    let relationships = main_relationships(docx);
+    let root = docx
+        .package()
+        .tree_at(docx.main_document_part())
+        .unwrap()
+        .root;
+    let mut drawings = Vec::new();
+    descendants(&root, WORDPROCESSING, "drawing", &mut drawings);
+    drawings
+        .iter()
+        .map(|drawing| picture_line(drawing, &relationships))
+        .collect()
+}
+
+/// An opaque grey PNG `width` by `height`.
+fn png_of_size(width: u32, height: u32) -> Vec<u8> {
+    let mut bytes = Vec::new();
+    let mut encoder = Encoder::new(&mut bytes, width, height);
+    encoder.set_color(ColorType::Rgb);
+    encoder.set_depth(BitDepth::Eight);
+    let mut writer = encoder.write_header().unwrap();
+    let samples = alloc::vec![128_u8; usize::try_from(width * height * 3).unwrap()];
+    writer.write_image_data(&samples).unwrap();
+    writer.finish().unwrap();
+    bytes
+}
+
+/// The samples of the PNG `bytes`, with its width, its height and its color type.
+fn png_samples(bytes: &[u8]) -> (u32, u32, ColorType, Vec<u8>) {
+    let mut reader = Decoder::new(Cursor::new(bytes)).read_info().unwrap();
+    let mut samples = alloc::vec![0; reader.output_buffer_size().unwrap()];
+    let info = reader.next_frame(&mut samples).unwrap();
+    samples.truncate(info.buffer_size());
+    (info.width, info.height, info.color_type, samples)
+}
+
+/// Twelve pixels of red, green, blue and alpha, a picture 4 by 3.
+fn team_pixels() -> Vec<u8> {
+    (0..12_u8)
+        .flat_map(|index| [index * 20, 255 - index * 20, index * 7, 128 + index])
+        .collect()
+}
+
+/// `pixels`, red, green, blue and alpha, `width` by `height`, as a lossless WebP.
+fn webp_of(pixels: &[u8], width: u32, height: u32) -> Vec<u8> {
+    let mut bytes = Vec::new();
+    WebPEncoder::new(&mut bytes)
+        .encode(pixels, width, height, WebPColor::Rgba8)
+        .unwrap();
+    bytes
+}
+
 /// The validator's errors for `docx`, for Microsoft 365.
 fn validation_errors(docx: &Docx) -> Vec<String> {
     Validator::new(OfficeVersion::Microsoft365)
@@ -715,9 +888,12 @@ fn a_frontmatter_that_does_not_read_is_passed_over_unless_it_is_to_be_carried() 
 }
 
 #[test]
-fn an_image_is_passed_over_and_its_paragraph_kept() {
-    let docx = converted("![alt](pic.png)\n", MarkdownOptions::default()).unwrap();
-    assert_eq!(outline(&docx), ["-: "]);
+fn a_picture_whose_file_is_missing_fails_the_conversion_naming_its_target() {
+    let failure = converted("![alt](pic.png)\n", MarkdownOptions::default()).unwrap_err();
+    assert!(matches!(
+        failure,
+        MarkdownError::Image { target, error } if target == "pic.png" && !error.is_empty()
+    ));
 }
 
 #[test]
@@ -1145,5 +1321,137 @@ fn the_converted_link_sample_validates() {
         ..MarkdownOptions::default()
     };
     let docx = converted(LINK_SAMPLE, carried).unwrap();
+    assert_eq!(validation_errors(&docx), Vec::<String>::new());
+}
+
+#[test]
+fn the_picture_sample_stores_its_parts_links_the_web_picture_and_sizes_each_frame() {
+    let logo = png_of_size(300, 100);
+    let team = webp_of(&team_pixels(), 4, 3);
+    let system = picture_notes(
+        PICTURE_SAMPLE,
+        &[
+            ("logo.png", &logo),
+            ("diagram.svg", DIAGRAM.as_bytes()),
+            ("team.webp", &team),
+        ],
+    );
+    let docx = picture_docx(&system);
+    assert_eq!(
+        pictures(&docx),
+        [
+            r#"1 "Picture 1" "Logo" "-" 2857500x952500 embed=media/image1.png"#,
+            r#"2 "Picture 2" "Diagram" "-" 1143000x762000 embed=media/image2.png svg=media/image3.svg"#,
+            r#"3 "Picture 3" "Team" "-" 38100x28575 embed=media/image4.png"#,
+            r#"4 "Picture 4" "Web" "-" 5943600x5943600 link=https://example.com/a.png"#,
+        ]
+    );
+    let package = docx.package();
+    let mut media: Vec<(String, String)> = package
+        .part_names()
+        .unwrap()
+        .iter()
+        .filter(|name| name.as_str().starts_with("/word/media/"))
+        .map(|name| {
+            (
+                name.as_str().to_owned(),
+                package.content_type(name).unwrap_or_default().to_owned(),
+            )
+        })
+        .collect();
+    media.sort();
+    assert_eq!(
+        media,
+        [
+            ("/word/media/image1.png".to_owned(), "image/png".to_owned()),
+            ("/word/media/image2.png".to_owned(), "image/png".to_owned()),
+            (
+                "/word/media/image3.svg".to_owned(),
+                "image/svg+xml".to_owned()
+            ),
+            ("/word/media/image4.png".to_owned(), "image/png".to_owned()),
+        ]
+    );
+    let bytes = |path: &str| package.part_bytes(&PartName::new(path).unwrap()).unwrap();
+    assert_eq!(bytes("/word/media/image1.png"), logo);
+    assert_eq!(bytes("/word/media/image3.svg"), DIAGRAM.as_bytes());
+    let (width, height, _, _) = png_samples(&bytes("/word/media/image2.png"));
+    assert_eq!((width, height), (120, 80));
+    assert_eq!(
+        png_samples(&bytes("/word/media/image4.png")),
+        (4, 3, ColorType::Rgba, team_pixels())
+    );
+    let image = RelationshipType::IMAGE.in_class(ConformanceClass::Transitional);
+    let images: Vec<(String, TargetMode)> = main_relationships(&docx)
+        .into_iter()
+        .filter(|relationship| relationship.type_uri == image)
+        .map(|relationship| (relationship.target, relationship.target_mode))
+        .collect();
+    assert_eq!(
+        images,
+        [
+            ("media/image1.png".to_owned(), TargetMode::Internal),
+            ("media/image2.png".to_owned(), TargetMode::Internal),
+            ("media/image3.svg".to_owned(), TargetMode::Internal),
+            ("media/image4.png".to_owned(), TargetMode::Internal),
+            ("https://example.com/a.png".to_owned(), TargetMode::External),
+        ]
+    );
+}
+
+#[test]
+fn a_picture_wider_than_the_text_takes_its_width_and_a_height_scaled_by_the_same_factor() {
+    let wide = png_of_size(1000, 500);
+    let system = picture_notes("![Wide](wide.png)\n", &[("wide.png", &wide)]);
+    assert_eq!(
+        pictures(&picture_docx(&system)),
+        [r#"1 "Picture 1" "Wide" "-" 5943600x2971800 embed=media/image1.png"#]
+    );
+}
+
+#[test]
+fn each_picture_is_numbered_by_its_place_among_the_documents_pictures_and_described_by_its_alt() {
+    let dot = png_of_size(1, 1);
+    let source = "![first](dot.png \"The dot\")\n\n# Next\n\n[![linked](dot.png)](https://example.com/page) ![](https://example.com/b.png)\n";
+    let docx = picture_docx(&picture_notes(source, &[("dot.png", &dot)]));
+    assert_eq!(
+        pictures(&docx),
+        [
+            r#"1 "Picture 1" "first" "The dot" 9525x9525 embed=media/image1.png"#,
+            r#"2 "Picture 2" "linked" "-" 9525x9525 embed=media/image2.png"#,
+            r#"3 "Picture 3" "" "-" 5943600x5943600 link=https://example.com/b.png"#,
+        ]
+    );
+    let content = docx.main_document().unwrap().body.unwrap().content;
+    let in_link = content.iter().any(|block| {
+        matches!(block, BlockContent::Paragraph(paragraph) if paragraph.content.iter().any(|item| {
+            matches!(item, ParagraphContent::Hyperlink(hyperlink) if hyperlink.content.iter().any(|inner| {
+                matches!(inner, ParagraphContent::TextRun(run) if run.content.iter().any(|piece| {
+                    matches!(piece, TextRunContent::DrawingMLObject(_))
+                }))
+            }))
+        }))
+    });
+    assert!(in_link);
+}
+
+#[test]
+fn a_converted_document_with_each_kind_of_picture_validates() {
+    let logo = png_of_size(300, 100);
+    let team = webp_of(&team_pixels(), 4, 3);
+    let source = format!(
+        "{PICTURE_SAMPLE}\n![d](data:image/png;base64,{}) ![s]({DIAGRAM_ADDRESS})\n\n[![l](logo.png)](https://example.com)\n",
+        STANDARD.encode(&logo)
+    );
+    let system = picture_notes(
+        &source,
+        &[
+            ("logo.png", &logo),
+            ("diagram.svg", DIAGRAM.as_bytes()),
+            ("team.webp", &team),
+        ],
+    );
+    let docx = from_markdown(&system, Path::new("/n/p.md"), MarkdownOptions::default()).unwrap();
+    assert_eq!(pictures(&docx).len(), 7);
     assert_eq!(validation_errors(&docx), Vec::<String>::new());
 }

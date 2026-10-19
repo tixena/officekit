@@ -35,6 +35,11 @@ os-shim = { git = "https://github.com/tixena/os-shim.git" }
 # Markdown documents as a typed tree
 archie-core = { git = "https://github.com/tixena/archie.git" }
 
+# Pictures in markdown: an SVG rendered to PNG, a WebP decoded to PNG
+image-webp = "0.2.4"
+png = "0.18.1"
+resvg = { version = "0.48.1", default-features = false, features = ["raster-images"] }
+
 # Test-only: builds zip archives whose entries carry data descriptors, as
 # files from streaming exporters do. Packages themselves go through os-shim's
 # zip feature. Feature selection matches os-shim's so both resolve to one

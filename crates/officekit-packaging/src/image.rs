@@ -3,6 +3,18 @@
 #[cfg(test)]
 mod tests;
 
+use imagesize::ImageType;
+
+/// The header types [`Image::from_bytes`] reads, each with the format it names. A table, not a
+/// match: the variants `ImageType` has depend on the imagesize features the whole build turns on.
+const HEADER_FORMATS: [(ImageType, ImageFormat); 5] = [
+    (ImageType::Bmp, ImageFormat::Bmp),
+    (ImageType::Gif, ImageFormat::Gif),
+    (ImageType::Jpeg, ImageFormat::Jpeg),
+    (ImageType::Png, ImageFormat::Png),
+    (ImageType::Tiff, ImageFormat::Tiff),
+];
+
 /// An image part's format and bytes.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Image {
@@ -123,13 +135,12 @@ impl Image {
         let Ok(image_type) = imagesize::image_type(&bytes) else {
             return Err(ImageError::UnknownHeader);
         };
-        let format = match image_type {
-            imagesize::ImageType::Bmp => ImageFormat::Bmp,
-            imagesize::ImageType::Gif => ImageFormat::Gif,
-            imagesize::ImageType::Jpeg => ImageFormat::Jpeg,
-            imagesize::ImageType::Png => ImageFormat::Png,
-            imagesize::ImageType::Tiff => ImageFormat::Tiff,
-            _ => return Err(ImageError::UnknownHeader),
+        let Some(format) = HEADER_FORMATS
+            .iter()
+            .find(|(header, _)| *header == image_type)
+            .map(|(_, format)| format.clone())
+        else {
+            return Err(ImageError::UnknownHeader);
         };
         Ok(Self { bytes, format })
     }
