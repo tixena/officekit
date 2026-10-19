@@ -9,6 +9,14 @@
 //! - [`embedded`]: a `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
 //! - [`compact`]: the merge of neighbouring runs that render the same.
 //! - [`folder`]: a `.docx` as a folder of its parts, and back.
+#![cfg_attr(
+    feature = "markdown",
+    doc = "- [`markdown`]: a Word document from an archie document, and back, with the feature `markdown`."
+)]
+#![cfg_attr(
+    not(feature = "markdown"),
+    doc = "- `markdown`: a Word document from an archie document, and back, with the feature `markdown`."
+)]
 //!
 //! Every byte that reaches or leaves the operating system does so through an
 //! [`os_shim::System`], so callers choose between the real filesystem and an in-memory one, and
@@ -21,6 +29,8 @@ pub mod docx;
 pub mod embedded;
 mod file;
 pub mod folder;
+#[cfg(feature = "markdown")]
+pub mod markdown;
 mod new_parts;
 pub mod pptx;
 pub mod xlsx;

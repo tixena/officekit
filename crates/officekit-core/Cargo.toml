@@ -19,6 +19,7 @@ required-features = ["strict", "transitional"]
 default = ["transitional"]
 transitional = ["officekit-parts/transitional", "dep:officekit-transitional"]
 strict = ["officekit-parts/strict", "dep:officekit-strict", "dep:officekit-traversal"]
+markdown = ["transitional", "dep:archie-core"]
 
 [dependencies]
 # The XML layer: element tree, names, values, markup compatibility, part reader and writer
@@ -61,6 +62,9 @@ base64 = "0.22"
 
 # Cleans a folder name
 regex = "1"
+
+# Markdown documents as a typed tree
+archie-core = { workspace = true, optional = true }
 
 [dev-dependencies]
 # The write-through tests and the timing example walk the typed tree

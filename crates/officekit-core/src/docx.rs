@@ -11,6 +11,10 @@ mod tests;
 
 use std::path::Path;
 
+#[cfg(feature = "markdown")]
+use archie_core::parser::ast::Document as ArchieDocument;
+#[cfg(feature = "markdown")]
+use archie_core::parser::extension::Extension;
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentProtectionTypesMember, DocumentSettings, Footer, Header,
     HeaderOrFooterTypeMember, TextRun,
@@ -30,6 +34,8 @@ use os_shim::System;
 
 use crate::compact::{self, Comments};
 use crate::file;
+#[cfg(feature = "markdown")]
+use crate::markdown::{self, MarkdownError, MarkdownOptions};
 use crate::new_parts;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
@@ -138,6 +144,26 @@ impl Docx {
     pub fn footers(&self) -> Result<Vec<RelatedPart>, PackageError> {
         self.package
             .related_by_type(Some(&self.main), &RelationshipType::FOOTER)
+    }
+
+    /// A new Word document holding `document`. Local picture targets are read through `system`,
+    /// relative to `base`.
+    ///
+    /// # Errors
+    ///
+    /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
+    #[cfg(feature = "markdown")]
+    pub fn from_archie<S, E>(
+        system: &S,
+        base: &Path,
+        document: &ArchieDocument<E>,
+        options: MarkdownOptions,
+    ) -> Result<Self, MarkdownError>
+    where
+        S: System + ?Sized,
+        E: Extension,
+    {
+        markdown::from_archie(system, base, document, options)
     }
 
     /// The file whose bytes are `bytes`.

@@ -32,6 +32,9 @@ serde_json = "1.0"
 # no crate in this workspace calls std::fs or std::env directly.
 os-shim = { git = "https://github.com/tixena/os-shim.git" }
 
+# Markdown documents as a typed tree
+archie-core = { git = "https://github.com/tixena/archie.git" }
+
 # Test-only: builds zip archives whose entries carry data descriptors, as
 # files from streaming exporters do. Packages themselves go through os-shim's
 # zip feature. Feature selection matches os-shim's so both resolve to one
