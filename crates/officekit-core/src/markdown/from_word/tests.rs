@@ -981,6 +981,35 @@ fn a_table_with_a_head_row_and_one_line_cells_is_a_pipe_table_aligned_by_its_fir
 }
 
 #[test]
+fn a_table_with_two_head_rows_or_a_one_line_code_cell_is_a_grid_table() {
+    let two_heads = [
+        table_row(true, &[table_cell("", "h1")]),
+        table_row(true, &[table_cell("", "h2")]),
+        table_row(false, &[table_cell("", "a")]),
+    ];
+    let code = r#"<w:tc><w:p><w:pPr><w:pStyle w:val="HTMLPreformatted"/></w:pPr><w:r><w:t>let a = 1;</w:t></w:r></w:p></w:tc>"#;
+    let code_cell = [
+        table_row(true, &[table_cell("", "h")]),
+        table_row(false, &[code.to_owned()]),
+    ];
+    let docx = word(&[table(&two_heads), table(&code_cell)].concat());
+    let formats: Vec<TableFormat> = archie(&docx)
+        .body
+        .sections
+        .iter()
+        .flat_map(|section| &section.blocks)
+        .filter_map(|block| {
+            if let Block::Table(table) = block {
+                Some(table.format)
+            } else {
+                None
+            }
+        })
+        .collect();
+    assert_eq!(formats, [TableFormat::Grid, TableFormat::Grid]);
+}
+
+#[test]
 fn a_table_with_no_head_row_or_with_a_cell_of_two_paragraphs_is_a_grid_table() {
     let two = "<w:tc><w:p><w:r><w:t>x</w:t></w:r></w:p><w:p><w:r><w:t>y</w:t></w:r></w:p></w:tc>";
     let rows = [

@@ -13,10 +13,11 @@ use core::{iter, mem, ptr};
 use archie_core::parser::ast::{
     Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArchieDocument, Emphasis,
     Heading, Html, Image, Inline, Item, Line, LineBreak, Link, LinkEmphasis, LinkForm, LinkInline,
-    LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArchieParagraph, Section, Strong,
-    Table as ArchieTable, TableCell as ArchieTableCell, TableFormat, TableRow as ArchieTableRow,
-    Text, ThematicBreak,
+    LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArchieParagraph, RawDocument, Section,
+    Strong, Table as ArchieTable, TableCell as ArchieTableCell, TableFormat,
+    TableRow as ArchieTableRow, Text, ThematicBreak,
 };
+use archie_core::writer::{self, WriteOptions};
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit_markup::wordprocessing::{
@@ -1585,8 +1586,8 @@ impl Walk<'_> {
     }
 
     /// A table: its rows marked `w:tblHeader` as head rows, each column aligned by its first
-    /// row's cell, every row one cell per column, in grid form when it has no head rows or a cell
-    /// holds more than one paragraph, a list, a line break or a table.
+    /// row's cell, every row one cell per column, in pipe form when it has one head row and archie
+    /// writes every cell on one line, in grid form otherwise.
     fn table(&mut self, table: &Table) -> Result<(), PackageError> {
         let mut rows = Vec::new();
         table_rows(&table.content_row_content, &mut rows);
@@ -1606,15 +1607,15 @@ impl Walk<'_> {
             return Ok(());
         }
         alignments.resize(width, Alignment::Default);
-        let rich = head
+        let one_line = head
             .iter()
             .chain(&body)
             .flatten()
-            .any(|cell| is_rich(&cell.body));
-        let format = if head.is_empty() || rich {
-            TableFormat::Grid
-        } else {
+            .all(|cell| is_one_line(&cell.body));
+        let format = if head.len() == 1 && one_line {
             TableFormat::Pipe
+        } else {
+            TableFormat::Grid
         };
         let padded = |mut cells: Vec<ArchieTableCell>| {
             cells.resize_with(width, empty_cell);
@@ -2084,28 +2085,12 @@ fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
     element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
 }
 
-/// Whether a cell of `body` holds more than one paragraph, a list, a line break or a table.
-fn is_rich(body: &MarkdownBlock) -> bool {
-    let mut paragraphs = 0_usize;
-    let mut sections: Vec<&Section> = body.sections.iter().collect();
-    while let Some(section) = sections.pop() {
-        paragraphs += usize::from(section.heading.is_some());
-        for block in &section.blocks {
-            let rich = match block {
-                Block::BlockQuote(quote) => quote.value.contains('\n'),
-                Block::CodeBlock(code) => code.value.contains('\n'),
-                Block::List(_) | Block::Table(_) => true,
-                Block::Paragraph(paragraph) => paragraph.lines.len() > 1,
-                Block::Html(_) | Block::ThematicBreak(_) | _ => false,
-            };
-            if rich {
-                return true;
-            }
-            paragraphs += 1;
-        }
-        sections.extend(&section.subsections);
-    }
-    paragraphs > 1
+/// Whether archie writes `body`, a table cell's content, on one line; a cell archie cannot write
+/// is not.
+fn is_one_line(body: &MarkdownBlock) -> bool {
+    let document = RawDocument::Valid(ArchieDocument::new(body.clone(), None));
+    writer::write(&document, &WriteOptions::default())
+        .is_ok_and(|text| !text.trim_end_matches('\n').contains('\n'))
 }
 
 /// Whether a paragraph of `properties` has a bottom border and no other.
