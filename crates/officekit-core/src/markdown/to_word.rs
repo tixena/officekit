@@ -2,7 +2,7 @@
 //! pictures.
 
 use alloc::boxed::Box;
-use alloc::collections::BTreeSet;
+use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem};
@@ -496,6 +496,18 @@ struct Pictures {
     /// The image parts stored so far: the next one is `media/image{n}`, `n` one more, whatever its
     /// extension.
     parts: usize,
+    /// Each stored picture's target, as written, with the ids of its image part and of its SVG
+    /// part and its frame size, so a later picture of the same target reuses them.
+    stored: BTreeMap<String, Stored>,
+}
+
+/// The parts one stored picture took: the ids `a:blip r:embed` and `asvg:svgBlip r:embed` name,
+/// and the frame size.
+#[derive(Clone)]
+struct Stored {
+    id: String,
+    size: Option<(u32, u32)>,
+    svg_id: Option<String>,
 }
 
 /// The runs of one paragraph, written so far, and the package its links and pictures are related
@@ -723,7 +735,8 @@ where
 
     /// A run holding a `w:drawing` of the picture `target` names, `alt` its description and
     /// `title` its title: an image part named through `r:embed`, beside an SVG part for an SVG, or
-    /// a web address named through `r:link`.
+    /// a web address named through `r:link`; a stored picture whose target an earlier one had
+    /// reuses its parts.
     fn picture(
         &mut self,
         target: &str,
@@ -731,21 +744,7 @@ where
         title: Option<&str>,
         format: Format,
     ) -> Result<(), MarkdownError> {
-        let (blip, size) = match picture::read(self.system, self.base, target)? {
-            Picture::Linked(address) => {
-                let id = self.package.relate_external(
-                    Some(self.main),
-                    &address,
-                    RelationshipType::IMAGE.in_class(ConformanceClass::Transitional),
-                )?;
-                (blip("link", id, None), None)
-            }
-            Picture::Stored { shown, size, svg } => {
-                let id = self.store(&shown)?;
-                let svg_id = svg.map(|image| self.store(&image)).transpose()?;
-                (blip("embed", id, svg_id), size)
-            }
-        };
+        let (blip, size) = self.stored_picture(target)?;
         self.pictures.count += 1;
         let drawing = drawing_run(self.pictures.count, alt, title, blip, frame(size));
         self.run(TextRun::read(&drawing).content, format);
@@ -787,6 +786,40 @@ where
             &name,
             RelationshipType::IMAGE.in_class(ConformanceClass::Transitional),
         )
+    }
+
+    /// The `a:blip` of the picture `target` names and its frame size; a target stored before
+    /// reads no file and stores no part.
+    fn stored_picture(
+        &mut self,
+        target: &str,
+    ) -> Result<(Element, Option<(u32, u32)>), MarkdownError> {
+        if let Some(known) = self.pictures.stored.get(target).cloned() {
+            return Ok((blip("embed", known.id, known.svg_id), known.size));
+        }
+        Ok(match picture::read(self.system, self.base, target)? {
+            Picture::Linked(address) => {
+                let id = self.package.relate_external(
+                    Some(self.main),
+                    &address,
+                    RelationshipType::IMAGE.in_class(ConformanceClass::Transitional),
+                )?;
+                (blip("link", id, None), None)
+            }
+            Picture::Stored { shown, size, svg } => {
+                let id = self.store(&shown)?;
+                let svg_id = svg.map(|image| self.store(&image)).transpose()?;
+                self.pictures.stored.insert(
+                    target.to_owned(),
+                    Stored {
+                        id: id.clone(),
+                        size,
+                        svg_id: svg_id.clone(),
+                    },
+                );
+                (blip("embed", id, svg_id), size)
+            }
+        })
     }
 
     /// One run of `value`: a tab in it is a `w:tab`, a line ending a `w:br`. Empty text writes

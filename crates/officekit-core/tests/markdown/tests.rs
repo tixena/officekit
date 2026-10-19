@@ -239,16 +239,14 @@ fn word_file() -> Docx {
         numbering_definitions::RELATIONSHIP_TYPE.transitional,
         NUMBERING.as_bytes(),
     );
-    let [logo, image] = ["image1", "image2"].map(|name| {
-        add_part(
-            &mut docx,
-            &main,
-            &format!("/word/media/{name}.png"),
-            "image/png",
-            RelationshipType::IMAGE.transitional,
-            &tiny_png(),
-        )
-    });
+    let picture = add_part(
+        &mut docx,
+        &main,
+        "/word/media/image1.png",
+        "image/png",
+        RelationshipType::IMAGE.transitional,
+        &tiny_png(),
+    );
     let chunk = add_part(
         &mut docx,
         &main,
@@ -277,7 +275,7 @@ fn word_file() -> Docx {
         .relate(None, &frontmatter, FRONTMATTER_RELATIONSHIP)
         .unwrap();
 
-    let body = word_body(&outer, &logo, &image, &chunk);
+    let body = word_body(&outer, &picture, &picture, &chunk);
     let document = format!("<w:document {NAMESPACES}><w:body>{body}</w:body></w:document>");
     docx.package_mut()
         .set_part_bytes(&main, &content_type, document.as_bytes())
@@ -399,7 +397,7 @@ fn word_converted_to_markdown_and_back_gives_the_same_markdown_twice() {
     let first = system.read_to_string(Path::new("/n/one/doc.md")).unwrap();
     assert_eq!(
         first,
-        "---\ntitle: Quarterly report\n---\n# Results\n\n## Notes\n\nPlain **bold** *italic* ***both*** `code`\ttabbed\\\nwrapped\n\n[the dashboard](https://example.com/q3 \"Tip\"), [below](#notes), [site](https://example.com/site), [Q3](#q3-results), [part](https://x.example#part_two)\n\n![Logo](doc_media/image1.png)\n\n![Chart](doc_media/image2.png)\n\n- North\n\n  - Inner\n\n- South\n\n  More about South\n\n3. three\n4. four\n\n```\nfirst\nsecond\n```\n\n> Quoted\n\n***\n\n+-----+-----+\n| a   | b   |\n+-----+-----+\n| c   | e   |\n|     |     |\n| d   |     |\n+-----+-----+\n\n| A   | B   |\n| --- | --- |\n| 1   | 2   |\n\n<div>Imported</div>\n\nBoxed\n"
+        "---\ntitle: Quarterly report\n---\n# Results\n\n## Notes\n\nPlain **bold** *italic* ***both*** `code`\ttabbed\\\nwrapped\n\n[the dashboard](https://example.com/q3 \"Tip\"), [below](#notes), [site](https://example.com/site), [Q3](#q3-results), [part](https://x.example#part_two)\n\n![Logo](doc_media/image1.png)\n\n![Chart](doc_media/image1.png)\n\n- North\n\n  - Inner\n\n- South\n\n  More about South\n\n3. three\n4. four\n\n```\nfirst\nsecond\n```\n\n> Quoted\n\n***\n\n+-----+-----+\n| a   | b   |\n+-----+-----+\n| c   | e   |\n|     |     |\n| d   |     |\n+-----+-----+\n\n| A   | B   |\n| --- | --- |\n| 1   | 2   |\n\n<div>Imported</div>\n\nBoxed\n"
     );
 
     let again = markdown::from_markdown(&system, Path::new("/n/one/doc.md"), options).unwrap();
@@ -409,10 +407,15 @@ fn word_converted_to_markdown_and_back_gives_the_same_markdown_twice() {
         system.read_to_string(Path::new("/n/two/doc.md")).unwrap(),
         first
     );
-    for name in ["image1", "image2"] {
+    for folder in ["one", "two"] {
         assert_eq!(
-            read_bytes(&system, &format!("/n/two/doc_media/{name}.png")),
+            read_bytes(&system, &format!("/n/{folder}/doc_media/image1.png")),
             tiny_png()
+        );
+        assert!(
+            !system
+                .exists(Path::new(&format!("/n/{folder}/doc_media/image2.png")))
+                .unwrap()
         );
     }
 }

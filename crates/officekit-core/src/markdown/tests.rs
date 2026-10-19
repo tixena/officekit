@@ -1496,7 +1496,7 @@ fn each_picture_is_numbered_by_its_place_among_the_documents_pictures_and_descri
         pictures(&docx),
         [
             r#"1 "Picture 1" "first" "The dot" 9525x9525 embed=media/image1.png"#,
-            r#"2 "Picture 2" "linked" "-" 9525x9525 embed=media/image2.png"#,
+            r#"2 "Picture 2" "linked" "-" 9525x9525 embed=media/image1.png"#,
             r#"3 "Picture 3" "" "-" 5943600x5943600 link=https://example.com/b.png"#,
         ]
     );
@@ -1511,6 +1511,40 @@ fn each_picture_is_numbered_by_its_place_among_the_documents_pictures_and_descri
         }))
     });
     assert!(in_link);
+}
+
+#[test]
+fn two_pictures_of_one_file_share_one_image_part() {
+    let dot = png_of_size(1, 1);
+    let system = picture_notes(
+        "![a](dot.png)\n\n![b](dot.png)\n\n![c](other.png)\n",
+        &[("dot.png", &dot), ("other.png", &dot)],
+    );
+    let docx = picture_docx(&system);
+    assert_eq!(
+        pictures(&docx),
+        [
+            r#"1 "Picture 1" "a" "-" 9525x9525 embed=media/image1.png"#,
+            r#"2 "Picture 2" "b" "-" 9525x9525 embed=media/image1.png"#,
+            r#"3 "Picture 3" "c" "-" 9525x9525 embed=media/image2.png"#,
+        ]
+    );
+}
+
+#[test]
+fn two_pictures_of_one_svg_share_one_png_part_and_one_svg_part() {
+    let system = picture_notes(
+        "![a](diagram.svg)\n\n![b](diagram.svg)\n",
+        &[("diagram.svg", DIAGRAM.as_bytes())],
+    );
+    let docx = picture_docx(&system);
+    assert_eq!(
+        pictures(&docx),
+        [
+            r#"1 "Picture 1" "a" "-" 1143000x762000 embed=media/image1.png svg=media/image2.svg"#,
+            r#"2 "Picture 2" "b" "-" 1143000x762000 embed=media/image1.png svg=media/image2.svg"#,
+        ]
+    );
 }
 
 #[test]
