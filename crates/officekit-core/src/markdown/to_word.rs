@@ -615,8 +615,12 @@ where
             }
         };
         self.link = Some(hyperlink);
-        for child in &link.children {
-            self.link_inline(child, format)?;
+        if link.children.is_empty() {
+            self.text(&link.target, format);
+        } else {
+            for child in &link.children {
+                self.link_inline(child, format)?;
+            }
         }
         if !matches!(link.continues, Continues::Next | Continues::Both) {
             self.content
@@ -854,10 +858,12 @@ where
     Ok(writer.blocks)
 }
 
-/// The bookmark name `anchor` gives: each character but a letter, a digit or `_` written `_`,
-/// cut to [`BOOKMARK_LENGTH`] characters.
+/// The bookmark name `anchor` gives: each character but a letter, a digit or `_` written `_`;
+/// `_` in front when it would start with anything but a letter, `_heading` when it is empty; at
+/// most [`BOOKMARK_LENGTH`] characters. Word takes only a name starting with a letter, and a
+/// leading `_` makes a hidden bookmark.
 fn bookmark_name(anchor: &str) -> String {
-    anchor
+    let kept: String = anchor
         .chars()
         .map(|character| {
             if character.is_alphanumeric() || character == '_' {
@@ -866,8 +872,13 @@ fn bookmark_name(anchor: &str) -> String {
                 '_'
             }
         })
-        .take(BOOKMARK_LENGTH)
-        .collect()
+        .collect();
+    let named = match kept.chars().next() {
+        None => String::from("_heading"),
+        Some(first) if first.is_alphabetic() || first == '_' => kept,
+        Some(_) => format!("_{kept}"),
+    };
+    named.chars().take(BOOKMARK_LENGTH).collect()
 }
 
 /// A `w:r` holding the `w:drawing` of picture `number`, counting from 1: an inline picture of

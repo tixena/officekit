@@ -1533,3 +1533,32 @@ fn a_converted_document_with_each_kind_of_picture_validates() {
     assert_eq!(pictures(&docx).len(), 7);
     assert_eq!(validation_errors(&docx), Vec::<String>::new());
 }
+
+#[test]
+fn a_link_with_no_text_shows_its_target() {
+    let docx = converted(
+        "[[Other page]] and [](https://example.com)\n",
+        MarkdownOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        outline(&docx),
+        [
+            "-: <Other page>Hyperlink:Other page</>| and |<https://example.com>Hyperlink:https://example.com</>"
+        ]
+    );
+}
+
+#[test]
+fn a_bookmark_name_starts_with_a_letter_or_an_underscore() {
+    let docx = converted(
+        "# 2024 plan\n\n# !!!\n\n# ???\n\n[x](#2024-plan)\n",
+        MarkdownOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        bookmarks(&docx),
+        ["0 _2024_plan", "1 _heading", "2 _heading_1"]
+    );
+    assert!(outline(&docx).contains(&"-: <#_2024_plan>Hyperlink:x</>".to_owned()));
+}
