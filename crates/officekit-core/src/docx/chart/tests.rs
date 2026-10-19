@@ -153,7 +153,7 @@ fn report_series() -> String {
 #[test]
 fn two_rows_written_give_the_ranges_and_caches_of_the_last_row_holding_a_value() {
     let text = refreshed(&report_series(), TWO_ROWS, ChartRanges::ToLastRow);
-    assert!(text.contains("<c:f>Sheet1!$A$2:$A$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt></c:numCache>"), "{text}");
+    assert!(text.contains("<c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt></c:strCache>"), "{text}");
     assert!(text.contains("<c:f>Sheet1!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt><c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
     assert!(text.contains("<c:f>Sheet1!$B$1</c:f><c:strCache><c:ptCount val=\"1\"/><c:pt idx=\"0\"><c:v>Alertas Recibidas</c:v></c:pt></c:strCache>"), "{text}");
     assert!(text.contains("<c:f>Sheet1!$C$2:$C$2</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"1\"/></c:numCache>"), "{text}");
@@ -190,7 +190,7 @@ fn a_range_never_ends_above_its_first_row() {
 fn a_range_of_several_columns_keeps_its_formula_and_counts_row_by_row() {
     let series = reference("val", "Sheet1!$A$2:$B$3", EMPTY_CACHE);
     let text = refreshed(&series, TWO_ROWS, ChartRanges::ToLastRow);
-    assert!(text.contains("<c:f>Sheet1!$A$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>12</c:v></c:pt><c:pt idx=\"2\"><c:v>Week 2</c:v></c:pt><c:pt idx=\"3\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
+    assert!(text.contains("<c:f>Sheet1!$A$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"1\"><c:v>12</c:v></c:pt><c:pt idx=\"3\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
 }
 
 #[cfg(feature = "transitional")]
@@ -202,7 +202,8 @@ fn a_quoted_sheet_name_finds_its_sheet_and_is_written_back_as_quoted() {
         reference("cat", "'Q1 data'!B2", EMPTY_CACHE)
     );
     let text = refreshed(&series, TWO_ROWS, ChartRanges::ToLastRow);
-    assert!(text.contains("<c:f>'Q1 data'!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>7</c:v></c:pt><c:pt idx=\"1\"><c:v>Quarter</c:v></c:pt>"), "{text}");
+    assert!(text.contains("<c:f>'Q1 data'!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>7</c:v></c:pt></c:numCache>"), "{text}");
+    assert!(text.contains("<c:cat><c:strRef><c:f>'Q1 data'!$B$2:$B$3</c:f><c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>7</c:v></c:pt><c:pt idx=\"1\"><c:v>Quarter</c:v></c:pt></c:strCache>"), "{text}");
 }
 
 #[cfg(feature = "transitional")]
@@ -302,4 +303,49 @@ fn cell_references_convert_columns_with_or_without_dollars() {
     assert_eq!(column_letters(26), "Z");
     assert_eq!(column_letters(27), "AA");
     assert_eq!(column_letters(0x4000), "XFD");
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_text_category_range_becomes_a_text_reference_with_a_text_cache() {
+    let series = format!(
+        "<c:cat><c:numRef><c:f>Sheet1!$A$2:$A$3</c:f>{EMPTY_CACHE}<c:extLst><c:ext/></c:extLst></c:numRef></c:cat><c:xVal><c:numRef><c:f>Sheet1!$A$2:$A$3</c:f>{EMPTY_CACHE}</c:numRef></c:xVal>"
+    );
+    let text = refreshed(&series, TWO_ROWS, ChartRanges::AsWritten);
+    assert!(text.contains("<c:cat><c:strRef><c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt></c:strCache><c:extLst><c:ext/></c:extLst></c:strRef></c:cat>"), "{text}");
+    assert!(
+        text.contains(
+            "<c:xVal><c:strRef><c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"2\"/>"
+        ),
+        "{text}"
+    );
+    assert!(
+        !text.contains("numRef") && !text.contains("numCache"),
+        "{text}"
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_number_category_range_stays_a_number_reference_with_a_number_cache() {
+    let series = reference("cat", "Sheet1!$B$2:$B$3", EMPTY_CACHE);
+    let text = refreshed(&series, TWO_ROWS, ChartRanges::AsWritten);
+    assert!(text.contains("<c:cat><c:numRef><c:f>Sheet1!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt><c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache></c:numRef></c:cat>"), "{text}");
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_value_cell_that_is_text_gets_no_point_but_counts_in_the_area() {
+    let series = reference("val", "Sheet1!$A$2:$B$3", EMPTY_CACHE);
+    let text = refreshed(&series, TWO_ROWS, ChartRanges::AsWritten);
+    assert!(text.contains("<c:numRef><c:f>Sheet1!$A$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"1\"><c:v>12</c:v></c:pt><c:pt idx=\"3\"><c:v>18</c:v></c:pt></c:numCache>"), "{text}");
+    assert!(!text.contains("Week"), "{text}");
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn the_report_chart_over_text_categories_refreshes_to_text_categories_and_number_values() {
+    let text = refreshed(&report_series(), TWO_ROWS, ChartRanges::ToLastRow);
+    assert!(text.contains("<c:cat><c:strRef><c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt></c:strCache></c:strRef></c:cat>"), "{text}");
+    assert!(text.contains("<c:val><c:numRef><c:f>Sheet1!$B$2:$B$3</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt><c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache></c:numRef></c:val>"), "{text}");
 }

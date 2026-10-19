@@ -215,12 +215,13 @@ fn walk(
     workbook: &mut Workbook,
     ranges: ChartRanges,
 ) -> Result<(), PackageError> {
+    let text_allowed = is(element, "cat") || is(element, "xVal");
     for node in &mut element.children {
         let Node::Element(child) = node else {
             continue;
         };
         if is(child, "strRef") || is(child, "numRef") {
-            refresh_reference(child, data, workbook, ranges)?;
+            refresh_reference(child, (data, text_allowed), workbook, ranges)?;
         } else {
             let inner =
                 (data || DATA_REFERENCES.iter().any(|local| is(child, local))) && !is(child, "tx");
@@ -232,7 +233,7 @@ fn walk(
 
 fn refresh_reference(
     reference: &mut Element,
-    data: bool,
+    (data, text_allowed): (bool, bool),
     workbook: &mut Workbook,
     ranges: ChartRanges,
 ) -> Result<(), PackageError> {
@@ -259,7 +260,7 @@ fn refresh_reference(
     }
     let width = u64::from(area.last_column - area.first_column + 1);
     let count = width * u64::from(area.last_row - area.first_row + 1);
-    let points: Vec<(u64, &String)> = cells
+    let mut points: Vec<(u64, &String)> = cells
         .range((area.first_row, area.first_column)..=(area.last_row, area.last_column))
         .filter(|((_, column), _)| (area.first_column..=area.last_column).contains(column))
         .map(|((row, column), text)| {
@@ -268,11 +269,14 @@ fn refresh_reference(
             (index, text)
         })
         .collect();
-    let cache_local = if is(reference, "numRef") {
-        "numCache"
-    } else {
-        "strCache"
-    };
+    if is(reference, "numRef") && text_allowed && !all_numbers(&points) {
+        to_string_reference(reference);
+    }
+    let numbers_only = is(reference, "numRef");
+    if numbers_only {
+        points.retain(|(_, text)| is_number(text));
+    }
+    let cache_local = if numbers_only { "numCache" } else { "strCache" };
     let prefix = reference.name.prefix.clone();
     let cache_at = position(reference, cache_local).unwrap_or_else(|| {
         let at = formula_at + 1;
@@ -286,6 +290,33 @@ fn refresh_reference(
         fill_cache(cache, &prefix, count, &points);
     }
     Ok(())
+}
+
+fn is_number(text: &str) -> bool {
+    text.trim().parse::<f64>().is_ok_and(f64::is_finite)
+}
+
+/// Whether every cell text of `points` is a number, as `c:numCache` takes it.
+fn all_numbers(points: &[(u64, &String)]) -> bool {
+    points.iter().all(|(_, text)| is_number(text))
+}
+
+/// `c:numRef` becomes `c:strRef` and its `c:numCache` a `c:strCache`, which has no `c:formatCode`.
+fn to_string_reference(reference: &mut Element) {
+    "strRef".clone_into(&mut reference.name.local);
+    reference
+        .children
+        .retain(|node| !matches!(node, Node::Element(child) if is(child, "strCache")));
+    for node in &mut reference.children {
+        if let Node::Element(cache) = node
+            && is(cache, "numCache")
+        {
+            "strCache".clone_into(&mut cache.name.local);
+            cache
+                .children
+                .retain(|inner| !matches!(inner, Node::Element(child) if is(child, "formatCode")));
+        }
+    }
 }
 
 /// `c:ptCount` set to the cells in the area and every `c:pt` replaced, in the schema's place:
