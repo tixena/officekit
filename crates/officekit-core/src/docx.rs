@@ -151,7 +151,8 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
+    /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null,
+    /// and [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
     #[cfg(feature = "markdown")]
     pub fn from_archie<S, E>(
         system: &S,

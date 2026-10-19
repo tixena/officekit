@@ -1,5 +1,5 @@
-//! The styles part every converted document gets: Word's built-in styles, by their built-in ids
-//! and names.
+//! The styles part every converted document gets, Word's built-in styles by their built-in ids
+//! and names, and the numbering part a document with a list gets.
 
 use alloc::boxed::Box;
 use alloc::string::String;
@@ -7,19 +7,23 @@ use alloc::vec::Vec;
 
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
-    AssociatedOutlineLevel, Bold, BorderStylesMember, ComplexScriptFontSize, Italics,
-    KeepParagraphWithNextParagraph, LeftParagraphBorder, NonComplexScriptFontSize,
+    AbstractNumberingDefinition, AbstractNumberingDefinitionReference, AssociatedOutlineLevel,
+    Bold, BorderStylesMember, ComplexScriptFontSize, Italics, KeepParagraphWithNextParagraph,
+    LeftParagraphBorder, NonComplexScriptFontSize, NumberingDefinitionInstance,
+    NumberingDefinitions, NumberingFormat, NumberingLevelDefinitionOverride,
+    NumberingLevelOverrideDefinition, NumberingLevelStartingValueOverride, NumberingLevelText,
     ParagraphBorderAboveIdenticalParagraphs, ParagraphBorderBelowIdenticalParagraphs,
     ParagraphIndentation, ParagraphPropertiesPPrGeneral, ParentStyleID, PreviousTableProperties,
     PrimaryStyleName, RightParagraphBorder, RunContentColor, RunFonts, RunProperties,
-    RunPropertiesContent, SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinition,
-    StyleDefinitions, StyleTypesMember, TableBorders, TableInsideHorizontalEdgesBorder,
-    TableInsideVerticalEdgesBorder, Underline, UnderlinePatternsMember,
+    RunPropertiesContent, SpacingBetweenLinesAndAboveBelowParagraph, StNumberFormatMember,
+    StartingValue, StyleDefinition, StyleDefinitions, StyleTypesMember, TableBorders,
+    TableInsideHorizontalEdgesBorder, TableInsideVerticalEdgesBorder, Underline,
+    UnderlinePatternsMember,
 };
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
-use officekit_parts::style_definitions::{self, RELATIONSHIP_TYPE};
+use officekit_parts::{numbering_definitions, style_definitions};
 use officekit_xml::write::WriteOptions;
 
 /// A single border of half a point, flush with the text, of the color Word picks: a `w:top`,
@@ -35,14 +39,34 @@ macro_rules! single_border {
     }};
 }
 
+/// The numbering instance every bullet list takes.
+pub const BULLET_INSTANCE: usize = 1;
+
+/// The texts of the bullet levels, in turn: `•`, `◦` and `▪`.
+const BULLETS: [&str; 3] = ["\u{2022}", "\u{25e6}", "\u{25aa}"];
+
 /// The character style of inline code.
 pub const CODE: &str = "HTMLCode";
+
+/// The deepest list level Word has, counting from 0; deeper lists take it.
+pub const DEEPEST_LEVEL: usize = 8;
+
+/// The character style of a link's text.
+pub const HYPERLINK: &str = "Hyperlink";
+
+/// The paragraph style of the blocks of a list item after its first paragraph.
+pub const LIST_PARAGRAPH: &str = "ListParagraph";
+
+const NUMBERING_PART: &str = "/word/numbering.xml";
 
 /// The paragraph style of each line of a code block.
 pub const PREFORMATTED: &str = "HTMLPreformatted";
 
 /// The paragraph style of each line of a block quote.
 pub const QUOTE: &str = "Quote";
+
+/// The table style of every table.
+pub const TABLE_GRID: &str = "TableGrid";
 
 /// The size of each heading level's text in half-points, from `Heading1` to `Heading9`.
 const HEADING_SIZES: [&str; 9] = ["40", "32", "28", "26", "24", "22", "22", "22", "22"];
@@ -54,6 +78,34 @@ const NORMAL: &str = "Normal";
 
 const STYLES_PART: &str = "/word/styles.xml";
 
+/// Store the numbering part at `/word/numbering.xml`, related from `main`: the bullet levels, the
+/// decimal levels, instance [`BULLET_INSTANCE`] for every bullet list, and one instance for each
+/// ordered list, starting at its first number in `starts`.
+///
+/// # Errors
+///
+/// The errors of [`numbering_definitions::store_transitional`] and [`Package::relate`].
+pub fn add_numbering(
+    package: &mut Package,
+    main: &PartName,
+    starts: &[u64],
+) -> Result<(), PackageError> {
+    let name = PartName::new(NUMBERING_PART)?;
+    numbering_definitions::store_transitional(
+        package,
+        &name,
+        &numbering(starts),
+        WriteOptions::default(),
+    )?;
+    package
+        .relate(
+            Some(main),
+            &name,
+            numbering_definitions::RELATIONSHIP_TYPE.transitional,
+        )
+        .map(|_| ())
+}
+
 /// Store the styles part at `/word/styles.xml`, related from `main`.
 ///
 /// # Errors
@@ -63,13 +115,45 @@ pub fn add_styles(package: &mut Package, main: &PartName) -> Result<(), PackageE
     let name = PartName::new(STYLES_PART)?;
     style_definitions::store_transitional(package, &name, &styles(), WriteOptions::default())?;
     package
-        .relate(Some(main), &name, RELATIONSHIP_TYPE.transitional)
+        .relate(
+            Some(main),
+            &name,
+            style_definitions::RELATIONSHIP_TYPE.transitional,
+        )
         .map(|_| ())
 }
 
 /// The id of the paragraph style of a heading at `level`, from 1 to [`DEEPEST_HEADING`].
 pub fn heading(level: usize) -> String {
     format!("Heading{level}")
+}
+
+/// The left indent of list level `level`, from 0, in twentieths of a point: half an inch per
+/// level.
+pub fn level_indent(level: usize) -> String {
+    (720 * (level + 1)).to_string()
+}
+
+/// The numbering instance of the ordered list at `index`, counting from 0 in document order.
+pub const fn ordered_instance(index: usize) -> usize {
+    index + BULLET_INSTANCE + 1
+}
+
+/// An abstract numbering of nine levels, `format` and `text` giving each level's.
+fn abstract_numbering<F>(
+    id: usize,
+    format: StNumberFormatMember,
+    text: F,
+) -> AbstractNumberingDefinition
+where
+    F: Fn(usize) -> String,
+{
+    let mut definition = AbstractNumberingDefinition::default();
+    definition.abstract_num_id = Some(id.to_string().into());
+    definition.numbering_level_override_definition = (0..=DEEPEST_LEVEL)
+        .map(|level| numbering_level(level, format, text(level)))
+        .collect();
+    definition
 }
 
 /// The run's fonts: `name` for every script but East Asian text.
@@ -138,6 +222,69 @@ fn normal() -> StyleDefinition {
     definition
 }
 
+/// The root of the numbering part: abstract numbering 0 of bullets, abstract numbering 1 of
+/// decimal numbers, the bullet instance, and an instance for each ordered list.
+fn numbering(starts: &[u64]) -> NumberingDefinitions {
+    let bullets = abstract_numbering(0, StNumberFormatMember::Bullet, |level| {
+        BULLETS[level % BULLETS.len()].to_owned()
+    });
+    let decimals = abstract_numbering(1, StNumberFormatMember::Decimal, |level| {
+        format!("%{}.", level + 1)
+    });
+    let mut instances = alloc::vec![numbering_instance(BULLET_INSTANCE, 0)];
+    for (index, start) in starts.iter().enumerate() {
+        let mut first = NumberingLevelStartingValueOverride::default();
+        first.val = Some(start.to_string().into());
+        let mut level = NumberingLevelDefinitionOverride::default();
+        level.ilvl = Some("0".to_owned().into());
+        level.numbering_level_starting_value_override = Some(Box::new(first));
+        let mut instance = numbering_instance(ordered_instance(index), 1);
+        instance.numbering_level_definition_override = alloc::vec![level];
+        instances.push(instance);
+    }
+    let mut root = NumberingDefinitions::default();
+    root.abstract_numbering_definition = alloc::vec![bullets, decimals];
+    root.numbering_definition_instance = instances;
+    root
+}
+
+/// Numbering instance `id`, on abstract numbering `abstract_id`.
+fn numbering_instance(id: usize, abstract_id: usize) -> NumberingDefinitionInstance {
+    let mut reference = AbstractNumberingDefinitionReference::default();
+    reference.val = Some(abstract_id.to_string().into());
+    let mut instance = NumberingDefinitionInstance::default();
+    instance.abstract_numbering_definition_reference = Box::new(reference);
+    instance.num_id = Some(id.to_string().into());
+    instance
+}
+
+/// Level `level` of an abstract numbering, from 0, in `format`, its marker `text`, indented by
+/// [`level_indent`] with a hanging indent of a quarter inch.
+fn numbering_level(
+    level: usize,
+    format: StNumberFormatMember,
+    text: String,
+) -> NumberingLevelOverrideDefinition {
+    let mut start = StartingValue::default();
+    start.val = Some("1".to_owned().into());
+    let mut number_format = NumberingFormat::default();
+    number_format.val = Some(format.into());
+    let mut marker = NumberingLevelText::default();
+    marker.val = Some(text);
+    let mut indentation = ParagraphIndentation::default();
+    indentation.hanging = Some("360".to_owned().into());
+    indentation.left = Some(level_indent(level).into());
+    let mut paragraph = ParagraphPropertiesPPrGeneral::default();
+    paragraph.paragraph_indentation = Some(Box::new(indentation));
+    let mut definition = NumberingLevelOverrideDefinition::default();
+    definition.ilvl = Some(level.to_string().into());
+    definition.numbering_format = Some(Box::new(number_format));
+    definition.numbering_level_text = Some(Box::new(marker));
+    definition.paragraph_properties_p_pr_general = Some(Box::new(paragraph));
+    definition.starting_value = Some(Box::new(start));
+    definition
+}
+
 /// Run properties of `content`, `None` when it is empty.
 fn run_properties(content: Vec<RunPropertiesContent>) -> Option<Box<RunProperties>> {
     (!content.is_empty()).then(|| {
@@ -196,7 +343,7 @@ fn styles() -> StyleDefinitions {
     ));
 
     definitions.push(based_on_normal(
-        "ListParagraph",
+        LIST_PARAGRAPH,
         "List Paragraph",
         None,
         Vec::new(),
@@ -211,7 +358,7 @@ fn styles() -> StyleDefinitions {
     color.val = Some("0563C1".to_owned().into());
     let mut underline = Underline::default();
     underline.val = Some(UnderlinePatternsMember::Single.into());
-    let mut hyperlink = style(StyleTypesMember::Character, "Hyperlink", "Hyperlink");
+    let mut hyperlink = style(StyleTypesMember::Character, HYPERLINK, HYPERLINK);
     hyperlink.run_properties = run_properties(alloc::vec![
         RunPropertiesContent::RunContentColor(color),
         RunPropertiesContent::Underline(underline),
@@ -240,7 +387,7 @@ fn table_grid() -> StyleDefinition {
         Some(single_border!(TableInsideVerticalEdgesBorder));
     let mut table = PreviousTableProperties::default();
     table.table_borders = Some(Box::new(borders));
-    let mut definition = style(StyleTypesMember::Table, "TableGrid", "Table Grid");
+    let mut definition = style(StyleTypesMember::Table, TABLE_GRID, "Table Grid");
     definition.previous_table_properties = Some(Box::new(table));
     definition
 }

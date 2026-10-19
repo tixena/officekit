@@ -11,15 +11,31 @@ use alloc::vec::Vec;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use archie_core::parser::ast::{Document, InvalidFrontmatter, MarkdownBlock, RawDocument};
+use archie_core::parser::ast::{
+    Document, FrontmatterFormat, InvalidFrontmatter, Mapping, MarkdownBlock, RawDocument,
+};
 use archie_core::parser::extension::Extension;
 use archie_core::parser::parse;
-use archie_core::writer::WriteError;
+use archie_core::writer::{self, WriteError, WriteOptions};
 use officekit_packaging::error::PackageError;
+use officekit_packaging::package::Package;
+use officekit_packaging::part_name::PartName;
 use officekit_parts::kinds::WordprocessingKind;
 use os_shim::System;
 
 use crate::docx::Docx;
+
+/// The relationship type that relates the frontmatter part, `/docProps/frontmatter.toml`, from the
+/// package.
+pub const FRONTMATTER_RELATIONSHIP: &str =
+    "https://github.com/tixena/officekit/relationships/frontmatter";
+
+const FRONTMATTER_CONTENT_TYPE: &str = "application/toml";
+
+const FRONTMATTER_PART: &str = "/docProps/frontmatter.toml";
+
+/// The line that opens and closes a TOML frontmatter.
+const TOML_FENCE: &str = "+++\n";
 
 /// What a conversion carries besides the document's content.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -53,16 +69,41 @@ pub enum MarkdownError {
     Write(#[from] WriteError),
 }
 
+/// Store `mapping` as TOML in the part `/docProps/frontmatter.toml`, related from the package with
+/// [`FRONTMATTER_RELATIONSHIP`]: the lines archie writes between the `+++` lines.
+///
+/// # Errors
+///
+/// [`MarkdownError::Write`] when the mapping holds a null, which TOML cannot hold, and
+/// [`MarkdownError::Package`] when the part cannot be stored.
+fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), MarkdownError> {
+    let mut options = WriteOptions::default();
+    options.frontmatter = FrontmatterFormat::Toml;
+    let frontmatter_only: Document =
+        Document::new(MarkdownBlock::new(Vec::new()), Some(mapping.clone()));
+    let text = writer::write(&RawDocument::Valid(frontmatter_only), &options)?;
+    let inside = text.strip_prefix(TOML_FENCE).unwrap_or(&text);
+    let toml: String = inside
+        .split_inclusive('\n')
+        .take_while(|line| *line != TOML_FENCE)
+        .collect();
+    let name = PartName::new(FRONTMATTER_PART)?;
+    package.set_part_bytes(&name, FRONTMATTER_CONTENT_TYPE, toml.as_bytes())?;
+    package.relate(None, &name, FRONTMATTER_RELATIONSHIP)?;
+    Ok(())
+}
+
 /// A new Word document holding `document`, for [`Docx::from_archie`].
 ///
 /// # Errors
 ///
+/// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null, and
 /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
 pub(crate) fn from_archie<S, E>(
     _system: &S,
     _base: &Path,
     document: &Document<E>,
-    _options: MarkdownOptions,
+    options: MarkdownOptions,
 ) -> Result<Docx, MarkdownError>
 where
     S: System + ?Sized,
@@ -72,8 +113,14 @@ where
     let main = docx.main_document_part().clone();
     parts::add_styles(docx.package_mut(), &main)?;
     let mut root = docx.main_document()?;
-    root.body.get_or_insert_with(Box::default).content = to_word::blocks(&document.body);
+    root.body.get_or_insert_with(Box::default).content =
+        to_word::blocks(&document.body, docx.package_mut(), &main)?;
     docx.set_main_document(&root)?;
+    if options.frontmatter
+        && let Some(mapping) = &document.frontmatter
+    {
+        add_frontmatter(docx.package_mut(), mapping)?;
+    }
     Ok(docx)
 }
 
