@@ -115,8 +115,9 @@ enum Piece {
     Text(Marks, String),
 }
 
-/// A picture a `w:drawing` holds: the relationship ids its `a:blip` names, embedded or linked,
-/// and of the SVG part its extension names; its alt text and its title.
+/// A picture a `w:drawing` or a VML `v:shape` holds: the relationship ids its `a:blip` or
+/// `v:imagedata` names, embedded or linked, and of the SVG part its extension names; its alt text
+/// and its title.
 struct Drawing {
     alt: String,
     embed: Option<String>,
@@ -1303,11 +1304,11 @@ impl Walk<'_> {
                 self.fields.pop();
             }
             ComplexFieldCharacterTypeMember::Separate => {
-                let address = self
+                let target = self
                     .fields
                     .last()
-                    .and_then(|field| hyperlink_address(&field.instruction));
-                let link = address.map(|target| self.links.index(target, None));
+                    .and_then(|field| hyperlink_target(&field.instruction));
+                let link = target.map(|name| self.links.index(name, None));
                 if let Some(field) = self.fields.last_mut() {
                     field.link = link;
                     field.result = true;
@@ -1469,8 +1470,8 @@ impl Walk<'_> {
                     }
                 }
                 ParagraphContent::SimpleField(field) => {
-                    let address = field.instr.as_deref().and_then(hyperlink_address);
-                    let link = address.map(|target| self.links.index(target, None));
+                    let target = field.instr.as_deref().and_then(hyperlink_target);
+                    let link = target.map(|name| self.links.index(name, None));
                     self.linked(link, &field.content, runs)?;
                 }
                 ParagraphContent::TextRun(run) => self.run(run, runs)?,
@@ -1880,8 +1881,27 @@ fn drawing(element: &Element) -> Option<Drawing> {
     })
 }
 
-/// Every picture of a `w:drawing` under `node`, outside text boxes; of an `mc:AlternateContent`,
-/// those of its first branch that holds any.
+/// The picture of a VML `v:shape`, when a `v:imagedata` child names one by `r:id`: the id read as
+/// a part or as an address, the shape's `alt` attribute as its alt text.
+fn vml_picture(shape: &Element) -> Option<Drawing> {
+    let id = shape
+        .child_elements()
+        .find(|child| is_named(child, "v", "imagedata"))
+        .and_then(|data| attribute(data, "r", "id"))?;
+    Some(Drawing {
+        alt: shape
+            .attribute(&Namespace::None, "alt")
+            .unwrap_or_default()
+            .to_owned(),
+        embed: Some(id.clone()),
+        link: Some(id),
+        svg: None,
+        title: None,
+    })
+}
+
+/// Every picture of a `w:drawing` or a VML `v:shape` under `node`, outside text boxes; of an
+/// `mc:AlternateContent`, those of its first branch that holds any.
 fn drawings(node: &Node, found: &mut Vec<Drawing>) {
     let Node::Element(element) = node else {
         return;
@@ -1891,6 +1911,8 @@ fn drawings(node: &Node, found: &mut Vec<Drawing>) {
     }
     if is_named(element, "w", "drawing") {
         found.extend(drawing(element));
+    } else if is_named(element, "v", "shape") {
+        found.extend(vml_picture(element));
     } else if mc::is_mc(&element.name.namespace) && element.name.local == "AlternateContent" {
         for branch in &element.children {
             let before = found.len();
@@ -2019,24 +2041,37 @@ fn html_body(page: &str) -> &str {
     &page[start..end]
 }
 
-/// The address of a field whose instruction is `HYPERLINK` and an address; the arguments of its
-/// `\l`, `\o` and `\t` switches are not the address.
-fn hyperlink_address(instruction: &str) -> Option<String> {
+/// The link target of a field whose instruction is `HYPERLINK`: its address, followed by `#` and
+/// the location its `\l` switch names when it has both; the location alone as [`anchor_target`]
+/// names a bookmark; `None` when it names neither. The arguments of `\o` and `\t` are skipped.
+fn hyperlink_target(instruction: &str) -> Option<String> {
     let mut words = field_words(instruction).into_iter();
     if !words.next()?.eq_ignore_ascii_case("HYPERLINK") {
         return None;
     }
-    let mut argument = false;
+    let mut address = None;
+    let mut location = None;
+    let mut argument_of = None;
     for word in words {
-        if argument {
-            argument = false;
-        } else if let Some(switch) = word.strip_prefix('\\') {
-            argument = matches!(switch.to_ascii_lowercase().as_str(), "l" | "o" | "t");
+        if let Some(switch) = argument_of.take() {
+            if switch == "l" {
+                location.get_or_insert(word);
+            }
+        } else if let Some(named) = word.strip_prefix('\\') {
+            let switch = named.to_ascii_lowercase();
+            if matches!(switch.as_str(), "l" | "o" | "t") {
+                argument_of = Some(switch);
+            }
         } else {
-            return Some(word.to_owned());
+            address.get_or_insert(word);
         }
     }
-    None
+    match (address, location) {
+        (Some(found), Some(place)) => Some(format!("{found}#{place}")),
+        (Some(found), None) => Some(found.to_owned()),
+        (None, Some(place)) => Some(anchor_target(place)),
+        (None, None) => None,
+    }
 }
 
 /// The list level whose indent is the own `w:ind w:left`, or `w:start`, of a paragraph of

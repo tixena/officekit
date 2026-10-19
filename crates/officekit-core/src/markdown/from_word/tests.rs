@@ -1341,3 +1341,101 @@ fn the_frontmatter_part_is_the_frontmatter_only_when_asked_and_one_that_does_not
         None
     );
 }
+
+/// A VML `v:shape` of alt text `alt` whose `v:imagedata` names the relationship `id`.
+fn vml_picture(alt: &str, id: &str) -> String {
+    format!(r#"<v:shape alt="{alt}"><v:imagedata r:id="{id}"/></v:shape>"#)
+}
+
+#[test]
+fn a_vml_picture_in_a_pict_or_an_object_is_an_image_with_the_shape_s_alt_text() {
+    let mut fixture = Fixture::new();
+    let id = fixture.part(
+        "/word/media/image1.png",
+        "image/png",
+        &RelationshipType::IMAGE,
+        PNG,
+    );
+    let body = format!(
+        "<w:p><w:r><w:pict>{}</w:pict></w:r></w:p><w:p><w:r><w:object>{}</w:object></w:r></w:p>",
+        vml_picture("Company logo", &id),
+        vml_picture("Sheet", &id),
+    );
+    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
+    assert_eq!(
+        result.document.body.sections,
+        no_heading(alloc::vec![
+            paragraph_of(alloc::vec![image(
+                "report_media/image1.png",
+                "Company logo"
+            )]),
+            paragraph_of(alloc::vec![image("report_media/image1.png", "Sheet")]),
+        ])
+    );
+}
+
+#[test]
+fn a_vml_picture_of_an_external_relationship_is_an_image_of_its_address() {
+    let mut fixture = Fixture::new();
+    let id = fixture.external("https://example.com/logo.png", &RelationshipType::IMAGE);
+    let body = format!(
+        "<w:p><w:r><w:pict>{}</w:pict></w:r></w:p>",
+        vml_picture("Logo", &id)
+    );
+    assert_eq!(
+        archie(&fixture.body(&body)).body.sections,
+        no_heading(alloc::vec![paragraph_of(alloc::vec![image(
+            "https://example.com/logo.png",
+            "Logo"
+        )])])
+    );
+}
+
+#[test]
+fn a_drawing_in_the_choice_wins_over_a_vml_picture_in_the_fallback() {
+    let mut fixture = Fixture::new();
+    let mut add = |name: &str| fixture.part(name, "image/png", &RelationshipType::IMAGE, PNG);
+    let drawn = add("/word/media/image1.png");
+    let vml = add("/word/media/image2.png");
+    let body = format!(
+        r#"<w:p><w:r><mc:AlternateContent><mc:Choice Requires="wps">{}</mc:Choice><mc:Fallback><w:pict>{}</w:pict></mc:Fallback></mc:AlternateContent></w:r></w:p>"#,
+        picture_drawing("drawn", &format!(r#"<a:blip r:embed="{drawn}"/>"#)),
+        vml_picture("vml", &vml),
+    );
+    let result = exported(&fixture.body(&body), MarkdownOptions::default());
+    assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);
+    assert_eq!(
+        result.document.body.sections,
+        no_heading(alloc::vec![paragraph_of(alloc::vec![image(
+            "report_media/image1.png",
+            "drawn"
+        )])])
+    );
+}
+
+#[test]
+fn a_hyperlink_field_s_l_switch_names_a_bookmark_or_an_address_s_fragment() {
+    let body = format!(
+        concat!(
+            r#"<w:p><w:r><w:fldChar w:fldCharType="begin"/></w:r>"#,
+            r#"<w:r><w:instrText xml:space="preserve"> HYPERLINK \l "q3_results" </w:instrText></w:r>"#,
+            r#"<w:r><w:fldChar w:fldCharType="separate"/></w:r>{}"#,
+            r#"<w:r><w:fldChar w:fldCharType="end"/></w:r>{}"#,
+            r#"<w:fldSimple w:instr=" HYPERLINK \l &quot;_2024_plan&quot; ">{}</w:fldSimple>{}"#,
+            r#"<w:fldSimple w:instr=" HYPERLINK &quot;https://x.example&quot; \l &quot;part_two&quot; ">{}</w:fldSimple>{}"#,
+            r#"<w:fldSimple w:instr=" HYPERLINK \o &quot;tip&quot; ">{}</w:fldSimple></w:p>"#,
+        ),
+        run("Q3"),
+        run(", "),
+        run("plan"),
+        run(", "),
+        run("part"),
+        run(", "),
+        run("plain"),
+    );
+    assert_eq!(
+        markdown(&word(&body)),
+        "[Q3](#q3-results), [plan](#2024-plan), [part](https://x.example#part_two), plain\n"
+    );
+}
