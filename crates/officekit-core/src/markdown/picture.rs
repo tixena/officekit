@@ -15,10 +15,13 @@ use image_webp::WebPDecoder;
 use officekit_packaging::image::{Image, ImageFormat};
 use os_shim::System;
 use png::{BitDepth, ColorType, Encoder};
-use resvg::tiny_skia::{Pixmap, Transform};
+use resvg::tiny_skia::{IntSize, Pixmap, Size, Transform};
 use resvg::usvg::{Options, Tree};
 
 use super::MarkdownError;
+
+/// The longest side, in pixels, of the PNG drawn from an SVG.
+const LONGEST_DRAWN: f32 = 4096.0;
 
 /// Bytes 0 to 3 of a WebP file.
 const RIFF: &[u8] = b"RIFF";
@@ -29,12 +32,21 @@ const UNKNOWN_FORMAT: &str = "the bytes are none of PNG, JPEG, GIF, TIFF, BMP, W
 /// Bytes 8 to 11 of a WebP file.
 const WEBP: &[u8] = b"WEBP";
 
+/// The most bytes a WebP's decoded pixels may take.
+const WEBP_MEMORY: usize = 256 * 1024 * 1024;
+
 /// The parts one markdown picture needs.
 pub(super) enum Picture {
     /// A web address Word fetches when it opens the file.
     Linked(String),
-    /// Image parts: `shown`, the part `a:blip r:embed` names, and for an SVG the SVG itself.
-    Stored { shown: Image, svg: Option<Image> },
+    /// Image parts: `shown`, the part `a:blip r:embed` names, and for an SVG the SVG itself; `size`
+    /// is the width and height in pixels of the picture's frame: an SVG's own size, otherwise
+    /// `shown`'s.
+    Stored {
+        shown: Image,
+        size: Option<(u32, u32)>,
+        svg: Option<Image>,
+    },
 }
 
 /// The bytes of a `data:` address, `address` being what follows `data:`: the bytes after the
@@ -140,12 +152,29 @@ where
         })
 }
 
-/// A PNG of the size of `tree`, drawn from it.
+/// The size, in pixels, of the PNG drawn from an SVG of `size`: `size` rounded, unless a side
+/// passes [`LONGEST_DRAWN`], then scaled down to fit keeping its proportions.
+fn drawn_size(size: Size) -> Option<IntSize> {
+    if size.width().max(size.height()) > LONGEST_DRAWN {
+        Some(
+            size.scale_to(Size::from_wh(LONGEST_DRAWN, LONGEST_DRAWN)?)
+                .to_int_size(),
+        )
+    } else {
+        Some(size.to_int_size())
+    }
+}
+
+/// A PNG drawn from `tree`, at most [`LONGEST_DRAWN`] pixels on its longer side.
 fn rendered(tree: &Tree) -> Result<Image, String> {
-    let size = tree.size().to_int_size();
-    let mut pixmap = Pixmap::new(size.width(), size.height())
+    let drawn = drawn_size(tree.size()).ok_or_else(|| "the SVG has no size".to_owned())?;
+    let mut pixmap = Pixmap::new(drawn.width(), drawn.height())
         .ok_or_else(|| "the SVG is too large to draw".to_owned())?;
-    resvg::render(tree, Transform::default(), &mut pixmap.as_mut());
+    let own = Transform::from_bbox(tree.size().to_non_zero_rect(0.0, 0.0))
+        .invert()
+        .ok_or_else(|| "the SVG has no size".to_owned())?;
+    let fit = Transform::from_bbox(drawn.to_size().to_non_zero_rect(0.0, 0.0));
+    resvg::render(tree, fit.pre_concat(own), &mut pixmap.as_mut());
     let bytes = pixmap.encode_png().map_err(|error| error.to_string())?;
     Ok(Image::with_format(ImageFormat::Png, bytes))
 }
@@ -154,21 +183,33 @@ fn rendered(tree: &Tree) -> Result<Image, String> {
 /// it; a PNG, JPEG, GIF, TIFF or BMP as it is.
 fn stored(bytes: Vec<u8>) -> Result<Picture, String> {
     if bytes.get(0..4) == Some(RIFF) && bytes.get(8..12) == Some(WEBP) {
+        let shown = webp_png(&bytes)?;
         return Ok(Picture::Stored {
-            shown: webp_png(&bytes)?,
+            size: shown
+                .pixel_size()
+                .map(|pixels| (pixels.width, pixels.height)),
+            shown,
             svg: None,
         });
     }
     if let Ok(tree) = Tree::from_data(&bytes, &svg_options()) {
+        let own = tree.size().to_int_size();
         return Ok(Picture::Stored {
             shown: rendered(&tree)?,
+            size: Some((own.width(), own.height())),
             svg: Some(Image::with_format(ImageFormat::Svg, bytes)),
         });
     }
     let Ok(shown) = Image::from_bytes(bytes) else {
         return Err(UNKNOWN_FORMAT.to_owned());
     };
-    Ok(Picture::Stored { shown, svg: None })
+    Ok(Picture::Stored {
+        size: shown
+            .pixel_size()
+            .map(|pixels| (pixels.width, pixels.height)),
+        shown,
+        svg: None,
+    })
 }
 
 /// usvg's default options, but an `<image>` that names a file is left out of the PNG: usvg would
@@ -188,9 +229,11 @@ fn webp_png(bytes: &[u8]) -> Result<Image, String> {
     } else {
         ColorType::Rgb
     };
+    decoder.set_memory_limit(WEBP_MEMORY);
     let length = decoder
         .output_buffer_size()
-        .ok_or_else(|| "the WebP is too large to decode".to_owned())?;
+        .filter(|length| *length <= WEBP_MEMORY)
+        .ok_or_else(|| "the WebP's pixels exceed 256 MiB".to_owned())?;
     let mut pixels = alloc::vec![0; length];
     decoder
         .read_image(&mut pixels)

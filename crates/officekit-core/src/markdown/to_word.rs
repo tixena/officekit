@@ -27,7 +27,7 @@ use officekit_markup::wordprocessing::{
     TableWidthUnitsMember, Text, TextRun, TextRunContent,
 };
 use officekit_packaging::error::PackageError;
-use officekit_packaging::image::{Image, PixelSize};
+use officekit_packaging::image::Image;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
@@ -740,10 +740,10 @@ where
                 )?;
                 (blip("link", id, None), None)
             }
-            Picture::Stored { shown, svg } => {
+            Picture::Stored { shown, size, svg } => {
                 let id = self.store(&shown)?;
                 let svg_id = svg.map(|image| self.store(&image)).transpose()?;
-                (blip("embed", id, svg_id), shown.pixel_size())
+                (blip("embed", id, svg_id), size)
             }
         };
         self.pictures.count += 1;
@@ -1086,14 +1086,14 @@ fn graphic(id: &str, name: &str, blip: Element, extent: &[(&str, &str)]) -> Elem
     )
 }
 
-/// The frame of a picture `size` pixels big, `cx` and `cy` in EMU: 9,525 EMU a pixel, scaled
-/// down to [`TEXT_WIDTH`] keeping its proportions when wider; a square [`TEXT_WIDTH`] wide when its
-/// size is not known.
-fn frame(size: Option<PixelSize>) -> (u64, u64) {
-    let Some(pixels) = size else {
+/// The frame of a picture `size` pixels big, width then height, `cx` and `cy` in EMU: 9,525 EMU a
+/// pixel, scaled down to [`TEXT_WIDTH`] keeping its proportions when wider; a square
+/// [`TEXT_WIDTH`] wide when its size is not known.
+fn frame(size: Option<(u32, u32)>) -> (u64, u64) {
+    let Some((across, down)) = size else {
         return (TEXT_WIDTH, TEXT_WIDTH);
     };
-    let (width, height) = (u64::from(pixels.width), u64::from(pixels.height));
+    let (width, height) = (u64::from(across), u64::from(down));
     if width * EMU_PER_PIXEL > TEXT_WIDTH {
         (TEXT_WIDTH, height * TEXT_WIDTH / width)
     } else {

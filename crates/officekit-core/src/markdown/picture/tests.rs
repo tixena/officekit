@@ -10,7 +10,9 @@ use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
-use super::{Picture, read};
+use resvg::tiny_skia::Size;
+
+use super::{Picture, drawn_size, read};
 use crate::markdown::MarkdownError;
 
 /// The header of an AVIF file, a format officekit does not store.
@@ -33,6 +35,38 @@ const SVG_ADDRESS: &str = "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.or
 
 /// A little-endian TIFF header.
 const TIFF: &[u8] = b"II*\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+
+/// A stored picture's image, its SVG and the size of its frame.
+type Parts = (Image, Option<Image>, Option<(u32, u32)>);
+
+/// An SVG `width` by `height`, holding a small rectangle.
+fn svg(width: u32, height: u32) -> String {
+    format!(
+        r#"<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"><rect width="10" height="10"/></svg>"#
+    )
+}
+
+/// The four bytes of `value`, least significant first.
+fn le(value: u32) -> [u8; 4] {
+    [0, 8, 16, 24].map(|shift| u8::try_from((value >> shift) & 0xFF).unwrap())
+}
+
+/// The header of a lossless WebP `width` by `height` with an alpha channel, and no pixels.
+fn webp_header(width: u32, height: u32) -> Vec<u8> {
+    let mut bytes = b"RIFF".to_vec();
+    bytes.extend_from_slice(&le(18));
+    bytes.extend_from_slice(b"WEBPVP8L");
+    bytes.extend_from_slice(&le(5));
+    bytes.push(0x2F);
+    bytes.extend_from_slice(&le((width - 1) | ((height - 1) << 14) | (1 << 28)));
+    bytes
+}
+
+/// The size in pixels `drawn_size` gives an SVG `width` by `height`.
+fn drawn(width: f32, height: f32) -> (u32, u32) {
+    let size = drawn_size(Size::from_wh(width, height).unwrap()).unwrap();
+    (size.width(), size.height())
+}
 
 /// The PNG `bytes` as its width, its height, its color type and its samples.
 fn decoded(bytes: &[u8]) -> (u32, u32, ColorType, Vec<u8>) {
@@ -66,12 +100,18 @@ fn png(width: u32, height: u32) -> Vec<u8> {
     bytes
 }
 
-/// The image a stored picture shows and its SVG; `None` for a linked picture.
-fn stored(picture: Picture) -> Option<(Image, Option<Image>)> {
+/// The image a stored picture shows, its SVG and the size of its frame; `None` for a linked
+/// picture.
+fn parts(picture: Picture) -> Option<Parts> {
     match picture {
         Picture::Linked(_) => None,
-        Picture::Stored { shown, svg } => Some((shown, svg)),
+        Picture::Stored { shown, svg, size } => Some((shown, svg, size)),
     }
+}
+
+/// The image a stored picture shows and its SVG; `None` for a linked picture.
+fn stored(picture: Picture) -> Option<(Image, Option<Image>)> {
+    parts(picture).map(|(shown, svg, _)| (shown, svg))
 }
 
 /// The picture `target` names, read relative to `/n` of `system`, as [`stored`] gives it.
@@ -201,5 +241,39 @@ fn a_target_missing_both_ways_fails_naming_it_as_written() {
     assert!(matches!(
         read(&system, Path::new("/n"), "gone%20.png"),
         Err(MarkdownError::Image { target, error }) if target == "gone%20.png" && !error.is_empty()
+    ));
+}
+
+#[test]
+fn a_huge_svg_is_drawn_at_4096_pixels_on_its_longer_side() {
+    assert_eq!(drawn(100_000.0, 100_000.0), (4096, 4096));
+}
+
+#[test]
+fn a_wide_svg_keeps_its_proportions_when_drawn_smaller() {
+    assert_eq!(drawn(8192.0, 2048.0), (4096, 1024));
+}
+
+#[test]
+fn a_small_svg_is_drawn_at_its_own_size() {
+    assert_eq!(drawn(120.0, 80.0), (120, 80));
+}
+
+#[test]
+fn a_huge_svg_is_stored_with_a_capped_png_and_its_own_size_as_the_frame() {
+    let system = files(&[("big.svg", svg(100_000, 100_000).as_bytes())]);
+    let (shown, svg, size) = parts(read(&system, Path::new("/n"), "big.svg").unwrap()).unwrap();
+    assert!(svg.is_some());
+    let png = shown.pixel_size().unwrap();
+    assert_eq!((png.width, png.height), (4096, 4096));
+    assert_eq!(size, Some((100_000, 100_000)));
+}
+
+#[test]
+fn a_webp_whose_pixels_exceed_256_mib_fails_naming_the_target() {
+    let system = files(&[("big.webp", &webp_header(16_383, 16_383))]);
+    assert!(matches!(
+        read(&system, Path::new("/n"), "big.webp"),
+        Err(MarkdownError::Image { target, error }) if target == "big.webp" && error.contains("256 MiB")
     ));
 }
