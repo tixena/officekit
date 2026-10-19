@@ -88,8 +88,8 @@ where
     main: &'package PartName,
     /// The level and the numbering instance of the next paragraph, the first of a list item.
     number: Option<(usize, usize)>,
-    /// The first number of each ordered list so far; `None` until the walk meets a list.
-    numbering: Option<Vec<u64>>,
+    /// The first number and the level of each ordered list so far; `None` until the walk meets a list.
+    numbering: Option<Vec<(u64, usize)>>,
     package: &'package mut Package,
     pictures: Pictures,
     system: &'package S,
@@ -215,7 +215,7 @@ where
         let depth = self.item.map_or(0, |outer| outer + 1);
         let ordered = self.numbering.get_or_insert_with(Vec::new);
         let instance = list.start.map_or(parts::BULLET_INSTANCE, |first| {
-            ordered.push(first);
+            ordered.push((first, depth.min(DEEPEST_LEVEL)));
             parts::ordered_instance(ordered.len() - 1)
         });
         for item in &list.items {
@@ -256,7 +256,8 @@ where
     }
 
     /// The properties of the next paragraph: its numbering when it opens a list item,
-    /// `ListParagraph` and the item's indent when it continues one, `style` otherwise.
+    /// the item's indent and `style` (`ListParagraph` for none) when it continues one, `style`
+    /// otherwise.
     fn properties(&mut self, style: Option<&str>) -> Option<Box<ParagraphProperties>> {
         let mut properties = ParagraphProperties::default();
         if let Some((level, instance)) = self.number.take() {
@@ -266,7 +267,8 @@ where
             let mut indentation = ParagraphIndentation::default();
             indentation.left = Some(parts::level_indent(depth.min(DEEPEST_LEVEL)).into());
             properties.paragraph_indentation = Some(Box::new(indentation));
-            properties.referenced_paragraph_style = Some(Box::new(paragraph_style(LIST_PARAGRAPH)));
+            properties.referenced_paragraph_style =
+                Some(Box::new(paragraph_style(style.unwrap_or(LIST_PARAGRAPH))));
         } else {
             properties.referenced_paragraph_style = Some(Box::new(paragraph_style(style?)));
         }
@@ -301,19 +303,30 @@ where
         E: Extension,
     {
         if let Some(heading) = &section.heading {
-            let (id, name) = self.bookmarks.add(&heading_text(&heading.children));
-            let mut start = BookmarkStart::default();
-            start.id = Some(id.to_string().into());
-            start.name = Some(name);
-            let mut end = BookmarkEnd::default();
-            end.id = Some(id.to_string().into());
-            let mut runs = self.runs();
-            runs.content.push(ParagraphContent::BookmarkStart(start));
-            runs.inlines(&heading.children, Format::default())?;
-            let mut content = runs.into_content();
-            content.push(ParagraphContent::BookmarkEnd(end));
-            let style = parts::heading(depth.min(DEEPEST_HEADING));
-            self.push(Some(&style), content);
+            if self.item.is_some() {
+                let bold = Format {
+                    bold: true,
+                    ..Format::default()
+                };
+                let mut runs = self.runs();
+                runs.inlines(&heading.children, bold)?;
+                let content = runs.into_content();
+                self.push(None, content);
+            } else {
+                let (id, name) = self.bookmarks.add(&heading_text(&heading.children));
+                let mut start = BookmarkStart::default();
+                start.id = Some(id.to_string().into());
+                start.name = Some(name);
+                let mut end = BookmarkEnd::default();
+                end.id = Some(id.to_string().into());
+                let mut runs = self.runs();
+                runs.content.push(ParagraphContent::BookmarkStart(start));
+                runs.inlines(&heading.children, Format::default())?;
+                let mut content = runs.into_content();
+                content.push(ParagraphContent::BookmarkEnd(end));
+                let style = parts::heading(depth.min(DEEPEST_HEADING));
+                self.push(Some(&style), content);
+            }
         }
         for block in &section.blocks {
             self.block(block)?;

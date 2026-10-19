@@ -80,7 +80,7 @@ const STYLES_PART: &str = "/word/styles.xml";
 
 /// Store the numbering part at `/word/numbering.xml`, related from `main`: the bullet levels, the
 /// decimal levels, instance [`BULLET_INSTANCE`] for every bullet list, and one instance for each
-/// ordered list, starting at its first number in `starts`.
+/// ordered list, starting at its first number in `starts` at the level it is nested at.
 ///
 /// # Errors
 ///
@@ -88,7 +88,7 @@ const STYLES_PART: &str = "/word/styles.xml";
 pub fn add_numbering(
     package: &mut Package,
     main: &PartName,
-    starts: &[u64],
+    starts: &[(u64, usize)],
 ) -> Result<(), PackageError> {
     let name = PartName::new(NUMBERING_PART)?;
     numbering_definitions::store_transitional(
@@ -224,7 +224,7 @@ fn normal() -> StyleDefinition {
 
 /// The root of the numbering part: abstract numbering 0 of bullets, abstract numbering 1 of
 /// decimal numbers, the bullet instance, and an instance for each ordered list.
-fn numbering(starts: &[u64]) -> NumberingDefinitions {
+fn numbering(starts: &[(u64, usize)]) -> NumberingDefinitions {
     let bullets = abstract_numbering(0, StNumberFormatMember::Bullet, |level| {
         BULLETS[level % BULLETS.len()].to_owned()
     });
@@ -232,11 +232,11 @@ fn numbering(starts: &[u64]) -> NumberingDefinitions {
         format!("%{}.", level + 1)
     });
     let mut instances = alloc::vec![numbering_instance(BULLET_INSTANCE, 0)];
-    for (index, start) in starts.iter().enumerate() {
+    for (index, &(start, depth)) in starts.iter().enumerate() {
         let mut first = NumberingLevelStartingValueOverride::default();
         first.val = Some(start.to_string().into());
         let mut level = NumberingLevelDefinitionOverride::default();
-        level.ilvl = Some("0".to_owned().into());
+        level.ilvl = Some(depth.to_string().into());
         level.numbering_level_starting_value_override = Some(Box::new(first));
         let mut instance = numbering_instance(ordered_instance(index), 1);
         instance.numbering_level_definition_override = alloc::vec![level];

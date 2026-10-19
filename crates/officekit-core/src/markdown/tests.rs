@@ -1049,8 +1049,86 @@ fn an_item_that_opens_with_another_block_gets_an_empty_numbered_paragraph() {
     let docx = converted("- ```\n  code\n  ```\n", MarkdownOptions::default()).unwrap();
     assert_eq!(
         outline(&docx),
-        ["- num=1/0: ", "ListParagraph left=720: code"]
+        ["- num=1/0: ", "HTMLPreformatted left=720: code"]
     );
+}
+
+#[test]
+fn a_nested_ordered_list_starts_at_its_first_number() {
+    let docx = converted("1. a\n\n   3. b\n", MarkdownOptions::default()).unwrap();
+    assert_eq!(outline(&docx), ["- num=2/0: a", "- num=3/1: b"]);
+    assert_eq!(
+        numbering_instances(&docx),
+        ["num 1 -> 0", "num 2 -> 1 0=1", "num 3 -> 1 1=3"]
+    );
+}
+
+#[test]
+fn an_ordered_list_nested_ten_deep_overrides_the_ninth_level() {
+    let innermost = MarkdownBlock::new(alloc::vec![Section::new(
+        None,
+        alloc::vec![plain("l10")],
+        Vec::new()
+    )]);
+    let mut list: List = List::new(alloc::vec![Item::new(innermost)], true, Some(7));
+    for depth in (1..10_usize).rev() {
+        let body = MarkdownBlock::new(alloc::vec![Section::new(
+            None,
+            alloc::vec![plain(&format!("l{depth}")), Block::List(list)],
+            Vec::new()
+        )]);
+        list = List::new(alloc::vec![Item::new(body)], false, None);
+    }
+    let docx = from_archie(&document_of(alloc::vec![Block::List(list)]));
+    assert_eq!(numbering_instances(&docx), ["num 1 -> 0", "num 2 -> 1 8=7"]);
+}
+
+#[test]
+fn a_top_level_ordered_list_starting_at_three_overrides_the_first_level() {
+    let docx = converted("3. a\n", MarkdownOptions::default()).unwrap();
+    assert_eq!(numbering_instances(&docx), ["num 1 -> 0", "num 2 -> 1 0=3"]);
+}
+
+#[test]
+fn blocks_inside_a_list_item_keep_their_style_and_get_the_item_indent() {
+    let docx = converted(
+        "- item\n\n  ```\n  code\n  ```\n\n  > quoted\n\n  ***\n\n  plain\n",
+        MarkdownOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        outline(&docx),
+        [
+            "- num=1/0: item",
+            "HTMLPreformatted left=720: code",
+            "Quote left=720: quoted",
+            "ListParagraph left=720: ",
+            "ListParagraph left=720: plain",
+        ]
+    );
+    let content = docx.main_document().unwrap().body.unwrap().content;
+    let bordered = content.iter().any(|block| {
+        matches!(block, BlockContent::Paragraph(paragraph)
+            if paragraph.content.is_empty()
+                && paragraph
+                    .properties
+                    .as_ref()
+                    .is_some_and(|properties| properties.paragraph_borders.is_some()))
+    });
+    assert!(bordered);
+}
+
+#[test]
+fn a_heading_inside_a_list_item_is_a_bold_list_paragraph_with_no_bookmark() {
+    let docx = converted("- item\n\n  ### Inner\n", MarkdownOptions::default()).unwrap();
+    assert_eq!(
+        outline(&docx),
+        ["- num=1/0: item", "ListParagraph left=720: b:Inner"]
+    );
+    let content = docx.main_document().unwrap().body.unwrap().content;
+    assert!(content.iter().all(|block| !matches!(block,
+        BlockContent::Paragraph(paragraph)
+            if paragraph.content.iter().any(|inner| matches!(inner, ParagraphContent::BookmarkStart(_))))));
 }
 
 #[test]
