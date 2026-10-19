@@ -180,3 +180,26 @@ fn a_missing_file_and_an_avif_file_each_fail_naming_the_target() {
         ));
     }
 }
+
+#[test]
+fn a_percent_encoded_target_reads_the_decoded_name() {
+    let system = files(&[("my dot.png", &png(1, 1))]);
+    let (shown, _) = stored_at(&system, "my%20dot.png");
+    assert_eq!(shown.bytes(), png(1, 1).as_slice());
+}
+
+#[test]
+fn a_file_whose_name_holds_a_percent_is_still_found() {
+    let system = files(&[("100%.png", &png(1, 1))]);
+    let (shown, _) = stored_at(&system, "100%.png");
+    assert_eq!(shown.bytes(), png(1, 1).as_slice());
+}
+
+#[test]
+fn a_target_missing_both_ways_fails_naming_it_as_written() {
+    let system = MemorySystem::new();
+    assert!(matches!(
+        read(&system, Path::new("/n"), "gone%20.png"),
+        Err(MarkdownError::Image { target, error }) if target == "gone%20.png" && !error.is_empty()
+    ));
+}

@@ -1514,6 +1514,51 @@ fn each_picture_is_numbered_by_its_place_among_the_documents_pictures_and_descri
 }
 
 #[test]
+fn a_picture_whose_alt_text_spans_two_lines_is_one_picture() {
+    let dot = png_of_size(1, 1);
+    let docx = picture_docx(&picture_notes(
+        "![first\nsecond](dot.png)\n",
+        &[("dot.png", &dot)],
+    ));
+    assert_eq!(
+        pictures(&docx),
+        [r#"1 "Picture 1" "first second" "-" 9525x9525 embed=media/image1.png"#]
+    );
+    let images = docx
+        .package()
+        .part_names()
+        .unwrap()
+        .iter()
+        .filter(|name| name.as_str().starts_with("/word/media/"))
+        .count();
+    assert_eq!(images, 1);
+}
+
+#[test]
+fn a_picture_whose_alt_text_spans_three_lines_is_one_picture() {
+    let dot = png_of_size(1, 1);
+    let docx = picture_docx(&picture_notes(
+        "![a\nb\nc](dot.png)\n",
+        &[("dot.png", &dot)],
+    ));
+    assert_eq!(
+        pictures(&docx),
+        [r#"1 "Picture 1" "a b c" "-" 9525x9525 embed=media/image1.png"#]
+    );
+}
+
+#[test]
+fn a_picture_inside_a_link_whose_alt_text_spans_two_lines_is_one_picture() {
+    let dot = png_of_size(1, 1);
+    let source = "[![a\nb](dot.png)](https://example.com/page)\n";
+    let docx = picture_docx(&picture_notes(source, &[("dot.png", &dot)]));
+    assert_eq!(
+        pictures(&docx),
+        [r#"1 "Picture 1" "a b" "-" 9525x9525 embed=media/image1.png"#]
+    );
+}
+
+#[test]
 fn a_converted_document_with_each_kind_of_picture_validates() {
     let logo = png_of_size(300, 100);
     let team = webp_of(&team_pixels(), 4, 3);

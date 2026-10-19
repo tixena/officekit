@@ -288,6 +288,7 @@ where
         Runs {
             base: self.base,
             content: Vec::new(),
+            image: None,
             link: None,
             main: self.main,
             package: &mut *self.package,
@@ -506,6 +507,8 @@ where
     /// The folder local picture targets are read relative to.
     base: &'package Path,
     content: Vec<ParagraphContent>,
+    /// The alt text so far of an image that goes on into the next line.
+    image: Option<String>,
     /// The hyperlink the runs go into while a link is written, kept open while the link goes on
     /// into the next line.
     link: Option<Hyperlink>,
@@ -540,6 +543,34 @@ where
         Ok(hyperlink)
     }
 
+    /// The picture of one piece of an image: an image cut across lines is written once, at its
+    /// last piece, its alt text the pieces' joined by spaces.
+    fn image(
+        &mut self,
+        target: &str,
+        alt: &str,
+        title: Option<&str>,
+        continues: Continues,
+        format: Format,
+    ) -> Result<(), MarkdownError> {
+        match continues {
+            Continues::Next => self.image = Some(alt.to_owned()),
+            Continues::Both => {
+                let gathered = self.image.get_or_insert_with(String::new);
+                gathered.push(' ');
+                gathered.push_str(alt);
+            }
+            Continues::Previous => {
+                let mut gathered = self.image.take().unwrap_or_default();
+                gathered.push(' ');
+                gathered.push_str(alt);
+                self.picture(target, &gathered, title, format)?;
+            }
+            Continues::Neither | _ => self.picture(target, alt, title, format)?,
+        }
+        Ok(())
+    }
+
     fn inline<E>(&mut self, inline: &Inline<E>, format: Format) -> Result<(), MarkdownError>
     where
         E: Extension,
@@ -560,7 +591,13 @@ where
                 },
             )?,
             Inline::Image(image) => {
-                self.picture(&image.target, &image.alt, image.title.as_deref(), format)?;
+                self.image(
+                    &image.target,
+                    &image.alt,
+                    image.title.as_deref(),
+                    image.continues,
+                    format,
+                )?;
             }
             Inline::LineBreak(_) => self.line_break(format),
             Inline::Link(link) => self.link(link, format)?,
@@ -658,7 +695,13 @@ where
                 }
             }
             LinkInline::Image(image) => {
-                self.picture(&image.target, &image.alt, image.title.as_deref(), format)?;
+                self.image(
+                    &image.target,
+                    &image.alt,
+                    image.title.as_deref(),
+                    image.continues,
+                    format,
+                )?;
             }
             LinkInline::LineBreak(_) => self.line_break(format),
             LinkInline::Strong(strong) => {

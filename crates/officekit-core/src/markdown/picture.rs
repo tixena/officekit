@@ -120,9 +120,18 @@ where
     if target.starts_with("http://") || target.starts_with("https://") {
         return Ok(Picture::Linked(target.to_owned()));
     }
-    let bytes = target
-        .strip_prefix("data:")
-        .map_or_else(|| file(system, &base.join(target)), data);
+    let bytes = target.strip_prefix("data:").map_or_else(
+        || {
+            String::from_utf8(percent_decoded(target))
+                .ok()
+                .filter(|name| name != target && system.exists(&base.join(name)).unwrap_or(false))
+                .map_or_else(
+                    || file(system, &base.join(target)),
+                    |name| file(system, &base.join(name)),
+                )
+        },
+        data,
+    );
     bytes
         .and_then(stored)
         .map_err(|error| MarkdownError::Image {
