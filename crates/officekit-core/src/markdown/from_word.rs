@@ -1,37 +1,47 @@
-//! A Word body as an archie document: headings as sections, paragraphs and their runs, code
-//! blocks, block quotes, thematic breaks, and the paragraphs of text boxes.
+//! A Word body as an archie document: headings as sections, paragraphs and their runs, lists,
+//! tables, links, pictures, code blocks, block quotes, thematic breaks, HTML imports, and the
+//! paragraphs of text boxes.
 
 #[cfg(test)]
 mod tests;
 
-use alloc::collections::BTreeMap;
+use alloc::collections::{BTreeMap, BTreeSet};
 use alloc::string::String;
 use alloc::vec::Vec;
 use core::{iter, mem, ptr};
 
 use archie_core::parser::ast::{
-    Args, Block, BlockQuote, Code, CodeBlock, Document as ArchieDocument, Emphasis, Heading,
-    Inline, Line, LineBreak, Mapping, MarkdownBlock, Paragraph as ArchieParagraph, Section, Strong,
+    Alignment, Args, Block, BlockQuote, Code, CodeBlock, Document as ArchieDocument, Emphasis,
+    Heading, Html, Image, Inline, Item, Line, LineBreak, Link, LinkEmphasis, LinkForm, LinkInline,
+    LinkStrong, List, Mapping, MarkdownBlock, Paragraph as ArchieParagraph, Section, Strong,
+    Table as ArchieTable, TableCell as ArchieTableCell, TableFormat, TableRow as ArchieTableRow,
     Text, ThematicBreak,
 };
+use base64::Engine as _;
+use base64::engine::general_purpose::STANDARD;
 use officekit_markup::wordprocessing::{
-    AssociatedOutlineLevel, BlockContent, BreakTypesMember, ComplexFieldCharacter,
-    ComplexFieldCharacterType, ComplexFieldCharacterTypeMember, ContentBlockContent,
-    ContentCellContent, ContentRowContent, Document, Paragraph, ParagraphContent,
-    ParagraphProperties, RichTextBoxContentContainer, RunProperties, RunPropertiesContent,
-    StyleDefinition, StyleTypesMember, TextRun, TextRunContent, TrackedRunContent,
+    AnchorForImportedExternalContent, AssociatedOutlineLevel, BlockContent, BreakTypesMember,
+    ComplexFieldCharacter, ComplexFieldCharacterType, ComplexFieldCharacterTypeMember,
+    ContentBlockContent, ContentCellContent, ContentRowContent, DecimalNumberValue, Document,
+    HorizontalAlignmentType, HorizontalAlignmentTypeMember, Hyperlink, MergedCellType,
+    MergedCellTypeMember, NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions,
+    Paragraph, ParagraphContent, ParagraphProperties, RichTextBoxContentContainer, RunProperties,
+    RunPropertiesContent, SignedMeasurementInTwentiethsOfPointMember, StNumberFormat,
+    StNumberFormatMember, StyleDefinition, StyleTypesMember, Table, TableCell, TableRow,
+    TableRowPropertiesContent, TextRun, TextRunContent, TrackedRunContent,
 };
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
-use officekit_packaging::relationship::Target;
-use officekit_parts::style_definitions::{self, RELATIONSHIP_TYPE};
+use officekit_packaging::relationship::{RelatedPart, RelationshipType, Target};
+use officekit_parts::{numbering_definitions, style_definitions};
 use officekit_xml::element::{Element, Node};
 use officekit_xml::mc;
 use officekit_xml::name::Namespace;
 use officekit_xml::name::table::NAMESPACES;
 
-use super::parts::{CODE, PREFORMATTED, QUOTE};
+use super::Exported;
+use super::parts::{self, CODE, DEEPEST_LEVEL, LIST_PARAGRAPH, PREFORMATTED, QUOTE};
 
 /// The name of the character style of inline code.
 const CODE_NAME: &str = "HTML Code";
@@ -55,6 +65,12 @@ const DEEPEST: usize = 6;
 /// The deepest heading level Word has.
 const DEEPEST_WORD: usize = 9;
 
+/// The content type of an HTML part a `w:altChunk` names.
+const HTML_CONTENT_TYPE: &str = "text/html";
+
+/// The name of the paragraph style of the later blocks of a list item.
+const LIST_PARAGRAPH_NAME: &str = "List Paragraph";
+
 const NON_BREAKING_HYPHEN: &str = "\u{2011}";
 
 /// The name of the paragraph style of each line of a code block.
@@ -68,6 +84,7 @@ enum Gathering {
 }
 
 /// What a paragraph is, by its style and its own properties.
+#[derive(Clone, Copy)]
 enum Kind {
     Code,
     Heading(usize),
@@ -75,28 +92,110 @@ enum Kind {
     Quote,
 }
 
+/// What the numbering of a paragraph makes it.
+enum Numbered {
+    /// A level whose `w:numFmt` is `none`: a plain paragraph.
+    Hidden,
+    /// An item of the list of numbering instance `instance` at level `level`, ordered from `start`
+    /// or bullets when `start` is `None`.
+    Item {
+        instance: i64,
+        level: usize,
+        start: Option<u64>,
+    },
+    /// No numbering, or numbering that names no instance or level.
+    Unnumbered,
+}
+
 /// What a paragraph's runs give, in order.
 enum Piece {
     Break,
+    Image(Option<usize>, Image),
     Text(Marks, String),
 }
 
+/// A picture a `w:drawing` holds: the relationship ids its `a:blip` names, embedded or linked,
+/// and of the SVG part its extension names; its alt text and its title.
+struct Drawing {
+    alt: String,
+    embed: Option<String>,
+    link: Option<String>,
+    svg: Option<String>,
+    title: Option<String>,
+}
+
+/// A complex field open: its instruction so far, whether its result has started, and the link
+/// its result is when its instruction is `HYPERLINK`.
+struct Field {
+    instruction: String,
+    link: Option<usize>,
+    result: bool,
+}
+
 /// The lines of a paragraph as they are built: the stretch of text of the same marks still to
-/// write, the line it goes on, and the lines before.
-#[derive(Default)]
-struct Lines {
+/// write, the link it goes in, the line they go on, and the lines before.
+struct Lines<'links> {
     done: Vec<Line>,
     line: Vec<Inline>,
+    /// The link open on the line: its index in `links`, and its text so far.
+    link: Option<(usize, Vec<LinkInline>)>,
+    links: &'links Links,
     marks: Marks,
     stretch: String,
 }
 
-/// Whether a stretch of text is bold, code, or italic.
+/// The target and the title of every link met, each once.
+#[derive(Default)]
+struct Links {
+    targets: Vec<(String, Option<String>)>,
+}
+
+/// Whether a stretch of text is bold, code, or italic, and the link it is the text of, by its
+/// index in [`Links`].
 #[derive(Clone, Copy, Default, PartialEq, Eq)]
 struct Marks {
     bold: bool,
     code: bool,
     italic: bool,
+    link: Option<usize>,
+}
+
+/// The numbering part's instances and abstract numberings.
+#[derive(Default)]
+pub struct Numbering {
+    root: NumberingDefinitions,
+}
+
+/// A list still open: its numbering instance and level, its first number when ordered, and the
+/// blocks of each of its items.
+struct OpenList {
+    instance: i64,
+    items: Vec<Vec<Block>>,
+    level: usize,
+    start: Option<u64>,
+}
+
+/// The blocks of one stretch of markdown, the body or a table cell's, as they are built: the
+/// paragraphs gathered into a code block or a block quote and the list they go into, by its
+/// index in `lists`, the lists open, and the sections.
+#[derive(Default)]
+struct Output {
+    gathered: Vec<String>,
+    gathering: Option<(Gathering, Option<usize>)>,
+    lists: Vec<OpenList>,
+    sections: Sections,
+}
+
+/// The parts the main part relates to, by relationship id, and the pictures exported so far.
+pub struct Parts<'package> {
+    /// Write each picture as a data URI.
+    embed: bool,
+    /// The folded names of the image parts in `images`.
+    exported: BTreeSet<String>,
+    images: Vec<(String, Vec<u8>)>,
+    media: &'package str,
+    package: &'package Package,
+    related: BTreeMap<String, RelatedPart>,
 }
 
 /// What the runs of one paragraph give: its pieces, and the text boxes they hold.
@@ -122,19 +221,31 @@ pub struct Styles {
 }
 
 /// The walk of a body in document order.
-struct Walk<'styles> {
-    /// Each complex field open, innermost last: whether its result has started.
-    fields: Vec<bool>,
-    gathered: Vec<String>,
-    gathering: Option<Gathering>,
-    sections: Sections,
-    styles: &'styles Styles,
+struct Walk<'walk> {
+    /// Each complex field open, innermost last.
+    fields: Vec<Field>,
+    /// The link of the `w:hyperlink` or `HYPERLINK` simple field being read, and how many complex
+    /// fields were open when it started.
+    hyperlink: Option<(usize, usize)>,
+    links: Links,
+    numbering: &'walk Numbering,
+    output: Output,
+    parts: Parts<'walk>,
+    styles: &'walk Styles,
 }
 
-impl Lines {
+impl<'links> Lines<'links> {
+    /// The open link, as a link node at the end of the line.
+    fn close_link(&mut self) {
+        if let Some((index, children)) = self.link.take() {
+            self.line.extend(self.links.node(index, children));
+        }
+    }
+
     /// The lines, without the hard line breaks that end the paragraph.
     fn finish(mut self) -> Vec<Line> {
         self.flush();
+        self.close_link();
         self.done.push(Line::new(mem::take(&mut self.line)));
         while self
             .done
@@ -151,17 +262,18 @@ impl Lines {
         self.done
     }
 
-    /// The stretch as its node: bold as strong, italic as emphasis holding it, code inside both;
-    /// the spaces at the ends of a bold or italic stretch go outside it.
+    /// The stretch as its node, inside its link: bold as strong, italic as emphasis holding it,
+    /// code inside both; the spaces at the ends of a bold or italic stretch go outside it.
     fn flush(&mut self) {
         let text = mem::take(&mut self.stretch);
         if text.is_empty() {
             return;
         }
         let marks = self.marks;
+        self.open(marks.link);
         if !marks.bold && !marks.italic {
             if marks.code {
-                self.push(Inline::Code(Code::new(text)));
+                self.push_marked(marks, &text);
             } else {
                 self.push_text(&text);
             }
@@ -175,6 +287,72 @@ impl Lines {
         let start = text.len() - text.trim_start_matches(char::is_whitespace).len();
         let end = start + core.len();
         self.push_text(&text[..start]);
+        self.push_marked(marks, core);
+        self.push_text(&text[end..]);
+    }
+
+    /// `image`, inside `link`.
+    fn image(&mut self, link: Option<usize>, image: Image) {
+        self.flush();
+        self.open(link);
+        if let Some((_, children)) = &mut self.link {
+            children.push(LinkInline::Image(image));
+        } else {
+            self.line.push(Inline::Image(image));
+        }
+    }
+
+    /// End the line with a hard line break, outside any link; the text after it starts the next
+    /// line.
+    fn line_break(&mut self) {
+        self.flush();
+        self.close_link();
+        self.line.push(Inline::LineBreak(LineBreak::default()));
+        self.done.push(Line::new(mem::take(&mut self.line)));
+    }
+
+    const fn new(links: &'links Links) -> Self {
+        Self {
+            done: Vec::new(),
+            line: Vec::new(),
+            link: None,
+            links,
+            marks: Marks {
+                bold: false,
+                code: false,
+                italic: false,
+                link: None,
+            },
+            stretch: String::new(),
+        }
+    }
+
+    /// Make `link` the open link, closing the one open when it is another.
+    fn open(&mut self, link: Option<usize>) {
+        if self.link.as_ref().map(|(index, _)| *index) == link {
+            return;
+        }
+        self.close_link();
+        self.link = link.map(|index| (index, Vec::new()));
+    }
+
+    /// `core`, bold, code or italic as `marks` say, inside the open link if any.
+    fn push_marked(&mut self, marks: Marks, core: &str) {
+        if let Some((_, children)) = &mut self.link {
+            let mut node = if marks.code {
+                LinkInline::Code(Code::new(core.to_owned()))
+            } else {
+                LinkInline::Text(Text::new(core.to_owned()))
+            };
+            if marks.bold {
+                node = LinkInline::Strong(LinkStrong::new(alloc::vec![node]));
+            }
+            if marks.italic {
+                node = LinkInline::Emphasis(LinkEmphasis::new(alloc::vec![node]));
+            }
+            children.push(node);
+            return;
+        }
         let mut node = if marks.code {
             Inline::Code(Code::new(core.to_owned()))
         } else {
@@ -186,30 +364,26 @@ impl Lines {
         if marks.italic {
             node = Inline::Emphasis(Emphasis::new(alloc::vec![node]));
         }
-        self.push(node);
-        self.push_text(&text[end..]);
-    }
-
-    /// End the line with a hard line break; the text after it starts the next line.
-    fn line_break(&mut self) {
-        self.flush();
-        self.line.push(Inline::LineBreak(LineBreak::default()));
-        self.done.push(Line::new(mem::take(&mut self.line)));
-    }
-
-    fn push(&mut self, node: Inline) {
         self.line.push(node);
     }
 
-    /// Plain `text`, joined to the plain text before it.
+    /// Plain `text`, joined to the plain text before it, inside the open link if any.
     fn push_text(&mut self, text: &str) {
         if text.is_empty() {
+            return;
+        }
+        if let Some((_, children)) = &mut self.link {
+            if let Some(LinkInline::Text(last)) = children.last_mut() {
+                last.value.push_str(text);
+            } else {
+                children.push(LinkInline::Text(Text::new(text.to_owned())));
+            }
             return;
         }
         if let Some(Inline::Text(last)) = self.line.last_mut() {
             last.value.push_str(text);
         } else {
-            self.push(Inline::Text(Text::new(text.to_owned())));
+            self.line.push(Inline::Text(Text::new(text.to_owned())));
         }
     }
 
@@ -223,9 +397,399 @@ impl Lines {
     }
 }
 
+impl Links {
+    /// The index of the link to `target` titled `title`, added when it is new.
+    fn index(&mut self, target: String, title: Option<String>) -> usize {
+        if let Some(found) = self
+            .targets
+            .iter()
+            .position(|(known, known_title)| *known == target && *known_title == title)
+        {
+            return found;
+        }
+        self.targets.push((target, title));
+        self.targets.len() - 1
+    }
+
+    /// The node of link `index`, whose text is `children`.
+    fn node(&self, index: usize, children: Vec<LinkInline>) -> Option<Inline> {
+        self.targets.get(index).map(|(target, title)| {
+            Inline::Link(Link::new(
+                LinkForm::Markdown,
+                target.clone(),
+                title.clone(),
+                children,
+            ))
+        })
+    }
+}
+
+impl Numbering {
+    /// What level `level` of numbering instance `instance` makes a paragraph: the level the
+    /// instance's `w:lvlOverride` gives, else its abstract numbering's; a bullet item, a hidden
+    /// number, or an ordered item from the override's `w:startOverride` or the level's `w:start`.
+    fn of(&self, instance: i64, level: usize) -> Numbered {
+        let Some(definition) = self
+            .root
+            .numbering_definition_instance
+            .iter()
+            .find(|candidate| number(candidate.num_id.as_ref()) == Some(instance))
+        else {
+            return Numbered::Unnumbered;
+        };
+        let level_override = definition
+            .numbering_level_definition_override
+            .iter()
+            .find(|candidate| level_number(candidate.ilvl.as_ref()) == Some(level));
+        let abstract_id = number(
+            definition
+                .abstract_numbering_definition_reference
+                .val
+                .as_ref(),
+        );
+        let Some(level_definition) = level_override
+            .and_then(|found| found.numbering_level_override_definition.as_deref())
+            .or_else(|| {
+                self.root
+                    .abstract_numbering_definition
+                    .iter()
+                    .find(|candidate| {
+                        abstract_id.is_some()
+                            && number(candidate.abstract_num_id.as_ref()) == abstract_id
+                    })?
+                    .numbering_level_override_definition
+                    .iter()
+                    .find(|candidate| level_number(candidate.ilvl.as_ref()) == Some(level))
+            })
+        else {
+            return Numbered::Unnumbered;
+        };
+        let format = level_definition
+            .numbering_format
+            .as_ref()
+            .and_then(|format| format.val.as_ref())
+            .map(StNumberFormat::value)
+            .and_then(Result::ok);
+        match format {
+            Some(StNumberFormatMember::Bullet) => Numbered::Item {
+                instance,
+                level,
+                start: None,
+            },
+            Some(StNumberFormatMember::None) => Numbered::Hidden,
+            Some(_) | None => {
+                let first = level_override
+                    .and_then(|found| found.numbering_level_starting_value_override.as_ref())
+                    .and_then(|start| number(start.val.as_ref()))
+                    .or_else(|| {
+                        let start = level_definition.starting_value.as_ref()?;
+                        number(start.val.as_ref())
+                    });
+                Numbered::Item {
+                    instance,
+                    level,
+                    start: Some(
+                        first
+                            .and_then(|value| u64::try_from(value).ok())
+                            .unwrap_or(0),
+                    ),
+                }
+            }
+        }
+    }
+
+    /// The numbering part `main` relates to, read with `options`; none when it relates to none.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`numbering_definitions::load`].
+    pub fn read(
+        package: &Package,
+        main: &PartName,
+        options: OpenOptions,
+    ) -> Result<Self, PackageError> {
+        let Some(name) = related_part(package, main, &numbering_definitions::RELATIONSHIP_TYPE)?
+        else {
+            return Ok(Self::default());
+        };
+        Ok(Self {
+            root: numbering_definitions::load(package, &name, options)?,
+        })
+    }
+}
+
+impl OpenList {
+    /// The list, each item one section with no heading holding its blocks, or no section when it
+    /// holds none. It is tight unless an item holds two paragraphs one after the other, which
+    /// markdown has no tight form for.
+    fn into_block(self) -> Block {
+        let loose = self.items.iter().any(|blocks| {
+            blocks
+                .windows(2)
+                .any(|pair| matches!(pair, [Block::Paragraph(_), Block::Paragraph(_)]))
+        });
+        let items = self
+            .items
+            .into_iter()
+            .map(|blocks| {
+                let sections = if blocks.is_empty() {
+                    Vec::new()
+                } else {
+                    alloc::vec![Section::new(None, blocks, Vec::new())]
+                };
+                Item::new(MarkdownBlock::new(sections))
+            })
+            .collect();
+        Block::List(List::new(items, loose, self.start))
+    }
+}
+
+impl Output {
+    /// A block outside every list: the lists open close first.
+    fn block(&mut self, block: Block) {
+        self.flush();
+        self.close(0);
+        self.sections.block(block);
+    }
+
+    /// Close the lists open past the first `keep`, each into the last item of the list before it,
+    /// or into the sections.
+    fn close(&mut self, keep: usize) {
+        if self.lists.len() > keep {
+            self.flush();
+        }
+        while self.lists.len() > keep
+            && let Some(list) = self.lists.pop()
+        {
+            self.put(list.into_block(), self.lists.len().checked_sub(1));
+        }
+    }
+
+    /// The blocks, every list closed.
+    fn finish(mut self) -> MarkdownBlock {
+        self.flush();
+        self.close(0);
+        MarkdownBlock::new(self.sections.finish())
+    }
+
+    /// The code block or block quote of the paragraphs gathered, if any, where they go.
+    fn flush(&mut self) {
+        let Some((gathering, place)) = self.gathering.take() else {
+            return;
+        };
+        let value = mem::take(&mut self.gathered).join("\n");
+        let block = match gathering {
+            Gathering::Code => {
+                Block::CodeBlock(CodeBlock::new(None, Args::Toml(Mapping::new()), value))
+            }
+            Gathering::Quote => Block::BlockQuote(BlockQuote::new(value)),
+        };
+        self.put(block, place);
+    }
+
+    /// `line`, the text of a code or quote paragraph going into the list at `place`, or the
+    /// sections when `None`, after the lines of the paragraphs of its kind and place right before
+    /// it.
+    fn gather(&mut self, gathering: Gathering, place: Option<usize>, line: String) {
+        if self.gathering != Some((gathering, place)) {
+            self.flush();
+            self.gathering = Some((gathering, place));
+        }
+        self.gathered.push(line);
+    }
+
+    /// A new section of `heading` at `depth`, outside every list.
+    fn heading(&mut self, depth: usize, heading: Heading) {
+        self.flush();
+        self.close(0);
+        self.sections.heading(depth, heading);
+    }
+
+    /// A new item of the list of `instance` at `level`, ordered from `start` or bullets: in the
+    /// list open at that level when it is of the same instance, else in a new list, nested in the
+    /// item before when that is at a shallower level. Returns the list's index.
+    fn item(&mut self, instance: i64, level: usize, start: Option<u64>) -> usize {
+        self.flush();
+        let deeper = self
+            .lists
+            .iter()
+            .position(|list| list.level > level)
+            .unwrap_or(self.lists.len());
+        self.close(deeper);
+        if let Some(last) = self.lists.last_mut()
+            && last.level == level
+            && last.instance == instance
+        {
+            last.items.push(Vec::new());
+        } else {
+            if self.lists.last().is_some_and(|last| last.level == level) {
+                self.close(self.lists.len() - 1);
+            }
+            self.lists.push(OpenList {
+                instance,
+                items: alloc::vec![Vec::new()],
+                level,
+                start,
+            });
+        }
+        self.lists.len() - 1
+    }
+
+    /// The list whose last item a later block goes into: the one open at `level` when there is
+    /// one, else the innermost; the lists inside it close.
+    fn later(&mut self, level: Option<usize>) -> usize {
+        let index = level
+            .and_then(|wanted| self.lists.iter().position(|list| list.level == wanted))
+            .unwrap_or_else(|| self.lists.len().saturating_sub(1));
+        self.close(index + 1);
+        index
+    }
+
+    /// `block`, last in the last item of the list at `place`, or in the sections.
+    fn put(&mut self, block: Block, place: Option<usize>) {
+        if let Some(blocks) = place
+            .and_then(|index| self.lists.get_mut(index))
+            .and_then(|list| list.items.last_mut())
+        {
+            blocks.push(block);
+            return;
+        }
+        self.sections.block(block);
+    }
+}
+
+impl<'package> Parts<'package> {
+    /// The address relationship `id` names when its target is outside the package, or the name
+    /// of the part it names.
+    fn external(&self, id: &str) -> Option<String> {
+        let related = self.related.get(id)?;
+        match &related.target {
+            Target::External(address) => Some(address.clone()),
+            Target::Part(name) => Some(name.as_str().to_owned()),
+            _ => None,
+        }
+    }
+
+    /// The HTML between `<body>` and `</body>` of the HTML part relationship `id` names; `None`
+    /// when it names no HTML part or the body is empty.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::part_bytes`].
+    fn html(&self, id: &str) -> Result<Option<String>, PackageError> {
+        let Some((name, content_type)) = self.part(id) else {
+            return Ok(None);
+        };
+        if !content_type.eq_ignore_ascii_case(HTML_CONTENT_TYPE) {
+            return Ok(None);
+        }
+        let bytes = self.package.part_bytes(name)?;
+        let page = String::from_utf8_lossy(&bytes);
+        let body = html_body(&page);
+        Ok((!body.trim().is_empty()).then(|| body.to_owned()))
+    }
+
+    /// The part relationship `id` names and its content type, when the package holds it.
+    fn part(&self, id: &str) -> Option<(&PartName, &str)> {
+        let related = self.related.get(id)?;
+        if let Target::Part(name) = &related.target {
+            self.package
+                .content_type(name)
+                .map(|content_type| (name, content_type))
+        } else {
+            None
+        }
+    }
+
+    /// The target of the picture `drawing` names: `{media}/{file name}` of its SVG part, else of
+    /// its embedded part, or that part as a data URI when the pictures are embedded; else the
+    /// address of its linked picture. `None` when it names none the package holds.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::part_bytes`].
+    fn picture(&mut self, drawing: Drawing) -> Result<Option<Image>, PackageError> {
+        let part = drawing
+            .svg
+            .as_deref()
+            .and_then(|id| self.part(id))
+            .or_else(|| {
+                let id = drawing.embed.as_deref()?;
+                self.part(id)
+            })
+            .map(|(name, content_type)| (name.clone(), content_type.to_owned()));
+        let target = if let Some((name, content_type)) = part {
+            self.target_of(&name, &content_type)?
+        } else if let Some(address) = drawing.link.as_deref().and_then(|id| self.external(id)) {
+            address
+        } else {
+            return Ok(None);
+        };
+        Ok(Some(Image::new(
+            LinkForm::Markdown,
+            target,
+            drawing.title,
+            drawing.alt,
+        )))
+    }
+
+    /// The parts `main` relates to in `package`; each picture's target is in the folder `media`,
+    /// or a data URI when `embed` is set.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related`].
+    pub fn read(
+        package: &'package Package,
+        main: &PartName,
+        media: &'package str,
+        embed: bool,
+    ) -> Result<Self, PackageError> {
+        let related = package
+            .related(Some(main))?
+            .into_iter()
+            .map(|part| (part.id.clone(), part))
+            .collect();
+        Ok(Self {
+            embed,
+            exported: BTreeSet::new(),
+            images: Vec::new(),
+            media,
+            package,
+            related,
+        })
+    }
+
+    /// The target of the image part `name`: a data URI of `content_type` when the pictures are
+    /// embedded, else `{media}/{file name}`, its bytes exported the first time.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::part_bytes`].
+    fn target_of(&mut self, name: &PartName, content_type: &str) -> Result<String, PackageError> {
+        if self.embed {
+            let bytes = self.package.part_bytes(name)?;
+            return Ok(format!(
+                "data:{content_type};base64,{}",
+                STANDARD.encode(bytes)
+            ));
+        }
+        let file = name
+            .as_str()
+            .rsplit('/')
+            .next()
+            .unwrap_or_default()
+            .to_owned();
+        if self.exported.insert(name.folded()) {
+            let bytes = self.package.part_bytes(name)?;
+            self.images.push((file.clone(), bytes));
+        }
+        Ok(format!("{}/{file}", self.media))
+    }
+}
+
 impl Runs {
-    /// What a piece of a shown run gives: text, a tab, a hard line break, or the text boxes a
-    /// drawing holds.
+    /// What a piece of a shown run gives: text, a tab, or a hard line break.
     fn add(&mut self, item: &TextRunContent, marks: Marks) {
         match item {
             TextRunContent::Break(line) => {
@@ -238,12 +802,6 @@ impl Runs {
                 }
             }
             TextRunContent::CarriageReturn(_) => self.pieces.push(Piece::Break),
-            TextRunContent::DrawingMLObject(_)
-            | TextRunContent::EmbeddedObject(_)
-            | TextRunContent::Other(_)
-            | TextRunContent::VMLObject(_) => {
-                text_boxes(&officekit_markup::generic(item), &mut self.boxes);
-            }
             TextRunContent::NonBreakingHyphenCharacter(_) => self.text(marks, NON_BREAKING_HYPHEN),
             TextRunContent::TabCharacter(_) => self.text(marks, "\t"),
             TextRunContent::Text(text) => self.text(marks, &text.value),
@@ -261,6 +819,8 @@ impl Runs {
             | TextRunContent::DateBlockShortYearFormat(_)
             | TextRunContent::DeletedFieldCode(_)
             | TextRunContent::DeletedText(_)
+            | TextRunContent::DrawingMLObject(_)
+            | TextRunContent::EmbeddedObject(_)
             | TextRunContent::EndnoteReference(_)
             | TextRunContent::EndnoteReferenceMark(_)
             | TextRunContent::FieldCode(_)
@@ -268,27 +828,27 @@ impl Runs {
             | TextRunContent::FootnoteReference(_)
             | TextRunContent::FootnoteReferenceMark(_)
             | TextRunContent::OptionalHyphenCharacter(_)
+            | TextRunContent::Other(_)
             | TextRunContent::PageNumberBlock(_)
             | TextRunContent::PhoneticGuide(_)
             | TextRunContent::PositionOfLastCalculatedPageBreak(_)
             | TextRunContent::SymbolCharacter(_)
+            | TextRunContent::VMLObject(_)
             | _ => {}
         }
     }
 
-    /// Whether the pieces hold a character other than white space.
-    fn has_text(&self) -> bool {
-        self.pieces.iter().any(|piece| match piece {
-            Piece::Break => false,
-            Piece::Text(_, text) => text.chars().any(|character| !character.is_whitespace()),
-        })
-    }
-
     /// The text of an equation, plain.
-    fn math(&mut self, item: &Node) {
+    fn math(&mut self, item: &Node, link: Option<usize>) {
         let mut text = String::new();
         math_text(item, &mut text);
-        self.text(Marks::default(), &text);
+        self.text(
+            Marks {
+                link,
+                ..Marks::default()
+            },
+            &text,
+        );
     }
 
     /// `text` of `marks`, joined to the text before it when that has the same marks.
@@ -401,6 +961,15 @@ impl Styles {
         })
     }
 
+    /// Whether a paragraph of `properties` is styled `ListParagraph`.
+    fn is_list_paragraph(&self, properties: Option<&ParagraphProperties>) -> bool {
+        self.is(
+            self.paragraph_style(properties),
+            LIST_PARAGRAPH,
+            LIST_PARAGRAPH_NAME,
+        )
+    }
+
     /// What a paragraph of `properties` is: a heading, a line of code or of a quote, or plain.
     fn kind(&self, properties: Option<&ParagraphProperties>) -> Kind {
         self.heading_level(properties).map_or_else(
@@ -456,7 +1025,35 @@ impl Styles {
                         .any(|code| code.eq_ignore_ascii_case(name))
                 }),
             italic: first(italic),
+            link: None,
         }
+    }
+
+    /// The numbering instance and level of a paragraph of `properties`: its own `w:numPr`, else
+    /// the first its style's chain gives; the level is 0 when neither names one.
+    fn numbering(&self, properties: Option<&ParagraphProperties>) -> Option<(i64, usize)> {
+        let own = properties.and_then(|paragraph| {
+            paragraph
+                .numbering_definition_instance_reference_num_pr
+                .as_deref()
+        });
+        let styled = self
+            .chain(self.paragraph_style(properties))
+            .into_iter()
+            .find_map(|style| {
+                let general = style.paragraph_properties_p_pr_general.as_ref()?;
+                general
+                    .numbering_definition_instance_reference_num_pr
+                    .as_deref()
+            });
+        let instance = own
+            .and_then(numbering_instance)
+            .or_else(|| styled.and_then(numbering_instance))?;
+        let level = own
+            .and_then(numbering_level)
+            .or_else(|| styled.and_then(numbering_level))
+            .unwrap_or(0);
+        Some((instance, level))
     }
 
     /// The paragraph style of a paragraph of `properties`: its own, else the default one.
@@ -481,17 +1078,7 @@ impl Styles {
         main: &PartName,
         options: OpenOptions,
     ) -> Result<Self, PackageError> {
-        let part = package
-            .related_by_type(Some(main), &RELATIONSHIP_TYPE)?
-            .into_iter()
-            .find_map(|related| {
-                if let Target::Part(name) = related.target {
-                    Some(name)
-                } else {
-                    None
-                }
-            });
-        let Some(name) = part else {
+        let Some(name) = related_part(package, main, &style_definitions::RELATIONSHIP_TYPE)? else {
             return Ok(Self::default());
         };
         let mut styles = Self::default();
@@ -509,21 +1096,21 @@ impl Styles {
 }
 
 impl Walk<'_> {
-    fn blocks(&mut self, blocks: &[BlockContent]) {
+    fn blocks(&mut self, blocks: &[BlockContent]) -> Result<(), PackageError> {
         for block in blocks {
             match block {
+                BlockContent::AnchorForImportedExternalContent(chunk) => self.html(chunk)?,
                 BlockContent::BlockLevelCustomXMLElement(element) => {
-                    self.content_blocks(&element.content);
+                    self.content_blocks(&element.content)?;
                 }
                 BlockContent::BlockLevelStructuredDocumentTag(tag) => {
                     if let Some(inner) = &tag.content {
-                        self.content_blocks(&inner.content);
+                        self.content_blocks(&inner.content)?;
                     }
                 }
-                BlockContent::Paragraph(paragraph) => self.paragraph(paragraph),
-                BlockContent::Table(table) => self.rows(&table.content_row_content),
-                BlockContent::AnchorForImportedExternalContent(_)
-                | BlockContent::BookmarkEnd(_)
+                BlockContent::Paragraph(paragraph) => self.paragraph(paragraph)?,
+                BlockContent::Table(table) => self.table(table)?,
+                BlockContent::BookmarkEnd(_)
                 | BlockContent::BookmarkStart(_)
                 | BlockContent::CommentAnchorRangeEnd(_)
                 | BlockContent::CommentAnchorRangeStart(_)
@@ -558,72 +1145,86 @@ impl Walk<'_> {
                 | _ => {}
             }
         }
+        Ok(())
     }
 
-    /// The cells of a table row, each cell's blocks in order.
-    fn cells(&mut self, cells: &[ContentCellContent]) {
-        for item in cells {
-            match item {
-                ContentCellContent::CellLevelCustomXMLElement(element) => {
-                    self.cells(&element.content);
+    /// A table cell's blocks, converted by these same rules into a markdown block of their own.
+    fn cell(&mut self, cell: &TableCell) -> Result<ArchieTableCell, PackageError> {
+        let outer = mem::take(&mut self.output);
+        let walked = self.blocks(&cell.content);
+        let inner = mem::replace(&mut self.output, outer);
+        walked?;
+        Ok(ArchieTableCell::new(inner.finish()))
+    }
+
+    /// The paragraph's pieces of `kind`, as the block they give at `place`: the list whose last
+    /// item they go into, or the sections when `None`.
+    fn content(
+        &mut self,
+        kind: Kind,
+        pieces: Vec<Piece>,
+        properties: Option<&ParagraphProperties>,
+        place: Option<usize>,
+    ) {
+        let has_text = has_text(&pieces);
+        match kind {
+            Kind::Code => self.output.gather(Gathering::Code, place, plain(pieces)),
+            Kind::Heading(level) if level <= DEEPEST => {
+                self.output.flush();
+                if has_text {
+                    let heading = Heading::new(heading_inlines(pieces, &self.links));
+                    self.output.heading(level, heading);
                 }
-                ContentCellContent::CellLevelStructuredDocumentTag(tag) => {
-                    if let Some(inner) = &tag.content {
-                        self.cells(&inner.content);
-                    }
-                }
-                ContentCellContent::TableCell(cell) => self.blocks(&cell.content),
-                ContentCellContent::BookmarkEnd(_)
-                | ContentCellContent::BookmarkStart(_)
-                | ContentCellContent::CommentAnchorRangeEnd(_)
-                | ContentCellContent::CommentAnchorRangeStart(_)
-                | ContentCellContent::ConflictDelRunTrackChange(_)
-                | ContentCellContent::ConflictInsRunTrackChange(_)
-                | ContentCellContent::CustomXMLMarkupDeletionEnd(_)
-                | ContentCellContent::CustomXMLMarkupDeletionStart(_)
-                | ContentCellContent::CustomXMLMarkupInsertionEnd(_)
-                | ContentCellContent::CustomXMLMarkupInsertionStart(_)
-                | ContentCellContent::CustomXMLMarkupMoveSourceEnd(_)
-                | ContentCellContent::CustomXMLMarkupMoveSourceStart(_)
-                | ContentCellContent::CustomXmlConflictDelRangeEnd(_)
-                | ContentCellContent::CustomXmlConflictDelRangeStart(_)
-                | ContentCellContent::CustomXmlConflictInsRangeEnd(_)
-                | ContentCellContent::CustomXmlConflictInsRangeStart(_)
-                | ContentCellContent::CustomXmlMoveToRangeEnd(_)
-                | ContentCellContent::CustomXmlMoveToRangeStart(_)
-                | ContentCellContent::DeletedRunContent(_)
-                | ContentCellContent::InsertedRunContent(_)
-                | ContentCellContent::MoveDestinationLocationContainerEnd(_)
-                | ContentCellContent::MoveDestinationLocationContainerStart(_)
-                | ContentCellContent::MoveDestinationRunContent(_)
-                | ContentCellContent::MoveSourceLocationContainerEnd(_)
-                | ContentCellContent::MoveSourceLocationContainerStart(_)
-                | ContentCellContent::MoveSourceRunContent(_)
-                | ContentCellContent::OfficeMath(_)
-                | ContentCellContent::OfficeMathParagraph(_)
-                | ContentCellContent::Other(_)
-                | ContentCellContent::ProofingErrorAnchor(_)
-                | ContentCellContent::RangePermissionEnd(_)
-                | ContentCellContent::RangePermissionStart(_)
-                | _ => {}
             }
+            Kind::Heading(_) => {
+                self.output.flush();
+                if has_text {
+                    let bold = pieces.into_iter().map(|piece| match piece {
+                        Piece::Text(marks, text) => Piece::Text(
+                            Marks {
+                                bold: true,
+                                ..marks
+                            },
+                            text,
+                        ),
+                        Piece::Break | Piece::Image(..) => piece,
+                    });
+                    let paragraph = ArchieParagraph::new(lines(bold, &self.links));
+                    self.output.put(Block::Paragraph(paragraph), place);
+                }
+            }
+            Kind::Plain => {
+                self.output.flush();
+                let block = if has_text || has_picture(&pieces) {
+                    Some(Block::Paragraph(ArchieParagraph::new(lines(
+                        pieces,
+                        &self.links,
+                    ))))
+                } else {
+                    is_rule(properties).then(|| Block::ThematicBreak(ThematicBreak::default()))
+                };
+                if let Some(rule_or_paragraph) = block {
+                    self.output.put(rule_or_paragraph, place);
+                }
+            }
+            Kind::Quote => self.output.gather(Gathering::Quote, place, plain(pieces)),
         }
     }
 
     /// The blocks of a content control or a custom XML element.
-    fn content_blocks(&mut self, blocks: &[ContentBlockContent]) {
+    fn content_blocks(&mut self, blocks: &[ContentBlockContent]) -> Result<(), PackageError> {
         for block in blocks {
             match block {
                 ContentBlockContent::BlockLevelCustomXMLElement(element) => {
-                    self.content_blocks(&element.content);
+                    self.content_blocks(&element.content)?;
                 }
                 ContentBlockContent::BlockLevelStructuredDocumentTag(tag) => {
                     if let Some(inner) = &tag.content {
-                        self.content_blocks(&inner.content);
+                        self.content_blocks(&inner.content)?;
                     }
                 }
-                ContentBlockContent::Paragraph(paragraph) => self.paragraph(paragraph),
-                ContentBlockContent::Table(table) => self.rows(&table.content_row_content),
+                ContentBlockContent::Paragraph(paragraph) => self.paragraph(paragraph)?,
+                ContentBlockContent::Table(table) => self.table(table)?,
                 ContentBlockContent::BookmarkEnd(_)
                 | ContentBlockContent::BookmarkStart(_)
                 | ContentBlockContent::CommentAnchorRangeEnd(_)
@@ -659,9 +1260,30 @@ impl Walk<'_> {
                 | _ => {}
             }
         }
+        Ok(())
     }
 
-    /// A `w:fldChar`: `begin` opens a field, `separate` starts its result, `end` closes it.
+    /// The pictures and the text boxes of `node`, an object a run holds, the pictures inside
+    /// `link`.
+    fn embedded(
+        &mut self,
+        node: &Node,
+        link: Option<usize>,
+        runs: &mut Runs,
+    ) -> Result<(), PackageError> {
+        text_boxes(node, &mut runs.boxes);
+        let mut found = Vec::new();
+        drawings(node, &mut found);
+        for drawing in found {
+            if let Some(image) = self.parts.picture(drawing)? {
+                runs.pieces.push(Piece::Image(link, image));
+            }
+        }
+        Ok(())
+    }
+
+    /// A `w:fldChar`: `begin` opens a field, `separate` starts its result, a link when its
+    /// instruction is `HYPERLINK`, `end` closes it.
     fn field_character(&mut self, character: &ComplexFieldCharacter) {
         let Some(Ok(kind)) = character
             .fld_char_type
@@ -671,131 +1293,186 @@ impl Walk<'_> {
             return;
         };
         match kind {
-            ComplexFieldCharacterTypeMember::Begin => self.fields.push(false),
+            ComplexFieldCharacterTypeMember::Begin => self.fields.push(Field {
+                instruction: String::new(),
+                link: None,
+                result: false,
+            }),
             ComplexFieldCharacterTypeMember::End => {
                 self.fields.pop();
             }
             ComplexFieldCharacterTypeMember::Separate => {
-                if let Some(result) = self.fields.last_mut() {
-                    *result = true;
+                let address = self
+                    .fields
+                    .last()
+                    .and_then(|field| hyperlink_address(&field.instruction));
+                let link = address.map(|target| self.links.index(target, None));
+                if let Some(field) = self.fields.last_mut() {
+                    field.link = link;
+                    field.result = true;
                 }
             }
             _ => {}
         }
     }
 
-    /// The code block or block quote of the paragraphs gathered, if any.
-    fn flush(&mut self) {
-        let Some(gathering) = self.gathering.take() else {
-            return;
-        };
-        let value = mem::take(&mut self.gathered).join("\n");
-        let block = match gathering {
-            Gathering::Code => {
-                Block::CodeBlock(CodeBlock::new(None, Args::Toml(Mapping::new()), value))
-            }
-            Gathering::Quote => Block::BlockQuote(BlockQuote::new(value)),
-        };
-        self.sections.block(block);
-    }
-
-    /// `line`, the text of a code or quote paragraph, after the lines of the paragraphs of its
-    /// kind right before it.
-    fn gather(&mut self, gathering: Gathering, line: String) {
-        if self.gathering != Some(gathering) {
-            self.flush();
-            self.gathering = Some(gathering);
+    /// The HTML block of a `w:altChunk` naming an HTML part.
+    fn html(&mut self, chunk: &AnchorForImportedExternalContent) -> Result<(), PackageError> {
+        if let Some(id) = &chunk.id
+            && let Some(html) = self.parts.html(id)?
+        {
+            self.output.block(Block::Html(Html::new(html)));
         }
-        self.gathered.push(line);
+        Ok(())
     }
 
-    /// A paragraph as the node its kind gives, then the paragraphs of its text boxes.
-    fn paragraph(&mut self, paragraph: &Paragraph) {
+    /// The link of a `w:hyperlink`: its relationship's target, else `#` and its anchor; its
+    /// tooltip as the title.
+    fn hyperlink(&mut self, hyperlink: &Hyperlink) -> Option<usize> {
+        let target = hyperlink
+            .id
+            .as_deref()
+            .and_then(|id| self.parts.external(id))
+            .or_else(|| hyperlink.anchor.as_deref().map(anchor_target))?;
+        let title = hyperlink
+            .tooltip
+            .clone()
+            .filter(|tooltip| !tooltip.is_empty());
+        Some(self.links.index(target, title))
+    }
+
+    /// The text of a complex field's instruction, while it is read.
+    fn instruction(&mut self, text: &str) {
+        if let Some(field) = self.fields.last_mut()
+            && !field.result
+        {
+            field.instruction.push_str(text);
+        }
+    }
+
+    /// The link the text read now is in: the outermost of the `w:hyperlink` and the `HYPERLINK`
+    /// fields open.
+    fn link(&self) -> Option<usize> {
+        let open = self.hyperlink.map_or(self.fields.len(), |(_, fields)| {
+            fields.min(self.fields.len())
+        });
+        let (outer, inner) = self.fields.split_at(open);
+        outer
+            .iter()
+            .find_map(|field| field.link)
+            .or_else(|| self.hyperlink.map(|(link, _)| link))
+            .or_else(|| inner.iter().find_map(|field| field.link))
+    }
+
+    /// `content`, the text of `link` unless a link is already being read, whose text it then
+    /// joins.
+    fn linked(
+        &mut self,
+        link: Option<usize>,
+        content: &[ParagraphContent],
+        runs: &mut Runs,
+    ) -> Result<(), PackageError> {
+        let outer = self.hyperlink;
+        if outer.is_none()
+            && let Some(index) = link
+        {
+            self.hyperlink = Some((index, self.fields.len()));
+        }
+        let walked = self.paragraph_content(content, runs);
+        self.hyperlink = outer;
+        walked
+    }
+
+    /// A paragraph as the node its kind gives: a list item, a later block of the list item before
+    /// it, or a block of its own; then the paragraphs of its text boxes.
+    fn paragraph(&mut self, paragraph: &Paragraph) -> Result<(), PackageError> {
         let mut runs = Runs::default();
-        self.paragraph_content(&paragraph.content, &mut runs);
-        let has_text = runs.has_text();
+        self.paragraph_content(&paragraph.content, &mut runs)?;
         let Runs { boxes, pieces } = runs;
         let properties = paragraph.properties.as_deref();
-        match self.styles.kind(properties) {
-            Kind::Code => self.gather(Gathering::Code, plain(pieces)),
-            Kind::Heading(level) if level <= DEEPEST => {
-                self.flush();
-                if has_text {
-                    self.sections
-                        .heading(level, Heading::new(heading_inlines(pieces)));
+        let kind = self.styles.kind(properties);
+        let numbered = if matches!(kind, Kind::Heading(_)) {
+            Numbered::Unnumbered
+        } else {
+            self.styles
+                .numbering(properties)
+                .map_or(Numbered::Unnumbered, |(instance, level)| {
+                    self.numbering.of(instance, level)
+                })
+        };
+        match numbered {
+            Numbered::Hidden => {
+                self.output.close(0);
+                self.content(kind, pieces, properties, None);
+            }
+            Numbered::Item {
+                instance,
+                level,
+                start,
+            } => {
+                let index = self.output.item(instance, level, start);
+                if has_text(&pieces) || has_picture(&pieces) {
+                    let opening = ArchieParagraph::new(lines(pieces, &self.links));
+                    self.output.put(Block::Paragraph(opening), Some(index));
                 }
             }
-            Kind::Heading(_) => {
-                self.flush();
-                if has_text {
-                    let bold = pieces.into_iter().map(|piece| match piece {
-                        Piece::Break => Piece::Break,
-                        Piece::Text(marks, text) => Piece::Text(
-                            Marks {
-                                bold: true,
-                                ..marks
-                            },
-                            text,
-                        ),
-                    });
-                    self.sections
-                        .block(Block::Paragraph(ArchieParagraph::new(lines(bold))));
-                }
+            Numbered::Unnumbered => {
+                let shows = has_text(&pieces) || has_picture(&pieces);
+                let place = self.place(kind, shows, properties);
+                self.content(kind, pieces, properties, place);
             }
-            Kind::Plain => {
-                self.flush();
-                let block = if has_text {
-                    Some(Block::Paragraph(ArchieParagraph::new(lines(pieces))))
-                } else {
-                    is_rule(properties).then(|| Block::ThematicBreak(ThematicBreak::default()))
-                };
-                if let Some(rule_or_paragraph) = block {
-                    self.sections.block(rule_or_paragraph);
-                }
-            }
-            Kind::Quote => self.gather(Gathering::Quote, plain(pieces)),
         }
         for text_box in boxes {
-            self.blocks(&text_box.content);
+            self.blocks(&text_box.content)?;
         }
+        Ok(())
     }
 
-    fn paragraph_content(&mut self, content: &[ParagraphContent], runs: &mut Runs) {
+    fn paragraph_content(
+        &mut self,
+        content: &[ParagraphContent],
+        runs: &mut Runs,
+    ) -> Result<(), PackageError> {
         for item in content {
             match item {
                 ParagraphContent::BidirectionalEmbeddingLevel(level) => {
-                    self.paragraph_content(&level.content, runs);
+                    self.paragraph_content(&level.content, runs)?;
                 }
                 ParagraphContent::BidirectionalOverride(direction) => {
-                    self.paragraph_content(&direction.content, runs);
+                    self.paragraph_content(&direction.content, runs)?;
                 }
-                ParagraphContent::Hyperlink(link) => self.paragraph_content(&link.content, runs),
+                ParagraphContent::Hyperlink(hyperlink) => {
+                    let link = self.hyperlink(hyperlink);
+                    self.linked(link, &hyperlink.content, runs)?;
+                }
                 ParagraphContent::InlineLevelCustomXMLElement(element) => {
-                    self.paragraph_content(&element.content, runs);
+                    self.paragraph_content(&element.content, runs)?;
                 }
                 ParagraphContent::InlineLevelSmartTag(tag) => {
-                    self.paragraph_content(&tag.content, runs);
+                    self.paragraph_content(&tag.content, runs)?;
                 }
                 ParagraphContent::InlineLevelStructuredDocumentTag(tag) => {
                     if let Some(inner) = &tag.content {
-                        self.paragraph_content(&inner.content, runs);
+                        self.paragraph_content(&inner.content, runs)?;
                     }
                 }
                 ParagraphContent::InsertedRunContent(insertion) => {
-                    self.tracked(&insertion.content, runs);
+                    self.tracked(&insertion.content, runs)?;
                 }
                 ParagraphContent::MoveDestinationRunContent(destination) => {
-                    self.tracked(&destination.content, runs);
+                    self.tracked(&destination.content, runs)?;
                 }
                 ParagraphContent::OfficeMath(_) | ParagraphContent::OfficeMathParagraph(_) => {
                     if self.shown() {
-                        runs.math(&officekit_markup::generic(item));
+                        runs.math(&officekit_markup::generic(item), self.link());
                     }
                 }
                 ParagraphContent::SimpleField(field) => {
-                    self.paragraph_content(&field.content, runs);
+                    let address = field.instr.as_deref().and_then(hyperlink_address);
+                    let link = address.map(|target| self.links.index(target, None));
+                    self.linked(link, &field.content, runs)?;
                 }
-                ParagraphContent::TextRun(run) => self.run(run, runs),
+                ParagraphContent::TextRun(run) => self.run(run, runs)?,
                 ParagraphContent::AnchorForSubdocumentLocation(_)
                 | ParagraphContent::BookmarkEnd(_)
                 | ParagraphContent::BookmarkStart(_)
@@ -828,119 +1505,195 @@ impl Walk<'_> {
                 | _ => {}
             }
         }
+        Ok(())
     }
 
-    /// The rows of a table, each row's cells in order.
-    fn rows(&mut self, rows: &[ContentRowContent]) {
-        self.flush();
-        for item in rows {
-            match item {
-                ContentRowContent::RowLevelCustomXMLElement(element) => {
-                    self.rows(&element.content);
-                }
-                ContentRowContent::RowLevelStructuredDocumentTag(tag) => {
-                    if let Some(inner) = &tag.content {
-                        self.rows(&inner.content);
-                    }
-                }
-                ContentRowContent::TableRow(row) => self.cells(&row.content),
-                ContentRowContent::BookmarkEnd(_)
-                | ContentRowContent::BookmarkStart(_)
-                | ContentRowContent::CommentAnchorRangeEnd(_)
-                | ContentRowContent::CommentAnchorRangeStart(_)
-                | ContentRowContent::ConflictDelRunTrackChange(_)
-                | ContentRowContent::ConflictInsRunTrackChange(_)
-                | ContentRowContent::CustomXMLMarkupDeletionEnd(_)
-                | ContentRowContent::CustomXMLMarkupDeletionStart(_)
-                | ContentRowContent::CustomXMLMarkupInsertionEnd(_)
-                | ContentRowContent::CustomXMLMarkupInsertionStart(_)
-                | ContentRowContent::CustomXMLMarkupMoveSourceEnd(_)
-                | ContentRowContent::CustomXMLMarkupMoveSourceStart(_)
-                | ContentRowContent::CustomXmlConflictDelRangeEnd(_)
-                | ContentRowContent::CustomXmlConflictDelRangeStart(_)
-                | ContentRowContent::CustomXmlConflictInsRangeEnd(_)
-                | ContentRowContent::CustomXmlConflictInsRangeStart(_)
-                | ContentRowContent::CustomXmlMoveToRangeEnd(_)
-                | ContentRowContent::CustomXmlMoveToRangeStart(_)
-                | ContentRowContent::DeletedRunContent(_)
-                | ContentRowContent::InsertedRunContent(_)
-                | ContentRowContent::MoveDestinationLocationContainerEnd(_)
-                | ContentRowContent::MoveDestinationLocationContainerStart(_)
-                | ContentRowContent::MoveDestinationRunContent(_)
-                | ContentRowContent::MoveSourceLocationContainerEnd(_)
-                | ContentRowContent::MoveSourceLocationContainerStart(_)
-                | ContentRowContent::MoveSourceRunContent(_)
-                | ContentRowContent::OfficeMath(_)
-                | ContentRowContent::OfficeMathParagraph(_)
-                | ContentRowContent::Other(_)
-                | ContentRowContent::ProofingErrorAnchor(_)
-                | ContentRowContent::RangePermissionEnd(_)
-                | ContentRowContent::RangePermissionStart(_)
-                | _ => {}
-            }
+    /// Where a paragraph of `kind` and `properties` with no numbering goes while a list is open:
+    /// the list whose last item it is a later block of, a `ListParagraph` paragraph, or a code,
+    /// quote or rule paragraph indented to a list level; else the lists close and it goes into
+    /// the sections.
+    fn place(
+        &mut self,
+        kind: Kind,
+        shows: bool,
+        properties: Option<&ParagraphProperties>,
+    ) -> Option<usize> {
+        if self.output.lists.is_empty() {
+            return None;
         }
-        self.flush();
+        let level = indent_level(properties);
+        let later = match kind {
+            Kind::Code | Kind::Quote => level.is_some(),
+            Kind::Heading(_) => false,
+            Kind::Plain => {
+                self.styles.is_list_paragraph(properties)
+                    || (level.is_some() && !shows && is_rule(properties))
+            }
+        };
+        if later {
+            Some(self.output.later(level))
+        } else {
+            self.output.close(0);
+            None
+        }
     }
 
-    /// A run's pieces, of the run's marks, and the text boxes of the nodes the schemas do not
-    /// declare in it, such as `mc:AlternateContent`; a field's instruction, and a result its field
-    /// does not show, give none.
-    fn run(&mut self, run: &TextRun, runs: &mut Runs) {
-        let marks = self.styles.marks(run.properties.as_deref());
+    /// A run's pieces, of the run's marks inside the link open, the pictures and text boxes of
+    /// the objects it holds, and of the nodes the schemas do not declare in it, such as
+    /// `mc:AlternateContent`; a field's instruction, and a result its field does not show, give
+    /// none.
+    fn run(&mut self, run: &TextRun, runs: &mut Runs) -> Result<(), PackageError> {
+        let own = self.styles.marks(run.properties.as_deref());
         for item in &run.content {
             if let TextRunContent::ComplexFieldCharacter(character) = item {
                 self.field_character(character);
                 continue;
             }
-            if self.shown() {
+            if let TextRunContent::FieldCode(code) = item {
+                self.instruction(&code.value);
+                continue;
+            }
+            if !self.shown() {
+                continue;
+            }
+            let marks = Marks {
+                link: self.link(),
+                ..own
+            };
+            if let TextRunContent::DrawingMLObject(_)
+            | TextRunContent::EmbeddedObject(_)
+            | TextRunContent::Other(_)
+            | TextRunContent::VMLObject(_) = item
+            {
+                self.embedded(&officekit_markup::generic(item), marks.link, runs)?;
+            } else {
                 runs.add(item, marks);
             }
         }
         if self.shown() {
+            let link = self.link();
             for extra in &run.unknown.children {
-                text_boxes(&extra.node, &mut runs.boxes);
+                self.embedded(&extra.node, link, runs)?;
             }
         }
+        Ok(())
     }
 
     /// Whether the text read now shows: every field open is in its result.
     fn shown(&self) -> bool {
-        self.fields.iter().all(|result| *result)
+        self.fields.iter().all(|field| field.result)
+    }
+
+    /// A table: its rows marked `w:tblHeader` as head rows, each column aligned by its first
+    /// row's cell, every row one cell per column, in grid form when it has no head rows or a cell
+    /// holds more than one paragraph, a list, a line break or a table.
+    fn table(&mut self, table: &Table) -> Result<(), PackageError> {
+        let mut rows = Vec::new();
+        table_rows(&table.content_row_content, &mut rows);
+        let mut alignments = Vec::new();
+        let mut head = Vec::new();
+        let mut body = Vec::new();
+        for (index, row) in rows.into_iter().enumerate() {
+            let cells = self.table_row(row, (index == 0).then_some(&mut alignments))?;
+            if is_head_row(row) {
+                head.push(cells);
+            } else {
+                body.push(cells);
+            }
+        }
+        let width = head.iter().chain(&body).map(Vec::len).max().unwrap_or(0);
+        if width == 0 {
+            return Ok(());
+        }
+        alignments.resize(width, Alignment::Default);
+        let rich = head
+            .iter()
+            .chain(&body)
+            .flatten()
+            .any(|cell| is_rich(&cell.body));
+        let format = if head.is_empty() || rich {
+            TableFormat::Grid
+        } else {
+            TableFormat::Pipe
+        };
+        let padded = |mut cells: Vec<ArchieTableCell>| {
+            cells.resize_with(width, empty_cell);
+            ArchieTableRow::new(cells)
+        };
+        let converted = ArchieTable::new(
+            format,
+            alignments,
+            head.into_iter().map(padded).collect(),
+            body.into_iter().map(padded).collect(),
+        );
+        self.output.block(Block::Table(converted));
+        Ok(())
+    }
+
+    /// The cells of a row: a cell spanning `n` columns is its cell and `n - 1` empty ones, a cell
+    /// continuing a vertical merge is empty. The alignment of each column it covers goes into
+    /// `alignments`, when given.
+    fn table_row(
+        &mut self,
+        row: &TableRow,
+        mut alignments: Option<&mut Vec<Alignment>>,
+    ) -> Result<Vec<ArchieTableCell>, PackageError> {
+        let mut word = Vec::new();
+        row_cells(&row.content, &mut word);
+        let mut cells = Vec::new();
+        for cell in word {
+            let span = grid_span(cell);
+            if let Some(columns) = alignments.as_mut() {
+                columns.push(cell_alignment(cell));
+                columns.extend(iter::repeat_n(Alignment::Default, span - 1));
+            }
+            if continues_merge(cell) {
+                cells.push(empty_cell());
+            } else {
+                cells.push(self.cell(cell)?);
+            }
+            cells.extend(iter::repeat_with(empty_cell).take(span - 1));
+        }
+        Ok(cells)
     }
 
     /// The content of an insertion or a move's destination, as if the change were accepted.
-    fn tracked(&mut self, content: &[TrackedRunContent], runs: &mut Runs) {
+    fn tracked(
+        &mut self,
+        content: &[TrackedRunContent],
+        runs: &mut Runs,
+    ) -> Result<(), PackageError> {
         for item in content {
             match item {
                 TrackedRunContent::BidirectionalEmbeddingLevel(level) => {
-                    self.paragraph_content(&level.content, runs);
+                    self.paragraph_content(&level.content, runs)?;
                 }
                 TrackedRunContent::BidirectionalOverride(direction) => {
-                    self.paragraph_content(&direction.content, runs);
+                    self.paragraph_content(&direction.content, runs)?;
                 }
                 TrackedRunContent::InlineLevelCustomXMLElement(element) => {
-                    self.paragraph_content(&element.content, runs);
+                    self.paragraph_content(&element.content, runs)?;
                 }
                 TrackedRunContent::InlineLevelSmartTag(tag) => {
-                    self.paragraph_content(&tag.content, runs);
+                    self.paragraph_content(&tag.content, runs)?;
                 }
                 TrackedRunContent::InlineLevelStructuredDocumentTag(tag) => {
                     if let Some(inner) = &tag.content {
-                        self.paragraph_content(&inner.content, runs);
+                        self.paragraph_content(&inner.content, runs)?;
                     }
                 }
                 TrackedRunContent::InsertedRunContent(insertion) => {
-                    self.tracked(&insertion.content, runs);
+                    self.tracked(&insertion.content, runs)?;
                 }
                 TrackedRunContent::MoveDestinationRunContent(destination) => {
-                    self.tracked(&destination.content, runs);
+                    self.tracked(&destination.content, runs)?;
                 }
                 TrackedRunContent::OfficeMath(_) | TrackedRunContent::OfficeMathParagraph(_) => {
                     if self.shown() {
-                        runs.math(&officekit_markup::generic(item));
+                        runs.math(&officekit_markup::generic(item), self.link());
                     }
                 }
-                TrackedRunContent::TextRun(run) => self.run(run, runs),
+                TrackedRunContent::TextRun(run) => self.run(run, runs)?,
                 TrackedRunContent::Accent(_)
                 | TrackedRunContent::ArrayObject(_)
                 | TrackedRunContent::Bar(_)
@@ -992,7 +1745,18 @@ impl Walk<'_> {
                 | _ => {}
             }
         }
+        Ok(())
     }
+}
+
+/// The target of a link to the bookmark `name`: `#` and the name with each `_` written `-`, the
+/// `_` that markdown to Word puts before a name starting with a digit dropped first.
+fn anchor_target(name: &str) -> String {
+    let named = name
+        .strip_prefix('_')
+        .filter(|rest| rest.starts_with(char::is_numeric))
+        .unwrap_or(name);
+    format!("#{}", named.replace('_', "-"))
 }
 
 /// The font of a run's `w:rFonts/@w:ascii`, when `property` gives one.
@@ -1002,6 +1766,18 @@ fn ascii_font(property: &RunPropertiesContent) -> Option<&str> {
     } else {
         None
     }
+}
+
+/// The value of `element`'s attribute `local` in the namespace the namespace table names
+/// `prefix`.
+fn attribute(element: &Element, prefix: &str, local: &str) -> Option<String> {
+    element
+        .attributes
+        .iter()
+        .find(|candidate| {
+            candidate.name.local == local && table_prefix(&candidate.name.namespace) == Some(prefix)
+        })
+        .map(|found| found.value.clone())
 }
 
 /// Whether `property` is `w:b`, and turns bold on.
@@ -1017,29 +1793,200 @@ fn bold(property: &RunPropertiesContent) -> Option<bool> {
     }
 }
 
-/// The archie document of `root`, its styles read from `styles`.
-pub fn document(root: &Document, styles: &Styles) -> ArchieDocument {
+/// The alignment of a column whose first row's cell is `cell`, from the `w:jc` of its first
+/// paragraph.
+fn cell_alignment(cell: &TableCell) -> Alignment {
+    let justification = cell
+        .content
+        .iter()
+        .find_map(|block| {
+            if let BlockContent::Paragraph(paragraph) = block {
+                Some(paragraph)
+            } else {
+                None
+            }
+        })
+        .and_then(|paragraph| paragraph.properties.as_deref())
+        .and_then(|properties| properties.paragraph_alignment.as_deref())
+        .and_then(|jc| jc.val.as_ref())
+        .map(HorizontalAlignmentType::value);
+    let Some(Ok(member)) = justification else {
+        return Alignment::Default;
+    };
+    match member {
+        HorizontalAlignmentTypeMember::Center => Alignment::Center,
+        HorizontalAlignmentTypeMember::End | HorizontalAlignmentTypeMember::Right => {
+            Alignment::Right
+        }
+        HorizontalAlignmentTypeMember::Left | HorizontalAlignmentTypeMember::Start => {
+            Alignment::Left
+        }
+        HorizontalAlignmentTypeMember::Both
+        | HorizontalAlignmentTypeMember::Distribute
+        | HorizontalAlignmentTypeMember::HighKashida
+        | HorizontalAlignmentTypeMember::LowKashida
+        | HorizontalAlignmentTypeMember::MediumKashida
+        | HorizontalAlignmentTypeMember::NumTab
+        | HorizontalAlignmentTypeMember::ThaiDistribute
+        | _ => Alignment::Default,
+    }
+}
+
+/// Whether `cell` continues a vertical merge: a `w:vMerge` whose value is not `restart`.
+fn continues_merge(cell: &TableCell) -> bool {
+    cell.properties
+        .as_ref()
+        .and_then(|properties| properties.vertically_merged_cell.as_ref())
+        .is_some_and(|merge| {
+            !matches!(
+                merge.val.as_ref().map(MergedCellType::value),
+                Some(Ok(MergedCellTypeMember::Restart))
+            )
+        })
+}
+
+/// The first element under `element` named `local` in the namespace the namespace table names
+/// `prefix`, in document order, outside text boxes.
+fn descendant<'tree>(element: &'tree Element, prefix: &str, local: &str) -> Option<&'tree Element> {
+    element.child_elements().find_map(|child| {
+        if is_named(child, prefix, local) {
+            Some(child)
+        } else if is_named(child, "w", "txbxContent") {
+            None
+        } else {
+            descendant(child, prefix, local)
+        }
+    })
+}
+
+/// The picture of a `w:drawing`, when its `a:blip` names one.
+fn drawing(element: &Element) -> Option<Drawing> {
+    let blip = descendant(element, "a", "blip")?;
+    let properties = descendant(element, "wp", "docPr");
+    let unprefixed = |local: &str| {
+        properties
+            .and_then(|found| found.attribute(&Namespace::None, local))
+            .unwrap_or_default()
+            .to_owned()
+    };
+    let title = unprefixed("title");
+    Some(Drawing {
+        alt: unprefixed("descr"),
+        embed: attribute(blip, "r", "embed"),
+        link: attribute(blip, "r", "link"),
+        svg: descendant(blip, "asvg", "svgBlip").and_then(|svg| attribute(svg, "r", "embed")),
+        title: (!title.is_empty()).then_some(title),
+    })
+}
+
+/// Every picture of a `w:drawing` under `node`, outside text boxes; of an `mc:AlternateContent`,
+/// those of its first branch that holds any.
+fn drawings(node: &Node, found: &mut Vec<Drawing>) {
+    let Node::Element(element) = node else {
+        return;
+    };
+    if is_named(element, "w", "txbxContent") {
+        return;
+    }
+    if is_named(element, "w", "drawing") {
+        found.extend(drawing(element));
+    } else if mc::is_mc(&element.name.namespace) && element.name.local == "AlternateContent" {
+        for branch in &element.children {
+            let before = found.len();
+            drawings(branch, found);
+            if found.len() > before {
+                break;
+            }
+        }
+    } else {
+        for child in &element.children {
+            drawings(child, found);
+        }
+    }
+}
+
+/// A cell with no block.
+const fn empty_cell() -> ArchieTableCell {
+    ArchieTableCell::new(MarkdownBlock::new(Vec::new()))
+}
+
+/// The archie document of `root` and `frontmatter`, its styles, numbering and parts read from
+/// `styles`, `numbering` and `parts`, and the pictures it names.
+///
+/// # Errors
+///
+/// The errors of [`Package::part_bytes`] for a picture or an HTML part.
+pub fn exported(
+    root: &Document,
+    styles: &Styles,
+    numbering: &Numbering,
+    parts: Parts<'_>,
+    frontmatter: Option<Mapping>,
+) -> Result<Exported, PackageError> {
     let mut walk = Walk {
         fields: Vec::new(),
-        gathered: Vec::new(),
-        gathering: None,
-        sections: Sections::default(),
+        hyperlink: None,
+        links: Links::default(),
+        numbering,
+        output: Output::default(),
+        parts,
         styles,
     };
     if let Some(body) = &root.body {
-        walk.blocks(&body.content);
+        walk.blocks(&body.content)?;
     }
-    walk.flush();
-    ArchieDocument::new(MarkdownBlock::new(walk.sections.finish()), None)
+    Ok(Exported {
+        document: ArchieDocument::new(walk.output.finish(), frontmatter),
+        images: walk.parts.images,
+    })
+}
+
+/// The words of a field instruction: each run of characters between spaces, or between `"`.
+fn field_words(instruction: &str) -> Vec<&str> {
+    let mut words = Vec::new();
+    let mut rest = instruction.trim_start();
+    while !rest.is_empty() {
+        let (word, after) = rest.strip_prefix('"').map_or_else(
+            || rest.split_once(char::is_whitespace).unwrap_or((rest, "")),
+            |quoted| quoted.split_once('"').unwrap_or((quoted, "")),
+        );
+        words.push(word);
+        rest = after.trim_start();
+    }
+    words
+}
+
+/// The number of columns `cell` spans, at least 1.
+fn grid_span(cell: &TableCell) -> usize {
+    cell.properties
+        .as_ref()
+        .and_then(|properties| properties.grid_columns_spanned.as_ref())
+        .and_then(|span| number(span.val.as_ref()))
+        .and_then(|span| usize::try_from(span).ok())
+        .unwrap_or(1)
+        .max(1)
+}
+
+/// Whether `pieces` hold a picture.
+fn has_picture(pieces: &[Piece]) -> bool {
+    pieces.iter().any(|piece| matches!(piece, Piece::Image(..)))
+}
+
+/// Whether `pieces` hold a character other than white space.
+fn has_text(pieces: &[Piece]) -> bool {
+    pieces.iter().any(|piece| match piece {
+        Piece::Break | Piece::Image(..) => false,
+        Piece::Text(_, text) => text.chars().any(|character| !character.is_whitespace()),
+    })
 }
 
 /// The inline nodes of a heading: one line, each hard line break a space.
-fn heading_inlines(pieces: Vec<Piece>) -> Vec<Inline> {
+fn heading_inlines(pieces: Vec<Piece>, links: &Links) -> Vec<Inline> {
     let spaced = pieces.into_iter().map(|piece| match piece {
         Piece::Break => Piece::Text(Marks::default(), " ".to_owned()),
-        Piece::Text(marks, text) => Piece::Text(marks, text),
+        Piece::Image(..) | Piece::Text(..) => piece,
     });
-    lines(spaced)
+    lines(spaced, links)
         .into_iter()
         .next()
         .map_or_else(Vec::new, |line| line.children)
@@ -1054,6 +2001,55 @@ fn heading_named(name: &str) -> Option<usize> {
         .filter(|level| (1..=DEEPEST_WORD).contains(level))
 }
 
+/// The HTML between `<body …>` and `</body>` of `page`, in any case; the whole page when it has
+/// no `<body`.
+fn html_body(page: &str) -> &str {
+    let lower = page.to_ascii_lowercase();
+    let Some(open) = lower.find("<body") else {
+        return page;
+    };
+    let start = lower[open..]
+        .find('>')
+        .map_or(page.len(), |close| open + close + 1);
+    let end = lower
+        .rfind("</body>")
+        .filter(|end| *end >= start)
+        .unwrap_or(start);
+    &page[start..end]
+}
+
+/// The address of a field whose instruction is `HYPERLINK` and an address; the arguments of its
+/// `\l`, `\o` and `\t` switches are not the address.
+fn hyperlink_address(instruction: &str) -> Option<String> {
+    let mut words = field_words(instruction).into_iter();
+    if !words.next()?.eq_ignore_ascii_case("HYPERLINK") {
+        return None;
+    }
+    let mut argument = false;
+    for word in words {
+        if argument {
+            argument = false;
+        } else if let Some(switch) = word.strip_prefix('\\') {
+            argument = matches!(switch.to_ascii_lowercase().as_str(), "l" | "o" | "t");
+        } else {
+            return Some(word.to_owned());
+        }
+    }
+    None
+}
+
+/// The list level whose indent is the own `w:ind w:left`, or `w:start`, of a paragraph of
+/// `properties`.
+fn indent_level(properties: Option<&ParagraphProperties>) -> Option<usize> {
+    let indentation = properties.and_then(|own| own.paragraph_indentation.as_deref())?;
+    let left = indentation.left.as_ref().or(indentation.start.as_ref())?;
+    let Ok(SignedMeasurementInTwentiethsOfPointMember::Integer(twips)) = left.value() else {
+        return None;
+    };
+    let written = twips.to_string();
+    (0..=DEEPEST_LEVEL).find(|level| parts::level_indent(*level) == written)
+}
+
 /// Whether `style` is the default paragraph style.
 fn is_default_paragraph(style: &StyleDefinition) -> bool {
     let paragraph = style
@@ -1065,6 +2061,51 @@ fn is_default_paragraph(style: &StyleDefinition) -> bool {
         .as_ref()
         .is_some_and(|value| value.value().unwrap_or(false));
     paragraph && default
+}
+
+/// Whether `row` is marked `w:tblHeader`.
+fn is_head_row(row: &TableRow) -> bool {
+    row.properties.as_ref().is_some_and(|properties| {
+        properties.content.iter().any(|property| {
+            if let TableRowPropertiesContent::RepeatTableRow(repeat) = property {
+                repeat
+                    .val
+                    .as_ref()
+                    .is_none_or(|value| value.value().unwrap_or(true))
+            } else {
+                false
+            }
+        })
+    })
+}
+
+/// Whether `element` is named `local` in the namespace the namespace table names `prefix`.
+fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
+    element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
+}
+
+/// Whether a cell of `body` holds more than one paragraph, a list, a line break or a table.
+fn is_rich(body: &MarkdownBlock) -> bool {
+    let mut paragraphs = 0_usize;
+    let mut sections: Vec<&Section> = body.sections.iter().collect();
+    while let Some(section) = sections.pop() {
+        paragraphs += usize::from(section.heading.is_some());
+        for block in &section.blocks {
+            let rich = match block {
+                Block::BlockQuote(quote) => quote.value.contains('\n'),
+                Block::CodeBlock(code) => code.value.contains('\n'),
+                Block::List(_) | Block::Table(_) => true,
+                Block::Paragraph(paragraph) => paragraph.lines.len() > 1,
+                Block::Html(_) | Block::ThematicBreak(_) | _ => false,
+            };
+            if rich {
+                return true;
+            }
+            paragraphs += 1;
+        }
+        sections.extend(&section.subsections);
+    }
+    paragraphs > 1
 }
 
 /// Whether a paragraph of `properties` has a bottom border and no other.
@@ -1093,11 +2134,6 @@ fn is_rule(properties: Option<&ParagraphProperties>) -> bool {
         })
 }
 
-/// Whether `element` is named `local` in the namespace the namespace table names `prefix`.
-fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
-    element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
-}
-
 /// Whether `property` is `w:i`, and turns italic on.
 fn italic(property: &RunPropertiesContent) -> Option<bool> {
     if let RunPropertiesContent::Italics(italics) = property {
@@ -1112,19 +2148,26 @@ fn italic(property: &RunPropertiesContent) -> Option<bool> {
     }
 }
 
+/// A list level from a `w:ilvl` value, from 0.
+fn level_number(value: Option<&DecimalNumberValue>) -> Option<usize> {
+    let level = number(value)?;
+    usize::try_from(level).ok()
+}
+
 /// The lines of `pieces`: each hard line break ends one, and the breaks that end the paragraph go.
-fn lines<I>(pieces: I) -> Vec<Line>
+fn lines<I>(pieces: I, links: &Links) -> Vec<Line>
 where
     I: IntoIterator<Item = Piece>,
 {
-    let mut lines = Lines::default();
+    let mut built = Lines::new(links);
     for piece in pieces {
         match piece {
-            Piece::Break => lines.line_break(),
-            Piece::Text(marks, text) => lines.text(marks, &text),
+            Piece::Break => built.line_break(),
+            Piece::Image(link, image) => built.image(link, image),
+            Piece::Text(marks, text) => built.text(marks, &text),
         }
     }
-    lines.finish()
+    built.finish()
 }
 
 /// The text of every `m:t` under `node`, in document order.
@@ -1141,6 +2184,25 @@ fn math_text(node: &Node, text: &mut String) {
             math_text(child, text);
         }
     }
+}
+
+/// The number a decimal value spells.
+fn number(value: Option<&DecimalNumberValue>) -> Option<i64> {
+    value?.value().ok()
+}
+
+/// The numbering instance a `w:numPr` names.
+fn numbering_instance(reference: &NumberingDefinitionInstanceReferenceNumPr) -> Option<i64> {
+    let instance = reference
+        .numbering_definition_instance_reference_num_id
+        .as_ref()?;
+    number(instance.val.as_ref())
+}
+
+/// The list level a `w:numPr` names.
+fn numbering_level(reference: &NumberingDefinitionInstanceReferenceNumPr) -> Option<usize> {
+    let level = reference.numbering_level_reference.as_ref()?;
+    level_number(level.val.as_ref())
 }
 
 /// The level of an outline level `N - 1`, from 1 to 9; `None` for body text.
@@ -1160,10 +2222,83 @@ fn plain(pieces: Vec<Piece>) -> String {
     for piece in pieces {
         match piece {
             Piece::Break => text.push('\n'),
+            Piece::Image(..) => {}
             Piece::Text(_, value) => text.push_str(&value),
         }
     }
     text
+}
+
+/// The first part of the package `main` relates to by `relationship_type`.
+///
+/// # Errors
+///
+/// The errors of [`Package::related_by_type`].
+fn related_part(
+    package: &Package,
+    main: &PartName,
+    relationship_type: &RelationshipType,
+) -> Result<Option<PartName>, PackageError> {
+    Ok(package
+        .related_by_type(Some(main), relationship_type)?
+        .into_iter()
+        .find_map(|related| {
+            if let Target::Part(name) = related.target {
+                Some(name)
+            } else {
+                None
+            }
+        }))
+}
+
+/// The cells of a row, inside custom XML elements and content controls too, in order.
+fn row_cells<'row>(content: &'row [ContentCellContent], cells: &mut Vec<&'row TableCell>) {
+    for item in content {
+        match item {
+            ContentCellContent::CellLevelCustomXMLElement(element) => {
+                row_cells(&element.content, cells);
+            }
+            ContentCellContent::CellLevelStructuredDocumentTag(tag) => {
+                if let Some(inner) = &tag.content {
+                    row_cells(&inner.content, cells);
+                }
+            }
+            ContentCellContent::TableCell(cell) => cells.push(cell),
+            ContentCellContent::BookmarkEnd(_)
+            | ContentCellContent::BookmarkStart(_)
+            | ContentCellContent::CommentAnchorRangeEnd(_)
+            | ContentCellContent::CommentAnchorRangeStart(_)
+            | ContentCellContent::ConflictDelRunTrackChange(_)
+            | ContentCellContent::ConflictInsRunTrackChange(_)
+            | ContentCellContent::CustomXMLMarkupDeletionEnd(_)
+            | ContentCellContent::CustomXMLMarkupDeletionStart(_)
+            | ContentCellContent::CustomXMLMarkupInsertionEnd(_)
+            | ContentCellContent::CustomXMLMarkupInsertionStart(_)
+            | ContentCellContent::CustomXMLMarkupMoveSourceEnd(_)
+            | ContentCellContent::CustomXMLMarkupMoveSourceStart(_)
+            | ContentCellContent::CustomXmlConflictDelRangeEnd(_)
+            | ContentCellContent::CustomXmlConflictDelRangeStart(_)
+            | ContentCellContent::CustomXmlConflictInsRangeEnd(_)
+            | ContentCellContent::CustomXmlConflictInsRangeStart(_)
+            | ContentCellContent::CustomXmlMoveToRangeEnd(_)
+            | ContentCellContent::CustomXmlMoveToRangeStart(_)
+            | ContentCellContent::DeletedRunContent(_)
+            | ContentCellContent::InsertedRunContent(_)
+            | ContentCellContent::MoveDestinationLocationContainerEnd(_)
+            | ContentCellContent::MoveDestinationLocationContainerStart(_)
+            | ContentCellContent::MoveDestinationRunContent(_)
+            | ContentCellContent::MoveSourceLocationContainerEnd(_)
+            | ContentCellContent::MoveSourceLocationContainerStart(_)
+            | ContentCellContent::MoveSourceRunContent(_)
+            | ContentCellContent::OfficeMath(_)
+            | ContentCellContent::OfficeMathParagraph(_)
+            | ContentCellContent::Other(_)
+            | ContentCellContent::ProofingErrorAnchor(_)
+            | ContentCellContent::RangePermissionEnd(_)
+            | ContentCellContent::RangePermissionStart(_)
+            | _ => {}
+        }
+    }
 }
 
 /// The prefix the namespace table gives `namespace`, when it knows it.
@@ -1172,6 +2307,56 @@ fn table_prefix(namespace: &Namespace) -> Option<&'static str> {
         NAMESPACES.get(usize::from(id)).map(|row| row.prefix)
     } else {
         None
+    }
+}
+
+/// The rows of a table, inside custom XML elements and content controls too, in order.
+fn table_rows<'table>(content: &'table [ContentRowContent], rows: &mut Vec<&'table TableRow>) {
+    for item in content {
+        match item {
+            ContentRowContent::RowLevelCustomXMLElement(element) => {
+                table_rows(&element.content, rows);
+            }
+            ContentRowContent::RowLevelStructuredDocumentTag(tag) => {
+                if let Some(inner) = &tag.content {
+                    table_rows(&inner.content, rows);
+                }
+            }
+            ContentRowContent::TableRow(row) => rows.push(row),
+            ContentRowContent::BookmarkEnd(_)
+            | ContentRowContent::BookmarkStart(_)
+            | ContentRowContent::CommentAnchorRangeEnd(_)
+            | ContentRowContent::CommentAnchorRangeStart(_)
+            | ContentRowContent::ConflictDelRunTrackChange(_)
+            | ContentRowContent::ConflictInsRunTrackChange(_)
+            | ContentRowContent::CustomXMLMarkupDeletionEnd(_)
+            | ContentRowContent::CustomXMLMarkupDeletionStart(_)
+            | ContentRowContent::CustomXMLMarkupInsertionEnd(_)
+            | ContentRowContent::CustomXMLMarkupInsertionStart(_)
+            | ContentRowContent::CustomXMLMarkupMoveSourceEnd(_)
+            | ContentRowContent::CustomXMLMarkupMoveSourceStart(_)
+            | ContentRowContent::CustomXmlConflictDelRangeEnd(_)
+            | ContentRowContent::CustomXmlConflictDelRangeStart(_)
+            | ContentRowContent::CustomXmlConflictInsRangeEnd(_)
+            | ContentRowContent::CustomXmlConflictInsRangeStart(_)
+            | ContentRowContent::CustomXmlMoveToRangeEnd(_)
+            | ContentRowContent::CustomXmlMoveToRangeStart(_)
+            | ContentRowContent::DeletedRunContent(_)
+            | ContentRowContent::InsertedRunContent(_)
+            | ContentRowContent::MoveDestinationLocationContainerEnd(_)
+            | ContentRowContent::MoveDestinationLocationContainerStart(_)
+            | ContentRowContent::MoveDestinationRunContent(_)
+            | ContentRowContent::MoveSourceLocationContainerEnd(_)
+            | ContentRowContent::MoveSourceLocationContainerStart(_)
+            | ContentRowContent::MoveSourceRunContent(_)
+            | ContentRowContent::OfficeMath(_)
+            | ContentRowContent::OfficeMathParagraph(_)
+            | ContentRowContent::Other(_)
+            | ContentRowContent::ProofingErrorAnchor(_)
+            | ContentRowContent::RangePermissionEnd(_)
+            | ContentRowContent::RangePermissionStart(_)
+            | _ => {}
+        }
     }
 }
 

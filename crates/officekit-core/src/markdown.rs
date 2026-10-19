@@ -17,11 +17,12 @@ use archie_core::parser::ast::{
     Document, FrontmatterFormat, InvalidFrontmatter, Mapping, MarkdownBlock, RawDocument,
 };
 use archie_core::parser::extension::{Extension, Markdown};
-use archie_core::parser::parse;
+use archie_core::parser::{parse, read_toml};
 use archie_core::writer::{self, WriteError, WriteOptions};
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
+use officekit_packaging::relationship::Target;
 use officekit_parts::kinds::WordprocessingKind;
 use os_shim::System;
 
@@ -229,22 +230,75 @@ where
     Ok(())
 }
 
-/// The main document of `docx`, its parts read with `read`, as an archie document, for
-/// [`Docx::to_archie`].
+/// The frontmatter the part `/docProps/frontmatter.toml` holds, the part related from the
+/// package with [`FRONTMATTER_RELATIONSHIP`]; `None` when the package relates no such part.
 ///
 /// # Errors
 ///
-/// [`MarkdownError::Package`] when the main document or its styles part cannot be read.
+/// [`MarkdownError::Frontmatter`] when the part is not TOML text, and [`MarkdownError::Package`]
+/// when it cannot be read.
+fn read_frontmatter(package: &Package) -> Result<Option<Mapping>, MarkdownError> {
+    let part = package.related(None)?.into_iter().find_map(|related| {
+        if related.type_uri == FRONTMATTER_RELATIONSHIP
+            && let Target::Part(name) = related.target
+        {
+            Some(name)
+        } else {
+            None
+        }
+    });
+    let Some(name) = part else {
+        return Ok(None);
+    };
+    let text = String::from_utf8(package.part_bytes(&name)?).map_err(|error| {
+        let written = String::from_utf8_lossy(error.as_bytes()).into_owned();
+        MarkdownError::Frontmatter(InvalidFrontmatter::new(
+            FrontmatterFormat::Toml,
+            written,
+            error.to_string(),
+        ))
+    })?;
+    match read_toml(&text, 0..text.len()) {
+        Ok(mapping) => Ok(Some(mapping)),
+        Err(error) => Err(MarkdownError::Frontmatter(InvalidFrontmatter::new(
+            FrontmatterFormat::Toml,
+            text,
+            error.message,
+        ))),
+    }
+}
+
+/// The main document of `docx`, its parts read with `read`, as an archie document, for
+/// [`Docx::to_archie`]: each picture's target in the folder `media`, or a data URI with
+/// `options.embed_images`, and the frontmatter part read with `options.frontmatter`.
+///
+/// # Errors
+///
+/// [`MarkdownError::Package`] when the main document, its styles or numbering part, a picture
+/// or an HTML part cannot be read, and [`MarkdownError::Frontmatter`] when the frontmatter part
+/// is to be read and does not read.
 pub(crate) fn to_archie(
     docx: &Docx,
     read: OpenOptions,
-    _media: &str,
-    _options: MarkdownOptions,
+    media: &str,
+    options: MarkdownOptions,
 ) -> Result<Exported, MarkdownError> {
     let root = docx.main_document()?;
-    let styles = from_word::Styles::read(docx.package(), docx.main_document_part(), read)?;
-    Ok(Exported {
-        document: from_word::document(&root, &styles),
-        images: Vec::new(),
-    })
+    let package = docx.package();
+    let main = docx.main_document_part();
+    let styles = from_word::Styles::read(package, main, read)?;
+    let numbering = from_word::Numbering::read(package, main, read)?;
+    let parts = from_word::Parts::read(package, main, media, options.embed_images)?;
+    let frontmatter = if options.frontmatter {
+        read_frontmatter(package)?
+    } else {
+        None
+    };
+    Ok(from_word::exported(
+        &root,
+        &styles,
+        &numbering,
+        parts,
+        frontmatter,
+    )?)
 }

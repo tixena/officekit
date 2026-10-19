@@ -511,7 +511,9 @@ impl Docx {
     ///
     /// # Errors
     ///
-    /// [`MarkdownError::Package`] when the main document or its styles part cannot be read.
+    /// [`MarkdownError::Package`] when the main document, its styles or numbering part, a picture
+    /// or an HTML part cannot be read, and [`MarkdownError::Frontmatter`] when
+    /// `options.frontmatter` is on and the frontmatter part does not read.
     #[cfg(feature = "markdown")]
     pub fn to_archie(
         &self,
