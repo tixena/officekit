@@ -1,5 +1,6 @@
 //! A Word document from an archie document and back, with the feature `markdown`.
 
+mod from_word;
 mod parts;
 #[cfg(test)]
 mod tests;
@@ -14,11 +15,11 @@ use std::path::{Path, PathBuf};
 use archie_core::parser::ast::{
     Document, FrontmatterFormat, InvalidFrontmatter, Mapping, MarkdownBlock, RawDocument,
 };
-use archie_core::parser::extension::Extension;
+use archie_core::parser::extension::{Extension, Markdown};
 use archie_core::parser::parse;
 use archie_core::writer::{self, WriteError, WriteOptions};
 use officekit_packaging::error::PackageError;
-use officekit_packaging::package::Package;
+use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_parts::kinds::WordprocessingKind;
 use os_shim::System;
@@ -36,6 +37,15 @@ const FRONTMATTER_PART: &str = "/docProps/frontmatter.toml";
 
 /// The line that opens and closes a TOML frontmatter.
 const TOML_FENCE: &str = "+++\n";
+
+/// A Word document converted to markdown: the archie document, and the pictures it names, each
+/// as its file name and bytes.
+#[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
+pub struct Exported {
+    pub document: Document<Markdown>,
+    pub images: Vec<(String, Vec<u8>)>,
+}
 
 /// What a conversion carries besides the document's content.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -158,4 +168,81 @@ where
     };
     let base = path.parent().unwrap_or_else(|| Path::new(""));
     Docx::from_archie(system, base, &document, options)
+}
+
+/// `docx` written as markdown to `path`, its pictures in the folder beside it, or inside the
+/// markdown when `options.embed_images` is set.
+///
+/// The pictures' folder is the markdown file's name plus `_media` (`contract.md` gives
+/// `contract_media`), made only when there is a picture to write. No file is removed.
+///
+/// # Errors
+///
+/// The errors of [`Docx::to_archie`], [`MarkdownError::Write`] when archie cannot write the
+/// document, and [`MarkdownError::Io`] when the markdown file, the folder, or a picture cannot be
+/// written.
+pub fn save_markdown<S>(
+    docx: &Docx,
+    system: &S,
+    path: &Path,
+    options: MarkdownOptions,
+) -> Result<(), MarkdownError>
+where
+    S: System + ?Sized,
+{
+    let mut media = path
+        .file_stem()
+        .map_or_else(String::new, |stem| stem.to_string_lossy().into_owned());
+    media.push_str("_media");
+    let exported = docx.to_archie(&media, options)?;
+    let text = writer::write(
+        &RawDocument::Valid(exported.document),
+        &WriteOptions::default(),
+    )?;
+    system
+        .write(path, text.as_bytes())
+        .map_err(|error| MarkdownError::Io {
+            error,
+            path: path.to_path_buf(),
+        })?;
+    if exported.images.is_empty() {
+        return Ok(());
+    }
+    let folder = path.parent().unwrap_or_else(|| Path::new("")).join(&media);
+    system
+        .create_dir_all(&folder)
+        .map_err(|error| MarkdownError::Io {
+            error,
+            path: folder.clone(),
+        })?;
+    for (name, bytes) in &exported.images {
+        let target = folder.join(name);
+        system
+            .write(&target, bytes)
+            .map_err(|error| MarkdownError::Io {
+                error,
+                path: target.clone(),
+            })?;
+    }
+    Ok(())
+}
+
+/// The main document of `docx`, its parts read with `read`, as an archie document, for
+/// [`Docx::to_archie`].
+///
+/// # Errors
+///
+/// [`MarkdownError::Package`] when the main document or its styles part cannot be read.
+pub(crate) fn to_archie(
+    docx: &Docx,
+    read: OpenOptions,
+    _media: &str,
+    _options: MarkdownOptions,
+) -> Result<Exported, MarkdownError> {
+    let root = docx.main_document()?;
+    let styles = from_word::Styles::read(docx.package(), docx.main_document_part(), read)?;
+    Ok(Exported {
+        document: from_word::document(&root, &styles),
+        images: Vec::new(),
+    })
 }

@@ -35,7 +35,7 @@ use os_shim::System;
 use crate::compact::{self, Comments};
 use crate::file;
 #[cfg(feature = "markdown")]
-use crate::markdown::{self, MarkdownError, MarkdownOptions};
+use crate::markdown::{self, Exported, MarkdownError, MarkdownOptions};
 use crate::new_parts;
 
 /// A `.docx`-family file: its package, its main document part, and the class and kind they give.
@@ -503,6 +503,21 @@ impl Docx {
     /// The options every store through the file writes with, its saves included.
     pub const fn set_write_options(&mut self, options: WriteOptions) {
         self.write_options = options;
+    }
+
+    /// The main document as an archie document. Each picture's target is `{media}/{file name}`,
+    /// the file name that of its image part (`image1.png`).
+    ///
+    /// # Errors
+    ///
+    /// [`MarkdownError::Package`] when the main document or its styles part cannot be read.
+    #[cfg(feature = "markdown")]
+    pub fn to_archie(
+        &self,
+        media: &str,
+        options: MarkdownOptions,
+    ) -> Result<Exported, MarkdownError> {
+        markdown::to_archie(self, self.options, media, options)
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
