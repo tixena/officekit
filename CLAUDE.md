@@ -29,6 +29,7 @@ docx, xlsx, pptx   the file types: a package with its main part, class, and kind
 embedded           a document stored in a part of another
 compact            the merge of neighbouring runs that render the same
 folder             a document as a folder of its parts, and back
+markdown           a document from an archie markdown document, and back (feature `markdown`)
 ```
 
 ## Rules

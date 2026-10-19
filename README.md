@@ -58,6 +58,7 @@ crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never i
 | `embedded` | A document stored in a part of another | A `.docx`, `.xlsx`, or `.pptx` inside a package |
 | `compact` | Run compaction | The merge of neighbouring runs that render the same |
 | `folder` | Expanded documents | A `.docx` as a folder of its parts, and back |
+| `markdown` | Markdown documents (feature `markdown`) | A Word document from an archie markdown document, and back |
 
 `officekit-parts` holds one generated module per part type of ECMA-376 Part 1
 and of Microsoft's extensions: its content type, its relationship type in both
@@ -65,14 +66,25 @@ classes' spelling, and the load and store of its root.
 
 ## Features
 
-`officekit-core` and `officekit-parts` have two features each, one per
-conformance class; the features of `officekit-core` turn on those of
-`officekit-parts`. Each turns on its class crate as an optional dependency:
+`officekit-core` has three features and `officekit-parts` two; the two class
+features of `officekit-core` turn on those of `officekit-parts`. Each class
+feature turns on its class crate as an optional dependency:
 
 | Feature | Default | Enables |
 |---|---|---|
 | `transitional` | yes | The `officekit-transitional` crate (ECMA-376 Part 1 with the migration features of Part 4): the generated read and write of every node of the typed tree as Transitional, and the conversion of date cells to number cells before a Transitional save |
 | `strict` | no | The `officekit-strict` crate (ECMA-376 Part 1): the generated read and write of every node as Strict, and the generated rules that rename, unpack, and refuse what Strict spells differently |
+| `markdown` | no | The `markdown` module: a Word document from an archie markdown document, and a Word document written as markdown, its pictures in a folder beside the file or inside the markdown as data URIs. Turns on `transitional` |
+
+Markdown to Word and back changes five things, and nothing else:
+
+- A code block loses its language and arguments.
+- A wiki link `[[target|text]]` comes back as `[text](target)`.
+- A loose list comes back tight, unless one of its items holds two paragraphs one after the other.
+- A simple table, or a grid table with exactly one head row whose cells each hold one line, comes back as a pipe table.
+- A paragraph comes back as one line.
+
+Pictures also come back under the media folder (`report_media/image1.png`), and a WebP as a PNG.
 
 ```bash
 cargo build -p officekit-core                                             # transitional
