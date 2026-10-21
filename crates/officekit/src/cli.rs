@@ -5,7 +5,7 @@
 
 use std::path::{Path, PathBuf};
 
-use clap::{Args, Parser, Subcommand};
+use clap::{Args, Parser, Subcommand, ValueEnum};
 use officekit_core::folder::DEFAULT_SUFFIX;
 use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
@@ -35,6 +35,8 @@ pub enum Commands {
     Down(DownArgs),
     /// Re-indent every XML part under a folder, in place.
     Format(FormatArgs),
+    /// Load a Word, Excel or `PowerPoint` file, or a markdown file, and write it in another form.
+    Get(GetArgs),
     /// List the parts inside a package.
     Parts(PartsArgs),
     /// Zip every expanded folder under a folder back into a `.docx`.
@@ -88,6 +90,33 @@ pub struct UpArgs {
     /// The folder the `.docx` files are written under.
     #[arg(long)]
     pub tgt: PathBuf,
+}
+
+#[derive(Args)]
+pub struct GetArgs {
+    /// The file to load; `-` for standard input.
+    pub file: PathBuf,
+
+    /// The form to write.
+    #[arg(short, long, value_enum)]
+    pub format: Form,
+
+    /// Carry a markdown frontmatter into the Word file and back.
+    #[arg(long)]
+    pub frontmatter: bool,
+
+    /// The file to write; standard output when absent or `-`.
+    #[arg(short, long, value_name = "FILE")]
+    pub output: Option<PathBuf>,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
+pub enum Form {
+    Docx,
+    #[value(alias = "md")]
+    Markdown,
+    Pptx,
+    Xlsx,
 }
 
 #[derive(Args)]

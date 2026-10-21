@@ -5,6 +5,7 @@
 //! system (ECMA-376 Part 1, 18.17.4.1), and the save reports each cell it
 //! converted.
 
+use core::fmt;
 use core::mem;
 
 use officekit_markup::class_rules::{BASE_1900, BASE_1904};
@@ -33,6 +34,22 @@ pub enum SaveWarning {
         part: PartName,
         serial: String,
     },
+}
+
+impl fmt::Display for SaveWarning {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::DateCellConverted {
+                cell,
+                date,
+                part,
+                serial,
+            } => write!(
+                f,
+                "{part} {cell}: the date {date} was written as the number {serial}"
+            ),
+        }
+    }
 }
 
 /// Turn every date cell of `worksheet` into a number cell holding its serial

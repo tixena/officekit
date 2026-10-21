@@ -1,20 +1,25 @@
 //! Command handlers: one `cmd_*` function per subcommand.
 
-use std::io::{self, Write};
+use std::io::{self, Read, Write};
 use std::path::Path;
 
-use anyhow::{Context as _, Result};
+use anyhow::{Context as _, Result, bail};
+use archie_core::parser::ast::RawDocument;
+use archie_core::writer::{self, WriteOptions};
 use os_shim::System;
 use serde_json::{Value, json};
 
 use officekit_core::folder::{self, DownOptions, UpOptions};
+use officekit_core::markdown::MarkdownOptions;
+use officekit_core::office_file::OfficeFile;
+use officekit_packaging::package::OpenOptions;
 use officekit_packaging::package::Package;
 use officekit_packaging::part_name::PartName;
 use officekit_validation::error::ValidationError;
 use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
 
-use crate::cli::{CatArgs, DownArgs, FormatArgs, PartsArgs, UpArgs, ValidateArgs};
+use crate::cli::{CatArgs, DownArgs, Form, FormatArgs, GetArgs, PartsArgs, UpArgs, ValidateArgs};
 use crate::dispatch::EXIT_ERROR;
 
 #[cfg(test)]
@@ -122,6 +127,88 @@ where
         summary.inspected, summary.rewritten
     )?;
     Ok(())
+}
+
+/// `officekit get <FILE> -f <FORM>`: the file, or standard input, loaded and written in `FORM`.
+pub fn cmd_get<S>(
+    system: &S,
+    args: &GetArgs,
+    stdin: &mut dyn Read,
+    stdout: &mut dyn Write,
+    stderr: &mut dyn Write,
+) -> Result<()>
+where
+    S: System + ?Sized,
+{
+    let (bytes, folder) = if args.file == Path::new("-") {
+        let mut bytes = Vec::new();
+        stdin.read_to_end(&mut bytes)?;
+        (bytes, None)
+    } else {
+        let path = args.file.as_path();
+        let mut bytes = Vec::new();
+        system
+            .open(path)
+            .and_then(|mut file| file.read_to_end(&mut bytes))
+            .with_context(|| format!("reading {}", path.display()))?;
+        (bytes, path.parent())
+    };
+    let mut markdown = MarkdownOptions::default();
+    markdown.embed_images = true;
+    markdown.frontmatter = args.frontmatter;
+    let file = OfficeFile::from_input(system, bytes, folder, OpenOptions::default(), markdown)?;
+    let output = match (args.format, &file) {
+        (Form::Markdown, OfficeFile::Word(docx)) => {
+            let exported = docx.to_archie("media", markdown)?;
+            writer::write(
+                &RawDocument::Valid(exported.document),
+                &WriteOptions::default(),
+            )?
+            .into_bytes()
+        }
+        (Form::Markdown, other) => bail!("markdown is not available for {} yet", kind_of(other)),
+        (Form::Docx, OfficeFile::Word(_))
+        | (Form::Xlsx, OfficeFile::Excel(_))
+        | (Form::Pptx, OfficeFile::PowerPoint(_)) => {
+            let (saved, warnings) = file.to_bytes_transitional()?;
+            for warning in warnings {
+                writeln!(stderr, "warning: {warning}")?;
+            }
+            saved
+        }
+        (Form::Docx | Form::Xlsx | Form::Pptx, _) => {
+            bail!(
+                "the input is {}; it cannot be written as {}",
+                kind_of(&file),
+                form_name(args.format)
+            )
+        }
+    };
+    match args.output.as_deref() {
+        Some(path) if path != Path::new("-") => system
+            .write(path, &output)
+            .with_context(|| format!("writing {}", path.display()))?,
+        _ => stdout.write_all(&output)?,
+    }
+    Ok(())
+}
+
+const fn kind_of(file: &OfficeFile) -> &'static str {
+    match file {
+        OfficeFile::Excel(_) => "an Excel workbook",
+        OfficeFile::PowerPoint(_) => "a PowerPoint presentation",
+        OfficeFile::Word(_) => "a Word document",
+        _ => "an Office file",
+    }
+}
+
+const fn form_name(form: Form) -> &'static str {
+    match form {
+        Form::Markdown => "markdown",
+        Form::Docx => "docx",
+        Form::Xlsx => "xlsx",
+        Form::Pptx => "pptx",
+    }
 }
 
 /// `officekit parts <FILE>`: list every part in the package, one per line

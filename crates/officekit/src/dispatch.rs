@@ -2,7 +2,7 @@
 //!
 //! `main.rs` calls [`run`] as its sole action after parsing the CLI.
 
-use std::io::Write;
+use std::io::{Read, Write};
 use std::process::ExitCode;
 
 use os_shim::System;
@@ -13,7 +13,13 @@ use crate::handlers::{self, PackageValidator};
 pub const EXIT_ERROR: u8 = 2;
 pub const EXIT_OK: u8 = 0;
 
-pub fn run<S>(cli: &Cli, system: &S, stdout: &mut dyn Write, stderr: &mut dyn Write) -> ExitCode
+pub fn run<S>(
+    cli: &Cli,
+    system: &S,
+    stdin: &mut dyn Read,
+    stdout: &mut dyn Write,
+    stderr: &mut dyn Write,
+) -> ExitCode
 where
     S: System + ?Sized,
 {
@@ -21,6 +27,9 @@ where
         Commands::Cat(args) => handlers::cmd_cat(system, args, stdout).map(|()| EXIT_OK),
         Commands::Down(args) => handlers::cmd_down(system, args, stdout).map(|()| EXIT_OK),
         Commands::Format(args) => handlers::cmd_format(system, args, stdout).map(|()| EXIT_OK),
+        Commands::Get(args) => {
+            handlers::cmd_get(system, args, stdin, stdout, stderr).map(|()| EXIT_OK)
+        }
         Commands::Up(args) => handlers::cmd_up(system, args, stdout).map(|()| EXIT_OK),
         Commands::Parts(args) => handlers::cmd_parts(system, args, stdout).map(|()| EXIT_OK),
         Commands::Validate(args) => {

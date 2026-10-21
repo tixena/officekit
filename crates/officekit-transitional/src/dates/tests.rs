@@ -185,3 +185,17 @@ fn a_date_cell_whose_text_is_not_a_date_stays_and_is_refused() {
         })
     ));
 }
+
+#[test]
+fn a_date_cell_warning_reads_as_one_line() {
+    let warning = SaveWarning::DateCellConverted {
+        cell: "A1".to_owned(),
+        date: "2024-01-01T00:00:00".to_owned(),
+        part: PartName::new("/xl/worksheets/sheet1.xml").unwrap(),
+        serial: "45292".to_owned(),
+    };
+    assert_eq!(
+        warning.to_string(),
+        "/xl/worksheets/sheet1.xml A1: the date 2024-01-01T00:00:00 was written as the number 45292"
+    );
+}

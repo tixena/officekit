@@ -704,10 +704,12 @@ name = "officekit"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "archie-core",
  "assert_cmd",
  "clap",
  "officekit-core",
  "officekit-packaging",
+ "officekit-parts",
  "officekit-validation",
  "officekit-xml",
  "os-shim",

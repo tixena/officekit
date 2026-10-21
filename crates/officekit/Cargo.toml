@@ -16,7 +16,10 @@ name = "officekit"
 path = "src/main.rs"
 
 [dependencies]
-officekit-core.workspace = true
+officekit-core = { workspace = true, features = ["markdown"] }
+
+# Writing the markdown text
+archie-core.workspace = true
 
 # Packages, part names and relationships
 officekit-packaging.workspace = true
@@ -41,4 +44,5 @@ anyhow.workspace = true
 
 [dev-dependencies]
 assert_cmd.workspace = true
+officekit-parts.workspace = true
 tempfile.workspace = true
