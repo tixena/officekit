@@ -29,7 +29,9 @@ use os_shim::System as _;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
-use super::{FRONTMATTER_RELATIONSHIP, MarkdownError, MarkdownOptions, from_markdown};
+use super::{
+    FRONTMATTER_RELATIONSHIP, MarkdownError, MarkdownOptions, from_markdown, from_markdown_text,
+};
 use crate::docx::Docx;
 
 /// A border as `val/sz/space/color`.
@@ -1668,4 +1670,44 @@ fn a_bookmark_name_starts_with_a_letter_or_an_underscore() {
         ["0 _2024_plan", "1 _heading", "2 _heading_1"]
     );
     assert!(outline(&docx).contains(&"-: <#_2024_plan>Hyperlink:x</>".to_owned()));
+}
+
+#[test]
+fn markdown_text_with_no_folder_fails_on_a_relative_picture_naming_it() {
+    let error = from_markdown_text(
+        &MemorySystem::new(),
+        "![Logo](logo.png)\n",
+        None,
+        MarkdownOptions::default(),
+    )
+    .unwrap_err();
+    assert!(
+        matches!(&error, MarkdownError::Image { target, error: cause }
+            if target == "logo.png" && !cause.is_empty()),
+        "{error:?}"
+    );
+    assert_eq!(
+        error.to_string(),
+        "logo.png: a relative path, and markdown from standard input has no folder to find it from"
+    );
+}
+
+#[test]
+fn markdown_text_with_no_folder_stores_a_data_and_an_absolute_picture_and_links_a_web_one() {
+    let dot = png_of_size(1, 1);
+    let system = picture_notes("", &[("dot.png", &dot)]);
+    let source = format!(
+        "![Data](data:image/png;base64,{}) ![Web](https://example.com/a.png) ![Dot](/n/dot.png)\n",
+        STANDARD.encode(&dot)
+    );
+    let docx =
+        reopened(&from_markdown_text(&system, &source, None, MarkdownOptions::default()).unwrap());
+    assert_eq!(
+        pictures(&docx),
+        [
+            r#"1 "Picture 1" "Data" "-" 9525x9525 embed=media/image1.png"#,
+            r#"2 "Picture 2" "Web" "-" 5943600x5943600 link=https://example.com/a.png"#,
+            r#"3 "Picture 3" "Dot" "-" 9525x9525 embed=media/image2.png"#,
+        ]
+    );
 }

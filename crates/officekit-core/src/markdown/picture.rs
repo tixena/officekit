@@ -35,6 +35,10 @@ const WEBP: &[u8] = b"WEBP";
 /// The most bytes a WebP's decoded pixels may take.
 const WEBP_MEMORY: usize = 256 * 1024 * 1024;
 
+/// Why a relative path is no picture when the markdown has no folder.
+const NO_FOLDER: &str =
+    "a relative path, and markdown from standard input has no folder to find it from";
+
 /// The parts one markdown picture needs.
 pub(super) enum Picture {
     /// A web address Word fetches when it opens the file.
@@ -81,6 +85,26 @@ fn hex_digit(digit: char) -> Option<u8> {
     u8::try_from(value).ok()
 }
 
+/// The bytes of the file `target` names, read through `system`, a relative path from `base`: the
+/// file of its percent-decoded name when that differs and exists, else the file of `target`.
+fn local<S>(system: &S, base: Option<&Path>, target: &str) -> Result<Vec<u8>, String>
+where
+    S: System + ?Sized,
+{
+    let folder = match base {
+        Some(folder) => folder,
+        None if Path::new(target).is_absolute() => Path::new(""),
+        None => return Err(NO_FOLDER.to_owned()),
+    };
+    String::from_utf8(percent_decoded(target))
+        .ok()
+        .filter(|name| name != target && system.exists(&folder.join(name)).unwrap_or(false))
+        .map_or_else(
+            || file(system, &folder.join(target)),
+            |name| file(system, &folder.join(name)),
+        )
+}
+
 /// `text` with each `%` and the two hexadecimal digits after it replaced by the byte they name; a
 /// `%` without two such digits stays as it is.
 fn percent_decoded(text: &str) -> Vec<u8> {
@@ -118,32 +142,28 @@ fn png_of(pixels: &[u8], width: u32, height: u32, color: ColorType) -> Result<Im
     Ok(Image::with_format(ImageFormat::Png, bytes))
 }
 
-/// The picture `target` names: a web address, a `data:` address, or a file read through `system`
-/// relative to `base`.
+/// The picture `target` names: a web address, a `data:` address, or a file read through `system`,
+/// a relative path from `base`.
 ///
 /// # Errors
 ///
-/// [`MarkdownError::Image`] naming `target` when its file cannot be read, its `data:` address
-/// does not decode, or its bytes are none of PNG, JPEG, GIF, TIFF, BMP, WebP and SVG.
-pub(super) fn read<S>(system: &S, base: &Path, target: &str) -> Result<Picture, MarkdownError>
+/// [`MarkdownError::Image`] naming `target` when it is a relative path and there is no `base`,
+/// its file cannot be read, its `data:` address does not decode, or its bytes are none of PNG,
+/// JPEG, GIF, TIFF, BMP, WebP and SVG.
+pub(super) fn read<S>(
+    system: &S,
+    base: Option<&Path>,
+    target: &str,
+) -> Result<Picture, MarkdownError>
 where
     S: System + ?Sized,
 {
     if target.starts_with("http://") || target.starts_with("https://") {
         return Ok(Picture::Linked(target.to_owned()));
     }
-    let bytes = target.strip_prefix("data:").map_or_else(
-        || {
-            String::from_utf8(percent_decoded(target))
-                .ok()
-                .filter(|name| name != target && system.exists(&base.join(name)).unwrap_or(false))
-                .map_or_else(
-                    || file(system, &base.join(target)),
-                    |name| file(system, &base.join(name)),
-                )
-        },
-        data,
-    );
+    let bytes = target
+        .strip_prefix("data:")
+        .map_or_else(|| local(system, base, target), data);
     bytes
         .and_then(stored)
         .map_err(|error| MarkdownError::Image {

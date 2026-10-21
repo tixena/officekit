@@ -165,7 +165,7 @@ impl Docx {
         S: System + ?Sized,
         E: Extension,
     {
-        markdown::from_archie(system, base, document, options)
+        markdown::from_archie(system, Some(base), document, options)
     }
 
     /// The file whose bytes are `bytes`.

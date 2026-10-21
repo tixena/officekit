@@ -105,16 +105,18 @@ fn add_frontmatter(package: &mut Package, mapping: &Mapping) -> Result<(), Markd
     Ok(())
 }
 
-/// A new Word document holding `document`, for [`Docx::from_archie`].
+/// A new Word document holding `document`, for [`Docx::from_archie`]; a relative picture path is
+/// found from `base`.
 ///
 /// # Errors
 ///
-/// [`MarkdownError::Image`] when a picture cannot be read or is in no format it stores,
+/// [`MarkdownError::Image`] when a picture is a relative path and there is no `base`, cannot be
+/// read or is in no format it stores,
 /// [`MarkdownError::Write`] when `options.frontmatter` is on and the frontmatter holds a null, and
 /// [`MarkdownError::Package`] when the new package cannot be built or its parts stored.
 pub(crate) fn from_archie<S, E>(
     system: &S,
-    base: &Path,
+    base: Option<&Path>,
     document: &Document<E>,
     options: MarkdownOptions,
 ) -> Result<Docx, MarkdownError>
@@ -137,16 +139,12 @@ where
     Ok(docx)
 }
 
-/// The markdown file at `path`, read through `system`, as a new Word document.
-///
-/// A frontmatter that does not read is passed over, and its body converted, unless
-/// `options.frontmatter` asks for the frontmatter.
+/// The markdown file at `path`, read through `system`, as a new Word document, a relative picture
+/// path found from the file's folder.
 ///
 /// # Errors
 ///
-/// [`MarkdownError::Io`] when the file cannot be read, [`MarkdownError::Frontmatter`] when its
-/// frontmatter does not read and `options.frontmatter` is on, and the errors of
-/// [`Docx::from_archie`].
+/// [`MarkdownError::Io`] when the file cannot be read, and the errors of [`from_markdown_text`].
 pub fn from_markdown<S>(
     system: &S,
     path: &Path,
@@ -161,7 +159,34 @@ where
             error,
             path: path.to_path_buf(),
         })?;
-    let document: Document = match parse(&text).document {
+    from_markdown_text(
+        system,
+        &text,
+        Some(path.parent().unwrap_or_else(|| Path::new(""))),
+        options,
+    )
+}
+
+/// The Word file of the markdown `text`. A relative picture path is found from `folder`; with no
+/// folder, it fails with [`MarkdownError::Image`] naming it.
+///
+/// A frontmatter that does not read is passed over, and its body converted, unless
+/// `options.frontmatter` asks for the frontmatter.
+///
+/// # Errors
+///
+/// [`MarkdownError::Frontmatter`] when the frontmatter does not read and `options.frontmatter` is
+/// on, and the errors of [`Docx::from_archie`].
+pub fn from_markdown_text<S>(
+    system: &S,
+    text: &str,
+    folder: Option<&Path>,
+    options: MarkdownOptions,
+) -> Result<Docx, MarkdownError>
+where
+    S: System + ?Sized,
+{
+    let document: Document = match parse(text).document {
         RawDocument::Valid(document) => document,
         RawDocument::Invalid(invalid) if options.frontmatter => {
             return Err(MarkdownError::Frontmatter(invalid.frontmatter));
@@ -169,8 +194,7 @@ where
         RawDocument::Invalid(invalid) => Document::new(invalid.body, None),
         _ => Document::new(MarkdownBlock::new(Vec::new()), None),
     };
-    let base = path.parent().unwrap_or_else(|| Path::new(""));
-    Docx::from_archie(system, base, &document, options)
+    from_archie(system, folder, &document, options)
 }
 
 /// `docx` written as markdown to `path`, its pictures in the folder beside it, or inside the

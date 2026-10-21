@@ -116,7 +116,7 @@ fn stored(picture: Picture) -> Option<(Image, Option<Image>)> {
 
 /// The picture `target` names, read relative to `/n` of `system`, as [`stored`] gives it.
 fn stored_at(system: &MemorySystem, target: &str) -> (Image, Option<Image>) {
-    stored(read(system, Path::new("/n"), target).unwrap()).unwrap()
+    stored(read(system, Some(Path::new("/n")), target).unwrap()).unwrap()
 }
 
 #[test]
@@ -127,7 +127,7 @@ fn a_web_address_is_linked_as_written() {
         "https://example.com/a.png?size=2",
     ] {
         assert!(matches!(
-            read(&system, Path::new("/n"), address).unwrap(),
+            read(&system, Some(Path::new("/n")), address).unwrap(),
             Picture::Linked(linked) if linked == address
         ));
     }
@@ -193,13 +193,13 @@ fn a_data_address_gives_the_parts_of_its_decoded_bytes() {
     let system = MemorySystem::new();
     let logo = png(3, 2);
     let encoded = format!("data:image/png;base64,{}", STANDARD.encode(&logo));
-    let (shown, svg) = stored(read(&system, Path::new("/n"), &encoded).unwrap()).unwrap();
+    let (shown, svg) = stored(read(&system, Some(Path::new("/n")), &encoded).unwrap()).unwrap();
     assert_eq!(
         (shown.format(), shown.bytes()),
         (&ImageFormat::Png, logo.as_slice())
     );
     assert!(svg.is_none());
-    let (drawn, kept) = stored(read(&system, Path::new("/n"), SVG_ADDRESS).unwrap()).unwrap();
+    let (drawn, kept) = stored(read(&system, Some(Path::new("/n")), SVG_ADDRESS).unwrap()).unwrap();
     assert_eq!(kept.unwrap().bytes(), SVG.as_bytes());
     let size = drawn.pixel_size().unwrap();
     assert_eq!((size.width, size.height), (120, 80));
@@ -215,7 +215,7 @@ fn a_missing_file_and_an_avif_file_each_fail_naming_the_target() {
     let system = files(&[("a.avif", AVIF)]);
     for target in ["missing.png", "a.avif"] {
         assert!(matches!(
-            read(&system, Path::new("/n"), target),
+            read(&system, Some(Path::new("/n")), target),
             Err(MarkdownError::Image { target: named, error }) if named == target && !error.is_empty()
         ));
     }
@@ -239,7 +239,7 @@ fn a_file_whose_name_holds_a_percent_is_still_found() {
 fn a_target_missing_both_ways_fails_naming_it_as_written() {
     let system = MemorySystem::new();
     assert!(matches!(
-        read(&system, Path::new("/n"), "gone%20.png"),
+        read(&system, Some(Path::new("/n")), "gone%20.png"),
         Err(MarkdownError::Image { target, error }) if target == "gone%20.png" && !error.is_empty()
     ));
 }
@@ -262,7 +262,8 @@ fn a_small_svg_is_drawn_at_its_own_size() {
 #[test]
 fn a_huge_svg_is_stored_with_a_capped_png_and_its_own_size_as_the_frame() {
     let system = files(&[("big.svg", svg(100_000, 100_000).as_bytes())]);
-    let (shown, svg, size) = parts(read(&system, Path::new("/n"), "big.svg").unwrap()).unwrap();
+    let (shown, svg, size) =
+        parts(read(&system, Some(Path::new("/n")), "big.svg").unwrap()).unwrap();
     assert!(svg.is_some());
     let png = shown.pixel_size().unwrap();
     assert_eq!((png.width, png.height), (4096, 4096));
@@ -273,7 +274,38 @@ fn a_huge_svg_is_stored_with_a_capped_png_and_its_own_size_as_the_frame() {
 fn a_webp_whose_pixels_exceed_256_mib_fails_naming_the_target() {
     let system = files(&[("big.webp", &webp_header(16_383, 16_383))]);
     assert!(matches!(
-        read(&system, Path::new("/n"), "big.webp"),
+        read(&system, Some(Path::new("/n")), "big.webp"),
         Err(MarkdownError::Image { target, error }) if target == "big.webp" && error.contains("256 MiB")
     ));
+}
+
+#[test]
+fn with_no_base_a_relative_target_fails_naming_it() {
+    let system = files(&[("a.png", &png(1, 1))]);
+    for target in ["a.png", "my%20dot.png"] {
+        assert!(matches!(
+            read(&system, None, target),
+            Err(MarkdownError::Image { target: named, error })
+                if named == target
+                    && error == "a relative path, and markdown from standard input has no folder to find it from"
+        ));
+    }
+}
+
+#[test]
+fn with_no_base_a_web_a_data_and_an_absolute_target_are_read() {
+    let system = files(&[("a.png", &png(1, 1)), ("my dot.png", &png(2, 1))]);
+    assert!(matches!(
+        read(&system, None, "https://example.com/a.png").unwrap(),
+        Picture::Linked(linked) if linked == "https://example.com/a.png"
+    ));
+    let encoded = format!("data:image/png;base64,{}", STANDARD.encode(png(3, 1)));
+    for (target, bytes) in [
+        (encoded.as_str(), png(3, 1)),
+        ("/n/a.png", png(1, 1)),
+        ("/n/my%20dot.png", png(2, 1)),
+    ] {
+        let (shown, _) = stored(read(&system, None, target).unwrap()).unwrap();
+        assert_eq!(shown.bytes(), bytes.as_slice());
+    }
 }

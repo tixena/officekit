@@ -79,8 +79,8 @@ struct Body<'package, S>
 where
     S: ?Sized,
 {
-    /// The folder local picture targets are read relative to.
-    base: &'package Path,
+    /// The folder a relative picture path is found from.
+    base: Option<&'package Path>,
     blocks: Vec<BlockContent>,
     bookmarks: Bookmarks,
     /// The depth of the list item whose later blocks are being written.
@@ -516,8 +516,8 @@ struct Runs<'package, S>
 where
     S: ?Sized,
 {
-    /// The folder local picture targets are read relative to.
-    base: &'package Path,
+    /// The folder a relative picture path is found from.
+    base: Option<&'package Path>,
     content: Vec<ParagraphContent>,
     /// The alt text so far of an image that goes on into the next line.
     image: Option<String>,
@@ -897,8 +897,8 @@ fn blip(reference: &str, id: String, svg: Option<String>) -> Element {
 }
 
 /// The Word blocks of `body`, its sections from depth 1. Its links, pictures and HTML blocks are
-/// related from `main` in `package`, local pictures read through `system` relative to `base`, and
-/// the numbering part is added when it holds a list.
+/// related from `main` in `package`, local pictures read through `system`, a relative path from
+/// `base`, and the numbering part is added when it holds a list.
 ///
 /// # Errors
 ///
@@ -906,7 +906,7 @@ fn blip(reference: &str, id: String, svg: Option<String>) -> Element {
 /// [`parts::add_numbering`].
 pub fn blocks<S, E>(
     system: &S,
-    base: &Path,
+    base: Option<&Path>,
     body: &MarkdownBlock<E>,
     package: &mut Package,
     main: &PartName,

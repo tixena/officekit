@@ -9,6 +9,7 @@
 //! - [`embedded`]: a `.docx`, `.xlsx`, or `.pptx` stored in a part of another document.
 //! - [`compact`]: the merge of neighbouring runs that render the same.
 //! - [`folder`]: a `.docx` as a folder of its parts, and back.
+//! - [`office_file`]: a `.docx`, `.xlsx`, or `.pptx` opened from its bytes without knowing which.
 #![cfg_attr(
     feature = "markdown",
     doc = "- [`markdown`]: a Word document from an archie document, and back, with the feature `markdown`."
@@ -32,5 +33,6 @@ pub mod folder;
 #[cfg(feature = "markdown")]
 pub mod markdown;
 mod new_parts;
+pub mod office_file;
 pub mod pptx;
 pub mod xlsx;
