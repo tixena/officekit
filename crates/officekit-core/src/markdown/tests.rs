@@ -1045,6 +1045,34 @@ fn the_later_blocks_of_an_item_are_list_paragraphs_indented_to_its_level() {
 }
 
 #[test]
+fn a_later_paragraph_of_an_item_is_indented_to_where_its_levels_numbering_puts_the_text() {
+    let docx = reopened(
+        &converted(
+            "1. one\n\n   1. inner\n\n      under inner\n\n   under one\n\n2. two\n",
+            MarkdownOptions::default(),
+        )
+        .unwrap(),
+    );
+    assert_eq!(
+        outline(&docx),
+        [
+            "- num=2/0: one",
+            "- num=3/1: inner",
+            "ListParagraph left=1440: under inner",
+            "ListParagraph left=720: under one",
+            "- num=2/0: two",
+        ]
+    );
+    let levels = numbering_lines(&docx);
+    for level in [
+        "abstract 1 0: decimal %1. start=1 left=720 hanging=360",
+        "abstract 1 1: decimal %2. start=1 left=1440 hanging=360",
+    ] {
+        assert!(levels.iter().any(|line| line == level), "{levels:?}");
+    }
+}
+
+#[test]
 fn an_item_that_opens_with_another_block_gets_an_empty_numbered_paragraph() {
     let docx = converted("- ```\n  code\n  ```\n", MarkdownOptions::default()).unwrap();
     assert_eq!(

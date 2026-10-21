@@ -41,15 +41,16 @@ const NAMESPACES: &str = concat!(
     r#"xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape""#
 );
 
-/// The numbering part of the tests: instance 1 is bullets, instance 2 decimal numbers from 1,
-/// instance 3 a level of format `none`, and instance 4 decimal numbers from 3 by a
-/// `w:startOverride`.
+/// The numbering part of the tests: instance 1 is bullets, instance 2 decimal numbers from 1
+/// whose levels' text starts at 720 and 1440, instance 3 a level of format `none`, and instance 4
+/// decimal numbers from 3 by a `w:startOverride`.
 const NUMBERING: &str = concat!(
     r#"<w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">"#,
     r#"<w:abstractNum w:abstractNumId="0"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl>"#,
     r#"<w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="bullet"/></w:lvl></w:abstractNum>"#,
-    r#"<w:abstractNum w:abstractNumId="1"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1)"/></w:lvl>"#,
-    r#"<w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="decimal"/></w:lvl></w:abstractNum>"#,
+    r#"<w:abstractNum w:abstractNumId="1"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1)"/>"#,
+    r#"<w:pPr><w:ind w:left="720" w:hanging="360"/></w:pPr></w:lvl>"#,
+    r#"<w:lvl w:ilvl="1"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:pPr><w:ind w:left="1440" w:hanging="360"/></w:pPr></w:lvl></w:abstractNum>"#,
     r#"<w:abstractNum w:abstractNumId="2"><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="none"/></w:lvl></w:abstractNum>"#,
     r#"<w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num>"#,
     r#"<w:num w:numId="2"><w:abstractNumId w:val="1"/></w:num>"#,
@@ -828,6 +829,116 @@ fn a_deeper_level_nests_bullets_have_no_start_and_a_start_override_gives_the_fir
                 ],
                 None
             ),
+            list(
+                alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
+                Some(3)
+            ),
+        ])
+    );
+}
+
+#[test]
+fn a_list_a_paragraph_interrupts_goes_on_from_its_last_number_and_a_deeper_level_starts_again() {
+    let mut fixture = Fixture::new();
+    fixture.numbering();
+    let body = [
+        numbered(2, 0, "one"),
+        numbered(2, 1, "inner"),
+        numbered(2, 1, "inner"),
+        numbered(2, 0, "two"),
+        numbered(2, 1, "again"),
+        paragraph("Normal", &run("between")),
+        numbered(2, 0, "three"),
+    ]
+    .concat();
+    let docx = fixture.body(&body);
+    assert_eq!(
+        markdown(&docx),
+        "1. one\n   1. inner\n   2. inner\n2. two\n   1. again\n\nbetween\n\n3. three\n"
+    );
+}
+
+#[test]
+fn paragraphs_that_write_nothing_leave_the_items_of_one_word_list_in_one_list() {
+    let mut fixture = Fixture::new();
+    fixture.numbering();
+    let body = [
+        numbered(2, 0, "one"),
+        "<w:p/>".to_owned(),
+        numbered(2, 1, "inner"),
+        paragraph("Ttulo1", ""),
+        numbered(2, 0, "two"),
+        "<w:p/>".to_owned(),
+        numbered(1, 0, "bullet"),
+    ]
+    .concat();
+    let docx = fixture.body(&body);
+    let inner = list(
+        alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("inner")])])],
+        Some(1),
+    );
+    assert_eq!(
+        archie(&docx).body.sections,
+        no_heading(alloc::vec![
+            list(
+                alloc::vec![
+                    item(alloc::vec![paragraph_of(alloc::vec![text("one")]), inner]),
+                    item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
+                ],
+                Some(1)
+            ),
+            list(
+                alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("bullet")])])],
+                None
+            ),
+        ])
+    );
+}
+
+#[test]
+fn a_paragraph_indented_to_where_an_items_text_starts_is_a_later_block_of_that_item() {
+    let mut fixture = Fixture::new();
+    fixture.numbering();
+    let indented = |left: u16, text: &str| {
+        format!(
+            r#"<w:p><w:pPr><w:ind w:left="{left}" w:firstLine="0"/></w:pPr>{}</w:p>"#,
+            run(text)
+        )
+    };
+    let body = [
+        numbered(2, 0, "one"),
+        numbered(2, 1, "inner"),
+        indented(1440, "under inner"),
+        indented(720, "under one"),
+        numbered(2, 0, "two"),
+        indented(360, "elsewhere"),
+        numbered(2, 0, "three"),
+    ]
+    .concat();
+    let docx = fixture.body(&body);
+    let inner = Block::List(List::new(
+        alloc::vec![item(alloc::vec![
+            paragraph_of(alloc::vec![text("inner")]),
+            paragraph_of(alloc::vec![text("under inner")]),
+        ])],
+        true,
+        Some(1),
+    ));
+    assert_eq!(
+        archie(&docx).body.sections,
+        no_heading(alloc::vec![
+            list(
+                alloc::vec![
+                    item(alloc::vec![
+                        paragraph_of(alloc::vec![text("one")]),
+                        inner,
+                        paragraph_of(alloc::vec![text("under one")]),
+                    ]),
+                    item(alloc::vec![paragraph_of(alloc::vec![text("two")])]),
+                ],
+                Some(1)
+            ),
+            paragraph_of(alloc::vec![text("elsewhere")]),
             list(
                 alloc::vec![item(alloc::vec![paragraph_of(alloc::vec![text("three")])])],
                 Some(3)

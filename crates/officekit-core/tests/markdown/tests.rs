@@ -141,6 +141,12 @@ fn a_loose_list_comes_back_tight_unless_an_item_holds_two_paragraphs() {
 }
 
 #[test]
+fn a_later_paragraph_of_an_item_comes_back_inside_that_item_at_its_level() {
+    let source = "1. one\n\n   under one\n\n   1. inner\n\n      under inner\n\n2. two\n";
+    assert_eq!(after_word(source), source);
+}
+
+#[test]
 fn a_simple_table_or_a_grid_table_of_one_head_row_of_one_line_cells_comes_back_as_a_pipe_table() {
     let pipe = "| A   | B   |\n| --- | --- |\n| 1   | 2   |\n";
     assert_eq!(after_word("A | B\n--|--\n1 | 2\n"), pipe);

@@ -26,10 +26,11 @@ use officekit_markup::wordprocessing::{
     ContentBlockContent, ContentCellContent, ContentRowContent, DecimalNumberValue, Document,
     HorizontalAlignmentType, HorizontalAlignmentTypeMember, Hyperlink, MergedCellType,
     MergedCellTypeMember, NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions,
-    Paragraph, ParagraphContent, ParagraphProperties, RichTextBoxContentContainer, RunProperties,
-    RunPropertiesContent, SignedMeasurementInTwentiethsOfPointMember, StNumberFormat,
-    StNumberFormatMember, StyleDefinition, StyleTypesMember, Table, TableCell, TableRow,
-    TableRowPropertiesContent, TextRun, TextRunContent, TrackedRunContent,
+    NumberingLevelDefinitionOverride, NumberingLevelOverrideDefinition, Paragraph,
+    ParagraphContent, ParagraphIndentation, ParagraphProperties, RichTextBoxContentContainer,
+    RunProperties, RunPropertiesContent, SignedMeasurementInTwentiethsOfPointMember,
+    StNumberFormat, StNumberFormatMember, StyleDefinition, StyleTypesMember, Table, TableCell,
+    TableRow, TableRowPropertiesContent, TextRun, TextRunContent, TrackedRunContent,
 };
 use officekit_packaging::error::PackageError;
 use officekit_packaging::package::{OpenOptions, Package};
@@ -182,6 +183,9 @@ struct OpenList {
 /// index in `lists`, the lists open, and the sections.
 #[derive(Default)]
 struct Output {
+    /// The lists open close before the next block written outside them; an item of the
+    /// numbering instance of an open list comes first keeps them open.
+    closing: bool,
     gathered: Vec<String>,
     gathering: Option<(Gathering, Option<usize>)>,
     lists: Vec<OpenList>,
@@ -231,6 +235,8 @@ struct Walk<'walk> {
     hyperlink: Option<(usize, usize)>,
     links: Links,
     numbering: &'walk Numbering,
+    /// The last number each level of each numbering instance showed, by instance and level.
+    numbers: BTreeMap<(i64, usize), u64>,
     output: Output,
     parts: Parts<'walk>,
     styles: &'walk Styles,
@@ -427,18 +433,29 @@ impl Links {
 }
 
 impl Numbering {
-    /// What level `level` of numbering instance `instance` makes a paragraph: the level the
-    /// instance's `w:lvlOverride` gives, else its abstract numbering's; a bullet item, a hidden
-    /// number, or an ordered item from the override's `w:startOverride` or the level's `w:start`.
-    fn of(&self, instance: i64, level: usize) -> Numbered {
-        let Some(definition) = self
+    /// The left indent, in twentieths of a point, of the text of level `level` of numbering
+    /// instance `instance`: the `w:ind` of the level's `w:pPr`.
+    fn indent(&self, instance: i64, level: usize) -> Option<i64> {
+        let (_, definition) = self.level(instance, level)?;
+        let properties = definition.paragraph_properties_p_pr_general.as_deref()?;
+        left_indent(properties.paragraph_indentation.as_deref()?)
+    }
+
+    /// Level `level` of numbering instance `instance`: the instance's `w:lvlOverride` of it, if
+    /// any, and the level that override gives, else its abstract numbering's.
+    fn level(
+        &self,
+        instance: i64,
+        level: usize,
+    ) -> Option<(
+        Option<&NumberingLevelDefinitionOverride>,
+        &NumberingLevelOverrideDefinition,
+    )> {
+        let definition = self
             .root
             .numbering_definition_instance
             .iter()
-            .find(|candidate| number(candidate.num_id.as_ref()) == Some(instance))
-        else {
-            return Numbered::Unnumbered;
-        };
+            .find(|candidate| number(candidate.num_id.as_ref()) == Some(instance))?;
         let level_override = definition
             .numbering_level_definition_override
             .iter()
@@ -449,7 +466,7 @@ impl Numbering {
                 .val
                 .as_ref(),
         );
-        let Some(level_definition) = level_override
+        let level_definition = level_override
             .and_then(|found| found.numbering_level_override_definition.as_deref())
             .or_else(|| {
                 self.root
@@ -462,8 +479,15 @@ impl Numbering {
                     .numbering_level_override_definition
                     .iter()
                     .find(|candidate| level_number(candidate.ilvl.as_ref()) == Some(level))
-            })
-        else {
+            })?;
+        Some((level_override, level_definition))
+    }
+
+    /// What level `level` of numbering instance `instance` makes a paragraph: the level the
+    /// instance's `w:lvlOverride` gives, else its abstract numbering's; a bullet item, a hidden
+    /// number, or an ordered item from the override's `w:startOverride` or the level's `w:start`.
+    fn of(&self, instance: i64, level: usize) -> Numbered {
+        let Some((level_override, level_definition)) = self.level(instance, level) else {
             return Numbered::Unnumbered;
         };
         let format = level_definition
@@ -560,6 +584,9 @@ impl Output {
         if self.lists.len() > keep {
             self.flush();
         }
+        if keep == 0 {
+            self.closing = false;
+        }
         while self.lists.len() > keep
             && let Some(list) = self.lists.pop()
         {
@@ -609,9 +636,14 @@ impl Output {
 
     /// A new item of the list of `instance` at `level`, ordered from `start` or bullets: in the
     /// list open at that level when it is of the same instance, else in a new list, nested in the
-    /// item before when that is at a shallower level. Returns the list's index.
+    /// item before when that is at a shallower level. Lists that are closing stay open when one
+    /// of them is of `instance`. Returns the list's index.
     fn item(&mut self, instance: i64, level: usize, start: Option<u64>) -> usize {
         self.flush();
+        if self.closing && !self.lists.iter().any(|list| list.instance == instance) {
+            self.close(0);
+        }
+        self.closing = false;
         let deeper = self
             .lists
             .iter()
@@ -640,6 +672,7 @@ impl Output {
     /// The list whose last item a later block goes into: the one open at `level` when there is
     /// one, else the innermost; the lists inside it close.
     fn later(&mut self, level: Option<usize>) -> usize {
+        self.closing = false;
         let index = level
             .and_then(|wanted| self.lists.iter().position(|list| list.level == wanted))
             .unwrap_or_else(|| self.lists.len().saturating_sub(1));
@@ -647,7 +680,8 @@ impl Output {
         index
     }
 
-    /// `block`, last in the last item of the list at `place`, or in the sections.
+    /// `block`, last in the last item of the list at `place`, or in the sections after the lists
+    /// that are closing.
     fn put(&mut self, block: Block, place: Option<usize>) {
         if let Some(blocks) = place
             .and_then(|index| self.lists.get_mut(index))
@@ -655,6 +689,9 @@ impl Output {
         {
             blocks.push(block);
             return;
+        }
+        if self.closing {
+            self.close(0);
         }
         self.sections.block(block);
     }
@@ -1385,6 +1422,21 @@ impl Walk<'_> {
         walked
     }
 
+    /// The number an item of `instance` at `level` shows: one past the last item of that instance
+    /// and level, wherever it was, else `start`; none for bullets. The instance's deeper levels
+    /// start again.
+    fn number(&mut self, instance: i64, level: usize, start: Option<u64>) -> Option<u64> {
+        self.numbers
+            .retain(|&(other, deeper), _| other != instance || deeper <= level);
+        let first = start?;
+        let shown = self
+            .numbers
+            .get(&(instance, level))
+            .map_or(first, |last| last.saturating_add(1));
+        self.numbers.insert((instance, level), shown);
+        Some(shown)
+    }
+
     /// A paragraph as the node its kind gives: a list item, a later block of the list item before
     /// it, or a block of its own; then the paragraphs of its text boxes.
     fn paragraph(&mut self, paragraph: &Paragraph) -> Result<(), PackageError> {
@@ -1404,7 +1456,7 @@ impl Walk<'_> {
         };
         match numbered {
             Numbered::Hidden => {
-                self.output.close(0);
+                self.output.closing = true;
                 self.content(kind, pieces, properties, None);
             }
             Numbered::Item {
@@ -1412,7 +1464,8 @@ impl Walk<'_> {
                 level,
                 start,
             } => {
-                let index = self.output.item(instance, level, start);
+                let shown = self.number(instance, level, start);
+                let index = self.output.item(instance, level, shown);
                 if has_text(&pieces) || has_picture(&pieces) {
                     let opening = ArchieParagraph::new(lines(pieces, &self.links));
                     self.output.put(Block::Paragraph(opening), Some(index));
@@ -1511,9 +1564,10 @@ impl Walk<'_> {
     }
 
     /// Where a paragraph of `kind` and `properties` with no numbering goes while a list is open:
-    /// the list whose last item it is a later block of, a `ListParagraph` paragraph, or a code,
-    /// quote or rule paragraph indented to a list level; else the lists close and it goes into
-    /// the sections.
+    /// the list whose last item it is a later block of, a plain paragraph indented to where the
+    /// text of an open list's items starts, a `ListParagraph` paragraph, or a code, quote or rule
+    /// paragraph indented to a list level; else it goes into the sections, and the lists close
+    /// before it when it writes a block.
     fn place(
         &mut self,
         kind: Kind,
@@ -1525,19 +1579,19 @@ impl Walk<'_> {
         }
         let level = indent_level(properties);
         let later = match kind {
-            Kind::Code | Kind::Quote => level.is_some(),
-            Kind::Heading(_) => false,
-            Kind::Plain => {
-                self.styles.is_list_paragraph(properties)
-                    || (level.is_some() && !shows && is_rule(properties))
-            }
+            Kind::Code | Kind::Quote => level.is_some().then_some(level),
+            Kind::Heading(_) => None,
+            Kind::Plain => self.under(properties).map(Some).or_else(|| {
+                (self.styles.is_list_paragraph(properties)
+                    || (level.is_some() && !shows && is_rule(properties)))
+                .then_some(level)
+            }),
         };
-        if later {
-            Some(self.output.later(level))
-        } else {
-            self.output.close(0);
-            None
-        }
+        let Some(wanted) = later else {
+            self.output.closing = true;
+            return None;
+        };
+        Some(self.output.later(wanted))
     }
 
     /// A run's pieces, of the run's marks inside the link open, the pictures and text boxes of
@@ -1749,6 +1803,19 @@ impl Walk<'_> {
         }
         Ok(())
     }
+
+    /// The level of the innermost open list whose items' text starts, by its numbering, at the
+    /// own left indent of a paragraph of `properties`.
+    fn under(&self, properties: Option<&ParagraphProperties>) -> Option<usize> {
+        let indentation = properties.and_then(|own| own.paragraph_indentation.as_deref())?;
+        let left = left_indent(indentation)?;
+        self.output
+            .lists
+            .iter()
+            .rev()
+            .find(|list| self.numbering.indent(list.instance, list.level) == Some(left))
+            .map(|list| list.level)
+    }
 }
 
 /// The target of a link to the bookmark `name`: `#` and the name with each `_` written `-`, the
@@ -1951,6 +2018,7 @@ pub fn exported(
         hyperlink: None,
         links: Links::default(),
         numbering,
+        numbers: BTreeMap::new(),
         output: Output::default(),
         parts,
         styles,
@@ -2078,12 +2146,17 @@ fn hyperlink_target(instruction: &str) -> Option<String> {
 /// `properties`.
 fn indent_level(properties: Option<&ParagraphProperties>) -> Option<usize> {
     let indentation = properties.and_then(|own| own.paragraph_indentation.as_deref())?;
+    let written = left_indent(indentation)?.to_string();
+    (0..=DEEPEST_LEVEL).find(|level| parts::level_indent(*level) == written)
+}
+
+/// The `w:left`, or `w:start`, of `indentation`, in twentieths of a point.
+fn left_indent(indentation: &ParagraphIndentation) -> Option<i64> {
     let left = indentation.left.as_ref().or(indentation.start.as_ref())?;
     let Ok(SignedMeasurementInTwentiethsOfPointMember::Integer(twips)) = left.value() else {
         return None;
     };
-    let written = twips.to_string();
-    (0..=DEEPEST_LEVEL).find(|level| parts::level_indent(*level) == written)
+    Some(twips)
 }
 
 /// Whether `style` is the default paragraph style.
