@@ -12,13 +12,15 @@ license = "MIT"
 repository = "https://github.com/eburgos/officekit"
 
 [workspace.dependencies]
-officekit-core = { path = "crates/officekit-core" }
+# Every entry turns its default features off: each crate turns on the
+# features it uses, and no more.
+officekit-core = { path = "crates/officekit-core", default-features = false }
 officekit-markup = { path = "crates/officekit-markup" }
 officekit-markup-base = { path = "crates/officekit-markup-base" }
 officekit-markup-core = { path = "crates/officekit-markup-core" }
 officekit-markup-ext = { path = "crates/officekit-markup-ext" }
 officekit-packaging = { path = "crates/officekit-packaging" }
-officekit-parts = { path = "crates/officekit-parts" }
+officekit-parts = { path = "crates/officekit-parts", default-features = false }
 officekit-strict = { path = "crates/officekit-strict" }
 officekit-transitional = { path = "crates/officekit-transitional" }
 officekit-traversal = { path = "crates/officekit-traversal" }
@@ -26,42 +28,56 @@ officekit-validation = { path = "crates/officekit-validation" }
 officekit-xml = { path = "crates/officekit-xml" }
 
 # CLI framework
-clap = { version = "4", features = ["derive", "env"] }
+clap = { version = "4", default-features = false }
 
 # JSON output
-serde_json = "1.0"
+serde_json = { version = "1.0", default-features = false }
 
 # System abstraction (filesystem, env, temp dirs). The only route to the OS:
 # no crate in this workspace calls std::fs or std::env directly.
-os-shim = "0.1.0"
+os-shim = { version = "0.1.0", default-features = false }
 
 # Markdown documents as a typed tree
-archie-core = { git = "https://github.com/tixena/archie.git" }
+archie-core = { git = "https://github.com/tixena/archie.git", default-features = false }
 
 # Pictures in markdown: an SVG rendered to PNG, a WebP decoded to PNG
-image-webp = "0.2.4"
-png = "0.18.1"
-resvg = { version = "0.48.1", default-features = false, features = ["raster-images"] }
+image-webp = { version = "0.2.4", default-features = false }
+png = { version = "0.18.1", default-features = false }
+resvg = { version = "0.48.1", default-features = false }
 
 # Test-only: builds zip archives whose entries carry data descriptors, as
 # files from streaming exporters do. Packages themselves go through os-shim's
-# zip feature. Feature selection matches os-shim's so both resolve to one
-# build of the crate.
-zip = { version = "9.0.4", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+# zip feature.
+zip = { version = "9.0.4", default-features = false }
 
 # Reads and writes the XML of every part (D29).
-quick-xml = "0.42"
+quick-xml = { version = "0.42", default-features = false }
 
 # The typed tree archived, read in place without parsing.
-rkyv = { version = "0.8", default-features = false, features = ["std", "bytecheck"] }
+rkyv = { version = "0.8", default-features = false }
 
 # Error handling
-anyhow = "1"
-thiserror = "2"
+anyhow = { version = "1", default-features = false }
+thiserror = { version = "2", default-features = false }
+
+# Regular expressions: the pattern facets of XML Schema, and folder names
+regex = { version = "1", default-features = false }
+
+# An image's pixel size, read from its header
+imagesize = { version = "0.15", default-features = false }
+
+# A document-protection password's hash and salt, written as text
+sha1 = { version = "0.10", default-features = false }
+base64 = { version = "0.22", default-features = false }
+
+# The generator's hand-maintained tables, and the SHA-256 in the header of
+# every generated file
+toml = { version = "1", default-features = false }
+sha2 = { version = "0.10", default-features = false }
 
 # Test-only crates
-assert_cmd = "2"
-tempfile = "3"
+assert_cmd = { version = "2", default-features = false }
+tempfile = { version = "3", default-features = false }
 
 [profile.release]
 lto = true

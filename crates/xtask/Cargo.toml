@@ -18,7 +18,7 @@ path = "src/main.rs"
 
 [dependencies]
 # Subcommand dispatch.
-clap.workspace = true
+clap = { workspace = true, features = ["std", "derive"] }
 
 # Error handling.
 anyhow.workspace = true
@@ -42,10 +42,10 @@ officekit-markup.workspace = true
 quick-xml.workspace = true
 
 # Reads the hand-maintained tables of simple types and part roots.
-toml = { version = "1", default-features = false, features = ["parse", "serde", "std"] }
+toml = { workspace = true, features = ["serde", "parse"] }
 
 # SHA-256 of the committed tables, for the header of every generated file.
-sha2 = "0.10"
+sha2.workspace = true
 
 [dev-dependencies]
 # The parity tests name the parts of their records.

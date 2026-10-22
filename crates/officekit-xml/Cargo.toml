@@ -14,17 +14,5 @@ workspace = true
 [dependencies]
 quick-xml.workspace = true
 thiserror.workspace = true
-regex = "1"
-# The features other crates of the workspace turn on, asked for here so every
-# cargo line resolves one set and the generated crates compile once.
-aho-corasick = "1"
-regex-automata = { version = "0.4", default-features = false, features = ["dfa-search", "nfa", "perf"] }
-indexmap = { version = "2", features = ["serde"] }
-rkyv = { workspace = true, features = ["indexmap-2"] }
-serde_core = { version = "1", features = ["alloc"] }
-
-[build-dependencies]
-# The features the CLI's proc-macros turn on, so the proc-macros' syn is the
-# same in every cargo line.
-syn = { version = "3", default-features = false, features = ["extra-traits"] }
-syn2 = { package = "syn", version = "2", default-features = false, features = ["extra-traits", "visit-mut"] }
+regex = { workspace = true, features = ["unicode-perl"] }
+rkyv = { workspace = true, features = ["alloc", "bytecheck"] }
