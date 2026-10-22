@@ -13,6 +13,7 @@ use officekit_parts::{numbering_definitions, style_definitions};
 use officekit_validation::validator::Validator;
 use officekit_xml::name::OfficeVersion;
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Encoder};
 
@@ -91,9 +92,15 @@ fn notes(source: &str) -> MemorySystem {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/n")).unwrap();
     system
-        .write(Path::new("/n/doc.md"), source.as_bytes())
+        .write(
+            Path::new("/n/doc.md"),
+            source.as_bytes(),
+            WriteMode::Replace,
+        )
         .unwrap();
-    system.write(Path::new("/n/logo.png"), &tiny_png()).unwrap();
+    system
+        .write(Path::new("/n/logo.png"), &tiny_png(), WriteMode::Replace)
+        .unwrap();
     system
 }
 

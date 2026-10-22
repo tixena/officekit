@@ -15,7 +15,7 @@ use alloc::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 
 use self::correspondences::Correspondences;
 use self::rules::{AttributeRule, ChildRule, Rules};
@@ -285,7 +285,7 @@ where
                 .with_context(|| format!("cannot create {}", parent.display()))?;
         }
         system
-            .write(&path, contents.as_bytes())
+            .write(&path, contents.as_bytes(), WriteMode::Replace)
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(())

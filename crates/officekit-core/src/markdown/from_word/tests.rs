@@ -20,6 +20,7 @@ use officekit_parts::kinds::WordprocessingKind;
 use officekit_parts::numbering_definitions;
 use officekit_parts::style_definitions::{CONTENT_TYPE, RELATIONSHIP_TYPE};
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 
 use crate::docx::Docx;
@@ -388,7 +389,11 @@ fn save_markdown_leaves_a_media_folder_already_there_as_it_is() {
         .create_dir_all(Path::new("/n/contract_media"))
         .unwrap();
     system
-        .write(Path::new("/n/contract_media/kept.png"), b"png")
+        .write(
+            Path::new("/n/contract_media/kept.png"),
+            b"png",
+            WriteMode::Replace,
+        )
         .unwrap();
     save_markdown(
         &word(&paragraph("Normal", &run("Hola"))),

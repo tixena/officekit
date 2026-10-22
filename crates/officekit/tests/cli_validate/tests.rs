@@ -4,6 +4,7 @@ use std::process::Output;
 
 use assert_cmd::Command;
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
@@ -81,7 +82,9 @@ fn a_file_that_does_not_exist_exits_2_with_the_reason() {
 fn a_file_that_is_not_a_zip_archive_exits_2() {
     let dir = TempDir::new().unwrap();
     let path = dir.path().join("not-a-package.docx");
-    RealSystem::new().write(&path, b"plain text").unwrap();
+    RealSystem::new()
+        .write(&path, b"plain text", WriteMode::Replace)
+        .unwrap();
 
     let output = run(&["validate", path.to_str().unwrap()]);
     assert_eq!(output.status.code(), Some(2_i32), "got {output:?}");

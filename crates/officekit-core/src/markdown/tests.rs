@@ -26,6 +26,7 @@ use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::name::{Namespace, OfficeVersion};
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
@@ -213,7 +214,11 @@ fn notes(source: &str) -> MemorySystem {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/notes")).unwrap();
     system
-        .write(Path::new("/notes/report.md"), source.as_bytes())
+        .write(
+            Path::new("/notes/report.md"),
+            source.as_bytes(),
+            WriteMode::Replace,
+        )
         .unwrap();
     system
 }
@@ -553,10 +558,12 @@ fn picture_notes(source: &str, files: &[(&str, &[u8])]) -> MemorySystem {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/n")).unwrap();
     system
-        .write(Path::new("/n/p.md"), source.as_bytes())
+        .write(Path::new("/n/p.md"), source.as_bytes(), WriteMode::Replace)
         .unwrap();
     for &(name, bytes) in files {
-        system.write(&Path::new("/n").join(name), bytes).unwrap();
+        system
+            .write(&Path::new("/n").join(name), bytes, WriteMode::Replace)
+            .unwrap();
     }
     system
 }

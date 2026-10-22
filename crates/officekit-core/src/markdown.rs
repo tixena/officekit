@@ -24,7 +24,7 @@ use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::Target;
 use officekit_parts::kinds::WordprocessingKind;
-use os_shim::System;
+use os_shim::{System, WriteMode};
 
 use crate::docx::Docx;
 
@@ -227,7 +227,7 @@ where
         &WriteOptions::default(),
     )?;
     system
-        .write(path, text.as_bytes())
+        .write(path, text.as_bytes(), WriteMode::Replace)
         .map_err(|error| MarkdownError::Io {
             error,
             path: path.to_path_buf(),
@@ -245,7 +245,7 @@ where
     for (name, bytes) in &exported.images {
         let target = folder.join(name);
         system
-            .write(&target, bytes)
+            .write(&target, bytes, WriteMode::Replace)
             .map_err(|error| MarkdownError::Io {
                 error,
                 path: target.clone(),

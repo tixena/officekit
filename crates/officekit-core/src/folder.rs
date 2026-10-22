@@ -12,9 +12,9 @@ use std::ffi::OsStr;
 use std::io::{self, Cursor, Read as _};
 use std::path::{Path, PathBuf};
 
-use os_shim::System;
 use os_shim::archive::load_zip_seekable;
 use os_shim::mock::MemorySystem;
+use os_shim::{System, WriteMode};
 use regex::Regex;
 use serde_json::{Value, json};
 
@@ -182,7 +182,9 @@ where
             .map_err(io_error(&directory))?;
         let output = directory.join(name);
         let archive = collapse(system, folder, options.minify)?;
-        system.write(&output, &archive).map_err(io_error(&output))?;
+        system
+            .write(&output, &archive, WriteMode::Replace)
+            .map_err(io_error(&output))?;
         written.push(output);
     }
     Ok(written)
@@ -206,7 +208,9 @@ where
         let pretty = relayout(&bytes, Layout::Pretty, file)?;
         summary.inspected += 1;
         if pretty != bytes {
-            system.write(file, &pretty).map_err(io_error(file))?;
+            system
+                .write(file, &pretty, WriteMode::Replace)
+                .map_err(io_error(file))?;
             summary.rewritten += 1;
         }
     }
@@ -341,7 +345,9 @@ where
         let target = folder.join(file.strip_prefix(root).unwrap_or(file));
         let layout = (pretty && is_xml_part(file)).then_some(Layout::Pretty);
         let bytes = transform(&read(&archive, file)?, layout, &target)?;
-        system.write(&target, &bytes).map_err(io_error(&target))?;
+        system
+            .write(&target, &bytes, WriteMode::Replace)
+            .map_err(io_error(&target))?;
     }
     let info = folder.join(INFO_FILE);
     let text = serde_json::to_string_pretty(&json!({ "name": name })).map_err(|error| {
@@ -351,7 +357,7 @@ where
         }
     })?;
     system
-        .write(&info, text.as_bytes())
+        .write(&info, text.as_bytes(), WriteMode::Replace)
         .map_err(io_error(&info))
 }
 
@@ -404,7 +410,9 @@ where
         let target = root.join(file.strip_prefix(folder).unwrap_or(file));
         let layout = (minify && is_xml_part(file)).then_some(Layout::Compact);
         let bytes = transform(&read(system, file)?, layout, file)?;
-        archive.write(&target, &bytes).map_err(io_error(&target))?;
+        archive
+            .write(&target, &bytes, WriteMode::Replace)
+            .map_err(io_error(&target))?;
     }
     archive.to_zip_vec(root).map_err(io_error(folder))
 }

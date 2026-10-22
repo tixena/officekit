@@ -30,6 +30,8 @@ use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::values::parse::boolean;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use os_shim::WriteMode;
 
 use crate::file;
 use crate::new_parts;
@@ -169,7 +171,7 @@ impl Xlsx {
         S: System + ?Sized,
     {
         let bytes = self.to_bytes_strict()?;
-        system.write(path, &bytes)?;
+        system.write(path, &bytes, WriteMode::Replace)?;
         Ok(())
     }
 
@@ -189,7 +191,7 @@ impl Xlsx {
         S: System + ?Sized,
     {
         let (bytes, warnings) = self.to_bytes_transitional()?;
-        system.write(path, &bytes)?;
+        system.write(path, &bytes, WriteMode::Replace)?;
         Ok(warnings)
     }
 

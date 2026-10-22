@@ -35,7 +35,7 @@ serde_json = { version = "1.0", default-features = false }
 
 # System abstraction (filesystem, env, temp dirs). The only route to the OS:
 # no crate in this workspace calls std::fs or std::env directly.
-os-shim = { version = "0.1.0", default-features = false }
+os-shim = { version = "0.1.1", default-features = false }
 
 # Markdown documents as a typed tree
 archie-core = { git = "https://github.com/tixena/archie.git", default-features = false }

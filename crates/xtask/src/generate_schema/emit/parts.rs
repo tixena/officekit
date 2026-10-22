@@ -15,7 +15,7 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 
 use super::markup::structs::Catalog;
 use super::markup::{self, Data, NodeKey, Source, names};
@@ -495,7 +495,7 @@ where
         .with_context(|| format!("cannot create {}", folder.display()))?;
     for (path, text) in files {
         system
-            .write(&path, text.as_bytes())
+            .write(&path, text.as_bytes(), WriteMode::Replace)
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(summary(&joined, &roots))

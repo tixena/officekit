@@ -14,8 +14,8 @@ use officekit_xml::name::QName;
 use officekit_xml::parse::parse;
 use officekit_xml::stream::reader::PartReader;
 use officekit_xml::write::WriteOptions;
-use os_shim::System;
 use os_shim::mock::MemorySystem;
+use os_shim::{System, WriteMode};
 
 use crate::content_types::{ContentTypes, XML_CONTENT_TYPE};
 use crate::error::PackageError;
@@ -717,7 +717,7 @@ impl Package {
     where
         S: System + ?Sized,
     {
-        system.write(path, &self.to_bytes()?)?;
+        system.write(path, &self.to_bytes()?, WriteMode::Replace)?;
         Ok(())
     }
 
@@ -889,7 +889,7 @@ impl Package {
         if let Some(parent) = path.parent() {
             self.fs.create_dir_all(parent)?;
         }
-        self.fs.write(path, bytes)?;
+        self.fs.write(path, bytes, WriteMode::Replace)?;
         Ok(())
     }
 

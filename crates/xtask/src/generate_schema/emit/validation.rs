@@ -12,7 +12,7 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 
 use self::strict::StrictChecks;
 use crate::generate_schema::compare::{self, Additions};
@@ -1682,7 +1682,7 @@ where
             folder.join(name)
         };
         system
-            .write(&path, text.as_bytes())
+            .write(&path, text.as_bytes(), WriteMode::Replace)
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(Emitted {

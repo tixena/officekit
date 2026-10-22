@@ -18,7 +18,7 @@ use alloc::vec::Vec;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result, bail};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 use serde_json::Value;
 
 use super::namespaces;
@@ -737,7 +737,7 @@ where
     let header = namespaces::header(inputs.checksums(), inputs.tools(), &read, &[])?;
     let (text, summary) = render_table(&header, emitted, &by_element)?;
     system
-        .write(out, text.as_bytes())
+        .write(out, text.as_bytes(), WriteMode::Replace)
         .with_context(|| format!("cannot write {}", out.display()))?;
     Ok(summary)
 }

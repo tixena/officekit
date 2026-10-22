@@ -7,6 +7,7 @@ use officekit_parts::kinds::SpreadsheetKind;
 use officekit_validation::error::{ErrorCode, Step, ValidationError};
 use officekit_xml::name::OfficeVersion;
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use serde_json::{Value, json};
 
@@ -198,12 +199,14 @@ fn workbook(system: &MemorySystem) {
         .unwrap()
         .to_bytes_transitional()
         .unwrap();
-    system.write(Path::new("/book.xlsx"), &bytes).unwrap();
+    system
+        .write(Path::new("/book.xlsx"), &bytes, WriteMode::Replace)
+        .unwrap();
 }
 
 fn report_docx(system: &MemorySystem) -> Vec<u8> {
     system
-        .write(Path::new("/it.md"), REPORT.as_bytes())
+        .write(Path::new("/it.md"), REPORT.as_bytes(), WriteMode::Replace)
         .unwrap();
     let args = get_args("/it.md", Form::Docx, None);
     let (result, bytes, _) = get(system, &args, b"");
@@ -215,7 +218,7 @@ fn report_docx(system: &MemorySystem) -> Vec<u8> {
 fn get_writes_a_markdown_file_as_a_word_file_that_reads_back_as_the_same_markdown() {
     let system = MemorySystem::new();
     system
-        .write(Path::new("/it.md"), REPORT.as_bytes())
+        .write(Path::new("/it.md"), REPORT.as_bytes(), WriteMode::Replace)
         .unwrap();
     let args = get_args("/it.md", Form::Docx, Some("/it.docx"));
     let (result, out, err) = get(&system, &args, b"");

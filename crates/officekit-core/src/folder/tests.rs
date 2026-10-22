@@ -4,6 +4,7 @@ use std::path::{Path, PathBuf};
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use zip::ZipArchive;
 use zip::write::{SimpleFileOptions, ZipWriter};
@@ -34,7 +35,7 @@ fn system_with(path: &str) -> MemorySystem {
     let system = MemorySystem::new();
     let file = Path::new(path);
     system.create_dir_all(file.parent().unwrap()).unwrap();
-    system.write(file, &docx()).unwrap();
+    system.write(file, &docx(), WriteMode::Replace).unwrap();
     system
 }
 
@@ -149,7 +150,7 @@ fn down_replaces_an_existing_folder() {
     let system = system_with("/in/d.docx");
     system.create_dir_all(Path::new("/out/d_docx")).unwrap();
     system
-        .write(Path::new("/out/d_docx/stale.txt"), b"x")
+        .write(Path::new("/out/d_docx/stale.txt"), b"x", WriteMode::Replace)
         .unwrap();
 
     down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap();
@@ -207,9 +208,15 @@ fn up_appends_docx_to_a_name_without_it() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/out/x_docx")).unwrap();
     system
-        .write(Path::new("/out/x_docx/info.json"), br#"{"name":"plain"}"#)
+        .write(
+            Path::new("/out/x_docx/info.json"),
+            br#"{"name":"plain"}"#,
+            WriteMode::Replace,
+        )
         .unwrap();
-    system.write(Path::new("/out/x_docx/a.txt"), b"a").unwrap();
+    system
+        .write(Path::new("/out/x_docx/a.txt"), b"a", WriteMode::Replace)
+        .unwrap();
 
     let written = up(
         &system,
@@ -226,7 +233,9 @@ fn up_appends_docx_to_a_name_without_it() {
 fn up_ignores_a_folder_without_info() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/out/x_docx")).unwrap();
-    system.write(Path::new("/out/x_docx/a.txt"), b"a").unwrap();
+    system
+        .write(Path::new("/out/x_docx/a.txt"), b"a", WriteMode::Replace)
+        .unwrap();
 
     let written = up(
         &system,
@@ -244,7 +253,11 @@ fn up_ignores_a_folder_without_the_suffix() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/out/x")).unwrap();
     system
-        .write(Path::new("/out/x/info.json"), br#"{"name":"p"}"#)
+        .write(
+            Path::new("/out/x/info.json"),
+            br#"{"name":"p"}"#,
+            WriteMode::Replace,
+        )
         .unwrap();
 
     let written = up(
@@ -263,7 +276,11 @@ fn up_reports_a_malformed_info() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/out/x_docx")).unwrap();
     system
-        .write(Path::new("/out/x_docx/info.json"), b"{\"name\": 3}")
+        .write(
+            Path::new("/out/x_docx/info.json"),
+            b"{\"name\": 3}",
+            WriteMode::Replace,
+        )
         .unwrap();
 
     let error = up(
@@ -334,7 +351,9 @@ fn format_is_idempotent() {
 fn format_reports_malformed_xml() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/d")).unwrap();
-    system.write(Path::new("/d/a.xml"), b"<a><b></a>").unwrap();
+    system
+        .write(Path::new("/d/a.xml"), b"<a><b></a>", WriteMode::Replace)
+        .unwrap();
 
     let error = format(&system, Path::new("/d")).unwrap_err();
 
@@ -367,7 +386,7 @@ fn down_rejects_a_file_that_is_not_a_zip() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/in")).unwrap();
     system
-        .write(Path::new("/in/bad.docx"), b"not a zip")
+        .write(Path::new("/in/bad.docx"), b"not a zip", WriteMode::Replace)
         .unwrap();
 
     let error = down(&system, Path::new("/in"), Path::new("/out"), options(false)).unwrap_err();

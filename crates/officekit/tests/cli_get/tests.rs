@@ -5,6 +5,7 @@ use std::process::Output;
 
 use assert_cmd::Command;
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::real::RealSystem;
 use tempfile::TempDir;
 
@@ -27,7 +28,7 @@ fn run(args: &[&str], stdin: &[u8]) -> Output {
 fn report_docx(dir: &Path) -> Vec<u8> {
     let markdown = dir.join("it.md");
     RealSystem::new()
-        .write(&markdown, REPORT.as_bytes())
+        .write(&markdown, REPORT.as_bytes(), WriteMode::Replace)
         .unwrap();
     let word = dir.join("it.docx");
     let output = run(
@@ -101,7 +102,9 @@ fn markdown_of_an_excel_workbook_exits_2() {
         .to_bytes_transitional()
         .unwrap();
     let book = dir.path().join("book.xlsx");
-    RealSystem::new().write(&book, &bytes).unwrap();
+    RealSystem::new()
+        .write(&book, &bytes, WriteMode::Replace)
+        .unwrap();
 
     let output = run(&["get", book.to_str().unwrap(), "-f", "md"], b"");
     assert_eq!(output.status.code(), Some(2_i32), "got {output:?}");

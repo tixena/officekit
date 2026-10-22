@@ -18,6 +18,8 @@ use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "markdown")]
 use os_shim::System as _;
 #[cfg(feature = "markdown")]
+use os_shim::WriteMode;
+#[cfg(feature = "markdown")]
 use os_shim::mock::MemorySystem;
 #[cfg(feature = "markdown")]
 use png::{BitDepth, ColorType, Encoder};
@@ -266,7 +268,9 @@ fn a_relative_picture_with_no_folder_fails_naming_it() {
 fn a_relative_picture_is_found_from_the_folder() {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/notes")).unwrap();
-    system.write(Path::new("/notes/logo.png"), &logo()).unwrap();
+    system
+        .write(Path::new("/notes/logo.png"), &logo(), WriteMode::Replace)
+        .unwrap();
     let file = OfficeFile::from_input(
         &system,
         b"![Logo](logo.png)\n".to_vec(),

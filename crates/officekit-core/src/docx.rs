@@ -31,6 +31,8 @@ use officekit_transitional::dates::SaveWarning;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use os_shim::WriteMode;
 
 use crate::compact::{self, Comments};
 use crate::file;
@@ -424,7 +426,7 @@ impl Docx {
         S: System + ?Sized,
     {
         let bytes = self.to_bytes_strict()?;
-        system.write(path, &bytes)?;
+        system.write(path, &bytes, WriteMode::Replace)?;
         Ok(())
     }
 
@@ -444,7 +446,7 @@ impl Docx {
         S: System + ?Sized,
     {
         let (bytes, warnings) = self.to_bytes_transitional()?;
-        system.write(path, &bytes)?;
+        system.write(path, &bytes, WriteMode::Replace)?;
         Ok(warnings)
     }
 

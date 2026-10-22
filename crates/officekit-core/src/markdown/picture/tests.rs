@@ -7,6 +7,7 @@ use base64::engine::general_purpose::STANDARD;
 use image_webp::{ColorType as WebPColor, WebPEncoder};
 use officekit_packaging::image::{Image, ImageFormat};
 use os_shim::System as _;
+use os_shim::WriteMode;
 use os_shim::mock::MemorySystem;
 use png::{BitDepth, ColorType, Decoder, Encoder};
 
@@ -82,7 +83,9 @@ fn files(entries: &[(&str, &[u8])]) -> MemorySystem {
     let system = MemorySystem::new();
     system.create_dir_all(Path::new("/n")).unwrap();
     for &(name, bytes) in entries {
-        system.write(&Path::new("/n").join(name), bytes).unwrap();
+        system
+            .write(&Path::new("/n").join(name), bytes, WriteMode::Replace)
+            .unwrap();
     }
     system
 }

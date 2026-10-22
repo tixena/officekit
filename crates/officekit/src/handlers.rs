@@ -6,7 +6,7 @@ use std::path::Path;
 use anyhow::{Context as _, Result, bail};
 use archie_core::parser::ast::RawDocument;
 use archie_core::writer::{self, WriteOptions};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 use serde_json::{Value, json};
 
 use officekit_core::folder::{self, DownOptions, UpOptions};
@@ -186,7 +186,7 @@ where
     };
     match args.output.as_deref() {
         Some(path) if path != Path::new("-") => system
-            .write(path, &output)
+            .write(path, &output, WriteMode::Replace)
             .with_context(|| format!("writing {}", path.display()))?,
         _ => stdout.write_all(&output)?,
     }

@@ -30,7 +30,7 @@ use core::iter;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context as _, Result};
-use os_shim::System;
+use os_shim::{System, WriteMode};
 
 use super::namespaces;
 use super::validation::Emitted;
@@ -431,7 +431,7 @@ where
                 .with_context(|| format!("cannot create {}", parent.display()))?;
         }
         system
-            .write(&path, text.as_bytes())
+            .write(&path, text.as_bytes(), WriteMode::Replace)
             .with_context(|| format!("cannot write {}", path.display()))?;
     }
     Ok(catalog)
