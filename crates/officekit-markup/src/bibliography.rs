@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the `b` namespace: its structs, enums, and
@@ -1147,7 +1147,7 @@ pub trait Context: crate::Context {
         None
     }
 
-    fn guid(&mut self, _node: &GUID) -> Option<GUID> {
+    fn guid(&mut self, _node: &Guid) -> Option<Guid> {
         None
     }
 
@@ -1339,7 +1339,7 @@ pub trait Context: crate::Context {
         None
     }
 
-    fn url(&mut self, _node: &URL) -> Option<URL> {
+    fn url(&mut self, _node: &Url) -> Option<Url> {
         None
     }
 
@@ -1656,7 +1656,7 @@ pub trait Context: crate::Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_guid(&mut self, _node: &GUID, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_guid(&mut self, _node: &Guid, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
@@ -2103,7 +2103,7 @@ pub trait Context: crate::Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_url(&mut self, _node: &URL, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_url(&mut self, _node: &Url, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
@@ -2282,7 +2282,7 @@ pub struct EditorEdition {
 /// 22.6.2.30 Guid (GUID): the tag `b:Guid`, schema type `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct GUID {
+pub struct Guid {
     pub unknown: crate::Unknown,
     pub value: String,
 }
@@ -2574,7 +2574,7 @@ pub enum SourceContent {
     Department(Department),
     Distributor(Distributor),
     EditorEdition(EditorEdition),
-    GUID(GUID),
+    Guid(Guid),
     Institution(Institution),
     InternetSiteTitle(InternetSiteTitle),
     Issue(Issue),
@@ -2604,7 +2604,7 @@ pub enum SourceContent {
     Theater(Theater),
     ThesisType(ThesisType),
     Title(Title),
-    URL(URL),
+    Url(Url),
     Version(Version),
     Volume(Volume),
     Year(Year),
@@ -2699,7 +2699,7 @@ pub struct Translator {
 /// 22.6.2.71 URL (URL): the tag `b:URL`, schema type `ST_String`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct URL {
+pub struct Url {
     pub unknown: crate::Unknown,
     pub value: String,
 }
@@ -2837,7 +2837,7 @@ pub trait Visitor: crate::Visitor {
         crate::Descend::Yes
     }
 
-    fn guid(&mut self, _node: &GUID) -> crate::Descend {
+    fn guid(&mut self, _node: &Guid) -> crate::Descend {
         crate::Descend::Yes
     }
 
@@ -3013,7 +3013,7 @@ pub trait Visitor: crate::Visitor {
         crate::Descend::Yes
     }
 
-    fn url(&mut self, _node: &URL) -> crate::Descend {
+    fn url(&mut self, _node: &Url) -> crate::Descend {
         crate::Descend::Yes
     }
 
@@ -3836,7 +3836,7 @@ impl crate::Write for EditorEdition {
     }
 }
 
-impl GUID {
+impl Guid {
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -3847,13 +3847,13 @@ impl GUID {
     }
 }
 
-impl crate::Read for GUID {
+impl crate::Read for Guid {
     fn read(element: &Element) -> Self {
         read::guid(element)
     }
 }
 
-impl crate::Write for GUID {
+impl crate::Write for Guid {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::guid(self, writer.scope());
         writer.known(element);
@@ -4633,7 +4633,7 @@ impl crate::Read for SourceContent {
             Some((NS_B, "Department")) => Self::Department(crate::read(element)),
             Some((NS_B, "Distributor")) => Self::Distributor(crate::read(element)),
             Some((NS_B, "Edition")) => Self::EditorEdition(crate::read(element)),
-            Some((NS_B, "Guid")) => Self::GUID(crate::read(element)),
+            Some((NS_B, "Guid")) => Self::Guid(crate::read(element)),
             Some((NS_B, "Institution")) => Self::Institution(crate::read(element)),
             Some((NS_B, "InternetSiteTitle")) => Self::InternetSiteTitle(crate::read(element)),
             Some((NS_B, "Issue")) => Self::Issue(crate::read(element)),
@@ -4662,7 +4662,7 @@ impl crate::Read for SourceContent {
             Some((NS_B, "Theater")) => Self::Theater(crate::read(element)),
             Some((NS_B, "ThesisType")) => Self::ThesisType(crate::read(element)),
             Some((NS_B, "Title")) => Self::Title(crate::read(element)),
-            Some((NS_B, "URL")) => Self::URL(crate::read(element)),
+            Some((NS_B, "URL")) => Self::Url(crate::read(element)),
             Some((NS_B, "Version")) => Self::Version(crate::read(element)),
             Some((NS_B, "Volume")) => Self::Volume(crate::read(element)),
             Some((NS_B, "Year")) => Self::Year(crate::read(element)),
@@ -4693,7 +4693,7 @@ impl crate::Write for SourceContent {
             Self::Department(arm) => arm.write_into(writer),
             Self::Distributor(arm) => arm.write_into(writer),
             Self::EditorEdition(arm) => arm.write_into(writer),
-            Self::GUID(arm) => arm.write_into(writer),
+            Self::Guid(arm) => arm.write_into(writer),
             Self::Institution(arm) => arm.write_into(writer),
             Self::InternetSiteTitle(arm) => arm.write_into(writer),
             Self::Issue(arm) => arm.write_into(writer),
@@ -4723,7 +4723,7 @@ impl crate::Write for SourceContent {
             Self::Theater(arm) => arm.write_into(writer),
             Self::ThesisType(arm) => arm.write_into(writer),
             Self::Title(arm) => arm.write_into(writer),
-            Self::URL(arm) => arm.write_into(writer),
+            Self::Url(arm) => arm.write_into(writer),
             Self::Version(arm) => arm.write_into(writer),
             Self::Volume(arm) => arm.write_into(writer),
             Self::Year(arm) => arm.write_into(writer),
@@ -4971,7 +4971,7 @@ impl crate::Write for Translator {
     }
 }
 
-impl URL {
+impl Url {
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -4982,13 +4982,13 @@ impl URL {
     }
 }
 
-impl crate::Read for URL {
+impl crate::Read for Url {
     fn read(element: &Element) -> Self {
         read::url(element)
     }
 }
 
-impl crate::Write for URL {
+impl crate::Write for Url {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::url(self, writer.scope());
         writer.known(element);

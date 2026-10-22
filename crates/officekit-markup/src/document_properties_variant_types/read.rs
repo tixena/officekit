@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `crate::document_properties_variant_types`: each struct read from its generic
@@ -529,10 +529,10 @@ pub fn integer(element: &Element) -> super::Integer {
     node
 }
 
-/// Read `vt:lpstr` into a `LPSTR`.
+/// Read `vt:lpstr` into a `Lpstr`.
 #[must_use]
-pub fn lpstr(element: &Element) -> super::LPSTR {
-    let mut node = super::LPSTR::default();
+pub fn lpstr(element: &Element) -> super::Lpstr {
+    let mut node = super::Lpstr::default();
     let mut reader = crate::Reader::new(element, &super::LPSTR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {
@@ -543,10 +543,10 @@ pub fn lpstr(element: &Element) -> super::LPSTR {
     node
 }
 
-/// Read `vt:lpwstr` into a `LPWSTR`.
+/// Read `vt:lpwstr` into a `Lpwstr`.
 #[must_use]
-pub fn lpwstr(element: &Element) -> super::LPWSTR {
-    let mut node = super::LPWSTR::default();
+pub fn lpwstr(element: &Element) -> super::Lpwstr {
+    let mut node = super::Lpwstr::default();
     let mut reader = crate::Reader::new(element, &super::LPWSTR_SHAPE);
     for (index, field) in &mut reader {
         if index == 0 {

@@ -335,7 +335,7 @@
 //   ee0ae0ea09db0cdfae1bc11eef04ea2ff123c8dbdd548e7feec91b14689565f5  inputs/open-xml-sdk/data/parts/XmlSignaturePart.json
 //   acf0693a1164ddd0a7d6af9318766c234b3ce7937c0e52ef07052e4a57038916  crates/xtask/data/document_kinds.toml
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 //   e26c4528f8340924ff27391d34681ecde1f597fc5ce3dbf2d354edc9c6071a52  crates/xtask/data/part_roots.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)

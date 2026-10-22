@@ -1,6 +1,7 @@
 # The names that replace a struct's or a simple type's title in PascalCase
 # (D14), copied from the naming study's table: a name that collides with
-# another in its module, or a title of more than six words, shortened. Each
+# another in its module, a title of more than six words, shortened, or a title
+# written all in capitals, which clippy's `upper_case_acronyms` rejects. Each
 # `[[element]]` row is the struct of one tag and schema type, its namespace by
 # its prefix in the namespace table; each `[[simple_type]]` row a simple type.
 # The generator stops when a row names no struct or no simple type.
@@ -704,6 +705,48 @@ namespace = "w"
 local = "widowControl"
 type = "CT_OnOff"
 name = "AllowFirstLastLineDisplay"
+
+[[element]]
+# lpstr (LPSTR), in capitals in Part 1
+namespace = "vt"
+local = "lpstr"
+type = "string"
+name = "Lpstr"
+
+[[element]]
+# lpwstr (LPWSTR), in capitals in Part 1
+namespace = "vt"
+local = "lpwstr"
+type = "string"
+name = "Lpwstr"
+
+[[element]]
+# Guid (GUID), in capitals in Part 1
+namespace = "b"
+local = "Guid"
+type = "ST_String"
+name = "Guid"
+
+[[element]]
+# URL (URL), in capitals in Part 1
+namespace = "b"
+local = "URL"
+type = "ST_String"
+name = "Url"
+
+[[element]]
+# hsl (HSL), in capitals in Part 1
+namespace = "p"
+local = "hsl"
+type = "CT_TLByHslColorTransform"
+name = "Hsl"
+
+[[element]]
+# rgb (RGB), in capitals in Part 1
+namespace = "p"
+local = "rgb"
+type = "CT_TLByRgbColorTransform"
+name = "Rgb"
 
 [[simple_type]]
 # Axis Position

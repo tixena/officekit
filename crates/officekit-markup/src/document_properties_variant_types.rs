@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the `vt` namespace: its structs, enums, and
@@ -822,11 +822,11 @@ pub trait Context: crate::Context {
         None
     }
 
-    fn lpstr(&mut self, _node: &LPSTR) -> Option<LPSTR> {
+    fn lpstr(&mut self, _node: &Lpstr) -> Option<Lpstr> {
         None
     }
 
-    fn lpwstr(&mut self, _node: &LPWSTR) -> Option<LPWSTR> {
+    fn lpwstr(&mut self, _node: &Lpwstr) -> Option<Lpwstr> {
         None
     }
 
@@ -1113,14 +1113,14 @@ pub trait Context: crate::Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_lpstr(&mut self, _node: &LPSTR, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_lpstr(&mut self, _node: &Lpstr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
     /// # Errors
     ///
     /// The sink's.
-    fn write_lpwstr(&mut self, _node: &LPWSTR, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_lpwstr(&mut self, _node: &Lpwstr, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
@@ -1332,7 +1332,7 @@ pub struct Integer {
 /// 22.4.2.17 lpstr (LPSTR): the tag `vt:lpstr`, schema type `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct LPSTR {
+pub struct Lpstr {
     pub unknown: crate::Unknown,
     pub value: String,
 }
@@ -1340,7 +1340,7 @@ pub struct LPSTR {
 /// 22.4.2.18 lpwstr (LPWSTR): the tag `vt:lpwstr`, schema type `string`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct LPWSTR {
+pub struct Lpwstr {
     pub unknown: crate::Unknown,
     pub value: String,
 }
@@ -1442,8 +1442,8 @@ pub enum VariantContent {
     I4(I4),
     I8(I8),
     Integer(Integer),
-    LPSTR(LPSTR),
-    LPWSTR(LPWSTR),
+    Lpstr(Lpstr),
+    Lpwstr(Lpwstr),
     Null(Null),
     Other(Node),
     R4(R4),
@@ -1512,8 +1512,8 @@ pub enum VectorContent {
     I2(I2),
     I4(I4),
     I8(I8),
-    LPSTR(LPSTR),
-    LPWSTR(LPWSTR),
+    Lpstr(Lpstr),
+    Lpwstr(Lpwstr),
     Other(Node),
     R4(R4),
     R8(R8),
@@ -1622,11 +1622,11 @@ pub trait Visitor: crate::Visitor {
         crate::Descend::Yes
     }
 
-    fn lpstr(&mut self, _node: &LPSTR) -> crate::Descend {
+    fn lpstr(&mut self, _node: &Lpstr) -> crate::Descend {
         crate::Descend::Yes
     }
 
-    fn lpwstr(&mut self, _node: &LPWSTR) -> crate::Descend {
+    fn lpwstr(&mut self, _node: &Lpwstr) -> crate::Descend {
         crate::Descend::Yes
     }
 
@@ -2375,7 +2375,7 @@ impl crate::Write for Integer {
     }
 }
 
-impl LPSTR {
+impl Lpstr {
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2386,20 +2386,20 @@ impl LPSTR {
     }
 }
 
-impl crate::Read for LPSTR {
+impl crate::Read for Lpstr {
     fn read(element: &Element) -> Self {
         read::lpstr(element)
     }
 }
 
-impl crate::Write for LPSTR {
+impl crate::Write for Lpstr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::lpstr(self, writer.scope());
         writer.known(element);
     }
 }
 
-impl LPWSTR {
+impl Lpwstr {
     /// This node's attributes and value, copied, with no unknown content.
     #[must_use]
     pub fn without_children(&self) -> Self {
@@ -2410,13 +2410,13 @@ impl LPWSTR {
     }
 }
 
-impl crate::Read for LPWSTR {
+impl crate::Read for Lpwstr {
     fn read(element: &Element) -> Self {
         read::lpwstr(element)
     }
 }
 
-impl crate::Write for LPWSTR {
+impl crate::Write for Lpwstr {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::lpwstr(self, writer.scope());
         writer.known(element);
@@ -2668,8 +2668,8 @@ impl crate::Read for VariantContent {
             Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
             Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
             Some((NS_VT, "int")) => Self::Integer(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::LPSTR(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::LPWSTR(crate::read(element)),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
             Some((NS_VT, "null")) => Self::Null(crate::read(element)),
             Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
             Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
@@ -2710,8 +2710,8 @@ impl crate::Write for VariantContent {
             Self::I4(arm) => arm.write_into(writer),
             Self::I8(arm) => arm.write_into(writer),
             Self::Integer(arm) => arm.write_into(writer),
-            Self::LPSTR(arm) => arm.write_into(writer),
-            Self::LPWSTR(arm) => arm.write_into(writer),
+            Self::Lpstr(arm) => arm.write_into(writer),
+            Self::Lpwstr(arm) => arm.write_into(writer),
             Self::Null(arm) => arm.write_into(writer),
             Self::Other(node) => writer.other(node.clone()),
             Self::R4(arm) => arm.write_into(writer),
@@ -2783,8 +2783,8 @@ impl TryFrom<VariantContent> for ArrayContent {
             VariantContent::I4(arm) => Ok(Self::I4(arm)),
             VariantContent::I8(arm) => Err(VariantContent::I8(arm)),
             VariantContent::Integer(arm) => Ok(Self::Integer(arm)),
-            VariantContent::LPSTR(arm) => Err(VariantContent::LPSTR(arm)),
-            VariantContent::LPWSTR(arm) => Err(VariantContent::LPWSTR(arm)),
+            VariantContent::Lpstr(arm) => Err(VariantContent::Lpstr(arm)),
+            VariantContent::Lpwstr(arm) => Err(VariantContent::Lpwstr(arm)),
             VariantContent::Null(arm) => Err(VariantContent::Null(arm)),
             VariantContent::Other(node) => Ok(Self::Other(node)),
             VariantContent::R4(arm) => Ok(Self::R4(arm)),
@@ -2835,8 +2835,8 @@ impl TryFrom<VariantContent> for super::document_properties_custom::CustomFilePr
             VariantContent::I4(arm) => Ok(Self::I4(arm)),
             VariantContent::I8(arm) => Ok(Self::I8(arm)),
             VariantContent::Integer(arm) => Ok(Self::Integer(arm)),
-            VariantContent::LPSTR(arm) => Ok(Self::LPSTR(arm)),
-            VariantContent::LPWSTR(arm) => Ok(Self::LPWSTR(arm)),
+            VariantContent::Lpstr(arm) => Ok(Self::Lpstr(arm)),
+            VariantContent::Lpwstr(arm) => Ok(Self::Lpwstr(arm)),
             VariantContent::Null(arm) => Ok(Self::Null(arm)),
             VariantContent::Other(node) => Ok(Self::Other(node)),
             VariantContent::R4(arm) => Ok(Self::R4(arm)),
@@ -2866,8 +2866,8 @@ impl From<VectorContent> for VariantContent {
             VectorContent::I2(arm) => Self::I2(arm),
             VectorContent::I4(arm) => Self::I4(arm),
             VectorContent::I8(arm) => Self::I8(arm),
-            VectorContent::LPSTR(arm) => Self::LPSTR(arm),
-            VectorContent::LPWSTR(arm) => Self::LPWSTR(arm),
+            VectorContent::Lpstr(arm) => Self::Lpstr(arm),
+            VectorContent::Lpwstr(arm) => Self::Lpwstr(arm),
             VectorContent::Other(node) => Self::Other(node),
             VectorContent::R4(arm) => Self::R4(arm),
             VectorContent::R8(arm) => Self::R8(arm),
@@ -2911,8 +2911,8 @@ impl TryFrom<VariantContent> for VectorContent {
             VariantContent::I4(arm) => Ok(Self::I4(arm)),
             VariantContent::I8(arm) => Ok(Self::I8(arm)),
             VariantContent::Integer(arm) => Err(VariantContent::Integer(arm)),
-            VariantContent::LPSTR(arm) => Ok(Self::LPSTR(arm)),
-            VariantContent::LPWSTR(arm) => Ok(Self::LPWSTR(arm)),
+            VariantContent::Lpstr(arm) => Ok(Self::Lpstr(arm)),
+            VariantContent::Lpwstr(arm) => Ok(Self::Lpwstr(arm)),
             VariantContent::Null(arm) => Err(VariantContent::Null(arm)),
             VariantContent::Other(node) => Ok(Self::Other(node)),
             VariantContent::R4(arm) => Ok(Self::R4(arm)),
@@ -3042,8 +3042,8 @@ impl crate::Read for VectorContent {
             Some((NS_VT, "i2")) => Self::I2(crate::read(element)),
             Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
             Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::LPSTR(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::LPWSTR(crate::read(element)),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
             Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
             Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
             Some((NS_VT, "ui1")) => Self::Ui1(crate::read(element)),
@@ -3070,8 +3070,8 @@ impl crate::Write for VectorContent {
             Self::I2(arm) => arm.write_into(writer),
             Self::I4(arm) => arm.write_into(writer),
             Self::I8(arm) => arm.write_into(writer),
-            Self::LPSTR(arm) => arm.write_into(writer),
-            Self::LPWSTR(arm) => arm.write_into(writer),
+            Self::Lpstr(arm) => arm.write_into(writer),
+            Self::Lpwstr(arm) => arm.write_into(writer),
             Self::Other(node) => writer.other(node.clone()),
             Self::R4(arm) => arm.write_into(writer),
             Self::R8(arm) => arm.write_into(writer),
@@ -3165,11 +3165,11 @@ fn custom_file_property_content_into_variant_content_1(
     if let super::document_properties_custom::CustomFilePropertyContent::Integer(arm) = *item {
         return Ok(VariantContent::Integer(arm));
     }
-    if let super::document_properties_custom::CustomFilePropertyContent::LPSTR(arm) = *item {
-        return Ok(VariantContent::LPSTR(arm));
+    if let super::document_properties_custom::CustomFilePropertyContent::Lpstr(arm) = *item {
+        return Ok(VariantContent::Lpstr(arm));
     }
-    if let super::document_properties_custom::CustomFilePropertyContent::LPWSTR(arm) = *item {
-        return Ok(VariantContent::LPWSTR(arm));
+    if let super::document_properties_custom::CustomFilePropertyContent::Lpwstr(arm) = *item {
+        return Ok(VariantContent::Lpwstr(arm));
     }
     if let super::document_properties_custom::CustomFilePropertyContent::Null(arm) = *item {
         return Ok(VariantContent::Null(arm));

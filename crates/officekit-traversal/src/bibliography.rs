@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The traversals of `officekit_markup::bibliography`: each node's `Transform`, `Visit`,
@@ -2299,7 +2299,7 @@ impl WriteThrough for bibliography::EditorEdition {
     }
 }
 
-impl crate::Transform for bibliography::GUID {
+impl crate::Transform for bibliography::Guid {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(ctx.bibliography(), bibliography::Context::guid, self);
         node.unwrap_or_else(|| self.transform_children(ctx))
@@ -2312,7 +2312,7 @@ impl crate::Transform for bibliography::GUID {
     }
 }
 
-impl crate::Visit for bibliography::GUID {
+impl crate::Visit for bibliography::Guid {
     fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
         let next = crate::show(visitor.bibliography(), bibliography::Visitor::guid, self);
         if next == Descend::Yes {
@@ -2325,7 +2325,7 @@ impl crate::Visit for bibliography::GUID {
     }
 }
 
-impl WriteThrough for bibliography::GUID {
+impl WriteThrough for bibliography::Guid {
     fn write_children_through(
         &self,
         ctx: &mut dyn officekit_markup::Context,
@@ -5309,7 +5309,7 @@ impl WriteThrough for bibliography::Translator {
     }
 }
 
-impl crate::Transform for bibliography::URL {
+impl crate::Transform for bibliography::Url {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(ctx.bibliography(), bibliography::Context::url, self);
         node.unwrap_or_else(|| self.transform_children(ctx))
@@ -5322,7 +5322,7 @@ impl crate::Transform for bibliography::URL {
     }
 }
 
-impl crate::Visit for bibliography::URL {
+impl crate::Visit for bibliography::Url {
     fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
         let next = crate::show(visitor.bibliography(), bibliography::Visitor::url, self);
         if next == Descend::Yes {
@@ -5335,7 +5335,7 @@ impl crate::Visit for bibliography::URL {
     }
 }
 
-impl WriteThrough for bibliography::URL {
+impl WriteThrough for bibliography::Url {
     fn write_children_through(
         &self,
         ctx: &mut dyn officekit_markup::Context,
@@ -5758,9 +5758,9 @@ fn transform_source_content_1(
         let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::EditorEdition(node));
     }
-    if let bibliography::SourceContent::GUID(arm) = item {
+    if let bibliography::SourceContent::Guid(arm) = item {
         let node = arm.transform(ctx);
-        return Some(bibliography::SourceContent::GUID(node));
+        return Some(bibliography::SourceContent::Guid(node));
     }
     if let bibliography::SourceContent::Institution(arm) = item {
         let node = arm.transform(ctx);
@@ -5888,9 +5888,9 @@ fn transform_source_content_3(
         let node = arm.transform(ctx);
         return Some(bibliography::SourceContent::Title(node));
     }
-    if let bibliography::SourceContent::URL(arm) = item {
+    if let bibliography::SourceContent::Url(arm) = item {
         let node = arm.transform(ctx);
-        return Some(bibliography::SourceContent::URL(node));
+        return Some(bibliography::SourceContent::Url(node));
     }
     if let bibliography::SourceContent::Version(arm) = item {
         let node = arm.transform(ctx);
@@ -5969,7 +5969,7 @@ fn visit_source_content_1(
     if let bibliography::SourceContent::EditorEdition(arm) = item {
         arm.visit(visitor);
     }
-    if let bibliography::SourceContent::GUID(arm) = item {
+    if let bibliography::SourceContent::Guid(arm) = item {
         arm.visit(visitor);
     }
     if let bibliography::SourceContent::Institution(arm) = item {
@@ -6068,7 +6068,7 @@ fn visit_source_content_3(
     if let bibliography::SourceContent::Title(arm) = item {
         arm.visit(visitor);
     }
-    if let bibliography::SourceContent::URL(arm) = item {
+    if let bibliography::SourceContent::Url(arm) = item {
         arm.visit(visitor);
     }
     if let bibliography::SourceContent::Version(arm) = item {
@@ -6144,7 +6144,7 @@ fn write_source_content_1(
     if let bibliography::SourceContent::EditorEdition(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let bibliography::SourceContent::GUID(arm) = item {
+    if let bibliography::SourceContent::Guid(arm) = item {
         return arm.write_through(ctx, out);
     }
     if let bibliography::SourceContent::Institution(arm) = item {
@@ -6247,7 +6247,7 @@ fn write_source_content_3(
     if let bibliography::SourceContent::Title(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let bibliography::SourceContent::URL(arm) = item {
+    if let bibliography::SourceContent::Url(arm) = item {
         return arm.write_through(ctx, out);
     }
     if let bibliography::SourceContent::Version(arm) = item {

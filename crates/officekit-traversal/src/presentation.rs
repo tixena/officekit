@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The traversals of `officekit_markup::presentation`: each node's `Transform`, `Visit`,
@@ -522,12 +522,12 @@ impl crate::Transform for presentation::AnimateColorByContent {
     }
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        if let Self::HSL(arm) = self {
-            Self::HSL(arm.transform(ctx))
+        if let Self::Hsl(arm) = self {
+            Self::Hsl(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(node.transform(ctx))
-        } else if let Self::RGB(arm) = self {
-            Self::RGB(arm.transform(ctx))
+        } else if let Self::Rgb(arm) = self {
+            Self::Rgb(arm.transform(ctx))
         } else {
             self.clone()
         }
@@ -547,13 +547,13 @@ impl crate::Visit for presentation::AnimateColorByContent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        if let Self::HSL(arm) = self {
+        if let Self::Hsl(arm) = self {
             arm.visit(visitor);
         }
         if let Self::Other(node) = self {
             node.visit(visitor);
         }
-        if let Self::RGB(arm) = self {
+        if let Self::Rgb(arm) = self {
             arm.visit(visitor);
         }
     }
@@ -565,11 +565,11 @@ impl WriteThrough for presentation::AnimateColorByContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        if let Self::HSL(arm) = self {
+        if let Self::Hsl(arm) = self {
             arm.write_through(ctx, out)
         } else if let Self::Other(node) = self {
             node.write_through(ctx, out)
-        } else if let Self::RGB(arm) = self {
+        } else if let Self::Rgb(arm) = self {
             arm.write_through(ctx, out)
         } else {
             Ok(())
@@ -7299,67 +7299,6 @@ impl WriteThrough for presentation::GroupShapeProperties {
     }
 }
 
-impl crate::Transform for presentation::HSL {
-    fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let node = crate::ask(ctx.presentation(), presentation::Context::hsl, self);
-        node.unwrap_or_else(|| self.transform_children(ctx))
-    }
-
-    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = self.without_children();
-        node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
-        node
-    }
-}
-
-impl crate::Visit for presentation::HSL {
-    fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let next = crate::show(visitor.presentation(), presentation::Visitor::hsl, self);
-        if next == Descend::Yes {
-            self.visit_children(visitor);
-        }
-    }
-
-    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        crate::Walk::new(&self.unknown).finish(visitor);
-    }
-}
-
-impl WriteThrough for presentation::HSL {
-    fn write_children_through(
-        &self,
-        ctx: &mut dyn officekit_markup::Context,
-        out: &mut PartWriter<'_>,
-    ) -> io::Result<()> {
-        let mut through = crate::Through::new(out, &presentation::HSL_SHAPE, &self.unknown);
-        through.attribute(0, &self.h);
-        through.attribute(1, &self.s);
-        through.attribute(2, &self.l);
-        through.finish(ctx)
-    }
-
-    fn write_through(
-        &self,
-        ctx: &mut dyn officekit_markup::Context,
-        out: &mut PartWriter<'_>,
-    ) -> io::Result<()> {
-        let written = crate::ask_write(
-            ctx.presentation(),
-            presentation::Context::write_hsl,
-            self,
-            out,
-        )?;
-        if written == Written::Yes {
-            return Ok(());
-        }
-        let replaced = crate::ask(ctx.presentation(), presentation::Context::hsl, self);
-        if let Some(node) = replaced {
-            return node.write_children_through(&mut Unchanged, out);
-        }
-        self.write_children_through(ctx, out)
-    }
-}
-
 impl crate::Transform for presentation::HTMLPublishingProperties {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(
@@ -7696,6 +7635,67 @@ impl WriteThrough for presentation::HeaderFooterInformationForASlideMaster {
             presentation::Context::header_footer_information_for_a_slide_master,
             self,
         );
+        if let Some(node) = replaced {
+            return node.write_children_through(&mut Unchanged, out);
+        }
+        self.write_children_through(ctx, out)
+    }
+}
+
+impl crate::Transform for presentation::Hsl {
+    fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
+        let node = crate::ask(ctx.presentation(), presentation::Context::hsl, self);
+        node.unwrap_or_else(|| self.transform_children(ctx))
+    }
+
+    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
+        let mut node = self.without_children();
+        node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
+        node
+    }
+}
+
+impl crate::Visit for presentation::Hsl {
+    fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
+        let next = crate::show(visitor.presentation(), presentation::Visitor::hsl, self);
+        if next == Descend::Yes {
+            self.visit_children(visitor);
+        }
+    }
+
+    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
+        crate::Walk::new(&self.unknown).finish(visitor);
+    }
+}
+
+impl WriteThrough for presentation::Hsl {
+    fn write_children_through(
+        &self,
+        ctx: &mut dyn officekit_markup::Context,
+        out: &mut PartWriter<'_>,
+    ) -> io::Result<()> {
+        let mut through = crate::Through::new(out, &presentation::HSL_SHAPE, &self.unknown);
+        through.attribute(0, &self.h);
+        through.attribute(1, &self.s);
+        through.attribute(2, &self.l);
+        through.finish(ctx)
+    }
+
+    fn write_through(
+        &self,
+        ctx: &mut dyn officekit_markup::Context,
+        out: &mut PartWriter<'_>,
+    ) -> io::Result<()> {
+        let written = crate::ask_write(
+            ctx.presentation(),
+            presentation::Context::write_hsl,
+            self,
+            out,
+        )?;
+        if written == Written::Yes {
+            return Ok(());
+        }
+        let replaced = crate::ask(ctx.presentation(), presentation::Context::hsl, self);
         if let Some(node) = replaced {
             return node.write_children_through(&mut Unchanged, out);
         }
@@ -13651,67 +13651,6 @@ impl WriteThrough for presentation::PushSlideTransition {
     }
 }
 
-impl crate::Transform for presentation::RGB {
-    fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let node = crate::ask(ctx.presentation(), presentation::Context::rgb, self);
-        node.unwrap_or_else(|| self.transform_children(ctx))
-    }
-
-    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
-        let mut node = self.without_children();
-        node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
-        node
-    }
-}
-
-impl crate::Visit for presentation::RGB {
-    fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let next = crate::show(visitor.presentation(), presentation::Visitor::rgb, self);
-        if next == Descend::Yes {
-            self.visit_children(visitor);
-        }
-    }
-
-    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        crate::Walk::new(&self.unknown).finish(visitor);
-    }
-}
-
-impl WriteThrough for presentation::RGB {
-    fn write_children_through(
-        &self,
-        ctx: &mut dyn officekit_markup::Context,
-        out: &mut PartWriter<'_>,
-    ) -> io::Result<()> {
-        let mut through = crate::Through::new(out, &presentation::RGB_SHAPE, &self.unknown);
-        through.attribute(0, &self.r);
-        through.attribute(1, &self.g);
-        through.attribute(2, &self.b);
-        through.finish(ctx)
-    }
-
-    fn write_through(
-        &self,
-        ctx: &mut dyn officekit_markup::Context,
-        out: &mut PartWriter<'_>,
-    ) -> io::Result<()> {
-        let written = crate::ask_write(
-            ctx.presentation(),
-            presentation::Context::write_rgb,
-            self,
-            out,
-        )?;
-        if written == Written::Yes {
-            return Ok(());
-        }
-        let replaced = crate::ask(ctx.presentation(), presentation::Context::rgb, self);
-        if let Some(node) = replaced {
-            return node.write_children_through(&mut Unchanged, out);
-        }
-        self.write_children_through(ctx, out)
-    }
-}
-
 impl crate::Transform for presentation::RandomBarSlideTransition {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(
@@ -13929,6 +13868,67 @@ impl WriteThrough for presentation::RegularEmbeddedFont {
             presentation::Context::regular_embedded_font,
             self,
         );
+        if let Some(node) = replaced {
+            return node.write_children_through(&mut Unchanged, out);
+        }
+        self.write_children_through(ctx, out)
+    }
+}
+
+impl crate::Transform for presentation::Rgb {
+    fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
+        let node = crate::ask(ctx.presentation(), presentation::Context::rgb, self);
+        node.unwrap_or_else(|| self.transform_children(ctx))
+    }
+
+    fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
+        let mut node = self.without_children();
+        node.unknown = crate::transform_unknown(&self.unknown, ctx, &crate::Rebase::default());
+        node
+    }
+}
+
+impl crate::Visit for presentation::Rgb {
+    fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
+        let next = crate::show(visitor.presentation(), presentation::Visitor::rgb, self);
+        if next == Descend::Yes {
+            self.visit_children(visitor);
+        }
+    }
+
+    fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
+        crate::Walk::new(&self.unknown).finish(visitor);
+    }
+}
+
+impl WriteThrough for presentation::Rgb {
+    fn write_children_through(
+        &self,
+        ctx: &mut dyn officekit_markup::Context,
+        out: &mut PartWriter<'_>,
+    ) -> io::Result<()> {
+        let mut through = crate::Through::new(out, &presentation::RGB_SHAPE, &self.unknown);
+        through.attribute(0, &self.r);
+        through.attribute(1, &self.g);
+        through.attribute(2, &self.b);
+        through.finish(ctx)
+    }
+
+    fn write_through(
+        &self,
+        ctx: &mut dyn officekit_markup::Context,
+        out: &mut PartWriter<'_>,
+    ) -> io::Result<()> {
+        let written = crate::ask_write(
+            ctx.presentation(),
+            presentation::Context::write_rgb,
+            self,
+            out,
+        )?;
+        if written == Written::Yes {
+            return Ok(());
+        }
+        let replaced = crate::ask(ctx.presentation(), presentation::Context::rgb, self);
         if let Some(node) = replaced {
             return node.write_children_through(&mut Unchanged, out);
         }

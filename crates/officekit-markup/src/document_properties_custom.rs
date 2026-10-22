@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the `op` namespace: its structs, enums, and
@@ -395,8 +395,8 @@ pub enum CustomFilePropertyContent {
     I4(super::document_properties_variant_types::I4),
     I8(super::document_properties_variant_types::I8),
     Integer(super::document_properties_variant_types::Integer),
-    LPSTR(super::document_properties_variant_types::LPSTR),
-    LPWSTR(super::document_properties_variant_types::LPWSTR),
+    Lpstr(super::document_properties_variant_types::Lpstr),
+    Lpwstr(super::document_properties_variant_types::Lpwstr),
     Null(super::document_properties_variant_types::Null),
     Other(Node),
     R4(super::document_properties_variant_types::R4),
@@ -514,8 +514,8 @@ impl crate::Read for CustomFilePropertyContent {
             Some((NS_VT, "i4")) => Self::I4(crate::read(element)),
             Some((NS_VT, "i8")) => Self::I8(crate::read(element)),
             Some((NS_VT, "int")) => Self::Integer(crate::read(element)),
-            Some((NS_VT, "lpstr")) => Self::LPSTR(crate::read(element)),
-            Some((NS_VT, "lpwstr")) => Self::LPWSTR(crate::read(element)),
+            Some((NS_VT, "lpstr")) => Self::Lpstr(crate::read(element)),
+            Some((NS_VT, "lpwstr")) => Self::Lpwstr(crate::read(element)),
             Some((NS_VT, "null")) => Self::Null(crate::read(element)),
             Some((NS_VT, "r4")) => Self::R4(crate::read(element)),
             Some((NS_VT, "r8")) => Self::R8(crate::read(element)),
@@ -555,8 +555,8 @@ impl crate::Write for CustomFilePropertyContent {
             Self::I4(arm) => arm.write_into(writer),
             Self::I8(arm) => arm.write_into(writer),
             Self::Integer(arm) => arm.write_into(writer),
-            Self::LPSTR(arm) => arm.write_into(writer),
-            Self::LPWSTR(arm) => arm.write_into(writer),
+            Self::Lpstr(arm) => arm.write_into(writer),
+            Self::Lpwstr(arm) => arm.write_into(writer),
             Self::Null(arm) => arm.write_into(writer),
             Self::Other(node) => writer.other(node.clone()),
             Self::R4(arm) => arm.write_into(writer),

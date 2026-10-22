@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The readers of `crate::presentation`: each struct read from its generic
@@ -1681,10 +1681,10 @@ pub fn header_footer_information_for_a_slide_master(
     node
 }
 
-/// Read `p:hsl` into a `HSL`.
+/// Read `p:hsl` into a `Hsl`.
 #[must_use]
-pub fn hsl(element: &Element) -> super::HSL {
-    let mut node = super::HSL::default();
+pub fn hsl(element: &Element) -> super::Hsl {
+    let mut node = super::Hsl::default();
     let mut reader = crate::Reader::new(element, &super::HSL_SHAPE);
     for (index, field) in &mut reader {
         match index {
@@ -2994,10 +2994,10 @@ pub fn regular_embedded_font(element: &Element) -> super::RegularEmbeddedFont {
     node
 }
 
-/// Read `p:rgb` into a `RGB`.
+/// Read `p:rgb` into a `Rgb`.
 #[must_use]
-pub fn rgb(element: &Element) -> super::RGB {
-    let mut node = super::RGB::default();
+pub fn rgb(element: &Element) -> super::Rgb {
+    let mut node = super::Rgb::default();
     let mut reader = crate::Reader::new(element, &super::RGB_SHAPE);
     for (index, field) in &mut reader {
         match index {

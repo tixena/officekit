@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the `am3d` namespace: its structs, enums, and
@@ -654,8 +654,6 @@ pub(crate) static MODEL3D_EXTENSION_CONTENT_TAGS: crate::Accept = crate::Accept 
         (NS_PVML, "iscomment"),
         (NS_WP, "inline"),
         (NS_VT, "int"),
-        (NS_VT, "lpstr"),
-        (NS_VT, "lpwstr"),
         (NS_DGM, "layoutDef"),
         (NS_DGM, "layoutDefHdr"),
         (NS_W10, "borderleft"),
@@ -664,6 +662,8 @@ pub(crate) static MODEL3D_EXTENSION_CONTENT_TAGS: crate::Accept = crate::Accept 
         (NS_P, "cmAuthorLst"),
         (NS_DGM, "styleDefHdrLst"),
         (NS_LC, "lockedCanvas"),
+        (NS_VT, "lpstr"),
+        (NS_VT, "lpwstr"),
         (NS_M, "mathPr"),
         (NS_X, "metadata"),
         (NS_V, "polyline"),
@@ -1523,8 +1523,6 @@ pub enum Model3DExtensionContent {
     InkAnnotationFlag(super::vml_presentation_drawing::InkAnnotationFlag),
     InlineDrawingMLObject(super::wordprocessing_drawing::InlineDrawingMLObject),
     Integer(super::document_properties_variant_types::Integer),
-    LPSTR(super::document_properties_variant_types::LPSTR),
-    LPWSTR(super::document_properties_variant_types::LPWSTR),
     LayoutDefinition(super::diagram::LayoutDefinition),
     LayoutDefinitionHeader(super::diagram::LayoutDefinitionHeader),
     LeftBorder(super::vml_wordprocessing_drawing::LeftBorder),
@@ -1533,6 +1531,8 @@ pub enum Model3DExtensionContent {
     ListOfCommentAuthors(super::presentation::ListOfCommentAuthors),
     ListOfStyleDefinitionHeaders(super::diagram::ListOfStyleDefinitionHeaders),
     LockedCanvasContainer(super::locked_canvas::LockedCanvasContainer),
+    Lpstr(super::document_properties_variant_types::Lpstr),
+    Lpwstr(super::document_properties_variant_types::Lpwstr),
     MathProperties(super::math::MathProperties),
     Metadata(super::spreadsheet::Metadata),
     MultiplePathLine(super::vml::MultiplePathLine),
@@ -2805,11 +2805,11 @@ impl From<super::document_properties_variant_types::VariantContent> for Model3DE
             super::document_properties_variant_types::VariantContent::Integer(arm) => {
                 Self::Integer(arm)
             }
-            super::document_properties_variant_types::VariantContent::LPSTR(arm) => {
-                Self::LPSTR(arm)
+            super::document_properties_variant_types::VariantContent::Lpstr(arm) => {
+                Self::Lpstr(arm)
             }
-            super::document_properties_variant_types::VariantContent::LPWSTR(arm) => {
-                Self::LPWSTR(arm)
+            super::document_properties_variant_types::VariantContent::Lpwstr(arm) => {
+                Self::Lpwstr(arm)
             }
             super::document_properties_variant_types::VariantContent::Null(arm) => Self::Null(arm),
             super::document_properties_variant_types::VariantContent::Other(node) => {
@@ -2872,9 +2872,9 @@ impl From<super::document_properties_variant_types::VectorContent> for Model3DEx
             super::document_properties_variant_types::VectorContent::I2(arm) => Self::I2(arm),
             super::document_properties_variant_types::VectorContent::I4(arm) => Self::I4(arm),
             super::document_properties_variant_types::VectorContent::I8(arm) => Self::I8(arm),
-            super::document_properties_variant_types::VectorContent::LPSTR(arm) => Self::LPSTR(arm),
-            super::document_properties_variant_types::VectorContent::LPWSTR(arm) => {
-                Self::LPWSTR(arm)
+            super::document_properties_variant_types::VectorContent::Lpstr(arm) => Self::Lpstr(arm),
+            super::document_properties_variant_types::VectorContent::Lpwstr(arm) => {
+                Self::Lpwstr(arm)
             }
             super::document_properties_variant_types::VectorContent::Other(node) => {
                 Self::Other(node)
@@ -3809,8 +3809,6 @@ fn read_model3d_extension_2(element: &Element) -> Option<Model3DExtensionContent
             Model3DExtensionContent::InlineDrawingMLObject(crate::read(element))
         }
         Some((NS_VT, "int")) => Model3DExtensionContent::Integer(crate::read(element)),
-        Some((NS_VT, "lpstr")) => Model3DExtensionContent::LPSTR(crate::read(element)),
-        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::LPWSTR(crate::read(element)),
         Some((NS_DGM, "layoutDef")) => {
             Model3DExtensionContent::LayoutDefinition(crate::read(element))
         }
@@ -3819,6 +3817,10 @@ fn read_model3d_extension_2(element: &Element) -> Option<Model3DExtensionContent
         }
         Some((NS_W10, "borderleft")) => Model3DExtensionContent::LeftBorder(crate::read(element)),
         Some((NS_V, "line")) => Model3DExtensionContent::Line(crate::read(element)),
+        Some((NS_V, "stroke")) => Model3DExtensionContent::LineStrokeSettings(crate::read(element)),
+        Some((NS_P, "cmAuthorLst")) => {
+            Model3DExtensionContent::ListOfCommentAuthors(crate::read(element))
+        }
         _ => return None,
     };
     Some(item)
@@ -3826,16 +3828,14 @@ fn read_model3d_extension_2(element: &Element) -> Option<Model3DExtensionContent
 
 fn read_model3d_extension_3(element: &Element) -> Option<Model3DExtensionContent> {
     let item = match crate::name(element) {
-        Some((NS_V, "stroke")) => Model3DExtensionContent::LineStrokeSettings(crate::read(element)),
-        Some((NS_P, "cmAuthorLst")) => {
-            Model3DExtensionContent::ListOfCommentAuthors(crate::read(element))
-        }
         Some((NS_DGM, "styleDefHdrLst")) => {
             Model3DExtensionContent::ListOfStyleDefinitionHeaders(crate::read(element))
         }
         Some((NS_LC, "lockedCanvas")) => {
             Model3DExtensionContent::LockedCanvasContainer(crate::read(element))
         }
+        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(crate::read(element)),
+        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(crate::read(element)),
         Some((NS_M, "mathPr")) => Model3DExtensionContent::MathProperties(crate::read(element)),
         Some((NS_X, "metadata")) => Model3DExtensionContent::Metadata(crate::read(element)),
         Some((NS_V, "polyline")) => Model3DExtensionContent::MultiplePathLine(crate::read(element)),
@@ -4247,12 +4247,6 @@ fn write_model3d_extension_4(item: &Model3DExtensionContent, writer: &mut crate:
     if let Model3DExtensionContent::Integer(arm) = item {
         arm.write_into(writer);
     }
-    if let Model3DExtensionContent::LPSTR(arm) = item {
-        arm.write_into(writer);
-    }
-    if let Model3DExtensionContent::LPWSTR(arm) = item {
-        arm.write_into(writer);
-    }
     if let Model3DExtensionContent::LayoutDefinition(arm) = item {
         arm.write_into(writer);
     }
@@ -4265,19 +4259,25 @@ fn write_model3d_extension_4(item: &Model3DExtensionContent, writer: &mut crate:
     if let Model3DExtensionContent::Line(arm) = item {
         arm.write_into(writer);
     }
-}
-
-fn write_model3d_extension_5(item: &Model3DExtensionContent, writer: &mut crate::Writer<'_, '_>) {
     if let Model3DExtensionContent::LineStrokeSettings(arm) = item {
         arm.write_into(writer);
     }
     if let Model3DExtensionContent::ListOfCommentAuthors(arm) = item {
         arm.write_into(writer);
     }
+}
+
+fn write_model3d_extension_5(item: &Model3DExtensionContent, writer: &mut crate::Writer<'_, '_>) {
     if let Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) = item {
         arm.write_into(writer);
     }
     if let Model3DExtensionContent::LockedCanvasContainer(arm) = item {
+        arm.write_into(writer);
+    }
+    if let Model3DExtensionContent::Lpstr(arm) = item {
+        arm.write_into(writer);
+    }
+    if let Model3DExtensionContent::Lpwstr(arm) = item {
         arm.write_into(writer);
     }
     if let Model3DExtensionContent::MathProperties(arm) = item {
@@ -5034,11 +5034,11 @@ fn custom_file_property_content_into_model3d_extension_content_1(
     if let super::document_properties_custom::CustomFilePropertyContent::Integer(arm) = *item {
         return Ok(Model3DExtensionContent::Integer(arm));
     }
-    if let super::document_properties_custom::CustomFilePropertyContent::LPSTR(arm) = *item {
-        return Ok(Model3DExtensionContent::LPSTR(arm));
+    if let super::document_properties_custom::CustomFilePropertyContent::Lpstr(arm) = *item {
+        return Ok(Model3DExtensionContent::Lpstr(arm));
     }
-    if let super::document_properties_custom::CustomFilePropertyContent::LPWSTR(arm) = *item {
-        return Ok(Model3DExtensionContent::LPWSTR(arm));
+    if let super::document_properties_custom::CustomFilePropertyContent::Lpwstr(arm) = *item {
+        return Ok(Model3DExtensionContent::Lpwstr(arm));
     }
     if let super::document_properties_custom::CustomFilePropertyContent::Null(arm) = *item {
         return Ok(Model3DExtensionContent::Null(arm));
@@ -5170,11 +5170,11 @@ fn model3d_extension_content_into_custom_file_property_content_1(
     if let Model3DExtensionContent::Integer(arm) = *item {
         return Ok(super::document_properties_custom::CustomFilePropertyContent::Integer(arm));
     }
-    if let Model3DExtensionContent::LPSTR(arm) = *item {
-        return Ok(super::document_properties_custom::CustomFilePropertyContent::LPSTR(arm));
+    if let Model3DExtensionContent::Lpstr(arm) = *item {
+        return Ok(super::document_properties_custom::CustomFilePropertyContent::Lpstr(arm));
     }
-    if let Model3DExtensionContent::LPWSTR(arm) = *item {
-        return Ok(super::document_properties_custom::CustomFilePropertyContent::LPWSTR(arm));
+    if let Model3DExtensionContent::Lpwstr(arm) = *item {
+        return Ok(super::document_properties_custom::CustomFilePropertyContent::Lpwstr(arm));
     }
     if let Model3DExtensionContent::Null(arm) = *item {
         return Ok(super::document_properties_custom::CustomFilePropertyContent::Null(arm));
@@ -5399,11 +5399,11 @@ fn model3d_extension_content_into_variant_content_1(
     if let Model3DExtensionContent::Integer(arm) = *item {
         return Ok(super::document_properties_variant_types::VariantContent::Integer(arm));
     }
-    if let Model3DExtensionContent::LPSTR(arm) = *item {
-        return Ok(super::document_properties_variant_types::VariantContent::LPSTR(arm));
+    if let Model3DExtensionContent::Lpstr(arm) = *item {
+        return Ok(super::document_properties_variant_types::VariantContent::Lpstr(arm));
     }
-    if let Model3DExtensionContent::LPWSTR(arm) = *item {
-        return Ok(super::document_properties_variant_types::VariantContent::LPWSTR(arm));
+    if let Model3DExtensionContent::Lpwstr(arm) = *item {
+        return Ok(super::document_properties_variant_types::VariantContent::Lpwstr(arm));
     }
     if let Model3DExtensionContent::Null(arm) = *item {
         return Ok(super::document_properties_variant_types::VariantContent::Null(arm));
@@ -5492,11 +5492,11 @@ fn model3d_extension_content_into_vector_content_1(
             arm,
         ));
     }
-    if let Model3DExtensionContent::LPSTR(arm) = *item {
-        return Ok(super::document_properties_variant_types::VectorContent::LPSTR(arm));
+    if let Model3DExtensionContent::Lpstr(arm) = *item {
+        return Ok(super::document_properties_variant_types::VectorContent::Lpstr(arm));
     }
-    if let Model3DExtensionContent::LPWSTR(arm) = *item {
-        return Ok(super::document_properties_variant_types::VectorContent::LPWSTR(arm));
+    if let Model3DExtensionContent::Lpwstr(arm) = *item {
+        return Ok(super::document_properties_variant_types::VectorContent::Lpwstr(arm));
     }
     if let Model3DExtensionContent::R4(arm) = *item {
         return Ok(super::document_properties_variant_types::VectorContent::R4(
@@ -5765,12 +5765,6 @@ fn any_element_content_into_model3d_extension_content_3(
     if let super::drawing::AnyElementContent::Integer(arm) = *item {
         return Ok(Model3DExtensionContent::Integer(arm));
     }
-    if let super::drawing::AnyElementContent::LPSTR(arm) = *item {
-        return Ok(Model3DExtensionContent::LPSTR(arm));
-    }
-    if let super::drawing::AnyElementContent::LPWSTR(arm) = *item {
-        return Ok(Model3DExtensionContent::LPWSTR(arm));
-    }
     if let super::drawing::AnyElementContent::LayoutDefinition(arm) = *item {
         return Ok(Model3DExtensionContent::LayoutDefinition(arm));
     }
@@ -5794,6 +5788,12 @@ fn any_element_content_into_model3d_extension_content_3(
     }
     if let super::drawing::AnyElementContent::LockedCanvasContainer(arm) = *item {
         return Ok(Model3DExtensionContent::LockedCanvasContainer(arm));
+    }
+    if let super::drawing::AnyElementContent::Lpstr(arm) = *item {
+        return Ok(Model3DExtensionContent::Lpstr(arm));
+    }
+    if let super::drawing::AnyElementContent::Lpwstr(arm) = *item {
+        return Ok(Model3DExtensionContent::Lpwstr(arm));
     }
     if let super::drawing::AnyElementContent::MathProperties(arm) = *item {
         return Ok(Model3DExtensionContent::MathProperties(arm));
@@ -6346,12 +6346,6 @@ fn model3d_extension_content_into_any_element_content_3(
     if let Model3DExtensionContent::Integer(arm) = *item {
         return Ok(super::drawing::AnyElementContent::Integer(arm));
     }
-    if let Model3DExtensionContent::LPSTR(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::LPSTR(arm));
-    }
-    if let Model3DExtensionContent::LPWSTR(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::LPWSTR(arm));
-    }
     if let Model3DExtensionContent::LayoutDefinition(arm) = *item {
         return Ok(super::drawing::AnyElementContent::LayoutDefinition(arm));
     }
@@ -6375,16 +6369,22 @@ fn model3d_extension_content_into_any_element_content_3(
     if let Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) = *item {
         return Ok(super::drawing::AnyElementContent::ListOfStyleDefinitionHeaders(arm));
     }
+    if let Model3DExtensionContent::LockedCanvasContainer(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::LockedCanvasContainer(
+            arm,
+        ));
+    }
+    if let Model3DExtensionContent::Lpstr(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::Lpstr(arm));
+    }
     Err(item)
 }
 
 fn model3d_extension_content_into_any_element_content_4(
     item: Box<Model3DExtensionContent>,
 ) -> Result<super::drawing::AnyElementContent, Box<Model3DExtensionContent>> {
-    if let Model3DExtensionContent::LockedCanvasContainer(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::LockedCanvasContainer(
-            arm,
-        ));
+    if let Model3DExtensionContent::Lpwstr(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::Lpwstr(arm));
     }
     if let Model3DExtensionContent::MathProperties(arm) = *item {
         return Ok(super::drawing::AnyElementContent::MathProperties(arm));
@@ -6469,15 +6469,15 @@ fn model3d_extension_content_into_any_element_content_4(
     if let Model3DExtensionContent::Revisions(arm) = *item {
         return Ok(super::drawing::AnyElementContent::Revisions(arm));
     }
+    if let Model3DExtensionContent::RichTextBoxContentContainer(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::RichTextBoxContentContainer(arm));
+    }
     Err(item)
 }
 
 fn model3d_extension_content_into_any_element_content_5(
     item: Box<Model3DExtensionContent>,
 ) -> Result<super::drawing::AnyElementContent, Box<Model3DExtensionContent>> {
-    if let Model3DExtensionContent::RichTextBoxContentContainer(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::RichTextBoxContentContainer(arm));
-    }
     if let Model3DExtensionContent::RightBorder(arm) = *item {
         return Ok(super::drawing::AnyElementContent::RightBorder(arm));
     }
@@ -6563,15 +6563,15 @@ fn model3d_extension_content_into_any_element_content_5(
             arm,
         ));
     }
+    if let Model3DExtensionContent::StyleDefinitions(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::StyleDefinitions(arm));
+    }
     Err(item)
 }
 
 fn model3d_extension_content_into_any_element_content_6(
     item: Box<Model3DExtensionContent>,
 ) -> Result<super::drawing::AnyElementContent, Box<Model3DExtensionContent>> {
-    if let Model3DExtensionContent::StyleDefinitions(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::StyleDefinitions(arm));
-    }
     if let Model3DExtensionContent::StyleSheet(arm) = *item {
         return Ok(super::drawing::AnyElementContent::StyleSheet(arm));
     }
@@ -6655,17 +6655,17 @@ fn model3d_extension_content_into_any_element_content_6(
     if let Model3DExtensionContent::VideoFromFile(arm) = *item {
         return Ok(super::drawing::AnyElementContent::VideoFromFile(arm));
     }
+    if let Model3DExtensionContent::VolatileDependencyTypes(arm) = *item {
+        return Ok(super::drawing::AnyElementContent::VolatileDependencyTypes(
+            arm,
+        ));
+    }
     Err(item)
 }
 
 fn model3d_extension_content_into_any_element_content_7(
     item: Box<Model3DExtensionContent>,
 ) -> Result<super::drawing::AnyElementContent, Box<Model3DExtensionContent>> {
-    if let Model3DExtensionContent::VolatileDependencyTypes(arm) = *item {
-        return Ok(super::drawing::AnyElementContent::VolatileDependencyTypes(
-            arm,
-        ));
-    }
     if let Model3DExtensionContent::WebPageSettings(arm) = *item {
         return Ok(super::drawing::AnyElementContent::WebPageSettings(arm));
     }

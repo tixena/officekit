@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The traversals of `officekit_markup::office_drawing_2017_model3d`: each node's `Transform`, `Visit`,
@@ -3846,16 +3846,6 @@ fn transform_model3d_extension_5(
         let node = arm.transform(ctx);
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Integer(node));
     }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPSTR(arm) = item {
-        let node = arm.transform(ctx);
-        return Some(office_drawing_2017_model3d::Model3DExtensionContent::LPSTR(
-            node,
-        ));
-    }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPWSTR(arm) = item {
-        let node = arm.transform(ctx);
-        return Some(office_drawing_2017_model3d::Model3DExtensionContent::LPWSTR(node));
-    }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(arm) = item {
         let node = arm.transform(ctx);
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(node));
@@ -3889,13 +3879,6 @@ fn transform_model3d_extension_5(
             office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(node),
         );
     }
-    None
-}
-
-fn transform_model3d_extension_6(
-    item: &office_drawing_2017_model3d::Model3DExtensionContent,
-    ctx: &mut dyn officekit_markup::Context,
-) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) =
         item
     {
@@ -3906,11 +3889,28 @@ fn transform_model3d_extension_6(
             ),
         );
     }
+    None
+}
+
+fn transform_model3d_extension_6(
+    item: &office_drawing_2017_model3d::Model3DExtensionContent,
+    ctx: &mut dyn officekit_markup::Context,
+) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(arm) = item {
         let node = arm.transform(ctx);
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(node),
         );
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(arm) = item {
+        let node = arm.transform(ctx);
+        return Some(office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(
+            node,
+        ));
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(arm) = item {
+        let node = arm.transform(ctx);
+        return Some(office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::MathProperties(arm) = item {
         let node = arm.transform(ctx);
@@ -4691,12 +4691,6 @@ fn visit_model3d_extension_4(
     if let office_drawing_2017_model3d::Model3DExtensionContent::Integer(arm) = item {
         arm.visit(visitor);
     }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPSTR(arm) = item {
-        arm.visit(visitor);
-    }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPWSTR(arm) = item {
-        arm.visit(visitor);
-    }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(arm) = item {
         arm.visit(visitor);
     }
@@ -4710,24 +4704,30 @@ fn visit_model3d_extension_4(
     if let office_drawing_2017_model3d::Model3DExtensionContent::Line(arm) = item {
         arm.visit(visitor);
     }
-}
-
-fn visit_model3d_extension_5(
-    item: &office_drawing_2017_model3d::Model3DExtensionContent,
-    visitor: &mut dyn officekit_markup::Visitor,
-) {
     if let office_drawing_2017_model3d::Model3DExtensionContent::LineStrokeSettings(arm) = item {
         arm.visit(visitor);
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(arm) = item {
         arm.visit(visitor);
     }
+}
+
+fn visit_model3d_extension_5(
+    item: &office_drawing_2017_model3d::Model3DExtensionContent,
+    visitor: &mut dyn officekit_markup::Visitor,
+) {
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) =
         item
     {
         arm.visit(visitor);
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(arm) = item {
+        arm.visit(visitor);
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(arm) = item {
+        arm.visit(visitor);
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(arm) = item {
         arm.visit(visitor);
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::MathProperties(arm) = item {
@@ -5334,12 +5334,6 @@ fn write_model3d_extension_4(
     if let office_drawing_2017_model3d::Model3DExtensionContent::Integer(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPSTR(arm) = item {
-        return arm.write_through(ctx, out);
-    }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LPWSTR(arm) = item {
-        return arm.write_through(ctx, out);
-    }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(arm) = item {
         return arm.write_through(ctx, out);
     }
@@ -5353,6 +5347,12 @@ fn write_model3d_extension_4(
     if let office_drawing_2017_model3d::Model3DExtensionContent::Line(arm) = item {
         return arm.write_through(ctx, out);
     }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::LineStrokeSettings(arm) = item {
+        return arm.write_through(ctx, out);
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(arm) = item {
+        return arm.write_through(ctx, out);
+    }
     Ok(())
 }
 
@@ -5361,18 +5361,18 @@ fn write_model3d_extension_5(
     ctx: &mut dyn officekit_markup::Context,
     out: &mut PartWriter<'_>,
 ) -> io::Result<()> {
-    if let office_drawing_2017_model3d::Model3DExtensionContent::LineStrokeSettings(arm) = item {
-        return arm.write_through(ctx, out);
-    }
-    if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(arm) = item {
-        return arm.write_through(ctx, out);
-    }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) =
         item
     {
         return arm.write_through(ctx, out);
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(arm) = item {
+        return arm.write_through(ctx, out);
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(arm) = item {
+        return arm.write_through(ctx, out);
+    }
+    if let office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(arm) = item {
         return arm.write_through(ctx, out);
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::MathProperties(arm) = item {

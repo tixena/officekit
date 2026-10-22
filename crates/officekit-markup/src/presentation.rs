@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the `p` namespace: its structs, enums, and
@@ -2633,9 +2633,9 @@ pub struct AnimateColorBehavior {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum AnimateColorByContent {
-    HSL(HSL),
+    Hsl(Hsl),
     Other(Node),
-    RGB(RGB),
+    Rgb(Rgb),
 }
 
 /// 19.5.3 `animEffect` (Animate Effect): the tag `p:animEffect`, schema type
@@ -3773,7 +3773,7 @@ pub trait Context: crate::Context {
         None
     }
 
-    fn hsl(&mut self, _node: &HSL) -> Option<HSL> {
+    fn hsl(&mut self, _node: &Hsl) -> Option<Hsl> {
         None
     }
 
@@ -4237,7 +4237,7 @@ pub trait Context: crate::Context {
         None
     }
 
-    fn rgb(&mut self, _node: &RGB) -> Option<RGB> {
+    fn rgb(&mut self, _node: &Rgb) -> Option<Rgb> {
         None
     }
 
@@ -5583,7 +5583,7 @@ pub trait Context: crate::Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_hsl(&mut self, _node: &HSL, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_hsl(&mut self, _node: &Hsl, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
@@ -6447,7 +6447,7 @@ pub trait Context: crate::Context {
     /// # Errors
     ///
     /// The sink's.
-    fn write_rgb(&mut self, _node: &RGB, _out: &mut PartWriter<'_>) -> io::Result<Written> {
+    fn write_rgb(&mut self, _node: &Rgb, _out: &mut PartWriter<'_>) -> io::Result<Written> {
         Ok(Written::No)
     }
 
@@ -7619,16 +7619,6 @@ pub struct GroupShapeProperties {
     pub xfrm_group_transform2d: Option<Box<super::drawing::XfrmGroupTransform2D>>,
 }
 
-/// 19.5.46 hsl (HSL): the tag `p:hsl`, schema type `CT_TLByHslColorTransform`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[non_exhaustive]
-pub struct HSL {
-    pub h: Option<super::drawing::Angle>,
-    pub l: Option<super::drawing::FixedPercentage>,
-    pub s: Option<super::drawing::FixedPercentage>,
-    pub unknown: crate::Unknown,
-}
-
 /// 16.3.1.1 `htmlPubPr` (HTML Publishing Properties): the tag `p:htmlPubPr`, schema type
 /// `CT_HtmlPublishProperties`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -7713,6 +7703,16 @@ pub struct HeaderFooterInformationForASlideMaster {
     pub ftr: Option<String>,
     pub hdr: Option<String>,
     pub sld_num: Option<String>,
+    pub unknown: crate::Unknown,
+}
+
+/// 19.5.46 hsl (HSL): the tag `p:hsl`, schema type `CT_TLByHslColorTransform`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[non_exhaustive]
+pub struct Hsl {
+    pub h: Option<super::drawing::Angle>,
+    pub l: Option<super::drawing::FixedPercentage>,
+    pub s: Option<super::drawing::FixedPercentage>,
     pub unknown: crate::Unknown,
 }
 
@@ -8688,16 +8688,6 @@ pub struct PushSlideTransition {
     pub unknown: crate::Unknown,
 }
 
-/// 19.5.63 rgb (RGB): the tag `p:rgb`, schema type `CT_TLByRgbColorTransform`.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[non_exhaustive]
-pub struct RGB {
-    pub b: Option<super::drawing::FixedPercentage>,
-    pub g: Option<super::drawing::FixedPercentage>,
-    pub r: Option<super::drawing::FixedPercentage>,
-    pub unknown: crate::Unknown,
-}
-
 /// 19.5.61 `randomBar` (Random Bar Slide Transition): the tag `p:randomBar`, schema type
 /// `CT_OrientationTransition`.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -8720,6 +8710,16 @@ pub struct RandomSlideTransition {
 #[non_exhaustive]
 pub struct RegularEmbeddedFont {
     pub id: Option<String>,
+    pub unknown: crate::Unknown,
+}
+
+/// 19.5.63 rgb (RGB): the tag `p:rgb`, schema type `CT_TLByRgbColorTransform`.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[non_exhaustive]
+pub struct Rgb {
+    pub b: Option<super::drawing::FixedPercentage>,
+    pub g: Option<super::drawing::FixedPercentage>,
+    pub r: Option<super::drawing::FixedPercentage>,
     pub unknown: crate::Unknown,
 }
 
@@ -10234,7 +10234,7 @@ pub trait Visitor: crate::Visitor {
         crate::Descend::Yes
     }
 
-    fn hsl(&mut self, _node: &HSL) -> crate::Descend {
+    fn hsl(&mut self, _node: &Hsl) -> crate::Descend {
         crate::Descend::Yes
     }
 
@@ -10617,7 +10617,7 @@ pub trait Visitor: crate::Visitor {
         crate::Descend::Yes
     }
 
-    fn rgb(&mut self, _node: &RGB) -> crate::Descend {
+    fn rgb(&mut self, _node: &Rgb) -> crate::Descend {
         crate::Descend::Yes
     }
 
@@ -11080,7 +11080,7 @@ impl crate::Write for AnimateColorBehavior {
 
 impl Default for AnimateColorByContent {
     fn default() -> Self {
-        Self::HSL(HSL::default())
+        Self::Hsl(Hsl::default())
     }
 }
 
@@ -11091,8 +11091,8 @@ impl crate::Read for AnimateColorByContent {
 
     fn read(element: &Element) -> Self {
         match crate::name(element) {
-            Some((NS_P, "hsl")) => Self::HSL(crate::read(element)),
-            Some((NS_P, "rgb")) => Self::RGB(crate::read(element)),
+            Some((NS_P, "hsl")) => Self::Hsl(crate::read(element)),
+            Some((NS_P, "rgb")) => Self::Rgb(crate::read(element)),
             _ => Self::Other(Node::Element(element.clone())),
         }
     }
@@ -11101,9 +11101,9 @@ impl crate::Read for AnimateColorByContent {
 impl crate::Write for AnimateColorByContent {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         match self {
-            Self::HSL(arm) => arm.write_into(writer),
+            Self::Hsl(arm) => arm.write_into(writer),
             Self::Other(node) => writer.other(node.clone()),
-            Self::RGB(arm) => arm.write_into(writer),
+            Self::Rgb(arm) => arm.write_into(writer),
         }
     }
 }
@@ -13796,32 +13796,6 @@ impl crate::Write for GroupShapeProperties {
     }
 }
 
-impl HSL {
-    /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
-    pub fn without_children(&self) -> Self {
-        Self {
-            h: self.h.clone(),
-            l: self.l.clone(),
-            s: self.s.clone(),
-            ..Self::default()
-        }
-    }
-}
-
-impl crate::Read for HSL {
-    fn read(element: &Element) -> Self {
-        read::hsl(element)
-    }
-}
-
-impl crate::Write for HSL {
-    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
-        let element = write::hsl(self, writer.scope());
-        writer.known(element);
-    }
-}
-
 impl HTMLPublishingProperties {
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
@@ -14036,6 +14010,32 @@ impl crate::Read for HeaderFooterInformationForASlideMaster {
 impl crate::Write for HeaderFooterInformationForASlideMaster {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::header_footer_information_for_a_slide_master(self, writer.scope());
+        writer.known(element);
+    }
+}
+
+impl Hsl {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            h: self.h.clone(),
+            l: self.l.clone(),
+            s: self.s.clone(),
+            ..Self::default()
+        }
+    }
+}
+
+impl crate::Read for Hsl {
+    fn read(element: &Element) -> Self {
+        read::hsl(element)
+    }
+}
+
+impl crate::Write for Hsl {
+    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
+        let element = write::hsl(self, writer.scope());
         writer.known(element);
     }
 }
@@ -16388,32 +16388,6 @@ impl crate::Write for PushSlideTransition {
     }
 }
 
-impl RGB {
-    /// This node's attributes, copied, with no declared child and no unknown content.
-    #[must_use]
-    pub fn without_children(&self) -> Self {
-        Self {
-            b: self.b.clone(),
-            g: self.g.clone(),
-            r: self.r.clone(),
-            ..Self::default()
-        }
-    }
-}
-
-impl crate::Read for RGB {
-    fn read(element: &Element) -> Self {
-        read::rgb(element)
-    }
-}
-
-impl crate::Write for RGB {
-    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
-        let element = write::rgb(self, writer.scope());
-        writer.known(element);
-    }
-}
-
 impl RandomBarSlideTransition {
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use]
@@ -16479,6 +16453,32 @@ impl crate::Read for RegularEmbeddedFont {
 impl crate::Write for RegularEmbeddedFont {
     fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
         let element = write::regular_embedded_font(self, writer.scope());
+        writer.known(element);
+    }
+}
+
+impl Rgb {
+    /// This node's attributes, copied, with no declared child and no unknown content.
+    #[must_use]
+    pub fn without_children(&self) -> Self {
+        Self {
+            b: self.b.clone(),
+            g: self.g.clone(),
+            r: self.r.clone(),
+            ..Self::default()
+        }
+    }
+}
+
+impl crate::Read for Rgb {
+    fn read(element: &Element) -> Self {
+        read::rgb(element)
+    }
+}
+
+impl crate::Write for Rgb {
+    fn write_into(&self, writer: &mut crate::Writer<'_, '_>) {
+        let element = write::rgb(self, writer.scope());
         writer.known(element);
     }
 }

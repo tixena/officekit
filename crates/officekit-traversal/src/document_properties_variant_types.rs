@@ -206,7 +206,7 @@
 //   00ca4be2d9713aaecf4d4b6e464c8696cc7d19e3b2f2b78a65ea34d793a88ff6  inputs/open-xml-sdk/data/schemas/www_w3_org_2003_InkML.json
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
-//   4d89b08defc901f697e94815926f83feb96e33fee6a6b68f5d13850ea566ab30  crates/xtask/data/name_overrides.toml
+//   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The traversals of `officekit_markup::document_properties_variant_types`: each node's `Transform`, `Visit`,
@@ -2100,7 +2100,7 @@ impl WriteThrough for document_properties_variant_types::Integer {
     }
 }
 
-impl crate::Transform for document_properties_variant_types::LPSTR {
+impl crate::Transform for document_properties_variant_types::Lpstr {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(
             ctx.document_properties_variant_types(),
@@ -2117,7 +2117,7 @@ impl crate::Transform for document_properties_variant_types::LPSTR {
     }
 }
 
-impl crate::Visit for document_properties_variant_types::LPSTR {
+impl crate::Visit for document_properties_variant_types::Lpstr {
     fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
         let next = crate::show(
             visitor.document_properties_variant_types(),
@@ -2134,7 +2134,7 @@ impl crate::Visit for document_properties_variant_types::LPSTR {
     }
 }
 
-impl WriteThrough for document_properties_variant_types::LPSTR {
+impl WriteThrough for document_properties_variant_types::Lpstr {
     fn write_children_through(
         &self,
         ctx: &mut dyn officekit_markup::Context,
@@ -2175,7 +2175,7 @@ impl WriteThrough for document_properties_variant_types::LPSTR {
     }
 }
 
-impl crate::Transform for document_properties_variant_types::LPWSTR {
+impl crate::Transform for document_properties_variant_types::Lpwstr {
     fn transform(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let node = crate::ask(
             ctx.document_properties_variant_types(),
@@ -2192,7 +2192,7 @@ impl crate::Transform for document_properties_variant_types::LPWSTR {
     }
 }
 
-impl crate::Visit for document_properties_variant_types::LPWSTR {
+impl crate::Visit for document_properties_variant_types::Lpwstr {
     fn visit(&self, visitor: &mut dyn officekit_markup::Visitor) {
         let next = crate::show(
             visitor.document_properties_variant_types(),
@@ -2209,7 +2209,7 @@ impl crate::Visit for document_properties_variant_types::LPWSTR {
     }
 }
 
-impl WriteThrough for document_properties_variant_types::LPWSTR {
+impl WriteThrough for document_properties_variant_types::Lpwstr {
     fn write_children_through(
         &self,
         ctx: &mut dyn officekit_markup::Context,
@@ -3317,15 +3317,15 @@ fn transform_variant_content_2(
             node,
         ));
     }
-    if let document_properties_variant_types::VariantContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpstr(arm) = item {
         let node = arm.transform(ctx);
-        return Some(document_properties_variant_types::VariantContent::LPSTR(
+        return Some(document_properties_variant_types::VariantContent::Lpstr(
             node,
         ));
     }
-    if let document_properties_variant_types::VariantContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpwstr(arm) = item {
         let node = arm.transform(ctx);
-        return Some(document_properties_variant_types::VariantContent::LPWSTR(
+        return Some(document_properties_variant_types::VariantContent::Lpwstr(
             node,
         ));
     }
@@ -3454,10 +3454,10 @@ fn visit_variant_content_2(
     if let document_properties_variant_types::VariantContent::Integer(arm) = item {
         arm.visit(visitor);
     }
-    if let document_properties_variant_types::VariantContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpstr(arm) = item {
         arm.visit(visitor);
     }
-    if let document_properties_variant_types::VariantContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpwstr(arm) = item {
         arm.visit(visitor);
     }
     if let document_properties_variant_types::VariantContent::Null(arm) = item {
@@ -3571,10 +3571,10 @@ fn write_variant_content_2(
     if let document_properties_variant_types::VariantContent::Integer(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let document_properties_variant_types::VariantContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpstr(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let document_properties_variant_types::VariantContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VariantContent::Lpwstr(arm) = item {
         return arm.write_through(ctx, out);
     }
     if let document_properties_variant_types::VariantContent::Null(arm) = item {
@@ -3666,15 +3666,15 @@ fn transform_vector_content_1(
         let node = arm.transform(ctx);
         return Some(document_properties_variant_types::VectorContent::I8(node));
     }
-    if let document_properties_variant_types::VectorContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpstr(arm) = item {
         let node = arm.transform(ctx);
-        return Some(document_properties_variant_types::VectorContent::LPSTR(
+        return Some(document_properties_variant_types::VectorContent::Lpstr(
             node,
         ));
     }
-    if let document_properties_variant_types::VectorContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpwstr(arm) = item {
         let node = arm.transform(ctx);
-        return Some(document_properties_variant_types::VectorContent::LPWSTR(
+        return Some(document_properties_variant_types::VectorContent::Lpwstr(
             node,
         ));
     }
@@ -3755,10 +3755,10 @@ fn visit_vector_content_1(
     if let document_properties_variant_types::VectorContent::I8(arm) = item {
         arm.visit(visitor);
     }
-    if let document_properties_variant_types::VectorContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpstr(arm) = item {
         arm.visit(visitor);
     }
-    if let document_properties_variant_types::VectorContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpwstr(arm) = item {
         arm.visit(visitor);
     }
     if let document_properties_variant_types::VectorContent::R4(arm) = item {
@@ -3822,10 +3822,10 @@ fn write_vector_content_1(
     if let document_properties_variant_types::VectorContent::I8(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let document_properties_variant_types::VectorContent::LPSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpstr(arm) = item {
         return arm.write_through(ctx, out);
     }
-    if let document_properties_variant_types::VectorContent::LPWSTR(arm) = item {
+    if let document_properties_variant_types::VectorContent::Lpwstr(arm) = item {
         return arm.write_through(ctx, out);
     }
     if let document_properties_variant_types::VectorContent::R4(arm) = item {
