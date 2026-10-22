@@ -345,10 +345,12 @@
 //! Each holds the part's content type, its relationship type in both classes' spelling, and the
 //! load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each
 //! file type. `restore_through_module` stores a part again in a class through the module its
-//! content type names.
+//! content type names; `model_of` gives a part's typed root as a `PartModel`, and `bytes_of` the
+//! part's bytes from it.
 
 pub mod additional_characteristics;
 pub mod alternative_format_import;
+mod archive;
 pub mod audio;
 pub mod bibliography;
 pub mod calculation_chain;
@@ -483,16 +485,58 @@ pub mod worksheet_threaded_comments;
 mod tests;
 
 use crate::part_root::PartRoot;
+use officekit_markup::additional_characteristics as additional_characteristics_markup;
+use officekit_markup::bibliography as bibliography_markup;
+use officekit_markup::chart as chart_markup;
+use officekit_markup::custom_xml_data_properties;
+use officekit_markup::diagram;
+use officekit_markup::document_properties_custom;
+use officekit_markup::document_properties_extended;
+use officekit_markup::drawing;
+use officekit_markup::office_2009_07_customui;
+use officekit_markup::office_2020_mip_label_metadata;
+use officekit_markup::office_drawing_2008_diagram;
+use officekit_markup::office_drawing_2012_chart_style;
+use officekit_markup::office_drawing_2014_chartex;
+use officekit_markup::office_powerpoint_2018_8_main;
+use officekit_markup::office_spreadsheetml_2009_9_main;
+use officekit_markup::office_spreadsheetml_2010_11_main;
+use officekit_markup::office_spreadsheetml_2017_richdata;
+use officekit_markup::office_spreadsheetml_2017_richdata2;
+use officekit_markup::office_spreadsheetml_2018_threadedcomments;
+use officekit_markup::office_spreadsheetml_2019_namedsheetviews;
+use officekit_markup::office_spreadsheetml_2020_richdatawebimage;
+use officekit_markup::office_spreadsheetml_2022_featurepropertybag;
+use officekit_markup::office_tasks_2019_documenttasks;
+use officekit_markup::office_webextensions_taskpanes_2010_11;
+use officekit_markup::office_webextensions_webextension_2010_11;
+use officekit_markup::office_word_2012_wordml;
+use officekit_markup::office_word_2016_wordml_cid;
+use officekit_markup::office_word_2018_wordml_cex;
+use officekit_markup::presentation as presentation_markup;
+use officekit_markup::spreadsheet;
+use officekit_markup::spreadsheet_drawing;
+use officekit_markup::wordprocessing;
 use officekit_packaging::error::PackageError;
-use officekit_packaging::package::{OpenOptions, Package};
+use officekit_packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::Element;
+use officekit_xml::element::{Document, Element};
 use officekit_xml::error::WriteError;
 use officekit_xml::name::{Namespace, NamespaceId};
 use officekit_xml::parse::parse;
 use officekit_xml::write::WriteOptions;
+
+/// The match on the part model `$model` that writes the typed root of each of the variants
+/// `$variant` in the class `$class`: a match of every variant is too long for one function.
+macro_rules! tree_of {
+    ($model:expr, $class:expr; $($variant:ident),+ $(,)?) => {
+        match $model {
+            $(PartModel::$variant(root) => root.to_tree($class),)+
+        }
+    };
+}
 
 /// Every part module: Part 1's definitions in the standard's order, then the parts of Microsoft's
 /// extensions by name.
@@ -1563,6 +1607,528 @@ const ROOTS: &[(NamespaceId, &str, Restorer)] = &[
     }),
 ];
 
+/// Each content type a module with a typed root lists, and the typed root of a part of it through
+/// that module; a content type several modules list goes by the part's root element.
+const MODELS: &[(&str, Modeler)] = &[
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml",
+        |part| part.through(PartModel::WordprocessingComments),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+        |part| part.through(PartModel::DocumentSettings),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml",
+        |part| part.through(PartModel::Endnotes),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+        |part| part.through(PartModel::FontTable),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml",
+        |part| part.through(PartModel::Footer),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml",
+        |part| part.through(PartModel::Footnotes),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.glossary+xml",
+        |part| part.through(PartModel::GlossaryDocument),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml",
+        |part| part.through(PartModel::Header),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+        |part| part.through(PartModel::MainDocument),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml",
+        |part| part.through(PartModel::MainDocument),
+    ),
+    (
+        "application/vnd.ms-word.document.macroEnabled.main+xml",
+        |part| part.through(PartModel::MainDocument),
+    ),
+    (
+        "application/vnd.ms-word.template.macroEnabledTemplate.main+xml",
+        |part| part.through(PartModel::MainDocument),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml",
+        |part| part.through(PartModel::NumberingDefinitions),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+        |part| part.through(PartModel::StyleDefinitions),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+        |part| part.through(PartModel::WebSettings),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.calcChain+xml",
+        |part| part.through(PartModel::CalculationChain),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.chartsheet+xml",
+        |part| part.through(PartModel::Chartsheet),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml",
+        |part| part.through(PartModel::SpreadsheetComments),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml",
+        |part| part.through(PartModel::Connections),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.dialogsheet+xml",
+        |part| part.through(PartModel::Dialogsheet),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawing+xml",
+        |part| part.through(PartModel::Drawings),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.externalLink+xml",
+        |part| part.through(PartModel::ExternalWorkbookReferences),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheetMetadata+xml",
+        |part| part.through(PartModel::Metadata),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml",
+        |part| part.through_boxed(PartModel::PivotTable),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition+xml",
+        |part| part.through(PartModel::PivotTableCacheDefinition),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheRecords+xml",
+        |part| part.through(PartModel::PivotTableCacheRecords),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.queryTable+xml",
+        |part| part.through(PartModel::QueryTable),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
+        |part| part.through(PartModel::SharedStringTable),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.revisionHeaders+xml",
+        |part| part.through(PartModel::SharedWorkbookRevisionHeaders),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.revisionLog+xml",
+        |part| part.through(PartModel::SharedWorkbookRevisionLog),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.userNames+xml",
+        |part| part.through(PartModel::SharedWorkbookUserData),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.tableSingleCells+xml",
+        |part| part.through(PartModel::SingleCellTableDefinitions),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml",
+        |part| part.through(PartModel::Styles),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+        |part| part.through(PartModel::TableDefinition),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.volatileDependencies+xml",
+        |part| part.through(PartModel::VolatileDependencies),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+        |part| part.through(PartModel::Workbook),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml",
+        |part| part.through(PartModel::Workbook),
+    ),
+    (
+        "application/vnd.ms-excel.sheet.macroEnabled.main+xml",
+        |part| part.through(PartModel::Workbook),
+    ),
+    (
+        "application/vnd.ms-excel.template.macroEnabled.main+xml",
+        |part| part.through(PartModel::Workbook),
+    ),
+    (
+        "application/vnd.ms-excel.addin.macroEnabled.main+xml",
+        |part| part.through(PartModel::Workbook),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+        |part| part.through(PartModel::Worksheet),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.commentAuthors+xml",
+        |part| part.through(PartModel::CommentAuthors),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.comments+xml",
+        |part| part.through(PartModel::PresentationComments),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.handoutMaster+xml",
+        |part| part.through(PartModel::HandoutMaster),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.notesMaster+xml",
+        |part| part.through(PartModel::NotesMaster),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.notesSlide+xml",
+        |part| part.through(PartModel::NotesSlide),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.ms-powerpoint.template.macroEnabled.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml",
+        |part| part.through(PartModel::Presentation),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.presProps+xml",
+        |part| part.through(PartModel::PresentationProperties),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slide+xml",
+        |part| part.through(PartModel::Slide),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml",
+        |part| part.through(PartModel::SlideLayout),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml",
+        |part| part.through(PartModel::SlideMaster),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.slideUpdateInfo+xml",
+        |part| part.through(PartModel::SlideSynchronizationData),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.tags+xml",
+        |part| part.through(PartModel::UserDefinedTags),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml",
+        |part| part.through(PartModel::ViewProperties),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.chart+xml",
+        |part| part.through(PartModel::Chart),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.chartshapes+xml",
+        |part| part.through(PartModel::ChartDrawing),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml",
+        |part| part.through(PartModel::DiagramColors),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml",
+        |part| part.through(PartModel::DiagramData),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml",
+        |part| part.through(PartModel::DiagramLayoutDefinition),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml",
+        |part| part.through(PartModel::DiagramStyle),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.theme+xml",
+        |part| part.through(PartModel::Theme),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.themeOverride+xml",
+        |part| part.through(PartModel::ThemeOverride),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml",
+        |part| part.through(PartModel::TableStyles),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.customXmlProperties+xml",
+        |part| part.through(PartModel::CustomXmlDataStorageProperties),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.custom-properties+xml",
+        |part| part.through(PartModel::CustomFileProperties),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+        |part| part.through(PartModel::ExtendedFileProperties),
+    ),
+    ("application/vnd.ms-office.chartcolorstyle+xml", |part| {
+        part.through(PartModel::ChartColorStyle)
+    }),
+    ("application/vnd.ms-office.chartstyle+xml", |part| {
+        part.through(PartModel::ChartStyle)
+    }),
+    ("application/vnd.ms-excel.controlproperties+xml", |part| {
+        part.through(PartModel::ControlProperties)
+    }),
+    (
+        "application/vnd.ms-excel.customDataProperties+xml",
+        |part| part.through(PartModel::CustomDataProperties),
+    ),
+    (
+        "application/vnd.ms-office.drawingml.diagramDrawing+xml",
+        |part| part.through(PartModel::DiagramPersistLayout),
+    ),
+    ("application/vnd.ms-office.documenttasks+xml", |part| {
+        part.through(PartModel::DocumentTasks)
+    }),
+    ("application/vnd.ms-office.chartex+xml", |part| {
+        part.through(PartModel::ExtendedChart)
+    }),
+    ("application/vnd.ms-excel.featurepropertybag+xml", |part| {
+        part.through(PartModel::FeaturePropertyBags)
+    }),
+    (
+        "application/vnd.ms-office.classificationlabels+xml",
+        |part| part.through(PartModel::LabelInfo),
+    ),
+    ("application/vnd.ms-excel.namedsheetviews+xml", |part| {
+        part.through(PartModel::NamedSheetViews)
+    }),
+    ("application/vnd.ms-powerpoint.authors+xml", |part| {
+        part.through(PartModel::PowerPointAuthors)
+    }),
+    ("application/vnd.ms-powerpoint.comments+xml", |part| {
+        part.through(PartModel::PowerPointComment)
+    }),
+    ("application/vnd.ms-excel.rdarray+xml", |part| {
+        part.through(PartModel::RdArray)
+    }),
+    ("application/vnd.ms-excel.rdrichvalue+xml", |part| {
+        part.through(PartModel::RdRichValue)
+    }),
+    (
+        "application/vnd.ms-excel.rdrichvaluestructure+xml",
+        |part| part.through(PartModel::RdRichValueStructure),
+    ),
+    ("application/vnd.ms-excel.rdrichvaluetypes+xml", |part| {
+        part.through(PartModel::RdRichValueTypes)
+    }),
+    ("application/vnd.ms-excel.rdrichvaluewebimage+xml", |part| {
+        part.through(PartModel::RdRichValueWebImage)
+    }),
+    (
+        "application/vnd.ms-excel.rdsupportingpropertybag+xml",
+        |part| part.through(PartModel::RdSupportingPropertyBag),
+    ),
+    (
+        "application/vnd.ms-excel.rdsupportingpropertybagstructure+xml",
+        |part| part.through(PartModel::RdSupportingPropertyBagStructure),
+    ),
+    ("application/vnd.ms-excel.richstyles+xml", |part| {
+        part.through(PartModel::RichStyles)
+    }),
+    ("application/vnd.ms-excel.slicerCache+xml", |part| {
+        part.through(PartModel::SlicerCache)
+    }),
+    ("application/vnd.ms-excel.slicer+xml", |part| {
+        part.through(PartModel::Slicers)
+    }),
+    ("application/vnd.ms-word.stylesWithEffects+xml", |part| {
+        part.through(PartModel::StylesWithEffects)
+    }),
+    ("application/vnd.ms-excel.timeline+xml", |part| {
+        part.through(PartModel::TimeLine)
+    }),
+    ("application/vnd.ms-excel.timelineCache+xml", |part| {
+        part.through(PartModel::TimeLineCache)
+    }),
+    (
+        "application/vnd.ms-office.webextensiontaskpanes+xml",
+        |part| part.through(PartModel::WebExTaskpanes),
+    ),
+    ("application/vnd.ms-office.webextension+xml", |part| {
+        part.through(PartModel::WebExtension)
+    }),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml",
+        |part| part.through(PartModel::WordCommentsExtensible),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml",
+        |part| part.through(PartModel::WordprocessingCommentsEx),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml",
+        |part| part.through(PartModel::WordprocessingCommentsIds),
+    ),
+    (
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.people+xml",
+        |part| part.through(PartModel::WordprocessingPeople),
+    ),
+    ("application/vnd.ms-excel.person+xml", |part| {
+        part.through(PartModel::WorkbookPerson)
+    }),
+    ("application/vnd.ms-excel.threadedcomments+xml", |part| {
+        part.through(PartModel::WorksheetThreadedComments)
+    }),
+    ("application/xml", |part| part.by_root()),
+];
+
+/// The root element of each module whose content type another module lists too: its namespace and
+/// local name, and the typed root of a part through that module.
+const MODEL_ROOTS: &[(NamespaceId, &str, Modeler)] = &[
+    (118, "MapInfo", |part| {
+        part.through(PartModel::CustomXmlMappings)
+    }),
+    (7, "additionalCharacteristics", |part| {
+        part.through(PartModel::AdditionalCharacteristics)
+    }),
+    (21, "Sources", |part| part.through(PartModel::Bibliography)),
+    (58, "customUI", |part| {
+        part.through(PartModel::RibbonAndBackstageCustomizations)
+    }),
+];
+
+/// The typed root of a part, by the module that loads it. rkyv archives it through its mirror in
+/// `archive`.
+#[derive(Clone, Debug, PartialEq)]
+#[non_exhaustive]
+pub enum PartModel {
+    AdditionalCharacteristics(additional_characteristics_markup::SetOfAdditionalCharacteristics),
+    Bibliography(bibliography_markup::Sources),
+    CalculationChain(spreadsheet::CalculationChainInfo),
+    Chart(chart_markup::ChartSpace),
+    ChartColorStyle(office_drawing_2012_chart_style::ColorStyle),
+    ChartDrawing(chart_markup::UserShapes),
+    ChartStyle(office_drawing_2012_chart_style::ChartStyle),
+    Chartsheet(spreadsheet::ChartSheet),
+    CommentAuthors(presentation_markup::ListOfCommentAuthors),
+    Connections(spreadsheet::Connections),
+    ControlProperties(office_spreadsheetml_2009_9_main::FormControlPr),
+    CustomDataProperties(office_spreadsheetml_2009_9_main::DatastoreItem),
+    CustomFileProperties(document_properties_custom::CustomFileProperties),
+    CustomXmlDataStorageProperties(custom_xml_data_properties::CustomXMLDataProperties),
+    CustomXmlMappings(spreadsheet::XMLMappingMapInfo),
+    DiagramColors(diagram::ColorTransformDefinitions),
+    DiagramData(diagram::DataModel),
+    DiagramLayoutDefinition(diagram::LayoutDefinition),
+    DiagramPersistLayout(office_drawing_2008_diagram::Drawing),
+    DiagramStyle(diagram::StyleDefinition),
+    Dialogsheet(spreadsheet::DialogSheet),
+    DocumentSettings(wordprocessing::DocumentSettings),
+    DocumentTasks(office_tasks_2019_documenttasks::Tasks),
+    Drawings(spreadsheet_drawing::WorksheetDrawing),
+    Endnotes(wordprocessing::DocumentEndnotes),
+    ExtendedChart(office_drawing_2014_chartex::ChartSpace),
+    ExtendedFileProperties(document_properties_extended::ApplicationSpecificFileProperties),
+    ExternalWorkbookReferences(spreadsheet::ExternalReferenceExternalLink),
+    FeaturePropertyBags(office_spreadsheetml_2022_featurepropertybag::FeaturePropertyBags),
+    FontTable(wordprocessing::FontTableRootElement),
+    Footer(wordprocessing::Footer),
+    Footnotes(wordprocessing::DocumentFootnotes),
+    GlossaryDocument(wordprocessing::GlossaryDocumentRootElement),
+    HandoutMaster(presentation_markup::HandoutMaster),
+    Header(wordprocessing::Header),
+    LabelInfo(office_2020_mip_label_metadata::LabelList),
+    MainDocument(wordprocessing::Document),
+    Metadata(spreadsheet::Metadata),
+    NamedSheetViews(office_spreadsheetml_2019_namedsheetviews::NamedSheetViews),
+    NotesMaster(presentation_markup::NotesMaster),
+    NotesSlide(presentation_markup::NotesSlide),
+    NumberingDefinitions(wordprocessing::NumberingDefinitions),
+    PivotTable(Box<spreadsheet::PivotTableDefinition>),
+    PivotTableCacheDefinition(spreadsheet::PivotCacheDefinition),
+    PivotTableCacheRecords(spreadsheet::PivotCacheRecords),
+    PowerPointAuthors(office_powerpoint_2018_8_main::AuthorLst),
+    PowerPointComment(office_powerpoint_2018_8_main::CmLst),
+    Presentation(presentation_markup::Presentation),
+    PresentationComments(presentation_markup::CommentList),
+    PresentationProperties(presentation_markup::PresentationWideProperties),
+    QueryTable(spreadsheet::QueryTable),
+    RdArray(office_spreadsheetml_2017_richdata2::ArrayData),
+    RdRichValue(office_spreadsheetml_2017_richdata::RvData),
+    RdRichValueStructure(office_spreadsheetml_2017_richdata::RvStructures),
+    RdRichValueTypes(office_spreadsheetml_2017_richdata2::RvTypesInfo),
+    RdRichValueWebImage(office_spreadsheetml_2020_richdatawebimage::WebImagesSrd),
+    RdSupportingPropertyBag(office_spreadsheetml_2017_richdata2::SupportingPropertyBags),
+    RdSupportingPropertyBagStructure(office_spreadsheetml_2017_richdata2::SpbStructures),
+    RibbonAndBackstageCustomizations(office_2009_07_customui::CustomUI),
+    RichStyles(office_spreadsheetml_2017_richdata2::RichStyleSheet),
+    SharedStringTable(spreadsheet::SharedStringTable),
+    SharedWorkbookRevisionHeaders(spreadsheet::RevisionHeaders),
+    SharedWorkbookRevisionLog(spreadsheet::Revisions),
+    SharedWorkbookUserData(spreadsheet::UserList),
+    SingleCellTableDefinitions(spreadsheet::SingleCells),
+    SlicerCache(office_spreadsheetml_2009_9_main::SlicerCacheDefinition),
+    Slicers(office_spreadsheetml_2009_9_main::Slicers),
+    Slide(presentation_markup::PresentationSlideSlide),
+    SlideLayout(presentation_markup::SlideLayout),
+    SlideMaster(presentation_markup::SlideMaster),
+    SlideSynchronizationData(presentation_markup::SlideSynchronizationProperties),
+    SpreadsheetComments(spreadsheet::Comments),
+    StyleDefinitions(wordprocessing::StyleDefinitions),
+    Styles(spreadsheet::StyleSheet),
+    StylesWithEffects(wordprocessing::StyleDefinitions),
+    TableDefinition(spreadsheet::Table),
+    TableStyles(drawing::TableStyleList),
+    Theme(drawing::Theme),
+    ThemeOverride(drawing::ThemeOverride),
+    TimeLine(office_spreadsheetml_2010_11_main::Timelines),
+    TimeLineCache(office_spreadsheetml_2010_11_main::TimelineCacheDefinition),
+    UserDefinedTags(presentation_markup::ProgrammableTabList),
+    ViewProperties(presentation_markup::PresentationWideViewProperties),
+    VolatileDependencies(spreadsheet::VolatileDependencyTypes),
+    WebExTaskpanes(office_webextensions_taskpanes_2010_11::Taskpanes),
+    WebExtension(office_webextensions_webextension_2010_11::Webextension),
+    WebSettings(wordprocessing::WebPageSettings),
+    WordCommentsExtensible(office_word_2018_wordml_cex::CommentsExtensible),
+    WordprocessingComments(wordprocessing::CommentsCollection),
+    WordprocessingCommentsEx(office_word_2012_wordml::CommentsEx),
+    WordprocessingCommentsIds(office_word_2016_wordml_cid::CommentsIds),
+    WordprocessingPeople(office_word_2012_wordml::People),
+    Workbook(spreadsheet::Workbook),
+    WorkbookPerson(office_spreadsheetml_2018_threadedcomments::PersonList),
+    Worksheet(spreadsheet::Worksheet),
+    WorksheetThreadedComments(office_spreadsheetml_2018_threadedcomments::ThreadedComments),
+}
+
 /// A generated part module, for code that works over every part type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
@@ -1574,6 +2140,16 @@ pub struct PartModule {
     /// `None` for a part of Microsoft's extensions.
     pub section: Option<&'static str>,
 }
+
+/// A part `model_of` loads: where it is, and the options it is read with.
+struct Load<'part> {
+    name: &'part PartName,
+    open: OpenOptions,
+    package: &'part Package,
+}
+
+/// The typed root of a part through one module.
+type Modeler = fn(Load<'_>) -> Result<Option<PartModel>, PackageError>;
 
 /// A part `restore_through_module` stores again: where it is, its content type, and the options
 /// it is read and written with.
@@ -1589,19 +2165,37 @@ struct Restore<'part> {
 /// The store again of a part through one module.
 type Restorer = fn(Restore<'_>) -> Result<(), PackageError>;
 
+impl Load<'_> {
+    /// The part's typed root through the module whose root element it holds, when one does.
+    fn by_root(self) -> Result<Option<PartModel>, PackageError> {
+        root_entry(self.package, self.name, MODEL_ROOTS)?.map_or(Ok(None), |modeler| modeler(self))
+    }
+
+    /// The part's typed root, read as the root `variant` holds, in `variant`.
+    fn through<R>(self, variant: fn(R) -> PartModel) -> Result<Option<PartModel>, PackageError>
+    where
+        R: PartRoot,
+    {
+        part_root::load(self.package, self.name, self.open).map(|root| Some(variant(root)))
+    }
+
+    /// The part's typed root, read as the root `variant` holds boxed, in `variant`.
+    fn through_boxed<R>(
+        self,
+        variant: fn(Box<R>) -> PartModel,
+    ) -> Result<Option<PartModel>, PackageError>
+    where
+        R: PartRoot,
+    {
+        part_root::load(self.package, self.name, self.open)
+            .map(|root| Some(variant(Box::new(root))))
+    }
+}
+
 impl Restore<'_> {
     /// The part through the module whose root element it holds, when one does.
     fn by_root(self) -> Result<(), PackageError> {
-        let root = parse(&self.package.part_bytes(self.name)?)
-            .map_err(|error| PackageError::Xml {
-                error,
-                part: self.name.clone(),
-            })?
-            .root;
-        let found = ROOTS.iter().find(|(namespace, local, _)| {
-            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
-        });
-        found.map_or(Ok(()), |(_, _, restorer)| restorer(self))
+        root_entry(self.package, self.name, ROOTS)?.map_or(Ok(()), |restorer| restorer(self))
     }
 
     /// Load the part with `load` and store its typed root again in the class.
@@ -1624,6 +2218,50 @@ impl Restore<'_> {
     }
 }
 
+/// The bytes of the part `name` from its typed root `model`, in `class`, every namespace declared
+/// with that class's URI, written with `write`.
+///
+/// # Errors
+///
+/// [`PackageError::Write`] naming `name` when the root holds content `class` has no form for, as
+/// [`part_root::store`] does.
+pub fn bytes_of(
+    name: &PartName,
+    model: &PartModel,
+    class: ConformanceClass,
+    write: WriteOptions,
+) -> Result<Vec<u8>, PackageError> {
+    let written = tree_of!(model, class;
+        AdditionalCharacteristics, Bibliography, CalculationChain, Chart, ChartColorStyle,
+        ChartDrawing, ChartStyle, Chartsheet, CommentAuthors, Connections, ControlProperties,
+        CustomDataProperties, CustomFileProperties, CustomXmlDataStorageProperties,
+        CustomXmlMappings, DiagramColors, DiagramData, DiagramLayoutDefinition,
+        DiagramPersistLayout, DiagramStyle, Dialogsheet, DocumentSettings, DocumentTasks, Drawings,
+        Endnotes, ExtendedChart, ExtendedFileProperties, ExternalWorkbookReferences,
+        FeaturePropertyBags, FontTable, Footer, Footnotes, GlossaryDocument, HandoutMaster, Header,
+        LabelInfo, MainDocument, Metadata, NamedSheetViews, NotesMaster, NotesSlide,
+        NumberingDefinitions, PivotTable, PivotTableCacheDefinition, PivotTableCacheRecords,
+        PowerPointAuthors, PowerPointComment, Presentation, PresentationComments,
+        PresentationProperties, QueryTable, RdArray, RdRichValue, RdRichValueStructure,
+        RdRichValueTypes, RdRichValueWebImage, RdSupportingPropertyBag,
+        RdSupportingPropertyBagStructure, RibbonAndBackstageCustomizations, RichStyles,
+        SharedStringTable, SharedWorkbookRevisionHeaders, SharedWorkbookRevisionLog,
+        SharedWorkbookUserData, SingleCellTableDefinitions, SlicerCache, Slicers, Slide,
+        SlideLayout, SlideMaster, SlideSynchronizationData, SpreadsheetComments, StyleDefinitions,
+        Styles, StylesWithEffects, TableDefinition, TableStyles, Theme, ThemeOverride, TimeLine,
+        TimeLineCache, UserDefinedTags, ViewProperties, VolatileDependencies, WebExTaskpanes,
+        WebExtension, WebSettings, WordCommentsExtensible, WordprocessingComments,
+        WordprocessingCommentsEx, WordprocessingCommentsIds, WordprocessingPeople, Workbook,
+        WorkbookPerson, Worksheet, WorksheetThreadedComments,
+    );
+    let mut tree = written.map_err(|error| PackageError::Write {
+        error,
+        part: name.clone(),
+    })?;
+    tree.set_class(class);
+    Ok(Document::new(DECLARATION, tree).to_xml(write))
+}
+
 /// `Ok` when `root` is the element `local` of the namespace `namespace`,
 /// else what it is instead.
 fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(), String> {
@@ -1637,6 +2275,34 @@ fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(),
         root.name.local,
         expected.uri(ConformanceClass::Transitional),
     ))
+}
+
+/// The typed root of the part `name`, through the module its content type names, the same way
+/// `restore_through_module` finds it; `None` for a part no module takes.
+///
+/// The module reads the part with `options`. A content type several modules list goes by the
+/// part's root element.
+///
+/// # Errors
+///
+/// The errors of the module's `load`, and [`PackageError::Xml`] for a part of a content type
+/// several modules list that is not well-formed.
+pub fn model_of(
+    package: &Package,
+    name: &PartName,
+    options: OpenOptions,
+) -> Result<Option<PartModel>, PackageError> {
+    let Some(content_type) = package.content_type(name) else {
+        return Ok(None);
+    };
+    let Some((_, modeler)) = MODELS.iter().find(|(listed, _)| *listed == content_type) else {
+        return Ok(None);
+    };
+    modeler(Load {
+        name,
+        open: options,
+        package,
+    })
 }
 
 /// Store the part `name` again in `class` through the module its content type names.
@@ -1670,6 +2336,31 @@ pub fn restore_through_module(
         package,
         write,
     })
+}
+
+/// The entry of `roots` whose root element the part `name` holds, when one does.
+///
+/// # Errors
+///
+/// The errors of [`Package::part_bytes`], and [`PackageError::Xml`] for a part that is not
+/// well-formed.
+fn root_entry<'roots, T>(
+    package: &Package,
+    name: &PartName,
+    roots: &'roots [(NamespaceId, &str, T)],
+) -> Result<Option<&'roots T>, PackageError> {
+    let root = parse(&package.part_bytes(name)?)
+        .map_err(|error| PackageError::Xml {
+            error,
+            part: name.clone(),
+        })?
+        .root;
+    Ok(roots
+        .iter()
+        .find(|(namespace, local, _)| {
+            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
+        })
+        .map(|(_, _, entry)| entry))
 }
 
 /// The tree of `root` in `class`, from `strict` or `transitional`, the writer of that class.

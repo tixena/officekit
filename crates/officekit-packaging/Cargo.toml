@@ -22,6 +22,9 @@ os-shim = { workspace = true, features = ["zip"] }
 # Error handling
 thiserror.workspace = true
 
+# The content types, part names and relationships archived, as officekit's binary form holds them
+rkyv = { workspace = true, features = ["alloc"] }
+
 # Reads an image's pixel size from its header; no pixel decoding
 imagesize = { workspace = true, features = ["bmp", "gif", "jpeg", "png", "tiff"] }
 

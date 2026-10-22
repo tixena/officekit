@@ -53,6 +53,9 @@ os-shim = { workspace = true, features = ["zip"] }
 # Error handling
 thiserror.workspace = true
 
+# officekit's binary form: the model of a whole package archived and read back
+rkyv = { workspace = true, features = ["alloc", "bytecheck"] }
+
 # A folder's manifest is JSON
 serde_json.workspace = true
 

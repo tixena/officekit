@@ -454,6 +454,52 @@ fn content_types_take_a_default_per_extension_and_an_override_when_different() {
 }
 
 #[test]
+fn from_parts_rebuilds_a_package_from_its_content_types_relationships_and_parts() {
+    let mut original = document();
+    let main = name("/word/document.xml");
+    original
+        .add_part(
+            Some(&main),
+            RelationshipType::HEADER.transitional,
+            HEADER,
+            "/word/header{}.xml",
+            b"<w:hdr/>",
+        )
+        .unwrap();
+    original
+        .relate_external(Some(&main), "https://example.org/", HYPERLINK)
+        .unwrap();
+    original
+        .set_part_bytes(&name("/a.bin"), "application/octet-stream", b"bin")
+        .unwrap();
+    original.remove_part(&name("/a.bin")).unwrap();
+    let parts = original
+        .part_names()
+        .unwrap()
+        .into_iter()
+        .map(|part| {
+            let bytes = original.part_bytes(&part).unwrap();
+            (part, bytes)
+        })
+        .collect();
+    let rebuilt = Package::from_parts(
+        original.content_types().clone(),
+        original.relationship_sets(),
+        parts,
+    )
+    .unwrap();
+    assert!(
+        rebuilt
+            .content_type_defaults()
+            .iter()
+            .any(|(extension, _)| extension == "bin"),
+        "a Default no part uses stays"
+    );
+    assert_eq!(rebuilt.relationship_sets(), original.relationship_sets());
+    assert_eq!(rebuilt.to_bytes().unwrap(), original.to_bytes().unwrap());
+}
+
+#[test]
 fn set_relationship_class_respells_the_office_document_family_only() {
     let mut package = document();
     let core = name("/docProps/core.xml");

@@ -7,6 +7,7 @@
 //! writes beside it would be public and exhaustive. Its mirror, a remote derive
 //! in the private module, holds the archived enum and the resolver, and the
 //! enum's `Archive`, `Serialize` and `Deserialize` hand the work to it.
+//! officekit-parts' `PartModel` archives through a mirror written the same way.
 
 use core::fmt::Write as _;
 
@@ -82,10 +83,10 @@ impl Cycles {
 
 /// One arm of a mirror: its variant, the type it holds as the mirror names
 /// it, and whether it closes a cycle.
-struct MirrorArm {
-    recursive: bool,
-    shown: String,
-    variant: String,
+pub struct MirrorArm {
+    pub recursive: bool,
+    pub shown: String,
+    pub variant: String,
 }
 
 /// The derive and rkyv attributes of a struct or newtype deriving `own`, with
@@ -129,8 +130,8 @@ pub fn text(header: &str, names: &Names<'_>, cycles: &Cycles) -> Option<String> 
         let recursive = arms.iter().any(|arm| arm.recursive);
         bounded |= recursive;
         mirrors.push('\n');
-        mirrors.push_str(&mirror(found, &arms, recursive));
-        impls.push_str(&from(names.runtime(), found, &arms));
+        mirrors.push_str(&mirror(&found.name, &arms, recursive));
+        impls.push_str(&from(names.runtime(), &found.name, &arms));
         impls.push_str(&handoffs(&found.name));
     }
     let mut out = String::from(header);
@@ -195,44 +196,50 @@ fn mirror_arms(
     arms
 }
 
-/// The mirror enum of `found`.
-fn mirror(found: &EnumDef, arms: &[MirrorArm], recursive: bool) -> String {
+/// The mirror enum of the enum `name`.
+#[must_use]
+pub fn mirror(name: &str, arms: &[MirrorArm], recursive: bool) -> String {
     let mut out = String::from("#[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]\n");
-    let _ = writeln!(out, "#[rkyv(remote = super::{})]", found.name);
+    let _ = writeln!(out, "#[rkyv(remote = super::{name})]");
     if recursive {
         out.push_str(BOUNDS);
     }
     out.push_str("#[rkyv(attr(non_exhaustive))]\n");
-    let _ = writeln!(out, "pub enum {} {{", found.name);
+    let _ = writeln!(out, "pub enum {name} {{");
     for arm in arms {
-        let field = if arm.recursive {
-            format!("{OMIT_BOUNDS} {}", arm.shown)
-        } else {
-            arm.shown.clone()
-        };
-        let line = format!("    {}({field}),", arm.variant);
-        if line.len() <= MAX_WIDTH {
-            out.push_str(&line);
-            out.push('\n');
-        } else if arm.recursive && format!("        {field},").len() > MAX_WIDTH {
-            let _ = writeln!(
-                out,
-                "    {}(\n        {OMIT_BOUNDS}\n        {},\n    ),",
-                arm.variant, arm.shown
-            );
-        } else {
-            let _ = writeln!(out, "    {}(\n        {field},\n    ),", arm.variant);
-        }
+        out.push_str(&variant(arm));
     }
     out.push_str("}\n");
     out
 }
 
-/// `From` the mirror for the enum, which rkyv's remote `Deserialize` calls;
-/// a match longer than `BODY_LINES` is the runtime's `mirror_into!` called
-/// with every variant, which expands to the match.
-fn from(runtime: &str, found: &EnumDef, arms: &[MirrorArm]) -> String {
-    let name = &found.name;
+/// One variant of an enum, as rustfmt lays it out: on its own line, or its
+/// field on a line of its own when the variant is too wide for one.
+#[must_use]
+pub fn variant(arm: &MirrorArm) -> String {
+    let field = if arm.recursive {
+        format!("{OMIT_BOUNDS} {}", arm.shown)
+    } else {
+        arm.shown.clone()
+    };
+    let line = format!("    {}({field}),", arm.variant);
+    if line.len() <= MAX_WIDTH {
+        format!("{line}\n")
+    } else if arm.recursive && format!("        {field},").len() > MAX_WIDTH {
+        format!(
+            "    {}(\n        {OMIT_BOUNDS}\n        {},\n    ),\n",
+            arm.variant, arm.shown
+        )
+    } else {
+        format!("    {}(\n        {field},\n    ),\n", arm.variant)
+    }
+}
+
+/// `From` the mirror for the enum `name`, which rkyv's remote `Deserialize`
+/// calls; a match longer than `BODY_LINES` is the runtime's `mirror_into!`
+/// called with every variant, which expands to the match.
+#[must_use]
+pub fn from(runtime: &str, name: &str, arms: &[MirrorArm]) -> String {
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header(
         &format!("From<{name}>"),
@@ -286,7 +293,8 @@ fn from_arm(name: &str, arm: &MirrorArm) -> String {
 
 /// The enum's `Archive`, `Serialize` and `Deserialize`, each handing the work
 /// to its mirror.
-fn handoffs(name: &str) -> String {
+#[must_use]
+pub fn handoffs(name: &str) -> String {
     let mut out = String::from("\n");
     out.push_str(&layout::impl_header(
         "rkyv::Archive",

@@ -15,7 +15,7 @@
 //! the hook traits of its traversals, which `officekit-markup-ext` holds for
 //! every module.
 
-mod archive;
+pub(crate) mod archive;
 mod enums;
 pub(crate) mod names;
 mod readers;

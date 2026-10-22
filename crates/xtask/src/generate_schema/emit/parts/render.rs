@@ -1,5 +1,6 @@
 //! The text of the part modules, of `lib.rs` declaring them, of the
-//! document kinds, and of the relationship types' constants.
+//! document kinds, of the relationship types' constants, and of `archive.rs`,
+//! the mirror `PartModel` archives through.
 
 use alloc::collections::BTreeSet;
 use core::fmt::Write as _;
@@ -8,8 +9,10 @@ use std::path::PathBuf;
 use anyhow::{Context as _, Result, bail};
 
 use super::{Definition, Joined, Kind, PARTS_PATH, PartType, RELATIONSHIP_TYPE_PATH, Root};
+use crate::generate_schema::emit::markup::archive::{self, MirrorArm};
+use crate::generate_schema::emit::markup::names;
 use crate::generate_schema::emit::markup::render as markup_render;
-use crate::generate_schema::emit::markup::render::layout::{self, Expr};
+use crate::generate_schema::emit::markup::render::layout::{self, Expr, MAX_WIDTH};
 use crate::generate_schema::emit::markup::structs::Catalog;
 use crate::generate_schema::emit::namespaces::Row;
 use crate::generate_schema::sdk_data::DataVersion;
@@ -22,6 +25,10 @@ const CALL_WIDTH: usize = 60;
 
 /// The head of each closure of the dispatch tables.
 const CLOSURE_HEAD: &str = "|part| ";
+
+/// What `lib.rs` adds to the name of a namespace module it imports when a
+/// part module has that name.
+const MARKUP_SUFFIX: &str = "_markup";
 
 /// The `load` of a module without a typed root.
 const BYTES_LOAD: &str = "
@@ -145,18 +152,133 @@ type Restorer = fn(Restore<'_>) -> Result<(), PackageError>;
 const BY_ROOT: &str =
     "    /// The part through the module whose root element it holds, when one does.
     fn by_root(self) -> Result<(), PackageError> {
-        let root = parse(&self.package.part_bytes(self.name)?)
-            .map_err(|error| PackageError::Xml {
-                error,
-                part: self.name.clone(),
-            })?
-            .root;
-        let found = ROOTS.iter().find(|(namespace, local, _)| {
-            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
-        });
-        found.map_or(Ok(()), |(_, _, restorer)| restorer(self))
+        root_entry(self.package, self.name, ROOTS)?.map_or(Ok(()), |restorer| restorer(self))
     }
 
+";
+
+/// `Load::by_root`, the first item of its `impl` when a content type is
+/// shared.
+const LOAD_BY_ROOT: &str =
+    "    /// The part's typed root through the module whose root element it holds, when one does.
+    fn by_root(self) -> Result<Option<PartModel>, PackageError> {
+        root_entry(self.package, self.name, MODEL_ROOTS)?.map_or(Ok(None), |modeler| modeler(self))
+    }
+
+";
+
+/// `Load::through`, after `Load::by_root`.
+const LOAD_THROUGH: &str =
+    "    /// The part's typed root, read as the root `variant` holds, in `variant`.
+    fn through<R>(self, variant: fn(R) -> PartModel) -> Result<Option<PartModel>, PackageError>
+    where
+        R: PartRoot,
+    {
+        part_root::load(self.package, self.name, self.open).map(|root| Some(variant(root)))
+    }
+";
+
+/// `Load::through_boxed`, the last item of its `impl` when `PartModel` holds
+/// a root boxed.
+const LOAD_THROUGH_BOXED: &str = "
+    /// The part's typed root, read as the root `variant` holds boxed, in `variant`.
+    fn through_boxed<R>(
+        self,
+        variant: fn(Box<R>) -> PartModel,
+    ) -> Result<Option<PartModel>, PackageError>
+    where
+        R: PartRoot,
+    {
+        part_root::load(self.package, self.name, self.open)
+            .map(|root| Some(variant(Box::new(root))))
+    }
+";
+
+/// The types `model_of` dispatches with.
+const LOAD_TYPES: &str = "
+/// A part `model_of` loads: where it is, and the options it is read with.
+struct Load<'part> {
+    name: &'part PartName,
+    open: OpenOptions,
+    package: &'part Package,
+}
+
+/// The typed root of a part through one module.
+type Modeler = fn(Load<'_>) -> Result<Option<PartModel>, PackageError>;
+";
+
+/// The macro `bytes_of` writes a typed root through, the first item after
+/// `lib.rs`'s imports.
+const TREE_OF: &str = "
+/// The match on the part model `$model` that writes the typed root of each of the variants
+/// `$variant` in the class `$class`: a match of every variant is too long for one function.
+macro_rules! tree_of {
+    ($model:expr, $class:expr; $($variant:ident),+ $(,)?) => {
+        match $model {
+            $(PartModel::$variant(root) => root.to_tree($class),)+
+        }
+    };
+}
+";
+
+/// `model_of`, after `check_root`.
+const MODEL_OF: &str = "
+/// The typed root of the part `name`, through the module its content type names, the same way
+/// `restore_through_module` finds it; `None` for a part no module takes.
+///
+/// The module reads the part with `options`. A content type several modules list goes by the
+/// part's root element.
+///
+/// # Errors
+///
+/// The errors of the module's `load`, and [`PackageError::Xml`] for a part of a content type
+/// several modules list that is not well-formed.
+pub fn model_of(
+    package: &Package,
+    name: &PartName,
+    options: OpenOptions,
+) -> Result<Option<PartModel>, PackageError> {
+    let Some(content_type) = package.content_type(name) else {
+        return Ok(None);
+    };
+    let Some((_, modeler)) = MODELS.iter().find(|(listed, _)| *listed == content_type) else {
+        return Ok(None);
+    };
+    modeler(Load {
+        name,
+        open: options,
+        package,
+    })
+}
+";
+
+/// `root_entry`, after `restore_through_module` when a content type is
+/// shared.
+const ROOT_ENTRY: &str = "
+/// The entry of `roots` whose root element the part `name` holds, when one does.
+///
+/// # Errors
+///
+/// The errors of [`Package::part_bytes`], and [`PackageError::Xml`] for a part that is not
+/// well-formed.
+fn root_entry<'roots, T>(
+    package: &Package,
+    name: &PartName,
+    roots: &'roots [(NamespaceId, &str, T)],
+) -> Result<Option<&'roots T>, PackageError> {
+    let root = parse(&package.part_bytes(name)?)
+        .map_err(|error| PackageError::Xml {
+            error,
+            part: name.clone(),
+        })?
+        .root;
+    Ok(roots
+        .iter()
+        .find(|(namespace, local, _)| {
+            root.name.namespace == Namespace::Known(*namespace) && root.name.local == *local
+        })
+        .map(|(_, _, entry)| entry))
+}
 ";
 
 /// `Restore::through`, the last item of its `impl`.
@@ -247,8 +369,22 @@ const RELATIONSHIP_METHODS: &str = "
 }
 ";
 
+/// One dispatch from a part's content type to its module: the closure of a
+/// module's entry, the type it has, what it gives, and the names of the two
+/// tables.
+struct Dispatch<'closure> {
+    closure: &'closure dyn Fn(&PartType, &RootText) -> String,
+    element: &'static str,
+    /// What the closure gives, `the store again of a part`.
+    gives: &'static str,
+    roots: &'static str,
+    table: &'static str,
+}
+
 /// What a part module writes for its root.
 struct RootText {
+    /// Whether `PartModel` holds it boxed.
+    boxed: bool,
     /// The function that reads and writes it, `document`.
     function: String,
     local: String,
@@ -295,10 +431,12 @@ pub fn files(
     tests: bool,
 ) -> Result<Vec<(PathBuf, String)>> {
     let folder = PathBuf::from(PARTS_PATH);
+    let nodes: Vec<usize> = roots.iter().flatten().map(|known| known.node).collect();
+    let boxed = catalog.boxed_arms(&nodes);
     let root_texts = roots
         .iter()
         .map(|root| {
-            root.map(|known| root_text(known, catalog, rows))
+            root.map(|known| root_text(known, catalog, rows, &boxed))
                 .transpose()
         })
         .collect::<Result<Vec<Option<RootText>>>>()?;
@@ -312,6 +450,10 @@ pub fn files(
             parts_text(header, joined, &root_texts, tests),
         ),
         (folder.join("kinds.rs"), kinds_text(header, &joined.kinds)),
+        (
+            folder.join("archive.rs"),
+            archive_text(header, &typed_parts(joined, &root_texts)),
+        ),
     ];
     for (part, root_text) in joined.parts.iter().zip(&root_texts) {
         let constant = joined
@@ -619,12 +761,7 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
 /// `lib.rs`: the module declarations, `MODULES`, the helpers the modules
 /// share, and the dispatch from a part's content type to its module.
 fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: bool) -> String {
-    let typed: Vec<(&PartType, &RootText)> = joined
-        .parts
-        .iter()
-        .zip(roots)
-        .filter_map(|(part, root)| root.as_ref().map(|known| (part, known)))
-        .collect();
+    let typed = typed_parts(joined, roots);
     let shared: BTreeSet<&str> = typed
         .iter()
         .flat_map(|(part, _)| part.content_types.iter().map(String::as_str))
@@ -643,32 +780,116 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
         .collect();
     let mut out = String::from(header);
     out.push_str(&inner_doc(
-        "One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.\n\nEach holds the part's content type, its relationship type in both classes' spelling, and the load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each file type. `restore_through_module` stores a part again in a class through the module its content type names.",
+        "One module per part type: ECMA-376 Part 1's part definitions, then the parts Microsoft's extensions define.\n\nEach holds the part's content type, its relationship type in both classes' spelling, and the load and store of its root, or the load of its bytes; `kinds` holds the document kinds of each file type. `restore_through_module` stores a part again in a class through the module its content type names; `model_of` gives a part's typed root as a `PartModel`, and `bytes_of` the part's bytes from it.",
     ));
     out.push('\n');
-    let mut modules: Vec<&str> = joined
+    let taken = module_declarations(joined, tests, &mut out);
+    lib_imports(&typed, &taken, !shared.is_empty(), &mut out);
+    out.push_str(TREE_OF);
+    out.push('\n');
+    modules_constant(joined, &mut out);
+    let restore = |part: &PartType, _: &RootText| {
+        format!("{CLOSURE_HEAD}part.through({}::load)", part.module)
+    };
+    let model = |part: &PartType, root: &RootText| {
+        let through = if root.boxed {
+            "through_boxed"
+        } else {
+            "through"
+        };
+        format!(
+            "{CLOSURE_HEAD}part.{through}(PartModel::{})",
+            variant_name(part)
+        )
+    };
+    dispatch_tables(
+        &typed,
+        &shared,
+        &Dispatch {
+            closure: &restore,
+            element: "Restorer",
+            gives: "the store again of a part",
+            roots: "ROOTS",
+            table: "RESTORES",
+        },
+        &mut out,
+    );
+    dispatch_tables(
+        &typed,
+        &shared,
+        &Dispatch {
+            closure: &model,
+            element: "Modeler",
+            gives: "the typed root of a part",
+            roots: "MODEL_ROOTS",
+            table: "MODELS",
+        },
+        &mut out,
+    );
+    out.push_str(&part_model(&typed, &taken));
+    lib_items(&typed, !shared.is_empty(), &mut out);
+    out
+}
+
+/// `lib.rs`'s module declarations, the private `archive` among them, and
+/// the unit tests' when `tests`; returns the names the modules take.
+fn module_declarations<'joined>(
+    joined: &'joined Joined,
+    tests: bool,
+    out: &mut String,
+) -> BTreeSet<&'joined str> {
+    let mut modules: Vec<(&str, &str)> = joined
         .parts
         .iter()
-        .map(|part| part.module.as_str())
+        .map(|part| ("pub ", part.module.as_str()))
         .collect();
-    modules.push("kinds");
-    modules.push("part_root");
-    modules.sort_unstable();
-    for module in modules {
-        let _ = writeln!(out, "pub mod {module};");
+    modules.push(("", "archive"));
+    modules.push(("pub ", "kinds"));
+    modules.push(("pub ", "part_root"));
+    modules.sort_unstable_by_key(|(_, module)| *module);
+    for (visibility, module) in &modules {
+        let _ = writeln!(out, "{visibility}mod {module};");
     }
     if tests {
         out.push_str("\n#[cfg(test)]\nmod tests;\n");
     }
-    let parse_use = if shared.is_empty() {
-        ""
-    } else {
+    modules.into_iter().map(|(_, module)| module).collect()
+}
+
+/// `lib.rs`'s imports: the namespace module of each typed root, one a module
+/// of `taken` names imported under another name, and `parse` when a content
+/// type is `shared`.
+fn lib_imports(
+    typed: &[(&PartType, &RootText)],
+    taken: &BTreeSet<&str>,
+    shared: bool,
+    out: &mut String,
+) {
+    let namespaces: BTreeSet<&str> = typed.iter().map(|(_, root)| root.module.as_str()).collect();
+    let mut markup_uses = String::new();
+    for namespace in namespaces {
+        if taken.contains(namespace) {
+            let _ = writeln!(
+                markup_uses,
+                "use officekit_markup::{namespace} as {namespace}{MARKUP_SUFFIX};"
+            );
+        } else {
+            let _ = writeln!(markup_uses, "use officekit_markup::{namespace};");
+        }
+    }
+    let parse_use = if shared {
         "use officekit_xml::parse::parse;\n"
+    } else {
+        ""
     };
     let _ = write!(
         out,
-        "\nuse crate::part_root::PartRoot;\nuse officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n\n",
+        "\nuse crate::part_root::PartRoot;\n{markup_uses}use officekit_packaging::error::PackageError;\nuse officekit_packaging::package::{{DECLARATION, OpenOptions, Package}};\nuse officekit_packaging::part_name::PartName;\nuse officekit_packaging::relationship::RelationshipType;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::{{Document, Element}};\nuse officekit_xml::error::WriteError;\nuse officekit_xml::name::{{Namespace, NamespaceId}};\n{parse_use}use officekit_xml::write::WriteOptions;\n",
     );
+}
+
+/// `MODULES`, every part module in `joined`'s order.
+fn modules_constant(joined: &Joined, out: &mut String) {
     out.push_str(&layout::doc(
         0,
         "Every part module: Part 1's definitions in the standard's order, then the parts of Microsoft's extensions by name.",
@@ -691,18 +912,164 @@ fn parts_text(header: &str, joined: &Joined, roots: &[Option<RootText>], tests: 
         );
     }
     out.push_str("];\n");
-    restore_tables(&typed, &shared, &mut out);
+}
+
+/// `lib.rs`'s types, their `impl`s and its functions, after `PartModel`;
+/// the dispatch by root element when a content type is `shared`.
+fn lib_items(typed: &[(&PartType, &RootText)], shared: bool, out: &mut String) {
     out.push_str(PART_MODULE);
+    out.push_str(LOAD_TYPES);
     out.push_str(RESTORE_TYPES);
+    out.push_str("\nimpl Load<'_> {\n");
+    if shared {
+        out.push_str(LOAD_BY_ROOT);
+    }
+    out.push_str(LOAD_THROUGH);
+    if typed.iter().any(|(_, root)| root.boxed) {
+        out.push_str(LOAD_THROUGH_BOXED);
+    }
+    out.push_str("}\n");
     out.push_str("\nimpl Restore<'_> {\n");
-    if !shared.is_empty() {
+    if shared {
         out.push_str(BY_ROOT);
     }
     out.push_str(THROUGH);
+    out.push_str(&bytes_of(typed));
     out.push_str(CHECK_ROOT);
+    out.push_str(MODEL_OF);
     out.push_str(RESTORE_THROUGH_MODULE);
+    if shared {
+        out.push_str(ROOT_ENTRY);
+    }
     out.push_str(TREE_IN_CLASS);
+}
+
+/// The `PartModel` enum: one variant per module with a typed root, by name,
+/// each holding its root; a namespace module named as one of `taken` is
+/// imported under another name.
+fn part_model(typed: &[(&PartType, &RootText)], taken: &BTreeSet<&str>) -> String {
+    let mut out = String::from("\n");
+    out.push_str(&layout::doc(
+        0,
+        "The typed root of a part, by the module that loads it. rkyv archives it through its mirror in `archive`.",
+    ));
+    out.push_str("#[derive(Clone, Debug, PartialEq)]\n#[non_exhaustive]\npub enum PartModel {\n");
+    for arm in model_arms(typed, |namespace| {
+        if taken.contains(namespace) {
+            format!("{namespace}{MARKUP_SUFFIX}")
+        } else {
+            namespace.to_owned()
+        }
+    }) {
+        out.push_str(&archive::variant(&arm));
+    }
+    out.push_str("}\n");
     out
+}
+
+/// One arm per module with a typed root, by variant: the variant and its
+/// root, its namespace module named as `module` gives it.
+fn model_arms<F>(typed: &[(&PartType, &RootText)], module: F) -> Vec<MirrorArm>
+where
+    F: Fn(&str) -> String,
+{
+    let mut arms: Vec<MirrorArm> = typed
+        .iter()
+        .map(|(part, root)| {
+            let path = format!("{}::{}", module(&root.module), root.name);
+            MirrorArm {
+                recursive: false,
+                shown: if root.boxed {
+                    format!("Box<{path}>")
+                } else {
+                    path
+                },
+                variant: variant_name(part),
+            }
+        })
+        .collect();
+    arms.sort_by(|left, right| left.variant.cmp(&right.variant));
+    arms
+}
+
+/// `bytes_of`, its match on the model `tree_of!` called with every variant.
+fn bytes_of(typed: &[(&PartType, &RootText)]) -> String {
+    let mut out = String::from("\n");
+    out.push_str(&layout::doc(
+        0,
+        "The bytes of the part `name` from its typed root `model`, in `class`, every namespace declared with that class's URI, written with `write`.\n\n# Errors\n\n[`PackageError::Write`] naming `name` when the root holds content `class` has no form for, as [`part_root::store`] does.",
+    ));
+    out.push_str(&layout::signature(
+        0,
+        "pub fn bytes_of",
+        &[
+            "name: &PartName".to_owned(),
+            "model: &PartModel".to_owned(),
+            "class: ConformanceClass".to_owned(),
+            "write: WriteOptions".to_owned(),
+        ],
+        "Result<Vec<u8>, PackageError>",
+    ));
+    out.push_str("    let written = tree_of!(model, class;\n");
+    let mut row = String::new();
+    for arm in model_arms(typed, str::to_owned) {
+        let item = format!("{},", arm.variant);
+        if !row.is_empty() && 8 + row.len() + 1 + item.len() > MAX_WIDTH {
+            let _ = writeln!(out, "        {row}");
+            row.clear();
+        }
+        if !row.is_empty() {
+            row.push(' ');
+        }
+        row.push_str(&item);
+    }
+    let _ = writeln!(out, "        {row}\n    );");
+    out.push_str(
+        "    let mut tree = written.map_err(|error| PackageError::Write {\n        error,\n        part: name.clone(),\n    })?;\n    tree.set_class(class);\n    Ok(Document::new(DECLARATION, tree).to_xml(write))\n}\n",
+    );
+    out
+}
+
+/// `archive.rs`: the mirror rkyv archives `PartModel` through, its `From`,
+/// and `PartModel`'s hand-off impls.
+fn archive_text(header: &str, typed: &[(&PartType, &RootText)]) -> String {
+    let mut out = String::from(header);
+    out.push_str(&inner_doc(
+        "The mirror rkyv archives `crate::PartModel` through: the archived enum and resolver it writes stay in this private module.",
+    ));
+    out.push('\n');
+    let namespaces: BTreeSet<&str> = typed.iter().map(|(_, root)| root.module.as_str()).collect();
+    for namespace in namespaces {
+        let _ = writeln!(out, "use officekit_markup::{namespace};");
+    }
+    out.push_str(
+        "use rkyv::de::Pooling;\nuse rkyv::rancor::{Fallible, Source};\nuse rkyv::ser::{Allocator, Sharing, Writer};\nuse rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};\n\n",
+    );
+    let arms = model_arms(typed, str::to_owned);
+    out.push_str(&archive::mirror("PartModel", &arms, false));
+    out.push_str(&archive::from("officekit_markup", "PartModel", &arms));
+    out.push_str(&archive::handoffs("PartModel"));
+    out
+}
+
+/// The modules with a typed root, each with its root.
+fn typed_parts<'joined>(
+    joined: &'joined Joined,
+    roots: &'joined [Option<RootText>],
+) -> Vec<(&'joined PartType, &'joined RootText)> {
+    joined
+        .parts
+        .iter()
+        .zip(roots)
+        .filter_map(|(part, root)| root.as_ref().map(|known| (part, known)))
+        .collect()
+}
+
+/// The variant of `PartModel` that holds the typed root of `part`'s module:
+/// its name in `PascalCase`.
+fn variant_name(part: &PartType) -> String {
+    let words: Vec<String> = part.module.split('_').map(str::to_owned).collect();
+    names::pascal(&words)
 }
 
 /// One entry of a table at indent 4, a tuple of `items` and, last, `last`,
@@ -730,23 +1097,32 @@ fn table_entry(items: &[String], last: &str) -> String {
     out
 }
 
-/// `RESTORES`, each content type of a typed module with the store again
-/// through that module, and `ROOTS`, the root of each module whose content
-/// type is `shared`, when one is.
-fn restore_tables(typed: &[(&PartType, &RootText)], shared: &BTreeSet<&str>, out: &mut String) {
-    let through = |part: &PartType| format!("{CLOSURE_HEAD}part.through({}::load)", part.module);
+/// The dispatch's table, each content type of a typed module with the
+/// dispatch's closure through that module, and its table of roots, the root
+/// of each module whose content type is `shared`, when one is.
+fn dispatch_tables(
+    typed: &[(&PartType, &RootText)],
+    shared: &BTreeSet<&str>,
+    dispatch: &Dispatch<'_>,
+    out: &mut String,
+) {
+    let entry = dispatch.closure;
+    let element = dispatch.element;
     out.push('\n');
     out.push_str(&layout::doc(
         0,
-        "Each content type a module with a typed root lists, and the store again of a part of it through that module; a content type several modules list goes by the part's root element.",
+        &format!(
+            "Each content type a module with a typed root lists, and {} of it through that module; a content type several modules list goes by the part's root element.",
+            dispatch.gives
+        ),
     ));
-    out.push_str("const RESTORES: &[(&str, Restorer)] = &[\n");
-    for (part, _) in typed {
+    let _ = writeln!(out, "const {}: &[(&str, {element})] = &[", dispatch.table);
+    for (part, root) in typed {
         for content_type in &part.content_types {
             if !shared.contains(content_type.as_str()) {
                 out.push_str(&table_entry(
                     &[layout::string(content_type)],
-                    &through(part),
+                    &entry(part, root),
                 ));
             }
         }
@@ -764,9 +1140,16 @@ fn restore_tables(typed: &[(&PartType, &RootText)], shared: &BTreeSet<&str>, out
     out.push('\n');
     out.push_str(&layout::doc(
         0,
-        "The root element of each module whose content type another module lists too: its namespace and local name, and the store again of a part through that module.",
+        &format!(
+            "The root element of each module whose content type another module lists too: its namespace and local name, and {} through that module.",
+            dispatch.gives
+        ),
     ));
-    out.push_str("const ROOTS: &[(NamespaceId, &str, Restorer)] = &[\n");
+    let _ = writeln!(
+        out,
+        "const {}: &[(NamespaceId, &str, {element})] = &[",
+        dispatch.roots
+    );
     for (part, root) in typed {
         if part
             .content_types
@@ -775,7 +1158,7 @@ fn restore_tables(typed: &[(&PartType, &RootText)], shared: &BTreeSet<&str>, out
         {
             out.push_str(&table_entry(
                 &[root.namespace.to_string(), layout::string(&root.local)],
-                &through(part),
+                &entry(part, root),
             ));
         }
     }
@@ -876,7 +1259,12 @@ fn relationship_types(header: &str, joined: &Joined) -> String {
 /// # Errors
 ///
 /// A struct whose reader the catalog cannot name, or a root in no namespace.
-fn root_text(root: Root, catalog: &Catalog, rows: &[Row]) -> Result<RootText> {
+fn root_text(
+    root: Root,
+    catalog: &Catalog,
+    rows: &[Row],
+    boxed: &BTreeSet<usize>,
+) -> Result<RootText> {
     let node = catalog
         .nodes
         .get(root.node)
@@ -898,6 +1286,7 @@ fn root_text(root: Root, catalog: &Catalog, rows: &[Row]) -> Result<RootText> {
         .get(usize::from(namespace))
         .map_or("", |row| row.prefix.as_str());
     Ok(RootText {
+        boxed: boxed.contains(&root.node),
         function,
         local: node.key.tag.local.clone(),
         module: module.name.clone(),

@@ -255,22 +255,19 @@ impl Catalog {
                 .map(|(_, arm)| (sizes.get(*arm).copied().unwrap_or(0), Some(*arm)))
                 .collect();
             variants.push((mem::size_of::<XmlNode>(), None));
-            loop {
-                variants.sort_by_key(|variant| Reverse(variant.0));
-                let (Some(&(largest, arm)), Some(&(second, _))) =
-                    (variants.first(), variants.get(1))
-                else {
-                    break;
-                };
-                let Some(boxed) = arm.filter(|_| largest - second > VARIANT_SIZE_DIFFERENCE) else {
-                    break;
-                };
-                found.boxed.insert(boxed);
-                if let Some(first) = variants.first_mut() {
-                    first.0 = mem::size_of::<Box<u8>>();
-                }
-            }
+            found.boxed = large_variants(variants);
         }
+    }
+
+    /// The structs among `arms` that an enum with one variant per arm holds
+    /// boxed, by the rule `box_large_arms` boxes the typed tree's arms with.
+    #[must_use]
+    pub fn boxed_arms(&self, arms: &[usize]) -> BTreeSet<usize> {
+        large_variants(
+            arms.iter()
+                .map(|arm| (self.nodes.get(*arm).map_or(0, struct_size), Some(*arm)))
+                .collect(),
+        )
     }
 
     /// Build the catalog: structs, enums, newtypes, and their names.
@@ -1769,6 +1766,29 @@ fn slot_holds(slot: &Slot, tag: &Name) -> bool {
             .any(|entry| matches!(entry, Entry::Element(key) if &key.tag == tag)),
         Slot::Any(_, _) => false,
     }
+}
+
+/// The structs of `variants`, each a variant's size and the struct it holds
+/// (`None` for one that is never boxed), to hold boxed: while the largest
+/// variant is more than `VARIANT_SIZE_DIFFERENCE` bytes larger than the next,
+/// its struct is boxed.
+fn large_variants(mut variants: Vec<(usize, Option<usize>)>) -> BTreeSet<usize> {
+    let mut boxed = BTreeSet::new();
+    loop {
+        variants.sort_by_key(|variant| Reverse(variant.0));
+        let (Some(&(largest, arm)), Some(&(second, _))) = (variants.first(), variants.get(1))
+        else {
+            break;
+        };
+        let Some(found) = arm.filter(|_| largest - second > VARIANT_SIZE_DIFFERENCE) else {
+            break;
+        };
+        boxed.insert(found);
+        if let Some(first) = variants.first_mut() {
+            first.0 = mem::size_of::<Box<u8>>();
+        }
+    }
+    boxed
 }
 
 /// The bytes a generated struct takes: its unknown content, a `String` per

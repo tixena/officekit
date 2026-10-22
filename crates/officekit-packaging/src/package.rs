@@ -266,6 +266,12 @@ impl Package {
         self.content_types.overrides()
     }
 
+    /// `[Content_Types].xml`'s entries, in the order the package has them.
+    #[must_use]
+    pub const fn content_types(&self) -> &ContentTypes {
+        &self.content_types
+    }
+
     /// An independent copy: `MemorySystem::clone` shares its files, so the
     /// copy goes through the package's bytes into a new filesystem.
     ///
@@ -335,6 +341,44 @@ impl Package {
                     );
                 }
             }
+        }
+        Ok(package)
+    }
+
+    /// A package of `parts`, each with its bytes, whose `[Content_Types].xml`
+    /// and relationship parts are written from `content_types` and
+    /// `relationships` as given, by source (`None`: the package): the values
+    /// [`content_types`](Self::content_types) and
+    /// [`relationship_sets`](Self::relationship_sets) return.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Io`] when the memory filesystem refuses a write.
+    pub fn from_parts(
+        content_types: ContentTypes,
+        relationships: Vec<(Option<PartName>, Vec<Relationship>)>,
+        parts: Vec<(PartName, Vec<u8>)>,
+    ) -> Result<Self, PackageError> {
+        let mut package = Self {
+            content_types,
+            fs: MemorySystem::new(),
+            relationships: relationships
+                .into_iter()
+                .map(|(source, items)| {
+                    (
+                        source_key(source.as_ref()),
+                        RelationshipSet { items, source },
+                    )
+                })
+                .collect(),
+        };
+        for (name, bytes) in parts {
+            package.write_file(name.path(), &bytes)?;
+        }
+        package.write_content_types()?;
+        let keys: Vec<String> = package.relationships.keys().cloned().collect();
+        for key in keys {
+            package.write_relationships(&key)?;
         }
         Ok(package)
     }

@@ -680,6 +680,7 @@ dependencies = [
  "quick-xml",
  "regex",
  "resvg",
+ "rkyv",
  "serde_json",
  "sha1",
  "thiserror",
@@ -730,6 +731,7 @@ dependencies = [
  "officekit-traversal",
  "officekit-xml",
  "os-shim",
+ "rkyv",
  "thiserror",
  "zip",
 ]

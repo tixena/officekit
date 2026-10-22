@@ -47,37 +47,9 @@ impl OfficeFile {
     ///
     /// # Errors
     ///
-    /// The errors of [`Package::from_bytes`] and [`Package::main_part`];
-    /// [`PackageError::ClassNotEnabled`] for a class whose feature is off; and
-    /// [`PackageError::ContentType`] for a main part of none of the three.
+    /// The errors of [`Package::from_bytes`] and of [`from_package`](Self::from_package).
     pub fn from_bytes(bytes: Vec<u8>, options: OpenOptions) -> Result<Self, PackageError> {
-        let package = Package::from_bytes(bytes)?;
-        let main = file::main_part(&package)?;
-        if lists(
-            &main,
-            &WordprocessingKind::ALL,
-            WordprocessingKind::main_content_type,
-        ) {
-            Docx::from_package(package, options).map(Self::Word)
-        } else if lists(
-            &main,
-            &SpreadsheetKind::ALL,
-            SpreadsheetKind::main_content_type,
-        ) {
-            Xlsx::from_package(package, options).map(Self::Excel)
-        } else if lists(
-            &main,
-            &PresentationKind::ALL,
-            PresentationKind::main_content_type,
-        ) {
-            Pptx::from_package(package, options).map(Self::PowerPoint)
-        } else {
-            Err(PackageError::ContentType {
-                expected: "a WordprocessingML, SpreadsheetML or PresentationML main part",
-                found: main.content_type,
-                part: main.name,
-            })
-        }
+        Self::from_package(Package::from_bytes(bytes)?, options)
     }
 
     /// The model of `bytes`: a Word, Excel or `PowerPoint` file when they open with the zip
@@ -108,6 +80,45 @@ impl OfficeFile {
             path: PathBuf::from(STANDARD_INPUT),
         })?;
         from_markdown_text(system, &text, folder, markdown).map(Self::Word)
+    }
+
+    /// The file `package` holds, by its main part's content type, as
+    /// [`from_bytes`](Self::from_bytes) finds it.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::main_part`]; [`PackageError::ClassNotEnabled`] for a class whose
+    /// feature is off; and [`PackageError::ContentType`] for a main part of none of the three.
+    pub(crate) fn from_package(
+        package: Package,
+        options: OpenOptions,
+    ) -> Result<Self, PackageError> {
+        let main = file::main_part(&package)?;
+        if lists(
+            &main,
+            &WordprocessingKind::ALL,
+            WordprocessingKind::main_content_type,
+        ) {
+            Docx::from_package(package, options).map(Self::Word)
+        } else if lists(
+            &main,
+            &SpreadsheetKind::ALL,
+            SpreadsheetKind::main_content_type,
+        ) {
+            Xlsx::from_package(package, options).map(Self::Excel)
+        } else if lists(
+            &main,
+            &PresentationKind::ALL,
+            PresentationKind::main_content_type,
+        ) {
+            Pptx::from_package(package, options).map(Self::PowerPoint)
+        } else {
+            Err(PackageError::ContentType {
+                expected: "a WordprocessingML, SpreadsheetML or PresentationML main part",
+                found: main.content_type,
+                part: main.name,
+            })
+        }
     }
 
     /// The file in the Transitional class, and the warnings of the save.

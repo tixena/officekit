@@ -2,6 +2,8 @@
 //! how a target resolves against its source, and the relationship types in
 //! both conformance classes' spelling.
 
+mod archive;
+
 use core::iter;
 
 use officekit_xml::conformance::ConformanceClass;
@@ -34,7 +36,8 @@ pub struct RelatedPart {
 }
 
 /// One `Relationship` element, as written.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
+#[rkyv(attr(non_exhaustive))]
 #[non_exhaustive]
 pub struct Relationship {
     pub id: String,
@@ -61,7 +64,8 @@ pub enum Target {
     Part(PartName),
 }
 
-/// The `TargetMode` attribute of a relationship.
+/// The `TargetMode` attribute of a relationship. rkyv archives it through its
+/// mirror in `archive`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum TargetMode {

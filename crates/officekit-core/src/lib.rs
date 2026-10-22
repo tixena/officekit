@@ -10,6 +10,8 @@
 //! - [`compact`]: the merge of neighbouring runs that render the same.
 //! - [`folder`]: a `.docx` as a folder of its parts, and back.
 //! - [`office_file`]: a `.docx`, `.xlsx`, or `.pptx` opened from its bytes without knowing which.
+//! - [`binary`]: officekit's binary form, a file's whole model archived so the next call parses no
+//!   XML.
 #![cfg_attr(
     feature = "markdown",
     doc = "- [`markdown`]: a Word document from an archie document, and back, with the feature `markdown`."
@@ -25,6 +27,7 @@
 
 extern crate alloc;
 
+pub mod binary;
 pub mod compact;
 pub mod docx;
 pub mod embedded;

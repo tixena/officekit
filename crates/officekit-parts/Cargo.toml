@@ -22,6 +22,4 @@ officekit-packaging.workspace = true
 officekit-xml.workspace = true
 officekit-transitional = { workspace = true, optional = true }
 officekit-strict = { workspace = true, optional = true }
-
-[dev-dependencies]
-rkyv.workspace = true
+rkyv = { workspace = true, features = ["alloc"] }

@@ -2,6 +2,8 @@
 use core::fmt::Debug;
 
 use officekit_packaging::error::PackageError;
+#[cfg(feature = "transitional")]
+use officekit_packaging::package::DECLARATION;
 use officekit_packaging::package::{OpenOptions, Package};
 use officekit_packaging::part_name::PartName;
 use officekit_packaging::relationship::RelationshipType;
@@ -13,8 +15,12 @@ use officekit_xml::parse::parse;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::write::WriteOptions;
 
+#[cfg(feature = "transitional")]
+use super::PartModel;
 use super::kinds::{PresentationKind, SpreadsheetKind, WordprocessingKind};
 use super::{MODULES, header, main_document, presentation, workbook};
+#[cfg(any(feature = "strict", feature = "transitional"))]
+use super::{bytes_of, model_of};
 #[cfg(feature = "transitional")]
 use crate::part_root::PartRoot;
 
@@ -196,6 +202,90 @@ fn a_strict_store_of_content_strict_has_no_form_for_fails_and_stores_nothing() {
         "{error:?}"
     );
     package.part_bytes(&source).unwrap_err();
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn model_of_reads_a_part_through_the_module_its_content_type_names() {
+    let part = name("/word/document.xml");
+    let package = package_with(&part, main_document::CONTENT_TYPES[0], DOCUMENT);
+    let root = main_document::load(&package, &part, OpenOptions::default()).unwrap();
+    assert_eq!(
+        model_of(&package, &part, OpenOptions::default()).unwrap(),
+        Some(PartModel::MainDocument(root))
+    );
+    let item = name("/customXml/item1.xml");
+    let sources = package_with(&item, "application/xml", SOURCES);
+    assert!(matches!(
+        model_of(&sources, &item, OpenOptions::default()).unwrap(),
+        Some(PartModel::Bibliography(_))
+    ));
+    let unknown = package_with(&item, "application/xml", "<data/>");
+    assert_eq!(
+        model_of(&unknown, &item, OpenOptions::default()).unwrap(),
+        None
+    );
+    let picture = name("/word/media/image1.png");
+    let image = package_with(&picture, "image/png", "png");
+    assert_eq!(
+        model_of(&image, &picture, OpenOptions::default()).unwrap(),
+        None
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn bytes_of_writes_a_typed_root_as_the_store_of_its_module_does() {
+    let part = name("/word/document.xml");
+    let xml = format!("<?{DECLARATION}?>\r\n{DOCUMENT}");
+    let mut package = package_with(&part, main_document::CONTENT_TYPES[0], &xml);
+    let model = model_of(&package, &part, OpenOptions::default())
+        .unwrap()
+        .unwrap();
+    let bytes = bytes_of(
+        &part,
+        &model,
+        ConformanceClass::Transitional,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    let root = main_document::load(&package, &part, OpenOptions::default()).unwrap();
+    main_document::store_transitional(&mut package, &part, &root, WriteOptions::default()).unwrap();
+    assert_eq!(
+        String::from_utf8(bytes).unwrap(),
+        String::from_utf8(package.part_bytes(&part).unwrap()).unwrap()
+    );
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn bytes_of_content_strict_has_no_form_for_is_a_write_error_naming_the_part() {
+    const VML: &str = "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:pict><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\"/></w:pict></w:r></w:p></w:body></w:document>";
+    let part = name("/word/document.xml");
+    let package = package_with(&part, main_document::CONTENT_TYPES[0], VML);
+    let model = model_of(&package, &part, OpenOptions::default())
+        .unwrap()
+        .unwrap();
+    let error = bytes_of(
+        &part,
+        &model,
+        ConformanceClass::Strict,
+        WriteOptions::default(),
+    )
+    .unwrap_err();
+    assert!(
+        matches!(
+            &error,
+            PackageError::Write {
+                error: WriteError::NotInClass {
+                    class: ConformanceClass::Strict,
+                    tag,
+                },
+                part: named,
+            } if !tag.is_empty() && *named == part
+        ),
+        "{error:?}"
+    );
 }
 
 #[test]
