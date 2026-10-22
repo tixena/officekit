@@ -26,8 +26,12 @@ build:
     cargo build --workspace
 
 # Run the test suite, officekit-core's and officekit-parts' with every class on,
-# and officekit-core's with Strict alone.
+# and officekit-core's with Strict alone. The first line builds the libraries,
+# binaries and examples with the dev-dependencies' features, as the test run
+# resolves them, so `cargo test --workspace` compiles test targets only and no
+# generated crate's library compiles beside its test binary.
 test:
+    cargo build --workspace --lib --bins --examples
     cargo test --workspace
     cargo test -p officekit-core --all-features
     cargo test -p officekit-parts --all-features
